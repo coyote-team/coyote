@@ -23,7 +23,6 @@ Image annotation site and API to enable the distributed annotation of museum ima
 
 We could include build status here.
 
-
 ## Requirements
 
 MariaDB, rbenv, ruby gems, and bundler.
@@ -42,6 +41,32 @@ MariaDB, rbenv, ruby gems, and bundler.
     grep -rn HERE ./ #check for configs
 
 Secure creds are kept untracked in ```.env```
+
+##Data model
+For use on [nomnoml](http://www.nomnoml.com/)
+
+    [<frame>Coyote data model|
+      [User | id: int | email: str | admin: bool | timestamps]
+      [Image | id: int |url : str]
+      [Tag | id: int | title: string]
+      [Group | id: int | title: string]
+      
+      [Description | id: int | locale:str(en) | text: text | status: int | timestamps]
+      [Website | id: int | url: str | title: str | timestamps]
+      [Status | id: int | title: str | description: text]
+      [Meta| id: int| title: str | instructions: text]
+
+      [Website]->[Group]
+      [Image]->[Group]
+      [Description]->Assigned[User]
+      [Description]->Assigner[User]
+      [Description]->[Meta]
+      [Description]->[Status]
+
+      [Image] +-> 0..* [Description]
+      [Image] +-> 0..* [Tag]
+    ]
+
 
 ## Scaffolds
  
