@@ -1,0 +1,17 @@
+-title = 'Welcome to Coyote'
+-description = '' #no html
+-thumb = '' #MUST HAVE A VALUE or should not be set
+-keywords = %w{''}  #space separated keywords
+-meta title: title,
+  keywords: keywords,
+  description: description,
+  og: { title: title,
+    description: description,
+    image: thumb,
+    url: request.url,
+  }
+
+.container
+  .row
+    .col-md-12
+      %h1 Welcome to Coyote

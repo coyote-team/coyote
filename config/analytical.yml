@@ -1,0 +1,11 @@
+defaults: &defaults
+  google:
+    key: <%= ENV['GOOGLE_ANALYTICS_ID'] %>
+production:
+  <<: *defaults
+development:
+  <<: *defaults
+staging:
+  <<: *defaults
+test:
+  <<: *defaults

@@ -1,0 +1,46 @@
+//= depend_on_asset "AjaxLoader.gif"
+
+//select/tags
+//https://github.com/ivaynberg/select2/issues/1588
+.select2-no-results
+  display: none !important
+.select2-input
+  min-width: 100px
+.select2-container
+  padding: 0px
+  height: auto
+  min-height: 1em
+  ul.select2-choices
+    border: 0
+.select2-container.form-control
+  height: auto !important
+
+//datepicker
+.form-group.datepicker
+  > div
+    display: block
+  > label
+    padding-left: 1em
+    padding-right: 1em
+
+
+//general admin
+.form-actions
+  @extend .col-sm-12
+input[type="radio"], input[type="checkbox"]
+  margin-top: 1em
+.create, .new, .edit, .update
+  @extend .container
+  .btn
+    text-transform: uppercase
+  .form-actions
+    text-align: right
+
+  .btn-success
+    margin-top: 1em
+    margin-bottom: 1em
+
+//etc
+.owl-item.loading
+  min-height: 4em
+  background: url(asset_path('AjaxLoader.gif')) no-repeat center center

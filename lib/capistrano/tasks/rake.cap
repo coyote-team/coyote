@@ -1,0 +1,14 @@
+#http://stackoverflow.com/questions/19599986/capistrano-3-rails-4-database-configuration-does-not-specify-adapter
+#set :rails_env, (fetch(:rails_env) || fetch(:stage))
+desc "Run rake task on server"
+task :rake do
+  set :rails_env, fetch(:stage)
+  on roles(:app), in: :sequence, wait: 5 do
+    within release_path do
+      with rails_env: fetch(:rails_env) do
+        puts fetch(:rails_env)
+        execute :rake, ENV['TASK']
+      end
+    end
+  end
+end
