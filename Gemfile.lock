@@ -1,18 +1,4 @@
 GIT
-  remote: git://github.com/Nerian/bootstrap-datepicker-rails.git
-  revision: 486f26e0c4cbbc6e55a1d8a477a550f5a6594a8d
-  specs:
-    bootstrap-datepicker-rails (1.4.0)
-      railties (>= 3.0)
-
-GIT
-  remote: git@github.com:thoughtbot/jack_up.git
-  revision: 2b214b644d35d80cc10c6b4675cc57ddbd0d69d0
-  specs:
-    jack_up (0.2.0)
-      rails (~> 4.0)
-
-GIT
   remote: https://github.com/EppO/rolify.git
   revision: ae0712ccf765c20945ce430ef0fdaa1b7c4bad8c
   specs:
@@ -576,7 +562,6 @@ DEPENDENCIES
   backbone-on-rails
   better_errors
   binding_of_caller
-  bootstrap-datepicker-rails!
   bootstrap-sass (>= 3.2)
   brakeman
   browser
@@ -616,7 +601,6 @@ DEPENDENCIES
   hogan_assets
   html2haml
   html2markdown
-  jack_up!
   jbuilder
   jquery-fileupload-rails
   jquery-rails (>= 3.0.0)

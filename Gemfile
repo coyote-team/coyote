@@ -22,7 +22,7 @@ gem 'rolify',  :git=>'https://github.com/EppO/rolify.git'  #roles
 gem 'acts-as-taggable-on' #automplete tags
 gem "select2-rails" #select form
 gem 'aws-sdk'
-gem 'jack_up', :git=>"git@github.com:thoughtbot/jack_up.git" #drag and drop
+#gem 'jack_up', :git=>"git@github.com:thoughtbot/jack_up.git" #drag and drop
 gem 'cocoon' #nested forms
 #gem 'country_select' #countries
 #gem 'i18n_country_select'
@@ -60,7 +60,7 @@ gem 'underscore-rails'
 gem 'jquery-rails', ">= 3.0.0"
 gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails'
-gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+#gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 gem 'execjs'
 gem 'uglifier', '>= 1.3.0'
 gem "validate_url"
