@@ -42,6 +42,7 @@ Secure creds are kept untracked in ```.env```
 ##Data model
 
 For use on [nomnoml](http://www.nomnoml.com/)
+
     [<frame>Coyote data model|
       [User | id: int | email: string | admin: bool | timestamps]
       [Image | id: int |url : string]
