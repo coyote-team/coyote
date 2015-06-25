@@ -1,0 +1,31 @@
+-title = 'Showing Website'
+-meta title: title
+-cache ['v1', admin?,  @website] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        %table.entity-table
+          %tbody
+            %tr
+              %th{scope: "row"}
+                %p
+                  %b Title:
+              %td
+                %p
+                  = @website.title
+            %tr
+              %th{scope: "row"}
+                %p
+                  %b Url:
+              %td
+                %p
+                  = @website.url
+        %nav.entity-nav{role:"navigation"}
+          = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
+            %i.fa.fa-list{title: 'List'}
+            Websites
+          = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
+            %i.fa.fa-pencil{title: 'Pencil'}
+            Edit 

@@ -1,0 +1,31 @@
+-title = 'Showing Metum'
+-meta title: title
+-cache ['v1', admin?,  @metum] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        %table.entity-table
+          %tbody
+            %tr
+              %th{scope: "row"}
+                %p
+                  %b Title:
+              %td
+                %p
+                  = @metum.title
+            %tr
+              %th{scope: "row"}
+                %p
+                  %b Instructions:
+              %td
+                %p
+                  = @metum.instructions
+        %nav.entity-nav{role:"navigation"}
+          = link_to meta_path, class: 'btn btn-info', title: "View the meta index" do
+            %i.fa.fa-list{title: 'List'}
+            Meta
+          = link_to edit_metum_path(@metum), title: "Edit this metum", class: 'btn btn-primary' do
+            %i.fa.fa-pencil{title: 'Pencil'}
+            Edit 

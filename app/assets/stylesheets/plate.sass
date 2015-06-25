@@ -26,7 +26,11 @@
 
 //general admin
 .form-actions
-  @extend .col-sm-12
+  +make-row
+.form-actions-inner
+  +make-sm-column(9)
+  +make-sm-column-push(3)
+
 input[type="radio"], input[type="checkbox"]
   margin-top: 1em
 .create, .new, .edit, .update
@@ -44,3 +48,24 @@ input[type="radio"], input[type="checkbox"]
 .owl-item.loading
   min-height: 4em
   background: url(asset_path('AjaxLoader.gif')) no-repeat center center
+
+//admin
+.index-outer, .entity-outer
+  @extend .container
+.index, .entity
+  +make-row
+.index-inner, .entity-inner
+  +make-lg-column(12)
+.index-action
+  float: right
+
+.index-table
+  @extend .table-striped
+  width: 100%
+  margin-bottom: ms(3)
+  th
+    +large-texts
+    padding: ms(0)
+  td
+    +texts
+    padding: ms(0)

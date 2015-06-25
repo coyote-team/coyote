@@ -1,0 +1,9 @@
+-title = 'Editing Status'
+-meta title: title
+-cache ['v1', admin?,  @status] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        = render 'form'

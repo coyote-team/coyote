@@ -1,0 +1,20 @@
+= simple_form_for @description, validate: true, html: {multipart: true, class: 'form-horizontal', role: "form"}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :locale
+    = f.input :text
+    = f.association :status
+    = f.association :image
+    = f.association :metum
+  
+
+  .form-actions
+    .form-actions-inner
+      = link_to descriptions_path, class: 'btn btn-info' do
+        %i.fa.fa-fw.fa-list{title: "List"}>
+        Descriptions 
+      - if action_name == 'edit'
+        = link_to @description, class: 'btn btn-info' do
+          %i.fa.fa-fw.fa-eye{title: "Eye"}>
+          View this description
+      = f.button :submit, class: 'btn btn-success'

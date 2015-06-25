@@ -1,0 +1,29 @@
+-title = 'Groups'
+-meta title: title
+- cache ['v1', admin?,  @groups] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1 Listing Groups
+        %table.index-table
+          %tr
+            %th{scope: "col"} 
+              Title
+            %th{scope: "col"} 
+
+          - @groups.each_with_index do |group, idx|
+            %tr{data: {item_id: "#{group.id}"}, class: "item"}
+              %td= group.title
+              %td.text-right
+                = link_to group, class: "btn btn-show", title: "Show this group" do
+                  %i.fa.fa-fw.fa-eye{title: "Eye"}
+                = link_to edit_group_path(group), class: "btn btn-edit", title: "Edit this group"  do
+                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                = link_to group, title: "Delete this group" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        %br
+
+        = link_to new_group_path, class: 'btn btn-success index-action' do
+          %i.fa.fa-fw.fa-plus{title: "Plus"}>
+          New Group

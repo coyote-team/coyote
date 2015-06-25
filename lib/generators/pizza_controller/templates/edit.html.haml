@@ -1,0 +1,9 @@
+-title = 'Editing <%= singular_table_name.capitalize %>'
+-meta title: title
+-cache ['v1', admin?,  @<%= singular_table_name %>] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        = render 'form'

@@ -35,7 +35,7 @@ module ApplicationHelper
   end
 
   def admin?
-    current_user && current_user.has_role?(:admin)
+    current_user && current_user.admin?
   end
 
   def set_markdown
@@ -65,10 +65,5 @@ module ApplicationHelper
     else
       ''
     end
-  end
-
-
-  def cache_version
-    'v1'
   end
 end

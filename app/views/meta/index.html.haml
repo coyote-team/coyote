@@ -1,0 +1,32 @@
+-title = 'Meta'
+-meta title: title
+- cache ['v1', admin?,  @meta] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1 Listing Meta
+        %table.index-table
+          %tr
+            %th{scope: "col"} 
+              Title
+            %th{scope: "col"} 
+              Instructions
+            %th{scope: "col"} 
+
+          - @meta.each_with_index do |metum, idx|
+            %tr{data: {item_id: "#{metum.id}"}, class: "item"}
+              %td= metum.title
+              %td= metum.instructions
+              %td.text-right
+                = link_to metum, class: "btn btn-show", title: "Show this metum" do
+                  %i.fa.fa-fw.fa-eye{title: "Eye"}
+                = link_to edit_metum_path(metum), class: "btn btn-edit", title: "Edit this metum"  do
+                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                = link_to metum, title: "Delete this metum" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        %br
+
+        = link_to new_metum_path, class: 'btn btn-success index-action' do
+          %i.fa.fa-fw.fa-plus{title: "Plus"}>
+          New Metum

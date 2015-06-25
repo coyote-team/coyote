@@ -1,0 +1,32 @@
+-title = 'Images'
+-meta title: title
+- cache ['v1', admin?,  @images] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1 Listing Images
+        %table.index-table
+          %tr
+            %th{scope: "col"} 
+              Url
+            %th{scope: "col"} 
+              Website
+            %th{scope: "col"} 
+
+          - @images.each_with_index do |image, idx|
+            %tr{data: {item_id: "#{image.id}"}, class: "item"}
+              %td= image.url
+              %td= image.website
+              %td.text-right
+                = link_to image, class: "btn btn-show", title: "Show this image" do
+                  %i.fa.fa-fw.fa-eye{title: "Eye"}
+                = link_to edit_image_path(image), class: "btn btn-edit", title: "Edit this image"  do
+                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        %br
+
+        = link_to new_image_path, class: 'btn btn-success index-action' do
+          %i.fa.fa-fw.fa-plus{title: "Plus"}>
+          New Image

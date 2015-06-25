@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.2'
 gem 'sass-rails', '~> 5.0.1'
 gem 'compass-rails', '~> 2.0.4'
 gem 'bootstrap-sass', '>= 3.2'
+#gem 'bootstrap-generators', '~> 3.3.4'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
@@ -104,6 +105,7 @@ group :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'selenium-webdriver'
+  gem 'capybara-accessible'
 end
 
 # gem 'bcrypt-ruby', '~> 3.1.2' # Use ActiveModel has_secure_password

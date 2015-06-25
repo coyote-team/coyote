@@ -1,0 +1,47 @@
+-title = '<%= plural_table_name.capitalize %>'
+-meta title: title
+- cache ['v1', admin?,  @<%= plural_table_name %>] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1 Listing <%= plural_table_name.capitalize %>
+<%- if options[:sortable] -%>
+        %table.index.sortable{:data => {update_url: sort_<%=plural_table_name %>_path}}
+<%- else -%>
+        %table.index-table
+<%- end -%>
+          %tr
+<%- for attribute in attributes -%>
+            %th{scope: "col"} 
+              <%= attribute.human_name %>
+<%- end -%>
+            %th{scope: "col"} 
+
+          - @<%= plural_table_name %>.each_with_index do |<%= singular_table_name %>, idx|
+            %tr{data: {item_id: "#{<%= singular_table_name %>.id}"}, class: "item"}
+<% for attribute in attributes -%>
+<%- if attribute.type.to_s == "boolean" -%>
+              %td
+                -if <%= singular_table_name %>.<%= attribute.name %>
+                  =link_to toggle_<%= singular_table_name %>_path(<%= singular_table_name %>, column: '<%= attribute.name %>'), remote: true do
+                    <i class='fa fa-fw fa-check boolean-toggle'></i> 
+                -else
+                  =link_to toggle_<%= singular_table_name %>_path(<%= singular_table_name %>, column: '<%= attribute.name %>'), remote: true do
+                    <i class='fa fa-fw fa-times boolean-toggle'></i> 
+<%- else -%>
+              %td= <%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+<% end -%>
+              %td.text-right
+                = link_to <%= singular_table_name %>, class: "btn btn-show", title: "Show this <%= singular_table_name %>" do
+                  %i.fa.fa-fw.fa-eye{title: "Eye"}
+                = link_to edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn btn-edit", title: "Edit this <%= singular_table_name %>"  do
+                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        %br
+
+        = link_to new_<%= singular_table_name %>_path, class: 'btn btn-success index-action' do
+          %i.fa.fa-fw.fa-plus{title: "Plus"}>
+          New <%= human_name %>

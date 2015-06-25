@@ -49,7 +49,7 @@
       .alert-message.error
         %a.close{:href => "#"} ×
         %p.alert= alert
-    #content
+    %main#content{role: "main"}
       = yield
     = render "footer"
     #loading

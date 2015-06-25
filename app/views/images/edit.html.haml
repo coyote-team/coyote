@@ -1,0 +1,9 @@
+-title = 'Editing Image'
+-meta title: title
+-cache ['v1', admin?,  @image] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        = render 'form'

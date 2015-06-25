@@ -1,0 +1,16 @@
+= simple_form_for @group, validate: true, html: {multipart: true, class: 'form-horizontal', role: "form"}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :title
+  
+
+  .form-actions
+    .form-actions-inner
+      = link_to groups_path, class: 'btn btn-info' do
+        %i.fa.fa-fw.fa-list{title: "List"}>
+        Groups 
+      - if action_name == 'edit'
+        = link_to @group, class: 'btn btn-info' do
+          %i.fa.fa-fw.fa-eye{title: "Eye"}>
+          View this group
+      = f.button :submit, class: 'btn btn-success'

@@ -1,0 +1,25 @@
+
+ (   (       )   )         
+ )\ ))\ ) ( /(( /(  (      
+(()/(()/( )\())\()) )\     
+ /(_))(_)|(_)((_)((((_)(   
+(_))(_))  _((_)((_)\ _ )\  
+| _ \_ _||_  /_  /(_)_\(_) 
+|  _/| |  / / / /  / _ \   
+|_| |___|/___/___|/_/ \_\  
+
+
+Description:
+    Our house scaffolding generator.  Starts us off with common tasks already done. Plus some extra options depending on what we need.
+
+Example:
+    rails g pizza_scaffold Dog name:string owner_id:integer
+
+    This will create:
+        a Dog model with a name and an owner_id
+
+Options:
+    --attachments, -a
+        outputs scaffolding with attachments form and strong params set up in controller, so you don't have to do it
+    --sortable
+        default index page table becomes sortable.  make sure to include a "place:integer" column when generating or it will not work

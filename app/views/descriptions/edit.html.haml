@@ -1,0 +1,9 @@
+-title = 'Editing Description'
+-meta title: title
+-cache ['v1', admin?,  @description] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1=title
+        = render 'form'

@@ -1,0 +1,32 @@
+-title = 'Statuses'
+-meta title: title
+- cache ['v1', admin?,  @statuses] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1 Listing Statuses
+        %table.index-table
+          %tr
+            %th{scope: "col"} 
+              Title
+            %th{scope: "col"} 
+              Description
+            %th{scope: "col"} 
+
+          - @statuses.each_with_index do |status, idx|
+            %tr{data: {item_id: "#{status.id}"}, class: "item"}
+              %td= status.title
+              %td= status.description
+              %td.text-right
+                = link_to status, class: "btn btn-show", title: "Show this status" do
+                  %i.fa.fa-fw.fa-eye{title: "Eye"}
+                = link_to edit_status_path(status), class: "btn btn-edit", title: "Edit this status"  do
+                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                = link_to status, title: "Delete this status" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        %br
+
+        = link_to new_status_path, class: 'btn btn-success index-action' do
+          %i.fa.fa-fw.fa-plus{title: "Plus"}>
+          New Status
