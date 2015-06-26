@@ -69,17 +69,15 @@ Vagrant.configure(2) do |config|
      apt-get update
      /usr/sbin/update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
-     apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev
+     curl -sL https://deb.nodesource.com/setup | sudo bash -
      apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
      add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
-     curl -sL https://deb.nodesource.com/setup | sudo bash -
-
      export DEBIAN_FRONTEND=noninteractive
      debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password PASS'
      debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password PASS'
-     apt-get install -y mariadb-server libmariadbclient-dev
+     apt-get update
+     apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev nodejs
      mysql -uroot -pPASS -e "SET PASSWORD = PASSWORD('');"
-
      apt-get upgrade -y
 
      sudo -i -u vagrant git clone git://github.com/sstephenson/rbenv.git ~vagrant/.rbenv
