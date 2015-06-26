@@ -20,6 +20,13 @@ Image annotation site and API to enable the distributed annotation of museum ima
 
 We could include build status here.
 
+## Via Vagrant
+
+Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant up```.  Then, you can view the site like so:
+
+    ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
+    open http://localhost:3000
+
 ## Requirements
 
 MariaDB, rbenv, ruby gems, and bundler.

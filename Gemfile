@@ -39,11 +39,11 @@ gem 'capistrano-flowdock'
 #gem 'capistrano-resque'
 #gem 'gibbon' #mailchimp
 #gem 'resque-scheduler'
-gem 'newrelic_rpm' #monitoring
+#gem 'newrelic_rpm' #monitoring
 #gem "therubyracer" #node for compiling js
 #gem 'delayed_job_active_record', '>= 4.0.3'
 gem 'oj' #optimized json
-gem 'rack-timeout' #helpful for api blocking
+#gem 'rack-timeout' #helpful for api blocking
 gem 'rack-raw-upload' #helpful for uploads
 #gem 'recipient_interceptor' #email interception
 gem "thin", ">= 1.6.3" # webserver
