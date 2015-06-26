@@ -1,27 +1,27 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
 gem 'rails', '4.2.2'
-gem 'sass-rails', '~> 5.0.1'
+gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate 
 gem 'compass-rails', '~> 2.0.4'
 gem 'bootstrap-sass', '>= 3.2'
+gem 'sprockets'
+gem 'sprockets-rails', '~> 2.0.1' #updating this breaks asset comp
 #gem 'bootstrap-generators', '~> 3.3.4'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
-gem 'sprockets', '~> 2.11.3'
-gem 'sprockets-rails', '~> 2.0.1'
 gem 'mysql2' #might need to set version for mariadb
-gem 'seed_dump'
+#gem 'seed_dump'
 gem 'annotate'
-gem 'will_paginate', '>= 3.0.5'
+gem 'will_paginate', '>= 3.0.7'
 gem 'simple_form', :git=>'https://github.com/plataformatec/simple_form.git'  #forms
 gem 'devise' #user auth
-gem 'cancan' # permissions
-gem 'rolify',  :git=>'https://github.com/EppO/rolify.git'  #roles
+#gem 'cancan' # permissions
+#gem 'rolify',  :git=>'https://github.com/EppO/rolify.git'  #roles
 gem 'acts-as-taggable-on' #automplete tags
 gem "select2-rails" #select form
-gem 'aws-sdk'
+#gem 'aws-sdk'
 #gem 'jack_up', :git=>"git@github.com:thoughtbot/jack_up.git" #drag and drop
 gem 'cocoon' #nested forms
 #gem 'country_select' #countries
@@ -29,7 +29,7 @@ gem 'cocoon' #nested forms
 gem 'analytical' #analytics
 gem 'metamagic' #meta
 gem 'browser' #browser detection
-gem 'capistrano', '>= 3.2.1' #deployment
+gem 'capistrano', '>= 3.2.1' #deployment.  also delicate
 gem 'capistrano-nc', '>= 0.1.3'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
@@ -40,36 +40,36 @@ gem 'capistrano-flowdock'
 #gem 'gibbon' #mailchimp
 #gem 'resque-scheduler'
 gem 'newrelic_rpm' #monitoring
-gem "therubyracer" #node for compiling js
-gem 'delayed_job_active_record', '>= 4.0.0'
-gem 'oj'
-gem 'rack-timeout'
-gem 'rack-raw-upload'
-gem 'recipient_interceptor'
-gem "thin", ">= 1.5.0" # webserver
+#gem "therubyracer" #node for compiling js
+#gem 'delayed_job_active_record', '>= 4.0.3'
+gem 'oj' #optimized json
+gem 'rack-timeout' #helpful for api blocking
+gem 'rack-raw-upload' #helpful for uploads
+#gem 'recipient_interceptor' #email interception
+gem "thin", ">= 1.6.3" # webserver
 gem 'turbolinks' #crazy fake ajax
-gem 'pagedown-bootstrap-rails' #markdown editor & processor
-gem 'redcarpet'
-gem 'html2markdown'
+#gem 'pagedown-bootstrap-rails' #markdown editor & processor
+#gem 'redcarpet'
+#gem 'html2markdown'
 gem 'high_voltage' #static pages
-gem 'coffee-rails', '>= 4.0.0'
+gem 'coffee-rails', '>= 4.1.0'
 gem 'asset_sync' #asset uploading
-gem 'coffee-views'
-gem 'backbone-on-rails'
-gem 'underscore-rails'
-gem 'jquery-rails', ">= 3.0.0"
+#gem 'coffee-views'
+#gem 'backbone-on-rails'
+#gem 'underscore-rails'
+gem 'jquery-rails', ">= 4.0.4"
 gem 'jquery-ui-rails'
-gem 'jquery-fileupload-rails'
+#gem 'jquery-fileupload-rails'
 #gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
-gem 'execjs'
-gem 'uglifier', '>= 1.3.0'
+#gem 'execjs'
+gem 'uglifier', '>= 2.7.1' #js compression
 gem "validate_url"
-gem 'tilt'
-gem 'haml_assets'
-gem 'hogan_assets'
+gem 'tilt' #template interface
 gem "haml-rails"
-gem 'sitemap_generator'
-gem 'whenever'
+#gem 'haml_assets' #haml + moustache
+#gem 'hogan_assets' #js template compilaton
+#gem 'sitemap_generator'
+#gem 'whenever'
 gem 'apipie-rails' #for api documentation
 gem 'jbuilder'
 

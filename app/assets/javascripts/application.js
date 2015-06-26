@@ -12,16 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-fileupload/basic
-//= require jquery-fileupload/vendor/tmpl
 //= require jquery-ui/sortable
 //= require jquery-ui/effect-highlight
 //= require cocoon
-//= require underscore
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require select2
-//= require jack_up
-//= require pagedown_bootstrap
 //= require_tree .
-//= require bootstrap-datepicker/core
