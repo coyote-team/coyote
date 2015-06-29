@@ -1,27 +1,14 @@
 Plate::Application.routes.draw do
-  resources :descriptions do
-  end
-
-  resources :meta do
-  end
-
-  resources :statuses do
-  end
-
-  resources :groups do
-  end
-
-  resources :images do
-  end
-
-  resources :websites do
-  end
-
   resources :descriptions 
   resources :meta 
   resources :statuses
   resources :groups 
-  resources :images 
+  resources :images do
+    collection do
+      post :import
+      get :export 
+    end
+  end
   resources :websites 
   devise_for :users
   root :to => "home#index"

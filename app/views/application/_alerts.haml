@@ -5,9 +5,9 @@
         .alert.alert-info.alert-dismissable{role: "alert"}
           %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
             %span{"aria-hidden" => "true"} ×
-          %p.notice= notice
+          %p= notice
       - if alert
         .alert.alert-danger.alert-dismissable{role: "alert"}
           %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
             %span{"aria-hidden" => "true"} ×
-          %p.alert= alert
+          %p= alert

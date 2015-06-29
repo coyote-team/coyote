@@ -14,6 +14,8 @@
           Metum
         %th{scope: "col"} 
           Locale
+        -#%th{scope: "col"} 
+          User
         %th{scope: "col"} 
           Text
         %th{scope: "col"} 
@@ -29,10 +31,12 @@
           %td= description.metum
           %td= description.locale
           %td= description.text
+          -#TODO quick assign to user
           %td.text-right
             = link_to description, class: "btn btn-show", title: "Show this description" do
               %i.fa.fa-fw.fa-eye{title: "Eye"}
             = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
               %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+            -#TODO check role
             = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
               %i.fa.fa-fw.fa-trash{title: "Trash can"}

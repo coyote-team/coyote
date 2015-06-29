@@ -45,12 +45,26 @@ class ImagesController < ApplicationController
     redirect_to images_url, notice: 'Image was successfully destroyed.'
   end
 
+  def export #for debugging csv formatting
+   send_data Image.all.to_csv
+  end
+
+  def import
+    begin
+      Image.import(params[:file])
+      redirect_to root_path, {notice: "Images imported."}
+    rescue => e
+      redirect_to root_path, {alert: "Images failed to import."}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
       @image = Image.find(params[:id])
     end
 
+    #TODO set image params that allow for upload too
     # Only allow a trusted parameter "white list" through.
     def image_params
       params.require(:image).permit(:url, :website_id)

@@ -1,9 +1,9 @@
 require File.expand_path('../boot', __FILE__)
-
 require 'rails/all'
-
 Bundler.require(:default, Rails.env)
 Dotenv.load
+require 'csv'
+require 'iconv'
 
 module Plate
   class Application < Rails::Application
@@ -26,7 +26,7 @@ module Plate
     ActsAsTaggableOn.remove_unused_tags = true
     ActsAsTaggableOn.force_lowercase = true
     ActsAsTaggableOn.force_parameterize = true
-    config.middleware.use 'Rack::RawUpload'
+    #config.middleware.use 'Rack::RawUpload'
     config.generators do |g|
       g.stylesheets false
       g.javascripts false

@@ -38,7 +38,7 @@ MariaDB, rbenv, ruby gems, and bundler.
     #set up the .env, override at .env.development and .env.test if needed
 
     #create the DBs for dev and test
-    bin/rake db:create db:migrate 
+    bin/rake db:create db:migrate db:seed
     RAILS_ENV=test bin/rake db:create db:migrate
 
 Secure creds are kept untracked in ```.env```

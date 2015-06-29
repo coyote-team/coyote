@@ -19,6 +19,7 @@
 #
 
 class Description < ActiveRecord::Base
+  default_scope {order('status_id ASC')}
   belongs_to :image, touch: true
   belongs_to :status
   belongs_to :metum
@@ -29,5 +30,14 @@ class Description < ActiveRecord::Base
   validates_presence_of :image, :status, :metum, :locale
 
   def check_text
+    #TODO updates status automatically 
+    #if unassigned and text empty
+      #set status to unassigned
+    #if assigned
+      #set status to assigned
+    #if text no longer empty but was empty
+      #set status to ready to review
+    #if text changed #TODO or if status changed to completed
+      #send patch request to image url
   end
 end

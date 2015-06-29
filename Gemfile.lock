@@ -355,6 +355,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    iconv (1.0.4)
     inflecto (0.0.2)
     ipaddress (0.8.0)
     jbuilder (2.3.0)
@@ -406,8 +407,6 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
-    rack-raw-upload (1.1.1)
-      multi_json
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.2)
@@ -440,6 +439,9 @@ GEM
       ffi (>= 0.5.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    roo (2.0.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -589,6 +591,7 @@ DEPENDENCIES
   haml-rails
   high_voltage
   html2haml
+  iconv
   jbuilder
   jquery-rails (>= 4.0.4)
   jquery-ui-rails
@@ -597,9 +600,9 @@ DEPENDENCIES
   mysql2
   oj
   quiet_assets
-  rack-raw-upload
   rails (= 4.2.2)
   rb-fsevent
+  roo
   rspec-rails
   sass-mediaqueries-rails
   sass-rails (~> 5.0.1)

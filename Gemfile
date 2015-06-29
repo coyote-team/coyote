@@ -44,10 +44,11 @@ gem 'capistrano-flowdock'
 #gem 'delayed_job_active_record', '>= 4.0.3'
 gem 'oj' #optimized json
 #gem 'rack-timeout' #helpful for api blocking
-gem 'rack-raw-upload' #helpful for uploads
+#gem 'rack-raw-upload' #helpful for uploads
 #gem 'recipient_interceptor' #email interception
 gem "thin", ">= 1.6.3" # webserver
 gem 'turbolinks' #crazy fake ajax
+#gem 'bootstrap_form'
 #gem 'pagedown-bootstrap-rails' #markdown editor & processor
 #gem 'redcarpet'
 #gem 'html2markdown'
@@ -71,7 +72,9 @@ gem "haml-rails"
 #gem 'sitemap_generator'
 #gem 'whenever'
 gem 'apipie-rails' #for api documentation
-gem 'jbuilder'
+gem 'jbuilder' #json builder
+gem 'roo' #spreadsheet interfaces
+gem 'iconv'
 
 group :development do
   gem "better_errors"

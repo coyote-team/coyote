@@ -17,6 +17,8 @@ $ ->
     Analytical.track()
 
   $(document).on 'page:change', ->
+    $('input[type=file]').bootstrapFileInput()
+
 
     #for ajax boolean toggle
     $('.boolean-toggle').off().on 'click', (e) ->
