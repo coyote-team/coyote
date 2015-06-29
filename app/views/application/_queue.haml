@@ -1,0 +1,38 @@
+.queue
+  %h3 Queue
+  %table.index-table
+    %caption.sr-only Queue
+    %thead
+      %tr
+        %th{scope: "col"} 
+          Image
+        %th{scope: "col"} 
+          Image Url
+        %th{scope: "col"} 
+          Status
+        %th{scope: "col"} 
+          Metum
+        %th{scope: "col"} 
+          Locale
+        %th{scope: "col"} 
+          Text
+        %th{scope: "col"} 
+          Actions
+
+    %tbody
+      - @queue.each_with_index do |description, idx|
+        %tr{data: {item_id: "#{description.id}"}, class: "item"}
+          %td
+            =image_tag description.image.full_url, width: "40px", alt: "image to be described"
+          %td= description.image
+          %td= description.status
+          %td= description.metum
+          %td= description.locale
+          %td= description.text
+          %td.text-right
+            = link_to description, class: "btn btn-show", title: "Show this description" do
+              %i.fa.fa-fw.fa-eye{title: "Eye"}
+            = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
+              %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+            = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+              %i.fa.fa-fw.fa-trash{title: "Trash can"}

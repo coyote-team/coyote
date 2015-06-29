@@ -1,5 +1,20 @@
 //= depend_on_asset "AjaxLoader.gif"
 
+//nav
+.icon-bar
+  background-color: $brand-primary
+
+//alerts
+.alert-message
+  p 
+    margin: 0
+    text-align: center
+
+//slides
+.owl-item.loading
+  min-height: 4em
+  background: url(asset_path('AjaxLoader.gif')) no-repeat center center
+
 //select/tags
 //https://github.com/ivaynberg/select2/issues/1588
 .select2-no-results
@@ -44,11 +59,6 @@ input[type="radio"], input[type="checkbox"]
     margin-top: 1em
     margin-bottom: 1em
 
-//etc
-.owl-item.loading
-  min-height: 4em
-  background: url(asset_path('AjaxLoader.gif')) no-repeat center center
-
 //admin
 .index-outer, .entity-outer
   @extend .container
@@ -56,15 +66,20 @@ input[type="radio"], input[type="checkbox"]
   +make-row
 .index-inner, .entity-inner
   +make-lg-column(12)
-.index-action
+.show-nav, .index-nav
   float: right
 
-.index-table
+//table
+.entity-table, .index-table
   @extend .table-striped
   width: 100%
   margin-bottom: ms(3)
+  tbody
+    th
+      text-align: right
   th
     +large-texts
+    text-transform: uppercase
     padding: ms(0)
   td
     +texts

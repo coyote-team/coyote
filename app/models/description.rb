@@ -19,8 +19,15 @@
 #
 
 class Description < ActiveRecord::Base
-
+  belongs_to :image, touch: true
   belongs_to :status
-  belongs_to :image
   belongs_to :metum
+
+  #validates :locale
+  #validates :text
+  validates_associated :image, :status, :metum
+  validates_presence_of :image, :status, :metum, :locale
+
+  def check_text
+  end
 end

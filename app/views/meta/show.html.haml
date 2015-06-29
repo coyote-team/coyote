@@ -11,22 +11,18 @@
           %tbody
             %tr
               %th{scope: "row"}
-                %p
-                  %b Title:
+                Title:
               %td
-                %p
-                  = @metum.title
+                = @metum.title
             %tr
               %th{scope: "row"}
-                %p
-                  %b Instructions:
+                Instructions:
               %td
-                %p
-                  = @metum.instructions
-        %nav.entity-nav{role:"navigation"}
+                = @metum.instructions
+        %nav.show-nav{role:"navigation"}
           = link_to meta_path, class: 'btn btn-info', title: "View the meta index" do
-            %i.fa.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{title: 'List'}
             Meta
           = link_to edit_metum_path(@metum), title: "Edit this metum", class: 'btn btn-primary' do
-            %i.fa.fa-pencil{title: 'Pencil'}
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
             Edit 

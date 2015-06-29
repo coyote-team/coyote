@@ -15,6 +15,7 @@
               %th{scope: "col"} 
                 Instructions
               %th{scope: "col"} 
+                Actions
 
           %tbody
             - @meta.each_with_index do |metum, idx|
@@ -29,6 +30,7 @@
                   = link_to metum, title: "Delete this metum" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_metum_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New Metum
+        %nav.index-nav{role:"navigation"}
+          = link_to new_metum_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Metum

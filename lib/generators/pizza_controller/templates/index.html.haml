@@ -19,6 +19,7 @@
                 <%= attribute.human_name %>
   <%- end -%>
               %th{scope: "col"} 
+                Actions
 
           %tbody
             - @<%= plural_table_name %>.each_with_index do |<%= singular_table_name %>, idx|
@@ -44,6 +45,7 @@
                   = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_<%= singular_table_name %>_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New <%= human_name %>
+        %nav.index-nav{role:"navigation"}
+          = link_to new_<%= singular_table_name %>_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New <%= human_name %>

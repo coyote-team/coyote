@@ -42,14 +42,7 @@
     = raw analytical.body_prepend_javascript
     = link_to "Skip to content", "#main", class: "sr-only"
     = render "nav"
-    - if notice
-      .alert-message.info
-        %a.close{:href => "#"} ×
-        %p.notice= notice
-    - if alert
-      .alert-message.error
-        %a.close{:href => "#"} ×
-        %p.alert= alert
+    = render "alerts"
     %main#main{role: "main", tabindex: "-1"}
       = yield
     = render "footer"

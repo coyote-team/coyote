@@ -14,6 +14,18 @@
 #
 
 class Image < ActiveRecord::Base
-
   belongs_to :website
+  has_many :descriptions, dependent: :destroy
+
+  validates :url, :presence => true, :uniqueness => {:scope => :website_id}
+  validates_associated :website
+
+  def to_s
+    url
+  end
+  def full_url
+    if website
+      website.url + url
+    end
+  end
 end

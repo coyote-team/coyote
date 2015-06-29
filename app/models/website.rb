@@ -10,5 +10,6 @@
 #
 
 class Website < ActiveRecord::Base
-
+  validates_presence_of :title, :url
+  validates_url :url
 end

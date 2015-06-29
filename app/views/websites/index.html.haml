@@ -15,6 +15,7 @@
               %th{scope: "col"} 
                 Url
               %th{scope: "col"} 
+                Actions
 
           %tbody
             - @websites.each_with_index do |website, idx|
@@ -29,6 +30,7 @@
                   = link_to website, title: "Delete this website" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_website_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New Website
+        %nav.index-nav{role:"navigation"}
+          = link_to new_website_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Website

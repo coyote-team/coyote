@@ -11,22 +11,18 @@
           %tbody
             %tr
               %th{scope: "row"}
-                %p
-                  %b Title:
+                Title:
               %td
-                %p
-                  = @website.title
+                = @website.title
             %tr
               %th{scope: "row"}
-                %p
-                  %b Url:
+                Url:
               %td
-                %p
-                  = @website.url
-        %nav.entity-nav{role:"navigation"}
+                = @website.url
+        %nav.show-nav{role:"navigation"}
           = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
-            %i.fa.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{title: 'List'}
             Websites
           = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
-            %i.fa.fa-pencil{title: 'Pencil'}
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
             Edit 

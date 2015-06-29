@@ -9,7 +9,7 @@
   %nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
     %h3.sr-only Main Navigation
     %ul.nav.navbar-nav
-      - models = ["websites", "meta", "statuses", "descriptions", "groups", "images"]
+      - models = [ "images", "descriptions", "groups", "websites", "meta", "statuses", ]
       - models.each do |m|
         -#%li.active
         %li<

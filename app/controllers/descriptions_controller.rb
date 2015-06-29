@@ -53,6 +53,6 @@ class DescriptionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def description_params
-      params.require(:description).permit(:locale, :text, :status_id, :image_id, :metum_id)
+      params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text)
     end
 end

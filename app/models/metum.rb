@@ -11,4 +11,9 @@
 
 class Metum < ActiveRecord::Base
 
+  validates_presence_of :title
+
+  def to_s
+    title
+  end
 end

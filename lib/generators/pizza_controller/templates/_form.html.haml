@@ -12,10 +12,10 @@
   .form-actions
     .form-actions-inner
       = link_to <%= index_helper %>_path, class: 'btn btn-info' do
-        %i.fa.fa-fw.fa-list{title: "List"}>
+        %i.fa.fa-fw.fa-list{title: "List"}
         <%=plural_table_name.capitalize%> 
       - if action_name == 'edit'
         = link_to @<%= singular_table_name %>, class: 'btn btn-info' do
-          %i.fa.fa-fw.fa-eye{title: "Eye"}>
+          %i.fa.fa-fw.fa-eye{title: "Eye"}
           View this <%= singular_table_name %>
       = f.button :submit, class: 'btn btn-success'

@@ -12,7 +12,7 @@ gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
 gem 'mysql2' #might need to set version for mariadb
-#gem 'seed_dump'
+gem 'seed_dump'
 gem 'annotate'
 gem 'will_paginate', '>= 3.0.7'
 gem 'simple_form', :git=>'https://github.com/plataformatec/simple_form.git'  #forms

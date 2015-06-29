@@ -14,4 +14,8 @@
 .container
   .row
     .col-md-12
+      %header{role: "header"}
       %h1 Welcome to Coyote
+    .col-md-12
+      =render "queue", queue: @queue
+

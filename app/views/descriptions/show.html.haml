@@ -11,43 +11,33 @@
           %tbody
             %tr
               %th{scope: "row"}
-                %p
-                  %b Locale:
+                Image:
               %td
-                %p
-                  = @description.locale
+                = @description.image
             %tr
               %th{scope: "row"}
-                %p
-                  %b Text:
+                Status:
               %td
-                %p
-                  = @description.text
+                = @description.status
             %tr
               %th{scope: "row"}
-                %p
-                  %b Status:
+                Metum:
               %td
-                %p
-                  = @description.status
+                = @description.metum
             %tr
               %th{scope: "row"}
-                %p
-                  %b Image:
+                Locale:
               %td
-                %p
-                  = @description.image
+                = @description.locale
             %tr
               %th{scope: "row"}
-                %p
-                  %b Metum:
+                Text:
               %td
-                %p
-                  = @description.metum
-        %nav.entity-nav{role:"navigation"}
+                = @description.text
+        %nav.show-nav{role:"navigation"}
           = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
-            %i.fa.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{title: 'List'}
             Descriptions
           = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
-            %i.fa.fa-pencil{title: 'Pencil'}
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
             Edit 

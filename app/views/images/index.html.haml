@@ -15,6 +15,7 @@
               %th{scope: "col"} 
                 Website
               %th{scope: "col"} 
+                Actions
 
           %tbody
             - @images.each_with_index do |image, idx|
@@ -29,6 +30,7 @@
                   = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_image_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New Image
+        %nav.index-nav{role:"navigation"}
+          = link_to new_image_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Image

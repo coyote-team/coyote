@@ -12,16 +12,14 @@
 <% for attribute in attributes -%>
             %tr
               %th{scope: "row"}
-                %p
-                  %b <%= attribute.human_name %>:
+                <%= attribute.human_name %>:
               %td
-                %p
-                  = @<%= singular_table_name %>.<%= attribute.name %>
+                = @<%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-        %nav.entity-nav{role:"navigation"}
+        %nav.show-nav{role:"navigation"}
           = link_to <%= index_helper %>_path, class: 'btn btn-info', title: "View the <%= plural_table_name%> index" do
-            %i.fa.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{title: 'List'}
             <%= plural_table_name.capitalize %>
           = link_to edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), title: "Edit this <%= singular_table_name %>", class: 'btn btn-primary' do
-            %i.fa.fa-pencil{title: 'Pencil'}
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
             Edit 

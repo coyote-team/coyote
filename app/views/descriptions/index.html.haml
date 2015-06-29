@@ -11,25 +11,26 @@
           %thead
             %tr
               %th{scope: "col"} 
+                Image
+              %th{scope: "col"} 
+                Status
+              %th{scope: "col"} 
+                Metum
+              %th{scope: "col"} 
                 Locale
               %th{scope: "col"} 
                 Text
               %th{scope: "col"} 
-                Status
-              %th{scope: "col"} 
-                Image
-              %th{scope: "col"} 
-                Metum
-              %th{scope: "col"} 
+                Actions
 
           %tbody
             - @descriptions.each_with_index do |description, idx|
               %tr{data: {item_id: "#{description.id}"}, class: "item"}
+                %td= description.image
+                %td= description.status
+                %td= description.metum
                 %td= description.locale
                 %td= description.text
-                %td= description.status
-                %td= description.image
-                %td= description.metum
                 %td.text-right
                   = link_to description, class: "btn btn-show", title: "Show this description" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
@@ -38,6 +39,7 @@
                   = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_description_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New Description
+        %nav.index-nav{role:"navigation"}
+          = link_to new_description_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Description

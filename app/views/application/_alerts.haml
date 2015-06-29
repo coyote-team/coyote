@@ -1,0 +1,13 @@
+.container
+  .row
+    .col-md-12
+      - if notice
+        .alert.alert-info.alert-dismissable{role: "alert"}
+          %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+          %p.notice= notice
+      - if alert
+        .alert.alert-danger.alert-dismissable{role: "alert"}
+          %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+            %span{"aria-hidden" => "true"} ×
+          %p.alert= alert

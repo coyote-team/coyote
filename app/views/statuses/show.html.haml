@@ -11,22 +11,18 @@
           %tbody
             %tr
               %th{scope: "row"}
-                %p
-                  %b Title:
+                Title:
               %td
-                %p
-                  = @status.title
+                = @status.title
             %tr
               %th{scope: "row"}
-                %p
-                  %b Description:
+                Description:
               %td
-                %p
-                  = @status.description
-        %nav.entity-nav{role:"navigation"}
+                = @status.description
+        %nav.show-nav{role:"navigation"}
           = link_to statuses_path, class: 'btn btn-info', title: "View the statuses index" do
-            %i.fa.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{title: 'List'}
             Statuses
           = link_to edit_status_path(@status), title: "Edit this status", class: 'btn btn-primary' do
-            %i.fa.fa-pencil{title: 'Pencil'}
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
             Edit 

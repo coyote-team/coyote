@@ -13,6 +13,7 @@
               %th{scope: "col"} 
                 Title
               %th{scope: "col"} 
+                Actions
 
           %tbody
             - @groups.each_with_index do |group, idx|
@@ -26,6 +27,7 @@
                   = link_to group, title: "Delete this group" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        = link_to new_group_path, class: 'btn btn-success index-action' do
-          %i.fa.fa-fw.fa-plus{title: "Plus"}>
-          New Group
+        %nav.index-nav{role:"navigation"}
+          = link_to new_group_path, class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Group

@@ -101,7 +101,7 @@ For updating generator based views and controllers
     rails g pizza_controller group title:string --force
     rails g pizza_controller status title:string description:text --force
     rails g pizza_controller meta title:string instructions:text --force
-    rails g pizza_controller description locale:string text:text status:references image:references metum:references --force
+    rails g pizza_controller description image:references status:references metum:references locale:string text:text --force
  
 ##Links
 

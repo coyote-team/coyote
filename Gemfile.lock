@@ -478,6 +478,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
+    seed_dump (3.2.2)
+      activerecord (~> 4)
+      activesupport (~> 4)
     select2-rails (3.5.9.3)
       thor (~> 0.14)
     selenium-webdriver (2.46.2)
@@ -600,6 +603,7 @@ DEPENDENCIES
   rspec-rails
   sass-mediaqueries-rails
   sass-rails (~> 5.0.1)
+  seed_dump
   select2-rails
   selenium-webdriver
   shoulda-matchers
