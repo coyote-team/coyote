@@ -17,6 +17,7 @@ $ ->
     Analytical.track()
 
   $(document).on 'page:change', ->
+    $('#main').focus()
     $('input[type=file]').bootstrapFileInput()
 
 

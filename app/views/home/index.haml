@@ -20,14 +20,13 @@
       =render "queue", queue: @queue
     .col-md-12
       = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
-        %h3>
-          Bulk image import
+        %h2>
+          Import images
           <small>via <code>.csv</code>, <code>.xsl</code>, and <code>.xslx</code>
         = file_field_tag :file
-        = submit_tag "Import", class: "btn btn-success"
-      %h3>
-        Image export
+        = submit_tag "Upload", class: "btn btn-success"
+      %h2>
+        Export images
         %small>
           %code csv
-      = link_to "Export", export_images_path(format: "csv"), class: 'btn btn-info'
-
+      = link_to "Export", export_images_path(format: "csv"), class: 'btn btn-info' #TODO use a button tag
