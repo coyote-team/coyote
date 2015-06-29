@@ -1,0 +1,30 @@
+$red: red
+$black: #000
+
+$colors: ( red $red, black $black)
+@each $color-code in $colors 
+  $color: nth($color-code, 1)
+  $code: nth($color-code, 2)
+  .light-#{$color}-bg
+    background-color: tint($code, 40%)
+  .#{$color}-bg
+    background-color: $code
+
+  @for $i from 0 through 6
+    .#{$color}-bg-#{$i}
+      background-color: tint($code, $i * 15%)
+    .#{$color}-bg-darken-#{$i}
+      background-color: shade($code, $i * 15%)
+  .clear-#{$color}-bg
+    background-color: rgba($code, 0.8)
+    background-blend-mode: multiply
+  a.#{$color}
+    color: $code
+    border-bottom-color: $code
+    &:hover
+      color: $code
+  .#{$color}-text
+    color: $code
+  .#{$color}-text-override
+    color: $code !important
+

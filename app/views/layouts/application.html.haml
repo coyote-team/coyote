@@ -40,6 +40,7 @@
 
   %body{:class => content_for?(:body_class) ? yield(:body_class) : body_class_default}
     = raw analytical.body_prepend_javascript
+    = link_to "Skip to content", "#main", class: "sr-only"
     = render "nav"
     - if notice
       .alert-message.info
@@ -49,7 +50,7 @@
       .alert-message.error
         %a.close{:href => "#"} ×
         %p.alert= alert
-    %main#content{role: "main"}
+    %main#main{role: "main", tabindex: "-1"}
       = yield
     = render "footer"
     #loading

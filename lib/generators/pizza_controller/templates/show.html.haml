@@ -7,6 +7,7 @@
         %header{role: "header"}
           %h1=title
         %table.entity-table
+          %caption.sr-only Key value pairs for this <%= singular_table_name %>
           %tbody
 <% for attribute in attributes -%>
             %tr

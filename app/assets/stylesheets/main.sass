@@ -5,8 +5,7 @@
 footer
     
 //home
-.home
-.carousel
+$slide-inset: 5%
 .slide
   width: 100%
   position: relative
@@ -15,11 +14,12 @@ footer
       width: 100%
     .title
       position: absolute
-      bottom: 5%
-      right: 5%
+      bottom: $slide-inset
+      right: $slide-inset
   &.has-no-image
     .title
-      top: 5%
-      left: 5%
+      top: $slide-inset
+      left: $slide-inset
       position: absolute
-
+.icon-bar
+  background-color: $brand-primary

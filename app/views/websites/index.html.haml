@@ -7,25 +7,27 @@
         %header{role: "header"}
           %h1 Listing Websites
         %table.index-table
-          %tr
-            %th{scope: "col"} 
-              Title
-            %th{scope: "col"} 
-              Url
-            %th{scope: "col"} 
+          %caption.sr-only Index table for websites
+          %thead
+            %tr
+              %th{scope: "col"} 
+                Title
+              %th{scope: "col"} 
+                Url
+              %th{scope: "col"} 
 
-          - @websites.each_with_index do |website, idx|
-            %tr{data: {item_id: "#{website.id}"}, class: "item"}
-              %td= website.title
-              %td= website.url
-              %td.text-right
-                = link_to website, class: "btn btn-show", title: "Show this website" do
-                  %i.fa.fa-fw.fa-eye{title: "Eye"}
-                = link_to edit_website_path(website), class: "btn btn-edit", title: "Edit this website"  do
-                  %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                = link_to website, title: "Delete this website" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
-        %br
+          %tbody
+            - @websites.each_with_index do |website, idx|
+              %tr{data: {item_id: "#{website.id}"}, class: "item"}
+                %td= website.title
+                %td= website.url
+                %td.text-right
+                  = link_to website, class: "btn btn-show", title: "Show this website" do
+                    %i.fa.fa-fw.fa-eye{title: "Eye"}
+                  = link_to edit_website_path(website), class: "btn btn-edit", title: "Edit this website"  do
+                    %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                  = link_to website, title: "Delete this website" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         = link_to new_website_path, class: 'btn btn-success index-action' do
           %i.fa.fa-fw.fa-plus{title: "Plus"}>
