@@ -17,8 +17,14 @@ $ ->
     Analytical.track()
 
   $(document).on 'page:change', ->
+    #set focus
     $('#page-title').focus()
+
+    #allow file input for csv upload
     $('input[type=file]').bootstrapFileInput()
+
+    #remove :visited attributes on */new for screen readers
+    $('a.new-link').removeProp('visited')
 
 
     #for ajax boolean toggle
