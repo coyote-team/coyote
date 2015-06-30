@@ -9,9 +9,10 @@
     .form-actions-inner
       = link_to websites_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        Websites 
+        View all Websites 
+      = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
+        %br
         = link_to @website, class: 'btn btn-info' do
           %i.fa.fa-fw.fa-eye{title: "Eye"}
           View this website
-      = f.button :submit, class: 'btn btn-success'

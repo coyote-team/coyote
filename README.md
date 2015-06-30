@@ -84,8 +84,8 @@ First we initialized our generators and our user login  system.
 Then we generated our scaffolds
 
     rails g pizza_scaffold website title:string url:string  --force
-    rails g pizza_scaffold image url:string website:references --force
     rails g pizza_scaffold group title:string --force
+    rails g pizza_scaffold image url:string website:references group:references --force
     rails g pizza_scaffold status title:string description:text --force
     rails g pizza_scaffold meta title:string instructions:text --force
     rails g pizza_scaffold description locale:string text:text status:references image:references metum:references --force
@@ -97,7 +97,7 @@ Then we generated our scaffolds
 For updating generator based views and controllers
 
     rails g pizza_controller website title:string url:string  --force
-    rails g pizza_controller image url:string website:references --force
+    rails g pizza_controller image url:string group:references website:references --force
     rails g pizza_controller group title:string --force
     rails g pizza_controller status title:string description:text --force
     rails g pizza_controller meta title:string instructions:text --force

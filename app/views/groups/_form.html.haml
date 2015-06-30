@@ -8,9 +8,10 @@
     .form-actions-inner
       = link_to groups_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        Groups 
+        View all Groups 
+      = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
+        %br
         = link_to @group, class: 'btn btn-info' do
           %i.fa.fa-fw.fa-eye{title: "Eye"}
           View this group
-      = f.button :submit, class: 'btn btn-success'

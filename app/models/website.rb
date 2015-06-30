@@ -12,4 +12,9 @@
 class Website < ActiveRecord::Base
   validates_presence_of :title, :url
   validates_url :url
+  has_many :image, dependent: :nullify
+
+  def to_s
+    title
+  end
 end

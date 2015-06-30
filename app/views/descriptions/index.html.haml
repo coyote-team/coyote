@@ -1,11 +1,11 @@
--title = 'Descriptions'
+-title = 'Listing Descriptions'
 -meta title: title
 - cache ['v1', admin?,  @descriptions] do
   .index-outer
     .index
       .index-inner
         %header{role: "header"}
-          %h1 Listing Descriptions
+          %h1#page-title{tabindex: -1}=title
         %table.index-table
           %caption.sr-only Index table for descriptions
           %thead
@@ -25,7 +25,7 @@
 
           %tbody
             - @descriptions.each_with_index do |description, idx|
-              %tr{data: {item_id: "#{description.id}"}, class: "item"}
+              %tr{class: "item"}
                 %td= description.image
                 %td= description.status
                 %td= description.metum
@@ -36,7 +36,7 @@
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
                     %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete @description?"} do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}

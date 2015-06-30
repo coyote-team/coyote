@@ -1,11 +1,11 @@
--title = 'Images'
+-title = 'Listing Images'
 -meta title: title
 - cache ['v1', admin?,  @images] do
   .index-outer
     .index
       .index-inner
         %header{role: "header"}
-          %h1 Listing Images
+          %h1#page-title{tabindex: -1}=title
         %table.index-table
           %caption.sr-only Index table for images
           %thead
@@ -13,21 +13,24 @@
               %th{scope: "col"} 
                 Url
               %th{scope: "col"} 
+                Group
+              %th{scope: "col"} 
                 Website
               %th{scope: "col"} 
                 Actions
 
           %tbody
             - @images.each_with_index do |image, idx|
-              %tr{data: {item_id: "#{image.id}"}, class: "item"}
+              %tr{class: "item"}
                 %td= image.url
+                %td= image.group
                 %td= image.website
                 %td.text-right
                   = link_to image, class: "btn btn-show", title: "Show this image" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_image_path(image), class: "btn btn-edit", title: "Edit this image"  do
                     %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete @image?"} do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}

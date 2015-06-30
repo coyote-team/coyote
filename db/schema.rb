@@ -36,10 +36,12 @@ ActiveRecord::Schema.define(version: 20150625155044) do
   create_table "images", force: :cascade do |t|
     t.string   "url",        limit: 255
     t.integer  "website_id", limit: 4
+    t.integer  "group_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "images", ["group_id"], name: "index_images_on_group_id", using: :btree
   add_index "images", ["website_id"], name: "index_images_on_website_id", using: :btree
 
   create_table "meta", force: :cascade do |t|
@@ -105,5 +107,6 @@ ActiveRecord::Schema.define(version: 20150625155044) do
   add_foreign_key "descriptions", "images"
   add_foreign_key "descriptions", "meta"
   add_foreign_key "descriptions", "statuses"
+  add_foreign_key "images", "groups"
   add_foreign_key "images", "websites"
 end

@@ -45,8 +45,8 @@ class ImagesController < ApplicationController
     redirect_to images_url, notice: 'Image was successfully destroyed.'
   end
 
-  def export #for debugging csv formatting
-   send_data Image.all.to_csv
+  def export 
+    send_data Image.all.to_csv
   end
 
   def import
@@ -64,9 +64,8 @@ class ImagesController < ApplicationController
       @image = Image.find(params[:id])
     end
 
-    #TODO set image params that allow for upload too
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:url, :website_id)
+      params.require(:image).permit(:url, :group_id, :website_id)
     end
 end

@@ -1,11 +1,11 @@
--title = '<%= plural_table_name.capitalize %>'
+-title = 'Listing <%= plural_table_name.capitalize %>'
 -meta title: title
 - cache ['v1', admin?,  @<%= plural_table_name %>] do
   .index-outer
     .index
       .index-inner
         %header{role: "header"}
-          %h1 Listing <%= plural_table_name.capitalize %>
+          %h1#page-title{tabindex: -1}=title
 <%- if options[:sortable] -%>
         %table.index-table.sortable{:data => {update_url: sort_<%=plural_table_name %>_path}}
 <%- else -%>
@@ -23,7 +23,11 @@
 
           %tbody
             - @<%= plural_table_name %>.each_with_index do |<%= singular_table_name %>, idx|
+<%- if options[:sortable] -%>
               %tr{data: {item_id: "#{<%= singular_table_name %>.id}"}, class: "item"}
+<%- else -%>
+              %tr{class: "item"}
+<%- end -%>
 <% for attribute in attributes -%>
 <%- if attribute.type.to_s == "boolean" -%>
                 %td
@@ -42,7 +46,7 @@
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn btn-edit", title: "Edit this <%= singular_table_name %>"  do
                     %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete @<%= singular_table_name %>?"} do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}

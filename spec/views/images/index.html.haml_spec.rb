@@ -5,10 +5,12 @@ RSpec.describe "images/index", type: :view do
     assign(:images, [
       Image.create!(
         :url => "Url",
+        :group => nil,
         :website => nil
       ),
       Image.create!(
         :url => "Url",
+        :group => nil,
         :website => nil
       )
     ])
@@ -17,6 +19,7 @@ RSpec.describe "images/index", type: :view do
   it "renders a list of images" do
     render
     assert_select "tr>td", :text => "Url".to_s, :count => 2
+    assert_select "tr>td", :text => nil.to_s, :count => 2
     assert_select "tr>td", :text => nil.to_s, :count => 2
   end
 end

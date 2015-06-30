@@ -2,6 +2,7 @@
   = f.error_notification
   .form-inputs
     = f.input :url
+    = f.association :group
     = f.association :website
   
 
@@ -9,9 +10,10 @@
     .form-actions-inner
       = link_to images_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        Images 
+        View all Images 
+      = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
+        %br
         = link_to @image, class: 'btn btn-info' do
           %i.fa.fa-fw.fa-eye{title: "Eye"}
           View this image
-      = f.button :submit, class: 'btn btn-success'

@@ -12,9 +12,10 @@
     .form-actions-inner
       = link_to descriptions_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        Descriptions 
+        View all Descriptions 
+      = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
+        %br
         = link_to @description, class: 'btn btn-info' do
           %i.fa.fa-fw.fa-eye{title: "Eye"}
           View this description
-      = f.button :submit, class: 'btn btn-success'
