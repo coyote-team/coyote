@@ -27,7 +27,7 @@
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_status_path(status), class: "btn btn-edit", title: "Edit this status"  do
                     %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to status, title: "Delete this status" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete @status?"} do
+                  = link_to status, title: "Delete this status" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{status}?"} do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}

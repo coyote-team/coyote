@@ -25,12 +25,12 @@
     -#%meta{:content => asset_url("mstile-144x144.png"), :name => "msapplication-TileImage"}
     -#%meta{:content => "#ffffff", :name => "theme-color"}
 
-    - site= "Plate"
+    - site= "Coyote"
     = metamagic site: site,
       title: [:title, :site], 
       separator: " | ",
-      keywords: [:keywords, "a", "b", "c"],
-      description: [:description, "things we do"],
+      keywords: [:keywords, "image description", "accessibility", "museums"],
+      description: [:description, "Image annotation site and API to enable the distributed annotation of museum images."],
       viewport: 'minimal-ui, width=device-width, initial-scale=1'
     -meta og: { site_name: site,
       locale: 'en_us',

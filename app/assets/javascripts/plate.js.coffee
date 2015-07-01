@@ -77,7 +77,7 @@ $.rails.allowAction = (element) ->
     # We want a button
     .addClass('btn').addClass('btn-danger')
     # We want it to sound confirmy
-    .html("Yes, I'm positively certain.")
+    .html("<i class='fa fa-fw fa-trash'></i> Yes")
 
     # Create the modal box with the message
     modal_html = """
@@ -85,13 +85,12 @@ $.rails.allowAction = (element) ->
                 <div class="modal-dialog">
                   <div class="modal-content">                
                     <div class="modal-header">
-                   <a class="close" data-dismiss="modal">×</a>
-                   <h3>#{message}</h3>
+                   <button type="button" class="close" title="Dismiss this modal" data-dismiss="modal">×</button>
+                   <h3 id="myModalLabel">#{message}</h3>
                  </div>
-                 <div class="modal-body">
+<!--                 <div class="modal-body">
                    <p>Are you sure you want to do this?</p>
-                   <p>There's no turning back.</p>
-                 </div>
+                 </div> -->
                  <div class="modal-footer">
                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                  </div>

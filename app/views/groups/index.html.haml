@@ -24,7 +24,7 @@
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_group_path(group), class: "btn btn-edit", title: "Edit this group"  do
                     %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to group, title: "Delete this group" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete @group?"} do
+                  = link_to group, title: "Delete this group" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{group}?"} do
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}
