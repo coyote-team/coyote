@@ -1,4 +1,4 @@
--title = 'Showing Status'
+-title = "Showing Status #{@status}"
 -meta title: title
 -cache ['v1', admin?,  @status] do
   .entity-outer
@@ -25,4 +25,4 @@
             Statuses
           = link_to edit_status_path(@status), title: "Edit this status", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

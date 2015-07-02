@@ -28,6 +28,7 @@ User.create!([
 Assignment.create!([
   {id: 1, user_id: 1, image_id: 1},
   {id: 2, user_id: 1, image_id: 2},
+  {id: 3, user_id: 2, image_id: 2},
 ])
 Description.create!([
   #image 1 : completed

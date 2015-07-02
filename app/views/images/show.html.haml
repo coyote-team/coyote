@@ -1,4 +1,4 @@
--title = 'Showing Image'
+-title = "Showing Image #{@image}"
 -meta title: title
 -cache ['v1', admin?,  @image] do
   .entity-outer
@@ -30,4 +30,4 @@
             Images
           = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

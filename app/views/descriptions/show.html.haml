@@ -1,4 +1,4 @@
--title = 'Showing Description'
+-title = "Showing Description #{@description}"
 -meta title: title
 -cache ['v1', admin?,  @description] do
   .entity-outer
@@ -11,6 +11,21 @@
           %tbody
             %tr
               %th{scope: "row"}
+                Image:
+              %td
+                = @description.image
+            %tr
+              %th{scope: "row"}
+                Status:
+              %td
+                = @description.status
+            %tr
+              %th{scope: "row"}
+                Metum:
+              %td
+                = @description.metum
+            %tr
+              %th{scope: "row"}
                 Locale:
               %td
                 = @description.locale
@@ -19,21 +34,6 @@
                 Text:
               %td
                 = @description.text
-            %tr
-              %th{scope: "row"}
-                Status:
-              %td
-                = @description.status
-            %tr
-              %th{scope: "row"}
-                Image:
-              %td
-                = @description.image
-            %tr
-              %th{scope: "row"}
-                Metum:
-              %td
-                = @description.metum
             %tr
               %th{scope: "row"}
                 User:
@@ -45,4 +45,4 @@
             Descriptions
           = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

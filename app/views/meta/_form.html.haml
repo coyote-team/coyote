@@ -3,13 +3,13 @@
   .form-inputs
     = f.input :title
     = f.input :instructions
-  
+
 
   .form-actions
     .form-actions-inner
       = link_to meta_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        View all Meta 
+        View all Meta
       = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
         %br

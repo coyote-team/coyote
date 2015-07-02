@@ -1,6 +1,8 @@
 - if queue and queue.size > 0
   .queue
-    %h3 #{type} Queue
+    %h3 
+      #{type} Queue
+      %span.badge= queue.count
     .well
       .row
         - queue.each_with_index do |item, idx|
@@ -23,8 +25,8 @@
                   - else
                     -descriptions = image.descriptions
                   %h4 
-                    =link_to new_description_path(image: image), class: "btn btn-success", title: "Add a description for Image #{image.id}" do
-                      %i.fa.fa-plus>
+                    =link_to new_description_path(image_id: image.id), class: "btn btn-success", title: "Add a description for Image #{image.id}" do
+                      %i.fa.fa-plus
                     Descriptions
                     %span.badge
                       = descriptions.count
@@ -47,13 +49,13 @@
                             -label_class = "danger"
                           %span{class: "label label-"+ label_class}=d.status
 
-                  - if @user.admin? #TODO replace with current_user?
-                    %h4 
-                      = link_to new_assignment_path(image: image), class: 'btn btn-success new-link', title: "Assign a user to Image #{image.id}" do
-                        %i.fa.fa-fw.fa-plus>
-                      Users 
-                      %span.badge
-                        =image.users.count
-                    %ul
-                      -image.users.each do |user|
-                        %li= user
+                - if @user.admin? #TODO replace with current_user?
+                  %h4 
+                    = link_to new_assignment_path(image_id: image.id), class: 'btn btn-success new-link', title: "Assign a user to Image #{image.id}" do
+                      %i.fa.fa-plus
+                    Users 
+                    %span.badge
+                      =image.users.count
+                  %ul
+                    -image.users.each do |user|
+                      %li= user

@@ -1,7 +1,7 @@
 class CreateDescriptions < ActiveRecord::Migration
   def change
     create_table :descriptions do |t|
-      t.string :locale
+      t.string :locale, default: "en"
       t.text :text
       t.references :status, index: true, foreign_key: true
       t.references :image, index: true, foreign_key: true

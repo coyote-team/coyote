@@ -1,4 +1,4 @@
--title = 'Showing Metum'
+-title = "Showing Metum #{@metum}"
 -meta title: title
 -cache ['v1', admin?,  @metum] do
   .entity-outer
@@ -25,4 +25,4 @@
             Meta
           = link_to edit_metum_path(@metum), title: "Edit this metum", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

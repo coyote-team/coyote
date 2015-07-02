@@ -1,4 +1,4 @@
--title = 'Showing Assignment'
+-title = "Showing Assignment #{@assignment}"
 -meta title: title
 -cache ['v1', admin?,  @assignment] do
   .entity-outer
@@ -25,4 +25,4 @@
             Assignments
           = link_to edit_assignment_path(@assignment), title: "Edit this assignment", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

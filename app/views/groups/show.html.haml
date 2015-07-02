@@ -1,4 +1,4 @@
--title = 'Showing Group'
+-title = "Showing Group #{@group}"
 -meta title: title
 -cache ['v1', admin?,  @group] do
   .entity-outer
@@ -20,4 +20,4 @@
             Groups
           = link_to edit_group_path(@group), title: "Edit this group", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

@@ -3,7 +3,7 @@
 # Table name: descriptions
 #
 #  id         :integer          not null, primary key
-#  locale     :string(255)
+#  locale     :string(255)      default("en")
 #  text       :text(65535)
 #  status_id  :integer
 #  image_id   :integer

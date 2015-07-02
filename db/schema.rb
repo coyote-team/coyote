@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150702152708) do
   add_index "assignments", ["user_id"], name: "index_assignments_on_user_id", using: :btree
 
   create_table "descriptions", force: :cascade do |t|
-    t.string   "locale",     limit: 255
+    t.string   "locale",     limit: 255,   default: "en"
     t.text     "text",       limit: 65535
     t.integer  "status_id",  limit: 4
     t.integer  "image_id",   limit: 4

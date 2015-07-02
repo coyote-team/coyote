@@ -4,11 +4,12 @@
     = f.association :user, :selected => params[:user_id], prompt: "Choose a user"
     = f.association :image,  :selected => params[:image_id], prompt: "Choose an image"
 
+
   .form-actions
     .form-actions-inner
       = link_to assignments_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        View all Assignments 
+        View all Assignments
       = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
         %br

@@ -1,10 +1,4 @@
 Plate::Application.routes.draw do
-  resources :descriptions do
-  end
-
-  resources :assignments do
-  end
-
   resources :assignments
   resources :descriptions 
   resources :meta 

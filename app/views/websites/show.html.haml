@@ -1,4 +1,4 @@
--title = 'Showing Website'
+-title = "Showing Website #{@website}"
 -meta title: title
 -cache ['v1', admin?,  @website] do
   .entity-outer
@@ -25,4 +25,4 @@
             Websites
           = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit 
+            Edit

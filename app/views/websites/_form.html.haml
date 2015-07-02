@@ -3,13 +3,13 @@
   .form-inputs
     = f.input :title
     = f.input :url
-  
+
 
   .form-actions
     .form-actions-inner
       = link_to websites_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
-        View all Websites 
+        View all Websites
       = f.button :submit, class: 'btn btn-success'
       - if action_name == 'edit'
         %br
