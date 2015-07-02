@@ -28,4 +28,12 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :assignments, dependent: :destroy
+  has_many :images, through: :assignments
+  has_many :descriptions, dependent: :nullify
+
+  def to_s
+    email
+  end
 end

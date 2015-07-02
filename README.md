@@ -58,9 +58,13 @@ For use on [nomnoml](http://www.nomnoml.com/)
       [Meta| id: int| title: string | instructions: text]
 
       [Website]->[Group]
+
       [Image]->[Group]
-      [Description]->Assigned[User]
-      [Description]->Assigner[User]
+
+      [Assignment]->[Image]
+      [Assignment]->[User]
+
+      [Description]->[User]
       [Description]->[Meta]
       [Description]->[Status]
 
@@ -88,10 +92,10 @@ Then we generated our scaffolds
     rails g pizza_scaffold image url:string website:references group:references --force
     rails g pizza_scaffold status title:string description:text --force
     rails g pizza_scaffold meta title:string instructions:text --force
-    rails g pizza_scaffold description locale:string text:text status:references image:references metum:references --force
+    rails g pizza_scaffold description locale:string text:text status:references image:references metum:references user:references --force
     rails g migration AddAdminBooleanToUsers admin:boolean --force
+    rails g pizza_scaffold assignment user:references image:references --force
     #set en default for locale
-    #http://stackoverflow.com/questions/13464277/rails-how-to-use-language-list-gem-with-select-tag-in-a-form
     #set admin bool on user, default false
 
 For updating generator based views and controllers
@@ -101,7 +105,8 @@ For updating generator based views and controllers
     rails g pizza_controller group title:string --force
     rails g pizza_controller status title:string description:text --force
     rails g pizza_controller meta title:string instructions:text --force
-    rails g pizza_controller description image:references status:references metum:references locale:string text:text --force
+    rails g pizza_controller description image:references status:references metum:references locale:string text:text user:references --force
+    rails g pizza_controller assignment user:references image:references --force
  
 ##Links
 

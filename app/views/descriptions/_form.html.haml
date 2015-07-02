@@ -1,11 +1,12 @@
 = simple_form_for @description, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
   = f.error_notification
   .form-inputs
-    = f.association :image
-    = f.association :status
-    = f.association :metum
     = f.input :locale
     = f.input :text
+    = f.association :status
+    = f.association :image
+    = f.association :metum
+    = f.association :user
   
 
   .form-actions

@@ -54,7 +54,8 @@ class ImagesController < ApplicationController
       Image.import(params[:file])
       redirect_to root_path, {notice: "Images imported."}
     rescue => e
-      redirect_to root_path, {alert: "Images failed to import."}
+      logger.error e.message
+      redirect_to root_path, {alert: "Images failed to import. " + e.message}
     end
   end
 

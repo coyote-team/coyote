@@ -20,11 +20,19 @@ require 'roo'
 class Image < ActiveRecord::Base
   belongs_to :website
   belongs_to :group
+
   has_many :descriptions, dependent: :destroy
+  has_many :assignments, dependent: :destroy
+  has_many :users, through: :assignments
 
   validates :url, :presence => true, :uniqueness => {:scope => :website_id}
   validates_associated :website, :group
   validates_presence_of :website, :group
+
+  default_scope {order('created_at DESC')}
+
+  scope :unassigned, -> (n = 0) { select { |i| i.users.size == n } }
+  scope :assigned, -> (n = 0) { select { |i| i.users.size > n } }
 
   def to_s
     url
@@ -33,6 +41,31 @@ class Image < ActiveRecord::Base
   def full_url
     if website
       website.url + url
+    end
+  end
+
+  #TODO check per locale
+  def completed?
+    meta_ids = Metum.all.map{|m| m.id}
+    approved_id = Status.find_by_title("Approved")
+    if descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?} & meta_ids == meta_ids
+      true
+    else
+      false
+    end
+  end
+
+  def ready_to_review?
+    ready_id = Status.find_by_title("Ready to review")
+    if descriptions.where({status_id: ready_id}).size > 0
+      true
+    end
+  end
+
+  def not_approved?
+    not_approved_id = Status.find_by_title("Not approved")
+    if descriptions.where({status_id: not_approved_id}).size > 0
+      true
     end
   end
 

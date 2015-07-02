@@ -10,6 +10,8 @@
 #
 
 class Status < ActiveRecord::Base
+  has_many :descriptions
+
   validates_presence_of :title
 
   def to_s

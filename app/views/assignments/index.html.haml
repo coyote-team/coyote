@@ -1,0 +1,36 @@
+-title = 'Listing Assignments'
+-meta title: title
+- cache ['v1', admin?,  @assignments] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1#page-title{tabindex: -1}=title
+        %table.index-table
+          %caption.sr-only Index table for assignments
+          %thead
+            %tr
+              %th{scope: "col"} 
+                User
+              %th{scope: "col"} 
+                Image
+              %th{scope: "col"} 
+                Actions
+
+          %tbody
+            - @assignments.each_with_index do |assignment, idx|
+              %tr{class: "item"}
+                %td= assignment.user
+                %td= assignment.image
+                %td.text-right
+                  = link_to assignment, class: "btn btn-show", title: "Show this assignment" do
+                    %i.fa.fa-fw.fa-eye{title: "Eye"}
+                  = link_to edit_assignment_path(assignment), class: "btn btn-edit", title: "Edit this assignment"  do
+                    %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                  = link_to assignment, title: "Delete this assignment" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
+                    %i.fa.fa-fw.fa-trash{title: "Trash can"}
+
+        %nav.index-nav{role:"navigation"}
+          = link_to new_assignment_path, class: 'btn btn-success new-link' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Assignment

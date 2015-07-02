@@ -18,6 +18,15 @@ $.fn.bootstrapFileInput = function() {
 
     var $elem = $(elem);
 
+    // Add [processed] class to avoid double processing of input file element
+    if (typeof $elem.attr('data-bfi-processed-class') != 'undefined') {
+      // Check if the element already has the [processed] flag on it and skip it if it does
+      if ($elem.hasClass($elem.attr('data-bfi-processed-class'))) {
+          return;
+      }
+      $elem.addClass($elem.attr('data-bfi-processed-class'));
+    }
+
     // Maybe some fields don't need to be standardized.
     if (typeof $elem.attr('data-bfi-disabled') != 'undefined') {
       return;
@@ -38,7 +47,11 @@ $.fn.bootstrapFileInput = function() {
 
     // Now we're going to wrap that input field with a Bootstrap button.
     // The input will actually still be there, it will just be float above and transparent (done with the CSS).
-    $elem.wrap('<a class="file-input-wrapper btn btn-primary ' + className + '"></a>').parent().prepend($('<span></span>').html(buttonWord));
+    $elem
+      .wrap('<a class="file-input-wrapper btn btn-primary ' + className + '"></a>')
+      .parent()
+        .prepend($('<span></span>').html(buttonWord))
+        .prepend("<i class='fa fa-fw fa-file'></i> ")
   })
 
   // After we have found all of the file inputs let's apply a listener for tracking the mouse movement.
@@ -81,6 +94,7 @@ $.fn.bootstrapFileInput = function() {
         left:moveInputX,
         top:moveInputY
       });
+      
     });
 
     $('body').on('change', '.file-input-wrapper input[type=file]', function(){
@@ -111,6 +125,7 @@ $.fn.bootstrapFileInput = function() {
         // Print the fileName aside (right after the the button)
         $(this).parent().after('<span class="file-input-name">'+fileName+'</span>');
       }
+      $(this).parent().parent().find('button[type=submit]').removeClass('disabled')
     });
 
   });

@@ -11,14 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625155044) do
+ActiveRecord::Schema.define(version: 20150702152708) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "image_id",   limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignments", ["image_id"], name: "index_assignments_on_image_id", using: :btree
+  add_index "assignments", ["user_id"], name: "index_assignments_on_user_id", using: :btree
 
   create_table "descriptions", force: :cascade do |t|
-    t.string   "locale",     limit: 255,   default: "en"
+    t.string   "locale",     limit: 255
     t.text     "text",       limit: 65535
     t.integer  "status_id",  limit: 4
     t.integer  "image_id",   limit: 4
     t.integer  "metum_id",   limit: 4
+    t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150625155044) do
   add_index "descriptions", ["image_id"], name: "index_descriptions_on_image_id", using: :btree
   add_index "descriptions", ["metum_id"], name: "index_descriptions_on_metum_id", using: :btree
   add_index "descriptions", ["status_id"], name: "index_descriptions_on_status_id", using: :btree
+  add_index "descriptions", ["user_id"], name: "index_descriptions_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -104,9 +116,12 @@ ActiveRecord::Schema.define(version: 20150625155044) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "assignments", "images"
+  add_foreign_key "assignments", "users"
   add_foreign_key "descriptions", "images"
   add_foreign_key "descriptions", "meta"
   add_foreign_key "descriptions", "statuses"
+  add_foreign_key "descriptions", "users"
   add_foreign_key "images", "groups"
   add_foreign_key "images", "websites"
 end

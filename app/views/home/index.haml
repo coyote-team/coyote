@@ -1,32 +1,44 @@
 -title = 'Welcome to Coyote'
--description = '' #no html
--thumb = '' #MUST HAVE A VALUE or should not be set
--keywords = %w{''}  #space separated keywords
 -meta title: title,
-  keywords: keywords,
-  description: description,
   og: { title: title,
-    description: description,
-    image: thumb,
     url: request.url,
   }
-
+- current_user = @user #dev override
 .container
   .row
     .col-md-12
       %header{role: "header"}
         %h1#page-title Welcome to Coyote
-    .col-md-12
-      =render "queue", queue: @queue
-    .col-md-12
-      = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
+    -if current_user.admin?
+      .col-md-6
+        = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
+          %h2>
+            Import images
+            <small>via <code>.csv</code>, <code>.xsl</code>, and <code>.xslx</code></small>
+          = file_field_tag :file
+          = button_tag type: "submit", class: "btn btn-success disabled" do
+            %i.fa.fa-fw.fa-upload
+            Upload
+      .col-md-6
         %h2>
-          Import images
-          <small>via <code>.csv</code>, <code>.xsl</code>, and <code>.xslx</code>
-        = file_field_tag :file
-        = submit_tag "Upload", class: "btn btn-success"
-      %h2>
-        Export images
-        %small>
-          %code csv
-      = link_to "Export", export_images_path(format: "csv"), class: 'btn btn-info' #TODO use a button tag
+          Export images
+          %small>
+            %code .csv
+        = link_to  export_images_path(format: "csv"), class: 'btn btn-success' do
+          %i.fa.fa-fw.fa-download
+          Export
+    -if current_user.admin?
+      .col-md-12
+        %h2 Admin Queues
+        =render "queue", queue: @unassigned, type: "Unassigned Images"
+        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions"
+        =render "queue", queue: @completed, type: "Completed Images"
+        -#Supplemental Queues
+        =render "queue", queue: @incomplete, type: "Incomplete Images" 
+        =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
+        =render "queue", queue: @assigned, type: "Assigned Images"
+    -if current_user
+      .col-md-12
+        %h2 My Queues 
+        =render "queue", queue: @my_assigned, type: "My Assigned Images"
+        =render "queue", queue: @my_completed, type: "My Completed Images"

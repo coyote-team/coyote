@@ -1,0 +1,17 @@
+= simple_form_for @assignment, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
+  = f.error_notification
+  .form-inputs
+    = f.association :user, :selected => params[:user_id], prompt: "Choose a user"
+    = f.association :image,  :selected => params[:image_id], prompt: "Choose an image"
+
+  .form-actions
+    .form-actions-inner
+      = link_to assignments_path, class: 'btn btn-info' do
+        %i.fa.fa-fw.fa-list{title: "List"}
+        View all Assignments 
+      = f.button :submit, class: 'btn btn-success'
+      - if action_name == 'edit'
+        %br
+        = link_to @assignment, class: 'btn btn-info' do
+          %i.fa.fa-fw.fa-eye{title: "Eye"}
+          View this assignment

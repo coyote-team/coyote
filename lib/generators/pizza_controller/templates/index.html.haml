@@ -15,10 +15,10 @@
           %thead
             %tr
   <%- for attribute in attributes -%>
-              %th{scope: "col"} 
+              %th{scope: "col"}
                 <%= attribute.human_name %>
   <%- end -%>
-              %th{scope: "col"} 
+              %th{scope: "col"}
                 Actions
 
           %tbody
@@ -33,10 +33,10 @@
                 %td
                   -if <%= singular_table_name %>.<%= attribute.name %>
                     =link_to toggle_<%= singular_table_name %>_path(<%= singular_table_name %>, column: '<%= attribute.name %>'), remote: true do
-                      <i class='fa fa-fw fa-check boolean-toggle'></i> 
+                      <i class='fa fa-fw fa-check boolean-toggle'></i>
                   -else
                     =link_to toggle_<%= singular_table_name %>_path(<%= singular_table_name %>, column: '<%= attribute.name %>'), remote: true do
-                      <i class='fa fa-fw fa-times boolean-toggle'></i> 
+                      <i class='fa fa-fw fa-times boolean-toggle'></i>
 <%- else -%>
                 %td= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>

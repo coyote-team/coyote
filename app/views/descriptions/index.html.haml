@@ -11,26 +11,29 @@
           %thead
             %tr
               %th{scope: "col"} 
-                Image
-              %th{scope: "col"} 
-                Status
-              %th{scope: "col"} 
-                Metum
-              %th{scope: "col"} 
                 Locale
               %th{scope: "col"} 
                 Text
+              %th{scope: "col"} 
+                Status
+              %th{scope: "col"} 
+                Image
+              %th{scope: "col"} 
+                Metum
+              %th{scope: "col"} 
+                User
               %th{scope: "col"} 
                 Actions
 
           %tbody
             - @descriptions.each_with_index do |description, idx|
               %tr{class: "item"}
-                %td= description.image
-                %td= description.status
-                %td= description.metum
                 %td= description.locale
                 %td= description.text
+                %td= description.status
+                %td= description.image
+                %td= description.metum
+                %td= description.user
                 %td.text-right
                   = link_to description, class: "btn btn-show", title: "Show this description" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}

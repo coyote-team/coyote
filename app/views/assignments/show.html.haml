@@ -1,0 +1,28 @@
+-title = 'Showing Assignment'
+-meta title: title
+-cache ['v1', admin?,  @assignment] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1#page-title{tabindex: -1}=title
+        %table.entity-table
+          %caption.sr-only Key value pairs for this assignment
+          %tbody
+            %tr
+              %th{scope: "row"}
+                User:
+              %td
+                = @assignment.user
+            %tr
+              %th{scope: "row"}
+                Image:
+              %td
+                = @assignment.image
+        %nav.show-nav{role:"navigation"}
+          = link_to assignments_path, class: 'btn btn-info', title: "View the assignments index" do
+            %i.fa.fa-fw.fa-list{title: 'List'}
+            Assignments
+          = link_to edit_assignment_path(@assignment), title: "Edit this assignment", class: 'btn btn-primary' do
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
+            Edit 

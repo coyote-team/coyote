@@ -3,11 +3,12 @@
 # Table name: descriptions
 #
 #  id         :integer          not null, primary key
-#  locale     :string(255)      default("en")
+#  locale     :string(255)
 #  text       :text(65535)
 #  status_id  :integer
 #  image_id   :integer
 #  metum_id   :integer
+#  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -16,28 +17,23 @@
 #  index_descriptions_on_image_id   (image_id)
 #  index_descriptions_on_metum_id   (metum_id)
 #  index_descriptions_on_status_id  (status_id)
+#  index_descriptions_on_user_id    (user_id)
 #
 
 class Description < ActiveRecord::Base
-  default_scope {order('status_id ASC')}
-  belongs_to :image, touch: true
+
   belongs_to :status
+  belongs_to :image, touch: true
   belongs_to :metum
+  belongs_to :user
 
-  #validates :locale
-  #validates :text
-  validates_associated :image, :status, :metum
-  validates_presence_of :image, :status, :metum, :locale
+  validates_associated :image, :status, :metum, :user
+  validates_presence_of :image, :status, :metum, :locale, :text
 
-  def check_text
-    #TODO updates status automatically 
-    #if unassigned and text empty
-      #set status to unassigned
-    #if assigned
-      #set status to assigned
-    #if text no longer empty but was empty
-      #set status to ready to review
-    #if text changed #TODO or if status changed to completed
-      #send patch request to image url
-  end
+  default_scope {order('status_id ASC')}
+
+  scope :ready_to_review, -> {where("status_id = 1")}
+  scope :approved, -> {where("status_id = 2")}
+  scope :not_approved, -> {where("status_id = 3")}
+
 end

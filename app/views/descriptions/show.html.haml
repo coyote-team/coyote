@@ -11,21 +11,6 @@
           %tbody
             %tr
               %th{scope: "row"}
-                Image:
-              %td
-                = @description.image
-            %tr
-              %th{scope: "row"}
-                Status:
-              %td
-                = @description.status
-            %tr
-              %th{scope: "row"}
-                Metum:
-              %td
-                = @description.metum
-            %tr
-              %th{scope: "row"}
                 Locale:
               %td
                 = @description.locale
@@ -34,6 +19,26 @@
                 Text:
               %td
                 = @description.text
+            %tr
+              %th{scope: "row"}
+                Status:
+              %td
+                = @description.status
+            %tr
+              %th{scope: "row"}
+                Image:
+              %td
+                = @description.image
+            %tr
+              %th{scope: "row"}
+                Metum:
+              %td
+                = @description.metum
+            %tr
+              %th{scope: "row"}
+                User:
+              %td
+                = @description.user
         %nav.show-nav{role:"navigation"}
           = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
             %i.fa.fa-fw.fa-list{title: 'List'}

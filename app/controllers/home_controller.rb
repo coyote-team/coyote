@@ -1,12 +1,22 @@
 class HomeController < ApplicationController
   def index
-    @queue = Description.all
-    #if user
-      #TODO scope to user
-      #assigned
-      #for review
-      #completed
-    #if admin
-      #unassigned
+    current_user = User.find(2) #test with admin user for scoping
+    @user = current_user #spoof current user for view
+    if current_user
+      #TODO should only show my content descriptions for these two
+      @my_assigned = current_user.images
+      @my_completed = @my_assigned.collect{|i| i if i.completed?}.compact 
+      @my_description_ids = current_user.descriptions.map{|d| d.id}
+
+      if current_user.admin?
+        images = Image.all
+        @unassigned = images.unassigned 
+        @assigned = images.assigned 
+        @completed = @assigned.collect{|i| i if i.completed?}.compact
+        @incomplete = @assigned.collect{|i| i unless i.completed?}.compact
+        @ready_to_review = @assigned.collect{|i| i if i.ready_to_review?}.compact
+        @not_approved = @assigned.collect{|i| i if i.not_approved?}.compact
+      end
+    end
   end
 end
