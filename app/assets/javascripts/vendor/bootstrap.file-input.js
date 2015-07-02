@@ -18,18 +18,10 @@ $.fn.bootstrapFileInput = function() {
 
     var $elem = $(elem);
 
-    // Add [processed] class to avoid double processing of input file element
-    if (typeof $elem.attr('data-bfi-processed-class') != 'undefined') {
-      // Check if the element already has the [processed] flag on it and skip it if it does
-      if ($elem.hasClass($elem.attr('data-bfi-processed-class'))) {
-          return;
-      }
-      $elem.addClass($elem.attr('data-bfi-processed-class'));
-    }
-
-    // Maybe some fields don't need to be standardized.
-    if (typeof $elem.attr('data-bfi-disabled') != 'undefined') {
+    if( $elem.hasClass('strapped')){
       return;
+    } else {
+      $elem.addClass('strapped');
     }
 
     // Set the word to be displayed on the button
