@@ -45,6 +45,15 @@ class ImagesController < ApplicationController
     redirect_to images_url, notice: 'Image was successfully destroyed.'
   end
 
+  def autocomplete_tags
+    @tags = ActsAsTaggableOn::Tag.
+      where("name LIKE ?", "#{params[:q]}%").
+      order(:name)
+    respond_to do |format|
+      format.json { render json: @tags.map{|t| {id: t.name, name: t.name}}}
+    end
+  end
+
   def export 
     send_data Image.all.to_csv
   end
@@ -67,6 +76,6 @@ class ImagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:url, :group_id, :website_id)
+      params.require(:image).permit(:url, :group_id, :website_id, :tag_list)
     end
 end

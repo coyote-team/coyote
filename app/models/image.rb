@@ -18,6 +18,8 @@ require 'roo'
 #
 
 class Image < ActiveRecord::Base
+  acts_as_taggable_on :tags
+
   belongs_to :website
   belongs_to :group
 

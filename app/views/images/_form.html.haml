@@ -1,9 +1,10 @@
 = simple_form_for @image, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
   = f.error_notification
   .form-inputs
-    = f.input :url
-    = f.association :group
     = f.association :website
+    = f.association :group
+    = f.input :url
+    = f.input :tag_list,  label: 'Tags', input_html: {class: 'autocomplete' , data: { class: 'autocomplete', placeholder: "Enter tags", saved:  f.object.tags.map{|t| {id: t.name, name: t.name}}.to_json, url: autocomplete_tags_path}}
 
 
   .form-actions

@@ -4,6 +4,7 @@ Plate::Application.routes.draw do
   resources :meta 
   resources :statuses
   resources :groups 
+  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
   resources :images do
     collection do
       post :import
