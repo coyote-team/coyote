@@ -33,6 +33,7 @@
                     - else
                       - path = new_description_path(image_id: image.id)
                     =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
+                      -#%i.fa.fa-plus
                       Describe
                   %ul
                     - descriptions.each do |d|
@@ -62,8 +63,9 @@
                     Users 
                     %span.badge
                       =image.users.count
-                    = link_to new_assignment_path(image_id: image.id), class: 'btn btn-default new-link', title: "Assign a user to Image #{image.id}" do
-                      %i.fa.fa-plus
+                    = link_to new_assignment_path(image_id: image.id), class: 'btn btn-success new-link', title: "Assign a user to Image #{image.id}" do
+                      -#%i.fa.fa-plus
+                      Assign
                   %ul
                     -image.users.each do |user|
                       %li= user
