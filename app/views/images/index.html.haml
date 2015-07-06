@@ -5,27 +5,35 @@
     .index
       .index-inner
         %header{role: "header"}
-          %h1#page-title{tabindex: -1}=title
+          %h1#page-title{tabindex: -1}
+            =title
+            %span.badge
+              =@images.count
+
         %table.index-table
           %caption.sr-only Index table for images
           %thead
             %tr
-              %th{scope: "col"}
+              %th{scope: "col"}<
                 Url
-              %th{scope: "col"}
+              %th{scope: "col"}<
                 Group
-              %th{scope: "col"}
+              %th{scope: "col"}<
                 Website
-              %th{scope: "col"}
+              %th{scope: "col"}<
+                Descriptions
+              %th{scope: "col"}<
                 Actions
 
           %tbody
             - @images.each_with_index do |image, idx|
-              %tr{class: "item"}
+              %tr{class: "item"}<
                 %td= image.url
                 %td= image.group
                 %td= image.website
-                %td.text-right
+                %td
+                  = render "counter", descriptions: image.descriptions, meta: Metum.all
+                %td.text-right<
                   = link_to image, class: "btn btn-show", title: "Show this image" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_image_path(image), class: "btn btn-edit", title: "Edit this image"  do

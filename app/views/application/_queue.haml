@@ -11,7 +11,7 @@
           - else #is a description
             - description = item
             - image = description.image
-          .col-sm-3.col-xs-6
+          .col-sm-4.col-xs-12
             .thumbnail
               =image_tag image.full_url, alt: "image #{image.id}"
               .caption
@@ -20,26 +20,32 @@
                     -#- descriptions = image.descriptions.ready_to_review
                   -#- else
                     -#-descriptions = image.descriptions
-                  - if type.start_with? "My"
+                  - if type.start_with? "Your"
                     -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
                   - else
                     -descriptions = image.descriptions
                   %h4 
-                    =link_to new_description_path(image_id: image.id), class: "btn btn-success", title: "Add a description for Image #{image.id}" do
-                      %i.fa.fa-plus
                     Descriptions
                     %span.badge
                       = descriptions.count
+                    - if type.start_with? "Your"
+                      - path = new_description_path(image_id: image.id, user_id: @user.id )
+                    - else
+                      - path = new_description_path(image_id: image.id)
+                    =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
+                      Describe
                   %ul
                     - descriptions.each do |d|
-                      %li<
+                      %li.well<
+                        %blockquote.blockquote
+                          %p
+                            =d.text
+                          %footer
+                            %cite
+                              =d.user
                         %p
-                          =link_to edit_description_path(d), title: "Edit this description" do
-                            %i.fa.fa-fw.fa-pencil>
-                          =d.text
-                          %br
-                          %span.label.label-info= d.metum
                           %span.label.label-default= d.locale
+                          %span.label.label-info= d.metum
                           - case d.status.id
                           - when 1
                             -label_class = "warning"
@@ -48,14 +54,16 @@
                           - when 3
                             -label_class = "danger"
                           %span{class: "label label-"+ label_class}=d.status
+                        =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary' do
+                          %i.fa.fa-fw.fa-pencil
 
-                - if @user.admin? #TODO replace with current_user?
+                - if @user.admin? and !type.starts_with?("Your") #TODO replace with current_user?
                   %h4 
-                    = link_to new_assignment_path(image_id: image.id), class: 'btn btn-success new-link', title: "Assign a user to Image #{image.id}" do
-                      %i.fa.fa-plus
                     Users 
                     %span.badge
                       =image.users.count
+                    = link_to new_assignment_path(image_id: image.id), class: 'btn btn-default new-link', title: "Assign a user to Image #{image.id}" do
+                      %i.fa.fa-plus
                   %ul
                     -image.users.each do |user|
                       %li= user

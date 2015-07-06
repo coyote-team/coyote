@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
 gem 'rails', '4.2.2'
+gem 'language_list'
 gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate 
 gem 'compass-rails', '~> 2.0.4'
 gem 'bootstrap-sass', '>= 3.2'

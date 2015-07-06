@@ -16,9 +16,14 @@
                 = @description.image
             %tr
               %th{scope: "row"}
-                Status:
+                Creator:
               %td
-                = @description.status
+                = @description.user
+            %tr
+              %th{scope: "row"}
+                Locale:
+              %td
+                = LanguageList::LanguageInfo.find(@description.locale).name if @description.locale
             %tr
               %th{scope: "row"}
                 Metum:
@@ -26,19 +31,14 @@
                 = @description.metum
             %tr
               %th{scope: "row"}
-                Locale:
-              %td
-                = @description.locale
-            %tr
-              %th{scope: "row"}
                 Text:
               %td
                 = @description.text
             %tr
               %th{scope: "row"}
-                User:
+                Status:
               %td
-                = @description.user
+                = @description.status
         %nav.show-nav{role:"navigation"}
           = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
             %i.fa.fa-fw.fa-list{title: 'List'}

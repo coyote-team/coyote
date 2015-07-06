@@ -11,9 +11,9 @@
           %tbody
 <% for attribute in attributes -%>
             %tr
-              %th{scope: "row"}
-                <%= attribute.human_name %>:
-              %td
+              %th{scope: "row"}<
+                <%= attribute.human_name %>
+              %td<
                 = @<%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
         %nav.show-nav{role:"navigation"}

@@ -1,4 +1,4 @@
--title = 'Welcome to Coyote'
+-title = 'Welcome Jane!'
 -meta title: title,
   og: { title: title,
     url: request.url,
@@ -8,7 +8,23 @@
   .row
     .col-md-12
       %header{role: "header"}
-        %h1#page-title Welcome to Coyote
+        %h1#page-title=title
+    -if current_user
+      .col-md-12
+        %h2 Your Queues 
+        =render "queue", queue: @my_queue, type: "Your Assigned Images"
+        =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
+        =render "queue", queue: @my_described_queue, type: "Your Described Images"
+    -if current_user.admin?
+      .col-md-12
+        %h2 Admin Queues
+        =render "queue", queue: @unassigned, type: "Unassigned Images"
+        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions"
+        -#=render "queue", queue: @completed, type: "Completed Images"
+        -#Supplemental Queues
+        -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
+        =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
+        -#=render "queue", queue: @assigned, type: "Assigned Images"
     -if current_user.admin?
       .col-md-6
         = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
@@ -27,18 +43,3 @@
         = link_to  export_images_path(format: "csv"), class: 'btn btn-success' do
           %i.fa.fa-fw.fa-download
           Export
-    -if current_user.admin?
-      .col-md-12
-        %h2 Admin Queues
-        =render "queue", queue: @unassigned, type: "Unassigned Images"
-        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions"
-        =render "queue", queue: @completed, type: "Completed Images"
-        -#Supplemental Queues
-        =render "queue", queue: @incomplete, type: "Incomplete Images" 
-        =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
-        =render "queue", queue: @assigned, type: "Assigned Images"
-    -if current_user
-      .col-md-12
-        %h2 My Queues 
-        =render "queue", queue: @my_assigned, type: "My Assigned Images"
-        =render "queue", queue: @my_completed, type: "My Completed Images"

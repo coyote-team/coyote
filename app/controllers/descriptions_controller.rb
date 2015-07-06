@@ -1,5 +1,7 @@
 class DescriptionsController < ApplicationController
   before_action :set_description, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:new]
+  before_action :set_author, only: [:new]
 
   # GET /descriptions
   def index
@@ -49,6 +51,14 @@ class DescriptionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_description
       @description = Description.find(params[:id])
+    end
+
+    def set_author
+      @author = User.find(params[:user_id])
+    end
+
+    def set_image
+      @image = Image.find(params[:image_id])
     end
 
     # Only allow a trusted parameter "white list" through.

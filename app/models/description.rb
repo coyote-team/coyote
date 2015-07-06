@@ -36,4 +36,11 @@ class Description < ActiveRecord::Base
   scope :approved, -> {where("status_id = 2")}
   scope :not_approved, -> {where("status_id = 3")}
 
+  scope :alt, -> {where("metum_id = 1")}
+  scope :caption, -> {where("metum_id = 2")}
+  scope :long, -> {where("metum_id = 3")}
+
+  def to_s
+    text
+  end
 end

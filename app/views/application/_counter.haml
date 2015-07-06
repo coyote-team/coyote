@@ -1,0 +1,7 @@
+%dl
+  -meta.each do |metum|
+    %dt=metum.title
+    %dd
+      %span.label.label-success= descriptions.where(metum_id: metum.id).approved.count
+      %span.label.label-warning= descriptions.where(metum_id: metum.id).ready_to_review.count
+      %span.label.label-danger= descriptions.where(metum_id: metum.id).not_approved.count

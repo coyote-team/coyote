@@ -4,8 +4,9 @@ class HomeController < ApplicationController
     @user = current_user #spoof current user for view
     if current_user
       #TODO should only show my content descriptions for these two
-      @my_assigned = current_user.images
-      @my_completed = @my_assigned.collect{|i| i if i.completed?}.compact 
+      @my_queue = current_user.images.collect{|i| i if i.undescribed_by?(current_user)}.compact
+      @my_described_queue = current_user.images.collect{|i| i if i.described_by?(current_user)}.compact
+      @my_completed_queue= current_user.images.collect{|i| i if i.completed_by?(current_user)}.compact
       @my_description_ids = current_user.descriptions.map{|d| d.id}
 
       if current_user.admin?

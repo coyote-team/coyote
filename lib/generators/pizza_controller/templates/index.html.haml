@@ -15,10 +15,10 @@
           %thead
             %tr
   <%- for attribute in attributes -%>
-              %th{scope: "col"}
+              %th{scope: "col"}<
                 <%= attribute.human_name %>
   <%- end -%>
-              %th{scope: "col"}
+              %th{scope: "col"}<
                 Actions
 
           %tbody
@@ -30,7 +30,7 @@
 <%- end -%>
 <% for attribute in attributes -%>
 <%- if attribute.type.to_s == "boolean" -%>
-                %td
+                %td<
                   -if <%= singular_table_name %>.<%= attribute.name %>
                     =link_to toggle_<%= singular_table_name %>_path(<%= singular_table_name %>, column: '<%= attribute.name %>'), remote: true do
                       <i class='fa fa-fw fa-check boolean-toggle'></i>
@@ -41,7 +41,7 @@
                 %td= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
 <% end -%>
-                %td.text-right
+                %td.text-right<
                   = link_to <%= singular_table_name %>, class: "btn btn-show", title: "Show this <%= singular_table_name %>" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}
                   = link_to edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn btn-edit", title: "Edit this <%= singular_table_name %>"  do

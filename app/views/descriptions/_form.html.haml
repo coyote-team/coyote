@@ -1,12 +1,24 @@
 = simple_form_for @description, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
   = f.error_notification
   .form-inputs
-    = f.association :image
-    = f.association :status
-    = f.association :metum
-    = f.input :locale
-    = f.input :text
-    = f.association :user
+    - if @image
+      .row
+        .col-sm-9.col-sm-push-3
+          = f.input :image_id,  as: :hidden, input_html: {value: params[:image_id]}
+          = image_tag  @image.full_url, class: "description-image"
+    - else
+      = f.association :image,  :selected => params[:image_id]
+    - if @author
+      = f.input :user_id,  as: :hidden, input_html: {value: params[:user_id]}
+    - else
+      = f.association :user, label: "Author", prompt: "Pick the author"
+    = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type"
+    = f.input :locale, collection: LanguageList::COMMON_LANGUAGES, :label_method => :name,:value_method => :iso_639_1, as: :select, prompt: "Pick the locale", selected: "en"
+    - if @author
+      = f.input :status_id, as: :hidden, input_html: {value: 1}
+    - else
+      = f.association :status, prompt: "Pick the status"
+    = f.input :text #TODO update prompt based on metum and user
 
 
   .form-actions

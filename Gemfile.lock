@@ -368,6 +368,7 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
+    language_list (1.1.0)
     listen (2.10.1)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
@@ -595,6 +596,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (>= 4.0.4)
   jquery-ui-rails
+  language_list
   metamagic
   modular-scale
   mysql2

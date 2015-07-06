@@ -46,11 +46,32 @@ class Image < ActiveRecord::Base
     end
   end
 
-  #TODO check per locale
+  #has no descriptions by this user in any locale
+  def undescribed_by?(user)
+    !descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
+  end
+
+  #has 1 of description by this user in any locale
+  def described_by?(user)
+   descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
+  end
+
+  #has 1 of each metum by this user in any combo of locales
+  def completed_by?(user)
+    meta_ids = Metum.all.map{|m| m.id}
+    described_meta_ids = descriptions.collect{ |d| d.metum_id if d.user_id == user.id}.compact 
+    (meta_ids - described_meta_ids).empty?
+  end
+
+  #TODO has 1 of description by this user in any combo of locales but hasn't been completed
+  def described_but_not_completed_by?(user)
+  end
+
+  #completed in any combo of locales
   def completed?
     meta_ids = Metum.all.map{|m| m.id}
     approved_id = Status.find_by_title("Approved")
-    if descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?} & meta_ids == meta_ids
+    if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
       true
     else
       false
