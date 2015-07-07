@@ -11,7 +11,7 @@
           - else #is a description
             - description = item
             - image = description.image
-          .col-sm-4.col-xs-12
+          .col-sm-6.col-xs-12{id: "image-#{image.id}"}
             .thumbnail
               =image_tag image.full_url, alt: "image #{image.id}"
               .caption
@@ -26,37 +26,56 @@
                     -descriptions = image.descriptions
                   %h4 
                     Descriptions
-                    %span.badge
-                      = descriptions.count
-                    - if type.start_with? "Your"
-                      - path = new_description_path(image_id: image.id, user_id: @user.id )
-                    - else
-                      - path = new_description_path(image_id: image.id)
+                    %span.badge= descriptions.count
+                    - path = new_description_path(image_id: image.id, user_id: @user.id )
                     =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
                       -#%i.fa.fa-plus
                       Describe
                   %ul
                     - descriptions.each do |d|
-                      %li.well<
-                        %blockquote.blockquote
-                          %p
-                            =d.text
-                          %footer
-                            %cite
-                              =d.user
-                        %p
-                          %span.label.label-default= d.locale
-                          %span.label.label-info= d.metum
-                          - case d.status.id
-                          - when 1
-                            -label_class = "warning"
-                          - when 2
-                            -label_class = "success"
-                          - when 3
-                            -label_class = "danger"
-                          %span{class: "label label-"+ label_class}=d.status
-                        =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary' do
-                          %i.fa.fa-fw.fa-pencil
+                      %li
+                        .panel.panel-default<
+                          .panel-heading
+                            -#=link_to description_path(d), title: "Approve this description", class: 'btn btn-success' do
+                            .btn-group{role: "group", "aria-label": "Image actions"} 
+                              -form_klass='btn btn-success '
+                              -disabled = false
+                              -if d.status_id == 2
+                                -form_klass += 'disabled'
+                                - disabled = true
+                              = button_to description_path(d), action: :update, params: {"description[status_id]": 2}, title: "Approve this description", 
+                                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
+                                data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
+                                %i.fa.fa-fw.fa-thumbs-up
+                              -form_klass='btn btn-danger '
+                              -disabled = false
+                              -if d.status_id == 3
+                                -form_klass += 'disabled'
+                                - disabled = true
+                              = button_to description_path(d), params: {"description[status_id]": 3}, title: "Disapprove this description", 
+                                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                                data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
+                                %i.fa.fa-fw.fa-thumbs-down
+                              =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary' do
+                                %i.fa.fa-fw.fa-pencil
+                            %span.label.label-default= d.locale
+                            %span.label.label-info= d.metum
+                            - case d.status.id
+                            - when 1
+                              -label_class = "warning"
+                            - when 2
+                              -label_class = "success"
+                            - when 3
+                              -label_class = "danger"
+                            %span{class: "label label-"+ label_class}=d.status
+                          .panel-body
+                            %blockquote.blockquote
+                              %p<
+                                =d.text
+                              -if d.user
+                                %footer<
+                                  %cite<
+                                    =d.user
 
                 - if @user.admin? and !type.starts_with?("Your") #TODO replace with current_user?
                   %h4 

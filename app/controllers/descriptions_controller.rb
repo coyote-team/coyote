@@ -1,7 +1,9 @@
 class DescriptionsController < ApplicationController
   before_action :set_description, only: [:show, :edit, :update, :destroy]
-  before_action :set_image, only: [:new]
+  before_action :set_image, only: [:new, :edit]
   before_action :set_author, only: [:new]
+
+  respond_to :html, :json
 
   # GET /descriptions
   def index
@@ -24,27 +26,21 @@ class DescriptionsController < ApplicationController
   # POST /descriptions
   def create
     @description = Description.new(description_params)
-
-    if @description.save
-      redirect_to @description, notice: 'Description was successfully created.'
-    else
-      render :new
-    end
+    flash[:notice] = "#{@description} was successfully created." if @description.save
+    respond_with(@description)
   end
 
   # PATCH/PUT /descriptions/1
   def update
-    if @description.update(description_params)
-      redirect_to @description, notice: 'Description was successfully updated.'
-    else
-      render :edit
-    end
+    flash[:notice] = "#{@description} was successfully updated." if @description.update(description_params)
+    respond_with @description
   end
 
   # DELETE /descriptions/1
   def destroy
     @description.destroy
-    redirect_to descriptions_url, notice: 'Description was successfully destroyed.'
+    flash[:notice] = "Description was successfully destroyed."
+    respond_with(@description)
   end
 
   private
@@ -54,11 +50,15 @@ class DescriptionsController < ApplicationController
     end
 
     def set_author
-      @author = User.find(params[:user_id])
+      @author = User.find(params[:user_id]) if params[:user_id]
     end
 
     def set_image
-      @image = Image.find(params[:image_id])
+      if params[:image_id]
+        @image = Image.find(params[:image_id]) 
+      else
+        @image = @description.image
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

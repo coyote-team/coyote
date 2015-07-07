@@ -5,6 +5,7 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :json
 
   # GET <%= route_url %>
   def index
@@ -27,27 +28,21 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
-
-    if @<%= orm_instance.save %>
-      redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} was successfully created.'" %>
-    else
-      render :new
-    end
+    flash[:notice] = "#{@<%= singular_table_name %>} was successfully created." if @<%= orm_instance.save %>
+    respond_with @<%= singular_table_name %>
   end
 
   # PATCH/PUT <%= route_url %>/1
   def update
-    if @<%= orm_instance.update("#{singular_table_name}_params") %>
-      redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} was successfully updated.'" %>
-    else
-      render :edit
-    end
+    flash[:notice] = "#{@<%= singular_table_name %>} was successfully updated." if @<%= orm_instance.save %>
+    respond_with @<%= singular_table_name %>
   end
 
   # DELETE <%= route_url %>/1
   def destroy
     @<%= orm_instance.destroy %>
-    redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully destroyed.'" %>
+    flash[:notice] = <%= "'#{human_name} was successfully destroyed.'" %>
+    respond_with @<%= singular_table_name %>
   end
 
   private

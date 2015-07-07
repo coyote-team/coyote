@@ -4,7 +4,7 @@
     - if @image
       .row
         .col-sm-9.col-sm-push-3
-          = f.input :image_id,  as: :hidden, input_html: {value: params[:image_id]}
+          = f.input :image_id,  as: :hidden, input_html: {value: @image.id}
           = image_tag  @image.full_url, class: "description-image"
     - else
       = f.association :image,  :selected => params[:image_id]

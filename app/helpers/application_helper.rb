@@ -25,12 +25,13 @@ module ApplicationHelper
     #logger.info(params[:tag])
     tag.include?(params[:tag])
   end
+
   def flash_class(level)
-    case level
-        when :notice then "alert alert-info"
-        when :success then "alert alert-success"
-        when :error then "alert alert-error"
-        when :alert then "alert alert-error"
+    case level.to_sym
+      when :notice then "alert alert-info alert-dismissable"
+      when :success then "alert alert-success alert-dismissable"
+      when :error then "alert alert-error alert-dismissable"
+      when :alert then "alert alert-error alert-dismissable"
     end
   end
 

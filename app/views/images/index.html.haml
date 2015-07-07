@@ -27,7 +27,9 @@
 
           %tbody
             - @images.each_with_index do |image, idx|
-              %tr{class: "item"}<
+              - klass = "item "
+              - klass += "success " if image.completed?
+              %tr{class: klass}<
                 %td= image.url
                 %td= image.group
                 %td= image.website

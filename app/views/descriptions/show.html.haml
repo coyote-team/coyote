@@ -1,4 +1,4 @@
--title = "Showing Description #{@description}"
+-title = "Showing #{@description}"
 -meta title: title
 -cache ['v1', admin?,  @description] do
   .entity-outer
@@ -6,43 +6,47 @@
       .entity-inner
         %header{role: "header"}
           %h1#page-title{tabindex: -1}=title
-        %table.entity-table
-          %caption.sr-only Key value pairs for this description
-          %tbody
-            %tr
-              %th{scope: "row"}
-                Image:
-              %td
-                = @description.image
-            %tr
-              %th{scope: "row"}
-                Creator:
-              %td
-                = @description.user
-            %tr
-              %th{scope: "row"}
-                Locale:
-              %td
-                = LanguageList::LanguageInfo.find(@description.locale).name if @description.locale
-            %tr
-              %th{scope: "row"}
-                Metum:
-              %td
-                = @description.metum
-            %tr
-              %th{scope: "row"}
-                Text:
-              %td
-                = @description.text
-            %tr
-              %th{scope: "row"}
-                Status:
-              %td
-                = @description.status
-        %nav.show-nav{role:"navigation"}
-          = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
-            %i.fa.fa-fw.fa-list{title: 'List'}
-            Descriptions
-          = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-            Edit
+        .row
+          .col-md-3
+            =image_tag @description.image.full_url, class: "description-image"
+          .col-md-9
+            %table.entity-table
+              %caption.sr-only Key value pairs for this description
+              %tbody
+                %tr
+                  %th{scope: "row"}<
+                    Text
+                  %td<
+                    = @description.text
+                %tr
+                  %th{scope: "row"}<
+                    Metum
+                  %td<
+                    = @description.metum
+                %tr
+                  %th{scope: "row"}<
+                    Status
+                  %td<
+                    = @description.status
+                %tr
+                  %th{scope: "row"}<
+                    Locale
+                  %td>
+                    = LanguageList::LanguageInfo.find(@description.locale).name if @description.locale
+                %tr
+                  %th{scope: "row"}<
+                    Image URL
+                  %td<
+                    = @description.image.full_url
+                %tr
+                  %th{scope: "row"}<
+                    Author
+                  %td<
+                    = @description.user
+            %nav.show-nav{role:"navigation"}
+              = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
+                %i.fa.fa-fw.fa-list{title: 'List'}
+                Descriptions
+              = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
+                %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
+                Edit

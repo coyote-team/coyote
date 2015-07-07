@@ -604,6 +604,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.2.2)
   rb-fsevent
+  responders
   roo
   rspec-rails
   sass-mediaqueries-rails

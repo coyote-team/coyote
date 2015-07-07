@@ -41,6 +41,6 @@ class Description < ActiveRecord::Base
   scope :long, -> {where("metum_id = 3")}
 
   def to_s
-    text
+    metum.title + " description for " + image.to_s + " by " + user.to_s
   end
 end
