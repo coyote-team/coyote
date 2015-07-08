@@ -1,8 +1,11 @@
-%h2 Forgot your password?
-= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+.devise-header
+  .devise-header-inner
+    %h2 Forgot your password?
+= simple_form_for resource, as: resource_name, url: password_path(resource_name), validate: true, html: {multipart: true, class: 'form-horizontal', method: :post }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
   = f.error_notification
   .form-inputs
     = f.input :email, required: true, autofocus: true
   .form-actions
-    = f.button :submit, "Send me reset password instructions"
+    .form-actions-inner
+      = f.button :submit, "Send me reset password instructions", class: "btn btn-success"
 = render "devise/shared/links"

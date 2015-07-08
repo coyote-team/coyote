@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-    current_user = User.find(2) #test with admin user for scoping
     @user = current_user #spoof current user for view
     if current_user
       #TODO should only show my content descriptions for these two

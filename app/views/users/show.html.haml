@@ -1,0 +1,38 @@
+-title = "Showing  #{@user}"
+-meta title: title
+-cache ['v1', admin?,  @user] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header{role: "header"}
+          %h1#page-title{tabindex: -1}=title
+        %table.entity-table
+          %caption.sr-only Key value pairs for this user
+          %tbody
+            %tr
+              %th{scope: "row"}<
+                First name
+              %td<
+                = @user.first_name
+            %tr
+              %th{scope: "row"}<
+                Last name
+              %td<
+                = @user.last_name
+            %tr
+              %th{scope: "row"}<
+                Email
+              %td<
+                = @user.email
+            %tr
+              %th{scope: "row"}<
+                Admin
+              %td<
+                = @user.admin
+        %nav.show-nav{role:"navigation"}
+          = link_to users_path, class: 'btn btn-info', title: "View the users index" do
+            %i.fa.fa-fw.fa-list{title: 'List'}
+            Users
+          = link_to edit_user_path(@user), title: "Edit this user", class: 'btn btn-primary' do
+            %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
+            Edit

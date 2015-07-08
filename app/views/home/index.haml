@@ -1,4 +1,6 @@
--title = 'Welcome Jane!'
+- title= "Welcome to Coyote"
+- if current_user and !@user.to_s.blank?
+  -title += ", #{@user}!"
 -meta title: title,
   og: { title: title,
     url: request.url,
@@ -9,13 +11,34 @@
     .col-md-12
       %header{role: "header"}
         %h1#page-title=title
-    -if current_user
+    - if !current_user
+      .col-md-6
+        %p<
+          Coyote is a tool for quickly annotating images built for the <a href="http://www.mcachicago.org/" target="_blank">Museum of Contemporary Art Chicago</a>.
+        %p<
+          = link_to "Create an account", new_registration_path(resource_name)
+          or
+          = link_to "log in", new_session_path(resource_name)
+          to start annotating.
+      -#.col-md-6
+        -#= render "devise/sessions/form"
+        -#.devise-actions
+          -#.devise-actions-inner
+            -#%br
+            -#= link_to "Sign up", new_registration_path(resource_name)
+            -#%br
+            -#= link_to "Forgot your password?", new_password_path(resource_name)
+    - if current_user
       .col-md-12
-        %h2 Your Queues 
+        - if @my_queue.length == 0 && @my_completed_queue.length == 0 && @my_described_queue.length ==0
+          %h2 You haven't been assigned any images.
+          %p Ask an admin to assign you some.
+        - else
+          %h2 Your Queues 
         =render "queue", queue: @my_queue, type: "Your Assigned Images"
         =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
         =render "queue", queue: @my_described_queue, type: "Your Described Images"
-    -if current_user.admin?
+    -if admin?
       .col-md-12
         %h2 Admin Queues
         =render "queue", queue: @unassigned, type: "Unassigned Images"
@@ -25,7 +48,7 @@
         -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
         =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
         -#=render "queue", queue: @assigned, type: "Assigned Images"
-    -if current_user.admin?
+    -if admin?
       .col-md-6
         = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
           %h2>

@@ -1,0 +1,42 @@
+-title = 'Listing Users'
+-meta title: title
+- cache ['v1', admin?,  @users] do
+  .index-outer
+    .index
+      .index-inner
+        %header{role: "header"}
+          %h1#page-title{tabindex: -1}=title
+        %table.index-table
+          %caption.sr-only Index table for users
+          %thead
+            %tr
+              %th{scope: "col"}<
+                First name
+              %th{scope: "col"}<
+                Last name
+              %th{scope: "col"}<
+                Email
+              %th{scope: "col"}<
+                Admin
+              %th{scope: "col"}<
+                Actions
+
+          %tbody
+            - @users.each_with_index do |user, idx|
+              %tr{class: "item"}
+                %td= user.first_name
+                %td= user.last_name
+                %td= user.email
+                %td= user.admin
+                %td.text-right<
+                  = link_to user, class: "btn btn-show", title: "Show this user" do
+                    %i.fa.fa-fw.fa-eye{title: "Eye"}
+                  = link_to edit_user_path(user), class: "btn btn-edit", title: "Edit this user"  do
+                    %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                  = link_to user, title: "Delete this user" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{user}?"} do
+                    %i.fa.fa-fw.fa-trash{title: "Trash can"}
+
+        %nav.index-nav{role:"navigation"}
+          = link_to new_user_path, class: 'btn btn-success new-link' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New User

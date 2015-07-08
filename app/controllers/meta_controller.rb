@@ -1,4 +1,5 @@
 class MetaController < ApplicationController
+  before_filter :admin
   before_action :set_metum, only: [:show, :edit, :update, :destroy]
 
   # GET /meta
@@ -40,10 +41,10 @@ class MetaController < ApplicationController
   end
 
   # DELETE /meta/1
-  def destroy
-    @metum.destroy
-    redirect_to meta_url, notice: 'Metum was successfully destroyed.'
-  end
+  #def destroy
+    #@metum.destroy
+    #redirect_to meta_url, notice: 'Metum was successfully destroyed.'
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

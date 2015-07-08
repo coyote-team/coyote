@@ -9,14 +9,25 @@
   %nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
     %h2.sr-only Navigation
     %ul.nav.navbar-nav
-      - models = [ "images", "descriptions", "groups", "websites", "meta", "statuses", ]
+      - models = [ "images", "descriptions", "groups", "websites", "meta", "statuses", "assignments", "users" ]
       - models.each do |m|
         -#%li.active
-        %li<
-          = link_to  m.capitalize, send("#{m}_path"), title: "#{m.capitalize} Index"
+        -if admin?
+          %li<
+            = link_to  m.capitalize, send("#{m}_path"), title: "#{m.capitalize} Index"
     %h2.sr-only Global Actions
     %ul.nav.navbar-nav.navbar-right
       %li<
         %a{href: "mailto:coyote@seeread.info", title: "Support email", target: "_blank"}
           %i.fa.fa-fw.fa-support{title: "Life Preserver"}
           Support
+      -if !current_user
+        %li<
+          = link_to user_session_path do
+            %i.fa.fa-fw.fa-sign-in{title: "Log in"}
+            Log in
+      -if current_user
+        %li<
+          = link_to destroy_user_session_path, :method => :delete do 
+            %i.fa.fa-fw.fa-sign-out{title: "Log out"}
+            Log out

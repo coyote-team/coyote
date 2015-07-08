@@ -1,4 +1,5 @@
 class StatusesController < ApplicationController
+  before_filter :admin
   before_action :set_status, only: [:show, :edit, :update, :destroy]
 
   # GET /statuses
@@ -40,10 +41,10 @@ class StatusesController < ApplicationController
   end
 
   # DELETE /statuses/1
-  def destroy
-    @status.destroy
-    redirect_to statuses_url, notice: 'Status was successfully destroyed.'
-  end
+  #def destroy
+    #@status.destroy
+    #redirect_to statuses_url, notice: 'Status was successfully destroyed.'
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

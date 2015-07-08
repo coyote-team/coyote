@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end unless :devise_controller?
 
-  def admin_user
-    redirect_to(root_url) unless current_user and current_user.admin?
-  end
+  protected
+    def admin_user
+      redirect_to(root_url) unless current_user and current_user.admin?
+    end
 end

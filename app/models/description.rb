@@ -43,4 +43,14 @@ class Description < ActiveRecord::Base
   def to_s
     metum.title + " description for " + image.to_s + " by " + user.to_s
   end
+
+  def approved?
+    status_id ==2
+  end
+  def not_approved?
+    status_id ==3
+  end
+  def ready_to_review
+    status_id == 1
+  end
 end

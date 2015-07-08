@@ -1,0 +1,23 @@
+= simple_form_for @user, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :email
+    = f.input :admin
+
+
+  .form-actions
+    .form-actions-inner
+      = f.button :submit, class: 'btn btn-success'
+      - if action_name == 'edit'
+        %br
+        %br
+        = link_to @user, class: 'btn btn-info' do
+          %i.fa.fa-fw.fa-eye{title: "Eye"}
+          View this user
+      %br
+      %br
+      = link_to users_path, class: 'btn btn-info' do
+        %i.fa.fa-fw.fa-list{title: "List"}
+        View all Users

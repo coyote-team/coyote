@@ -5,8 +5,12 @@
     .index
       .index-inner
         %header{role: "header"}
-          %h1#page-title{tabindex: -1}=title
-        %table.index-table
+          %h1#page-title{tabindex: -1}
+            =title
+            %span.badge
+              =@descriptions.count
+
+        %table.index-table.table
           %caption.sr-only Index table for descriptions
           %thead
             %tr
@@ -27,7 +31,11 @@
 
           %tbody
             - @descriptions.each_with_index do |description, idx|
-              %tr{class: "item"}
+              - klass = "item "
+              - klass += "success" if description.status_id == 2
+              - klass += "warning" if description.status_id == 1
+              - klass += "danger" if description.status_id == 3
+              %tr{class: klass}
                 %td= description.image
                 %td= description.status
                 %td= description.metum

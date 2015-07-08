@@ -1,9 +1,12 @@
-%h2 Resend confirmation instructions
-= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+.devise-header
+    .devise-header-inner
+      %h2 Resend confirmation instructions
+= simple_form_for resource, as: resource_name, url: confirmation_path(resource_name), validate: true, html: {multipart: true, class: 'form-horizontal', method: :post}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
   = f.error_notification
   = f.full_error :confirmation_token
   .form-inputs
     = f.input :email, required: true, autofocus: true
   .form-actions
-    = f.button :submit, "Resend confirmation instructions"
+    .form-actions-inner
+      = f.button :submit, "Resend", class: 'btn btn-success'
 = render "devise/shared/links"

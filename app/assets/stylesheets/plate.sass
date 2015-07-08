@@ -40,24 +40,23 @@
 
 
 //general admin
-.form-actions
+.form-actions, .devise-actions, .devise-header
   +make-row
-.form-actions-inner
+.form-actions-inner, .devise-actions-inner, .devise-header-inner
   +make-sm-column(9)
   +make-sm-column-push(3)
 
 input[type="radio"], input[type="checkbox"]
   margin-top: 1em
 .create, .new, .edit, .update
-  @extend .container
-  .btn
-    text-transform: uppercase
-  .form-actions
-    text-align: right
+  #main
+    @extend .container
+    .btn
+      text-transform: uppercase
+    .btn-success
+      margin-top: 1em
+      margin-bottom: 1em
 
-  .btn-success
-    margin-top: 1em
-    margin-bottom: 1em
 
 //admin
 .index-outer, .entity-outer
@@ -71,6 +70,7 @@ input[type="radio"], input[type="checkbox"]
 
 //table
 .entity-table, .index-table
+  @extend .table
   @extend .table-striped
   width: 100%
   margin-bottom: ms(3)
@@ -87,3 +87,7 @@ input[type="radio"], input[type="checkbox"]
   thead th:last-child
     text-align: right
   
+//fix for remember me on sessions/new
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]
+  top: -6px
+

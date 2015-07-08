@@ -16,6 +16,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  admin                  :boolean          default(FALSE)
+#  first_name             :string(255)
+#  last_name              :string(255)
 #
 # Indexes
 #
@@ -34,6 +36,6 @@ class User < ActiveRecord::Base
   has_many :descriptions, dependent: :nullify
 
   def to_s
-    email
+    [first_name, last_name].join(' ')
   end
 end

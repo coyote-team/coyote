@@ -1,0 +1,11 @@
+.devise-header
+  .devise-header-inner
+    %h2 Log in
+= simple_form_for resource, as: resource_name, url: session_path(resource_name), validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
+  .form-inputs
+    = f.input :email, required: false, autofocus: true
+    = f.input :password, required: false
+    = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+  .form-actions
+    .form-actions-inner
+      = f.button :submit, "Log in", class: 'btn btn-success'
