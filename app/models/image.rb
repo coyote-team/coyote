@@ -4,12 +4,13 @@ require 'roo'
 #
 # Table name: images
 #
-#  id         :integer          not null, primary key
-#  url        :string(255)
-#  website_id :integer
-#  group_id   :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  url          :string(255)
+#  website_id   :integer
+#  group_id     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  canonical_id :string(255)
 #
 # Indexes
 #
@@ -28,6 +29,7 @@ class Image < ActiveRecord::Base
   has_many :users, through: :assignments
 
   validates :url, :presence => true, :uniqueness => {:scope => :website_id}
+  validates :canonical_id, :presence => true, :uniqueness => {:scope => :website_id}
   validates_associated :website, :group
   validates_presence_of :website, :group
 
@@ -35,6 +37,8 @@ class Image < ActiveRecord::Base
 
   scope :unassigned, -> (n = 0) { select { |i| i.users.size == n } }
   scope :assigned, -> (n = 0) { select { |i| i.users.size > n } }
+
+  paginates_per 50
 
   def to_s
     url

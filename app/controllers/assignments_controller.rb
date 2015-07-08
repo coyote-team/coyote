@@ -4,7 +4,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments
   def index
-    @assignments = Assignment.all
+    @assignments = Assignment.all.page params[:page]
   end
 
   # GET /assignments/1

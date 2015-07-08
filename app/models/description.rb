@@ -40,6 +40,8 @@ class Description < ActiveRecord::Base
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
+  paginates_per 50
+
   def to_s
     metum.title + " description for " + image.to_s + " by " + user.to_s
   end

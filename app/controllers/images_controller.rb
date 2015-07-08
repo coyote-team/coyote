@@ -3,7 +3,7 @@ class ImagesController < ApplicationController
 
   # GET /images
   def index
-    @images = Image.all
+    @images = Image.all.page params[:page]
   end
 
   # GET /images/1
@@ -75,6 +75,6 @@ class ImagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:url, :group_id, :website_id, :tag_list)
+      params.require(:image).permit(:url, :group_id, :website_id, :tag_list, :canonical_id)
     end
 end

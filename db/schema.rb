@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708151043) do
+ActiveRecord::Schema.define(version: 20150708191222) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -46,11 +46,12 @@ ActiveRecord::Schema.define(version: 20150708151043) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.integer  "website_id", limit: 4
-    t.integer  "group_id",   limit: 4
+    t.string   "url",          limit: 255
+    t.integer  "website_id",   limit: 4
+    t.integer  "group_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "canonical_id", limit: 255
   end
 
   add_index "images", ["group_id"], name: "index_images_on_group_id", using: :btree

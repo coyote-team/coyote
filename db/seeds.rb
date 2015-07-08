@@ -14,12 +14,14 @@ Status.create!([
   {id: 3, title: "Not approved", description: ""}
 ])
 Website.create!([
-  {id: 1, title: "Museum Of Contemporary Art Chicago", url: "http://www2.mcachicago.org/"}
+  {id: 1, title: "Staging MCA Chicago", url: "http://staging.cms.mcachicago.org/api/v1/attachment_images/"},
+  {id: 2, title: "MCA Chicago", url: "http://www2.mcachicago.org/"}
+
 ])
 Image.create!([
-  {id: 1, url: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 1, group_id: 1},
-  {id: 2, url: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 1, group_id: 1},
-  {id: 3, url: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 1, group_id: 1},
+  {id: 1, url: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
+  {id: 2, url: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
+  {id: 3, url: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
 ])
 User.create!([
   {id: 1, email: "coyote_user@seeread.info", password: "asdfasdf", first_name: "Test", last_name: "User"},

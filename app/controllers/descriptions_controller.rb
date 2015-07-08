@@ -8,7 +8,7 @@ class DescriptionsController < ApplicationController
 
   # GET /descriptions
   def index
-    @descriptions = Description.all
+    @descriptions = Description.all.page params[:page]
   end
 
   # GET /descriptions/1

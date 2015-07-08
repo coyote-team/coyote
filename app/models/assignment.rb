@@ -20,4 +20,9 @@ class Assignment < ActiveRecord::Base
 
   validates_associated :user, :image
   validates_presence_of :user, :image
+  
+  default_scope {order('created_at DESC')}
+
+  paginates_per 50
+
 end

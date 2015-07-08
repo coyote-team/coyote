@@ -6,6 +6,15 @@
       .index-inner
         %header{role: "header"}
           %h1#page-title{tabindex: -1}=title
+
+        %nav.index-nav{role:"navigation"}
+          =paginate @assignments
+          %h3.sr-only Actions
+          = link_to new_assignment_path, class: 'btn btn-success new-link' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Assignment
+
+
         %table.index-table
           %caption.sr-only Index table for assignments
           %thead
@@ -31,6 +40,8 @@
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}
+          =paginate @assignments
+          %h3.sr-only Actions
           = link_to new_assignment_path, class: 'btn btn-success new-link' do
             %i.fa.fa-fw.fa-plus{title: "Plus"}
             New Assignment

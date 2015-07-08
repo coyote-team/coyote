@@ -8,8 +8,16 @@
           %h1#page-title{tabindex: -1}
             =title
             %span.badge
-              =@images.count
+              =@images.total_count
 
+        %nav.index-nav{role:"navigation"}
+          %h3.sr-only Pagination
+          =paginate @images
+          %h3.sr-only Actions
+          = link_to new_image_path, class: 'btn btn-success new-link' do
+            %i.fa.fa-fw.fa-plus{title: "Plus"}
+            New Image
+        
         %table.index-table
           %caption.sr-only Index table for images
           %thead
@@ -48,6 +56,8 @@
                     %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
         %nav.index-nav{role:"navigation"}
+          %h3.sr-only Pagination
+          =paginate @images
           = link_to new_image_path, class: 'btn btn-success new-link' do
             %i.fa.fa-fw.fa-plus{title: "Plus"}
             New Image
