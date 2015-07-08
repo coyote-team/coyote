@@ -10,7 +10,11 @@ class ApplicationController < ActionController::Base
   end unless :devise_controller?
 
   protected
-    def admin_user
+    def admin
       redirect_to(root_url) unless current_user and current_user.admin?
+    end
+
+    def users
+      redirect_to(root_url) if current_user.nil?
     end
 end

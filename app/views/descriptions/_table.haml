@@ -2,8 +2,9 @@
   %caption.sr-only Index table for descriptions
   %thead
     %tr
-      %th{scope: "col"}
-        Image
+      - if action_name == "index"
+        %th{scope: "col"}
+          Image
       %th{scope: "col"}
         Status
       %th{scope: "col"}
@@ -24,10 +25,12 @@
       - klass += "warning" if description.status_id == 1
       - klass += "danger" if description.status_id == 3
       %tr{class: klass}
-        %td= description.image
+        - if action_name == "index"
+          %td= description.image
         %td= description.status
         %td= description.metum
-        %td= description.locale
+        %td
+          = LanguageList::LanguageInfo.find(description.locale).name if description.locale
         %td= description.text
         %td= description.user
         %td.text-right

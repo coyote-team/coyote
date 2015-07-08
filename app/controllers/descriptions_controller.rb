@@ -3,6 +3,7 @@ class DescriptionsController < ApplicationController
   before_action :set_image, only: [:new, :edit]
   before_action :collect_meta, only: [:new, :edit]
   before_action :set_author, only: [:new]
+  before_filter :users
 
   respond_to :html, :json
 
