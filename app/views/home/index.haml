@@ -1,11 +1,10 @@
 - title= "Welcome to Coyote"
-- if current_user and !@user.to_s.blank?
-  -title += ", #{@user}!"
+- if current_user
+  -title += ", #{current_user}!"
 -meta title: title,
   og: { title: title,
     url: request.url,
   }
-- current_user = @user #dev override
 .container
   .row
     .col-md-12

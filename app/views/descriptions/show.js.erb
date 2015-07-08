@@ -1,3 +1,11 @@
 $("#flash-messages").html('<%= j render partial: "alerts", flash: flash %>');
+$('#disable-me')
+  .parent().prop('disabled', 'disabled')
+  .parent().addClass('disabled')
+  .siblings('form.btn').first().removeClass('disabled')
+  .find('button').prop('disabled', false);
+
+
+
 //TODO toggle approved status
 //shift queue
