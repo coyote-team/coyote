@@ -28,16 +28,6 @@
             -#= link_to "Sign up", new_registration_path(resource_name)
             -#%br
             -#= link_to "Forgot your password?", new_password_path(resource_name)
-    - if current_user
-      .col-md-12
-        - if @my_queue.length == 0 && @my_completed_queue.length == 0 && @my_described_queue.length ==0
-          %h2 You haven't been assigned any images.
-          %p Ask an admin to assign you some.
-        - else
-          %h2 Your Queues 
-        =render "queue", queue: @my_queue, type: "Your Assigned Images"
-        =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
-        =render "queue", queue: @my_described_queue, type: "Your Described Images"
     -if admin?
       .col-md-12
         %h2 Admin Queues
@@ -48,7 +38,6 @@
         -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
         =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
         -#=render "queue", queue: @assigned, type: "Assigned Images"
-    -if admin?
       .col-md-6
         = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
           %h2>
@@ -66,3 +55,15 @@
         = link_to  export_images_path(format: "csv"), class: 'btn btn-success' do
           %i.fa.fa-fw.fa-download
           Export
+    - if current_user
+      .col-md-12
+        - if @my_queue.length == 0 && @my_completed_queue.length == 0 && @my_described_queue.length ==0
+          %h2 You haven't been assigned any images.
+          - if !admin?
+            %p Ask an admin to assign you some.
+
+        - else
+          %h2 Your Queues 
+        =render "queue", queue: @my_queue, type: "Your Assigned Images"
+        =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
+        =render "queue", queue: @my_described_queue, type: "Your Described Images"

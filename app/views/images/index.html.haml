@@ -15,6 +15,8 @@
           %thead
             %tr
               %th{scope: "col"}<
+                Image
+              %th{scope: "col"}<
                 Url
               %th{scope: "col"}<
                 Group
@@ -30,6 +32,8 @@
               - klass = "item "
               - klass += "success " if image.completed?
               %tr{class: klass}<
+                %td
+                  =image_tag image.full_url
                 %td= image.url
                 %td= image.group
                 %td= image.website

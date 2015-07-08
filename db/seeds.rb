@@ -22,13 +22,12 @@ Image.create!([
   {id: 3, url: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 1, group_id: 1},
 ])
 User.create!([
-  {id: 1, email: "coyote_dev@seeread.info", password: "asdfasdf"},
-  {id: 2, email: "coyote_admin@seeread.info", admin: true , password: "asdfasdf"},
+  {id: 1, email: "coyote_user@seeread.info", password: "asdfasdf", first_name: "Test", last_name: "User"},
+  {id: 2, email: "coyote_admin@seeread.info", admin: true , password: "asdfasdf", first_name: "Admin", last_name: "User"},
 ])
 Assignment.create!([
   {id: 1, user_id: 1, image_id: 1},
   {id: 2, user_id: 1, image_id: 2},
-  {id: 3, user_id: 2, image_id: 2},
 ])
 Description.create!([
   #image 1 : completed

@@ -8,16 +8,16 @@
           = image_tag  @image.full_url, class: "description-image"
     - else
       = f.association :image,  :selected => params[:image_id]
-    - if @author
-      = f.input :user_id,  as: :hidden, input_html: {value: params[:user_id]}
-    - else
+    - if admin? and @author.nil?
       = f.association :user, label: "Author", prompt: "Pick the author"
+    - elsif action_name == 'new' and 
+      = f.input :user_id,  as: :hidden, input_html: {value: @author.id}
     = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type"
     = f.input :locale, collection: LanguageList::COMMON_LANGUAGES, :label_method => :name,:value_method => :iso_639_1, as: :select, prompt: "Pick the locale", selected: "en"
-    - if @author
-      = f.input :status_id, as: :hidden, input_html: {value: 1}
-    - else
+    - if admin?
       = f.association :status, prompt: "Pick the status"
+    - else
+      = f.input :status_id, as: :hidden, input_html: {value: 1}
     = f.input :text #TODO update prompt based on metum and user
 
 

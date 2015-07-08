@@ -67,7 +67,7 @@ class Image < ActiveRecord::Base
   def described_but_not_completed_by?(user)
   end
 
-  #completed in any combo of locales
+  #completed all meta in any combo of locales
   def completed?
     meta_ids = Metum.all.map{|m| m.id}
     approved_id = Status.find_by_title("Approved")

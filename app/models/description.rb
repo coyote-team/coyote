@@ -53,4 +53,13 @@ class Description < ActiveRecord::Base
   def ready_to_review
     status_id == 1
   end
+
+  def siblings
+    Description.where(image_id: image_id).where.not(id: id)
+  end
+
+  def siblings_by(user)
+    Description.where(image_id: image_id).where.not(id: id).where(user_id: user.id)
+  end
+
 end

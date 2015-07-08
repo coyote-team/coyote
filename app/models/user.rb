@@ -36,6 +36,31 @@ class User < ActiveRecord::Base
   has_many :descriptions, dependent: :nullify
 
   def to_s
-    [first_name, last_name].join(' ')
+    if !first_name.blank? or !last_name.blank?
+      [first_name, last_name].join(' ')
+    else
+      email
+    end
   end
+
+  def next_image(current_image=nil)
+    next_image = nil
+    images.each do |i|
+      described_by_me = nil
+      described_by_me = i.descriptions.detect{ |d| d.user_id == id}
+
+      if current_image
+        if described_by_me.nil?  and current_image.id != i.id
+          next_image = i
+          break
+        end
+      elsif described_by_me.nil?
+        next_image = i
+        break
+      end
+
+    end
+    next_image
+  end
+
 end

@@ -1,8 +1,10 @@
-- if queue and queue.size > 0
+- if queue 
   .queue
     %h3 
       #{type} Queue
-      %span.badge= queue.count
+      -if queue.size > 0
+        %span.badge= queue.count
+  -if queue.size > 0
     .well
       .row
         - queue.each_with_index do |item, idx|
@@ -27,7 +29,7 @@
                   %h4 
                     Descriptions
                     %span.badge= descriptions.count
-                    - path = new_description_path(image_id: image.id, user_id: @user.id )
+                    - path = new_description_path(image_id: image.id, user_id: current_user.id )
                     =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
                       -#%i.fa.fa-plus
                       Describe
@@ -38,24 +40,25 @@
                           .panel-heading
                             -#=link_to description_path(d), title: "Approve this description", class: 'btn btn-success' do
                             .btn-group{role: "group", "aria-label": "Image actions"} 
-                              -form_klass='btn btn-success '
-                              -disabled = false
-                              -if d.status_id == 2
-                                -form_klass += 'disabled'
-                                - disabled = true
-                              = button_to description_path(d), action: :update, params: {"description[status_id]": 2}, title: "Approve this description", 
-                                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
-                                data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
-                                %i.fa.fa-fw.fa-thumbs-up
-                              -form_klass='btn btn-danger '
-                              -disabled = false
-                              -if d.status_id == 3
-                                -form_klass += 'disabled'
-                                - disabled = true
-                              = button_to description_path(d), params: {"description[status_id]": 3}, title: "Disapprove this description", 
-                                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
-                                data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
-                                %i.fa.fa-fw.fa-thumbs-down
+                              -if admin?
+                                -form_klass='btn btn-success '
+                                -disabled = false
+                                -if d.status_id == 2
+                                  -form_klass += 'disabled'
+                                  - disabled = true
+                                = button_to description_path(d), action: :update, params: {"description[status_id]": 2}, title: "Approve this description", 
+                                  form_class: form_klass, disabled: disabled, method: :patch, remote: true,
+                                  data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
+                                  %i.fa.fa-fw.fa-thumbs-up
+                                -form_klass='btn btn-danger '
+                                -disabled = false
+                                -if d.status_id == 3
+                                  -form_klass += 'disabled'
+                                  - disabled = true
+                                = button_to description_path(d), params: {"description[status_id]": 3}, title: "Disapprove this description", 
+                                  form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                                  data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"} do
+                                  %i.fa.fa-fw.fa-thumbs-down
                               =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary' do
                                 %i.fa.fa-fw.fa-pencil
                             %span.label.label-default= d.locale
@@ -77,7 +80,7 @@
                                   %cite<
                                     =d.user
 
-                - if @user.admin? and !type.starts_with?("Your") #TODO replace with current_user?
+                - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
                   %h4 
                     Users 
                     %span.badge
@@ -88,3 +91,5 @@
                   %ul
                     -image.users.each do |user|
                       %li= user
+  -if queue.size == 0
+    %p This queue is empty.
