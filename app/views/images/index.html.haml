@@ -1,4 +1,4 @@
--title = 'Listing Images'
+-title = 'Images'
 -meta title: title
 - cache ['v1', admin?,  @images] do
   .index-outer
@@ -11,8 +11,9 @@
               =@images.total_count
 
         %nav.index-nav{role:"navigation"}
-          %h3.sr-only Pagination
-          =paginate @images
+          - if @images.total_pages < 1
+            %h3.sr-only Pagination
+            =paginate @images
           %h3.sr-only Actions
           = link_to new_image_path, class: 'btn btn-success new-link' do
             %i.fa.fa-fw.fa-plus{title: "Plus"}

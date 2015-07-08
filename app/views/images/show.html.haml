@@ -29,9 +29,11 @@
                   %td
                     = @image.website
             %nav.show-nav{role:"navigation"}
-              = link_to images_path, class: 'btn btn-info', title: "View the images index" do
-                %i.fa.fa-fw.fa-list{title: 'List'}
-                Images
               = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
                 %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
                 Edit
+              %br
+              %br
+              = link_to images_path, class: 'btn btn-info', title: "View the images index" do
+                %i.fa.fa-fw.fa-list{title: 'List'}
+                Images

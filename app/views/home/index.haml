@@ -56,13 +56,11 @@
           Export
     - if current_user
       .col-md-12
+        %h2 Your Queues 
         - if @my_queue.length == 0 && @my_completed_queue.length == 0 && @my_described_queue.length ==0
-          %h2 You haven't been assigned any images.
+          %p You haven't been assigned any images.
           - if !admin?
             %p Ask an admin to assign you some.
-
-        - else
-          %h2 Your Queues 
         =render "queue", queue: @my_queue, type: "Your Assigned Images"
         =render "queue", queue: @my_described_queue, type: "Your Described Images"
         =render "queue", queue: @my_completed_queue, type: "Your Completed Images"

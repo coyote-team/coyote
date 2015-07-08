@@ -5,8 +5,8 @@
       = f.input :canonical_id, label: "Canonical ID"
     - else
       = f.input :canonical_id, as: :hidden
-    = f.association :website
-    = f.association :group
+    = f.association :website, prompt: "Pick a website"
+    = f.association :group, prompt: "Pick a group"
     = f.input :url, as: :string, label: "Path", hint: "relative to the website domain"
     = f.input :tag_list,  label: 'Tags', input_html: {class: 'autocomplete' , data: { class: 'autocomplete', placeholder: "Enter tags", saved:  f.object.tags.map{|t| {id: t.name, name: t.name}}.to_json, url: autocomplete_tags_path}}
 

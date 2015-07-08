@@ -13,7 +13,7 @@
         - models = [ "images", "descriptions", "assignments", "users", "groups", "websites" ]
         - models.each do |m|
           %li<
-            = link_to  m.capitalize, send("#{m}_path"), title: "#{m.capitalize} Index"
+            = link_to  m.capitalize, send("#{m}_path")
     .navbar-right
       -if current_user
         %p.navbar-text
