@@ -26,6 +26,9 @@ $ ->
     #remove :visited attributes on */new for screen readers
     $('a.new-link').removeProp('visited')
 
+    $('#description_metum_id').off().on 'change',  (e) ->
+      metum_id = $(@).find(":selected").val()
+      $("#metum-instructions-" + metum_id).slideDown().siblings().slideUp()
 
     #for ajax boolean toggle
     $('.boolean-toggle').off().on 'click', (e) ->

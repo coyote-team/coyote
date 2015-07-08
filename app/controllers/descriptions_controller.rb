@@ -1,6 +1,7 @@
 class DescriptionsController < ApplicationController
   before_action :set_description, only: [:show, :edit, :update, :destroy]
   before_action :set_image, only: [:new, :edit]
+  before_action :collect_meta, only: [:new, :edit]
   before_action :set_author, only: [:new]
 
   respond_to :html, :json
@@ -64,5 +65,9 @@ class DescriptionsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def description_params
       params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :user_id)
+    end
+
+    def collect_meta
+      @meta = Metum.all
     end
 end

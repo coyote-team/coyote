@@ -19,6 +19,17 @@
     - else
       = f.input :status_id, as: :hidden, input_html: {value: 1}
     = f.input :text #TODO update prompt based on metum and user
+    .row
+      .col-md-9.col-md-push-3
+        - @meta.each do |m|
+          - if @description.metum_id == m.id
+            - style = 'display: block;'
+          -else
+            - style = 'display: none;'
+          - klass = 'metum-instructions'
+          %p{id: "metum-instructions-#{m.id}", style: style}
+            =m.instructions
+
 
 
   .form-actions
