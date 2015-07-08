@@ -7,12 +7,11 @@
       %span.icon-bar
     %a.navbar-brand{:href => "/"} Coyote
   %nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
-    %h2.sr-only Navigation
-    %ul.nav.navbar-nav
-      - models = [ "images", "descriptions", "assignments", "users", "groups", "websites" ]
-      - models.each do |m|
-        -#%li.active
-        -if admin?
+    -if admin?
+      %h2.sr-only Navigation
+      %ul.nav.navbar-nav
+        - models = [ "images", "descriptions", "assignments", "users", "groups", "websites" ]
+        - models.each do |m|
           %li<
             = link_to  m.capitalize, send("#{m}_path"), title: "#{m.capitalize} Index"
     .navbar-right
@@ -25,14 +24,17 @@
       %h2.sr-only Global Actions
       %ul.nav.navbar-nav
         %li<
-          %a{href: "mailto:coyote@seeread.info", title: "Support email", target: "_blank"}
-            %i.fa.fa-fw.fa-support{title: "Life Preserver"}
+          %a{href: "mailto:coyote@seeread.info", target: "_blank"}
+            %i.fa.fa-fw.fa-support
+            Support
+
         - if current_user
           %li<
             = link_to destroy_user_session_path, :method => :delete do 
-              %i.fa.fa-fw.fa-sign-out{title: "Log out"}
+              %i.fa.fa-fw.fa-sign-out
+              Log out
         - else
           %li<
             = link_to user_session_path do
-              %i.fa.fa-fw.fa-sign-in{title: "Log in"}
+              %i.fa.fa-fw.fa-sign-in
               Log in

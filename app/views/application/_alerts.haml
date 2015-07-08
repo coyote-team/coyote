@@ -4,6 +4,9 @@
       #flash-messages
         -flash.each do |name, msg|
           %div{class: flash_class(name), role: "alert", id: "flash_#{name}"}
-            %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
-              %span{"aria-hidden" => "true"} ×
-            %p= msg
+            %p
+              =msg
+              %button.close{"data-dismiss" => "alert", :type => "button"}
+                .sr-only
+                  Dismiss message
+                %span{"aria-hidden" => "true"} ×
