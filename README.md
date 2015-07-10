@@ -29,7 +29,7 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant u
 
 ## Requirements
 
-MariaDB, rbenv, ruby gems, and bundler.
+[MariaDB](https://mariadb.org/), [rbenv](http://rbenv.org/) with [plugins](https://github.com/sstephenson/rbenv/wiki/Plugins) for gems, bundler, build, and binstubs, and [bundler](http://bundler.io/).
 
 ## Setup
 
@@ -48,8 +48,8 @@ Secure creds are kept untracked in ```.env```
 For use on [nomnoml](http://www.nomnoml.com/)
 
     [<frame>Coyote data model|
-      [User | id: int | email: string | admin: bool | timestamps]
-      [Image | id: int |url : string]
+      [User | id: int | first_name: string | last_name: string |  email: string | admin: bool | timestamps]
+      [Image | id: int |url : string | canonical_id: string]
       [Tag | id: int | title: string]
       [Group | id: int | title: string]
       [Description | id: int | locale:str(en) | text: text | timestamps]
@@ -89,11 +89,12 @@ Then we generated our scaffolds
 
     rails g pizza_scaffold website title:string url:string  --force
     rails g pizza_scaffold group title:string --force
-    rails g pizza_scaffold image url:string website:references group:references --force
+    rails g pizza_scaffold image url:string website:references group:references canonical_id:string --force
     rails g pizza_scaffold status title:string description:text --force
     rails g pizza_scaffold meta title:string instructions:text --force
     rails g pizza_scaffold description locale:string text:text status:references image:references metum:references user:references --force
     rails g migration AddAdminBooleanToUsers admin:boolean --force
+    rails g migration AddFirstNameAndLastNameToUser first_name:string last_name:string --force
     rails g pizza_scaffold assignment user:references image:references --force
     #set en default for locale
     #set admin bool on user, default false
@@ -101,7 +102,7 @@ Then we generated our scaffolds
 For updating generator based views and controllers
 
     rails g pizza_controller website title:string url:string  --force
-    rails g pizza_controller image url:string group:references website:references --force
+    rails g pizza_controller image url:string group:references website:references canonical_id:integer --force
     rails g pizza_controller group title:string --force
     rails g pizza_controller status title:string description:text --force
     rails g pizza_controller meta title:string instructions:text --force

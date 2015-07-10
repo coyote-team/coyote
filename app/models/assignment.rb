@@ -25,4 +25,7 @@ class Assignment < ActiveRecord::Base
 
   paginates_per 50
 
+  def to_s
+    user.to_s + " assigned to " + image.to_s
+  end
 end

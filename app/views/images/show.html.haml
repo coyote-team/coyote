@@ -34,6 +34,15 @@
                 Edit
               %br
               %br
+              = link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
+                Assign
+              %br
+              %br
               = link_to images_path, class: 'btn btn-info', title: "View the images index" do
                 %i.fa.fa-fw.fa-list{title: 'List'}
                 Images
+              %br
+              %br
+          = render "descriptions/table", descriptions: @image.descriptions
+
+

@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
-  before_filter :admin_user
+  before_filter :admin
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :next_image
 
   # GET /assignments
   def index
@@ -57,5 +58,9 @@ class AssignmentsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def assignment_params
       params.require(:assignment).permit(:user_id, :image_id)
+    end
+    def next_image
+      @next_image = Image.limit(1).unassigned
+      @next_image = nil if @next_image.empty?
     end
 end
