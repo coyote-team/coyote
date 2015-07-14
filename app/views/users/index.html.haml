@@ -17,7 +17,7 @@
               %th{scope: "col"}<
                 Email
               %th{scope: "col"}<
-                Admin
+                Role
               %th{scope: "col"}<
                 Actions
 
@@ -27,7 +27,7 @@
                 %td= user.first_name
                 %td= user.last_name
                 %td= user.email
-                %td= user.admin
+                %td= user.admin ? "Admin" : "Regular"
                 %td.text-right<
                   = link_to user, class: "btn btn-show", title: "Show this user" do
                     %i.fa.fa-fw.fa-eye{title: "Eye"}

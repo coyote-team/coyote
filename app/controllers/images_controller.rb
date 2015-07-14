@@ -3,7 +3,9 @@ class ImagesController < ApplicationController
 
   # GET /images
   def index
-    @images = Image.all.page params[:page]
+    @q = Image.ransack(params[:q])
+    @images = @q.result(distinct: true).page(params[:page]) 
+    @tags = Image.tag_counts_on(:tags)
   end
 
   # GET /images/1

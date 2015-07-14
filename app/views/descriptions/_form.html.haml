@@ -8,7 +8,7 @@
           = image_tag  @image.full_url, class: "description-image"
     - else
       = f.association :image,  :selected => params[:image_id]
-    - if admin? and @author.nil?
+    - if @author.nil?
       = f.association :user, label: "Author", prompt: "Pick the author"
     - elsif action_name == 'new' and 
       = f.input :user_id,  as: :hidden, input_html: {value: @author.id}

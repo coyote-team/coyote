@@ -1,6 +1,6 @@
 -title = 'Images'
 -meta title: title
-- cache ['v1', admin?,  @images] do
+- cache ['v1', admin?,  @images, @q, @page] do
   .index-outer
     .index
       .index-inner
@@ -15,46 +15,83 @@
             %h3.sr-only Pagination
             =paginate @images
           %h3.sr-only Actions
-          = link_to new_image_path, class: 'btn btn-success new-link' do
-            %i.fa.fa-fw.fa-plus{title: "Plus"}
-            New Image
-        
-        %table.index-table
-          %caption.sr-only Index table for images
-          %thead
-            %tr
-              %th{scope: "col"}<
-                Image
-              %th{scope: "col"}<
-                Url
-              %th{scope: "col"}<
-                Group
-              %th{scope: "col"}<
-                Website
-              %th{scope: "col"}<
-                Descriptions
-              %th{scope: "col"}<
-                Actions
+          - if admin?
+            = link_to new_image_path, class: 'btn btn-success new-link' do
+              %i.fa.fa-fw.fa-plus{title: "Plus"}
+              New Image
+          = search_form_for @q, :html => {:class => "form-inline"}  do |f|
+            .form-group
+              = f.label :url_cont, "URL contains"
+              = f.search_field :url_cont, :class => 'input-medium form-control' 
 
-          %tbody
-            - @images.each_with_index do |image, idx|
-              - klass = "item "
-              - klass += "success " if image.completed?
-              %tr{class: klass}<
-                %td
-                  =image_tag image.full_url
-                %td= image.url
-                %td= image.group
-                %td= image.website
-                %td
-                  = render "counter", descriptions: image.descriptions, meta: Metum.all
-                %td.text-right<
-                  = link_to image, class: "btn btn-show", title: "Show this image" do
-                    %i.fa.fa-fw.fa-eye{title: "Eye"}
-                  = link_to edit_image_path(image), class: "btn btn-edit", title: "Edit this image"  do
-                    %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-                  = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{image}?"} do
-                    %i.fa.fa-fw.fa-trash{title: "Trash can"}
+        
+        .table-responsive
+          %table.index-table
+            %caption.sr-only Index table for images
+            %thead
+              %tr
+                -if admin?
+                  %th{scope: "col"}<
+                    %span.sr-only Select
+                    .btn-group
+                      %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => true, "aria-expanded" => false}
+                        Assign to
+                        %span.caret
+                      %ul.dropdown-menu
+                        - User.all.each do |u|
+                          %li
+                            %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk'}
+                              =u
+                %th{scope: "col"}<
+                  Assigned to
+                %th{scope: "col"}<
+                  Image
+                %th{scope: "col"}<
+                  Path
+                %th{scope: "col"}<
+                  Group
+                %th{scope: "col"}<
+                  Website
+                %th{scope: "col"}<
+                  Descriptions
+                %th{scope: "col"}<
+                  Actions
+
+            %tbody
+              - @images.each_with_index do |image, idx|
+                - klass = "item "
+                - klass += "success " if image.completed?
+                %tr{class: klass}<
+                  -if admin?
+                    %td
+                      = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id})
+                  %td
+                    - image.users.each do |u|
+                      = u.email
+                      %br
+                  %td
+                    = link_to image, class: "", title: "Show this image" do
+                      =image_tag image.full_url
+                  %td= truncate image.url, {length: 25, omission: "..."}
+                  %td= image.group
+                  %td= image.website
+                  %td
+                    = render "counter", descriptions: image.descriptions, meta: Metum.all
+                  %td.text-right<
+                    = link_to image, class: "btn btn-show", title: "Show this image" do
+                      %i.fa.fa-fw.fa-eye{title: "Eye"}
+                    -if admin?
+                      = link_to edit_image_path(image), class: "btn btn-edit", title: "Edit this image"  do
+                        %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                      = link_to image, title: "Delete this image" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{image}?"} do
+                        %i.fa.fa-fw.fa-trash{title: "Trash can"}
+
+        %p
+          - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+            = link_to images_path(tag: tag.name), :class => css_class do
+              = tag.name
+              %span.badge
+                = tag.count
 
         %nav.index-nav{role:"navigation"}
           %h3.sr-only Pagination

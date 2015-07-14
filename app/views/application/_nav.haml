@@ -14,6 +14,13 @@
         - models.each do |m|
           %li<
             = link_to  m.capitalize, send("#{m}_path")
+    -elsif current_user
+      %h2.sr-only Navigation
+      %ul.nav.navbar-nav
+        - models = [ "descriptions", "images"]
+        - models.each do |m|
+          %li<
+            = link_to  m.capitalize, send("#{m}_path")
     .navbar-right
       -if current_user
         %p.navbar-text

@@ -9,14 +9,14 @@
   -if queue.size > 0
     .well.well-sm
       .row
-        - queue.each_with_index do |item, idx|
-          - if item.is_a? Image
-            - image = item
-          - else #is a description
-            - description = item
-            - image = description.image
-          %ul
-            - queue_id = type.downcase.strip.gsub(' ', '-')
+        %ul
+          - queue.each_with_index do |item, idx|
+            - if item.is_a? Image
+              - image = item
+            - else #is a description
+              - description = item
+              - image = description.image
+              - queue_id = type.downcase.strip.gsub(' ', '-')
             %li{id: "#{queue_id}-image-li-#{image.id}"}<
               .col-sm-6.col-xs-12<
                 .thumbnail<
@@ -47,14 +47,7 @@
                                   %span.label.label-info{id: metum_id}= d.metum
                                   - locale_id= "#{queue_id}-#{d.id}-locale"
                                   %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
-                                  - case d.status.id
-                                  - when 1
-                                    -label_class = "warning"
-                                  - when 2
-                                    -label_class = "success"
-                                  - when 3
-                                    -label_class = "danger"
-                                  %span{id: "" , class: "label label-"+ label_class}= d.status
+                                  = render 'status', status: d.status
                               .panel-body
                                 %blockquote.blockquote
                                   %p<

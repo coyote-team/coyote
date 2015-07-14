@@ -61,20 +61,19 @@ input[type="radio"], input[type="checkbox"]
 //admin
 .index-outer, .entity-outer
   @extend .container
-.index, .entity
+.index:not(body), .entity
   +make-row
 .index-inner, .entity-inner
   +make-lg-column(12)
 
-.new-link
-  margin-top: 20px
-  float: right
 //table
+.table-responsive
+  clear: both
 .entity-table, .index-table
   @extend .table
   @extend .table-striped
   width: 100%
-  margin-bottom: ms(3)
+  margin-bottom: ms(2)
   tbody
     th
       text-align: right

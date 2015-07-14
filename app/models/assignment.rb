@@ -20,6 +20,8 @@ class Assignment < ActiveRecord::Base
 
   validates_associated :user, :image
   validates_presence_of :user, :image
+
+  validates :user, uniqueness: {scope: :image}
   
   default_scope {order('created_at DESC')}
 

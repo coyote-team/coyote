@@ -28,14 +28,23 @@
                     Website:
                   %td
                     = @image.website
+                %tr
+                  %th{scope: "row"}
+                    Tags:
+                  %td
+                    - tag_cloud(@image.tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+                      = link_to images_path(tag: tag.name), :class => css_class do
+                        = tag.name
+
             %nav.show-nav{role:"navigation"}
-              = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
-                %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
-                Edit
-              %br
-              %br
-              = link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
-                Assign
+              -if admin?
+                = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
+                  %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
+                  Edit
+                = link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
+                  Assign
+              =link_to new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-success", title: "Add a description for Image #{@image.id}" do
+                Describe
               %br
               %br
               = link_to images_path, class: 'btn btn-info', title: "View the images index" do
@@ -43,6 +52,9 @@
                 Images
               %br
               %br
-          = render "descriptions/table", descriptions: @image.descriptions
+          -if @image.descriptions.length > 0
+            .col-md-12
+              %h3 Descriptions
+              = render "descriptions/table", descriptions: @image.descriptions
 
 

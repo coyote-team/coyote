@@ -16,6 +16,7 @@ gem 'mysql2' #might need to set version for mariadb
 gem 'seed_dump'
 gem 'annotate'
 gem 'kaminari'
+gem 'ransack'
 gem 'simple_form', :git=>'https://github.com/plataformatec/simple_form.git'  #forms
 gem 'devise' #user auth
 #gem 'cancan' # permissions

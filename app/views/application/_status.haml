@@ -1,0 +1,8 @@
+- case status.id
+- when 1
+  -label_class = "warning"
+- when 2
+  -label_class = "success"
+- when 3
+  -label_class = "danger"
+%span{class: "label label-"+ label_class}= status

@@ -1,12 +1,13 @@
 = simple_form_for @assignment, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
   = f.error_notification
   .form-inputs
-    = f.association :user, :selected => params[:user_id], prompt: "Choose a user"
-    = f.association :image,  prompt: "Choose an image"
-    - if params[:image_id]
-      = f.association :image,  :selected => params[:image_id], prompt: "Choose an image"
-    -else
-
+    = f.association :user, prompt: "Choose a user"
+    - if @assignment.image  and action_name == "new"
+      = f.input :image_id,  as: :hidden, input_html: {value: @assignment.image.id}
+      .col-md-9.col-md-push-3
+        = image_tag @assignment.image.full_url
+    - else
+      = f.association :image,  prompt: "Choose an image"
 
   .form-actions
     .form-actions-inner

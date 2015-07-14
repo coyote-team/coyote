@@ -1,5 +1,9 @@
 Plate::Application.routes.draw do
-  resources :assignments
+  resources :assignments do
+    collection do
+      post :bulk
+    end
+  end
   resources :descriptions 
   resources :meta 
   resources :statuses

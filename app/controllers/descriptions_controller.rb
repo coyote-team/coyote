@@ -52,14 +52,18 @@ class DescriptionsController < ApplicationController
     end
 
     def set_author
-      @author = User.find(params[:user_id]) if params[:user_id]
+      if params[:user_id]
+        @author = User.find(params[:user_id]) 
+      elsif current_user and !current_user.admin?
+        @author = current_user 
+      end
     end
 
     def set_image
       if params[:image_id]
         @image = Image.find(params[:image_id]) 
       else
-        @image = @description.image
+        @image = @description.image if @description
       end
     end
 
