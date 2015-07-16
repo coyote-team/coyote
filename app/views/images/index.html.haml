@@ -1,4 +1,4 @@
--title = 'Images'
+- title = 'Images'
 -meta title: title
 - cache ['v1', admin?,  @images, @q, @page] do
   .index-outer
@@ -7,7 +7,7 @@
         %header{role: "header"}
           %h1#page-title{tabindex: -1}
             =title
-            %span.badge
+            -#%span.badge
               =@images.total_count
 
         %nav.index-nav{role:"navigation"}
@@ -64,15 +64,15 @@
                 %tr{class: klass}<
                   -if admin?
                     %td
-                      = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id})
+                      = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } image-path-#{ image.id }")
                   %td
                     - image.users.each do |u|
                       = u.email
                       %br
                   %td
                     = link_to image, class: "", title: "Show this image" do
-                      =image_tag image.full_url
-                  %td= truncate image.url, {length: 25, omission: "..."}
+                      =image_tag image.full_url, id: "image-file-#{ image.id }"#, alt: "" }#TODO alt
+                  %td{id: "image-path-#{image.id}"}=truncate image.url, {length: 25, omission: "..."} 
                   %td= image.group
                   %td= image.website
                   %td

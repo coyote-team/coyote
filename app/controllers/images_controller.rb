@@ -4,7 +4,14 @@ class ImagesController < ApplicationController
   # GET /images
   def index
     @q = Image.ransack(params[:q])
-    @images = @q.result(distinct: true).page(params[:page]) 
+
+    if params[:tag].present? 
+      @images = Image.tagged_with(params[:tag]).page(params[:page]) 
+    else
+      @images = @q.result(distinct: true).page(params[:page]) 
+    end
+
+
     @tags = Image.tag_counts_on(:tags)
   end
 
@@ -79,4 +86,5 @@ class ImagesController < ApplicationController
     def image_params
       params.require(:image).permit(:url, :group_id, :website_id, :tag_list, :canonical_id)
     end
+
 end

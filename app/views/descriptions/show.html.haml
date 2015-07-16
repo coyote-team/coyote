@@ -22,17 +22,17 @@
                   %th{scope: "row"}<
                     Metum
                   %td<
-                    = @description.metum
+                    %span.label.label-info= @description.metum
                 %tr
                   %th{scope: "row"}<
                     Status
                   %td<
-                    = @description.status
+                    = render "status", status: @description.status
                 %tr
                   %th{scope: "row"}<
                     Locale
                   %td>
-                    = LanguageList::LanguageInfo.find(@description.locale).name if @description.locale
+                    %span.label.label-default= LanguageList::LanguageInfo.find(@description.locale).name if @description.locale
                 %tr
                   %th{scope: "row"}<
                     Image URL

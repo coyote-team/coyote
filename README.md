@@ -27,9 +27,15 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant u
     ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
     open http://localhost:3000
 
-## Requirements
+## Components
 
-[MariaDB](https://mariadb.org/), [rbenv](http://rbenv.org/) with [plugins](https://github.com/sstephenson/rbenv/wiki/Plugins) for gems, bundler, build, and binstubs, and [bundler](http://bundler.io/).
+- [RubyOnRails](http://rubyonrails.org/)
+- [accecess](http://lukyvj.github.io/accecss/)
+- [MariaDB](https://mariadb.org/) 
+- [rbenv](http://rbenv.org/) with [plugins](https://github.com/sstephenson/rbenv/wiki/Plugins) for gems, bundler, build, and binstubs
+- [bundler](http://bundler.io/).
+- [SASS](http://sass-lang.com/)
+- [Coffeescript](http://coffeescript.org/)
 
 ## Setup
 
@@ -118,5 +124,4 @@ For updating generator based views and controllers
 - [ARIA in HTML](http://rawgit.com/w3c/aria-in-html/master/index.html) and [ARIA](http://www.w3.org/TR/wai-aria/states_and_properties#global_states)
 
 ## Versus
-
-## License 
+- [Depict4](http://depictfor.us/)
