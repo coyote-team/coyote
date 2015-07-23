@@ -57,7 +57,7 @@ gem 'responders' #respond_with ala  http://www.justinweiss.com/blog/2014/11/03/r
 #gem 'html2markdown'
 gem 'high_voltage' #static pages
 gem 'coffee-rails', '>= 4.1.0'
-gem 'asset_sync' #asset uploading
+#gem 'asset_sync' #asset uploading
 #gem 'coffee-views'
 #gem 'backbone-on-rails'
 #gem 'underscore-rails'
@@ -65,7 +65,7 @@ gem 'jquery-rails', ">= 4.0.4"
 gem 'jquery-ui-rails'
 #gem 'jquery-fileupload-rails'
 #gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
-#gem 'execjs' 
+gem 'execjs' 
 gem 'uglifier', '>= 2.7.1' #js compression
 gem "validate_url"
 gem 'tilt' #template interface

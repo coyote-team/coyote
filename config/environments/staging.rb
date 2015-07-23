@@ -90,15 +90,15 @@ Plate::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
 
-  config.paperclip_defaults = {
-    :storage => :fog,
-    :fog_credentials => {
-      :provider => ENV['FOG_PROVIDER'],
-      #:region =>  ENV['FOG_REGION'],
-      :aws_access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    },
-    :fog_directory => ENV['FOG_DIRECTORY'],
-    :fog_host => ENV['S3_HOST_ALIAS']
-  }
+  #config.paperclip_defaults = {
+    #:storage => :fog,
+    #:fog_credentials => {
+      #:provider => ENV['FOG_PROVIDER'],
+      ##:region =>  ENV['FOG_REGION'],
+      #:aws_access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      #:aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+    #},
+    #:fog_directory => ENV['FOG_DIRECTORY'],
+    #:fog_host => ENV['S3_HOST_ALIAS']
+  #}
 end
