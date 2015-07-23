@@ -42,7 +42,7 @@ gem 'capistrano-flowdock'
 #gem 'gibbon' #mailchimp
 #gem 'resque-scheduler'
 #gem 'newrelic_rpm' #monitoring
-#gem "therubyracer" #node for compiling js
+gem "therubyracer" #node for compiling js
 #gem 'delayed_job_active_record', '>= 4.0.3'
 gem 'oj' #optimized json
 #gem 'rack-timeout' #helpful for api blocking
@@ -65,7 +65,7 @@ gem 'jquery-rails', ">= 4.0.4"
 gem 'jquery-ui-rails'
 #gem 'jquery-fileupload-rails'
 #gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
-gem 'execjs' #needed for asset creation
+#gem 'execjs' 
 gem 'uglifier', '>= 2.7.1' #js compression
 gem "validate_url"
 gem 'tilt' #template interface
