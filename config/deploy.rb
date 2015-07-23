@@ -13,8 +13,8 @@ set :flowdock_project_name, ENV['FLOWDOCK_PROJECT_NAME']
 set :flowdock_deploy_tags, ["deploy"]
 set :flowdock_api_token, ENV['FLOWDOCK_API_TOKEN']
 
-set :user, 'ubuntu'
-set :deploy_to, "/home/ubuntu/data/#{fetch(:application)}"
+set :user, "seeread"
+set :deploy_to, "/home/seeread/data/#{fetch(:application)}"
 set :ssh_options, { :forward_agent => true, 
                     :keys => %w(~/.ssh/id_rsa),
                     :auth_methods => %w(publickey)}
@@ -22,10 +22,8 @@ set :ssh_options, { :forward_agent => true,
 set :keep_releases, 5
 
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/assets}
-set :linked_files, %w{.env .env.production .env.staging} #TODO make this smarter
 
 namespace :deploy do
-  before :check:linked_files, "dotenv:upload"
   before :restart, "assets:precompile"
   after :publishing, :restart
   #before :restart, "deploy:sitemap:clean"
@@ -47,6 +45,7 @@ namespace :dotenv do
       end
     end
   end
+  before 'deploy:check:linked_files', 'dotenv:upload'
 end
 #https://gist.github.com/andrey-skat/10399224
 namespace :assets do
