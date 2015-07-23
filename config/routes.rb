@@ -1,4 +1,5 @@
 Plate::Application.routes.draw do
+  apipie
   resources :assignments do
     collection do
       post :bulk

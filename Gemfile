@@ -74,7 +74,7 @@ gem "haml-rails"
 #gem 'hogan_assets' #js template compilaton
 #gem 'sitemap_generator'
 #gem 'whenever'
-gem 'apipie-rails' #for api documentation
+gem 'apipie-rails', :github => 'Apipie/apipie-rails' #for api documentation
 gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
 gem 'iconv'

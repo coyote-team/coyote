@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/Apipie/apipie-rails.git
+  revision: becc75b5f02663a1473ee94c0fbb98a82a2ce7bd
+  specs:
+    apipie-rails (0.3.4)
+      json
+
+GIT
   remote: https://github.com/josetapadas/select2-rails.git
   revision: 4e90042d893bac8bdf976852fcd2774d0930bead
   branch: upgrade-version-4
@@ -60,8 +67,6 @@ GEM
     annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
-    apipie-rails (0.3.4)
-      json
     arel (6.0.0)
     asset_sync (1.1.0)
       activemodel
@@ -571,7 +576,7 @@ DEPENDENCIES
   acts-as-taggable-on
   analytical
   annotate
-  apipie-rails
+  apipie-rails!
   asset_sync
   autoprefixer-rails
   better_errors

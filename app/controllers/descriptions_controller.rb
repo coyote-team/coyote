@@ -7,12 +7,27 @@ class DescriptionsController < ApplicationController
 
   respond_to :html, :json
 
+  def_param_group :description do
+    param :description, Hash do
+      param :locale, String
+      param :text, String
+      param :status_id, Integer
+      param :image_id, Integer
+      param :metum_id, Integer
+      param :created_at,    DateTime
+      param :updated_at,    DateTime
+    end
+  end
+
+
   # GET /descriptions
+  api :GET, "descriptions", "Get an index of descriptions"
   def index
     @descriptions = Description.all.page params[:page]
   end
 
   # GET /descriptions/1
+  api :GET, "descriptions/:id", "Get a description"
   def show
   end
 
@@ -26,6 +41,8 @@ class DescriptionsController < ApplicationController
   end
 
   # POST /descriptions
+  api :POST, "descriptions", "Create a description"
+  param_group :description
   def create
     @description = Description.new(description_params)
     flash[:notice] = "#{@description} was successfully created." if @description.save
@@ -33,6 +50,8 @@ class DescriptionsController < ApplicationController
   end
 
   # PATCH/PUT /descriptions/1
+  api :PUT, "descriptions/:id", "Create a description"
+  param_group :description
   def update
     flash[:notice] = "#{@description} was successfully updated." if @description.update(description_params)
     respond_with @description
