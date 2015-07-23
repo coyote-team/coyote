@@ -19,10 +19,10 @@
             = link_to new_image_path, class: 'btn btn-success new-link' do
               %i.fa.fa-fw.fa-plus{title: "Plus"}
               New Image
-          = search_form_for @q, :html => {:class => "form-inline"}  do |f|
-            .form-group
-              = f.label :url_cont, "URL contains"
-              = f.search_field :url_cont, :class => 'input-medium form-control' 
+          -#= search_form_for @q, :html => {:class => "form-inline"}  do |f|
+            -#.form-group
+              -#= f.label :path_cont, "Path contains"
+              -#= f.search_field :path_cont, :class => 'input-medium form-control' 
 
         
         .table-responsive
@@ -72,7 +72,7 @@
                   %td
                     = link_to image, class: "", title: "Show this image" do
                       =image_tag image.full_url, id: "image-file-#{ image.id }"#, alt: "" }#TODO alt
-                  %td{id: "image-path-#{image.id}"}=truncate image.url, {length: 25, omission: "..."} 
+                  %td{id: "image-path-#{image.id}"}=truncate image.path, {length: 25, omission: "..."} 
                   %td= image.group
                   %td= image.website
                   %td

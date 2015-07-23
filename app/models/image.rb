@@ -5,7 +5,7 @@ require 'roo'
 # Table name: images
 #
 #  id           :integer          not null, primary key
-#  url          :string(255)
+#  path         :string(255)
 #  website_id   :integer
 #  group_id     :integer
 #  created_at   :datetime
@@ -28,7 +28,7 @@ class Image < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
 
-  validates :url, :presence => true, :uniqueness => {:scope => :website_id}
+  validates :path, :presence => true, :uniqueness => {:scope => :website_id}
   validates :canonical_id, :presence => true, :uniqueness => {:scope => :website_id}
   validates_associated :website, :group
   validates_presence_of :website, :group
@@ -41,12 +41,12 @@ class Image < ActiveRecord::Base
   paginates_per 50
 
   def to_s
-    url
+    path
   end
 
-  def full_url
+  def url
     if website
-      website.url + url
+      website.url + path
     end
   end
 

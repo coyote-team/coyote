@@ -1,7 +1,22 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_filter :users
+
+  respond_to :html, :json
+
+  def_param_group :image do
+    param :image, Hash do
+      param :canonical_id,  String #(255)
+      param :path,           String #(255)
+      param :website_id,    Integer
+      param :group_id,      Integer
+      param :created_at,    DateTime
+      param :updated_at,    DateTime
+    end
+  end
 
   # GET /images
+  api :GET, "images", "Get an index of images"
   def index
     @q = Image.ransack(params[:q])
 
@@ -16,6 +31,7 @@ class ImagesController < ApplicationController
   end
 
   # GET /images/1
+  api :GET, "images/:id", "Get an image"
   def show
   end
 
@@ -29,6 +45,8 @@ class ImagesController < ApplicationController
   end
 
   # POST /images
+  api :POST, "images", "Create an image"
+  param_group :image
   def create
     @image = Image.new(image_params)
     if @image.save
@@ -38,7 +56,8 @@ class ImagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /images/1
+  api :PUT, "images/:id", "Update an image"
+  param_group :image
   def update
     if @image.update(image_params)
       redirect_to @image, notice: 'Image was successfully updated.'
@@ -48,6 +67,7 @@ class ImagesController < ApplicationController
   end
 
   # DELETE /images/1
+  api :DELETE, "images/:id", "Delete an image"
   def destroy
     @image.destroy
     redirect_to images_url, notice: 'Image was successfully destroyed.'
@@ -84,7 +104,7 @@ class ImagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:url, :group_id, :website_id, :tag_list, :canonical_id)
+      params.require(:image).permit(:path, :group_id, :website_id, :tag_list, :canonical_id)
     end
 
 end

@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150708191222) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.string   "url",          limit: 255
+    t.string   "path",         limit: 255
     t.integer  "website_id",   limit: 4
     t.integer  "group_id",     limit: 4
     t.datetime "created_at"

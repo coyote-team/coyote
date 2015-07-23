@@ -3,7 +3,7 @@
 # Table name: images
 #
 #  id           :integer          not null, primary key
-#  url          :string(255)
+#  path         :string(255)
 #  website_id   :integer
 #  group_id     :integer
 #  created_at   :datetime

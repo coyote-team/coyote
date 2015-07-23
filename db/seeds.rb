@@ -19,9 +19,9 @@ Website.create!([
 
 ])
 Image.create!([
-  {id: 1, url: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
-  {id: 2, url: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
-  {id: 3, url: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
+  {id: 1, path: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
+  {id: 2, path: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
+  {id: 3, path: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
 ])
 User.create!([
   {id: 1, email: "coyote_user@seeread.info", password: "asdfasdf", first_name: "Test", last_name: "User"},
