@@ -14,11 +14,6 @@
                 Title:
               %td
                 = @status.title
-            %tr
-              %th{scope: "row"}
-                Description:
-              %td
-                = @status.description
         %nav.show-nav{role:"navigation"}
           = link_to statuses_path, class: 'btn btn-info', title: "View the statuses index" do
             %i.fa.fa-fw.fa-list{title: 'List'}

@@ -9,11 +9,11 @@ class DescriptionsController < ApplicationController
 
   def_param_group :description do
     param :description, Hash do
-      param :locale, String
+      param :locale, String, desc: "Must be a valid ISO 639-1 locale."
       param :text, String
-      param :status_id, Integer
-      param :image_id, Integer
-      param :metum_id, Integer
+      param :status_id, :number
+      param :image_id, :number
+      param :metum_id, :number
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end
@@ -58,6 +58,7 @@ class DescriptionsController < ApplicationController
   end
 
   # DELETE /descriptions/1
+  api :DELETE, "descriptions/:id", "Delete a description"
   def destroy
     @description.destroy
     flash[:notice] = "Description was successfully destroyed."

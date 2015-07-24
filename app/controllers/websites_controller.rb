@@ -1,13 +1,17 @@
 class WebsitesController < ApplicationController
-  before_filter :admin
+  before_filter :admin, only: [:create, :edit, :update, :destroy]
   before_action :set_website, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html, :json
+
   # GET /websites
+  api :GET, "websites", "Get an index of websites"
   def index
     @websites = Website.all
   end
 
   # GET /websites/1
+  api :GET, "websites/:id", "Get a website"
   def show
   end
 

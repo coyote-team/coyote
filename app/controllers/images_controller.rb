@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
-  before_filter :users
+  before_filter :users, only: [:create, :edit, :update, :destroy]
 
   respond_to :html, :json
 
@@ -8,8 +8,8 @@ class ImagesController < ApplicationController
     param :image, Hash do
       param :canonical_id,  String #(255)
       param :path,           String #(255)
-      param :website_id,    Integer
-      param :group_id,      Integer
+      param :website_id,    :number
+      param :group_id,      :number
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end

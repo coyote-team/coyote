@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  acts_as_token_authentication_handler_for User
+
   private
 
   def sign_up_params

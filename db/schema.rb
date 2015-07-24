@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708191222) do
+ActiveRecord::Schema.define(version: 20150724203747) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -65,8 +65,7 @@ ActiveRecord::Schema.define(version: 20150708191222) do
   end
 
   create_table "statuses", force: :cascade do |t|
-    t.string   "title",       limit: 255
-    t.text     "description", limit: 65535
+    t.string   "title",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -107,8 +106,10 @@ ActiveRecord::Schema.define(version: 20150708191222) do
     t.boolean  "admin",                  limit: 1,   default: false
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
+    t.string   "authentication_token",   limit: 255
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

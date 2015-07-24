@@ -1,12 +1,22 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
+  def_param_group :group do
+    param :group, Hash do
+      param :title,  String #(255)
+      param :created_at,    DateTime
+      param :updated_at,    DateTime
+    end
+  end
+
   # GET /groups
+  api :GET, "groups", "Get an index of groups"
   def index
     @groups = Group.all
   end
 
   # GET /groups/1
+  api :GET, "groups/:id", "Get a group"
   def show
   end
 
@@ -20,6 +30,8 @@ class GroupsController < ApplicationController
   end
 
   # POST /groups
+  api :POST, "groups/:id", "Create a group"
+  param_group :group
   def create
     @group = Group.new(group_params)
 
@@ -31,6 +43,8 @@ class GroupsController < ApplicationController
   end
 
   # PATCH/PUT /groups/1
+  api :PUT, "groups/:id", "Update a group"
+  param_group :group
   def update
     if @group.update(group_params)
       redirect_to @group, notice: 'Group was successfully updated.'
@@ -40,6 +54,7 @@ class GroupsController < ApplicationController
   end
 
   # DELETE /groups/1
+  api :DELETE, "groups/:id", "Delete a group"
   def destroy
     @group.destroy
     redirect_to groups_url, notice: 'Group was successfully destroyed.'

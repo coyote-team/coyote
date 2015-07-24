@@ -21,7 +21,7 @@
 #
 
 class Description < ActiveRecord::Base
-
+  include Iso639::Validator
   belongs_to :status
   belongs_to :image, touch: true
   belongs_to :metum
@@ -29,6 +29,8 @@ class Description < ActiveRecord::Base
 
   validates_associated :image, :status, :metum, :user
   validates_presence_of :image, :status, :metum, :locale, :text
+  validates :locale, iso639Code: true, length: { is: 2 } 
+
 
   default_scope {order('status_id ASC')}
 

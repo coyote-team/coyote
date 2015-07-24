@@ -17,9 +17,9 @@ Metum.create!([
   {id: 3, title: "Long", instructions: "A long description is a lengthier description of an image compared to the alternative text. It is designed with description, instead of function, in mind. see description guidelines for specific guidance for aesthetics."}
 ])
 Status.create!([
-  {id: 1, title: "Ready to review", description: ""},
-  {id: 2, title: "Approved", description: ""},
-  {id: 3, title: "Not approved", description: ""}
+  {id: 1, title: "Ready to review"},
+  {id: 2, title: "Approved"},
+  {id: 3, title: "Not approved"}
 ])
 Website.create!([
   {id: 1, title: "Staging MCA Chicago", url: "http://staging.cms.mcachicago.org/api/v1/attachment_images/"},

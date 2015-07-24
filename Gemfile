@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails'
 gem 'rails', '4.2.2'
 gem 'language_list'
+gem 'iso639-validator'
 gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate 
 gem 'compass-rails', '~> 2.0.4'
 gem 'bootstrap-sass', '>= 3.2'
@@ -75,6 +76,7 @@ gem "haml-rails"
 #gem 'sitemap_generator'
 #gem 'whenever'
 gem 'apipie-rails', :github => 'Apipie/apipie-rails' #for api documentation
+gem 'simple_token_authentication' #token auth for api
 gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
 gem 'iconv'

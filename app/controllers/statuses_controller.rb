@@ -1,13 +1,16 @@
 class StatusesController < ApplicationController
-  before_filter :admin
+  before_filter :admin, only: [:create, :edit, :update, :destroy]
   before_action :set_status, only: [:show, :edit, :update, :destroy]
 
+
   # GET /statuses
+  api :GET, "statuses", "Get an index of statuses"
   def index
     @statuses = Status.all
   end
 
   # GET /statuses/1
+  api :GET, "statuses/:id", "Get a statuses"
   def show
   end
 
@@ -21,24 +24,24 @@ class StatusesController < ApplicationController
   end
 
   # POST /statuses
-  def create
-    @status = Status.new(status_params)
+  #def create
+    #@status = Status.new(status_params)
 
-    if @status.save
-      redirect_to @status, notice: 'Status was successfully created.'
-    else
-      render :new
-    end
-  end
+    #if @status.save
+      #redirect_to @status, notice: 'Status was successfully created.'
+    #else
+      #render :new
+    #end
+  #end
 
   # PATCH/PUT /statuses/1
-  def update
-    if @status.update(status_params)
-      redirect_to @status, notice: 'Status was successfully updated.'
-    else
-      render :edit
-    end
-  end
+  #def update
+    #if @status.update(status_params)
+      #redirect_to @status, notice: 'Status was successfully updated.'
+    #else
+      #render :edit
+    #end
+  #end
 
   # DELETE /statuses/1
   #def destroy
@@ -54,6 +57,6 @@ class StatusesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def status_params
-      params.require(:status).permit(:title, :description)
+      params.require(:status).permit(:title)
     end
 end
