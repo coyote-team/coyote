@@ -41,10 +41,10 @@ Assignment.create!([
 ])
 Description.create!([
   #image 1 : completed
+  #image 2 : 1 description ready to review
   {id: 1, locale: "en", text: "This is a test alt for image 1.", status_id: 2, image_id: 1, metum_id: 1, user_id: 1},
   {id: 2, locale: "en", text: "This is a test caption for image 1.", status_id: 2, image_id: 1, metum_id: 2, user_id: 1},
   {id: 3, locale: "en", text: "This is a test long description for image 1.", status_id: 2, image_id: 1, metum_id: 3, user_id: 2},
-  #image 2 : 1 description ready to review
   {id: 4, locale: "en", text: "This is a test alt for image 2.", status_id: 2, image_id: 2, metum_id: 1, user_id: 1},
   {id: 5, locale: "en", text: "This is a test caption for image 2.", status_id: 2, image_id: 2, metum_id: 2, user_id: 1},
   {id: 6, locale: "en", text: "This is a test long description for image 2.", status_id: 1, image_id: 2, metum_id: 3, user_id: 1}

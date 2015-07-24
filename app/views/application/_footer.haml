@@ -5,8 +5,9 @@
         %p>
           Brought to you by <a target="_blank" href="http://www2.mcachicago.org/">Museum of Contemporary Art Chicago</a>.
           %br
-          Check out our  
-          =link_to "API", apipie_apipie_path
-          with your authentication token
-          %code=current_user.authentication_token
+          -if current_user
+            Check out our  
+            =link_to "API", apipie_apipie_path
+            with your authentication token
+            %code=current_user.authentication_token
           
