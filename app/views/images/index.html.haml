@@ -71,7 +71,7 @@
                       %br
                   %td
                     = link_to image, class: "", title: "Show this image" do
-                      =image_tag image.full_url, id: "image-file-#{ image.id }"#, alt: "" }#TODO alt
+                      =image_tag image.url, id: "image-file-#{ image.id }"#, alt: "" }#TODO alt
                   %td{id: "image-path-#{image.id}"}=truncate image.path, {length: 25, omission: "..."} 
                   %td= image.group
                   %td= image.website

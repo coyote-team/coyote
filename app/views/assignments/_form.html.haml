@@ -5,7 +5,7 @@
     - if @assignment.image  and action_name == "new"
       = f.input :image_id,  as: :hidden, input_html: {value: @assignment.image.id}
       .col-md-9.col-md-push-3
-        = image_tag @assignment.image.full_url
+        = image_tag @assignment.image.url
     - else
       = f.association :image,  prompt: "Choose an image"
 

@@ -99,6 +99,6 @@ Vagrant.configure(2) do |config|
      printf "Host *\nStrictHostKeyChecking no\n" >> ~vagrant/.ssh/config
      sudo -i -u vagrant BUNDLE_GEMFILE=/vagrant/Gemfile bundle install
      sudo -i -u vagrant BUNDLE_GEMFILE=/vagrant/Gemfile bundle update
-sudo -i -u vagrant sh -c 'cd /vagrant && exec rake db:create db:migrate'
+     sudo -i -u vagrant sh -c 'cd /vagrant && exec rake db:create db:migrate'
    SHELL
 end

@@ -18,7 +18,7 @@
               %th{scope: "row"}
                 Image:
               %td
-                = image_tag @assignment.image.full_url, class: "description-image"
+                = image_tag @assignment.image.url, class: "description-image"
                 %br
                 = @assignment.image
         %nav.show-nav{role:"navigation"}
