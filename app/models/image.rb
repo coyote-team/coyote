@@ -4,13 +4,14 @@ require 'roo'
 #
 # Table name: images
 #
-#  id           :integer          not null, primary key
-#  path         :string(255)
-#  website_id   :integer
-#  group_id     :integer
-#  created_at   :datetime
-#  updated_at   :datetime
-#  canonical_id :string(255)
+#  id                :integer          not null, primary key
+#  path              :string(255)
+#  website_id        :integer
+#  group_id          :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  canonical_id      :string(255)
+#  assignments_count :integer          default(0)
 #
 # Indexes
 #
@@ -35,8 +36,8 @@ class Image < ActiveRecord::Base
 
   default_scope {order('created_at DESC')}
 
-  scope :unassigned, -> (n = 0) { select { |i| i.users.size == n } }
-  scope :assigned, -> (n = 0) { select { |i| i.users.size > n } }
+  scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
+  scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
 
   paginates_per 50
 
