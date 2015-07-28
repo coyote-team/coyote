@@ -21,6 +21,8 @@
 #
 
 class Description < ActiveRecord::Base
+  require 'net/http'
+
   include Iso639::Validator
   belongs_to :status
   belongs_to :image, touch: true
@@ -41,6 +43,8 @@ class Description < ActiveRecord::Base
   scope :alt, -> {where("metum_id = 1")}
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
+
+  after_update :patch_image
 
   paginates_per 50
 
@@ -64,6 +68,17 @@ class Description < ActiveRecord::Base
 
   def siblings_by(user)
     Description.where(image_id: image_id).where.not(id: id).where(user_id: user.id)
+  end
+
+  def patch_image
+    if status_id == 2
+      url = URI.parse(image.url)
+      req = Net::HTTP::Patch.new(image.url)
+      res = Net::HTTP.start(url.host, url.port) {|http|
+          http.request(req)
+      }
+      logger.info res.body
+    end
   end
 
 end
