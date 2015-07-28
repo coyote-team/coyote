@@ -6,17 +6,21 @@ class ImagesController < ApplicationController
 
   def_param_group :image do
     param :image, Hash do
-      param :canonical_id,  String #(255)
-      param :path,           String #(255)
-      param :website_id,    :number
-      param :group_id,      :number
+      param :canonical_id,  String , required: true
+      param :path,           String , required: true
+      param :website_id,    :number, required: true
+      param :group_id,      :number, required: true
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end
   end
 
   # GET /images
+  param :page, :number
   api :GET, "images", "Get an index of images"
+  description  <<-EOT
+    Returns an object with <code>_metadata</code> and <code>results</code>
+  EOT
   def index
     @q = Image.ransack(params[:q])
 

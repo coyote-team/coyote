@@ -9,11 +9,11 @@ class DescriptionsController < ApplicationController
 
   def_param_group :description do
     param :description, Hash do
-      param :locale, String, desc: "Must be a valid ISO 639-1 locale."
-      param :text, String
-      param :status_id, :number
-      param :image_id, :number
-      param :metum_id, :number
+      param :locale, String, desc: "Must be a valid ISO 639-1 locale.", required: true
+      param :text, String, required: true
+      param :status_id, :number, required: true
+      param :image_id, :number, required: true
+      param :metum_id, :number, required: true
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end
@@ -22,6 +22,11 @@ class DescriptionsController < ApplicationController
 
   # GET /descriptions
   api :GET, "descriptions", "Get an index of descriptions"
+  param :page, :number
+  description  <<-EOT
+  Returns an object with <code>_metadata</code> and <code>results</code>
+  EOT
+
   def index
     @descriptions = Description.all.page params[:page]
   end

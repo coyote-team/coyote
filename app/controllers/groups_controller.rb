@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
 
   def_param_group :group do
     param :group, Hash do
-      param :title,  String #(255)
+      param :title,  String, required: true
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end

@@ -9,7 +9,7 @@ Apipie.configure do |config|
 
     All API endppoints expect <code>.json</code> as an ending.  
 
-    You can hit the endpoints when you have logged in.  Otherwise, you can find your user token in the regular site footer after you have logged in and then  you can use request headers:
+    You can hit the endpoints when you have logged in.  Otherwise, you can find your user token in the regular site footer after you have logged in and then you can use request headers:
         X-User-Email alice@example.com
         X-User-Token 1G8_s7P-V-4MGojaKD7a
     Or a query string to authenticate:
