@@ -39,6 +39,7 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/new
   def new
     @description = Description.new
+    @description.image_id = params[:image_id] if params[:image_id] #for populating sibling descriptions
   end
 
   # GET /descriptions/1/edit

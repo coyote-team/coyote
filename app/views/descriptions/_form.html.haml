@@ -46,3 +46,8 @@
       = link_to descriptions_path, class: 'btn btn-info' do
         %i.fa.fa-fw.fa-list{title: "List"}
         View all Descriptions
+  - other_descriptions = @description.siblings
+  - if other_descriptions.length > 0
+    %h2 Other descriptions of this image
+    = render "descriptions/table", descriptions: other_descriptions
+

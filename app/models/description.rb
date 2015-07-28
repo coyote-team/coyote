@@ -49,7 +49,7 @@ class Description < ActiveRecord::Base
   paginates_per 50
 
   def to_s
-    metum.title + " description for " + image.to_s + " by " + user.to_s
+    metum.to_s + " description for " + image.to_s + " by " + user.to_s
   end
 
   def approved?

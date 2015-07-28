@@ -61,13 +61,12 @@
               = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
                 %i.fa.fa-fw.fa-list{title: 'List'}
                 Descriptions
-        - if current_user 
-          - if admin?
-            - other_descriptions = @description.siblings
-            - if other_descriptions.length > 0
-              %h2 Other descriptions of this image
-              = render "descriptions/table", descriptions: other_descriptions
-
+        - if admin?
+          - other_descriptions = @description.siblings
+          - if other_descriptions.length > 0
+            %h2 Other descriptions of this image
+            = render "descriptions/table", descriptions: other_descriptions
+        -else
           - my_other_descriptions = @description.siblings_by(current_user)
           - if my_other_descriptions.length > 0
             %h2 Other descriptions of this image by me
