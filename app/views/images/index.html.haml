@@ -11,11 +11,12 @@
               =@images.total_count
 
         %nav.index-nav{role:"navigation"}
-          - if @images.total_pages < 1
+          - if @images.total_pages > 1
             %h3.sr-only Pagination
             =paginate @images
-          %h3.sr-only Actions
           - if admin?
+            %br
+            %h3.sr-only Actions
             = link_to new_image_path, class: 'btn btn-success new-link' do
               %i.fa.fa-fw.fa-plus{title: "Plus"}
               New Image
@@ -94,8 +95,12 @@
                 = tag.count
 
         %nav.index-nav{role:"navigation"}
-          %h3.sr-only Pagination
-          =paginate @images
-          = link_to new_image_path, class: 'btn btn-success new-link' do
-            %i.fa.fa-fw.fa-plus{title: "Plus"}
-            New Image
+          - if @images.total_pages > 1
+            %h3.sr-only Pagination
+            =paginate @images
+          -if admin?
+            %br
+            %h3.sr-only Actions
+            = link_to new_image_path, class: 'btn btn-success new-link' do
+              %i.fa.fa-fw.fa-plus{title: "Plus"}
+              New Image

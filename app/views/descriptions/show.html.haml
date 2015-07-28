@@ -52,7 +52,9 @@
                   = link_to new_description_path(user_id: current_user.id, image_id: next_image.id) , class: 'btn btn-success' do
                     %i.fa.fa-fw.fa-play
                     Next image
-
+              = link_to new_description_path(user_id: current_user.id, image_id: @description.image_id) , class: 'btn btn-success' do
+                %i.fa.fa-fw.fa-plus
+                Describe Again
               = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
                 %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
                 Edit
@@ -64,7 +66,7 @@
             - other_descriptions = @description.siblings
             - if other_descriptions.length > 0
               %h2 Other descriptions of this image
-            = render "descriptions/table", descriptions: other_descriptions
+              = render "descriptions/table", descriptions: other_descriptions
 
           - my_other_descriptions = @description.siblings_by(current_user)
           - if my_other_descriptions.length > 0
