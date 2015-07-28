@@ -29,6 +29,16 @@
                 Admin
               %td<
                 = @user.admin
+
+        .col-md-12
+          - if @user.descriptions.count > 0
+            %h3 Descriptions
+            = render "descriptions/table", descriptions: @user.descriptions
+
+          - if @user.assignments.count > 0
+            %h3 Assignments
+            = render "assignments/table", assignments: @user.assignments
+
         %nav.show-nav{role:"navigation"}
           = link_to users_path, class: 'btn btn-info', title: "View the users index" do
             %i.fa.fa-fw.fa-list{title: 'List'}
