@@ -19,7 +19,7 @@ class ImagesController < ApplicationController
   param :page, :number
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-    Returns an object with <code>_metadata</code> and <code>results</code>
+    Returns an object with <code>_metadata</code> and <code>results</code> 
   EOT
   def index
     @q = Image.ransack(params[:q])
@@ -36,6 +36,9 @@ class ImagesController < ApplicationController
 
   # GET /images/1
   api :GET, "images/:id", "Get an image"
+  description  <<-EOT
+    Includes approved descriptions.
+  EOT
   def show
   end
 
