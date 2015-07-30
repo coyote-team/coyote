@@ -31,7 +31,7 @@ class ImagesController < ApplicationController
       @images = @q.result(distinct: true).page(params[:page]) 
     end
 
-
+    #TODO cache
     @tags = Image.tag_counts_on(:tags)
   end
 

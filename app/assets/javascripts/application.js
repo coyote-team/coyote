@@ -16,6 +16,6 @@
 //= require jquery-ui/effect-highlight
 //= require cocoon
 //= require turbolinks
-//= require bootstrap-sprockets
 //= require select2
+//= require bootstrap-sprockets
 //= require_tree .

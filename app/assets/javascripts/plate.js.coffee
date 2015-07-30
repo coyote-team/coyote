@@ -26,8 +26,8 @@ plate =() ->
       tags: true
       placeholder: placeholder
       minimumInputLength: 1
-      #initSelection: (element, callback) ->
-        #saved and callback(saved)
+      initSelection: (element, callback) ->
+        saved and callback(saved)
 
       ajax:
         url: url

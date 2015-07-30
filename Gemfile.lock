@@ -6,9 +6,9 @@ GIT
       json
 
 GIT
-  remote: https://github.com/josetapadas/select2-rails.git
-  revision: 4e90042d893bac8bdf976852fcd2774d0930bead
-  branch: upgrade-version-4
+  remote: git@github.com:argerim/select2-rails.git
+  revision: 2cf2c1645b02e061f136ecd136d9ee0c2c9d25ae
+  ref: 2cf2c1645b02e061f136ecd136d9ee0c2c9d25ae
   specs:
     select2-rails (3.5.9.3)
       thor (~> 0.14)
@@ -558,4 +558,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

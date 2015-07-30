@@ -23,7 +23,7 @@ gem 'devise' #user auth
 #gem 'cancan' # permissions
 #gem 'rolify',  :git=>'https://github.com/EppO/rolify.git'  #roles
 gem 'acts-as-taggable-on' #automplete tags
-gem "select2-rails", :git=> "https://github.com/josetapadas/select2-rails.git", :branch => "upgrade-version-4"
+gem "select2-rails", git: 'git@github.com:argerim/select2-rails.git', ref: "2cf2c1645b02e061f136ecd136d9ee0c2c9d25ae"
 #gem 'aws-sdk'
 #gem 'jack_up', :git=>"git@github.com:thoughtbot/jack_up.git" #drag and drop
 gem 'cocoon' #nested forms
