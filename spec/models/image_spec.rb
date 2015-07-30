@@ -2,14 +2,15 @@
 #
 # Table name: images
 #
-#  id                :integer          not null, primary key
-#  path              :string(255)
-#  website_id        :integer
-#  group_id          :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  canonical_id      :string(255)
-#  assignments_count :integer          default(0)
+#  id                 :integer          not null, primary key
+#  path               :string(255)
+#  website_id         :integer
+#  group_id           :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  canonical_id       :string(255)
+#  assignments_count  :integer          default(0)
+#  descriptions_count :integer          default(0)
 #
 # Indexes
 #

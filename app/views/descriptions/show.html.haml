@@ -8,7 +8,8 @@
           %h1#page-title{tabindex: -1}=title
         .row
           .col-md-3
-            =image_tag @description.image.url, class: "description-image"
+            =link_to @description.image do
+              =image_tag @description.image.url, class: "description-image"
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this description

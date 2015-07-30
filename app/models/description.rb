@@ -25,7 +25,7 @@ class Description < ActiveRecord::Base
 
   include Iso639::Validator
   belongs_to :status
-  belongs_to :image, touch: true
+  belongs_to :image, touch: true, counter_cache: true
   belongs_to :metum
   belongs_to :user
 
