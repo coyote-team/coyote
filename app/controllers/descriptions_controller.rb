@@ -9,11 +9,11 @@ class DescriptionsController < ApplicationController
 
   def_param_group :description do
     param :description, Hash do
-      param :locale, String, desc: "Must be a valid ISO 639-1 locale.", required: true
-      param :text, String, required: true
-      param :status_id, :number, required: true
-      param :image_id, :number, required: true
-      param :metum_id, :number, required: true
+      param :locale, String, desc: "Must be a valid ISO 639-1 locale."
+      param :text, String
+      param :status_id, :number
+      param :image_id, :number
+      param :metum_id, :number
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end
