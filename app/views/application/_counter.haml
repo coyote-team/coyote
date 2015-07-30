@@ -1,14 +1,22 @@
-%span.badge{title: "count"}=descriptions.count
-%dl
+-#%span.badge{title: "count"}=descriptions.count
+%ul.counter
   -meta.each do |metum|
-    %dt=metum.title
-    %dd<
-      %span.label.label-success<
-        =descriptions.where(metum_id: metum.id).approved.count
-      %span.sr-only approved,
-      %span.label.label-warning<
-        =descriptions.where(metum_id: metum.id).ready_to_review.count
-      %span.sr-only ready to review,
-      %span.label.label-danger<
-        =descriptions.where(metum_id: metum.id).not_approved.count
-      %span.sr-only disapproved
+    - descriptions = descriptions.where(metum_id: metum.id)
+    - if descriptions.count > 0
+      %li>
+        %span.label.label-info=metum.title
+        - approved = descriptions.approved.count
+        - ready_to_review = descriptions.ready_to_review.count
+        - not_approved = descriptions.not_approved.count
+        -if approved > 0
+          %span.label.label-success<
+            =approved
+            %span.sr-only approved,
+        -if ready_to_review > 0
+          %span.label.label-warning<
+            =ready_to_review
+            %span.sr-only ready to review,
+        -if not_approved > 0
+          %span.label.label-danger<
+            =not_approved
+            %span.sr-only disapproved

@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :clear_search, only: [:index]
   before_filter :users, only: [:create, :edit, :update, :destroy]
 
   respond_to :html, :json
@@ -22,7 +23,7 @@ class ImagesController < ApplicationController
     Returns an object with <code>_metadata</code> and <code>results</code> 
   EOT
   def index
-    @q = Image.ransack(params[:q])
+    @q = Image.ransack(search_params)
 
     if params[:tag].present? 
       @images = Image.tagged_with(params[:tag]).page(params[:page]) 
@@ -112,6 +113,20 @@ class ImagesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def image_params
       params.require(:image).permit(:path, :group_id, :website_id, :tag_list, :canonical_id)
+    end
+    def search_params
+      params[:q]
+    end
+     
+    def clear_search
+      if params[:search_cancel]
+        params.delete(:search_cancel)
+        if(!search_params.nil?)
+          search_params.each do |key, param|
+            search_params[key] = nil
+          end
+        end
+      end
     end
 
 end
