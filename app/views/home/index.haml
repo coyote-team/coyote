@@ -37,23 +37,6 @@
         -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
         =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
         -#=render "queue", queue: @assigned, type: "Assigned Images"
-      .col-md-6
-        = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
-          %h2>
-            Import images
-            <small>via <code>.csv</code>, <code>.xsl</code>, and <code>.xslx</code></small>
-          = file_field_tag :file
-          = button_tag type: "submit", class: "btn btn-success disabled" do
-            %i.fa.fa-fw.fa-upload
-            Upload
-      .col-md-6
-        %h2>
-          Export images
-          %small>
-            %code .csv
-        = link_to  export_images_path(format: "csv"), class: 'btn btn-success' do
-          %i.fa.fa-fw.fa-download
-          Export
     - if current_user
       .col-md-12
         %h2 Your Queues 
@@ -64,3 +47,21 @@
         =render "queue", queue: @my_queue, type: "Your Assigned Images"
         =render "queue", queue: @my_described_queue, type: "Your Described Images"
         =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
+    -if admin?
+      .col-md-6
+        = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
+          %h2>
+            Import images
+            <small>via <code>.csv</code>, <code>.xls</code>, and <code>.xlsx</code></small>
+          = file_field_tag :file, label: "Select your file"
+          = button_tag type: "submit", class: "btn btn-success disabled", data: {disaabled: true} do
+            %i.fa.fa-fw.fa-upload
+            Upload
+      .col-md-6
+        %h2>
+          Export spreadsheet of image records
+          %small>
+            %code .csv
+        = button_tag  export_images_path(format: "csv"), class: 'btn btn-success' do
+          %i.fa.fa-fw.fa-download
+          Export

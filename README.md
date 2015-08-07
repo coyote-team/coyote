@@ -102,8 +102,6 @@ Then we generated our scaffolds
     rails g migration AddAdminBooleanToUsers admin:boolean --force
     rails g migration AddFirstNameAndLastNameToUser first_name:string last_name:string --force
     rails g pizza_scaffold assignment user:references image:references --force
-    #set en default for locale
-    #set admin bool on user, default false
 
 For updating generator based views and controllers
 
@@ -125,3 +123,4 @@ For updating generator based views and controllers
 
 ## Versus
 - [Depict4](http://depictfor.us/)
+- [Autotune](https://github.com/voxmedia/autotune/)

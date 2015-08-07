@@ -2,9 +2,9 @@
   .queue
     %h3<
       #{type} Queue
-      %span.sr-only<
-        ,
       -if queue.size > 0
+        %span.sr-only<
+          ,
         %span.badge= queue.count
   -if queue.size > 0
     .well.well-sm
@@ -89,8 +89,9 @@
 
                     - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
                       - if image.users.count > 0
-                        %h4 
+                        %h4<
                           Users 
+                          %span.sr-only ,
                           %span.badge
                             =image.users.count
                         %ul
