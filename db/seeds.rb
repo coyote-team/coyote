@@ -1,15 +1,8 @@
 Group.create!([
   {id: 1, title: "collection"},
   {id: 2, title: "website"},
-  {id: 3, title: "visit"},
-  {id: 4, title: "exhibitions"},
-  {id: 5, title: "events "},
-  {id: 6, title: "collection"},
-  {id: 7, title: "stories"},
-  {id: 8, title: "support"},
-  {id: 9, title: "education"},
-  {id: 10, title: "about"},
-  {id: 11, title: "shop"}
+  {id: 3, title: "exhibitions"},
+  {id: 4, title: "events "},
 ])
 Metum.create!([
   {id: 1, title: "Alt", instructions: "Alt, or alternative, text is the text that will be read to a blind user by their screen reader. If the image is a UI element, one to two words is preferred e.g. home, Twitter, Contact Us, etc. If the image is not a UI element, then the alt text should describe the image’s main purpose or theme. It’s best to keep the alt text less than 20 to 30 words. Long description exists for longer form description. If this image has a caption, then try not to repeat caption text in this alt text."},
