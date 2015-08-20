@@ -21,7 +21,7 @@ set :ssh_options, { :forward_agent => true,
 
 set :keep_releases, 5
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/assets}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/assets}
 
 namespace :deploy do
   before :restart, "assets:precompile"
