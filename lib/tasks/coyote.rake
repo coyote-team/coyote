@@ -8,7 +8,7 @@ namespace :coyote do
     limit = 1000
     offset = 0
     if Image.count > 10 #kludge
-      updated_at = (Time.zone.now - 30.seconds).iso8601
+      updated_at = (Time.zone.now - 1.minute).iso8601
     else
       updated_at = (Time.zone.now - 100.years).iso8601
     end

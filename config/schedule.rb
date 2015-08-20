@@ -1,3 +1,3 @@
-every 30.seconds do
+every 1.minute do
   rake "coyote:grab_images"
 end
