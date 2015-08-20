@@ -1,3 +1,3 @@
-every 1.day, :at => '5:00 am' do
-  rake "-s sitemap:refresh"
+every 30.seconds do
+  rake "coyote:grab_images"
 end

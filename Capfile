@@ -27,7 +27,7 @@ require 'capistrano/flowdock'
 require 'capistrano/thin'
 require 'capistrano-nc/nc'
 #require 'capistrano/sitemap_generator'
-#require "whenever/capistrano"
+require "whenever/capistrano"
 
 
 

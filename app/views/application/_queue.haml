@@ -16,7 +16,7 @@
             - else #is a description
               - description = item
               - image = description.image
-              - queue_id = type.downcase.strip.gsub(' ', '-')
+            - queue_id = type.downcase.strip.gsub(' ', '-')
             %li{id: "#{queue_id}-image-li-#{image.id}"}<
               .col-sm-6.col-xs-12<
                 .thumbnail<

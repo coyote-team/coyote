@@ -14,31 +14,28 @@ Status.create!([
   {id: 2, title: "Approved"},
   {id: 3, title: "Not approved"}
 ])
-Website.create!([
-  {id: 1, title: "Staging MCA Chicago", url: "http://staging.cms.mcachicago.org/api/v1/attachment_images/"},
-  {id: 2, title: "MCA Chicago", url: "http://www2.mcachicago.org/"}
-
-])
-Image.create!([
-  {id: 1, path: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
-  {id: 2, path: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
-  {id: 3, path: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
-])
 User.create!([
   {id: 1, email: "coyote_user@seeread.info", password: "asdfasdf", first_name: "Test", last_name: "User"},
   {id: 2, email: "coyote_admin@seeread.info", admin: true , password: "asdfasdf", first_name: "Admin", last_name: "User"},
 ])
-Assignment.create!([
-  {id: 1, user_id: 1, image_id: 1},
-  {id: 2, user_id: 1, image_id: 2},
+Website.create!([
+  {id: 1, title: "MCA Chicago", url: "http://cms.mcachicago.org"}
+  #,{id: 2, title: "MCA Chicago", url: "http://www2.mcachicago.org/"}
 ])
-Description.create!([
-  #image 1 : completed
-  #image 2 : 1 description ready to review
-  {id: 1, locale: "en", text: "This is a test alt for image 1.", status_id: 2, image_id: 1, metum_id: 1, user_id: 1},
-  {id: 2, locale: "en", text: "This is a test caption for image 1.", status_id: 2, image_id: 1, metum_id: 2, user_id: 1},
-  {id: 3, locale: "en", text: "This is a test long description for image 1.", status_id: 2, image_id: 1, metum_id: 3, user_id: 2},
-  {id: 4, locale: "en", text: "This is a test alt for image 2.", status_id: 2, image_id: 2, metum_id: 1, user_id: 1},
-  {id: 5, locale: "en", text: "This is a test caption for image 2.", status_id: 2, image_id: 2, metum_id: 2, user_id: 1},
-  {id: 6, locale: "en", text: "This is a test long description for image 2.", status_id: 1, image_id: 2, metum_id: 3, user_id: 1}
-])
+#Image.create!([
+  #{id: 1, path: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
+  #{id: 2, path: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
+  #{id: 3, path: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
+#])
+#Assignment.create!([
+  #{id: 1, user_id: 1, image_id: 1},
+  #{id: 2, user_id: 1, image_id: 2},
+#])
+#Description.create!([
+  #{id: 1, locale: "en", text: "This is a test alt for image 1.", status_id: 2, image_id: 1, metum_id: 1, user_id: 1},
+  #{id: 2, locale: "en", text: "This is a test caption for image 1.", status_id: 2, image_id: 1, metum_id: 2, user_id: 1},
+  #{id: 3, locale: "en", text: "This is a test long description for image 1.", status_id: 2, image_id: 1, metum_id: 3, user_id: 2},
+  #{id: 4, locale: "en", text: "This is a test alt for image 2.", status_id: 2, image_id: 2, metum_id: 1, user_id: 1},
+  #{id: 5, locale: "en", text: "This is a test caption for image 2.", status_id: 2, image_id: 2, metum_id: 2, user_id: 1},
+  #{id: 6, locale: "en", text: "This is a test long description for image 2.", status_id: 1, image_id: 2, metum_id: 3, user_id: 1}
+#])

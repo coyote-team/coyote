@@ -44,7 +44,7 @@ class Description < ActiveRecord::Base
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
-  after_update :patch_image
+  after_save :patch_image
 
   paginates_per 50
 
@@ -71,12 +71,15 @@ class Description < ActiveRecord::Base
   end
 
   def patch_image
-    if status_id == 2
-      url = URI.parse(image.url)
-      req = Net::HTTP::Patch.new(image.url)
-      res = Net::HTTP.start(url.host, url.port) {|http|
+    website = image.website
+    if status_id == 2 and website.id = 2
+      url = website.url + "/api/attachment_images/" + image.canonical_id
+      url = URI.parse(url)
+      req = Net::HTTP::Patch.new(url)
+      res = Net::HTTP.start(url.host, url.port,   :use_ssl => url.scheme == 'https',  :verify_mode => OpenSSL::SSL::VERIFY_NONE) {|http|
           http.request(req)
       }
+      #store patched at on image
       logger.info res.body
     end
   end
