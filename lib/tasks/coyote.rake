@@ -51,12 +51,18 @@ namespace :coyote do
             #create initial description field
             puts "created image #{image.id} from canonical id #{image.canonical_id}"
           else
+            #update
             image.path = i["thumb_url"]
             image.updated_at = i["updated_at"]
             image.save
             puts "updated image #{image.id} from canonical id #{image.canonical_id}"
           end
-          #update descriptions?
+          #create description if none are handy
+          if image.descriptions.length == 0  and !i["title"].blank?
+            d = Description.new(text: i["title"], locale: "en", metum_id: 1, image_id: image.id, status_id: 1, user_id: 1)
+            d.save!
+          end
+
         rescue Exception => e
           puts "image creation error"
           puts i
