@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   def index
     @user = current_user #spoof current user for view
     if current_user
+      @users = User.all
       #TODO should only show my content descriptions for these two
       limit = 10
       @my_queue = current_user.images.collect{|i| i if i.undescribed_by?(current_user)}.compact.first(limit)

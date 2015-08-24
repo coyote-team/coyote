@@ -28,14 +28,9 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    @assignment = Assignment.new(assignment_params)
-
-    if @assignment.save
-      #redirect_to @assignment, notice: 'Assignment was successfully created.'
-      redirect_to root_path, notice: 'Assignment was successfully created.'
-    else
-      render :new
-    end
+    @assigntment = Assignment.new(assignment_params)
+    flash[:notice] = "#{@assigntment} was successfully created." if @assigntment.save
+    respond_with @assigntment
   end
 
   # PATCH/PUT /assignments/1

@@ -3,9 +3,11 @@ class DescriptionsController < ApplicationController
   before_action :set_image, only: [:new, :edit]
   before_action :collect_meta, only: [:new, :edit]
   before_action :set_author, only: [:new]
+  before_action :clear_search_index, :only => [:index]
   before_filter :users
 
-  respond_to :html, :json
+
+  respond_to :html, :json, :js
 
   def_param_group :description do
     param :description, Hash do

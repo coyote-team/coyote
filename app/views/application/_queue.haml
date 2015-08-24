@@ -17,7 +17,7 @@
               - description = item
               - image = description.image
             - queue_id = type.downcase.strip.gsub(' ', '-')
-            %li{id: "#{queue_id}-image-li-#{image.id}"}<
+            %li.image{id: "#{queue_id}-image-li-#{image.id}"}<
               .col-sm-6.col-xs-12<
                 .thumbnail<
                   - image_id= "#{queue_id}-image-#{image.id}"
@@ -36,56 +36,13 @@
                         Descriptions
                         %span.sr-only ,
                         %span.badge= descriptions.count
-                        - path = new_description_path(image_id: image.id, user_id: current_user.id )
-                      %ul
-                        - descriptions.each do |d|
-                          %li<
-                            .panel.panel-default<
-                              .panel-heading
-                                %h5.panel-title
-                                  - metum_id= "#{queue_id}-#{d.id}-metum"
-                                  %span.label.label-info{id: metum_id}= d.metum
-                                  - locale_id= "#{queue_id}-#{d.id}-locale"
-                                  %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
-                                  = render 'status', status: d.status
-                              .panel-body
-                                %blockquote.blockquote
-                                  %p<
-                                    =d.text
-                                  -if d.user
-                                    %footer<
-                                      %cite<
-                                        =d.user
-                              .panel-footer.text-right
-                                -if admin?
-                                  -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+                        =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: image_id
 
-                                  -form_klass='btn btn-success '
-                                  -disabled = false
-                                  -if d.status_id == 2
-                                    -form_klass += 'disabled'
-                                    - disabled = true
-                                  = button_to description_path(d), action: :update, params: {"description[status_id]": 2},
-                                    form_class: form_klass, disabled: disabled, method: :patch, remote: true,
-                                    data: {disable_with: disable_with} do
-                                    %span.sr-only Approve this description
-                                    %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": true}
-
-                                  -form_klass='btn btn-danger '
-                                  -disabled = false
-                                  -if d.status_id == 3
-                                    -form_klass += 'disabled'
-                                    - disabled = true
-                                  = button_to description_path(d), params: {"description[status_id]": 3},
-                                    form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
-                                    data: {disable_with: disable_with} do
-                                    %span.sr-only Disapprove this description
-                                    %i.fa.fa-fw.fa-thumbs-down
-                                =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary', "aria-describedby" => [locale_id, metum_id, image_id ].join(' ') do
-                                  %i.fa.fa-fw.fa-pencil
-                      =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
-                        -#%i.fa.fa-plus
-                        Describe
+                      - path = new_description_path(image_id: image.id, user_id: current_user.id )
+                      - unless type == "Ready to Review Descriptions"
+                        =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
+                          -#%i.fa.fa-plus
+                          Describe
 
                     - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
                       - if image.users.count > 0
@@ -97,9 +54,21 @@
                         %ul
                           -image.users.each do |user|
                             %li= user
-                      %br
-                      = link_to new_assignment_path(image_id: image.id), class: 'btn btn-success', title: "Assign image #{image.id} to a user" do
-                        -#%i.fa.fa-plus
-                        Assign
+                      - unless type == "Ready to Review Descriptions"
+                        %br
+                        .dropdown
+                          -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+                          - assign_id = image_id + "-dropdown"
+                          %button.btn.btn-success.dropdown-toggle{id: assign_id, "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                            Assign to
+                            %span.caret
+                          %ul.dropdown-menu{"aria-labelledby" => assign_id}
+                            - @users.each do |user|
+                              %li
+                                = button_to assignments_path(assignment: {image_id: image.id, user_id: user.id}), action: :create, 
+                                  remote: true, format: :js, class: 'btn', title: "Assign image #{image.id} to #{user}", data: {disable_with: disable_with} do
+                                  #{user}
+      -#-if queue.size > 8
+        = link_to "See more", root_path
   -if queue.size == 0
     %p This queue is empty.

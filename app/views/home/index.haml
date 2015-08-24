@@ -35,7 +35,7 @@
         -#=render "queue", queue: @completed, type: "Completed Images"
         -#Supplemental Queues
         -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
-        =render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
+        -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
         -#=render "queue", queue: @assigned, type: "Assigned Images"
     - if current_user
       .col-md-12
@@ -45,8 +45,8 @@
           - if !admin?
             %p Ask an admin to assign you some.
         =render "queue", queue: @my_queue, type: "Your Assigned Images"
-        =render "queue", queue: @my_described_queue, type: "Your Described Images"
-        =render "queue", queue: @my_completed_queue, type: "Your Completed Images"
+        -#=render "queue", queue: @my_described_queue, type: "Your Described Images"
+        -#=render "queue", queue: @my_completed_queue, type: "Your Completed Images"
     -if admin?
       .col-md-6
         = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|

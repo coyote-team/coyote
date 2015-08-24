@@ -35,6 +35,14 @@ module ApplicationHelper
     end
   end
 
+  def description_css_class(description)
+    klass = "item "
+    klass += "success" if description.status_id == 2
+    klass += "warning" if description.status_id == 1
+    klass += "danger" if description.status_id == 3
+    klass
+  end
+
   def admin?
     current_user && current_user.admin?
   end

@@ -1,0 +1,52 @@
+%table.table<
+  %thead.sr-only<
+    %th{scope: "col"}<
+      Description
+    -if admin?
+      %th{scope: "col"}<
+        Actions
+  %tbody<
+    - descriptions.each do |d|
+      %tr{class: description_css_class(d) + " description"}<
+        %td<
+          %blockquote.blockquote<
+            =d.text
+            -if d.user
+              %footer.footer
+                %cite=d.user
+            - metum_id= "#{queue_id}-#{d.id}-metum"
+            %span.label.label-info{id: metum_id}= d.metum
+            - locale_id= "#{queue_id}-#{d.id}-locale"
+            %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
+            %span
+            = render 'status', status: d.status
+        -if admin?
+          %td
+            .btn-group
+              -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+
+              - form_klass= 'btn btn-success '
+              - disabled = false
+              - if d.status_id == 2
+                - form_klass += 'disabled'
+                - disabled = true
+              = button_to description_path(d), params: {"description[status_id]": 2},
+                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                data: {disable_with: disable_with} do
+                %span.sr-only Approve this description
+                %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": true}
+
+              - form_klass='btn btn-danger '
+              - disabled = false
+              - if d.status_id == 3
+                - form_klass += 'disabled'
+                - disabled = true
+              = button_to description_path(d), params: {"description[status_id]": 3},
+                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                data: {disable_with: disable_with} do
+                %span.sr-only Disapprove this description
+                %i.fa.fa-fw.fa-thumbs-down{ "aria-hidden": true}
+
+              =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-primary', "aria-describedby" => [locale_id, metum_id, image_id ].join(' ') do
+                %i.fa.fa-fw.fa-pencil
+

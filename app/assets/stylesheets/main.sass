@@ -39,6 +39,8 @@ blockquote.blockquote
 table
   img
     max-width: 100px
+//.panel .table
+  //margin-bottom: 0
 
 html.turbolinks-progress-bar::before 
   background-color: $brand-primary !important
@@ -56,3 +58,14 @@ html.turbolinks-progress-bar::before
 ul.counter
   li
     margin-bottom: ms(0)
+.dropdown li
+  button
+    border-color: transparent
+    background-color: transparent
+    border-radius: 0
+    display: block
+    width: 100%
+    text-align: left
+    &:hover
+      background-color: #e5e5e5
+    

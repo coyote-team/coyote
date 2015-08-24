@@ -15,17 +15,17 @@
           -if @descriptions.total_pages > 1
             %h2.sr-only navigation
             =paginate @descriptions
-          %h2.sr-only Actions
-          = link_to new_description_path, class: 'btn btn-success new-link' do
-            %i.fa.fa-fw.fa-plus{title: "Plus"}
-            New Description
+          -#%h2.sr-only Actions
+          -#= link_to new_description_path, class: 'btn btn-success new-link' do
+            -#%i.fa.fa-fw.fa-plus{title: "Plus"}
+            -#New Description
 
         =render "table", descriptions: @descriptions
 
         %nav.index-nav{role:"navigation"}
           %h3.sr-only Pagination
           =paginate @descriptions
-          %h3.sr-only Actions
-          = link_to new_description_path, class: 'btn btn-success new-link' do
-            %i.fa.fa-fw.fa-plus{title: "Plus"}
-            New Description
+          -#%h3.sr-only Actions
+          -#= link_to new_description_path, class: 'btn btn-success new-link' do
+            -#%i.fa.fa-fw.fa-plus{title: "Plus"}
+            -#New Description
