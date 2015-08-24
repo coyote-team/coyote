@@ -46,6 +46,33 @@ class Image < ActiveRecord::Base
     path
   end
 
+  def alt
+    d = descriptions.where(metum_id: 1, status_id: 2, locale: "en").last
+    if d
+      d.text
+    else
+      ""
+    end
+  end
+
+  def caption
+    d= descriptions.where(metum_id: 2, status_id: 2, locale: "en").last
+    if d
+      d.text
+    else
+      ""
+    end
+  end
+
+  def long
+    d = descriptions.where(metum_id: 3, status_id: 2, locale: "en").last
+    if d
+      d.text 
+    else
+      ""
+    end
+  end
+
   def url
     if website
       website.url + path
@@ -67,10 +94,6 @@ class Image < ActiveRecord::Base
     meta_ids = Metum.all.map{|m| m.id}
     described_meta_ids = descriptions.collect{ |d| d.metum_id if d.user_id == user.id}.compact 
     (meta_ids - described_meta_ids).empty?
-  end
-
-  #TODO has 1 of description by this user in any combo of locales but hasn't been completed
-  def described_but_not_completed_by?(user)
   end
 
   #completed all meta in any combo of locales

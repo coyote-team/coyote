@@ -19,26 +19,87 @@ class ImagesController < ApplicationController
   # GET /images
   param :page, :number
   api :GET, "images", "Get an index of images"
+  param :canonical_id,  String , required: false
   description  <<-EOT
-    Returns an object with <code>_metadata</code> and <code>results</code> 
+    If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
+    If the result is a single image queried by <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+
   EOT
   def index
-    @q = Image.ransack(search_params)
-
-    if params[:tag].present? 
-      @images = Image.tagged_with(params[:tag]).page(params[:page]) 
+    if params[:canonical_id].present? 
+      @image = Image.find_by(canonical_id: params[:canonical_id])
     else
-      @images = @q.result(distinct: true).page(params[:page]) 
+      @q = Image.ransack(search_params)
+
+      if params[:tag].present? 
+        @images = Image.tagged_with(params[:tag]).page(params[:page]) 
+      else
+        @images = @q.result(distinct: true).page(params[:page]) 
+      end
+
+      #TODO cache
+      @tags = Image.tag_counts_on(:tags)
     end
 
-    #TODO cache
-    @tags = Image.tag_counts_on(:tags)
   end
 
   # GET /images/1
   api :GET, "images/:id", "Get an image"
   description  <<-EOT
-    Includes approved descriptions.
+    Includes approved descriptions in a hash.
+
+    Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.
+
+An example
+
+  {
+    "id": 1,
+    "canonical_id": "55917aaa613430007400000a",
+    "alt": "A short title.",
+    "caption": "A caption that clarifies.",
+    "long": "A long detailed description.",
+    "path": "55917aaa613430007400000a.jpg?sha=72066b7eb6b6152ed511d52b099365afcd8b23e5",
+    "group_id": 2,
+    "website_id": 1,
+    "created_at": "2015-06-29T17:04:42.000Z",
+    "updated_at": "2015-07-30T16:26:30.000Z"
+    "descriptions": [
+      {
+        "id": 1,
+        "image_id": 1,
+        "status_id": 2,
+        "metum_id": 1,
+        "locale": "en",
+        "text": "A short title.",
+        "user_id": 1,
+        "created_at": "2015-07-28T14:54:58.000Z",
+        "updated_at": "2015-07-28T19:39:17.000Z"
+      },
+      {
+        "id": 5,
+        "image_id": 1,
+        "status_id": 2,
+        "metum_id": 2,
+        "locale": "en",
+        "text": "A caption that clarifies.",
+        "user_id": 2,
+        "created_at": "2015-07-29T16:26:30.000Z",
+        "updated_at": "2015-07-29T16:26:30.000Z"
+      },
+      {
+        "id": 6,
+        "image_id": 1,
+        "status_id": 2,
+        "metum_id": 3,
+        "locale": "en",
+        "text": "A long detailed description.",
+        "user_id": 2,
+        "created_at": "2015-07-30T16:26:30.000Z",
+        "updated_at": "2015-07-30T16:26:30.000Z"
+      }
+    ]
+  }
+
   EOT
   def show
   end

@@ -58,7 +58,7 @@ class Description < ActiveRecord::Base
   def not_approved?
     status_id ==3
   end
-  def ready_to_review
+  def ready_to_review?
     status_id == 1
   end
 
