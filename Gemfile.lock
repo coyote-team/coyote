@@ -262,6 +262,8 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    html2markdown (0.0.3)
+      nokogiri
     http_parser.rb (0.6.0)
     httparty (0.13.5)
       json (~> 1.8)
@@ -318,6 +320,8 @@ GEM
       shellany (~> 0.0)
     oj (2.12.9)
     orm_adapter (0.5.0)
+    pagedown-bootstrap-rails (2.1.2)
+      railties (> 3.1)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
     pry (0.10.1)
@@ -363,6 +367,7 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    redcarpet (3.3.2)
     ref (2.0.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
@@ -521,6 +526,7 @@ DEPENDENCIES
   haml-rails
   high_voltage
   html2haml
+  html2markdown
   iconv
   iso639-validator
   jbuilder
@@ -532,10 +538,12 @@ DEPENDENCIES
   modular-scale
   mysql2
   oj
+  pagedown-bootstrap-rails
   quiet_assets
   rails (= 4.2.2)
   ransack
   rb-fsevent
+  redcarpet
   responders
   roo
   rspec-rails

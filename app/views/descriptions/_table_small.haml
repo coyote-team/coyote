@@ -10,7 +10,7 @@
       %tr{class: description_css_class(d) + " description"}<
         %td<
           %blockquote.blockquote<
-            =d.text
+            =to_html d.text
             -if d.user
               %footer.footer
                 %cite=d.user

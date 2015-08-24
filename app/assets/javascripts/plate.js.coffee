@@ -56,6 +56,27 @@ plate =() ->
     $(@).toggleClass('fa-check')
     $(@).toggleClass('fa-times')
 
+  initMarkdownToolbar = () ->
+    $('textarea.wmd-input').each (i, input) ->
+      unless $(input).data('initialized')
+        id = $(input).attr('id')
+        $(input).siblings().andSelf().each ->
+          thisId = $(this).attr('class') + '-' + id
+          $(this).attr('id', thisId )
+        id = '-' +id
+        converter = new Markdown.Converter()
+        Markdown.Extra.init(converter)
+        help =
+          handler: () ->
+            window.open('http://daringfireball.net/projects/markdown/syntax')
+            return false
+          title: "<%= I18n.t('components.markdown_editor.help', default: 'Markdown Editing Help') %>"
+        editor = new Markdown.Editor(converter, id, help)
+        editor.run()
+        $(input).data('initialized', true)
+  initMarkdownToolbar()
+
+
 $(document).on('page:change', plate)
 
 # Override Rails handling of confirmation

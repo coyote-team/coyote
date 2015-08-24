@@ -53,11 +53,7 @@ module ApplicationHelper
 
   def to_html(content)
     set_markdown
-    @markdown.render(content)
-  end
-    def to_html(content)
-    set_markdown
-    @markdown.render(content)
+    raw @markdown.render(content)
   end
 
   def to_text(content)

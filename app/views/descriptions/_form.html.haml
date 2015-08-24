@@ -23,13 +23,6 @@
         - elsif action_name == 'new' and 
           = f.input :user_id,  as: :hidden, input_html: {value: @author.id}
         = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type"
-        - f.object.new_record? ? selected = "en" : selected = f.object.locale
-        = f.input :locale, collection: LanguageList::COMMON_LANGUAGES, :label_method => :name,:value_method => :iso_639_1, as: :select, prompt: "Pick the locale", selected: selected
-        - if admin?
-          = f.association :status, prompt: "Pick the status"
-        - else
-          = f.input :status_id, as: :hidden, input_html: {value: 1}
-        = f.input :text #TODO update prompt based on metum and user
         .metum-instructions
           - @meta.each do |m|
             - if @description.metum_id == m.id
@@ -40,7 +33,14 @@
             %p{id: "metum-instructions-#{m.id}", style: style}
               =m.instructions
 
+        - f.object.new_record? ? selected = "en" : selected = f.object.locale
+        = f.input :locale, collection: LanguageList::COMMON_LANGUAGES, :label_method => :name,:value_method => :iso_639_1, as: :select, prompt: "Pick the locale", selected: selected
+        - if admin?
+          = f.association :status, prompt: "Pick the status"
+        - else
+          = f.input :status_id, as: :hidden, input_html: {value: 1}
 
+        = f.input :text , :as => :pagedown, :input_html => { :preview => true }
 
         = f.button :submit, class: 'btn btn-success'
         - if action_name == 'edit'
