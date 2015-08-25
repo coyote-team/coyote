@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
+  before_filter :users
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+
 
   def_param_group :group do
     param :group, Hash do
