@@ -17,20 +17,20 @@ namespace :coyote do
     root = "https://cms.mcachicago.org"
     while length != 0 do
       url = root + "/api/v1/attachment_images?updated_at=#{updated_at}&offset=#{offset}&limit=#{limit}"
-      puts "grabbing images for #{url}"
+      Rails.logger.info "grabbing images for #{url}"
 
       begin
         content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
       rescue OpenURI::HTTPError => error
         response = error.io
-        puts response.string
+        Rails.logger.error response.string
         length = 0
       end
 
       begin 
         images = JSON.parse(content)
       rescue Exception => e
-        puts "JSON parsing exception"
+        Rails.logger.error "JSON parsing exception"
         length = 0
       end
 
@@ -49,13 +49,13 @@ namespace :coyote do
             image.updated_at = i["updated_at"]
             image.save
             #create initial description field
-            puts "created image #{image.id} from canonical id #{image.canonical_id}"
+            Rails.logger.info "created image #{image.id} from canonical id #{image.canonical_id}"
           else
             #update
             image.path = i["thumb_url"]
             image.updated_at = i["updated_at"]
             image.save
-            puts "updated image #{image.id} from canonical id #{image.canonical_id}"
+            Rails.logger.info "updated image #{image.id} from canonical id #{image.canonical_id}"
           end
           #create description if none are handy
           if image.descriptions.length == 0  and !i["title"].blank?
@@ -64,9 +64,9 @@ namespace :coyote do
           end
 
         rescue Exception => e
-          puts "image creation error"
-          puts i
-          puts e
+          Rails.logger.error "image creation error"
+          Rails.logger.error i
+          Rails.logger.error e
         end
       end
 
