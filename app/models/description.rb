@@ -72,15 +72,15 @@ class Description < ActiveRecord::Base
 
   def patch_image
     website = image.website
-    if status_id == 2 and website.id = 2
-      url = website.url + "/api/attachment_images/" + image.canonical_id
+    if status_id == 2 and website.id == 1
+      url = website.url + "/api/v1/attachment_images/" + image.canonical_id
+
       url = URI.parse(url)
       req = Net::HTTP::Patch.new(url)
       res = Net::HTTP.start(url.host, url.port,   :use_ssl => url.scheme == 'https',  :verify_mode => OpenSSL::SSL::VERIFY_NONE) {|http|
           http.request(req)
       }
-      #store patched at on image
-      logger.info res.body
+      Rails.logger.info "Patched to #{url.to_s}"
     end
   end
 

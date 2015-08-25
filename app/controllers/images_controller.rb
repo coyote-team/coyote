@@ -46,11 +46,11 @@ class ImagesController < ApplicationController
   # GET /images/1
   api :GET, "images/:id", "Get an image"
   description  <<-EOT
-    Includes approved descriptions in a hash.
+Includes approved descriptions in a hash.
 
-    Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.
+Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.
 
-An example
+Ex:
 
   {
     "id": 1,

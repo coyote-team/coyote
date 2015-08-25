@@ -19,7 +19,7 @@ User.create!([
   {id: 2, email: "coyote_admin@seeread.info", admin: true , password: "asdfasdf", first_name: "Admin", last_name: "User"},
 ])
 Website.create!([
-  {id: 1, title: "MCA Chicago", url: "http://cms.mcachicago.org"}
+  {id: 1, title: "MCA Chicago", url: "https://cms.mcachicago.org"}
   #,{id: 2, title: "MCA Chicago", url: "http://www2.mcachicago.org/"}
 ])
 #Image.create!([
