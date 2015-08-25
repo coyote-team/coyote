@@ -40,7 +40,7 @@
     - if current_user
       .col-md-12
         %h2 Your Queues 
-        - if @my_queue.length == 0 && @my_completed_queue.length == 0 && @my_described_queue.length ==0
+        - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
           %p You haven't been assigned any images.
           - if !admin?
             %p Ask an admin to assign you some.

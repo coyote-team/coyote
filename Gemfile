@@ -15,6 +15,7 @@ gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
 gem 'mysql2' #might need to set version for mariadb
 gem 'seed_dump'
+gem 'actionpack-action_caching' #caching
 gem 'annotate'
 gem 'kaminari'
 gem 'ransack'

@@ -21,7 +21,8 @@
               .col-sm-6.col-xs-12<
                 .thumbnail<
                   - image_id= "#{queue_id}-image-#{image.id}"
-                  =image_tag image.url, alt: "image #{image.id}", id: image_id
+                  = link_to image_path(image) do
+                    =image_tag image.url, alt: image.alt, id: image_id
                   .caption
                     - unless type == "Unassigned Images"
                       -#- if type == "Ready to Review Descriptions"

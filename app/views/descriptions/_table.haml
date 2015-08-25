@@ -14,10 +14,11 @@
           Locale
         %th{scope: "col"}
           Text
-        %th{scope: "col"}
-          Author
-        %th{scope: "col"}
-          Actions
+        -if current_user
+          %th{scope: "col"}
+            Author
+          %th{scope: "col"}
+            Actions
 
     %tbody
       - descriptions.each_with_index do |description, idx|
@@ -37,12 +38,13 @@
           %td
             %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
           %td= to_text(description.text).truncate(50)
-          %td= description.user
-          %td.text-right
-            = link_to description, class: "btn btn-show", title: "Show this description" do
-              %i.fa.fa-fw.fa-eye{title: "Eye"}
-            = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
-              %i.fa.fa-fw.fa-pencil{title: "Pencil"}
-            -if admin?
-              = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
-                %i.fa.fa-fw.fa-trash{title: "Trash can"}
+          -if current_user
+            %td= description.user
+            %td.text-right
+              = link_to description, class: "btn btn-show", title: "Show this description" do
+                %i.fa.fa-fw.fa-eye{title: "Eye"}
+              = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
+                %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+              -if admin?
+                = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
+                  %i.fa.fa-fw.fa-trash{title: "Trash can"}
