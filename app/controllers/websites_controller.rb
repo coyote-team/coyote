@@ -1,6 +1,6 @@
 class WebsitesController < ApplicationController
   before_filter :admin, only: [:create, :edit, :update, :destroy]
-  before_action :set_website, only: [:show, :edit, :update, :destroy]
+  before_action :set_website, only: [:show, :edit, :update, :destroy, :check_count]
 
   respond_to :html, :json
 
@@ -13,6 +13,37 @@ class WebsitesController < ApplicationController
   # GET /websites/1
   api :GET, "websites/:id", "Get a website"
   def show
+  end
+
+  def check_count
+    require 'multi_json'
+    require 'open-uri'
+
+    if @website.url.include?("mcachicago")
+      limit = 1000
+      offset = 0
+      url = "https://cms.mcachicago.org/api/v1/attachment_images&offset=#{offset}&limit=#{limit}"
+      puts "grabbing images for #{url}"
+      begin
+        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        puts response.string
+        length = 0
+      end
+      puts content
+
+      begin 
+        images = JSON.parse(content)
+      rescue Exception => e
+        puts "JSON parsing exception"
+        length = 0
+      end
+
+      length = images.length 
+
+    end
+
   end
 
   # GET /websites/new

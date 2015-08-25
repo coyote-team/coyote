@@ -19,6 +19,12 @@
                 Url:
               %td
                 = @website.url
+
+        =button_to website_check_count_path(@website), form_class: "btn btn-primary", method: "get" do
+          CHECK COUNT
+        %br
+        %br
+
         %nav.show-nav{role:"navigation"}
           = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
             %i.fa.fa-fw.fa-list{title: 'List'}

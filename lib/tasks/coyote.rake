@@ -73,5 +73,8 @@ namespace :coyote do
       offset += limit
     end
 
+    @their_count = offset
+    @our_count = @website.images.count
+
   end
 end
