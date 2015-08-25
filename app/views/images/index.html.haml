@@ -88,7 +88,7 @@
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } image-path-#{ image.id }")
                     %td<
                       = link_to image, class: "", title: "Show this image" do
-                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt }#TODO alt
+                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt 
                     %td<
                       - image.users.each do |u|
                         = u.email
