@@ -19,29 +19,41 @@ class WebsitesController < ApplicationController
     require 'multi_json'
     require 'open-uri'
 
+    @our_count = @website.images.count
+    @their_count = 0
     if @website.url.include?("mcachicago")
       limit = 1000
       offset = 0
-      url = "https://cms.mcachicago.org/api/v1/attachment_images&offset=#{offset}&limit=#{limit}"
-      puts "grabbing images for #{url}"
-      begin
-        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
-      rescue OpenURI::HTTPError => error
-        response = error.io
-        puts response.string
-        length = 0
+      length = 1 
+      while length != 0 do
+        url = "https://cms.mcachicago.org/api/v1/attachment_images&offset=#{offset}&limit=#{limit}"
+        puts "grabbing images for #{url}"
+
+        begin
+          content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+        rescue OpenURI::HTTPError => error
+          response = error.io
+          puts response.string
+          length = 0
+        end
+        puts content
+
+        begin 
+          images = JSON.parse(content)
+        rescue Exception => e
+          puts "JSON parsing exception"
+          length = 0
+        end
+
+        if images and images.length
+          length = images.length 
+          offset += limit
+          @their_count = offset - limit + length
+        else
+          length = 0
+          @their_count = 0
+        end
       end
-      puts content
-
-      begin 
-        images = JSON.parse(content)
-      rescue Exception => e
-        puts "JSON parsing exception"
-        length = 0
-      end
-
-      length = images.length 
-
     end
 
   end

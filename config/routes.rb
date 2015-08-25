@@ -17,7 +17,9 @@ Plate::Application.routes.draw do
     end
   end
   resources :websites  do
-    get :check_count
+    member do
+      get :check_count
+    end
   end
   devise_for :users, :controllers => { registrations: 'registrations' }
   scope "/admin" do

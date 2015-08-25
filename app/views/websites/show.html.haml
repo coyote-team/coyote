@@ -20,7 +20,8 @@
               %td
                 = @website.url
 
-        =button_to website_check_count_path(@website), form_class: "btn btn-primary", method: "get" do
+        -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+        =link_to website_check_count_path(@website), form_class: "btn btn-primary", data: {disable_with: disable_with} do
           CHECK COUNT
         %br
         %br
