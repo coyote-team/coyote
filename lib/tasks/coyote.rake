@@ -81,7 +81,7 @@ namespace :coyote do
           end
           #create description if none are handy
           if image.descriptions.length == 0  and !i["title"].blank?
-            d = Description.new(text: i["title"], locale: "en", metum_id: 1, image_id: image.id, status_id: 1, user_id: 1)
+            d = Description.new(text: i["title"], locale: "en", metum_id: 2, image_id: image.id, status_id: 1, user_id: 1)
             if d.save
               Rails.logger.info "description #{d.id} for image #{image.id} saved"
             else

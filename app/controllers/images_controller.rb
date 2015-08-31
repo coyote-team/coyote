@@ -48,7 +48,7 @@ class ImagesController < ApplicationController
   description  <<-EOT
 Includes approved descriptions in a hash.
 
-Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.
+Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.  If one doesn't exist, it returns the most recent ready to review item.
 
 Ex:
 
