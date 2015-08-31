@@ -30,8 +30,9 @@
     -if admin?
       .col-md-12
         %h2 Admin Queues
-        =render "queue", queue: @unassigned, type: "Unassigned Images"
-        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions"
+        =render "queue", queue: @undescribed, type: "Undescribed Images", count: @undescribed_count
+        =render "queue", queue: @unassigned, type: "Unassigned Images", count: @unassigned_count
+        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions", count: @ready_to_review_count
         -#=render "queue", queue: @completed, type: "Completed Images"
         -#Supplemental Queues
         -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
@@ -44,7 +45,7 @@
           %p You haven't been assigned any images.
           - if !admin?
             %p Ask an admin to assign you some.
-        =render "queue", queue: @my_queue, type: "Your Assigned Images"
+        =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
         -#=render "queue", queue: @my_described_queue, type: "Your Described Images"
         -#=render "queue", queue: @my_completed_queue, type: "Your Completed Images"
     -if admin?

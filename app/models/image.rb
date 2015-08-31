@@ -38,6 +38,7 @@ class Image < ActiveRecord::Base
   default_scope {order('created_at DESC')}
 
   scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
+  scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
   scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
 
   paginates_per 50

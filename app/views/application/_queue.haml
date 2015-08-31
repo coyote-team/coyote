@@ -5,7 +5,7 @@
       -if queue.size > 0
         %span.sr-only<
           ,
-        %span.badge= queue.count
+        %span.badge= count if count
   -if queue.size > 0
     .well.well-sm
       .row
@@ -24,7 +24,7 @@
                   = link_to image_path(image) do
                     =image_tag image.url, alt: image.alt, id: image_id
                   .caption
-                    - unless type == "Unassigned Images"
+                    - unless type == "Unassigned Images" or type == "Undescribed Images"
                       -#- if type == "Ready to Review Descriptions"
                         -#- descriptions = image.descriptions.ready_to_review
                       -#- else

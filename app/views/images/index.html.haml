@@ -63,7 +63,10 @@
                     %th<
                   %th<
                   %th<
+                    = f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: false, required: false, collection: User.all
+
                   %th<
+                    = f.input  :group_id_eq, as: :select, include_blank: "Any group", label: false, required: false, collection: Group.all
                   %th<
                     = f.search_field :descriptions_text_cont, :class => 'input-medium form-control' 
                   %th<
