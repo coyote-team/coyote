@@ -41,11 +41,15 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/new
   def new
     @description = Description.new
-    @description.image_id = params[:image_id] if params[:image_id] #for populating sibling descriptions
+    if @image
+      @description.image = @image 
+      @title = get_image_title(@image)
+    end
   end
 
   # GET /descriptions/1/edit
   def edit
+    @title = get_image_title(@description.image)
   end
 
   # POST /descriptions

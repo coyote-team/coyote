@@ -61,20 +61,6 @@ class Image < ActiveRecord::Base
     end
   end
 
-  def caption
-    d= descriptions.where(metum_id: 2, status_id: 2, locale: "en").last
-    if d
-      d.text
-    else
-      d= descriptions.where(metum_id: 2, status_id: 1, locale: "en").last
-      if d
-        d.text
-      else
-        ""
-      end
-    end
-  end
-
   def long
     d = descriptions.where(metum_id: 3, status_id: 2, locale: "en").last
     if d

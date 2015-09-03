@@ -1,4 +1,4 @@
-json.extract! image, :id, :canonical_id, :alt, :caption, :long, :path, :group_id, :website_id, :created_at, :updated_at 
+json.extract! image, :id, :canonical_id, :caption, :long, :path, :group_id, :website_id, :created_at, :updated_at 
 
 if !@status_ids.empty?
   descriptions = image.descriptions.where(status_id: @status_ids)

@@ -74,7 +74,6 @@ Ex:
     "id": 1,
     "canonical_id": "55917aaa613430007400000a",
     "alt": "A short title.",
-    "caption": "A caption that clarifies.",
     "long": "A long detailed description.",
     "path": "55917aaa613430007400000a.jpg?sha=72066b7eb6b6152ed511d52b099365afcd8b23e5",
     "group_id": 2,
@@ -94,17 +93,6 @@ Ex:
         "updated_at": "2015-07-28T19:39:17.000Z"
       },
       {
-        "id": 5,
-        "image_id": 1,
-        "status_id": 2,
-        "metum_id": 2,
-        "locale": "en",
-        "text": "A caption that clarifies.",
-        "user_id": 2,
-        "created_at": "2015-07-29T16:26:30.000Z",
-        "updated_at": "2015-07-29T16:26:30.000Z"
-      },
-      {
         "id": 6,
         "image_id": 1,
         "status_id": 2,
@@ -120,6 +108,7 @@ Ex:
 
   EOT
   def show
+    @title = get_image_title(@image)
   end
 
   # GET /images/new

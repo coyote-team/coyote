@@ -3,6 +3,12 @@
     .col-md-6
       = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
       - other_descriptions = @description.siblings
+
+      -if @title
+        %h2 
+          Title
+          %small from #{@image.website}
+        = to_html @title
       - if other_descriptions.length > 0
         #id-for-queue-ref.panel.panel-default
           %h2.panel-heading Other descriptions 

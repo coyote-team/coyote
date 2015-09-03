@@ -8,11 +8,20 @@
           %h1#page-title{tabindex: -1}=title
         .row
           .col-md-3
-            =image_tag @image.url, class: "description-image"
+            =image_tag @image.url, class: "description-image", alt: @image.alt
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this image
               %tbody
+                %tr
+                  %th{scope: "row"}
+                    Title:
+                  %td
+                    - if @title
+                      = @title
+                    -else
+                      No title available.
+
                 %tr
                   %th{scope: "row"}
                     Path:
