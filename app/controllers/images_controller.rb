@@ -63,17 +63,17 @@ The image JSON also includes the text of the most recent English <code>alt</code
 If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
 If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
 
-<code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
+<code>status_ids[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
-<code>status_id[]</code> values can include:
+<code>status_ids[]</code> values can include:
 
 - 1 : "Ready to review"
 - 2 : "Approved"
 - 3 : "Not approved"
 
-Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.
+Accordingly, <code>status_ids[]=1&status_ids[]=2</code> should be used in the CMS view.
 
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_ids</code>.
 
 Ex:
 
