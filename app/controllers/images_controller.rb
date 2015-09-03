@@ -58,14 +58,6 @@ class ImagesController < ApplicationController
 
 Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.  <code>status_id[]=2</code> should be used in the public view.
 
-<code>status_id[]</code> values can include:
-
-- 1 : "Ready to review"
-- 2 : "Approved"
-- 3 : "Not approved"
-
-Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.  <code>status_id[]=2</code> should be used in the public view.
-
 The image JSON also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.  If one doesn't exist, it returns the most recent ready to review item.
 
 Ex:
