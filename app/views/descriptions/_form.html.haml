@@ -4,11 +4,14 @@
       = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
       - other_descriptions = @description.siblings
 
-      -if @title
-        %h2 
-          Title
-          %small from #{@image.website}
+      %h2 
+        Title
+        %small from #{@image.website}
+      -if !@title.blank?
         = to_html @title
+      -else
+        No title available.
+
       - if other_descriptions.length > 0
         #id-for-queue-ref.panel.panel-default
           %h2.panel-heading Other descriptions 

@@ -91,7 +91,7 @@ class Image < ActiveRecord::Base
    descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
   end
 
-  #has 1 of each metum by this user in any combo of locales
+  #has 1 of each metum by this user in any combo of locales and status'es
   def completed_by?(user)
     meta_ids = Metum.all.map{|m| m.id}
     described_meta_ids = descriptions.collect{ |d| d.metum_id if d.user_id == user.id}.compact 
@@ -101,12 +101,35 @@ class Image < ActiveRecord::Base
   #completed all meta in any combo of locales
   def completed?
     meta_ids = Metum.all.map{|m| m.id}
-    approved_id = Status.find_by_title("Approved")
-    if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
+    #approved_id = Status.find_by_title("Approved")
+    #if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
+    if (meta_ids - descriptions.map{|d| d.metum_id unless d.nil?}).empty?
       true
     else
       false
     end
+  end
+
+  def status
+    if partially_completed? 
+      if completed?
+        if ready_to_review?
+          return "Ready to Review" 
+        else
+          return "Completed" 
+        end
+      else
+        return "Partially Completed"
+      end
+    else
+      return "Not described"
+    end
+  end
+
+  def partially_completed?
+    #approved_id = Status.find_by_title("Approved")
+    #descriptions.where({status_id: approved_id}).count > 0
+    descriptions.count > 0
   end
 
   def ready_to_review?

@@ -5,7 +5,12 @@
     .entity
       .entity-inner
         %header{role: "header"}
-          %h1#page-title{tabindex: -1}=title
+          %h1#page-title{tabindex: -1}
+            =title
+            -status = @description.image.status
+            -klass = image_status_css_class(status)
+            %span{class: klass}=status
+
         .row
           .col-md-3
             =link_to @description.image do
