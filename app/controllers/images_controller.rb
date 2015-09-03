@@ -22,8 +22,20 @@ class ImagesController < ApplicationController
   param :status_ids, Array, optional: true
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-    If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
-    If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
+If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+
+<code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
+
+<code>status_id[]</code> values can include:
+
+- 1 : "Ready to review"
+- 2 : "Approved"
+- 3 : "Not approved"
+
+Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.
+
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
   EOT
   def index
     if params[:canonical_id].present? 
@@ -40,7 +52,7 @@ class ImagesController < ApplicationController
       #TODO cache
       @tags = Image.tag_counts_on(:tags)
     end
-    @status_ids = []
+    @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
   end
 
@@ -48,7 +60,10 @@ class ImagesController < ApplicationController
   api :GET, "images/:id", "Get an image"
   param :status_ids, Array, optional: true
   description  <<-EOT
-<code>status_id[]</code> can be used to filter the descriptions array.
+If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
+If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+
+<code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
 <code>status_id[]</code> values can include:
 
@@ -56,9 +71,9 @@ class ImagesController < ApplicationController
 - 2 : "Approved"
 - 3 : "Not approved"
 
-Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.  <code>status_id[]=2</code> should be used in the public view.
+Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.
 
-The image JSON also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.  If one doesn't exist, it returns the most recent ready to review item.
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
 
 Ex:
 
