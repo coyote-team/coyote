@@ -7,7 +7,7 @@ if @images
 
   json.records  do
     json.array!(@images) do |image|
-      json.extract! image, :id, :path, :group_id, :website_id
+      json.partial! 'image', image: image
       json.url image_url(image, format: :json)
     end
   end

@@ -18,12 +18,12 @@ class ImagesController < ApplicationController
 
   # GET /images
   param :page, :number
+  param :canonical_id,  String , optional: true
+  param :status_ids, Array, optional: true
   api :GET, "images", "Get an index of images"
-  param :canonical_id,  String , required: false
   description  <<-EOT
     If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
-    If the result is a single image queried by <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
-
+    If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
   EOT
   def index
     if params[:canonical_id].present? 
@@ -40,15 +40,33 @@ class ImagesController < ApplicationController
       #TODO cache
       @tags = Image.tag_counts_on(:tags)
     end
-
+    @status_ids = []
+    @status_ids = params[:status_ids]  if params[:status_ids]
   end
 
   # GET /images/1
   api :GET, "images/:id", "Get an image"
+  param :status_ids, Array, optional: true
   description  <<-EOT
-Includes approved descriptions in a hash.
+<code>status_id[]</code> can be used to filter the descriptions array.
 
-Also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.  If one doesn't exist, it returns the most recent ready to review item.
+<code>status_id[]</code> values can include:
+
+- 1 : "Ready to review"
+- 2 : "Approved"
+- 3 : "Not approved"
+
+Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.  <code>status_id[]=2</code> should be used in the public view.
+
+<code>status_id[]</code> values can include:
+
+- 1 : "Ready to review"
+- 2 : "Approved"
+- 3 : "Not approved"
+
+Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.  <code>status_id[]=2</code> should be used in the public view.
+
+The image JSON also includes the text of the most recent approved English <code>alt</code>,  <code>caption</code>, and <code>long</code>.  If one doesn't exist, it returns the most recent ready to review item.
 
 Ex:
 
