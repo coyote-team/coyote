@@ -35,7 +35,7 @@ If the params include <code>canonical_id</code>, an object is returned in the st
 
 Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.
 
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>. If an approved description is available, it will be supplied instead of any ready to review descriptions when <code>status_id[]=1&status_id[]=2</code> is requested.
   EOT
   def index
     if params[:canonical_id].present? 
@@ -73,7 +73,7 @@ If the params include <code>canonical_id</code>, an object is returned in the st
 
 Accordingly, <code>status_ids[]=1&status_ids[]=2</code> should be used in the CMS view.
 
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_ids</code>.
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>. If an approved description is available, it will be supplied instead of any ready to review descriptions when <code>status_id[]=1&status_id[]=2</code> is requested.
 
 Ex:
 
