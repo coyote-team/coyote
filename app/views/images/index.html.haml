@@ -45,6 +45,8 @@
                   %th{scope: "col"}<
                     Image
                   %th{scope: "col"}<
+                    Title
+                  %th{scope: "col"}<
                     = sort_link @q, :assignments_count, 'Assigned to'
                   %th{scope: "col"}<
                     = sort_link @q, :group_name, 'Group'
@@ -61,6 +63,7 @@
                 %tr
                   -if admin?
                     %th<
+                  %th<
                   %th<
                   %th<
                     = f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: false, required: false, collection: User.all
@@ -92,6 +95,8 @@
                     %td<
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt 
+                    %td<
+                      = @images_titles[image.id]
                     %td<
                       - image.users.each do |u|
                         = u.email

@@ -49,9 +49,13 @@ The image JSON also includes the text of the most recent English <code>alt</code
         @images = @q.result(distinct: true).page(params[:page]) 
       end
 
-      #TODO cache
-      @tags = Image.tag_counts_on(:tags)
+      @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
+        Image.tag_counts_on(:tags)
+      end
     end
+
+    @images_titles = get_images_titles(@images)
+
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
   end
