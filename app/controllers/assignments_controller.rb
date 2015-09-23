@@ -98,7 +98,6 @@ class AssignmentsController < ApplicationController
     end
 
     def next_image
-      @next_image = Image.limit(1).unassigned
-      @next_image = nil if @next_image.empty?
+      @next_image = Image.unassigned.first
     end
 end
