@@ -21,7 +21,7 @@ class HomeController < ApplicationController
         #@incomplete = images.collect{|i| i unless i.completed?}.compact.first(limit)
         @ready_to_review = Description.ready_to_review
         @ready_to_review_count = @ready_to_review.count
-        @ready_to_review = @ready_to_review.first(limit).collect{|d| d.image}
+        @ready_to_review = @ready_to_review.first(limit).collect{|d| d.image}.uniq
         #@not_approved = images.collect{|i| i if i.not_approved?}.compact.first(limit)
       end
     end
