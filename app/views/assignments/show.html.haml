@@ -33,7 +33,7 @@
           -if @next_image
             %br
             %br
-            = link_to new_assignment_path(image_id: @next_image.id), class: 'btn btn-success', title: "Assign image #{image.id} to a user" do
+            = link_to new_assignment_path(image_id: @next_image.id), class: 'btn btn-success', title: "Assign image #{@next_image.id} to a user" do
               -#%i.fa.fa-plus
               Assign next image
 
