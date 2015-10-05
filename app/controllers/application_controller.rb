@@ -26,10 +26,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_image_title(image)
-    image.title
-  end
-
   def get_images_titles(images)
     Rails.cache.fetch('images_titles', expires_in: 2.minutes) do
       require 'multi_json'
@@ -46,7 +42,7 @@ class ApplicationController < ActionController::Base
       #request 
       Rails.logger.info "grabbing image json at #{url}"
       begin
-        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 5}).read
       rescue OpenURI::HTTPError => error
         response = error.io
         Rails.logger.error response.string

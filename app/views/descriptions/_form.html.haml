@@ -1,18 +1,10 @@
 .row
   - if @image
+    - @title = @image.title
     .col-md-6
-      = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
+      = render 'image'
+
       - other_descriptions = @description.siblings
-
-      -if !@title.blank?
-        %blockquote<
-          = to_html @title
-          %cite<
-            %small from #{@image.website}
-            .label.label-info Title
-      -else
-        No title available.
-
       - if other_descriptions.length > 0
         #id-for-queue-ref.panel.panel-default
           %h2.panel-heading Other descriptions 

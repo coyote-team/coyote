@@ -43,13 +43,11 @@ class DescriptionsController < ApplicationController
     @description = Description.new
     if @image
       @description.image = @image 
-      @title = get_image_title(@image)
     end
   end
 
   # GET /descriptions/1/edit
   def edit
-    @title = get_image_title(@description.image)
   end
 
   # POST /descriptions

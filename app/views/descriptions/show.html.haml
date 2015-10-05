@@ -1,6 +1,8 @@
 -title = "Showing #{@description}"
 -meta title: title
--cache ['v1', admin?,  @description] do
+- @image = @description.image
+- @title = @image.title
+-cache ['v1', admin?,  @description, @title] do
   .entity-outer
     .entity
       .entity-inner
@@ -13,8 +15,7 @@
 
         .row
           .col-md-3
-            =link_to @description.image do
-              =image_tag @description.image.url, class: "description-image"
+            = render "image"
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this description

@@ -1,4 +1,4 @@
-- if queue 
+- if queue
   .queue
     %h3<
       #{type} Queue
@@ -16,14 +16,24 @@
             - else #is a description
               - description = item
               - image = description.image
+            - @title = image.title
             - queue_id = type.downcase.strip.gsub(' ', '-')
             %li.image{id: "#{queue_id}-image-li-#{image.id}"}<
               .col-sm-6.col-xs-12<
                 .thumbnail<
                   - image_id= "#{queue_id}-image-#{image.id}"
                   = link_to image_path(image) do
-                    =image_tag image.url, alt: image.alt, id: image_id
+                    =image_tag image.url, alt: image.alt, id: image_id, title: to_text(@title)
                   .caption
+                    - if !@title.blank?
+                      %blockquote
+                        = to_html @title
+                        %cite<
+                          %small
+                            %span.label.label-info Title
+                            from #{image.website}
+                    -else
+                      %p No caption available.
                     - unless type == "Unassigned Images" or type == "Undescribed Images"
                       -#- if type == "Ready to Review Descriptions"
                         -#- descriptions = image.descriptions.ready_to_review
@@ -48,7 +58,7 @@
                     - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
                       - if image.users.count > 0
                         %h4<
-                          Users 
+                          Users
                           %span.sr-only ,
                           %span.badge
                             =image.users.count
@@ -66,7 +76,7 @@
                           %ul.dropdown-menu{"aria-labelledby" => assign_id}
                             - @users.each do |user|
                               %li
-                                = button_to assignments_path(assignment: {image_id: image.id, user_id: user.id}), action: :create, 
+                                = button_to assignments_path(assignment: {image_id: image.id, user_id: user.id}), action: :create,
                                   remote: true, format: :js, class: 'btn', title: "Assign image #{image.id} to #{user}", data: {disable_with: disable_with} do
                                   #{user}
       -#-if queue.size > 8

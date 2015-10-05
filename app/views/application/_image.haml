@@ -1,0 +1,11 @@
+= link_to images_path(@image) do
+  = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, title: to_text(@title)
+-if !@title.blank?
+  %blockquote<
+    = to_html @title
+    %cite<
+      %small
+        %span.label.label-info Title
+        from #{@image.website}
+-else
+  %p No title available.
