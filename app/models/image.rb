@@ -80,23 +80,21 @@ class Image < ActiveRecord::Base
       if self.website.url.include?("mcachicago")
         url = "https://cms.mcachicago.org/api/v1/attachment_images/" + self.canonical_id
         Rails.logger.info "grabbing image json at #{url}"
-
         begin
           content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 5}).read
+          begin 
+            image = JSON.parse(content)
+            title = image["title"]
+          rescue Exception => e
+            Rails.logger.error "JSON parsing exception"
+            Rails.logger.error e
+            length = 0
+          end
         rescue OpenURI::HTTPError => error
           response = error.io
           Rails.logger.error response.string
           length = 0
         end
-
-        begin 
-          image = JSON.parse(content)
-        rescue Exception => e
-          Rails.logger.error "JSON parsing exception"
-          Rails.logger.error e
-          length = 0
-        end
-        title = image["title"]
       end
       title
     end

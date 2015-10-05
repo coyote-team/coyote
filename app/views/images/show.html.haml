@@ -13,20 +13,11 @@
             %span{class: klass}= status
         .row
           .col-md-3
-            =image_tag @image.url, class: "description-image", alt: @image.alt, title: to_text(@title)
+            = render "image"
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this image
               %tbody
-                %tr
-                  %th{scope: "row"}
-                    Title:
-                  %td
-                    - if !@title.blank?
-                      = to_html @title
-                    -else
-                      No title available.
-
                 %tr
                   %th{scope: "row"}
                     Path:
