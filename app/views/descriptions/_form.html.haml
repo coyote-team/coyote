@@ -4,11 +4,12 @@
       = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
       - other_descriptions = @description.siblings
 
-      %h2 
-        Title
-        %small from #{@image.website}
       -if !@title.blank?
-        = to_html @title
+        %blockquote<
+          = to_html @title
+          %cite<
+            %small from #{@image.website}
+            .label.label-info Title
       -else
         No title available.
 

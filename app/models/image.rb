@@ -71,6 +71,38 @@ class Image < ActiveRecord::Base
     end
   end
 
+  def title
+    require 'multi_json'
+    require 'open-uri'
+
+    title = Rails.cache.fetch([self, 'title'].hash, expires_in: 1.minute) do
+      title = ""
+      if self.website.url.include?("mcachicago")
+        url = "https://cms.mcachicago.org/api/v1/attachment_images/" + self.canonical_id
+        Rails.logger.info "grabbing image json at #{url}"
+
+        begin
+          content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+        rescue OpenURI::HTTPError => error
+          response = error.io
+          Rails.logger.error response.string
+          length = 0
+        end
+
+        begin 
+          image = JSON.parse(content)
+        rescue Exception => e
+          Rails.logger.error "JSON parsing exception"
+          Rails.logger.error e
+          length = 0
+        end
+        title = image["title"]
+      end
+      title
+    end
+    title
+  end
+
   #has no descriptions by this user in any locale
   def undescribed_by?(user)
     !descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
