@@ -9,7 +9,7 @@
 
         %nav.index-nav{role:"navigation"}
           =paginate @assignments
-          %h3.sr-only Actions
+          %h2.sr-only Actions
           = link_to new_assignment_path, class: 'btn btn-success new-link' do
             %i.fa.fa-fw.fa-plus{title: "Plus"}
             New Assignment
@@ -19,7 +19,7 @@
 
         %nav.index-nav{role:"navigation"}
           =paginate @assignments
-          %h3.sr-only Actions
+          %h2.sr-only Actions
           = link_to new_assignment_path, class: 'btn btn-success new-link' do
             %i.fa.fa-fw.fa-plus{title: "Plus"}
             New Assignment

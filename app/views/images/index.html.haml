@@ -12,11 +12,11 @@
 
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1
-            %h3.sr-only Pagination
+            %h2.sr-only Pagination
             =paginate @images
           - if admin?
             %br
-            %h3.sr-only Actions
+            %h2.sr-only Actions
             = link_to new_image_path, class: 'btn btn-success new-link' do
               %i.fa.fa-fw.fa-plus{title: "Plus"}
               New Image
@@ -31,10 +31,10 @@
               %thead
                 %tr
                   -if admin?
-                    %th{scope: "col"}<
+                    %th{scope: "col", rowspan: 2}<
                       %span.sr-only Select
                       .btn-group
-                        %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => true, "aria-expanded" => false}
+                        %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false"}
                           Assign to
                           %span.caret
                         %ul.dropdown-menu
@@ -42,9 +42,9 @@
                             %li
                               %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk'}
                                 =u
-                  %th{scope: "col"}<
+                  %th{scope: "col", rowspan: 2}<
                     Image
-                  %th{scope: "col"}<
+                  %th{scope: "col", rowspan: 2}<
                     Title
                   %th{scope: "col"}<
                     = sort_link @q, :assignments_count, 'Assigned to'
@@ -56,26 +56,21 @@
                     = sort_link @q, :descriptions_count, 'Descriptions'
                   %th{scope: "col"}<
                     Tags
-                  %th{scope: "col"}<
+                  %th{scope: "col", rowspan: 2}<
                     = sort_link @q, :created_at, 'Date'
                   %th{scope: "col"}<
                     Actions
                 %tr
-                  -if admin?
-                    %th<
-                  %th<
-                  %th<
-                  %th<
+                  %td<
                     = f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: false, required: false, collection: User.all
 
-                  %th<
+                  %td<
                     = f.input  :group_id_eq, as: :select, include_blank: "Any group", label: false, required: false, collection: Group.all
-                  %th<
+                  %td<
                     = f.search_field :descriptions_text_cont, :class => 'input-medium form-control' 
-                  %th<
+                  %td<
                     = f.search_field :tags_name_cont, :class => 'input-medium form-control' 
-                  %th<
-                  %th<
+                  %td.search-btns<
                     .btn-group
                       = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
                         %span.sr-only Clear
@@ -95,7 +90,7 @@
                     %td<
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt 
-                    -#%td<
+                    %td<
                       -#= @images_titles[image.id]
                     %td<
                       - image.users.each do |u|
@@ -129,11 +124,11 @@
 
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1
-            %h3.sr-only Pagination
+            %h2.sr-only Pagination
             =paginate @images
           -if admin?
             %br
-            %h3.sr-only Actions
+            %h2.sr-only Actions
             = link_to new_image_path, class: 'btn btn-success new-link' do
               %i.fa.fa-fw.fa-plus{title: "Plus"}
               New Image
