@@ -32,16 +32,16 @@
       %ul.nav.navbar-nav
         %li<
           %a{href: "mailto:coyote@seeread.info", target: "_blank"}
-            %i.fa.fa-fw.fa-support{"aria-hidden" => true}
+            %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
             Support
 
         - if current_user
           %li<
             = link_to destroy_user_session_path, :method => :delete do 
-              %i.fa.fa-fw.fa-sign-out{"aria-hidden" => true}
+              %i.fa.fa-fw.fa-sign-out{"aria-hidden" => "true"}
               Log out
         - else
           %li<
             = link_to user_session_path do
-              %i.fa.fa-fw.fa-sign-in{"aria-hidden" => true}
+              %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
               Log in
