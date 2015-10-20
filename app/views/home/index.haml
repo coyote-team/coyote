@@ -10,7 +10,8 @@
     .col-md-12
       %header
         %h1#page-title=title
-    - if !current_user
+  - if !current_user
+    .row
       .col-md-6
         %p<
           Coyote is a tool for quickly annotating images built for the <a href="//www.mcachicago.org/" target="_blank">Museum of Contemporary Art Chicago</a>.
@@ -19,50 +20,69 @@
           or
           = link_to "log in", new_session_path(resource_name)
           to start annotating.
-      -#.col-md-6
-        -#= render "devise/sessions/form"
-        -#.devise-actions
-          -#.devise-actions-inner
-            -#%br
-            -#= link_to "Sign up", new_registration_path(resource_name)
-            -#%br
-            -#= link_to "Forgot your password?", new_password_path(resource_name)
+  - else
+    .row
+      .col-sm-6
+        %h2 Your Stats
+        %table.table
+          %tr<
+            %th Described Images
+            %td #{@my_described_count} 
+          %tr<
+            %th Descriptions
+            %td #{@my_descriptions_count} 
+          -#%tr<
+            %th Completed Images
+            %td #{@my_completed_count} 
+      -if admin?
+        .col-sm-6
+          %h2 Cumulative Stats
+          %table.table
+            %tr<
+              %th Described Images
+              %td #{@described_count}
+            %tr<
+              %th Descriptions
+              %td #{@description_count}
+            -#%tr<
+              -#%th Completed Images
+              -#%td #{@completed_count}
+    .row
+      -if admin?
+        .col-md-12
+          %h2 Admin Queues
+          =render "queue", queue: @undescribed, type: "Undescribed Images", count: @undescribed_count
+          =render "queue", queue: @unassigned, type: "Unassigned Images", count: @unassigned_count
+          =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions", count: @ready_to_review_count
+          -#=render "queue", queue: @completed, type: "Completed Images"
+          -#Supplemental Queues
+          -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
+          -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
+          -#=render "queue", queue: @assigned, type: "Assigned Images"
+      - else
+        .col-md-12
+          %h2 Your Queues 
+          - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
+            %p You haven't been assigned any images.
+            - if !admin?
+              %p Ask an admin to assign you some.
+          =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
     -if admin?
-      .col-md-12
-        %h2 Admin Queues
-        =render "queue", queue: @undescribed, type: "Undescribed Images", count: @undescribed_count
-        =render "queue", queue: @unassigned, type: "Unassigned Images", count: @unassigned_count
-        =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions", count: @ready_to_review_count
-        -#=render "queue", queue: @completed, type: "Completed Images"
-        -#Supplemental Queues
-        -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
-        -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
-        -#=render "queue", queue: @assigned, type: "Assigned Images"
-    - if current_user
-      .col-md-12
-        %h2 Your Queues 
-        - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
-          %p You haven't been assigned any images.
-          - if !admin?
-            %p Ask an admin to assign you some.
-        =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
-        -#=render "queue", queue: @my_described_queue, type: "Your Described Images"
-        -#=render "queue", queue: @my_completed_queue, type: "Your Completed Images"
-    -if admin?
-      .col-md-6
-        = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
+      .row
+        .col-md-6
+          = form_tag import_images_path, multipart: true, class: 'form-horizontal' do |f|
+            %h2>
+              Import images
+              <small>via <code>.csv</code>, <code>.xls</code>, and <code>.xlsx</code></small>
+            = file_field_tag :file, label: "Select your file"
+            = button_tag type: "submit", class: "btn btn-success disabled", data: {disaabled: true} do
+              %i.fa.fa-fw.fa-upload
+              Upload
+        .col-md-6
           %h2>
-            Import images
-            <small>via <code>.csv</code>, <code>.xls</code>, and <code>.xlsx</code></small>
-          = file_field_tag :file, label: "Select your file"
-          = button_tag type: "submit", class: "btn btn-success disabled", data: {disaabled: true} do
-            %i.fa.fa-fw.fa-upload
-            Upload
-      .col-md-6
-        %h2>
-          Export spreadsheet of image records
-          %small>
-            %code .csv
-        = button_tag  export_images_path(format: "csv"), class: 'btn btn-success' do
-          %i.fa.fa-fw.fa-download
-          Export
+            Export spreadsheet of image records
+            %small>
+              %code .csv
+          = button_tag  export_images_path(format: "csv"), class: 'btn btn-success' do
+            %i.fa.fa-fw.fa-download
+            Export

@@ -1,7 +1,8 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :clear_search, only: [:index]
-  before_filter :users, only: [:create, :edit, :update, :destroy]
+  before_action :prep_assign_to, only: [:index]
+  before_action :admin, only: [:create, :edit, :update, :destroy]
 
   respond_to :html, :json
 

@@ -39,7 +39,7 @@
                           Assign to
                           %span.caret
                         %ul.dropdown-menu<
-                          - User.all.each do |u|
+                          - @users.each do |u|
                             %li<
                               %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk'}=u
 

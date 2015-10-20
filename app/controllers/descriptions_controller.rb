@@ -4,8 +4,9 @@ class DescriptionsController < ApplicationController
   before_action :collect_meta, only: [:new, :edit]
   before_action :set_author, only: [:new]
   before_action :clear_search_index, :only => [:index]
-  before_filter :users
-
+  before_action :users
+  before_action :admin_or_owner, only: [:update, :edit]
+  before_action :admin, only: [:delete]
 
   respond_to :html, :json, :js
 
@@ -30,7 +31,11 @@ class DescriptionsController < ApplicationController
   EOT
 
   def index
-    @descriptions = Description.all.page params[:page]
+    if request.format.html? and !current_user.admin?
+      @descriptions = current_user.descriptions.all.page params[:page]
+    else
+      @descriptions = Description.all.page params[:page]
+    end
   end
 
   # GET /descriptions/1
@@ -104,5 +109,12 @@ class DescriptionsController < ApplicationController
 
     def collect_meta
       @meta = Metum.all
+    end
+
+    def admin_or_owner
+      puts "filter ran"
+      unless current_user and (current_user.admin? or current_user.id == @description.user_id)
+        redirect_to(descriptions_path) 
+      end
     end
 end
