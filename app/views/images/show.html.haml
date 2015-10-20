@@ -58,7 +58,7 @@
             %nav.show-nav{role:"navigation"}
               -if admin?
                 = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
-                  %i.fa.fa-fw.fa-pencil{title: 'Pencil'}
+                  %i.fa.fa-fw.fa-pencil{title: 'Edit'}
                   Edit
                 = link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
                   Assign

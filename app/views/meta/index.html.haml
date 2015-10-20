@@ -24,11 +24,11 @@
                 %td= metum.instructions
                 %td.text-right
                   = link_to metum, class: "btn btn-show", title: "Show this metum" do
-                    %i.fa.fa-fw.fa-eye{title: "Eye"}
+                    %i.fa.fa-fw.fa-eye{title: "Show"}
                   = link_to edit_metum_path(metum), class: "btn btn-edit", title: "Edit this metum"  do
-                    %i.fa.fa-fw.fa-pencil{title: "Pencil"}
+                    %i.fa.fa-fw.fa-pencil{title: "Edit"}
                   -#= link_to metum, title: "Delete this metum" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{metum}?"} do
-                    %i.fa.fa-fw.fa-trash{title: "Trash can"}
+                    %i.fa.fa-fw.fa-trash{title: "Delete"}
 
         %nav.index-nav{role:"navigation"}
           = link_to new_metum_path, class: 'btn btn-success new-link' do
