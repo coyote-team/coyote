@@ -52,7 +52,7 @@
                   %th{scope: "col", rowspan: 2}<
                     Title
                   %th{scope: "col"}<
-                    = sort_link @q, :assignments_count, 'Assigned to'
+                    = sort_link @q, :assignments_count, 'Assigned to', html: {title: "Sort by assignment count"}
                   %th{scope: "col"}<
                     = sort_link @q, :group_name, 'Group'
                   -#%th{scope: "col"}<
@@ -67,14 +67,16 @@
                     Actions
                 %tr
                   %td<
-                    = f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: false, required: false, collection: User.all
+                    = f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: "Select a user", required: false, collection: User.all, label_html: {class: 'sr-only'}
 
                   %td<
-                    = f.input  :group_id_eq, as: :select, include_blank: "Any group", label: false, required: false, collection: Group.all
+                    = f.input  :group_id_eq, as: :select, include_blank: "Any group", label: "Select a group", required: false, collection: Group.all , label_html: {class: 'sr-only'}
                   %td<
-                    = f.search_field :descriptions_text_cont, :class => 'input-medium form-control'
+                    =f.label "Search by description", for: "q_descriptions_text_cont", class: "sr-only"
+                    = f.search_field :descriptions_text_cont, :class => 'input-medium form-control', placeholder: "Search by description"
                   %td<
-                    = f.search_field :tags_name_cont, :class => 'input-medium form-control'
+                    = f.label "Search by tag", for: "q_tags_name_cont", class: "sr-only"
+                    = f.search_field :tags_name_cont, :class => 'input-medium form-control', placeholder: "Search by tag"
                   %td.search-btns<
                     .btn-group
                       = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
@@ -120,13 +122,14 @@
                           = link_to image, title: "Delete this image" , class: "btn btn-sm btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{image}?"} do
                             %i.fa.fa-fw.fa-trash{title: "Trash can"}
 
-        %p
-          - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-            = link_to images_path(tag: tag.name), :class => css_class do
-              = tag.name
-              %span.sr-only ,
-              %span.badge
-                = tag.count
+        -if @tags.length > 0
+          %p
+            - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+              = link_to images_path(tag: tag.name), :class => css_class do
+                = tag.name
+                %span.sr-only ,
+                %span.badge
+                  = tag.count
 
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1

@@ -21,7 +21,6 @@
 FactoryGirl.define do
   factory :image do
     url "MyString"
-website nil
+    website nil
   end
-
 end
