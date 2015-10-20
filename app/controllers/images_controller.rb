@@ -54,6 +54,7 @@ The image JSON also includes the text of the most recent English <code>alt</code
       end
     end
 
+    #TODO change to an ajax call
     @images_titles = get_images_titles(@images)
 
     @status_ids = [2]
@@ -116,7 +117,6 @@ Ex:
 
   EOT
   def show
-    @title = get_image_title(@image)
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
   end
