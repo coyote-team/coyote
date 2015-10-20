@@ -64,9 +64,6 @@ The image JSON also includes the text of the most recent English <code>alt</code
   api :GET, "images/:id", "Get an image"
   param :status_ids, Array, optional: true
   description  <<-EOT
-If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
-If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
-
 <code>status_ids[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
 <code>status_ids[]</code> values can include:

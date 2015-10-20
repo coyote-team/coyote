@@ -64,7 +64,7 @@ class AssignmentsController < ApplicationController
         success_count += 1
       else
         fail_count += 1
-        errors += assignment.errors.full_messages.collect{|m| m + ".  "}.join()
+        #errors += assignment.errors.full_messages.collect{|m| m + ".  "}.join()
       end
     end
 

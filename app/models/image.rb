@@ -23,8 +23,8 @@ require 'roo'
 class Image < ActiveRecord::Base
   acts_as_taggable_on :tags
 
-  belongs_to :website
-  belongs_to :group
+  belongs_to :website, touch: true
+  belongs_to :group, touch: true
 
   has_many :descriptions, dependent: :destroy
   has_many :assignments, dependent: :destroy

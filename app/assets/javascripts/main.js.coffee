@@ -70,6 +70,8 @@ $ ->
       data = {}
       data[bulk] = sets
 
+      
+      $('#main').addClass('animated fadeOut')
       $.ajax
         url: url
         type: "POST"
@@ -79,4 +81,5 @@ $ ->
 
         error: (jqXHR, textStatus, errorThrown) ->
           alert textStatus, errorThrown
+          $('#main').addClass('animated fadeIn')
 

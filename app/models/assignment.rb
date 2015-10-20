@@ -15,8 +15,8 @@
 #
 
 class Assignment < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :image, counter_cache: true
+  belongs_to :user, touch: true
+  belongs_to :image, counter_cache: true, touch: true
 
   validates_associated :user, :image
   validates_presence_of :user, :image
