@@ -72,7 +72,7 @@ class Description < ActiveRecord::Base
 
   def patch_image
     website = image.website
-    if status_id == 2 and website.id == 1
+    if status_id == 2 and website.id == 1 and Rails.env.production?
       url = website.url + "/api/v1/attachment_images/" + image.canonical_id
 
       url = URI.parse(url)
