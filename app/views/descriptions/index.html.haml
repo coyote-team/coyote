@@ -7,8 +7,8 @@
         %header{role: "header"}
           %h1#page-title{tabindex: -1}
             =title
-            %span.badge
-              =@descriptions.total_count
+            %span.sr-only ,
+            %span.badge=@descriptions.total_count
 
         %nav.index-nav{role:"navigation"}
           
