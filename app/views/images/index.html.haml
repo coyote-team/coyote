@@ -7,8 +7,8 @@
         %header{role: "header"}
           %h1#page-title{tabindex: -1}
             =title
-            %span.badge
-              =@images.total_count
+            %span.sr-only ,
+            %span.badge=@images.total_count
 
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1
@@ -23,7 +23,7 @@
 
 
 
-        
+
         = search_form_for @q, :html => {:class => "form-vertical"} do |f|
           .table-responsive
             %table.index-table
@@ -32,7 +32,8 @@
                 %tr
                   -if admin?
                     %th{scope: "col", rowspan: 2}<
-                      %span.sr-only Select
+                      %span.sr-only Bulk Actions
+
                       .btn-group
                         %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false"}
                           Assign to
@@ -42,6 +43,10 @@
                             %li
                               %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk'}
                                 =u
+
+                      %br
+                      <input type="checkbox" name="select-all" id="select-all" />
+
                   %th{scope: "col", rowspan: 2}<
                     Image
                   %th{scope: "col", rowspan: 2}<
@@ -67,9 +72,9 @@
                   %td<
                     = f.input  :group_id_eq, as: :select, include_blank: "Any group", label: false, required: false, collection: Group.all
                   %td<
-                    = f.search_field :descriptions_text_cont, :class => 'input-medium form-control' 
+                    = f.search_field :descriptions_text_cont, :class => 'input-medium form-control'
                   %td<
-                    = f.search_field :tags_name_cont, :class => 'input-medium form-control' 
+                    = f.search_field :tags_name_cont, :class => 'input-medium form-control'
                   %td.search-btns<
                     .btn-group
                       = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
@@ -89,7 +94,7 @@
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } image-path-#{ image.id }")
                     %td<
                       = link_to image, class: "", title: "Show this image" do
-                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt 
+                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt
                     %td<
                       -#= @images_titles[image.id]
                     %td<
@@ -119,6 +124,7 @@
           - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
             = link_to images_path(tag: tag.name), :class => css_class do
               = tag.name
+              %span.sr-only ,
               %span.badge
                 = tag.count
 

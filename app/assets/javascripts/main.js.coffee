@@ -18,7 +18,9 @@ $ ->
     Analytical.track()
 
   $(document).on 'page:change', ->
+    #fade/in out on page transition
     $('#main').removeClass('fadeOut').addClass('animated fadeIn')
+
     #set focus
     $('#page-title').focus()
 
@@ -28,15 +30,25 @@ $ ->
     #remove :visited attributes on */new for screen readers
     $('a.new-link').removeProp('visited')
 
+    #show instructions per metum on description form
     $('#description_metum_id').off().on 'change',  (e) ->
       metum_id = $(@).find(":selected").val()
       $("#metum-instructions-" + metum_id).slideDown().siblings().slideUp()
 
-    #for ajax boolean toggle
+    #ajax boolean toggle
     $('.boolean-toggle').off().on 'click', (e) ->
       $(@).toggleClass 'fa-check'
           .toggleClass 'fa-times'
 
+    #selectAll
+    $('#select-all').click (event) ->
+      state =  @checked
+      $(':checkbox').each ->
+        @checked = state
+        return
+      return
+
+    #bulk ajax action
     $('.bulk').off().on 'click', (e) ->
       bulk          = $(@).data('bulk') #used for strong params
       url           = $(@).data('url')
