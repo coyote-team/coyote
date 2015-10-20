@@ -115,6 +115,8 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver'
   gem 'capybara-accessible'
+  gem 'be_valid_asset'
+  gem 'mortise', :git=>'https://github.com/seeread/mortise.git' #tenon
 end
 
 # gem 'bcrypt-ruby', '~> 3.1.2' # Use ActiveModel has_secure_password

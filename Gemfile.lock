@@ -21,6 +21,13 @@ GIT
       actionpack (~> 4.0)
       activemodel (~> 4.0)
 
+GIT
+  remote: https://github.com/seeread/mortise.git
+  revision: 6752d880aaf798bb17f1210be9f71fafaa7b505f
+  specs:
+    mortise (0.3.0)
+      httparty (~> 0.13)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,6 +80,8 @@ GEM
       execjs
       json
     bcrypt (3.1.10)
+    be_valid_asset (1.3.0)
+      rspec
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -494,6 +503,7 @@ DEPENDENCIES
   annotate
   apipie-rails!
   autoprefixer-rails
+  be_valid_asset
   better_errors
   binding_of_caller
   bootstrap-sass (>= 3.2)
@@ -539,6 +549,7 @@ DEPENDENCIES
   language_list
   metamagic
   modular-scale
+  mortise!
   mysql2
   oj
   pagedown-bootstrap-rails
