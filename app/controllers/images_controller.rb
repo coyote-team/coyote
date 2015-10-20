@@ -116,6 +116,7 @@ Ex:
 
   EOT
   def show
+    @title = get_image_title(@image)
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
   end

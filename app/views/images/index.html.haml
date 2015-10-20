@@ -86,7 +86,7 @@
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt
                     %td<
-                      -#= @images_titles[image.id]
+                      = @images_titles[image.id]
                     %td<
                       - image.users.each do |u|
                         = u.email

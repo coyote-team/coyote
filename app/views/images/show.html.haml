@@ -20,6 +20,15 @@
               %tbody
                 %tr
                   %th{scope: "row"}
+                    Title:
+                  %td
+                    - if !@title.blank?
+                      = @title
+                    -else
+                      No title available.
+
+                %tr
+                  %th{scope: "row"}
                     Path:
                   %td
                     = @image.path
