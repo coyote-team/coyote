@@ -1,14 +1,14 @@
-.devise-header
-  .devise-header-inner
-    %h2 Change your password
-= simple_form_for resource, as: resource_name, url: registration_path(resource_name), validate: true, html: {multipart: true, method: :put, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
-  = f.error_notification
-  = f.input :reset_password_token, as: :hidden
-  = f.full_error :reset_password_token
-  .form-inputs
-    = f.input :password, label: "New password", required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
-    = f.input :password_confirmation, label: "Confirm your new password", required: true
-  .form-actions
-    .form-actions-inner
+.row
+  .col-md-6.col-md-offset-3
+    .devise-header
+      .devise-header-inner
+        %h2 Change your password
+    = simple_form_for resource, as: resource_name, url: registration_path(resource_name), validate: true, html: {multipart: true, method: :put, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
+      = f.error_notification
+      = f.input :reset_password_token, as: :hidden
+      = f.full_error :reset_password_token
+      .form-inputs
+        = f.input :password, label: "New password", required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+        = f.input :password_confirmation, label: "Confirm your new password", required: true
       = f.button :submit, "Change my password"
-= render "devise/shared/links"
+    = render "devise/shared/links"
