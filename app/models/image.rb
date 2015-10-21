@@ -121,20 +121,8 @@ class Image < ActiveRecord::Base
     (meta_ids - described_meta_ids).empty?
   end
 
-  #completed all meta in any combo of locales
-  def completed?
-    meta_ids = Metum.all.map{|m| m.id}
-    #approved_id = Status.find_by_title("Approved")
-    #if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
-    if (meta_ids - descriptions.map{|d| d.metum_id unless d.nil?}).empty?
-      true
-    else
-      false
-    end
-  end
-
   def status
-    if partially_completed? 
+    if begun? 
       if completed?
         if ready_to_review?
           return "Ready to Review" 
@@ -149,7 +137,7 @@ class Image < ActiveRecord::Base
     end
   end
 
-  def partially_completed?
+  def begun?
     #approved_id = Status.find_by_title("Approved")
     #descriptions.where({status_id: approved_id}).count > 0
     descriptions.count > 0
@@ -159,6 +147,19 @@ class Image < ActiveRecord::Base
     ready_id = Status.find_by_title("Ready to review")
     if descriptions.where({status_id: ready_id}).size > 0
       true
+    end
+  end
+
+  #TODO needs to be normalized
+  #completed all meta in any combo of locales
+  def completed?
+    meta_ids = Metum.all.map{|m| m.id}
+    #approved_id = Status.find_by_title("Approved")
+    #if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
+    if (meta_ids - descriptions.map{|d| d.metum_id unless d.nil?}).empty?
+      true
+    else
+      false
     end
   end
 

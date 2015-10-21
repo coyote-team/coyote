@@ -36,24 +36,29 @@ module ApplicationHelper
   end
 
   def image_status_css_class(status)
-    klass = "label "
+    klass = ""
     case status
     when "Completed"
-      klass += "label-success" 
+      klass += "success" 
     when "Not Described"
-      klass += "label-warning" 
+      #klass += "warning" 
     when "Ready to Review"
-      klass += "label-warning" 
+      klass += "warning" 
     when "Partially Completed"
-      klass += "label-danger" 
+      klass += "danger" 
     end
     klass
   end
   def description_css_class(description)
     klass = "item "
-    klass += "success" if description.status_id == 2
-    klass += "warning" if description.status_id == 1
-    klass += "danger" if description.status_id == 3
+    case description.status_id
+    when 2
+      klass += "success" 
+    when 1
+      klass += "warning" 
+    when 3
+      klass += "danger" 
+    end
     klass
   end
 

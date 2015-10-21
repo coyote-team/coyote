@@ -35,19 +35,25 @@
                       %span.sr-only Bulk Actions
 
                       .btn-group
-                        %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false"}
+                        -#- described_by = ''
+                        -#- @images.each_with_index do |image, idx|
+                          -#-  described_by += "image-id_" + image.id.to_s + " "
+                        -#%button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", "aria-describedby" => described_by}
+                        %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'assign-to'}
                           Assign to
                           %span.caret
                         %ul.dropdown-menu<
                           - @users.each do |u|
                             %li<
-                              %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk'}=u
+                              %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk', 'aria-describedby' => 'assign-to'}=u
 
                       %br
                       <input type="checkbox" name="select-all" id="select-all" />
+                      <label for="select-all" class="sr-only">Select all items on the page</label>
 
                   %th{scope: "col", rowspan: 2} Image
                   %th{scope: "col", rowspan: 2} Title
+                  %th{scope: "col", rowspan: 2} Status
                   %th{scope: "col"}= sort_link @q, :assignments_count, 'Assigned to', html: {title: "Sort by assignment count"}
                   %th{scope: "col"}= sort_link @q, :group_name, 'Group'
                   -#%th{scope: "col"}< Website
@@ -76,20 +82,23 @@
 
               %tbody
                 - @images.each_with_index do |image, idx|
-                  - klass = "item "
-                  - klass += "success " if image.completed?
+                  - status = image.status
+                  - klass = "item " + image_status_css_class(status)
                   %tr{class: klass}<
                     -if admin?
                       %td<
-                        = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } image-path-#{ image.id }")
+                        = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } ")
                     %td<
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt
                     %td<
                       = @images_titles[image.id]
+                    %td
+                      -klass = 'label label-' + image_status_css_class(status)
+                      %span{class: klass}= status
                     %td<
                       - image.users.each do |u|
-                        = u.email
+                        = u
                         %br
                     %td= image.group
                     %td<

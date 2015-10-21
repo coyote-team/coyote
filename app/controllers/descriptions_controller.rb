@@ -48,11 +48,13 @@ class DescriptionsController < ApplicationController
     @description = Description.new
     if @image
       @description.image = @image 
+      @siblings = @description.image.descriptions
     end
   end
 
   # GET /descriptions/1/edit
   def edit
+    @siblings = @description.image.descriptions
   end
 
   # POST /descriptions

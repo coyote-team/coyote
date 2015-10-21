@@ -9,7 +9,7 @@
           %h1#page-title{tabindex: -1}
             =title
             - status =@image.status 
-            -klass = image_status_css_class(status)
+            -klass = 'label label-' + image_status_css_class(status)
             %span{class: klass}= status
         .row
           .col-md-3
@@ -19,8 +19,7 @@
               %caption.sr-only Key value pairs for this image
               %tbody
                 %tr
-                  %th{scope: "row"}
-                    Title:
+                  %th{scope: "row"} Title
                   %td
                     - if !@title.blank?
                       = @title
@@ -28,28 +27,19 @@
                       No title available.
 
                 %tr
-                  %th{scope: "row"}
-                    Path:
-                  %td
-                    = @image.path
+                  %th{scope: "row"} Path
+                  %td= @image.path
                 %tr
-                  %th{scope: "row"}
-                    Group:
-                  %td
-                    = @image.group
+                  %th{scope: "row"} Group
+                  %td= @image.group
                 %tr
-                  %th{scope: "row"}
-                    Website:
-                  %td
-                    = @image.website
+                  %th{scope: "row"} Website
+                  %td= @image.website
                 %tr
-                  %th{scope: "row"}
-                    Canonical ID:
-                  %td
-                    = @image.canonical_id
+                  %th{scope: "row"} Canonical ID
+                  %td= @image.canonical_id
                 %tr
-                  %th{scope: "row"}
-                    Tags:
+                  %th{scope: "row"} Tags
                   %td
                     - tag_cloud(@image.tags, %w(css1 css2 css3 css4)) do |tag, css_class|
                       = link_to images_path(tag: tag.name), :class => css_class do

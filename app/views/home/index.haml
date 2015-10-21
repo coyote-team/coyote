@@ -59,14 +59,13 @@
           -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
           -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
           -#=render "queue", queue: @assigned, type: "Assigned Images"
-      - else
-        .col-md-12
-          %h2 Your Queues 
-          - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
-            %p You haven't been assigned any images.
-            - if !admin?
-              %p Ask an admin to assign you some.
-          =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
+      .col-md-12
+        %h2 Your Queues 
+        - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
+          %p You haven't been assigned any images.
+          - if !admin?
+            %p Ask an admin to assign you some.
+        =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
     -if admin?
       .row
         .col-md-6

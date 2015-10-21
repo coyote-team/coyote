@@ -24,7 +24,10 @@
           = f.association :user, label: "Author", prompt: "Pick the author"
         - elsif action_name == 'new' and 
           = f.input :user_id,  as: :hidden, input_html: {value: @author.id}
-        = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type"
+        -if @siblings
+          = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type", :label_method => lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum ==metum}.compact.count})" }
+        -else
+          = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type" 
         .metum-instructions
           - @meta.each do |m|
             - if @description.metum_id == m.id
