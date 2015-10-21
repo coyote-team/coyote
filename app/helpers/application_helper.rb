@@ -41,7 +41,7 @@ module ApplicationHelper
     when "Completed"
       klass += "success" 
     when "Not Described"
-      #klass += "warning" 
+      klass += "default" 
     when "Ready to Review"
       klass += "warning" 
     when "Partially Completed"
