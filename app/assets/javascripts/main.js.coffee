@@ -21,8 +21,15 @@ $ ->
     #fade/in out on page transition
     $('#main').removeClass('fadeOut').addClass('animated fadeIn')
 
-    #set focus
-    $('#page-title').focus()
+    #set focus on flash then shift to page title
+    $flash = $('#flash-messages')
+    if $flash.text().trim().length > 0
+      $flash.attr('tabindex', -1).focus()
+      $flash.on 'closed.bs.alert', () ->
+        $('#page-title').focus()
+    #or just put it on the page title
+    else
+      $('#page-title').focus()
 
     #allow file input for csv upload
     $('input[type=file]').bootstrapFileInput()
