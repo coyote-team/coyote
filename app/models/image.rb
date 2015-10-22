@@ -133,7 +133,7 @@ class Image < ActiveRecord::Base
         return "Partially Completed"
       end
     else
-      return "Not described"
+      return "Not Described"
     end
   end
 
