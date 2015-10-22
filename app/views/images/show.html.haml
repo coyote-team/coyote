@@ -22,7 +22,7 @@
                   %th{scope: "row"} Title
                   %td
                     - if !@title.blank?
-                      = @title
+                      = to_html @title
                     -else
                       No title available.
 

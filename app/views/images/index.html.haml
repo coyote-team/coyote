@@ -92,7 +92,7 @@
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt
                     %td<
-                      = @images_titles[image.id]
+                      = to_html @images_titles[image.id]
                     %td
                       -klass = 'label label-' + image_status_css_class(status)
                       %span{class: klass}= status
