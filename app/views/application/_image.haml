@@ -1,4 +1,4 @@
-= link_to images_path(@image) do
+= link_to image_path(@image) do
   = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, title: to_text(@title)
 -if !@title.blank?
   %blockquote<
