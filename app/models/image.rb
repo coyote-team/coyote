@@ -83,7 +83,7 @@ class Image < ActiveRecord::Base
         Rails.logger.info "grabbing image json at #{url}"
 
         begin
-          content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+          content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}, read_timeout: 5).read
         rescue OpenURI::HTTPError => error
           response = error.io
           Rails.logger.error response.string
