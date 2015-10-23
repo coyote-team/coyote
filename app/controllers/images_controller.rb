@@ -40,8 +40,12 @@ The image JSON also includes the text of the most recent English <code>alt</code
   EOT
   def index
     if params[:canonical_id].present? 
+
+      #for ajax
       @image = Image.find_by(canonical_id: params[:canonical_id])
+
     else
+
       @q = Image.ransack(search_params)
 
       if params[:tag].present? 
@@ -50,13 +54,15 @@ The image JSON also includes the text of the most recent English <code>alt</code
         @images = @q.result(distinct: true).page(params[:page]) 
       end
 
-      @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
-        Image.tag_counts_on(:tags)
+      if request.format.html?
+        @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
+          Image.tag_counts_on(:tags)
+        end
+        @images_titles = get_images_titles(@images)
       end
+
     end
 
-    #TODO change to an ajax call
-    @images_titles = get_images_titles(@images)
 
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
