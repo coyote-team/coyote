@@ -92,6 +92,7 @@ Ex:
     "alt": "A short title.",
     "long": "A long detailed description.",
     "path": "55917aaa613430007400000a.jpg?sha=72066b7eb6b6152ed511d52b099365afcd8b23e5",
+    "url": "http://coyote.mcachicago.org/images/1"
     "group_id": 2,
     "website_id": 1,
     "created_at": "2015-06-29T17:04:42.000Z",
@@ -124,8 +125,8 @@ Ex:
 
   EOT
   def show
-    @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
+    @status_ids ||= [2]
   end
 
   # GET /images/new
