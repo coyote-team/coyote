@@ -190,6 +190,10 @@ Ex:
     end
   end
 
+  def title
+    ids = title_params
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
@@ -199,6 +203,10 @@ Ex:
     # Only allow a trusted parameter "white list" through.
     def image_params
       params.require(:image).permit(:path, :group_id, :website_id, :tag_list, :canonical_id)
+    end
+
+    def title_params
+      params.require(:images_ids)
     end
     def search_params
       params[:q]

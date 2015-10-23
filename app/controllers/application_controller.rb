@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_images_titles(images)
-    Rails.cache.fetch('images_titles', expires_in: 2.minutes) do
+    Rails.cache.fetch(images, expires_in: 2.minutes) do
       require 'multi_json'
       require 'open-uri'
       images_titles = {}
