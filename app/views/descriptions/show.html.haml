@@ -1,8 +1,7 @@
 -title = "Showing #{@description}"
 -meta title: title
 - @image = @description.image
-- @title = @image.title
--cache ['v1', admin?,  @description, @title] do
+-cache ['v1', admin?,  @description] do
   .entity-outer
     .entity
       .entity-inner
