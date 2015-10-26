@@ -4,8 +4,12 @@
     = f.association :user, prompt: "Choose a user"
     - if @assignment.image  and action_name == "new"
       = f.input :image_id,  as: :hidden, input_html: {value: @assignment.image.id}
-      .col-md-9.col-md-push-3
-        = image_tag @assignment.image.url
+      .row
+        .col-md-9.col-md-push-3
+          .thumbnail
+            = image_tag @assignment.image.url,  data: {"canonical-id" => @assignment.image.canonical_id}
+            %p.caption
+              %span{data: {"canonical-id" => @assignment.image.canonical_id}} Loading title...
     - else
       = f.association :image,  prompt: "Choose an image"
 

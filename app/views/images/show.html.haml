@@ -1,7 +1,6 @@
 -title = "Showing Image #{@image}"
 -meta title: title
-- @title = @image.title
--cache ['v1', admin?,  @image, @title] do
+-cache ['v1', admin?,  @image] do
   .entity-outer
     .entity
       .entity-inner
@@ -18,14 +17,6 @@
             %table.entity-table
               %caption.sr-only Key value pairs for this image
               %tbody
-                %tr
-                  %th{scope: "row"} Title
-                  %td
-                    - if !@title.blank?
-                      = to_html @title
-                    -else
-                      No title available.
-
                 %tr
                   %th{scope: "row"} Path
                   %td= @image.path

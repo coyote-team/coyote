@@ -16,7 +16,8 @@
             - else #is a description
               - description = item
               - image = description.image
-            - @title = image.title
+
+
             - queue_id = type.downcase.strip.gsub(' ', '-')
             %li.image{id: "#{queue_id}-image-li-#{image.id}"}<
               .col-sm-6.col-xs-12<
@@ -24,11 +25,14 @@
                   - image_id= "#{queue_id}-image-#{image.id}"
                   -#TODO add descriptions ids for ready to review queue
                   = link_to image_path(image) do
-                    =image_tag image.url, alt: image.alt, id: image_id, title: to_text(@title)
+                    -if image.is_mca?
+                      =image_tag image.url, alt: image.alt, id: image_id, data: {"canonical-id" => image.canonical_id}
+                    -else
+                      =image_tag image.url, alt: image.alt, id: image_id
                   .caption
-                    - if !@title.blank?
+                    - if image.is_mca?
                       %blockquote
-                        = to_html @title
+                        %span{data: {"canonical-id" => image.canonical_id}}
                         %cite<
                           %small
                             %span.label.label-info Title

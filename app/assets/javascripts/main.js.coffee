@@ -55,6 +55,45 @@ $ ->
         return
       return
 
+    #get MCA title
+    $canonicals = $('[data-canonical-id]')
+    if $canonicals.length > 0
+      canonical_ids = []
+      $canonicals.each () ->
+        id = $(@).data('canonical-id')
+        canonical_ids.push(id) if canonical_ids.indexOf(id) == -1
+        $(@).text('Loading title...') if $(@).is('span')
+
+      data = {'canonical_ids' :  canonical_ids}
+      #console.log data
+      $.ajax
+        url: '/images/titles'
+        type: "POST"
+        dataType: "json"
+        data: data
+        success: (data) ->
+          #console.log(data)
+          id_titles = data
+          $canonicals.each () ->
+            id = $(@).data('canonical-id')
+            title = id_titles[id]
+            md_title = marked(title)
+            md_text = $(md_title).text()
+            if title
+              if $(@).is('span')
+                $(@).html(md_title)
+              else if $(@).is('img')
+                $(@).attr('alt', md_text)
+            else
+              if $(@).is('span')
+                $(@).text('Title unavailable')
+
+        error: (jqXHR, textStatus, errorThrown) ->
+          #alert textStatus, errorThrown
+          $canonicals.each () ->
+            if $(@).is('span')
+              $(@).text('Title unavailable')
+
     #bulk ajax action
     $('.bulk').off().on 'click', (e) ->
       bulk          = $(@).data('bulk') #used for strong params

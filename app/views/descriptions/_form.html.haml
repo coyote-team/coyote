@@ -1,9 +1,7 @@
 .row
   - if @image
-    - @title = @image.title
     .col-md-6
       = render 'image'
-
       - other_descriptions = @description.siblings
       - if other_descriptions.length > 0
         #id-for-queue-ref.panel.panel-default

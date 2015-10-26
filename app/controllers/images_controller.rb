@@ -58,7 +58,6 @@ The image JSON also includes the text of the most recent English <code>alt</code
         @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
           Image.tag_counts_on(:tags)
         end
-        @images_titles = get_images_titles(@images)
       end
 
     end
@@ -190,8 +189,58 @@ Ex:
     end
   end
 
-  def title
-    ids = title_params
+  #returns hash of canonical_ids to titles from MCA 
+  def titles
+    canonical_ids = params["canonical_ids"]
+
+    #TODO try to read each image in cache and if not available, then bulk grab
+    ids_titles = Rails.cache.fetch(canonical_ids, expires_in: 1.minute) do
+      require 'multi_json'
+      require 'open-uri'
+
+      ids_titles = {}
+
+      #prep url
+      url = "https://cms.mcachicago.org/api/v1/attachment_images/?"
+      canonical_ids.each do |i|
+        url += "ids[]=" + i + "&"
+      end
+
+      #request
+      Rails.logger.info "grabbing images json at #{url}"
+      begin
+        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10}).read
+        #parse
+        begin
+          images_received = JSON.parse(content)
+
+          #match ids, add titles to image cache, and set titles
+          canonical_ids.each do |id|
+            i = images_received.find{|i| i["id"].to_s == id.to_s}
+            puts i
+            if i
+              title = Rails.cache.fetch([id, 'title'].hash, expires_in: 1.minute) do
+                i["title"]
+              end
+              ids_titles[id] = title
+            end
+          end
+
+        rescue Exception => e
+          Rails.logger.error "JSON parsing exception"
+          Rails.logger.error e
+          length = 0
+        end
+
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        Rails.logger.error response.string
+        length = 0
+      end
+      ids_titles
+    end
+
+    render :json => ids_titles.to_json
   end
 
   private
@@ -205,9 +254,6 @@ Ex:
       params.require(:image).permit(:path, :group_id, :website_id, :tag_list, :canonical_id)
     end
 
-    def title_params
-      params.require(:images_ids)
-    end
     def search_params
       params[:q]
     end

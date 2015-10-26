@@ -26,56 +26,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_images_titles(images)
-    Rails.cache.fetch(images, expires_in: 2.minutes) do
-      require 'multi_json'
-      require 'open-uri'
-      images_titles = {}
-
-      #prep url
-      url = "https://cms.mcachicago.org/api/v1/attachment_images/?"
-      images.each do |i|
-        if i.website.url.include?("mcachicago")
-          url += "ids[]=" + i.canonical_id + "&"
-        end
-      end
-
-      #request
-      Rails.logger.info "grabbing image json at #{url}"
-      begin
-        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 5}).read
-        #parse
-        begin
-          images_received = JSON.parse(content)
-
-          #match ids, add titles to image cache, and set titles
-          images.each do |image|
-            i = images_received.find{|i| i["id"] == image.canonical_id}
-            puts i
-            if i
-              title = Rails.cache.fetch([image, 'title'].hash, expires_in: 1.minute) do
-                i["title"]
-              end
-              images_titles[image.id] = title
-            end
-          end
-
-        rescue Exception => e
-          Rails.logger.error "JSON parsing exception"
-          Rails.logger.error e
-          length = 0
-        end
-
-      rescue OpenURI::HTTPError => error
-        response = error.io
-        Rails.logger.error response.string
-        length = 0
-      end
-
-      images_titles
-    end
-  end
-
   protected
   def admin
     redirect_to(root_url) unless current_user and current_user.admin?

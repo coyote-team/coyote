@@ -90,9 +90,9 @@
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } ")
                     %td<
                       = link_to image, class: "", title: "Show this image" do
-                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt
+                        =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt, data: {"canonical-id" => image.canonical_id}
                     %td<
-                      = to_html @images_titles[image.id]
+                      %span{data: {"canonical-id" => image.canonical_id}}
                     %td
                       -klass = 'label label-' + image_status_css_class(status)
                       %span{class: klass}= status

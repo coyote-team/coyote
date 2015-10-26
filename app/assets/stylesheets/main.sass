@@ -1,25 +1,19 @@
-//http://thesassway.com/beginner/how-to-structure-a-sass-project
-//home
-$slide-inset: 5%
-.slide
-  width: 100%
-  position: relative
-  &.has-image
-    img
-      width: 100%
-    .title
-      position: absolute
-      bottom: $slide-inset
-      right: $slide-inset
-  &.has-no-image
-    .title
-      top: $slide-inset
-      left: $slide-inset
-      position: absolute
+html.turbolinks-progress-bar::before
+  background-color: $brand-primary !important
+  height: 5px !important
+
+#footer
+  margin-top: 2em
+
+.new-link
+  margin-bottom: ms(0)
+  +min-screen($phone-wide + 1)
+    float: right
 
 caption
   ul
     list-style: none
+
 dt, th
   font-weight: bold
 dd
@@ -27,13 +21,32 @@ dd
 .description-image
   margin-bottom: 1em
   max-width: 100%
-td.search-btns 
+
+table
+  img
+    max-width: 100px
+td.search-btns
   text-align: right
   .btn-group
     min-width: 75px
 td .btn-group
   min-width: 120px
-//button_to
+th .form-group
+  margin-bottom: 0
+
+.index-table
+  > thead
+    border-bottom: 2px solid #ddd
+    > tr > th
+      vertical-align: top
+      border-bottom: 0px
+    > tr > td
+      border-bottom: 0px
+      border-top: 0px
+
+.btn-show, .btn-edit, .btn-destroy
+  @extend .btn-sm
+
 form.btn
   padding: 0
   button
@@ -45,28 +58,11 @@ form.btn
 
 blockquote.blockquote
   margin-bottom: 0px
-table
-  img
-    max-width: 100px
-//.panel .table
-  //margin-bottom: 0
-
-html.turbolinks-progress-bar::before 
-  background-color: $brand-primary !important
-  height: 5px !important
-
-#footer
-  margin-top: 2em
-
-
-.new-link
-  margin-bottom: ms(0)
-  +min-screen($phone-wide + 1)
-    float: right
 
 ul.counter
   li
     margin-bottom: ms(0)
+
 .dropdown li
   button
     border-color: transparent
@@ -77,19 +73,6 @@ ul.counter
     text-align: left
     &:hover
       background-color: #e5e5e5
-    
-.btn-show, .btn-edit, .btn-destroy
-  @extend .btn-sm
 
-th .form-group
-  margin-bottom: 0
-
-.index-table 
-  > thead 
-    border-bottom: 2px solid #ddd
-    > tr > th
-      vertical-align: top
-      border-bottom: 0px
-    > tr > td
-      border-bottom: 0px
-      border-top: 0px
+em
+  font-style: italic

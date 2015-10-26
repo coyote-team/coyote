@@ -1,8 +1,12 @@
 = link_to image_path(@image) do
-  = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, title: to_text(@title)
--if !@title.blank?
+  - if @image.is_mca?
+    = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, data: {"canonical-id" => @image.canonical_id}
+  - else
+    = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
+
+-if @image.is_mca?
   %blockquote<
-    = to_html @title
+    %span{data: {"canonical-id" => @image.canonical_id}}
     %cite<
       %small
         %span.label.label-info Title

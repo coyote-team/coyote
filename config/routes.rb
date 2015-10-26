@@ -14,6 +14,7 @@ Plate::Application.routes.draw do
     collection do
       post :import
       get :export 
+      post :titles
     end
   end
   resources :websites  do
