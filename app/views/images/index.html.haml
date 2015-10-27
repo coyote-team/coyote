@@ -119,7 +119,7 @@
                           = link_to image, title: "Delete this image" , class: "btn btn-sm btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{image}?"} do
                             %i.fa.fa-fw.fa-trash{title: "Delete"}
 
-        -if @tags.length > 0
+        -if @tags and @tags.length > 0
           %p
             - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
               = link_to images_path(tag: tag.name), :class => css_class do

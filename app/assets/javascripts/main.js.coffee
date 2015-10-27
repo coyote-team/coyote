@@ -77,9 +77,9 @@ $ ->
           $canonicals.each () ->
             id = $(@).data('canonical-id')
             title = id_titles[id]
-            md_title = marked(title)
-            md_text = $(md_title).text()
             if title
+              md_title = marked(title)
+              md_text = $(md_title).text()
               if $(@).is('span')
                 $(@).html(md_title)
               else if $(@).is('img')
