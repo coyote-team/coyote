@@ -217,7 +217,7 @@ Ex:
           #match ids, add titles to image cache, and set titles
           canonical_ids.each do |id|
             i = images_received.find{|i| i["id"].to_s == id.to_s}
-            puts i
+            #puts i
             if i
               title = Rails.cache.fetch([id, 'title'].hash, expires_in: 1.minute) do
                 i["title"]

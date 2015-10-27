@@ -2,11 +2,12 @@ class DescriptionsController < ApplicationController
   before_action :set_description, only: [:show, :edit, :update, :destroy]
   before_action :set_image, only: [:new, :edit]
   before_action :collect_meta, only: [:new, :edit]
+  before_action :clear_search, only: [:index]
   before_action :set_author, only: [:new]
   before_action :clear_search_index, :only => [:index]
   before_action :users
   before_action :admin_or_owner, only: [:update, :edit]
-  before_action :admin, only: [:delete]
+  before_action :admin, only: [:delete, :bulk]
 
   respond_to :html, :json, :js
 
@@ -31,7 +32,10 @@ class DescriptionsController < ApplicationController
   EOT
 
   def index
-    if request.format.html? and !current_user.admin?
+    if request.format.html? and current_user.admin?
+      @q = Description.ransack(search_params)
+      @descriptions = @q.result(distinct: true).page(params[:page]) 
+    elsif request.format.html? and !current_user.admin?
       @descriptions = current_user.descriptions.all.page params[:page]
     else
       @descriptions = Description.all.page params[:page]
@@ -47,7 +51,7 @@ class DescriptionsController < ApplicationController
   def new
     @description = Description.new
     if @image
-      @description.image = @image 
+      @description.image = @image
       @siblings = @description.image.descriptions
     end
   end
@@ -82,6 +86,36 @@ class DescriptionsController < ApplicationController
     respond_with(@description)
   end
 
+  def bulk
+    descriptions = descriptions_params[:descriptions]
+
+    success_count = 0
+    fail_count = 0
+    errors = ""
+
+    descriptions.each do |k, a|
+      puts a
+      if Description.find(a[:id]).update(status_id: a[:status_id])
+        success_count += 1
+      else
+        fail_count += 1
+      end
+    end
+
+    if fail_count == 0 and success_count > 0
+      flash[:success] = success_count.to_s + " descriptions updated."
+    elsif fail_count == 0 and success_count == 0
+      flash[:notice] = "No descriptions updated."
+    else
+      error = fail_count.to_s + " descriptions failed.  " + errors  
+      if success_count > 0 
+        error +=  success_count.to_s + " descriptions updated."
+      end
+      flash[:error]  = error
+    end
+    render nothing: true
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_description
@@ -90,15 +124,15 @@ class DescriptionsController < ApplicationController
 
     def set_author
       if params[:user_id]
-        @author = User.find(params[:user_id]) 
+        @author = User.find(params[:user_id])
       elsif current_user and !current_user.admin?
-        @author = current_user 
+        @author = current_user
       end
     end
 
     def set_image
       if params[:image_id]
-        @image = Image.find(params[:image_id]) 
+        @image = Image.find(params[:image_id])
       else
         @image = @description.image if @description
       end
@@ -114,9 +148,29 @@ class DescriptionsController < ApplicationController
     end
 
     def admin_or_owner
-      puts "filter ran"
+      #puts "filter ran"
       unless current_user and (current_user.admin? or current_user.id == @description.user_id)
-        redirect_to(descriptions_path) 
+        redirect_to(descriptions_path)
       end
+    end
+
+    def search_params
+      params[:q]
+    end
+
+    def clear_search
+      if params[:search_cancel]
+        params.delete(:search_cancel)
+        if(!search_params.nil?)
+          search_params.each do |key, param|
+            search_params[key] = nil
+          end
+        end
+      end
+    end
+
+
+    def descriptions_params
+      params.permit(:descriptions => [:id, :status_id])
     end
 end

@@ -127,5 +127,5 @@ $ ->
 
         error: (jqXHR, textStatus, errorThrown) ->
           alert textStatus, errorThrown
-          $('#main').addClass('animated fadeIn')
+          $('#main').addClass('fadeIn').removeClass('fadeOut')
 

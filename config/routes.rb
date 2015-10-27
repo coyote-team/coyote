@@ -5,7 +5,11 @@ Plate::Application.routes.draw do
       post :bulk
     end
   end
-  resources :descriptions 
+  resources :descriptions do
+    collection do
+      post :bulk
+    end
+  end
   resources :meta 
   resources :statuses
   resources :groups 
