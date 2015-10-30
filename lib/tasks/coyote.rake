@@ -8,11 +8,8 @@ namespace :coyote do
     @website = Website.first
     limit = 1000
     offset = 0
-    if Image.all.count > 10 #kludge
-      updated_at = (Time.zone.now - 1.minute).iso8601
-    else
-      updated_at = nil
-    end
+    updated_at = (Time.zone.now - 1.minute).iso8601
+    updated_at = nil if Image.all.count < 10 #kludge for seeding
 
     length = 1
     root = "https://cms.mcachicago.org"
