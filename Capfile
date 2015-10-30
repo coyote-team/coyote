@@ -27,8 +27,6 @@ require 'capistrano/flowdock'
 require 'capistrano/thin'
 require 'capistrano-nc/nc'
 #require 'capistrano/sitemap_generator'
-set :whenever_command, "bundle exec whenever"
-set :whenever_environment, defer { stage }
 require "whenever/capistrano"
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
