@@ -16,6 +16,7 @@ namespace :coyote do
     updated = 0
     created = 0
     errors = 0
+    images = {}
     while length != 0 do
       #some images have a null updated at
       if updated_at
