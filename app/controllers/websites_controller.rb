@@ -32,7 +32,7 @@ class WebsitesController < ApplicationController
       offset = 0
       length = 1 
       while length != 0 do
-        url = "https://cms.mcachicago.org/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
+        url = "https://mcachicago.org/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
         Rails.logger.info "grabbing images for #{url}"
 
         begin

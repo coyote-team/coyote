@@ -201,7 +201,7 @@ Ex:
       ids_titles = {}
 
       #prep url
-      url = "https://cms.mcachicago.org/api/v1/attachment_images/?"
+      url = "https://mcachicago.org/api/v1/attachment_images/?"
       canonical_ids.each do |i|
         url += "ids[]=" + i + "&"
       end
