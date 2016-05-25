@@ -61,12 +61,14 @@ namespace :coyote do
             image.path = i["thumb_url"]
             image.created_at = i["created_at"]
             image.updated_at = i["updated_at"]
+            image.title = i["title"]
             image.save
             #create initial description field
             Rails.logger.info "created image #{image.id} from canonical id #{image.canonical_id}"
             created += 1
           else
             #update
+            image.title = i["title"]
             image.path = i["thumb_url"]
             image.updated_at = i["updated_at"]
             if image.save
@@ -106,5 +108,64 @@ namespace :coyote do
     Rails.logger.info "Our total: #{@website.images.count}"
     Rails.logger.info "---"
 
+  end
+
+
+  desc "Grab titles for old MCA images"
+  task :get_mca_titles => :environment do
+		require 'multi_json'
+		require 'open-uri'
+		
+		canonical_ids = Image.where(website_id: 1).collect{|i| i.canonical_id}
+
+    canonical_ids.each_slice(20) do |ids|
+      ids_titles = {}
+      #prep url
+      url = "https://mcachicago.org/api/v1/attachment_images/?"
+      ids.each do |i|
+        url += "ids[]=" + i + "&"
+      end
+
+      #request
+      Rails.logger.info "grabbing images json at #{url}"
+      puts "grabbing images json at #{url}"
+      begin
+        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10}).read
+        #parse
+        begin
+          images_received = JSON.parse(content)
+
+          #match ids, add titles to image cache, and set titles
+          canonical_ids.each do |id|
+            i = images_received.find{|i| i["id"].to_s == id.to_s}
+            #puts i
+            if i
+              title = i["title"]
+              ids_titles[id] = title
+            end
+          end
+
+        rescue Exception => e
+          Rails.logger.error "JSON parsing exception"
+          Rails.logger.error e
+        end
+
+      rescue OpenURI::HTTPError => error
+        response = error.io
+        Rails.logger.error response.string
+      end
+
+      ids_titles.each do |canonical_id, title|
+        matches = Image.where(canonical_id: canonical_id, website_id: 1)
+        puts "#{canonical_id} - #{title}"
+        if matches.length == 1
+          image = matches.first
+          image.title = title
+          image.save
+        else
+          Rails.logger.error "canonical mismatch for #{canonical_id}"
+        end	
+      end
+    end
   end
 end

@@ -13,6 +13,7 @@ require 'roo'
 #  canonical_id       :string(255)
 #  assignments_count  :integer          default(0)
 #  descriptions_count :integer          default(0)
+#  title              :text(65535)
 #
 # Indexes
 #

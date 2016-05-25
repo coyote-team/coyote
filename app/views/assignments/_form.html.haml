@@ -7,9 +7,10 @@
       .row
         .col-md-9.col-md-push-3
           .thumbnail
-            = image_tag @assignment.image.url,  data: {"canonical-id" => @assignment.image.canonical_id}
+            = image_tag  @assignment.image.url, alt: @assignment.image.alt, "aria-describedby": "image-title-#{@image.id}"
+
             %p.caption
-              %span{data: {"canonical-id" => @assignment.image.canonical_id}} Loading title...
+              %span=h @assignment.image.title
     - else
       = f.association :image,  prompt: "Choose an image"
 

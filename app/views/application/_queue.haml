@@ -25,19 +25,16 @@
                   - image_id= "#{queue_id}-image-#{image.id}"
                   -#TODO add descriptions ids for ready to review queue
                   = link_to image_path(image) do
-                    -if image.is_mca?
-                      =image_tag image.url, alt: image.alt, id: image_id, data: {"canonical-id" => image.canonical_id}
-                    -else
-                      =image_tag image.url, alt: image.alt, id: image_id
+                    =image_tag image.url, alt: image.alt, id: image_id, "aria-describedby": "image-title-#{@image.id}"
                   .caption
-                    - if image.is_mca?
+                    - unless image.title.blank?
                       %blockquote
-                        %span{data: {"canonical-id" => image.canonical_id}}
+                        %span{id: "image-title-#{image.id}"}= to_html image.title
                         %cite<
                           %small
-                            %span.label.label-info Title
+                            %span.label.label-info Caption
                             from #{image.website}
-                    -else
+                    - else
                       %p No caption available.
                     - unless type == "Unassigned Images" or type == "Undescribed Images"
                       -#- if type == "Ready to Review Descriptions"

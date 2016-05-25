@@ -1,15 +1,12 @@
 = link_to image_path(@image) do
-  - if @image.is_mca?
-    = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, data: {"canonical-id" => @image.canonical_id}
-  - else
-    = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt
+  = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, "aria-describedby": "image-title-#{@image.id}"
 
--if @image.is_mca?
+-unless @image.title.blank?
   %blockquote<
-    %span{data: {"canonical-id" => @image.canonical_id}}
+    %span{id: "image-title-#{@image.id}"}= to_html @image.title
     %cite<
       %small
-        %span.label.label-info Title
+        %span.label.label-info Caption
         from #{@image.website}
 -else
   %p No title available.
