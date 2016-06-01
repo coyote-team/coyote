@@ -25,7 +25,7 @@
                   - image_id= "#{queue_id}-image-#{image.id}"
                   -#TODO add descriptions ids for ready to review queue
                   = link_to image_path(image) do
-                    =image_tag image.url, alt: image.alt, id: image_id, "aria-describedby": "image-title-#{@image.id}"
+                    =image_tag image.url, alt: image.alt, id: image_id, "aria-describedby": "image-title-#{image.id}"
                   .caption
                     - unless image.title.blank?
                       %blockquote
