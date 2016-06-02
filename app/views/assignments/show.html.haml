@@ -11,16 +11,15 @@
           %tbody
             %tr
               %th{scope: "row"}
-                User:
+                Image
               %td
-                = @assignment.user
+                = link_to @assignment.image do
+                  = image_tag @assignment.image.url, class: "description-image"
             %tr
               %th{scope: "row"}
-                Image:
+                User
               %td
-                = image_tag @assignment.image.url, class: "description-image"
-                %br
-                = @assignment.image
+                =link_to @assignment.user
         %nav.show-nav{role:"navigation"}
           = link_to assignments_path, class: 'btn btn-info', title: "View the assignments index" do
             %i.fa.fa-fw.fa-list{title: 'List'}

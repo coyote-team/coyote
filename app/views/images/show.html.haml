@@ -59,3 +59,7 @@
               = render "descriptions/table", descriptions: @image.descriptions
 
 
+          -if @image.assignments.length > 0
+            .col-md-12
+              %h3 Assignments
+              = render "assignments/table", assignments: @image.assignments
