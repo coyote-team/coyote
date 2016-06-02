@@ -75,7 +75,7 @@
               <small>via <code>.csv</code>, <code>.xls</code>, and <code>.xlsx</code></small>
             = file_field_tag :file, label: "Select your file"
             = button_tag type: "submit", class: "btn btn-success disabled", data: {disaabled: true} do
-              %i.fa.fa-fw.fa-upload
+              %i.fa.fa-fw.fa-upload{"aria-hidden" => "true"}
               Upload
         .col-md-6
           %h2>
@@ -83,5 +83,5 @@
             %small>
               %code .csv
           = button_tag  export_images_path(format: "csv"), class: 'btn btn-success' do
-            %i.fa.fa-fw.fa-download
+            %i.fa.fa-fw.fa-download{"aria-hidden" => "true"}
             Export

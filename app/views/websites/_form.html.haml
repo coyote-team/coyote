@@ -12,10 +12,10 @@
         %br
         %br
         = link_to @website, class: 'btn btn-info' do
-          %i.fa.fa-fw.fa-eye{title: "Show"}
+          %i.fa.fa-fw.fa-eye{"aria-hidden" => true}
           View this website
       %br
       %br
       = link_to websites_path, class: 'btn btn-info' do
-        %i.fa.fa-fw.fa-list{title: "List"}
+        %i.fa.fa-fw.fa-list{"aria-hidden" => true}
         View all Websites

@@ -41,8 +41,8 @@
 
         %nav.show-nav{role:"navigation"}
           = link_to users_path, class: 'btn btn-info', title: "View the users index" do
-            %i.fa.fa-fw.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
             Users
           = link_to edit_user_path(@user), title: "Edit this user", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{title: 'Edit'}
+            %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
             Edit

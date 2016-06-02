@@ -18,9 +18,9 @@
           =link_to assignment.image, image_path(assignment.image)
         %td.text-right
           = link_to assignment, class: "btn btn-show", title: "Show this assignment" do
-            %i.fa.fa-fw.fa-eye{title: "Show"}
+            %i.fa.fa-fw.fa-eye{"title" => "Show", "aria-hidden" => "true"}
           = link_to edit_assignment_path(assignment), class: "btn btn-edit", title: "Edit this assignment"  do
-            %i.fa.fa-fw.fa-pencil{title: "Edit"}
+            %i.fa.fa-fw.fa-pencil{"title" => "Edit", "aria-hidden" => "true"}
           = link_to assignment, title: "Delete this assignment" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
-            %i.fa.fa-fw.fa-trash{title: "Delete"}
+            %i.fa.fa-fw.fa-trash{"title" => "Delete", "aria-hidden" => "true"}
 

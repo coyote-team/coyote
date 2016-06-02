@@ -40,7 +40,7 @@
           - path = new_description_path(image_id: image.id, user_id: current_user.id )
           - unless type == "Ready to Review Descriptions"
             =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
-              -#%i.fa.fa-plus
+              -#%i.fa.fa-plus{"aria-hidden" => "true"}
               Describe
 
         - if admin? and !type.starts_with?("Your") #TODO replace with current_user?

@@ -39,7 +39,7 @@
             %nav.show-nav{role:"navigation"}
               -if admin?
                 = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
-                  %i.fa.fa-fw.fa-pencil{title: 'Edit'}
+                  %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
                   Edit
 
                 - css_id = "quick-assign"
@@ -53,7 +53,7 @@
               %br
               %br
               = link_to images_path, class: 'btn btn-info', title: "View the images index" do
-                %i.fa.fa-fw.fa-list{title: 'List'}
+                %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
                 Images
               %br
               %br

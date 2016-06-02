@@ -16,10 +16,10 @@
         %br
         %br
         = link_to @<%= singular_table_name %>, class: 'btn btn-info' do
-          %i.fa.fa-fw.fa-eye{title: "Eye"}
+          %i.fa.fa-fw.fa-eye{"aria-hidden" => true}
           View this <%= singular_table_name %>
       %br
       %br
       = link_to <%= index_helper %>_path, class: 'btn btn-info' do
-        %i.fa.fa-fw.fa-list{title: "List"}
+        %i.fa.fa-fw.fa-list{"aria-hidden" => true}
         View all <%=plural_table_name.capitalize%>

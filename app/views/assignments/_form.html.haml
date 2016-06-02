@@ -20,10 +20,10 @@
         %br
         %br
         = link_to @assignment, class: 'btn btn-info' do
-          %i.fa.fa-fw.fa-eye{title: "Show"}
+          %i.fa.fa-fw.fa-eye{:title => "Show", "aria-hidden" => "true"}
           View this assignment
       %br
       %br
       = link_to assignments_path, class: 'btn btn-info' do
-        %i.fa.fa-fw.fa-list{title: "List"}
+        %i.fa.fa-fw.fa-list{:title => "List", "aria-hidden" => "true"}
         View all Assignments

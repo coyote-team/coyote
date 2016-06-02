@@ -17,7 +17,7 @@
             =paginate @descriptions
           -#%h2.sr-only Actions
           -#= link_to new_description_path, class: 'btn btn-success new-link' do
-            -#%i.fa.fa-fw.fa-plus{title: "Plus"}
+            -#%i.fa.fa-fw.fa-plus{"title" => "Plus", "aria-hidden" => "true"}
             -#New Description
 
         -if admin?
@@ -62,10 +62,10 @@
                       .btn-group
                         = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
                           %span.sr-only Clear
-                          %i.fa.fa-fw.fa-close
+                          %i.fa.fa-fw.fa-close{"aria-hidden" => "true"}
                         = button_tag type: "submit", class: "btn btn-success btn-sm" do
                           %span.sr-only Search
-                          %i.fa.fa-fw.fa-search
+                          %i.fa.fa-fw.fa-searc{"aria-hidden" => "true"}h
                 %tbody
                   - @descriptions.each_with_index do |description, idx|
                     - klass = "item "
@@ -88,11 +88,11 @@
                       %td= description.user
                       %td.text-right
                         = link_to description, class: "btn btn-show", title: "Show this description" do
-                          %i.fa.fa-fw.fa-eye
+                          %i.fa.fa-fw.fa-eye{"aria-hidden" => "true"}
                         = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
-                          %i.fa.fa-fw.fa-pencil
+                          %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
                         = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
-                          %i.fa.fa-fw.fa-trash
+                          %i.fa.fa-fw.fa-trash{"aria-hidden" => "true"}
 
         -else
           =render 'table', descriptions: @descriptions
@@ -100,7 +100,3 @@
         %nav.index-nav{role:"navigation"}
           %h2.sr-only Pagination
           =paginate @descriptions
-          -#%h2.sr-only Actions
-          -#= link_to new_description_path, class: 'btn btn-success new-link' do
-            -#%i.fa.fa-fw.fa-plus{title: "Plus"}
-            -#New Description

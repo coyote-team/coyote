@@ -16,8 +16,8 @@
                 = @status.title
         %nav.show-nav{role:"navigation"}
           = link_to statuses_path, class: 'btn btn-info', title: "View the statuses index" do
-            %i.fa.fa-fw.fa-list{title: 'List'}
+            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
             Statuses
           = link_to edit_status_path(@status), title: "Edit this status", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{title: 'Edit'}
+            %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
             Edit
