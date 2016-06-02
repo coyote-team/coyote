@@ -1,0 +1,69 @@
+- if item.is_a? Image
+	- image = item
+- else #is a description
+	- description = item
+	- image = description.image
+
+- queue_id = type.downcase.strip.gsub(' ', '-')
+%li.image{id: "#{queue_id}-image-li-#{image.id}"}<
+	.col-sm-6.col-xs-12<
+		.thumbnail<
+			- image_id= "#{queue_id}-image-#{image.id}"
+			-#TODO add descriptions ids for ready to review queue
+			= link_to image_path(image) do
+				=image_tag image.url, alt: image.alt, id: image_id, "aria-describedby": "image-title-#{image.id}"
+			.caption
+				- unless image.title.blank?
+					%blockquote
+						%span{id: "image-title-#{image.id}"}= to_html image.title
+						%cite<
+							%small
+								%span.label.label-info Caption
+								from #{image.website}
+				- else
+					%p No caption available.
+				- unless type == "Unassigned Images" or type == "Undescribed Images"
+					-#- if type == "Ready to Review Descriptions"
+						-#- descriptions = image.descriptions.ready_to_review
+					-#- else
+						-#-descriptions = image.descriptions
+					- if type.start_with? "Your"
+						-descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
+					- else
+						-descriptions = image.descriptions
+					%h4<
+						Descriptions
+						%span.sr-only ,
+						%span.badge= descriptions.count
+					=render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: image_id
+
+					- path = new_description_path(image_id: image.id, user_id: current_user.id )
+					- unless type == "Ready to Review Descriptions"
+						=link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}" do
+							-#%i.fa.fa-plus
+							Describe
+
+				- if admin? and !type.starts_with?("Your") #TODO replace with current_user?
+					- if image.users.count > 0
+						%h4<
+							Assigned Users
+							%span.sr-only ,
+							%span.badge
+								=image.users.count
+						%ul
+							-image.users.each do |user|
+								%li= user
+					- unless type == "Ready to Review Descriptions"
+						%br
+						.dropdown
+							-disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+							- assign_id = image_id + "-dropdown"
+							%button.btn.btn-success.dropdown-toggle{id: assign_id, "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+								Assign to
+								%span.caret
+							%ul.dropdown-menu{"aria-labelledby" => assign_id}
+								- @users.each do |user|
+									%li
+										= button_to assignments_path(assignment: {image_id: image.id, user_id: user.id}), action: :create,
+											remote: true, format: :js, class: 'btn', title: "Assign image #{image.id} to #{user}", data: {disable_with: disable_with} do
+											#{user}
