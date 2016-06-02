@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :prep_assign_to
+  before_action :get_users
 
   def index
     if current_user

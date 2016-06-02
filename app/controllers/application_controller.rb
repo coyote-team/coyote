@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url) if current_user.nil?
   end
 
-  def prep_assign_to
+  def get_users
     if current_user and current_user.admin?
       @users = User.all
     end

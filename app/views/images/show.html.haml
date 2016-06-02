@@ -41,11 +41,15 @@
                 = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
                   %i.fa.fa-fw.fa-pencil{title: 'Edit'}
                   Edit
-                = link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
-                  Assign
+
+                - css_id = "quick-assign"
+                - image = @image
+                = render "assign_to", css_id: css_id, image: image, users: @users
+
+                -#= link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
+                  -#Assign
               -if current_user
-                =link_to new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-success", title: "Add a description for Image #{@image.id}" do
-                  Describe
+                =link_to 'Describe', new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-success", title: "Add a description for Image #{@image.id}" 
               %br
               %br
               = link_to images_path, class: 'btn btn-info', title: "View the images index" do
