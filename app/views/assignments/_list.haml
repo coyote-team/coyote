@@ -1,14 +1,14 @@
 .group
-	-if title
-		%h4<
-			Assigned Users
-			%span.sr-only ,
-			%span.badge.countable
-				=assignments.count
-	%ul.assignments
-		-assignments.each do |assignment|
-			%li.deletable
-				= assignment.user
-				-#= link_to assignment, title: "Delete this assignment" , class: "badge",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
-				= link_to assignment, title: "Delete this assignment" , class: "quick-delete badge",  :method => :delete, :remote => true do
+  -if title
+    %h4<
+      Assigned Users
+      %span.sr-only ,
+      %span.badge.countable
+        =assignments.count
+  %ul.assignments
+    -assignments.each do |assignment|
+      %li.deletable
+        = assignment.user
+        -#= link_to assignment, title: "Delete this assignment" , class: "badge",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
+        = link_to assignment, title: "Delete this assignment" , class: "quick-delete badge",  :method => :delete, :remote => true do
           %i.fa.fa-times{"aria-hidden" => "true"}
