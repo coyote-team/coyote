@@ -101,9 +101,8 @@
                       -klass = 'label label-' + image_status_css_class(status)
                       %span{class: klass}= status
                     %td<
-                      - image.users.each do |u|
-                        = u
-                        %br
+                      -assignments = image.assignments
+                      = render "assignments/list", assignments: assignments, title: false
                     %td= image.group
                     %td<
                       = render "counter", descriptions: image.descriptions, meta: Metum.all

@@ -46,7 +46,11 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   def destroy
     @assignment.destroy
-    redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
+    if request.xhr?
+      render nothing: true
+    else
+      redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
+    end
   end
 
   # POST /assignments/bulk

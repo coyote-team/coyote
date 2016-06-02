@@ -44,15 +44,9 @@
               Describe
 
         - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
-          - if image.users.count > 0
-            %h4<
-              Assigned Users
-              %span.sr-only ,
-              %span.badge
-                =image.users.count
-            %ul
-              -image.users.each do |user|
-                %li= user
+          - if image.assignments.count > 0
+            - assignments = image.assignments
+            = render "assignments/list", assignments: assignments, title: true
           - unless type == "Ready to Review Descriptions"
             %br
             = render "assign_to", css_id: css_id, image: image, users: @users

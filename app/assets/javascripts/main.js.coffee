@@ -42,11 +42,6 @@ $ ->
       metum_id = $(@).find(":selected").val()
       $("#metum-instructions-" + metum_id).slideDown().siblings().slideUp()
 
-    #ajax boolean toggle
-    $('.boolean-toggle').off().on 'click', (e) ->
-      $(@).toggleClass 'fa-check'
-          .toggleClass 'fa-times'
-
     #selectAll
     $('#select-all').click (event) ->
       state =  @checked
@@ -55,7 +50,25 @@ $ ->
         return
       return
 
-    #bulk ajax action
+    #ajax boolean toggle
+    $('.boolean-toggle').off().on 'click', (e) ->
+      $(@).toggleClass 'fa-check'
+          .toggleClass 'fa-times'
+
+    #ajax quick-delete
+    $('.quick-delete').bind 'ajax:beforeSend', (e) ->
+      $(e.currentTarget).html '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i><span class="sr-only">Loading..</span>'
+    .bind 'ajax:error', (e) ->
+      $(e.currentTarget).html 'There was an error'
+    .bind 'ajax:complete', (e) ->
+      #$('body').fadeIn()
+      $group = $(e.currentTarget).parents('.group').first()
+      $countable = $group.find('.countable').first()
+      $countable.text(parseInt($countable.text()) - 1)
+      $deletable = $(e.currentTarget).parents('.deletable').first()
+      $deletable.fadeOut()
+
+    #ajax bulk
     $('.bulk').off().on 'click', (e) ->
       bulk          = $(@).data('bulk') #used for strong params
       url           = $(@).data('url')
