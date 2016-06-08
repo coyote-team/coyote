@@ -118,6 +118,8 @@ namespace :coyote do
 		
 		canonical_ids = Image.where(website_id: 1).collect{|i| i.canonical_id}
 
+    #example
+    #https://mcachicago.org/api/v1/attachment_images/?ids[]=56ead2b051bd255f9f00000e
     canonical_ids.each_slice(20) do |ids|
       ids_titles = {}
       #prep url
