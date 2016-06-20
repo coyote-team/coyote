@@ -107,9 +107,12 @@
                     %td<
                       = render "counter", descriptions: image.descriptions, meta: Metum.all
                     %td<
-                      -image.tags.each do |tag|
-                        = link_to images_path(tag: tag.name) do
-                          = tag.name
+                      - if image.tags.count > 0
+                        %ul<
+                          -image.tags.each do |tag|
+                            %li<
+                              = link_to images_path(tag: tag.name) do
+                                = tag.name
                     %td<
                       =image.created_at
                     %td.text-right<

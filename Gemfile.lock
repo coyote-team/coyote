@@ -7,10 +7,9 @@ GIT
 
 GIT
   remote: git@github.com:argerim/select2-rails.git
-  revision: 2cf2c1645b02e061f136ecd136d9ee0c2c9d25ae
-  ref: 2cf2c1645b02e061f136ecd136d9ee0c2c9d25ae
+  revision: bf00cc1f9a137c360cb7b66222b27d2eafd97e58
   specs:
-    select2-rails (3.5.9.3)
+    select2-rails (4.0.2)
       thor (~> 0.14)
 
 GIT
@@ -587,4 +586,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

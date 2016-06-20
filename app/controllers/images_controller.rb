@@ -252,7 +252,7 @@ Ex:
 
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:path, :group_id, :website_id, :tag_list, :canonical_id)
+      params.require(:image).permit(:path, :group_id, :website_id, :canonical_id, :tag_list => [])
     end
 
     def search_params

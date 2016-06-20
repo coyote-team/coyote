@@ -8,7 +8,13 @@
     = f.association :website, prompt: "Pick a website"
     = f.association :group, prompt: "Pick a group"
     = f.input :path, as: :string, label: "Path", hint: "relative to the website domain"
-    = f.input :tag_list,  label: 'Tags', input_html: {class: 'autocomplete' , data: { class: 'autocomplete', tags: true, placeholder: "Enter tags", saved:  f.object.tags.map{|t| {id: t.name, name: t.name}}.to_json, url: autocomplete_tags_path}}
+    -#= f.input :tag_list, as: :select, label: "Tags", label_method: :name, value_method: :id, input_html: {multiple: true, class: 'autocomplete'}, collection: ActsAsTaggableOn::Tag.most_used(30), selected: @image.tags
+    -#= f.association :tags, label_method: :name, value_method: :id, input_html: {multiple: true, class: 'autocomplete'}, collection: ActsAsTaggableOn::Tag.most_used(30)
+    -#= f.input :tag_list do 
+      -#= f.select :tag_list, options_for_select(ActsAsTaggableOn::Tag.all, @image.tag_list), {}, {class: 'select2', multiple: true, :style => "width:100%;"}
+    = f.input :tag_list, as: :tags, label: "Tags", input_html: {class: 'autocomplete'}, collection: ActsAsTaggableOn::Tag.most_used(30), hint: "Use a comma to separate new tags"
+    -#= f.input :tag_list do
+      = f.select ActsAsTaggableOn::Tag.all.map{|t| t.name, t.id,  @image.tags.include?(t) ? "selected" : ""}
 
 
   .form-actions

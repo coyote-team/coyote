@@ -24,32 +24,10 @@ plate =() ->
     saved = $autocomplete.data("saved")
     $autocomplete.select2
       tags: true
+      theme: 'bootstrap'
       placeholder: placeholder
+      tokenSeparators: ','
       minimumInputLength: 1
-      initSelection: (element, callback) ->
-        saved and callback(saved)
-
-      ajax:
-        url: url
-        dataType: "json"
-        data: (term) ->
-          q: term
-
-        results: (data) ->
-          results: data
-
-      createSearchChoice: (term, data) ->
-        if $(data).filter(->
-          @name.localeCompare(term) is 0
-        ).length is 0
-          id: term
-          name: term
-
-      formatResult: (item, page) ->
-        item.name
-
-      formatSelection: (item, page) ->
-        item.name
 
   $booleanToggles = $('i.boolean-toggle')
   $booleanToggles.off().click ->
