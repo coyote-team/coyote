@@ -75,6 +75,11 @@ GEM
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
     arel (6.0.0)
+    audited (4.2.0)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.2.0)
+      activerecord (~> 4.0)
+      audited (= 4.2.0)
     autoprefixer-rails (5.2.1)
       execjs
       json
@@ -362,6 +367,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     railties (4.2.2)
       actionpack (= 4.2.2)
       activesupport (= 4.2.2)
@@ -503,6 +510,7 @@ DEPENDENCIES
   analytical
   annotate
   apipie-rails!
+  audited-activerecord
   autoprefixer-rails
   be_valid_asset
   better_errors

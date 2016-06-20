@@ -28,6 +28,7 @@ class Image < ActiveRecord::Base
   belongs_to :group, touch: true
 
   has_many :descriptions, dependent: :destroy
+  has_associated_audits
   has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
 

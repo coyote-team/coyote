@@ -81,6 +81,8 @@ gem 'simple_token_authentication' #token auth for api
 gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
 gem 'iconv'
+gem "audited-activerecord"
+
 gem 'rollbar', '~> 2.5.0'
 
 

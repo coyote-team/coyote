@@ -22,8 +22,8 @@
 
 class Description < ActiveRecord::Base
   require 'net/http'
-
   include Iso639::Validator
+  audited associated_with: :image
   belongs_to :status
   belongs_to :image, touch: true, counter_cache: true
   belongs_to :metum

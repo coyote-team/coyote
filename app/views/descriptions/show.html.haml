@@ -62,6 +62,10 @@
                 %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
                 Descriptions
         - if admin?
+          - audits = @description.audits.reverse
+          - if audits.length > 0
+            %h2 Audit log
+            = render "descriptions/audits", audits: audits
           - other_descriptions = @description.siblings
           - if other_descriptions.length > 0
             %h2 Other descriptions of this image

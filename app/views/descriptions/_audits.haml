@@ -1,0 +1,40 @@
+%table.table<
+  %thead
+    %tr
+      %th{scope: "col"}<
+        Status
+      %th{scope: "col"}<
+        Metum
+      %th{scope: "col"}<
+        Locale
+      %th{scope: "col"}<
+        Text
+      %th{scope: "col"}<
+        Author
+      %th{scope: "col"}<
+        Editor
+      %th{scope: "col"}<
+        Date
+  %tbody<
+    - audits.each do |a|
+      %tr{class: ""}<
+        %td<
+          -if a.audited_changes["status_id"]
+            = render "status", status: Status.find(a.audited_changes["status_id"].last)
+        %td<
+          -if a.audited_changes["metum_id"]
+            %span.label.label-info=Metum.find(a.audited_changes["metum_id"].last)
+        %td<
+          -if a.audited_changes["locale"]
+            %span.label.label-default= LanguageList::LanguageInfo.find(a.audited_changes["locale"].last).name
+        %td<
+          -if a.audited_changes["text"]
+            =to_html a.audited_changes["text"].last
+        %td<
+          -if a.audited_changes["user_id"]
+            = User.find(a.audited_changes["user_id"].last).to_s
+        %td<
+          -if a.user_id
+            = User.find(a.user_id)
+        %td<
+          =a.created_at
