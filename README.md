@@ -3,6 +3,10 @@ COYOTE
 
 Image annotation site and API to enable the distributed annotation of museum images.
 
+- [Coyote.pics](https://coyote.pics/)
+- [Repo](http://github.com/coyote-team/coyote)
+- [MCA Coyote](http://coyote.mcachicago.org)
+
 ## Usage 
 
 ```bash
