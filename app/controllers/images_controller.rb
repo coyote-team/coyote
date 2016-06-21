@@ -1,9 +1,9 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :toggle]
   before_action :clear_search, only: [:index]
   before_action :get_users, only: [:index, :show], unless: -> { request.xhr? }
 
-  before_action :admin, only: [:create, :edit, :update, :destroy]
+  before_action :admin, only: [:create, :edit, :update, :destroy, :toggle]
 
   respond_to :html, :json
 
@@ -13,6 +13,7 @@ class ImagesController < ApplicationController
       param :path,           String , required: true
       param :website_id,    :number, required: true
       param :group_id,      :number, required: true
+      param :priority,      [true, false, "1", "0", 1, 0]
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end
@@ -20,8 +21,9 @@ class ImagesController < ApplicationController
 
   # GET /images
   param :page, :number
-  param :canonical_id,  String , optional: true
-  param :status_ids, Array, optional: true
+  param :canonical_id,    String , optional: true
+  param :status_ids,      Array, optional: true
+  param :priority,        [true, false], optional: true
   api :GET, "images", "Get an index of images"
   description  <<-EOT
 If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
@@ -95,6 +97,8 @@ Ex:
     "url": "http://coyote.mcachicago.org/images/1"
     "group_id": 2,
     "website_id": 1,
+    "title": "This is a caption",
+    "boolean": false,
     "created_at": "2015-06-29T17:04:42.000Z",
     "updated_at": "2015-07-30T16:26:30.000Z"
     "descriptions": [
@@ -243,6 +247,11 @@ Ex:
 
     render :json => ids_titles.to_json
   end
+	def toggle
+    @image.toggle!(params[:column].to_sym)
+    render nothing: true
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -252,7 +261,7 @@ Ex:
 
     # Only allow a trusted parameter "white list" through.
     def image_params
-      params.require(:image).permit(:path, :group_id, :website_id, :canonical_id, :tag_list => [])
+      params.require(:image).permit(:path, :group_id, :website_id, :canonical_id, :title, :priority, :tag_list => [])
     end
 
     def search_params

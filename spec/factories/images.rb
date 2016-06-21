@@ -12,6 +12,7 @@
 #  assignments_count  :integer          default(0)
 #  descriptions_count :integer          default(0)
 #  title              :text(65535)
+#  priority           :boolean          default(FALSE)
 #
 # Indexes
 #

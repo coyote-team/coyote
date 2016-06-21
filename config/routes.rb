@@ -15,6 +15,7 @@ Plate::Application.routes.draw do
   resources :groups 
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
   resources :images do
+    get :toggle, on: :member
     collection do
       post :import
       get :export 

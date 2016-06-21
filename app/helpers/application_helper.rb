@@ -72,11 +72,19 @@ module ApplicationHelper
 
   def to_html(content)
     set_markdown
-    raw @markdown.render(content)
+    if content.blank?
+      ""
+    else
+      raw @markdown.render(content)
+    end
   end
 
   def to_text(content)
-    strip_tags to_html(content)
+    if content.blank?
+      ""
+    else
+      strip_tags to_html(content)
+    end
   end
 
   def to_html_attr(content)

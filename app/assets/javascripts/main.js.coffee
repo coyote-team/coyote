@@ -50,11 +50,6 @@ $ ->
         return
       return
 
-    #ajax boolean toggle
-    $('.boolean-toggle').off().on 'click', (e) ->
-      $(@).toggleClass 'fa-check'
-          .toggleClass 'fa-times'
-
     #ajax quick-delete
     $('.quick-delete').bind 'ajax:beforeSend', (e) ->
       $(e.currentTarget).html '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i><span class="sr-only">Loading..</span>'

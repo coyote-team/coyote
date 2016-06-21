@@ -14,6 +14,7 @@ require 'roo'
 #  assignments_count  :integer          default(0)
 #  descriptions_count :integer          default(0)
 #  title              :text(65535)
+#  priority           :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -37,12 +38,13 @@ class Image < ActiveRecord::Base
   validates_associated :website, :group
   validates_presence_of :website, :group
 
-  default_scope {order('created_at DESC')}
+  default_scope {order('priority DESC, created_at DESC')}
 
   scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
   scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
   scope :described, -> (n = 0) { select { |i| i.descriptions_count > n } }
   scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
+  scope :prioritized, -> { order('priority DESC')}
 
   paginates_per 50
 

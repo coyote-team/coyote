@@ -29,10 +29,14 @@ plate =() ->
       tokenSeparators: ','
       minimumInputLength: 1
 
-  $booleanToggles = $('i.boolean-toggle')
+  $booleanToggles = $('a.boolean-toggle')
   $booleanToggles.off().click ->
-    $(@).toggleClass('fa-check')
-    $(@).toggleClass('fa-times')
+    if $(@).find('i').hasClass('fa-check')
+      $(@).find('span').text('False')
+    else
+      $(@).find('span').text('True')
+    $(@).find('i').toggleClass('fa-check')
+    $(@).find('i').toggleClass('fa-close')
 
   initMarkdownToolbar = () ->
     $('textarea.wmd-input').each (i, input) ->

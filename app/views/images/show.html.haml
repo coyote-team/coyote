@@ -18,17 +18,23 @@
               %caption.sr-only Key value pairs for this image
               %tbody
                 %tr
+                  %th{scope: "row"} Website
+                  %td= @image.website
+                %tr
+                  %th{scope: "row"} Canonical ID
+                  %td= @image.canonical_id
+                %tr
                   %th{scope: "row"} Path
                   %td= @image.path
                 %tr
                   %th{scope: "row"} Group
                   %td= @image.group
                 %tr
-                  %th{scope: "row"} Website
-                  %td= @image.website
+                  %th{scope: "row"} Title
+                  %td= @image.title
                 %tr
-                  %th{scope: "row"} Canonical ID
-                  %td= @image.canonical_id
+                  %th{scope: "row"} Priortiy
+                  %td= @image.priority ? "True" : "False"
                 %tr
                   %th{scope: "row"} Tags
                   %td

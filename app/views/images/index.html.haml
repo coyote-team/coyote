@@ -51,8 +51,9 @@
                       <input type="checkbox" name="select-all" id="select-all" />
                       <label for="select-all" class="sr-only">Select all items on the page</label>
 
+                  %th{scope: "col"} Priority
                   %th{scope: "col", rowspan: 2} Image
-                  %th{scope: "col"} Caption
+                  %th{scope: "col"} Title
                   %th{scope: "col", rowspan: 2} Status
                   %th{scope: "col"}= sort_link @q, :assignments_count, 'Assigned to', html: {title: "Sort by assignment count"}
                   %th{scope: "col"}= sort_link @q, :group_name, 'Group'
@@ -62,6 +63,7 @@
                   %th{scope: "col", rowspan: 2}= sort_link @q, :created_at, 'Date'
                   %th{scope: "col"} Actions
                 %tr<
+                  %td= f.input  :priority_eq, as: :select, include_blank: "Any priority", label: "Select a priority level", required: false, collection: [true, false], label_html: {class: 'sr-only'}
                   %td<
                     =f.label "Search by caption", for: "q_title_cont", class: "sr-only"
                     = f.search_field :title_cont, :class => 'input-medium form-control', placeholder: "Search by caption"
@@ -91,6 +93,14 @@
                     -if admin?
                       %td<
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } ")
+                    %td<
+                      =link_to toggle_image_path(image, column: 'priority'), remote: true, title: "Click to toggle priority", class: "boolean-toggle" do
+                        - if image.priority
+                          %span.sr-only True
+                          %i.fa.fa-fw.fa-check{"aria-hidden" => true}
+                        - else 
+                          %span.sr-only False
+                          %i.fa.fa-fw.fa-close{"aria-hidden" => true}
                     %td<
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt, "aria-describedby": "image-title-#{image.id}"

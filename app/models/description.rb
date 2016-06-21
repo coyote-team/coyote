@@ -33,7 +33,6 @@ class Description < ActiveRecord::Base
   validates_presence_of :image, :status, :metum, :locale, :text
   validates :locale, iso639Code: true, length: { is: 2 } 
 
-
   default_scope {order('status_id DESC, updated_at DESC')}
 
   scope :ready_to_review, -> {where("status_id = 1")}
