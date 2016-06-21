@@ -20,19 +20,20 @@
       %tr{class: ""}<
         %td<
           -if a.audited_changes["status_id"]
-            = render "status", status: Status.find(a.audited_changes["status_id"].first)
+            
+            = render "status", status: Status.find(audited_value(a.audited_changes["status_id"]))
         %td<
           -if a.audited_changes["metum_id"]
-            %span.label.label-info=Metum.find(a.audited_changes["metum_id"].first)
+            %span.label.label-info=Metum.find(audited_value(a.audited_changes["metum_id"]))
         %td<
           -if a.audited_changes["locale"]
-            %span.label.label-default= LanguageList::LanguageInfo.find(a.audited_changes["locale"].first).name
+            %span.label.label-default= LanguageList::LanguageInfo.find(audited_value(a.audited_changes["locale"])).name
         %td<
           -if a.audited_changes["text"]
-            =to_html a.audited_changes["text"].first
+            =to_html audited_value(a.audited_changes["text"])
         %td<
           -if a.audited_changes["user_id"]
-            = User.find(a.audited_changes["user_id"].first).to_s
+            = User.find(audited_value(a.audited_changes["user_id"])).to_s
         %td<
           -if a.user_id
             = User.find(a.user_id)

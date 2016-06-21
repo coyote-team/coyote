@@ -90,4 +90,12 @@ module ApplicationHelper
       ''
     end
   end
+
+  def audited_value(value)
+    if value.kind_of? Array
+      value.last
+    else
+      value
+    end
+  end
 end
