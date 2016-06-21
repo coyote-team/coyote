@@ -10,7 +10,7 @@
       %tr{class: description_css_class(d) + " description"}<
         %td<
           %blockquote.blockquote<
-            =to_html d.text
+            %span{id: "small-table-description-#{d.id}"}=to_html d.text
             -if d.user
               %footer.footer
                 %cite=d.user
@@ -32,7 +32,7 @@
                 - disabled = true
               = button_to description_path(d), params: {"description[status_id]": 2},
                 form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
-                data: {disable_with: disable_with} do
+                data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}"  do
                 %span.sr-only Approve this description
                 %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": "true"}
 
@@ -43,9 +43,9 @@
                 - disabled = true
               = button_to description_path(d), params: {"description[status_id]": 3},
                 form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
-                data: {disable_with: disable_with} do
+                data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}" do
                 %span.sr-only Disapprove this description
                 %i.fa.fa-fw.fa-thumbs-down{ "aria-hidden": "true"}
 
-              =link_to edit_description_path(d), title: "Edit this description", class: 'btn-sm btn btn-primary', "aria-describedby" => [locale_id, metum_id, image_id ].join(' ') do
+              =link_to edit_description_path(d), title: "Edit this description", class: 'btn-sm btn btn-primary', "aria-describedby" => "small-table-description-#{d.id}" do
                 %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
