@@ -8,9 +8,8 @@
         %header
           %h1#page-title{tabindex: -1}
             =title
-            -status = @description.image.status
-            -klass = 'label  label-' + image_status_css_class(status)
-            %span{class: klass}=status
+            -klass = 'label  label-' + image_status_css_class(@image.status_code)
+            %span{class: klass}=@image.status
         .row
           .col-md-3
             = render "image"

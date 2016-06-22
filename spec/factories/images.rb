@@ -13,6 +13,7 @@
 #  descriptions_count :integer          default(0)
 #  title              :text(65535)
 #  priority           :boolean          default(FALSE)
+#  status_code        :integer          default(0)
 #
 # Indexes
 #

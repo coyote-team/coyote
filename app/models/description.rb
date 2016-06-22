@@ -43,7 +43,8 @@ class Description < ActiveRecord::Base
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
-  after_save :patch_image
+  after_commit :patch_image, :update_image
+  #after_destroy :update_image
 
   paginates_per 50
 
@@ -69,6 +70,12 @@ class Description < ActiveRecord::Base
     Description.where(image_id: image_id).where.not(id: id).where(user_id: user.id)
   end
 
+  def update_image
+    image.update_status_code
+    image.save
+    return true
+  end
+
   def patch_image
     website = image.website
     if status_id == 2 and website.id == 1 and Rails.env.production?
@@ -81,6 +88,6 @@ class Description < ActiveRecord::Base
       }
       Rails.logger.info "Patched to #{url.to_s}"
     end
+    return true
   end
-
 end

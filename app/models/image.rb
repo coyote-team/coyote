@@ -15,6 +15,7 @@ require 'roo'
 #  descriptions_count :integer          default(0)
 #  title              :text(65535)
 #  priority           :boolean          default(FALSE)
+#  status_code        :integer          default(0)
 #
 # Indexes
 #
@@ -24,6 +25,7 @@ require 'roo'
 
 class Image < ActiveRecord::Base
   acts_as_taggable_on :tags
+  before_validation :update_status_code
 
   belongs_to :website, touch: true
   belongs_to :group, touch: true
@@ -85,17 +87,19 @@ class Image < ActiveRecord::Base
     end
   end
 
-  #has no descriptions by this user in any locale
+  #TODO per locale
+  #has no descriptions by this user 
   def undescribed_by?(user)
     !descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
   end
 
-  #has 1 of description by this user in any locale
+  #has 1 of description by this user
   def described_by?(user)
    descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
   end
 
-  #has 1 of each metum by this user in any combo of locales and status'es
+  #TODO?
+  #has 1 of each metum by this user  ? in any combo of locales and status'es
   def completed_by?(user)
     meta_ids = Metum.all.map{|m| m.id}
     described_meta_ids = descriptions.collect{ |d| d.metum_id if d.user_id == user.id}.compact 
@@ -103,51 +107,40 @@ class Image < ActiveRecord::Base
   end
 
   def status
-    if begun? 
-      if completed?
-        if ready_to_review?
-          return "Ready to Review" 
-        else
-          return "Completed" 
-        end
-      else
-        return "Partially Completed"
-      end
+    case status_code
+    when 0
+      "Not Described"
+    when 1
+      "Partially Completed"
+    when 2
+      "Ready to Review" 
+    when 3
+      "Completed" 
     else
       return "Not Described"
     end
   end
 
   def begun?
-    #approved_id = Status.find_by_title("Approved")
-    #descriptions.where({status_id: approved_id}).count > 0
     descriptions.count > 0
   end
 
   def ready_to_review?
-    ready_id = Status.find_by_title("Ready to review")
-    if descriptions.where({status_id: ready_id}).size > 0
-      true
-    end
-  end
-
-  #TODO needs to be normalized
-  #completed all meta in any combo of locales
-  def completed?
     meta_ids = Metum.all.map{|m| m.id}
-    #approved_id = Status.find_by_title("Approved")
-    #if (meta_ids - descriptions.where({status_id: approved_id}).map{|d| d.metum_id unless d.nil?}).empty?
-    if (meta_ids - descriptions.map{|d| d.metum_id unless d.nil?}).empty?
+    if meta_ids.count == (descriptions.approved +  descriptions.ready_to_review).map{|d| d.metum_id unless d.nil?  }.uniq.compact.count
       true
     else
       false
     end
   end
 
-  def not_approved?
-    not_approved_id = Status.find_by_title("Not approved")
-    if descriptions.where({status_id: not_approved_id}).size > 0
+  #completed all meta in any combo of locales
+  def completed?
+    meta_ids = Metum.all.map{|m| m.id}
+    if meta_ids.count == descriptions.approved.map{|d| d.metum_id unless d.nil?}.uniq.compact.count
       true
+    else
+      false
     end
   end
 
@@ -181,5 +174,20 @@ class Image < ActiveRecord::Base
         csv << product.attributes.values_at(*column_names)
       end
     end
+  end
+
+  def update_status_code
+    if begun? 
+      if completed?
+        self.status_code = 3
+      elsif ready_to_review?
+        self.status_code = 2
+      else
+        self.status_code = 1
+      end
+    else
+      self.status_code = 0
+    end
+    return true
   end
 end
