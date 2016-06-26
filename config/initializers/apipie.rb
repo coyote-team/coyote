@@ -16,6 +16,6 @@ Or a query string to authenticate:
    GET http://coyote.mcachicago.com?user_email=alice@example.com&user_token=1G8_s7P-V-4MGojaKD7a
 
 When a description is approved for an image, a PATCH request is sent out to its resource URI, e.g.:  
-<code>https://cms.mcachicago.org/api/v1/attachment_images/55d7749830363200600001ab</code>
+<code>https://mcachicago.org/api/v1/attachment_images/55d7749830363200600001ab</code>
   EOT
 end

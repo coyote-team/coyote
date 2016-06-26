@@ -12,7 +12,7 @@ namespace :coyote do
     updated_at = nil if Image.all.count < 10 #kludge for seeding
 
     length = 1
-    root = "https://cms.mcachicago.org"
+    root = "https://mcachicago.org"
     updated = 0
     created = 0
     errors = 0
@@ -123,14 +123,15 @@ namespace :coyote do
     canonical_ids.each_slice(20) do |ids|
       ids_titles = {}
       #prep url
-      url = "https://mcachicago.org/api/v1/attachment_images/?"
+      root = "https://mcachicago.org"
+      url = root + "/api/v1/attachment_images/?"
       ids.each do |i|
         url += "ids[]=" + i + "&"
       end
 
       #request
       Rails.logger.info "grabbing images json at #{url}"
-      puts "grabbing images json at #{url}"
+      #puts "grabbing images json at #{url}"
       begin
         content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10}).read
         #parse
@@ -159,7 +160,7 @@ namespace :coyote do
 
       ids_titles.each do |canonical_id, title|
         matches = Image.where(canonical_id: canonical_id, website_id: 1)
-        puts "#{canonical_id} - #{title}"
+        #puts "#{canonical_id} - #{title}"
         if matches.length == 1
           image = matches.first
           image.title = title
