@@ -101,15 +101,15 @@
                         - else 
                           %span.sr-only False
                           %i.fa.fa-fw.fa-close{"aria-hidden" => true}
+                    %td
+                      -klass = 'label label-' + image_status_css_class(image.status_code)
+                      %span{class: klass}= image.status
                     %td<
                       = link_to image, class: "", title: "Show this image" do
                         =image_tag image.url, id: "image-file-#{ image.id }", alt: image.alt, "aria-describedby": "image-title-#{image.id}"
                     %td<
                       %span{id: "image-title-#{image.id}"}= to_html image.title
 
-                    %td
-                      -klass = 'label label-' + image_status_css_class(image.status_code)
-                      %span{class: klass}= image.status
                     %td<
                       -assignments = image.assignments
                       = render "assignments/list", assignments: assignments, title: false
