@@ -1,9 +1,12 @@
 = simple_form_for @user, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean} do |f|
   = f.error_notification
   .form-inputs
-    = f.input :first_name
+    = f.input :first_name, autofocus: true
     = f.input :last_name
-    = f.input :email
+    = f.input :email, required: true
+    = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+    = f.input :password_confirmation, required: true
+
     = f.input :admin
 
 
