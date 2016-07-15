@@ -21,6 +21,15 @@ $ ->
     #fade/in out on page transition
     $('#main').removeClass('fadeOut').addClass('animated fadeIn')
 
+    #pagination on user pages
+    $('.paginated-table tbody').pageMe
+      pagerSelector:'.pager'
+      showPrevNext:true
+      hidePageNumbers:false
+      perPage:10
+
+
+
     #set focus on flash then shift to page title
     $flash = $('#flash-messages')
     if $flash.text().trim().length > 0
