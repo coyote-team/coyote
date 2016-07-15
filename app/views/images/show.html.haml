@@ -60,6 +60,16 @@
               = link_to images_path, class: 'btn btn-info', title: "View the images index" do
                 %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
                 Images
+              - previous_image = Image.where("id < ?", @image.id).first
+              - if previous_image
+                = link_to image_path(previous_image), class: 'btn btn-info', title: "View the previous image" do
+                  %i.fa.fa-fw.fa-arrow-left{"aria-hidden" => "true"}
+                  Previous
+              - next_image = Image.where("id > ?", @image.id).first
+              - if next_image
+                = link_to image_path(next_image), class: 'btn btn-info', title: "View the next image" do
+                  %i.fa.fa-fw.fa-arrow-right{"aria-hidden" => "true"}
+                  Next
               %br
               %br
           -if @image.descriptions.length > 0
