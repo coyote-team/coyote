@@ -1,9 +1,9 @@
+body
+  //navbar height
+  padding-top: 50px 
 html.turbolinks-progress-bar::before
   background-color: $brand-primary !important
   height: 5px !important
-
-#footer
-  margin-top: 2em
 
 .new-link
   margin-bottom: ms(0)
@@ -49,6 +49,8 @@ th .form-group
 .btn-show, .btn-edit, .btn-destroy
   @extend .btn-sm
 
+.btn
+  padding: 3px 6px
 form.btn
   padding: 0
   button
@@ -87,3 +89,27 @@ em
     padding-top: 15px
     padding-bottom: 15px
 
+
+
+
+#main a, #footer a
+  text-decoration: underline
+
+h2
+  text-transform: uppercase
+
+#footer
+  margin-top: 2em
+
+.btn-default:hover
+  background: $blue
+
+
+.form-control:focus
+  border-color: $blue
+  box-shadow: none
+.form-control
+  padding: 3px 6px
+  box-shadow: none
+.form-group p
+  margin-left: 6px
