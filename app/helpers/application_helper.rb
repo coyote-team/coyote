@@ -39,9 +39,9 @@ module ApplicationHelper
     klass = ""
     case status_code
     when 0
-      klass += "default" 
+      klass += "undescribed" 
     when 1
-      klass += "danger" 
+      klass += "partial" 
     when 2
       klass += "warning" 
     when 3

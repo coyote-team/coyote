@@ -64,7 +64,7 @@
                   %th{scope: "col"} Actions
                 %tr<
                   %td= f.input  :priority_eq, as: :select, include_blank: "Any priority", label: "Select a priority level", required: false, collection: [["Priority", true], ["Regular", false]], label_html: {class: 'sr-only'}
-                  %td= f.input  :status_code_eq, as: :select, include_blank: "Any status", label: "Select a status", required: false, collection: [["Not Described", 0], ["Partially Described", 1],  ["Ready to Review", 2], ["Completed", 3]], label_html: {class: 'sr-only'}
+                  %td= f.input  :status_code_eq, as: :select, include_blank: "Any status", label: "Select a status", required: false, collection: [["Not Described", 0], ["Partially Completed", 1],  ["Ready to Review", 2], ["Completed", 3]], label_html: {class: 'sr-only'}
                   %td<
                     =f.label "Search by caption", for: "q_title_cont", class: "sr-only"
                     = f.search_field :title_cont, :class => 'input-medium form-control', placeholder: "Search by caption"
@@ -94,13 +94,15 @@
                       %td<
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } ")
                     %td<
-                      =link_to toggle_image_path(image, column: 'priority'), remote: true, title: "Click to toggle priority", class: "boolean-toggle" do
-                        - if image.priority
-                          %span.sr-only True
-                          %i.fa.fa-fw.fa-check{"aria-hidden" => true}
-                        - else 
-                          %span.sr-only False
-                          %i.fa.fa-fw.fa-close{"aria-hidden" => true}
+                      - klass = "priority-toggle label "
+                      - if image.priority
+                        - klass += "label-priority"
+                        - text = "High"
+                      - else
+                        - klass += "label-default"
+                        - text = "None"
+                      =link_to toggle_image_path(image, column: 'priority'), remote: true, title: "Click to toggle priority", class: klass do
+                        = text
                     %td
                       -klass = 'label label-' + image_status_css_class(image.status_code)
                       %span{class: klass}= image.status

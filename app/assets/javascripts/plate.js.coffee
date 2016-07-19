@@ -29,6 +29,13 @@ plate =() ->
       tokenSeparators: ','
       minimumInputLength: 1
 
+  $priorityToggles = $('a.priority-toggle')
+  $priorityToggles.off().click ->
+    if $(@).hasClass('label-priority')
+      $(@).addClass('label-default').removeClass('label-priority').text("None")
+    else
+      $(@).addClass('label-priority').removeClass('label-default').text("High")
+
   $booleanToggles = $('a.boolean-toggle')
   $booleanToggles.off().click ->
     if $(@).find('i').hasClass('fa-check')

@@ -13,7 +13,7 @@
         %ul.nav.navbar-nav
           - models = [ "images", "descriptions", "assignments", "users", "groups", "websites" ]
           - models.each do |m|
-            %li<
+            %li{ class: active_controller_check(m)}<
               = link_to  m.capitalize, send("#{m}_path")
       -elsif current_user
         %h2.sr-only Navigation

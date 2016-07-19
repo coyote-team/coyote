@@ -92,8 +92,11 @@ em
 
 
 
-#main a, #footer a
-  text-decoration: underline
+#main, #footer
+  a
+    text-decoration: underline
+    &.label, &.btn
+      text-decoration: none
 
 h2
   text-transform: uppercase
@@ -113,3 +116,31 @@ h2
   box-shadow: none
 .form-group p
   margin-left: 6px
+
+.label
+  text-transform: uppercase
+  border-radius: 0
+.label-default
+  color: $black
+  border: 1px solid $black
+//metum
+.label-info
+  color: $lightBlue
+  border: 1px solid $lightBlue
+//status
+.label-partial
+  color: $white
+  background-color: $orange
+.label-undescribed
+  color: $white
+  background-color: $darkGrey
+//priorirty
+a.label-default
+  &:hover, &:focus
+    color: $black
+.label-priority
+  color: $red
+  border: 1px solid $red
+a.label-priority
+  &:hover, &:focus
+    color: $red
