@@ -21,27 +21,28 @@
         - models.each do |m|
           %li<
             = link_to  m.capitalize, send("#{m}_path")
-    .navbar-right
-      -if current_user
-        %p.navbar-text
-          Hello
-          = link_to root_path, class: "navbar-link" do
+    -if current_user
+      .navbar-right.navbar-nav
+        %h2.sr-only Global Actions
+        -#%ul.nav.navbar-nav
+          -#%li<
+        %span.dropdown
+          %button{type: "button", class: "dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions'}
             =current_user
+            %span.caret
+          %ul.dropdown-menu<
+            %li<
+              %a{href: "mailto:coyote@seeread.info", target: "_blank"}
+                %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
+                Support
 
-      %h2.sr-only Global Actions
-      %ul.nav.navbar-nav
-        %li<
-          %a{href: "mailto:coyote@seeread.info", target: "_blank"}
-            %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
-            Support
-
-        - if current_user
-          %li<
-            = link_to destroy_user_session_path, :method => :delete do 
-              %i.fa.fa-fw.fa-sign-out{"aria-hidden" => "true"}
-              Log out
-        - else
-          %li<
-            = link_to user_session_path do
-              %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
-              Log in
+            - if current_user
+              %li<
+                = link_to destroy_user_session_path, :method => :delete do 
+                  %i.fa.fa-fw.fa-sign-out{"aria-hidden" => "true"}
+                  Log out
+            - else
+              %li<
+                = link_to user_session_path do
+                  %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
+                  Log in
