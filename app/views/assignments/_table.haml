@@ -1,5 +1,5 @@
 - klass = "index-table table "
-- klass += " paginated-table " unless paginate.nil? or paginate == false
+- klass += " paginated-table " unless !defined? paginated or paginated == false
 %table{class: klass}
   %caption.sr-only Index table for assignments
   %thead
@@ -26,7 +26,7 @@
           = link_to assignment, title: "Delete this assignment" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
             %i.fa.fa-fw.fa-trash{"title" => "Delete", "aria-hidden" => "true"}
 
-- unless paginate.nil? or paginate == false
+- unless !defined? paginated or paginated == false
   .text-center
     %ul.pagination.pagination-lg.pager
 

@@ -35,13 +35,13 @@
             %h3 
               Descriptions
               %span.badge= @user.descriptions.count
-            = render "descriptions/table", descriptions: @user.descriptions, paginate: true
+            = render "descriptions/table", descriptions: @user.descriptions, paginated: true
 
           - if @user.assignments.count > 0
             %h3 
               Assignments
               %span.badge= @user.assignments.count
-            = render "assignments/table", assignments: @user.assignments, paginate: true
+            = render "assignments/table", assignments: @user.assignments, paginated: true
 
         %nav.show-nav{role:"navigation"}
           = link_to users_path, class: 'btn btn-info', title: "View the users index" do

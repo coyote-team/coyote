@@ -1,6 +1,6 @@
 .table-responsive
   - klass = "table index-table "
-  - klass += " paginated-table " unless paginate.nil? or paginate == false
+  - klass += " paginated-table " unless !defined? paginate or paginate == false
   %table{class: klass}
     %caption.sr-only Table of descriptions
     %thead
@@ -49,6 +49,6 @@
               -if admin?
                 = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
                   %i.fa.fa-fw.fa-trash{"aria-hidden" => "true"}
-- unless paginate.nil? or paginate == false
+- unless !defined? paginated or paginated == false
   .text-center
     %ul.pagination.pagination-lg.pager
