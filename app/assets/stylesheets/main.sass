@@ -81,6 +81,21 @@ ul.counter
 em
   font-style: italic
 
+.navbar-brand
+  text-transform: uppercase
+  font-weight: bold
+  &:hover
+    .stayOut
+      +animate(fadeIn, 0.2s, 0s, ease, both)
+.stayOut
+  +opacity(0)
+.fadeOutSlow, .stayOut.fadeOutSlow
+  +animate(fadeOut, 1s, 1s, ease, both)
+.fadeOut
+  +animate(fadeOut, 0.5s, 0s, ease, both)
+.fadeIn
+  +animate(fadeIn, 0.5s, 0s, ease, both)
+
 .navbar-nav button
   background: transparent
   line-height: 20px

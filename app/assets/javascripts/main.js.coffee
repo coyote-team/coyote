@@ -1,4 +1,4 @@
-Turbolinks.enableProgressBar()
+#Turbolinks.enableProgressBar()
 $ ->
   #setSizes = ()->
     #height = $(window).height() - $('#nav').outerHeight()
@@ -8,18 +8,24 @@ $ ->
   #$(window).resize $.debounce 100, ->
       #setSizes()
 
-  $(document).on 'page:fetch', ->
-    $('#main').addClass('animated fadeOut')
+  $(document).on 'turbolinks:click', ->
+    console.log('fade out')
+    $('#main').addClass('fadeOut')
 
-  $(document).on 'page:load', ->
-    Analytical.track()
+  $(document).on 'turbolinks:load', ->
 
-  $(document).on 'page:restore', ->
-    Analytical.track()
+  #$(document).on 'page:restore', ->
+    #Analytical.track()
 
-  $(document).on 'page:change', ->
+  counter = 0
+  $(document).on 'turbolinks:load', ->
+    if counter > 0
+      Analytical.track()
+      $('.stayOut').removeClass('fadeOutSlow')
+    counter += 1
     #fade/in out on page transition
-    $('#main').removeClass('fadeOut').addClass('animated fadeIn')
+    $('#main').removeClass('fadeOut').addClass('fadeIn')
+    console.log('fade in')
 
     #pagination on user pages
     $('.paginated-table tbody').pageMe
@@ -95,7 +101,8 @@ $ ->
       data[bulk] = sets
 
       
-      $('#main').addClass('animated fadeOut')
+      $('#main').addClass('fadeOut')
+      console.log('fade out')
       $.ajax
         url: url
         type: "POST"
