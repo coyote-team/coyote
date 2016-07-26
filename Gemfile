@@ -4,16 +4,16 @@ gem 'rails', '4.2.2'
 gem 'language_list'
 gem 'iso639-validator'
 gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate 
-gem 'compass-rails', '~> 2.0.4'
+gem 'compass-rails', '~> 3.0.2'
 gem 'bootstrap-sass', '>= 3.2'
 gem 'sprockets'
-gem 'sprockets-rails', '~> 2.0.1' #updating this breaks asset comp
+gem 'sprockets-rails', '~> 3.0.3'
 #gem 'bootstrap-generators', '~> 3.3.4'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
-gem 'mysql2' #might need to set version for mariadb
+gem 'mysql2', '~> 0.3.18'
 gem 'seed_dump'
 gem 'actionpack-action_caching' #caching
 gem 'annotate'
@@ -76,7 +76,7 @@ gem "haml-rails"
 #gem 'hogan_assets' #js template compilaton
 #gem 'sitemap_generator'
 gem 'whenever'
-gem 'apipie-rails', :github => 'Apipie/apipie-rails' #for api documentation
+gem 'apipie-rails'
 gem 'simple_token_authentication' #token auth for api
 gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
@@ -88,7 +88,6 @@ gem 'rollbar', '~> 2.5.0'
 
 group :development do
   gem "better_errors"
-  gem 'sprockets_better_errors'
   gem "html2haml"
   gem "binding_of_caller"
   gem "quiet_assets"
