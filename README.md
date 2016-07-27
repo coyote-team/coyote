@@ -42,7 +42,7 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant u
 - [accecess](http://lukyvj.github.io/accecss/)
 - [MariaDB](https://mariadb.org/) 
 - [rbenv](http://rbenv.org/) with [plugins](https://github.com/sstephenson/rbenv/wiki/Plugins) for gems, bundler, build, and binstubs
-- [bundler](http://bundler.io/).
+- [bundler](http://bundler.io/)
 - [SASS](http://sass-lang.com/)
 - [Coffeescript](http://coffeescript.org/)
 

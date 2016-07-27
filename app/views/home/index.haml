@@ -6,21 +6,37 @@
     url: request.url,
   }
 .container
-  .row
-    .col-md-12
-      %header
-        %h1#page-title=title
   - if !current_user
     .row
       .col-md-6
-        %p<
+        %header
+          %h1#page-title=title
+        :markdown
           Coyote is a tool for quickly annotating images built for the <a href="//www.mcachicago.org/" target="_blank">Museum of Contemporary Art Chicago</a>.
-        %p>
-          = link_to "Create an account", new_registration_path(resource_name)
-          or
-          = link_to "log in", new_session_path(resource_name)
-          to start annotating.
+
+          While Coyote’s primary goal is to be the canonical holder of image description, it does not strive nor is meant to be the canonical holder of image data or metadata not related to description. Coyote offers role-based logins to facilitate a workflow approach towards image description. To this end, those who are administrators may approve, assign, and review descriptions. When users log in, they are presented with a queue-based interface for authoring descriptions that they have been assigned. Realizing that image description is a context-sensitive process, Coyote offers content creators the ability to author both multiple types and multiple instances of a single type of description per image. In addition, a tagging interface exists to assist in search and organization activities within the interface. 
+
+      .col-md-6
+        %div
+          / Nav tabs
+          %ul.nav.nav-tabs{:role => "tablist"}
+            %li.active{:role => "presentation"}
+              %a{"aria-controls" => "sign-up", "data-toggle" => "tab", :href => "#sign-up", :role => "tab"} Sign up
+            %li{:role => "presentation"}
+              %a{"aria-controls" => "log-in", "data-toggle" => "tab", :href => "#log-in", :role => "tab"} Log in
+          / Tab panes
+          .tab-content
+            #sign-up.fade.in.tab-pane.active{:role => "tabpanel"}
+              = render 'devise/registrations/form'
+            #log-in.fade.tab-pane{:role => "tabpanel"}
+              = render 'devise/sessions/form'
+              = link_to "Forgot your password?", new_password_path(resource_name)
+
   - else
+    .row
+      .col-sm-12
+        %header
+          %h1#page-title=title
     .row
       .col-sm-6
         %h2 Your Stats

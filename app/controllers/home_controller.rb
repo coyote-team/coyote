@@ -6,9 +6,7 @@ class HomeController < ApplicationController
       limit = 10
 
       #TODO move parts  of this into the model and view...
-      
       my_images = current_user.images
-
       @my_queue = my_images.collect{|i| i if i.undescribed_by?(current_user)}.compact
       @my_queue_count = @my_queue.count
       @my_queue = @my_queue.first(limit)
@@ -38,6 +36,8 @@ class HomeController < ApplicationController
         #@assigned_count = images.assigned.length
         @description_count = Description.all.count
       end
+    else
     end
+    @minimum_password_length = User.password_length.min
   end
 end

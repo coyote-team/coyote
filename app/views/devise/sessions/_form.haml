@@ -1,6 +1,3 @@
-.devise-header
-  .devise-header-inner
-    %h1#page-title Log in
 = simple_form_for resource, as: resource_name, url: session_path(resource_name), validate: true, html: {multipart: true} do |f|
   .form-inputs
     = f.input :email, required: false, autofocus: true, label: false, placeholder: "Email"

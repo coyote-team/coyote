@@ -118,8 +118,16 @@ em
 h2
   text-transform: uppercase
 
-#footer
-  margin-top: 2em
+body 
+  margin-bottom: 3em
+#footer 
+  background: $white
+  position: absolute
+  bottom: 0
+  width: 100%
+  height: 3em
+  padding-top: 1em
+  border-top: 1px solid $black
 
 .btn-default:hover
   background: $blue
@@ -163,3 +171,37 @@ a.label-priority
     color: $red
 .alert
   border: 0px
+
+.nav-tabs
+  @media (min-width: 768px) 
+    li
+      font-size: 32px
+      line-height: 41.6px
+      margin-top: 21px
+      margin-bottom: 21px
+      a
+        padding-top: 0
+        padding-right: 26px
+        padding-bottom: 0
+      &:first-child:after
+        content: "or"
+        position: absolute
+        right: -7px
+        bottom: 3px
+  li:first-child
+    a
+      padding-left: 0
+  a
+    text-decoration: none !important
+  li.active a
+    text-decoration: underline !important
+input:focus:placeholder
+
+.form-control:focus::-webkit-input-placeholder
+  color: $darkGrey 
+.form-control:-moz-placeholder:focus
+  color: $darkGrey 
+.form-control:-ms-input-placeholder:focus
+  color: $darkGrey 
+.form-control::-moz-placeholder:focus
+  color: $darkGrey 
