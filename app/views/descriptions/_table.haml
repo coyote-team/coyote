@@ -1,6 +1,6 @@
 .table-responsive
   - klass = "table index-table "
-  - klass += " paginated-table " unless !defined? paginate or paginate == false
+  - klass += " paginated-table " unless !defined? paginated or paginated == false
   %table{class: klass}
     %caption.sr-only Table of descriptions
     %thead
