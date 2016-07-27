@@ -83,7 +83,7 @@ gem 'roo' #spreadsheet interfaces
 gem 'iconv'
 gem "audited-activerecord"
 
-gem 'rollbar', '~> 2.5.0'
+gem 'rollbar', '~> 2.7'
 
 
 group :development do

@@ -77,5 +77,5 @@ namespace :assets do
 end
 
 set :format, :pretty
-set :log_level, :trace
+#set :log_level, :trace
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }

@@ -381,7 +381,7 @@ GEM
     ref (2.0.0)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
-    rollbar (2.5.2)
+    rollbar (2.12.0)
       multi_json
     roo (2.4.0)
       nokogiri (~> 1)
@@ -551,7 +551,7 @@ DEPENDENCIES
   rb-fsevent
   redcarpet
   responders
-  rollbar (~> 2.5.0)
+  rollbar (~> 2.7)
   roo
   rspec-rails
   sass-mediaqueries-rails
