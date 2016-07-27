@@ -8,7 +8,7 @@ namespace :coyote do
     require 'open-uri'
 
     @website = Website.first
-    limit = 500
+    limit = 100
     offset = 0
     updated_at = (Time.zone.now - args.minutes.to_f.minute).iso8601
     updated_at = nil if Image.all.count < 10 #kludge for seeding
