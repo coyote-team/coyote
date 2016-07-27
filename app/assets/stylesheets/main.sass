@@ -28,7 +28,7 @@ table
 td.search-btns
   text-align: right
   .btn-group
-    min-width: 75px
+    min-width: 83px
 td .btn-group
   min-width: 120px
 th .form-group
@@ -107,13 +107,17 @@ em
 
 
 
+#main
+  margin-bottom: 3em
 #main, #footer
-  a
+  a, button
     text-decoration: underline
     &.label, &.btn
       text-decoration: none
     &.btn:hover
-      color: $blue
+      background-color: $blue
+      color: $white
+      border-color: transparent
 
 h2
   text-transform: uppercase
@@ -208,3 +212,4 @@ input:focus:placeholder
 
 .close
   +opacity(1)
+  color: $white !important !important
