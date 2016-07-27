@@ -14,6 +14,7 @@
 #  title              :text(65535)
 #  priority           :boolean          default(FALSE)
 #  status_code        :integer          default(0)
+#  page_urls          :text(65535)
 #
 # Indexes
 #

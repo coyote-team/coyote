@@ -40,6 +40,13 @@
                     - tag_cloud(@image.tags, %w(css1 css2 css3 css4)) do |tag, css_class|
                       = link_to images_path(tag: tag.name), :class => css_class do
                         = tag.name
+                %tr
+                  %th{scope: "row"} Pages
+                  %td
+                    %ul
+                      -if @image.page_urls
+                        - @image.page_urls.each do |u|
+                          %li=link_to u, u, target: "_blank"
 
             %nav.show-nav{role:"navigation"}
               -if admin?

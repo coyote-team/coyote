@@ -1,14 +1,16 @@
 namespace :coyote do
   desc "Checks for new MCA images"
-  task :update_mca => :environment do
+  task :update_mca, [:minutes]  => :environment do |t, args|
+    args.with_defaults(:minutes => 1)
+    Rails.logger.info "Checking for images from #{args.minutes} minutes ago"
 
     require 'multi_json'
     require 'open-uri'
 
     @website = Website.first
-    limit = 1000
+    limit = 500
     offset = 0
-    updated_at = (Time.zone.now - 1.minute).iso8601
+    updated_at = (Time.zone.now - args.minutes.to_f.minute).iso8601
     updated_at = nil if Image.all.count < 10 #kludge for seeding
 
     length = 1
@@ -62,6 +64,7 @@ namespace :coyote do
             image.created_at = i["created_at"]
             image.updated_at = i["updated_at"]
             image.title = i["title"]
+            image.page_urls = i["page_urls"]
             image.save
             #create initial description field
             Rails.logger.info "created image #{image.id} from canonical id #{image.canonical_id}"
@@ -70,6 +73,7 @@ namespace :coyote do
             #update
             image.title = i["title"]
             image.path = i["thumb_url"]
+            image.page_urls = i["page_urls"]
             image.updated_at = i["updated_at"]
             if image.save
               Rails.logger.info "updated image #{image.id} from canonical id #{image.canonical_id}"

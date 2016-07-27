@@ -13,6 +13,7 @@ class ImagesController < ApplicationController
       param :path,           String , required: true
       param :website_id,    :number, required: true
       param :group_id,      :number, required: true
+      param :page_urls,     Array
       param :priority,      [true, false, "1", "0", 1, 0]
       param :created_at,    DateTime
       param :updated_at,    DateTime

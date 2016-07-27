@@ -16,6 +16,7 @@ require 'roo'
 #  title              :text(65535)
 #  priority           :boolean          default(FALSE)
 #  status_code        :integer          default(0)
+#  page_urls          :text(65535)
 #
 # Indexes
 #
@@ -24,6 +25,8 @@ require 'roo'
 #
 
 class Image < ActiveRecord::Base
+  serialize :page_urls, JSON
+
   acts_as_taggable_on :tags
   before_validation :update_status_code
 
