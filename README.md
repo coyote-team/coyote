@@ -1,11 +1,26 @@
 COYOTE
 ====
 
-Image annotation site and API to enable the distributed annotation of museum images.
+Image annotation site and API to enable the distributed annotation of museum images built on RubyOnRails with MySQL (via MariaDB). 
 
+- [Coyote Repo](http://github.com/coyote-team/coyote)
 - [Coyote.pics](https://coyote.pics/)
-- [Repo](http://github.com/coyote-team/coyote)
-- [MCA Coyote](http://coyote.mcachicago.org)
+- [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
+
+## Setup
+
+```bash
+    bundle install
+
+    #set up the .env, override at .env.development and .env.test if needed
+
+    #create the DBs for dev and test
+    bin/rake db:create db:migrate db:seed
+    RAILS_ENV=test bin/rake db:create db:migrate
+```
+
+Secure creds are kept untracked in `.env`
+
 
 ## Usage 
 
@@ -24,16 +39,52 @@ Image annotation site and API to enable the distributed annotation of museum ima
     bin/rails c
 ```
 
-We could include build status here.
+## Vagrant Setup
 
-## Via Vagrant
-
-Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant up```.  Then, you can view the site like so:
+Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`  Then, you can view the site like so:
 
 ```bash
-
+	vagrant up
     ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
     open http://localhost:3000
+```
+
+## Server Setup
+
+Assuming a recent Ubuntu distribution...
+
+```bash
+     sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+     sudo apt-get update
+     sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev nodejs
+     sudo apt-get upgrade -y
+     git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+     source ~/.bash_profile
+     git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+     echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+     source ~/.bash_profile
+
+     rbenv install -v 2.3.1
+     rbenv global 2.3.1
+     echo "gem: --no-document" > ~/.gemrc
+
+     gem install bundler
+
+     # edit config/thin.production.yml
+     # edit config/nginx.site.conf 
+     # then copy or link to your /etc/nginx/sites-available
+     # enable it
+
+     # finish mysql setup
+     
+
+     # then locally edit your config/deploy/production.rb
+     # and edit your config/deploy.rb
+
+     # then deploy
+     bundle exec cap production deploy
 ```
 
 ## Components
@@ -45,20 +96,6 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run ```vagrant u
 - [bundler](http://bundler.io/)
 - [SASS](http://sass-lang.com/)
 - [Coffeescript](http://coffeescript.org/)
-
-## Setup
-
-```bash
-    bundle install
-
-    #set up the .env, override at .env.development and .env.test if needed
-
-    #create the DBs for dev and test
-    bin/rake db:create db:migrate db:seed
-    RAILS_ENV=test bin/rake db:create db:migrate
-```
-
-Secure creds are kept untracked in `.env`
 
 ##Data model
 

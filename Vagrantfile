@@ -88,8 +88,8 @@ Vagrant.configure(2) do |config|
      sudo -i -u vagrant echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~vagrant/.bash_profile
      sudo -i -u vagrant exec $SHELL
 
-     sudo -i -u vagrant rbenv install -v 2.2.2
-     sudo -i -u vagrant rbenv global 2.2.2
+     sudo -i -u vagrant rbenv install -v 2.3.1
+     sudo -i -u vagrant rbenv global 2.3.1
      sudo -i -u vagrant echo "gem: --no-document" > ~vagrant/.gemrc
 
      sudo -i -u vagrant gem install bundler
