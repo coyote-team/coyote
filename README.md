@@ -56,7 +56,8 @@ Assuming a recent Ubuntu distribution...
 ```bash
      sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
      sudo apt-get update
-     sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev nodejs
+     sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
+
      sudo apt-get upgrade -y
      git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
