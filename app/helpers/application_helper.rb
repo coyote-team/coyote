@@ -107,4 +107,5 @@ module ApplicationHelper
       value
     end
   end
+
 end

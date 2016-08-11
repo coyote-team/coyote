@@ -1,20 +1,39 @@
-namespace :coyote do
-  desc "Checks for new MCA images"
-  task :update_mca, [:minutes]  => :environment do |t, args|
-    args.with_defaults(:minutes => 1)
-    Rails.logger.info "Checking for images from #{args.minutes} minutes ago"
+class MCAStrategy < Strategy
 
+  #title
+  #patch
+  #update
+  #check_count
+
+  def title
+    "MCA"
+  end
+
+  def patch(image)
+    website = image.website
+    if image.status_id == 2 and Rails.env.production?
+      url = website.url + "/api/v1/attachment_images/" + image.canonical_id
+      url = URI.parse(url)
+      req = Net::HTTP::Patch.new(url)
+      res = Net::HTTP.start(url.host, url.port,   :use_ssl => url.scheme == 'https',  :verify_mode => OpenSSL::SSL::VERIFY_NONE) {|http|
+          http.request(req)
+      }
+      Rails.logger.info "Patched to #{url.to_s}"
+    end
+    return true
+  end
+
+  def update(website, minutes)
     require 'multi_json'
     require 'open-uri'
 
-    @website = Website.first
     limit = 100
     offset = 0
-    updated_at = (Time.zone.now - args.minutes.to_f.minute).iso8601
+    updated_at = (Time.zone.now - minutes.to_f.minute).iso8601
     updated_at = nil if Image.all.count < 10 #kludge for seeding
 
     length = 1
-    root = "https://mcachicago.org"
+    root = website.url
     updated = 0
     created = 0
     errors = 0
@@ -49,14 +68,14 @@ namespace :coyote do
       Rails.logger.info "Updated: #{updated}"
       Rails.logger.info "Errors: #{errors}"
       Rails.logger.info "Total: #{errors + updated + created}"
-      Rails.logger.info "Our total: #{@website.images.count}"
+      Rails.logger.info "Our total: #{website.images.count}"
 
 
       images.each do |i|
         begin
-          image = Image.find_or_create_by(canonical_id:  i["id"], website: @website)
+          image = Image.find_or_create_by(canonical_id:  i["id"], website: website)
           if image.new_record?
-            image.website = @website
+            image.website = website
             group = Group.find_or_create_by(title: i["group"])
             group.save if group.new_record?
             image.group = group
@@ -83,15 +102,6 @@ namespace :coyote do
               errors += 1
             end
           end
-          #create description if none are handy
-          #if image.descriptions.length == 0  and !i["title"].blank?
-            #d = Description.new(text: i["title"], locale: "en", metum_id: 2, image_id: image.id, status_id: 1, user_id: 1)
-            #if d.save
-              #Rails.logger.info "description #{d.id} for image #{image.id} saved"
-            #else
-              #Rails.logger.error "description save failed"
-            #end
-          #end
 
         rescue Exception => e
           Rails.logger.error "image creation error"
@@ -109,70 +119,51 @@ namespace :coyote do
     Rails.logger.info "Updated: #{updated}"
     Rails.logger.info "Errors: #{errors}"
     Rails.logger.info "Total: #{errors + updated + created}"
-    Rails.logger.info "Our total: #{@website.images.count}"
+    Rails.logger.info "Our total: #{website.images.count}"
     Rails.logger.info "---"
-
   end
 
+  def check_count(website)
+    require 'multi_json'
+    require 'open-uri'
 
-  desc "Grab titles for old MCA images"
-  task :get_mca_titles => :environment do
-		require 'multi_json'
-		require 'open-uri'
-		
-		canonical_ids = Image.where(website_id: 1).collect{|i| i.canonical_id}
+    ids = []
+    limit = 200
+    offset = 0
+    length = 1 
+    while length != 0 do
+      url = "#{website.url}/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
+      Rails.logger.info "getting ids from #{url}"
 
-    #example
-    #https://mcachicago.org/api/v1/attachment_images/?ids[]=56ead2b051bd255f9f00000e
-    canonical_ids.each_slice(20) do |ids|
-      ids_titles = {}
-      #prep url
-      root = "https://mcachicago.org"
-      url = root + "/api/v1/attachment_images/?"
-      ids.each do |i|
-        url += "ids[]=" + i + "&"
-      end
-
-      #request
-      Rails.logger.info "grabbing images json at #{url}"
-      #puts "grabbing images json at #{url}"
       begin
-        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10}).read
-        #parse
-        begin
-          images_received = JSON.parse(content)
-
-          #match ids, add titles to image cache, and set titles
-          canonical_ids.each do |id|
-            i = images_received.find{|i| i["id"].to_s == id.to_s}
-            #puts i
-            if i
-              title = i["title"]
-              ids_titles[id] = title
-            end
-          end
-
-        rescue Exception => e
-          Rails.logger.error "JSON parsing exception"
-          Rails.logger.error e
-        end
-
+        content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
       rescue OpenURI::HTTPError => error
         response = error.io
         Rails.logger.error response.string
+        length = 0
       end
 
-      ids_titles.each do |canonical_id, title|
-        matches = Image.where(canonical_id: canonical_id, website_id: 1)
-        #puts "#{canonical_id} - #{title}"
-        if matches.length == 1
-          image = matches.first
-          image.title = title
-          image.save
-        else
-          Rails.logger.error "canonical mismatch for #{canonical_id}"
-        end	
+      begin 
+        images = JSON.parse(content)
+      rescue Exception => e
+        Rails.logger.error "JSON parsing exception"
+        Rails.logger.error e
+        length = 0
+      end
+
+      Rails.logger.info "count of images here is: #{images.count}"
+      ids.push images.collect{|i| i["id"]}
+
+      if images and images.length
+        length = images.length 
+        offset += limit
+      else
+        length = 0
       end
     end
+
+    ids.flatten!
+    ids.compact!
+    return ids.uniq
   end
 end

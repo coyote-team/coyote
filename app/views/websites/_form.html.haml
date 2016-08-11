@@ -3,7 +3,7 @@
   .form-inputs
     = f.input :title
     = f.input :url
-
+    = f.input :strategy, as: :select, collection: @strategies_collection, include_blank: "None"
 
   .form-actions
     .form-actions-inner

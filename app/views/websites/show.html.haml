@@ -19,6 +19,11 @@
                 Url:
               %td
                 = @website.url
+            %tr
+              %th{scope: "row"}
+                Strategy:
+              %td
+                = @website.strategy_title
 
         -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
         =link_to check_count_website_path(@website), class: "btn btn-primary", data: {disable_with: disable_with} do

@@ -1,3 +1,3 @@
 every 1.minute do
-  rake "coyote:update_mca"
+  rake "websites:update"
 end
