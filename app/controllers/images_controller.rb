@@ -98,8 +98,9 @@ Ex:
     "url": "http://coyote.mcachicago.org/images/1"
     "group_id": 2,
     "website_id": 1,
+    "page_urls": ["http://url1withimage.com/", "http://url2withimage.com/"],
     "title": "This is a caption",
-    "boolean": false,
+    "priority": false,
     "created_at": "2015-06-29T17:04:42.000Z",
     "updated_at": "2015-07-30T16:26:30.000Z"
     "descriptions": [
