@@ -24,7 +24,6 @@ class WebsitesController < ApplicationController
     @their_count = 0
 
     uniqs = @website.strategy_check_count
-    if uniqs
     @their_count = uniqs.count
 
     our_c_ids = @website.images.collect{|i| i.canonical_id}
