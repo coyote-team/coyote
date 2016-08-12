@@ -130,7 +130,7 @@ class MCAStrategy < Strategy
     ids = []
     limit = 200
     offset = 0
-    length = 1 
+    length = 1
     while length != 0 do
       url = "#{website.url}/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
       Rails.logger.info "getting ids from #{url}"
@@ -143,7 +143,7 @@ class MCAStrategy < Strategy
         length = 0
       end
 
-      begin 
+      begin
         images = JSON.parse(content)
       rescue Exception => e
         Rails.logger.error "JSON parsing exception"
@@ -155,7 +155,7 @@ class MCAStrategy < Strategy
       ids.push images.collect{|i| i["id"]}
 
       if images and images.length
-        length = images.length 
+        length = images.length
         offset += limit
       else
         length = 0
