@@ -104,7 +104,7 @@ For use on [nomnoml](http://www.nomnoml.com/)
 
     [<frame>Coyote data model|
       [User | id: int | first_name: string | last_name: string |  email: string | admin: bool | timestamps]
-      [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text]
+      [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
       [Tag | id: int | title: string]
       [Group | id: int | title: string]
       [Description | id: int | locale:str(en) | text: text | timestamps]

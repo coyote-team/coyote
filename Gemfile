@@ -57,6 +57,7 @@ gem 'responders' #respond_with ala  http://www.justinweiss.com/blog/2014/11/03/r
 gem 'pagedown-bootstrap-rails' #markdown editor & processor
 gem 'redcarpet'
 gem 'html2markdown'
+gem 'markdown-rails'
 gem 'high_voltage' #static pages
 gem 'coffee-rails', '>= 4.1.0'
 #gem 'asset_sync' #asset uploading

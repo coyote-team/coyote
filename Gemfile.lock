@@ -301,6 +301,9 @@ GEM
     lumberjack (1.0.10)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    markdown-rails (0.2.1)
+      rails
+      rdiscount (>= 1.6.8, < 2.0)
     metamagic (3.1.7)
       rails (>= 3.0.0)
     method_source (0.8.2)
@@ -377,6 +380,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rdiscount (1.6.8)
     redcarpet (3.3.4)
     ref (2.0.0)
     responders (2.2.0)
@@ -539,6 +543,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   language_list
+  markdown-rails
   metamagic
   modular-scale
   mortise!
