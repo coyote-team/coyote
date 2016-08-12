@@ -9,24 +9,9 @@
   .col-sm-6.col-xs-12<
     .thumbnail<
       - css_id= "#{queue_id}-image-#{image.id}"
-      -#TODO add descriptions ids for ready to review queue
-      = link_to image_path(image) do
-        =image_tag image.url, alt: image.alt, id: css_id, "aria-describedby": "image-title-#{image.id}"
+      =render "image", image: image, id: css_id
       .caption
-        - unless image.title.blank?
-          %blockquote
-            %span{id: "image-title-#{image.id}"}= to_html image.title
-            %cite<
-              %small
-                %span.label.label-info Caption
-                from #{image.website}
-        - else
-          %p No caption available.
         - unless type == "Unassigned Images" or type == "Undescribed Images"
-          -#- if type == "Ready to Review Descriptions"
-            -#- descriptions = image.descriptions.ready_to_review
-          -#- else
-            -#-descriptions = image.descriptions
           - if type.start_with? "Your"
             -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
           - else
@@ -40,10 +25,9 @@
           - path = new_description_path(image_id: image.id, user_id: current_user.id )
           - unless type == "Ready to Review Descriptions"
             =link_to path, class: "btn btn-success", title: "Add a description for Image #{image.id}", "arira-describedby" => css_id do
-              -#%i.fa.fa-plus{"aria-hidden" => "true"}
               Describe
 
-        - if admin? and !type.starts_with?("Your") #TODO replace with current_user?
+        - if admin? and !type.starts_with?("Your")
           - if image.assignments.count > 0
             - assignments = image.assignments
             = render "assignments/list", assignments: assignments, title: true

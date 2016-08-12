@@ -1,6 +1,6 @@
 -title = "Showing #{@description}"
 -meta title: title
-- @image = @description.image
+- image = @description.image
 -cache ['v1', admin?,  @description] do
   .entity-outer
     .entity
@@ -8,11 +8,11 @@
         %header
           %h1#page-title{tabindex: -1}
             =title
-            -klass = 'label  label-' + image_status_css_class(@image.status_code)
-            %span{class: klass}=@image.status
+            -klass = 'label  label-' + image_status_css_class(image.status_code)
+            %span{class: klass}=image.status
         .row
           .col-md-3
-            = render "image"
+            = render "image", image: image
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this description

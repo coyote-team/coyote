@@ -1,12 +1,12 @@
-= link_to image_path(@image) do
-  = image_tag  @image.url, class: "description-image", id: "description-image", alt: @image.alt, "aria-describedby": "image-title-#{@image.id}"
+-id ||= "description-image"
+= link_to image_path(image) do
+  = image_tag  image.url, class: "description-image", id: id, alt: image.alt, "aria-describedby": "image-title-#{image.id}"
 
--unless @image.title.blank?
+-unless image.title.blank?
   %blockquote<
-    %span{id: "image-title-#{@image.id}"}= to_html @image.title
-    %cite<
-      %small
-        %span.label.label-info Caption
-        from #{@image.website}
+    %span{id: "image-title-#{image.id}"}= to_html image.title
+    %footer.footer
+      %span.label.label-info Caption
+      from #{image.website}
 -else
   %p No title available.

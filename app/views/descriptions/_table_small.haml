@@ -14,12 +14,15 @@
             -if d.user
               %footer.footer
                 %cite=d.user
-            - metum_id= "#{queue_id}-#{d.id}-metum"
-            %span.label.label-info{id: metum_id}= d.metum
-            - locale_id= "#{queue_id}-#{d.id}-locale"
-            %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
-            %span
-            = render 'status', status: d.status
+            %ul.list-inline
+              %li
+                - metum_id= "#{queue_id}-#{d.id}-metum"
+                %span.label.label-info{id: metum_id}= d.metum
+              %li
+                - locale_id= "#{queue_id}-#{d.id}-locale"
+                %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
+              %li
+                = render 'status', status: d.status
         -if admin?
           %td
             .btn-group

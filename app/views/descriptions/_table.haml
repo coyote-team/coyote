@@ -31,7 +31,7 @@
           - if action_name == "index"
             %td
               =link_to image_path(description.image) do
-                =image_tag description.image.url
+                =image_tag description.image.url, alt: description.image.alt
           %td
             =render 'status', status: description.status
           %td

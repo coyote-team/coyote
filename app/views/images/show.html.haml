@@ -11,7 +11,7 @@
             %span{class: klass}= @image.status
         .row
           .col-md-3
-            = render "image"
+            = render "image", image: @image
           .col-md-9
             %table.entity-table
               %caption.sr-only Key value pairs for this image
@@ -55,8 +55,7 @@
                   Edit
 
                 - css_id = "quick-assign"
-                - image = @image
-                = render "assign_to", css_id: css_id, image: image, users: @users
+                = render "assign_to", css_id: css_id, image: @image, users: @users
 
                 -#= link_to new_assignment_path(image_id: @image.id), class: 'btn btn-success', title: "Assign image #{@image.id} to a user" do
                   -#Assign
