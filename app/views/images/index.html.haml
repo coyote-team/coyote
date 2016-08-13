@@ -17,7 +17,7 @@
           - if admin?
             %br
             %h2.sr-only Actions
-            = link_to new_image_path, class: 'btn btn-success new-link' do
+            = link_to new_image_path, class: 'btn btn-primary new-link' do
               %i.fa.fa-fw.fa-plus{"aria-hidden" => "true"}
               New Image
 
@@ -38,8 +38,8 @@
                         -#- described_by = ''
                         -#- @images.each_with_index do |image, idx|
                           -#-  described_by += "image-id_" + image.id.to_s + " "
-                        -#%button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", "aria-describedby" => described_by}
-                        %button{type: "button", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'assign-to'}
+                        -#%button{type: "button", class: "btn btn-primary dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", "aria-describedby" => described_by}
+                        %button{type: "button", class: "btn btn-primary dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'assign-to'}
                           Assign to
                           %span.caret
                         %ul.dropdown-menu<
@@ -82,7 +82,7 @@
                       = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
                         %span.sr-only Clear
                         %i.fa.fa-fw.fa-close{"aria-hidden" => "true"}
-                      = button_tag type: "submit", class: "btn btn-success btn-sm" do
+                      = button_tag type: "submit", class: "btn btn-primary btn-sm" do
                         %span.sr-only Search
                         %i.fa.fa-fw.fa-search{"aria-hidden" => "true"}
 
@@ -153,6 +153,6 @@
           -if admin?
             %br
             %h2.sr-only Actions
-            = link_to new_image_path, class: 'btn btn-success new-link' do
+            = link_to new_image_path, class: 'btn btn-primary new-link' do
               %i.fa.fa-fw.fa-plus{"aria-hidden" => "true"}
               New Image

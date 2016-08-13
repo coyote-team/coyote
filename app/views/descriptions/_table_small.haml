@@ -20,7 +20,7 @@
                 %span.label.label-info{id: metum_id}= d.metum
               %li
                 - locale_id= "#{queue_id}-#{d.id}-locale"
-                %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name 
+                %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name
               %li
                 = render 'status', status: d.status
         -if admin?
@@ -34,7 +34,7 @@
                 - form_klass += 'disabled'
                 - disabled = true
               = button_to description_path(d), params: {"description[status_id]": 2},
-                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
                 data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}"  do
                 %span.sr-only Approve this description
                 %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": "true"}
@@ -45,7 +45,7 @@
                 - form_klass += 'disabled'
                 - disabled = true
               = button_to description_path(d), params: {"description[status_id]": 3},
-                form_class: form_klass, disabled: disabled, method: :patch, remote: true, 
+                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
                 data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}" do
                 %span.sr-only Disapprove this description
                 %i.fa.fa-fw.fa-thumbs-down{ "aria-hidden": "true"}

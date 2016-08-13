@@ -90,7 +90,7 @@
               Import images
               <small>via <code>.csv</code>, <code>.xls</code>, and <code>.xlsx</code></small>
             = file_field_tag :file, label: "Select your file"
-            = button_tag type: "submit", class: "btn btn-success disabled", data: {disaabled: true} do
+            = button_tag type: "submit", class: "btn btn-primary disabled", data: {disaabled: true} do
               %i.fa.fa-fw.fa-upload{"aria-hidden" => "true"}
               Upload
         .col-md-6
@@ -98,6 +98,6 @@
             Export spreadsheet of image records
             %small>
               %code .csv
-          = button_tag  export_images_path(format: "csv"), class: 'btn btn-success' do
+          = button_tag  export_images_path(format: "csv"), class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-download{"aria-hidden" => "true"}
             Export
