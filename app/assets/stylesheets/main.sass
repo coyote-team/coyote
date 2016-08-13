@@ -200,7 +200,6 @@ a.label-priority
   li.active a
     text-decoration: underline !important
 input:focus:placeholder
-
 .form-control:focus::-webkit-input-placeholder
   color: $darkGrey 
 .form-control:-moz-placeholder:focus
@@ -209,6 +208,8 @@ input:focus:placeholder
   color: $darkGrey 
 .form-control::-moz-placeholder:focus
   color: $darkGrey 
+*:focus
+  outline: -webkit-focus-ring-color auto 0px
 
 .close
   +opacity(1)
