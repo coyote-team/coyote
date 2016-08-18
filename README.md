@@ -139,3 +139,6 @@ For use on [nomnoml](http://www.nomnoml.com/)
 ## Versus
 - [Depict4](http://depictfor.us/)
 - [Autotune](https://github.com/voxmedia/autotune/)
+
+## License
+[MPLv2](http://choosealicense.com/licenses/mpl-2.0/#)
