@@ -1,0 +1,3 @@
+service_name: travis_ci
+repo_token: <%= ENV["COVERALLS_REPO_TOKEN"] %>
+
