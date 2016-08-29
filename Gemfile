@@ -33,14 +33,6 @@ gem 'cocoon' #nested forms
 gem 'analytical' #analytics
 gem 'metamagic' #meta
 gem 'browser' #browser detection
-gem 'capistrano', '>= 3.2.1' #deployment.  also delicate
-gem 'capistrano-nc', '>= 0.1.3'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-rbenv', '>= 2.0'
-gem 'capistrano-thin'
-gem 'capistrano-flowdock'
-#gem 'capistrano-resque'
 #gem 'gibbon' #mailchimp
 #gem 'resque-scheduler'
 #gem 'newrelic_rpm' #monitoring
@@ -101,6 +93,14 @@ group :development do
   gem 'guard-coffeescript'
   gem 'guard-sass'
   gem 'guard-livereload'
+  gem 'capistrano', '>= 3.2.1' #deployment.  also delicate
+  gem 'capistrano-nc', '>= 0.1.3'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv', '>= 2.0'
+  gem 'capistrano-thin'
+  gem 'capistrano-flowdock'
+  #gem 'capistrano-resque'
 end
 
 group :development, :test do
