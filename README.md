@@ -3,7 +3,7 @@ COYOTE
 
 [![Travis CI](https://travis-ci.org/coyote-team/coyote.svg?branch=master)](https://travis-ci.org/coyote-team/coyote)
 [![Code Climate](https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg)](https://codeclimate.com/github/coyote-team/coyote)
-[![Coverage Status](https://coveralls.io/repos/github/coyote-team/coyote/badge.svg?branch=master)](https://coveralls.io/github/coyote-team/coyote?branch=master)
+[![Test Coverage](https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg)](https://codeclimate.com/github/coyote-team/coyote/coverage)
 
 
 Image annotation site and API to enable the distributed annotation of museum images built on RubyOnRails with MySQL (via MariaDB). 

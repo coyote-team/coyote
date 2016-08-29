@@ -12,6 +12,9 @@ module Plate
     config.before_configuration do
       config.sass.preferred_syntax = :sass
     end
+    
+    # after_commit etc. callback transaction errors will raise
+    config.active_record.raise_in_transactional_callbacks = true
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
