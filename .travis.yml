@@ -1,7 +1,10 @@
 language: ruby
-services: 
-  - mysql
+services:
+- mysql
 before_script:
-  - export RAILS_ENV=test
-  - bundle exec rake db:create
-  - bundle exec rake db:schema:load
+- export RAILS_ENV=test
+- bundle exec rake db:create
+- bundle exec rake db:schema:load
+addons:
+  code_climate:
+    secure: aIkZPbR60KbvWWLWoX0aeRXGrFrqO/6mq25pCmo8DsRNDAxyWiqY4BDXakg/U4AyQW9OHpBNOQMM2ikSGqc3DYv/zm2pxYA1TTFR2vOKozPzF3iuGftZqZSTL9lchYdiXjzna1JriXzdwWEbVubbEfWz6YxaFxp0SOoeLLGlTDnE7jvwntweN8BYucIa7UWS6wKhel2xvMQZMC5F77AWBbSsbGqdMUfBf0ceqmDK+sbcXhvAB+35mxvCEmzsW9A+wgd/XC5pOjXJmu91m1lChXQm02CE2RU5xAHzbTKRXzi2c0Fz2TxOo0xRX/4bfgwkTSnv4X+rbfId2P0GQNtrZCJKsEvq52jKNjzktGLj9fTOegTsUFBbE5OPnL6F0BUj1Oqm9EW2HeTah0AqhRwytccMo4dIs7SkSxN3TFBpcMM7kq4hidtLcBRby9TAlILFmTqg3H9PcOadwbJV1y6+bZ4fo0GfpFmRO3Gn7enGDMs8boaCG3NSS53vnRjDclVVGUP7x3Xw9UaKYV+T0yk76jPknDjIxIC6wnhaBzjtHM4dkuie1sBCzuCYimxMaGRjQPuAg/RBtLD0lcGhSXszTPkPeqoYW7L2SUeFK8E2RYOm7rN8r0KlqzL2zD07cSTGIbAa7SdIWIMp5/o8tCGkMScyHMvYZN4rbo61kaYKk7w=

@@ -114,6 +114,7 @@ end
 
 group :test do
   gem 'coveralls', require: false
+  gem "codeclimate-test-reporter", require: nil
   gem 'shoulda-matchers'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'

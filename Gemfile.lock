@@ -134,6 +134,8 @@ GEM
     chronic (0.10.2)
     chunky_png (1.3.6)
     cocoon (1.2.9)
+    codeclimate-test-reporter (0.6.0)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -529,6 +531,7 @@ DEPENDENCIES
   capistrano-thin
   capybara-accessible
   cocoon
+  codeclimate-test-reporter
   coffee-rails (>= 4.1.0)
   compass-h5bp
   compass-rails (~> 3.0.2)
