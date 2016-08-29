@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:argerim/select2-rails.git
+  remote: https://github.com/argerim/select2-rails.git
   revision: 8a77cfc2f667994ea2271d316c83e7df55004d2f
   specs:
     select2-rails (4.0.3)
