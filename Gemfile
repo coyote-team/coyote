@@ -84,6 +84,7 @@ group :development do
   gem "html2haml"
   gem "binding_of_caller"
   gem "quiet_assets"
+  gem 'rails_real_favicon'
   gem 'brakeman', :require => false
   gem 'spring'
   gem 'guard'
