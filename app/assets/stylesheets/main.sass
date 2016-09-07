@@ -1,27 +1,22 @@
 body
   //navbar height
-  padding-top: 50px 
+  padding-top: 50px
+
 html.turbolinks-progress-bar::before
   background-color: $brand-primary !important
   height: 5px !important
 
-.new-link
-  margin-bottom: ms(0)
-  +min-screen($phone-wide + 1)
-    float: right
+//type
+h2
+  text-transform: uppercase
+caption ul
+  list-style: none
+em
+  font-style: italic
 
-caption
-  ul
-    list-style: none
 
-dt, th
-  font-weight: bold
-dd
-  margin-bottom: 1em
-.description-image
-  margin-bottom: 1em
-  max-width: 100%
 
+//tables
 table
   img
     max-width: 100px
@@ -33,7 +28,13 @@ td .btn-group
   min-width: 120px
 th .form-group
   margin-bottom: 0
-
+dt, th
+  font-weight: bold
+dd
+  margin-bottom: 1em
+.description-image
+  margin-bottom: 1em
+  max-width: 100%
 .index-table
   > thead
     border-bottom: 2px solid #ddd
@@ -46,11 +47,29 @@ th .form-group
 .paginated-table
   margin-bottom: 0px !important
 
+//buttons
 .btn-show, .btn-edit, .btn-destroy
   @extend .btn-sm
-
 .btn
   padding: 4px 7px 5px
+.btn-default:hover, .btn-success:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hoverdanger:hover, .btn-primary:hover, .btn-info:hover
+  background: $blue
+.close
+  +opacity(1)
+  color: $white !important !important
+//$btn-success-bg: $black
+.btn-group .btn
+  height: 30px
+.btn-full, .btn-full + .dropdown-menu
+  width: 100%
+
+//button related...
+.new-link
+  margin-bottom: ms(0)
+  +min-screen($phone-wide + 1)
+    float: right
+
+//dropdowns
 form.btn
   padding: 0
   button
@@ -60,13 +79,9 @@ form.btn
     button
       padding: 5px 10px
 
-blockquote.blockquote
-  margin-bottom: 0px
-
-ul.counter
-  li
-    margin-bottom: ms(0)
-
+.dropdown ul
+  margin: 0px
+  top: initial
 .dropdown li
   button
     border-color: transparent
@@ -78,15 +93,23 @@ ul.counter
     &:hover
       background-color: #e5e5e5
 
-em
-  font-style: italic
 
+//navbar
 .navbar-brand
   text-transform: uppercase
   font-weight: bold
   &:hover
     .stayOut
       +animate(fadeIn, 0.2s, 0s, ease, both)
+.navbar-nav button
+  background: transparent
+  line-height: 20px
+  padding: 10px 15px
+  +min-screen(768px)
+    padding-top: 15px
+    padding-bottom: 15px
+
+//animations
 .stayOut
   +opacity(0)
 .fadeOutSlow, .stayOut.fadeOutSlow
@@ -96,17 +119,7 @@ em
 .fadeIn
   +animate(fadeIn, 0.5s, 0s, ease, both)
 
-.navbar-nav button
-  background: transparent
-  line-height: 20px
-  padding: 10px 15px
-  @media (min-width: 768px) 
-    padding-top: 15px
-    padding-bottom: 15px
-
-
-
-
+//layout
 #main
   margin-bottom: 3em
 #main, #footer
@@ -119,22 +132,11 @@ em
       color: $white
       border-color: transparent
 
-h2
-  text-transform: uppercase
-
-body 
-  //margin-bottom: 3em
-#footer 
-  //position: absolute
-  //bottom: 0
-  //height: 3em
+#footer
   background: $white
   width: 100%
   padding-top: 1em
   border-top: 1px solid $black
-
-.btn-default:hover, .btn-success:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hoverdanger:hover, .btn-primary:hover, .btn-info:hover
-  background: $blue
 
 
 .form-control:focus
@@ -146,6 +148,7 @@ body
 .form-group p
   margin-left: 6px
 
+//labels
 .label
   text-transform: uppercase
   border-radius: 0
@@ -175,9 +178,15 @@ a.label-priority
     color: $red
 .alert
   border: 0px
+//counter
+ul.counter
+  li
+    margin-bottom: ms(0)
 
+
+//tabs
 .nav-tabs
-  @media (min-width: 768px) 
+  +min-screen(768px)
     li
       font-size: 32px
       line-height: 41.6px
@@ -199,24 +208,27 @@ a.label-priority
     text-decoration: none !important
   li.active a
     text-decoration: underline !important
+
+//focus override
 input:focus:placeholder
 .form-control:focus::-webkit-input-placeholder
-  color: $darkGrey 
+  color: $darkGrey
 .form-control:-moz-placeholder:focus
-  color: $darkGrey 
+  color: $darkGrey
 .form-control:-ms-input-placeholder:focus
-  color: $darkGrey 
+  color: $darkGrey
 .form-control::-moz-placeholder:focus
-  color: $darkGrey 
+  color: $darkGrey
 *:focus
   outline: -webkit-focus-ring-color auto 0px
 
-.close
-  +opacity(1)
-  color: $white !important !important
-//$btn-success-bg: $black
-.btn-group .btn
-  height: 30px
 
-blockquote footer
-  margin-top: 1em
+//blockquote spacing
+blockquote.blockquote
+  margin-bottom: 0px
+blockquote
+  margin-bottom: 0
+  footer
+    margin-top: 1em
+.thumbnail .caption
+  padding: 0

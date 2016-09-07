@@ -9,4 +9,5 @@
       %span.label.label-info Caption
       from #{image.website}
 -else
-  %p No title available.
+  %blockquote
+    %span{id: "image-title-#{image.id}"} No title available.

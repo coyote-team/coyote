@@ -5,32 +5,31 @@
   - image = description.image
 
 - queue_id = type.downcase.strip.gsub(' ', '-')
-%li.image{id: "#{queue_id}-image-li-#{image.id}"}<
-  .col-sm-6.col-xs-12<
-    .thumbnail<
-      - css_id= "#{queue_id}-image-#{image.id}"
-      =render "image", image: image, id: css_id
-      .caption
-        - unless type == "Unassigned Images" or type == "Undescribed Images"
-          - if type.start_with? "Your"
-            -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
-          - else
-            -descriptions = image.descriptions
-          %h4<
-            Descriptions
-            %span.sr-only ,
-            %span.badge= descriptions.count
-          =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: css_id
+%li.image.col-sm-4.col-xs-12{id: "#{queue_id}-image-li-#{image.id}"}<
+  .thumbnail<
+    - css_id= "#{queue_id}-image-#{image.id}"
+    =render "image", image: image, id: css_id
+    .caption
+      - unless type == "Unassigned Images" or type == "Undescribed Images"
+        - if type.start_with? "Your"
+          -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
+        - else
+          -descriptions = image.descriptions
+        %h4<
+          Descriptions
+          %span.sr-only ,
+          %span.badge= descriptions.count
+        =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: css_id
 
-          - path = new_description_path(image_id: image.id, user_id: current_user.id )
-          - unless type == "Ready to Review Descriptions"
-            =link_to path, class: "btn btn-primary", title: "Add a description for Image #{image.id}", "aria-describedby" => css_id do
-              Describe
+        - path = new_description_path(image_id: image.id, user_id: current_user.id )
+        - unless type == "Ready to Review Descriptions"
+          =link_to path, class: "btn btn-primary", title: "Add a description for Image #{image.id}", "aria-describedby" => css_id do
+            Describe
 
-        - if admin? and !type.starts_with?("Your")
-          - if image.assignments.count > 0
-            - assignments = image.assignments
-            = render "assignments/list", assignments: assignments, title: true
-          - unless type == "Ready to Review Descriptions"
-            %br
-            = render "assign_to", css_id: css_id, image: image, users: @users
+      - if admin? and !type.starts_with?("Your")
+        - if image.assignments.count > 0
+          - assignments = image.assignments
+          = render "assignments/list", assignments: assignments, title: true
+        - unless type == "Ready to Review Descriptions"
+          %br
+          = render "assign_to", css_id: css_id, image: image, users: @users

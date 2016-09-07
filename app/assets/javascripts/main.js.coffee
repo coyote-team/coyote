@@ -27,6 +27,8 @@ $ ->
     $('#main').removeClass('fadeOut').addClass('fadeIn')
     console.log('fade in')
 
+    $grid = $('.isotope').isotope()
+
     #pagination on user pages
     $('.paginated-table tbody').pageMe
       pagerSelector:'.pager'

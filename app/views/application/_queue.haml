@@ -10,7 +10,8 @@
     .well.well-sm
       .row
         %ul
-          - queue.each_with_index do |item, idx|
-            = render "quickview", type: type, item: item, idx: idx, queue: queue
+          .isotope
+            - queue.each_with_index do |item, idx|
+              = render "quickview", type: type, item: item, idx: idx, queue: queue
   -if queue.size == 0
     %p This queue is empty.
