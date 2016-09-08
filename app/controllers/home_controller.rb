@@ -7,6 +7,7 @@ class HomeController < ApplicationController
 
       #TODO move parts  of this into the model and view...
       my_images = current_user.images
+      @my_images_count = my_images.count
       @my_queue = my_images.collect{|i| i if i.undescribed_by?(current_user)}.compact
       @my_queue_count = @my_queue.count
       @my_queue = @my_queue.first(limit)
@@ -31,6 +32,7 @@ class HomeController < ApplicationController
         
         #leaderboard
         images = Image.all
+        @image_count = images.count
         @described_count = images.described.length
         #@incomplete_count = images.collect{|i| i unless i.completed?}.compact.length
         #@assigned_count = images.assigned.length

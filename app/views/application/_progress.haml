@@ -1,0 +1,12 @@
+- value ||= 0
+- title ||= "title"
+- max ||= 100
+- min ||= 0
+- diff = max - min
+- diff = 1 if diff == 0
+- percentage = value / diff
+.progress
+  .progress-bar{"aria-valuemax" => max, "aria-valuemin" => min, "aria-valuenow" => value, :role => "progressbar", :style => "width: #{percentage}%"}
+%p.no-margin
+  %span.progress-label= "#{value} #{title}"
+  %span.progress-percentage= "#{percentage}%"

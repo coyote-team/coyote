@@ -14,7 +14,7 @@
         :markdown
           Coyote is a tool for quickly annotating images built for the <a href="//www.mcachicago.org/" target="_blank">Museum of Contemporary Art Chicago</a>.
 
-          While Coyote’s primary goal is to be the canonical holder of image description, it does not strive nor is meant to be the canonical holder of image data or metadata not related to description. Coyote offers role-based logins to facilitate a workflow approach towards image description. To this end, those who are administrators may approve, assign, and review descriptions. When users log in, they are presented with a queue-based interface for authoring descriptions that they have been assigned. Realizing that image description is a context-sensitive process, Coyote offers content creators the ability to author both multiple types and multiple instances of a single type of description per image. In addition, a tagging interface exists to assist in search and organization activities within the interface. 
+          While Coyote’s primary goal is to be the canonical holder of image description, it does not strive nor is meant to be the canonical holder of image data or metadata not related to description. Coyote offers role-based logins to facilitate a workflow approach towards image description. To this end, those who are administrators may approve, assign, and review descriptions. When users log in, they are presented with a queue-based interface for authoring descriptions that they have been assigned. Realizing that image description is a context-sensitive process, Coyote offers content creators the ability to author both multiple types and multiple instances of a single type of description per image. In addition, a tagging interface exists to assist in search and organization activities within the interface.
 
       .col-md-6
         %div
@@ -39,30 +39,25 @@
           %h1#page-title=title
     .row
       .col-sm-6
-        %h2 Your Stats
-        %table.table
+        %h2 Welcome #{current_user.first_name}!
+      .col-sm-6
+        %h2 Status
+        %table.table.table-no-grid
           %tr<
-            %th Described Images
-            %td #{@my_described_count} 
+            %th.sr-only Total Images Described
+            %td= render "progress", value: @described_count, max: @images_count, title: "Described Images"
           %tr<
-            %th Descriptions
-            %td #{@my_descriptions_count} 
+            %th.sr-only Assigned Images Described by You
+            %td= render "progress", value: @my_described_count, max: @my_images_count, title: "Images Described by You"
+          -#%tr<
+            -#%th Descriptions
+            -#%td #{@my_descriptions_count}
+          -#%tr<
+            -#%th Completed Images
+            -#%td #{@completed_count}
           -#%tr<
             %th Completed Images
-            %td #{@my_completed_count} 
-      -if admin?
-        .col-sm-6
-          %h2 Cumulative Stats
-          %table.table
-            %tr<
-              %th Described Images
-              %td #{@described_count}
-            %tr<
-              %th Descriptions
-              %td #{@description_count}
-            -#%tr<
-              -#%th Completed Images
-              -#%td #{@completed_count}
+            %td #{@my_completed_count}
     .row
       -if admin?
         .col-md-12
@@ -72,11 +67,11 @@
           =render "queue", queue: @ready_to_review, type: "Ready to Review Descriptions", count: @ready_to_review_count
           -#=render "queue", queue: @completed, type: "Completed Images"
           -#Supplemental Queues
-          -#=render "queue", queue: @incomplete, type: "Incomplete Images" 
+          -#=render "queue", queue: @incomplete, type: "Incomplete Images"
           -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
           -#=render "queue", queue: @assigned, type: "Assigned Images"
       .col-md-12
-        %h2 Your Queues 
+        %h2 Your Queues
         - if @my_queue and @my_queue.length == 0 #&& @my_completed_queue.length == 0 && @my_described_queue.length ==0
           %p You haven't been assigned any images.
           - if !admin?
