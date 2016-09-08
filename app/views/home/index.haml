@@ -39,16 +39,18 @@
           %h1#page-title=title
     .row
       .col-sm-6
-        %h2 Welcome #{current_user.first_name}!
-      .col-sm-6
         %h2 Status
         %table.table.table-no-grid
           %tr<
             %th.sr-only Total Images Described
-            %td= render "progress", value: @described_count, max: @images_count, title: "Described Images"
+            %td= render "progress", value: @described_count, max: @image_count, title: "Described Images"
           %tr<
             %th.sr-only Assigned Images Described by You
-            %td= render "progress", value: @my_described_count, max: @my_images_count, title: "Images Described by You"
+            %td= render "progress", value: @my_described_count, max: @my_images_count, title: "Assigned Images Described by You"
+          - if admin?
+            %tr<
+              %th.sr-only Images Assigned
+              %td= render "progress", value: @assigned_count, max: @image_count, title: "Images Assigned"
           -#%tr<
             -#%th Descriptions
             -#%td #{@my_descriptions_count}

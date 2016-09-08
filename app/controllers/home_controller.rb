@@ -18,10 +18,19 @@ class HomeController < ApplicationController
       @my_described_count = my_images.collect{|i| i if i.described_by?(current_user)}.compact.length
       @my_completed_count= my_images.collect{|i| i if i.completed_by?(current_user)}.compact.length
       @my_descriptions_count= @my_description_ids.length
+      #leaderboard
+      images = Image.all
+      @image_count = images.count
+      @described_count = images.described.length
+      #@incomplete_count = images.collect{|i| i unless i.completed?}.compact.length
+      #@assigned_count = images.assigned.length
+      @description_count = Description.all.count
 
       if current_user.admin?
         @unassigned_count = Image.unassigned.count
+        @assigned_count = @image_count - @unassigned_count
         @unassigned = Image.unassigned.first(limit)
+
         @undescribed_count = Image.undescribed.count
         @undescribed = Image.undescribed.first(limit)
 
@@ -30,13 +39,6 @@ class HomeController < ApplicationController
         @ready_to_review = @ready_to_review.first(limit).collect{|d| d.image}.uniq
         #@not_approved = images.collect{|i| i if i.not_approved?}.compact.first(limit)
         
-        #leaderboard
-        images = Image.all
-        @image_count = images.count
-        @described_count = images.described.length
-        #@incomplete_count = images.collect{|i| i unless i.completed?}.compact.length
-        #@assigned_count = images.assigned.length
-        @description_count = Description.all.count
       end
     else
     end

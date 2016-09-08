@@ -4,7 +4,7 @@
 - min ||= 0
 - diff = max - min
 - diff = 1 if diff == 0
-- percentage = value / diff
+- percentage = 100 * value / diff
 .progress
   .progress-bar{"aria-valuemax" => max, "aria-valuemin" => min, "aria-valuenow" => value, :role => "progressbar", :style => "width: #{percentage}%"}
 %p.no-margin
