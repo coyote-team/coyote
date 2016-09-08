@@ -32,4 +32,4 @@
           = render "assignments/list", assignments: assignments, title: true
         - unless type == "Ready to Review Descriptions"
           %br
-          = render "assign_to", css_id: css_id, image: image, users: @users
+          = render "assign_to", css_id: css_id, image: image, users: @users, full_width: true
