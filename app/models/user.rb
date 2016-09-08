@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :images, through: :assignments
   has_many :descriptions, dependent: :nullify
 
+  scope :sorted, -> { order('LOWER(last_name) asc') }
+
   def to_s
     if !first_name.blank? or !last_name.blank?
       [first_name, last_name].join(' ')
@@ -46,6 +48,10 @@ class User < ActiveRecord::Base
       email
     end
   end
+
+  #def sorted
+    #all.sort{|a,b| a.last_name.dropcase <=> a.last_name.dropcase}
+  #end
 
   def next_image(current_image=nil)
     next_image = nil

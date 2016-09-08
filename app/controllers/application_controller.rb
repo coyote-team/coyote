@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
 
   def get_users
     if current_user and current_user.admin?
-      @users = User.all
+      @users = User.sorted
     end
   end
 end
