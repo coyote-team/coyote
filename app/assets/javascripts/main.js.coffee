@@ -27,7 +27,8 @@ $ ->
     $('#main').removeClass('fadeOut').addClass('fadeIn')
     console.log('fade in')
 
-    $grid = $('.isotope').isotope()
+    $('.isotope').each ->
+      $(@).addClass('isotoped').isotope() if $(@).hasClass('isotoped') == false
 
     #pagination on user pages
     $('.paginated-table tbody').pageMe
@@ -102,7 +103,7 @@ $ ->
       data = {}
       data[bulk] = sets
 
-      
+
       $('#main').addClass('fadeOut')
       console.log('fade out')
       $.ajax
