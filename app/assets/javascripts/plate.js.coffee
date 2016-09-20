@@ -47,12 +47,9 @@ plate =() ->
 
   initMarkdownToolbar = () ->
     $('textarea.wmd-input').each (i, input) ->
+      console.log(input)
       unless $(input).data('initialized')
-        id = $(input).attr('id')
-        $(input).siblings().andSelf().each ->
-          thisId = $(this).attr('class') + '-' + id
-          $(this).attr('id', thisId )
-        id = '-' +id
+        attr = $(input).attr('id').split('wmd-input')[1]
         converter = new Markdown.Converter()
         Markdown.Extra.init(converter)
         help =
@@ -60,13 +57,13 @@ plate =() ->
             window.open('http://daringfireball.net/projects/markdown/syntax')
             return false
           title: "<%= I18n.t('components.markdown_editor.help', default: 'Markdown Editing Help') %>"
-        editor = new Markdown.Editor(converter, id, help)
+        editor = new Markdown.Editor(converter, attr, help)
         editor.run()
         $(input).data('initialized', true)
   initMarkdownToolbar()
 
-
-$(document).on('page:change', plate)
+$(document).on 'turbolinks:load', ->
+  plate()
 
 # Override Rails handling of confirmation
 # https://gist.github.com/postpostmodern/1862479

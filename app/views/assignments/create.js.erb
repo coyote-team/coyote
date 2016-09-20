@@ -1,3 +1,5 @@
 $("#flash-messages").html('<%= j render partial: "alerts", flash: flash %>');
-$('#disable-me')
-  .parents(".image").slideUp('slow');
+var $target = $('#disable-me')
+$target.parents(".image").slideUp('slow', function() {
+  $target.parents(".isotope").isotope('layout');
+});

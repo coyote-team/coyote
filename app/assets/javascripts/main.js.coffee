@@ -1,21 +1,7 @@
 #Turbolinks.enableProgressBar()
 $ ->
-  #setSizes = ()->
-    #height = $(window).height() - $('#nav').outerHeight()
-    #width = $(window).width()
-    ##$('section', '#dashboard').css {'height': height}
-
-  #$(window).resize $.debounce 100, ->
-      #setSizes()
-
   $(document).on 'turbolinks:click', ->
-    console.log('fade out')
     $('#main').addClass('fadeOut')
-
-  $(document).on 'turbolinks:load', ->
-
-  #$(document).on 'page:restore', ->
-    #Analytical.track()
 
   counter = 0
   $(document).on 'turbolinks:load', ->
@@ -25,7 +11,7 @@ $ ->
     counter += 1
     #fade/in out on page transition
     $('#main').removeClass('fadeOut').addClass('fadeIn')
-    console.log('fade in')
+    #console.log('fade in')
 
     $('.isotope').each ->
       $that = $(@)
@@ -39,8 +25,6 @@ $ ->
       showPrevNext:true
       hidePageNumbers:false
       perPage:10
-
-
 
     #set focus on flash then shift to page title
     $flash = $('#flash-messages')
@@ -106,9 +90,7 @@ $ ->
       data = {}
       data[bulk] = sets
 
-
       $('#main').addClass('fadeOut')
-      console.log('fade out')
       $.ajax
         url: url
         type: "POST"
@@ -119,4 +101,3 @@ $ ->
         error: (jqXHR, textStatus, errorThrown) ->
           alert textStatus, errorThrown
           $('#main').addClass('fadeIn').removeClass('fadeOut')
-
