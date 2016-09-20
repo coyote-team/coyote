@@ -26,6 +26,11 @@ Image annotation site and API to enable the distributed annotation of museum ima
 
 Secure creds are kept untracked in `.env`
 
+## Deploy
+
+```bash
+bundle exec cap production deploy
+```
 
 ## Usage 
 
