@@ -44,9 +44,12 @@
             = render "assignments/table", assignments: @user.assignments, paginated: true
 
         %nav.show-nav{role:"navigation"}
-          = link_to users_path, class: 'btn btn-info', title: "View the users index" do
-            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
-            Users
-          = link_to edit_user_path(@user), title: "Edit this user", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
-            Edit
+          %ul.list-inline
+            %li
+              = link_to users_path, class: 'btn btn-info', title: "View the users index" do
+                %i.fa.fa-fw.fa-list{"aria-hidden" => true}
+                Users
+            %li
+              = link_to edit_user_path(@user), title: "Edit this user", class: 'btn btn-primary' do
+                %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
+                Edit

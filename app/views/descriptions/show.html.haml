@@ -45,21 +45,26 @@
 
             
             %nav.show-nav{role:"navigation"}
-              -if @description.user == current_user 
-                - next_image = current_user.next_image(@description.image)
-                - if next_image
-                  = link_to new_description_path(user_id: current_user.id, image_id: next_image.id) , class: 'btn btn-primary' do
-                    %i.fa.fa-fw.fa-play{"aria-hidden" => "true"}
-                    Next image
-              = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
-                %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
-                Edit
-              = link_to new_description_path(user_id: current_user.id, image_id: @description.image_id) , class: 'btn btn-primary' do
-                %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
-                Describe Again
-              = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
-                %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
-                Descriptions
+              %ul.list-inline
+                -if @description.user == current_user 
+                  - next_image = current_user.next_image(@description.image)
+                  - if next_image
+                    %li
+                      = link_to new_description_path(user_id: current_user.id, image_id: next_image.id) , class: 'btn btn-primary' do
+                        %i.fa.fa-fw.fa-play{"aria-hidden" => "true"}
+                        Next image
+                %li
+                  = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
+                    %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
+                    Edit
+                %li
+                  = link_to new_description_path(user_id: current_user.id, image_id: @description.image_id) , class: 'btn btn-primary' do
+                    %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
+                    Describe Again
+                %li
+                  = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
+                    %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
+                    Descriptions
         - if admin?
           - audits = @description.audits.reverse
           - if audits.length > 0

@@ -49,33 +49,41 @@
                           %li=link_to u, u, target: "_blank"
 
             %nav.show-nav{role:"navigation"}
-              -if admin?
-                = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
-                  %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
-                  Edit
+              %ul.list-inline
+                -if admin?
+                  %li
+                    = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
+                      %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
+                      Edit
 
-                - css_id = "quick-assign"
-                = render "assign_to", css_id: css_id, image: @image, users: @users
+                  %li
+                    - css_id = "quick-assign"
+                    = render "assign_to", css_id: css_id, image: @image, users: @users
 
-                -#= link_to new_assignment_path(image_id: @image.id), class: 'btn btn-primary', title: "Assign image #{@image.id} to a user" do
-                  -#Assign
-              -if current_user
-                =link_to 'Describe', new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
-              %br
-              %br
-              = link_to images_path, class: 'btn btn-info', title: "View the images index" do
-                %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
-                Images
-              - previous_image = Image.where("id < ?", @image.id).first
-              - if previous_image
-                = link_to image_path(previous_image), class: 'btn btn-info', title: "View the previous image" do
-                  %i.fa.fa-fw.fa-arrow-left{"aria-hidden" => "true"}
-                  Previous
-              - next_image = Image.where("id > ?", @image.id).first
-              - if next_image
-                = link_to image_path(next_image), class: 'btn btn-info', title: "View the next image" do
-                  %i.fa.fa-fw.fa-arrow-right{"aria-hidden" => "true"}
-                  Next
+                  -#= link_to new_assignment_path(image_id: @image.id), class: 'btn btn-primary', title: "Assign image #{@image.id} to a user" do
+                    -#Assign
+                  -if current_user
+                    %li
+                      =link_to 'Describe', new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
+                %br
+                %br
+              %ul.list-inline
+                %li
+                  = link_to images_path, class: 'btn btn-info', title: "View the images index" do
+                    %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
+                    Images
+                  - previous_image = Image.where("id < ?", @image.id).first
+                - if previous_image
+                  %li
+                    = link_to image_path(previous_image), class: 'btn btn-info', title: "View the previous image" do
+                      %i.fa.fa-fw.fa-arrow-left{"aria-hidden" => "true"}
+                      Previous
+                - next_image = Image.where("id > ?", @image.id).first
+                - if next_image
+                  %li
+                    = link_to image_path(next_image), class: 'btn btn-info', title: "View the next image" do
+                      %i.fa.fa-fw.fa-arrow-right{"aria-hidden" => "true"}
+                      Next
               %br
               %br
           -if @image.descriptions.length > 0

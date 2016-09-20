@@ -21,18 +21,16 @@
               %td
                 =link_to @assignment.user
         %nav.show-nav{role:"navigation"}
-          = link_to assignments_path, class: 'btn btn-info', title: "View the assignments index" do
-            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
-            Assignments
-          %br
-          %br
-          = link_to edit_assignment_path(@assignment), title: "Edit this assignment", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
-            Edit
-          -if @next_image
-            %br
-            %br
-            = link_to new_assignment_path(image_id: @next_image.id), class: 'btn btn-primary', title: "Assign image #{@next_image.id} to a user" do
-              Assign next image
-
-
+          %ul.list-inline
+            %li
+              = link_to assignments_path, class: 'btn btn-info', title: "View the assignments index" do
+                %i.fa.fa-fw.fa-list{"aria-hidden" => true}
+                Assignments
+            %li
+              = link_to edit_assignment_path(@assignment), title: "Edit this assignment", class: 'btn btn-primary' do
+                %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
+                Edit
+            -if @next_image
+              %li
+                = link_to new_assignment_path(image_id: @next_image.id), class: 'btn btn-primary', title: "Assign image #{@next_image.id} to a user" do
+                  Assign next image

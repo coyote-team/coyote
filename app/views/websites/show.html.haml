@@ -33,9 +33,12 @@
         %br
 
         %nav.show-nav{role:"navigation"}
-          = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
-            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
-            Websites
-          = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
-            %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
-            Edit
+          %ul.list-inline
+            %li
+              = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
+                %i.fa.fa-fw.fa-list{"aria-hidden" => true}
+                Websites
+            %li
+              = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
+                %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
+                Edit
