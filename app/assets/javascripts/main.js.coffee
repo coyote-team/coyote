@@ -28,7 +28,10 @@ $ ->
     console.log('fade in')
 
     $('.isotope').each ->
-      $(@).addClass('isotoped').isotope() if $(@).hasClass('isotoped') == false
+      $that = $(@)
+      $that.addClass('isotoped').isotope() if $(@).hasClass('isotoped') == false
+      $that.imagesLoaded().progress () ->
+        $that.isotope('layout')
 
     #pagination on user pages
     $('.paginated-table tbody').pageMe
