@@ -47,7 +47,7 @@ plate =() ->
 
   initMarkdownToolbar = () ->
     $('textarea.wmd-input').each (i, input) ->
-      console.log(input)
+      #console.log(input)
       unless $(input).data('initialized')
         attr = $(input).attr('id').split('wmd-input')[1]
         converter = new Markdown.Converter()
