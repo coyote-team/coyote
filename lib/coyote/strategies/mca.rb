@@ -11,7 +11,7 @@ class MCAStrategy < Strategy
 
   def patch(image)
     website = image.website
-    if image.status_id == 2 and Rails.env.production?
+    if image.status_code == 3 and Rails.env.production?
       url = website.url + "/api/v1/attachment_images/" + image.canonical_id
       url = URI.parse(url)
       req = Net::HTTP::Patch.new(url)
