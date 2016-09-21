@@ -15,13 +15,13 @@ Image annotation site and API to enable the distributed annotation of museum ima
 ## Setup
 
 ```bash
-    bundle install
+bundle install
 
-    #set up the .env, override at .env.development and .env.test if needed
+#set up the .env, override at .env.development and .env.test if needed
 
-    #create the DBs for dev and test
-    bin/rake db:create db:migrate db:seed
-    RAILS_ENV=test bin/rake db:create db:migrate
+#create the DBs for dev and test
+bin/rake db:create db:migrate db:seed
+RAILS_ENV=test bin/rake db:create db:migrate
 ```
 
 Secure creds are kept untracked in `.env`
@@ -35,18 +35,18 @@ bundle exec cap production deploy
 ## Usage 
 
 ```bash
-    #run the server
-    bin/rails s
+#run the server
+bin/rails s
 
-    #automatically run tests as you work
-    #you might need to install a shim for guard
-    guard
+#automatically run tests as you work
+#you might need to install a shim for guard
+guard
 
-    #run the tests on their own
-    bin/rspec
+#run the tests on their own
+bin/rspec
 
-    #run the console
-    bin/rails c
+#run the console
+bin/rails c
 ```
 
 ## Vagrant Setup
@@ -54,9 +54,9 @@ bundle exec cap production deploy
 Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`  Then, you can view the site like so:
 
 ```bash
-	vagrant up
-    ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
-    open http://localhost:3000
+vagrant up
+ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
+open http://localhost:3000
 ```
 
 ## Server Setup
@@ -64,38 +64,38 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`
 Assuming a recent Ubuntu distribution...
 
 ```bash
-     sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
-     sudo apt-get update
-     sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
+ sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+ sudo apt-get update
+ sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
 
-     sudo apt-get upgrade -y
-     git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-     source ~/.bash_profile
-     git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-     echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
-     source ~/.bash_profile
+ sudo apt-get upgrade -y
+ git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+ source ~/.bash_profile
+ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+ echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+ source ~/.bash_profile
 
-     rbenv install -v 2.3.1
-     rbenv global 2.3.1
-     echo "gem: --no-document" > ~/.gemrc
+ rbenv install -v 2.3.1
+ rbenv global 2.3.1
+ echo "gem: --no-document" > ~/.gemrc
 
-     gem install bundler
+ gem install bundler
 
-     # edit config/thin.production.yml
-     # edit config/nginx.site.conf 
-     # then copy or link to your /etc/nginx/sites-available
-     # enable it
+ # edit config/thin.production.yml
+ # edit config/nginx.site.conf 
+ # then copy or link to your /etc/nginx/sites-available
+ # enable it
 
-     # finish mysql setup
-     
+ # finish mysql setup
+ 
 
-     # then locally edit your config/deploy/production.rb
-     # and edit your config/deploy.rb
+ # then locally edit your config/deploy/production.rb
+ # and edit your config/deploy.rb
 
-     # then deploy
-     bundle exec cap production deploy
+ # then deploy
+ bundle exec cap production deploy
 ```
 
 ## Components
@@ -112,30 +112,32 @@ Assuming a recent Ubuntu distribution...
 
 For use on [nomnoml](http://www.nomnoml.com/)
 
-    [<frame>Coyote data model|
-      [User | id: int | first_name: string | last_name: string |  email: string | admin: bool | timestamps]
-      [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
-      [Tag | id: int | title: string]
-      [Group | id: int | title: string]
-      [Description | id: int | locale:str(en) | text: text | timestamps]
-      [Website | id: int | url: string | title: string | timestamps]
-      [Status | id: int | title: string | description: text]
-      [Meta| id: int| title: string | instructions: text]
+```
+[<frame>Coyote data model|
+  [User | id: int | first_name: string | last_name: string |  email: string | admin: bool | timestamps]
+  [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
+  [Tag | id: int | title: string]
+  [Group | id: int | title: string]
+  [Description | id: int | locale:str(en) | text: text | timestamps]
+  [Website | id: int | url: string | title: string | timestamps]
+  [Status | id: int | title: string | description: text]
+  [Meta| id: int| title: string | instructions: text]
 
-      [Website]->[Group]
+  [Website]->[Group]
 
-      [Image]->[Group]
+  [Image]->[Group]
 
-      [Assignment]->[Image]
-      [Assignment]->[User]
+  [Assignment]->[Image]
+  [Assignment]->[User]
 
-      [Description]->[User]
-      [Description]->[Meta]
-      [Description]->[Status]
+  [Description]->[User]
+  [Description]->[Meta]
+  [Description]->[Status]
 
-      [Image] +-> 0..* [Description]
-      [Image] +-> 0..* [Tag]
-    ]
+  [Image] +-> 0..* [Description]
+  [Image] +-> 0..* [Tag]
+]
+```
 
  
 ## Links
