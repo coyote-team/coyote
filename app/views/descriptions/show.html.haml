@@ -42,6 +42,15 @@
                     Author
                   %td<
                     = @description.user
+                %tr
+                  %th{scope: "row"} Updated
+                  %td
+                    =@description.updated_at
+                %tr
+                  %th{scope: "row"} Created 
+                  %td
+                    =@description.created_at
+
 
             
             %nav.show-nav{role:"navigation"}

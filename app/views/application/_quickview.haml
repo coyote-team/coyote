@@ -6,10 +6,14 @@
 
 - queue_id = type.downcase.strip.gsub(' ', '-')
 %li.image.col-sm-4.col-xs-12{id: "#{queue_id}-image-li-#{image.id}"}<
-  .thumbnail<
+  -klass = "thumbnail "
+  -if image.priority
+    - klass += "priority"
+  %div{class: klass}<
     - css_id= "#{queue_id}-image-#{image.id}"
     =render "image", image: image, id: css_id
     .caption
+      = image.created_at
       - unless type == "Unassigned Images" or type == "Undescribed Images"
         - if type.start_with? "Your"
           -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact

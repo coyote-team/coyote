@@ -47,6 +47,14 @@
                       -if @image.page_urls
                         - @image.page_urls.each do |u|
                           %li=link_to u, u, target: "_blank"
+                %tr
+                  %th{scope: "row"} Updated
+                  %td
+                    =@image.updated_at
+                %tr
+                  %th{scope: "row"} Created 
+                  %td
+                    =@image.created_at
 
             %nav.show-nav{role:"navigation"}
               %ul.list-inline
