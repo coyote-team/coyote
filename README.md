@@ -64,38 +64,38 @@ open http://localhost:3000
 Assuming a recent Ubuntu distribution...
 
 ```bash
- sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
- sudo apt-get update
- sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
+sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+sudo apt-get update
+sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
 
- sudo apt-get upgrade -y
- git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
- echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
- echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
- source ~/.bash_profile
- git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
- echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
- source ~/.bash_profile
+sudo apt-get upgrade -y
+git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+source ~/.bash_profile
+git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
 
- rbenv install -v 2.3.1
- rbenv global 2.3.1
- echo "gem: --no-document" > ~/.gemrc
+rbenv install -v 2.3.1
+rbenv global 2.3.1
+echo "gem: --no-document" > ~/.gemrc
 
- gem install bundler
+gem install bundler
 
- # edit config/thin.production.yml
- # edit config/nginx.site.conf 
- # then copy or link to your /etc/nginx/sites-available
- # enable it
+# edit config/thin.production.yml
+# edit config/nginx.site.conf 
+# then copy or link to your /etc/nginx/sites-available
+# enable it
 
- # finish mysql setup
- 
+# finish mysql setup
 
- # then locally edit your config/deploy/production.rb
- # and edit your config/deploy.rb
 
- # then deploy
- bundle exec cap production deploy
+# then locally edit your config/deploy/production.rb
+# and edit your config/deploy.rb
+
+# then deploy
+bundle exec cap production deploy
 ```
 
 ## Components
@@ -109,6 +109,8 @@ Assuming a recent Ubuntu distribution...
 - [Coffeescript](http://coffeescript.org/)
 
 ##Data model
+
+![Data model](datamodel.png)
 
 For use on [nomnoml](http://www.nomnoml.com/)
 
