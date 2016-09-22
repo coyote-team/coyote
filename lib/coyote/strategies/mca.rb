@@ -13,7 +13,7 @@ class MCAStrategy < Strategy
   #returns true
   def patch(image)
     website = image.website
-    if image.status_code == 3 and Rails.env.production?
+    if image.status_code >= 2 and Rails.env.production?
       url = website.url + "/api/v1/attachment_images/" + image.canonical_id
       url = URI.parse(url)
       req = Net::HTTP::Patch.new(url)
@@ -175,8 +175,7 @@ class MCAStrategy < Strategy
   #returns true
   def patch_bulk(website, minutes_ago)
     updated_at = (Time.zone.now - minutes_ago.to_f.minute).iso8601
-    images = Description.where("updated_at > ?", updated_at).collect{|d| d.image if d.image.status_code == 3 and d.image.website == website}.compact.uniq
-    website.images.where(status_code: 3)
+    images = Description.where("updated_at > ?", updated_at).collect{|d| d.image if d.image.status_code >= 2 and d.image.website == website}.compact.uniq
     Rails.logger.info "These images are ready to be updated for #{images.collect{|i| i.id}.join(", ")}"
     images.each{|i| patch(i)}
     return true
