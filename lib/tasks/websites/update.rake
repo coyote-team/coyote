@@ -14,7 +14,7 @@ namespace :websites do
     Website.all.each do |w|
 			s = w.get_strategy
 			if s
-				s.patch_bulk(args.minutes)
+				s.patch_bulk(w, args.minutes)
 			else
 				Rails.logger.info "No strategy available for this description's image"
 				return true
