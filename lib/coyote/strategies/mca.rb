@@ -173,12 +173,12 @@ class MCAStrategy < Strategy
 
   #optional
   #returns true
-  def patch_bulk(website, minutes)
+  def patch_bulk(website, minutes_ago)
     updated_at = (Time.zone.now - minutes_ago.to_f.minute).iso8601
     images = Description.where("updated_at > ?", updated_at).collect{|d| d.image if d.image.status_code == 3 and d.image.website == website}.compact.uniq
     website.images.where(status_code: 3)
     Rails.logger.info "These images are ready to be updated for #{images.collect{|i| i.id}.join(", ")}"
-    images.each{|i| i.patch}
+    images.each{|i| patch(i)}
     return true
   end
 end
