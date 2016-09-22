@@ -4,11 +4,13 @@ class MCAStrategy < Strategy
   #patch
   #update
   #check_count
+  #update_bulk
 
   def title
     "MCA"
   end
 
+  #returns true
   def patch(image)
     website = image.website
     if image.status_code == 3 and Rails.env.production?
@@ -23,13 +25,14 @@ class MCAStrategy < Strategy
     return true
   end
 
-  def update(website, minutes)
+  #returns true 
+  def update(website, minutes_ago)
     require 'multi_json'
     require 'open-uri'
 
     limit = 100
     offset = 0
-    updated_at = (Time.zone.now - minutes.to_f.minute).iso8601
+    updated_at = (Time.zone.now - minutes_ago.to_f.minute).iso8601
     updated_at = nil if Image.all.count < 10 #kludge for seeding
 
     length = 1
@@ -69,7 +72,6 @@ class MCAStrategy < Strategy
       Rails.logger.info "Errors: #{errors}"
       Rails.logger.info "Total: #{errors + updated + created}"
       Rails.logger.info "Our total: #{website.images.count}"
-
 
       images.each do |i|
         begin
@@ -121,8 +123,10 @@ class MCAStrategy < Strategy
     Rails.logger.info "Total: #{errors + updated + created}"
     Rails.logger.info "Our total: #{website.images.count}"
     Rails.logger.info "---"
+    return true
   end
 
+  #returns array of canonical ids
   def check_count(website)
     require 'multi_json'
     require 'open-uri'
@@ -165,5 +169,16 @@ class MCAStrategy < Strategy
     ids.flatten!
     ids.compact!
     return ids.uniq
+  end
+
+  #optional
+  #returns true
+  def patch_bulk(website, minutes)
+    updated_at = (Time.zone.now - minutes_ago.to_f.minute).iso8601
+    images = Description.where("updated_at > ?", updated_at).collect{|d| d.image if d.image.status_code == 3 and d.image.website == website}.compact.uniq
+    website.images.where(status_code: 3)
+    Rails.logger.info "These images are ready to be updated for #{images.collect{|i| i.id}.join(", ")}"
+    images.each{|i| i.patch}
+    return true
   end
 end

@@ -36,7 +36,14 @@ class Website < ActiveRecord::Base
     end
   end
 
+  #TODO should record on website record
   def strategy_check_count
+    s = get_strategy
+    if s
+      s.check_count(self)
+    else
+      []
+    end
   end
 
   def strategy_update_images(minutes)

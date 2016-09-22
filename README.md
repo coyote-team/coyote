@@ -31,6 +31,17 @@ Secure creds are kept untracked in `.env`
 ```bash
 bundle exec cap production deploy
 ```
+## Update website images
+
+```bash
+# update images from past 2 minutes on local
+bin/rake websites:update
+# update images from past 60 minutes on local
+bin/rake websites:update[60]
+# update images from past 60 minutes on production
+TASK="websites:update[60] bundle exec cap production rake"
+
+```
 
 ## Usage 
 

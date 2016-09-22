@@ -81,6 +81,7 @@ class Description < ActiveRecord::Base
     if s
       s.patch(image)
     else
+      Rails.logger.info "No strategy available for this description's image"
       return true
     end
   end
