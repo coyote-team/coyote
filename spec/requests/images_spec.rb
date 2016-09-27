@@ -1,19 +1,22 @@
 require 'spec_helper'
 
-describe 'GET /api/v1/images/:id' do
+describe 'GET /images/:id.json' do
   before(:each) do
+    @user = create(:user)
     @image = create(:image)
   end
   it 'returns image record' do
-    get "/api/v1/images/#{@image.id}", {}.to_json
-    expect(response_json).to eq(image_json)
+    get "/images/#{@image.id}.json", {}.to_json, set_headers(@user)
+    #expect(response_json).to eq(image_json)
+    expect_json_keys(:id)
   end
 end
 
-describe 'GET /api/v1/images' do
+describe 'GET /images.json' do
   #optional params: page, canonical_id, status_ids, priority
   #Default is [2] for the public view.
   before(:each) do
+    @user = create(:user)
     @images = []
     5.times do
       image = create(:image)
@@ -22,8 +25,9 @@ describe 'GET /api/v1/images' do
   end
   it 'returns all image records to user' do
     @user = create(:user)
-    get "/api/v1/images", {}.to_json
-    expect(response_json).to eq(images_json(@images))
+    get "/images.json", {}.to_json, set_headers(@user)
+    #expect(response_json).to eq(images_json(@images))
+    expect_json_keys([:_metadata, :records])
   end
 end
 

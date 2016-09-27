@@ -1,11 +1,8 @@
 module RequestHeaders
-  def set_headers(authentication_token)
-    app_secret = 'secretkey'
-    ENV['TT_SECRET'] = app_secret
+  def set_headers(user)
     {
-      'tt-app-secret' => app_secret,
-      'tt-authentication-token' => authentication_token,
-      'Content-Type' => 'application/json'
+      'X-User-Email' => user.email,
+      'X-User-Token' => user.authentication_token
     }
   end
 end

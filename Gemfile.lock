@@ -63,6 +63,12 @@ GEM
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
     addressable (2.4.0)
+    airborne (0.2.7)
+      activesupport (>= 3.0, < 5.0)
+      rack (< 2.0)
+      rack-test (~> 0.6, >= 0.6.2)
+      rest-client (>= 1.7.3, < 3.0)
+      rspec (~> 3.1)
     airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
     analytical (3.0.12)
@@ -519,6 +525,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   acts-as-taggable-on
+  airborne
   analytical
   annotate
   apipie-rails
