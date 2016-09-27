@@ -8,7 +8,20 @@ describe 'GET /images/:id.json' do
   it 'returns image record' do
     get "/images/#{@image.id}.json", {}.to_json, set_headers(@user)
     #expect(response_json).to eq(image_json)
-    expect_json_keys(:id)
+    expect_json_keys(	:id, 
+											:canonical_id, 
+											:path, 
+											:page_urls, 
+											:priority, 
+											:group_id, 
+											:website_id, 
+											:created_at, 
+											:updated_at,
+											:url,
+											:alt,
+											:title,
+											:long
+                    )
   end
 end
 
@@ -81,11 +94,11 @@ def images_json(images)
   @images
 end
 
-def image_json(opts = {})
-  hash = {
-    id: opts[:id] || @image.id,
-    canonical_id: "",
-    created_at: opts[:created_at] || @image.created_at.strftime('%FT%T.%LZ'),
-    updated_at: opts[:updated_at] || @image.updated_at.strftime('%FT%T.%LZ'),
-    }.as_json
-end
+#def image_json(opts = {})
+  #hash = {
+    #id: opts[:id] || @image.id,
+    #canonical_id: "",
+    #created_at: opts[:created_at] || @image.created_at.strftime('%FT%T.%LZ'),
+    #updated_at: opts[:updated_at] || @image.updated_at.strftime('%FT%T.%LZ'),
+    #}.as_json
+#end
