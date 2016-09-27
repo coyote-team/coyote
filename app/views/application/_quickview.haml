@@ -13,16 +13,13 @@
     - css_id= "#{queue_id}-image-#{image.id}"
     =render "image", image: image, id: css_id
     .caption
-      = image.created_at
       - unless type == "Unassigned Images" or type == "Undescribed Images"
         - if type.start_with? "Your"
           -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
         - else
           -descriptions = image.descriptions
         %h4<
-          Descriptions
-          %span.sr-only ,
-          %span.badge= descriptions.count
+          #{descriptions.count} Descriptions
         =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: css_id
 
         - path = new_description_path(image_id: image.id, user_id: current_user.id )

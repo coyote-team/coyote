@@ -84,7 +84,8 @@
                         %span.label.label-info= description.metum
                       %td
                         %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
-                      %td{id: "description-text-#{description.id}"}= to_text(description.text).truncate(50)
+                      %td{id: "description-text-#{description.id}"}
+                        .text-wrap= to_html(description.text)
                       %td= description.user
                       %td.text-right
                         = link_to description, class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do

@@ -3,11 +3,12 @@
   = image_tag  image.url, class: "description-image", id: id, alt: image.alt, "aria-describedby": "image-title-#{image.id}"
 
 -unless image.title.blank?
-  %blockquote<
-    %span{id: "image-title-#{image.id}"}= to_html image.title
-    %footer.footer
+  %div{id: "image-title-#{image.id}"}= to_html image.title
+  %p 
+    %span.sr-only from
+    #{image.website}
+  %ul.list-inline.list-labels
+    %li
       %span.label.label-info Caption
-      from #{image.website}
 -else
-  %blockquote
-    %span{id: "image-title-#{image.id}"} No title available.
+  %p{id: "image-title-#{image.id}"} No title available.

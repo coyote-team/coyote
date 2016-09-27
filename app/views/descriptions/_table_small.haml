@@ -9,22 +9,22 @@
     - descriptions.each do |d|
       %tr{class: description_css_class(d) + " description"}<
         %td<
-          %blockquote.blockquote<
-            %span{id: "small-table-description-#{d.id}"}=to_html d.text
-            -if d.user
-              %footer.footer
-                %cite=d.user
-            %ul.list-inline.label-list
-              %li
-                - metum_id= "#{queue_id}-#{d.id}-metum"
-                %span.label.label-info{id: metum_id}= d.metum
-              %li
-                - locale_id= "#{queue_id}-#{d.id}-locale"
-                %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name
-              %li
-                = render 'status', status: d.status
-        -if admin?
-          %td
+          %div{id: "small-table-description-#{d.id}"}=to_html d.text
+          -if d.user
+            %p
+              %span.sr-only by
+              =d.user
+          %ul.list-inline.label-list
+            %li
+              - metum_id= "#{queue_id}-#{d.id}-metum"
+              %span.label.label-info{id: metum_id}= d.metum
+            %li
+              - locale_id= "#{queue_id}-#{d.id}-locale"
+              %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name
+            %li
+              = render 'status', status: d.status
+          -if admin?
+            %br
             .btn-group
               -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
 

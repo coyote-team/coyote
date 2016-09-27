@@ -1,10 +1,8 @@
 .group
   -if title
     %h4<
+      %span.countable=assignments.count
       Assigned Users
-      %span.sr-only ,
-      %span.badge.countable
-        =assignments.count
   %ul.assignments
     -assignments.each do |assignment|
       %li.deletable
