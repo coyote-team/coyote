@@ -26,11 +26,29 @@ RAILS_ENV=test bin/rake db:create db:migrate
 
 Secure creds are kept untracked in `.env`
 
+## Test
+
+Lint the [FactoryGirls](https://github.com/thoughtbot/factory_girl)
+
+```bash
+bin/rake factory_girl:lint
+
+```
+
+```bash
+bin/rspec
+
+guard
+#press enter or update a page and the test suite will run
+
+```
+
 ## Deploy
 
 ```bash
 bundle exec cap production deploy
 ```
+
 ## Update website images
 
 ```bash

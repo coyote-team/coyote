@@ -16,8 +16,7 @@
 
 FactoryGirl.define do
   factory :assignment do
-    user nil
-image nil
+    user 
+    image 
   end
-
 end

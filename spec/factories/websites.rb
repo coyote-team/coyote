@@ -12,8 +12,7 @@
 
 FactoryGirl.define do
   factory :website do
-    title "MyString"
-url "MyString"
+    title "MCA"
+    url "https://mcachicago.org"
   end
-
 end

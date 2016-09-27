@@ -10,8 +10,6 @@
 
 FactoryGirl.define do
   factory :status do
-    title "MyString"
-description "MyText"
+    title Faker::Lorem.word
   end
-
 end

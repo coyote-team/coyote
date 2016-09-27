@@ -1,10 +1,8 @@
-json.extract! image, :id, :canonical_id, :path, :page_urls, :group_id, :website_id, :created_at, :updated_at 
+json.extract! image, :id, :canonical_id, :path, :page_urls, :priority, :group_id, :website_id, :created_at, :updated_at 
 
-json.url image_url(@image, format: 'html')
+json.url image_url(image, format: 'html')
 json.alt image.alt(@status_ids)
 json.title image.title
-json.priority image.priority
-json.page_urls image.page_urls
 json.long image.long(@status_ids)
 
 if !@status_ids.empty?

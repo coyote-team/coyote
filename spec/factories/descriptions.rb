@@ -22,12 +22,11 @@
 
 FactoryGirl.define do
   factory :description do
-    locale "MyString"
-text "MyText"
-status nil
-image nil
-metum nil
-user nil
+    locale "en"
+    text Faker::Lorem.paragraph
+    status 
+    image 
+    metum 
+    user 
   end
-
 end

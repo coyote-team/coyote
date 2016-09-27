@@ -12,7 +12,6 @@
 FactoryGirl.define do
   factory :metum do
     title "MyString"
-instructions "MyText"
+    instructions Faker::Lorem.sentence
   end
-
 end

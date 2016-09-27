@@ -29,7 +29,11 @@
 
 FactoryGirl.define do
   factory :user do
-    
+    authentication_token { generate(:token) }
+    email {Faker::Internet.email}
+    password {Faker::Internet.password}
+    factory :admin do
+      admin true
+    end
   end
-
 end

@@ -1,1 +1,1 @@
-render "image", image: @image
+json.partial! 'image', image: @image
