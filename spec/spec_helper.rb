@@ -1,10 +1,11 @@
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
 
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
 
 RSpec.configure do |config|
   #http://dchua.com/2013/08/19/dry-up-your-devise-logins-in-rspec/
@@ -20,9 +21,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
- 
-  #config.fail_fast = true
-  config.fail_fast = false
+  config.fail_fast = true
+  #config.fail_fast = false
   config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
