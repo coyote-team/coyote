@@ -29,8 +29,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 end
 
-WebMock.disable_net_connect!(allow_localhost: true)
-
+#WebMock.disable_net_connect!(allow_localhost: true)
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end
