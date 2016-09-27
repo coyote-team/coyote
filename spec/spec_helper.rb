@@ -30,3 +30,7 @@ RSpec.configure do |config|
 end
 
 WebMock.disable_net_connect!(allow_localhost: true)
+
+SimpleCov.start do
+  add_filter "/config/" # Ignores any file containing "/config/" in its path.
+end
