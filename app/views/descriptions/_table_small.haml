@@ -1,10 +1,7 @@
-%table.table<
-  %thead.sr-only<
+%table.table.table-black-border<
+  %thead<
     %th{scope: "col"}<
-      Description
-    -if admin?
-      %th{scope: "col"}<
-        Actions
+      Descriptions: #{descriptions.count} 
   %tbody<
     - descriptions.each do |d|
       -#%tr{class: description_css_class(d) + " description"}<

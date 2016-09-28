@@ -18,8 +18,8 @@
           -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
         - else
           -descriptions = image.descriptions
-        %h4<
-          #{descriptions.count} Descriptions
+          - if type == "Ready to Review Descriptions"
+            - descriptions = descriptions.sort_by{|a| a.status_id == 1 ? 0 : 1}
         =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: css_id
 
         - path = new_description_path(image_id: image.id, user_id: current_user.id )
