@@ -255,5 +255,7 @@ p.no-margin
   margin-bottom: 0 
 
 .table-black-border
-  > tbody > tr, > thead > tr > th
+  > thead > tr > th, > tbody > tr > td
     border-bottom: 1px solid $black
+  > tbody > tr:last-child > td
+    border-bottom: 0px solid $black

@@ -28,9 +28,9 @@
             Describe
 
       - if admin? and !type.starts_with?("Your")
-        - if image.assignments.count > 0
-          - assignments = image.assignments
-          = render "assignments/list", assignments: assignments, title: true
+        -#- if image.assignments.count > 0
+          -#- assignments = image.assignments
+          -#= render "assignments/list", assignments: assignments, title: true
         - unless type == "Ready to Review Descriptions"
           %br
           = render "assign_to", css_id: css_id, image: image, users: @users, full_width: true
