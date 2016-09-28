@@ -1,17 +1,14 @@
 - if queue
   .queue
     %h3<
-      #{type} Queue
+      #{type}:
       -if queue.size > 0
-        %span.sr-only<
-          ,
-        %span.badge= count if count
+        %span= count if count
   -if queue.size > 0
-    .well.well-sm
-      .row
-        %ul
-          .isotope
-            - queue.each_with_index do |item, idx|
-              = render "quickview", type: type, item: item, idx: idx, queue: queue
+    .row
+      %ul
+        .isotope
+          - queue.each_with_index do |item, idx|
+            = render "quickview", type: type, item: item, idx: idx, queue: queue
   -if queue.size == 0
     %p This queue is empty.

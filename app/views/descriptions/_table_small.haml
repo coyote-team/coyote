@@ -7,7 +7,8 @@
         Actions
   %tbody<
     - descriptions.each do |d|
-      %tr{class: description_css_class(d) + " description"}<
+      -#%tr{class: description_css_class(d) + " description"}<
+      %tr{class: "description"}<
         %td<
           %div{id: "small-table-description-#{d.id}"}=to_html d.text
           -if d.user

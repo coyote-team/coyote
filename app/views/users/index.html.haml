@@ -1,11 +1,12 @@
--title = 'Listing Users'
+-title = 'Users'
 -meta title: title
 - cache ['v1', admin?,  @users] do
   .index-outer
     .index
       .index-inner
         %header
-          %h1#page-title{tabindex: -1}=title
+          %h1#page-title{tabindex: -1}
+            #{title}: #{@users.count}
         %table.index-table
           %caption.sr-only Index table for users
           %thead

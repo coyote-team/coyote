@@ -8,7 +8,7 @@
           %h2.panel-heading Other descriptions 
           = render "descriptions/table_small", descriptions: other_descriptions, image_id: "description-image", queue_id: "id-for-queue-ref"
       -if @image.page_urls
-        %h3 Pages
+        %h3 Context
         - @image.page_urls.each do |u|
           %li=link_to u, u, target: "_blank"
 

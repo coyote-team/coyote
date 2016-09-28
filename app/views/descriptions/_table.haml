@@ -24,9 +24,9 @@
     %tbody
       - descriptions.each_with_index do |description, idx|
         - klass = "item "
-        - klass += "success" if description.status_id == 2
-        - klass += "warning" if description.status_id == 1
-        - klass += "danger" if description.status_id == 3
+        -#- klass += "success" if description.status_id == 2
+        -#- klass += "warning" if description.status_id == 1
+        -#- klass += "danger" if description.status_id == 3
         %tr{class: klass}
           - if action_name == "index"
             %td

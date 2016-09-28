@@ -6,9 +6,7 @@
       .index-inner
         %header
           %h1#page-title{tabindex: -1}
-            =title
-            %span.sr-only ,
-            %span.badge=@descriptions.total_count
+            #{title}: #{@descriptions.total_count}
 
         %nav.index-nav{role:"navigation"}
 
@@ -69,9 +67,9 @@
                 %tbody
                   - @descriptions.each_with_index do |description, idx|
                     - klass = "item "
-                    - klass += "success" if description.status_id == 2
-                    - klass += "warning" if description.status_id == 1
-                    - klass += "danger" if description.status_id == 3
+                    -#- klass += "success" if description.status_id == 2
+                    -#- klass += "warning" if description.status_id == 1
+                    -#- klass += "danger" if description.status_id == 3
                     %tr{class: klass}
                       %td= check_box("id-", description.id, class: "id", data: {"id" => description.id}, "aria-labeledby": "description-text-#{ description.id } ")
 

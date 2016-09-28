@@ -1,11 +1,12 @@
--title = 'Listing Assignments'
+-title = 'Assignments'
 -meta title: title
 - cache ['v1', admin?,  @assignments] do
   .index-outer
     .index
       .index-inner
         %header
-          %h1#page-title{tabindex: -1}=title
+          %h1#page-title{tabindex: -1}
+            #{title}: #{@assignments.total_count}
 
         %nav.index-nav{role:"navigation"}
           =paginate @assignments
