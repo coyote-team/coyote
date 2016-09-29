@@ -2,10 +2,10 @@
 -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
 - assign_id = css_id + "-dropdown"
 %span.dropdown
-  -klass = "btn btn-primary dropdown-toggle "
-  -klass += "btn-full " if full_width
+  -klass = "btn btn-info dropdown-toggle "
+  -#-klass += "btn-full " if full_width
   %button{id: assign_id, class: klass, "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-    Assign to
+    Assign
     %span.caret
   %ul.dropdown-menu{"aria-labelledby" => assign_id}
     - users.each do |user|

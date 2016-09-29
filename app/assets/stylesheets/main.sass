@@ -70,8 +70,19 @@ dd
   margin-bottom: ms(0)
   +min-screen($phone-wide + 1)
     float: right
+.deletable
+  display: inline-block
 
-//dropdowns
+//form
+.inline-form
+  margin-right: 1em
+  display: inline-block
+.control-label
+  text-transform: uppercase
+.form-control
+  background: $white
+  border-color: $black
+  color: $black
 form.btn
   padding: 0
   button
@@ -81,6 +92,7 @@ form.btn
     button
       padding: 5px 10px
 
+//dropdown
 .dropdown ul
   margin: 0px
   top: initial
@@ -259,3 +271,16 @@ p.no-margin
     border-bottom: 1px solid $black
   > tbody > tr:last-child > td
     border-bottom: 0px solid $black
+
+#wmd-help-button-text
+  display: none
+#wmd-button-row-text
+  .btn-default
+    border-color: $black
+    color: $black
+    background-color: $white
+.wmd-preview
+  background-color: $white
+  border-color: $black
+  box-shadow: none
+  padding: 0.25em 0

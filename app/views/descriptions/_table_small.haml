@@ -7,46 +7,43 @@
       -#%tr{class: description_css_class(d) + " description"}<
       %tr{class: "description"}<
         %td<
-          %div{id: "small-table-description-#{d.id}"}=to_html d.text
+          %div{id: "small-table-description-#{d.id}"}
+            =to_html d.text
+          - user = d.user
+          - user ||= ""
           -if d.user
             %p
-              %span.sr-only by
-              =d.user
-          %ul.list-inline.label-list
-            %li
+              = render 'status', status: d.status
               - metum_id= "#{queue_id}-#{d.id}-metum"
               %span.label.label-info{id: metum_id}= d.metum
-            %li
               - locale_id= "#{queue_id}-#{d.id}-locale"
               %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name
-            %li
-              = render 'status', status: d.status
+            %p
+              from
+              =d.user
           -if admin?
-            %br
-            .btn-group
-              -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+            -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
+            - klass= 'btn btn-info '
+            - form_klass = "inline-form "
+            - disabled = false
+            - if d.status_id == 2
+              - form_klass += 'disabled'
+              - disabled = true
+            = button_to description_path(d), params: {"description[status_id]": 2},
+              form_class: form_klass, class: klass, disabled: disabled, method: :patch, remote: true,
+              data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}"  do
+              Approve 
 
-              - form_klass= 'btn-sm btn btn-success '
-              - disabled = false
-              - if d.status_id == 2
-                - form_klass += 'disabled'
-                - disabled = true
-              = button_to description_path(d), params: {"description[status_id]": 2},
-                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
-                data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}"  do
-                %span.sr-only Approve this description
-                %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": "true"}
+            - klass='btn btn-info '
+            - form_klass = "inline-form "
+            - disabled = false
+            - if d.status_id == 3
+              - form_klass += 'disabled'
+              - disabled = true
+            = button_to description_path(d), params: {"description[status_id]": 3},
+              form_class: form_klass, class: klass, disabled: disabled, method: :patch, remote: true,
+              data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}" do
+              Reject
 
-              - form_klass='btn-sm btn btn-danger '
-              - disabled = false
-              - if d.status_id == 3
-                - form_klass += 'disabled'
-                - disabled = true
-              = button_to description_path(d), params: {"description[status_id]": 3},
-                form_class: form_klass, disabled: disabled, method: :patch, remote: true,
-                data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}" do
-                %span.sr-only Disapprove this description
-                %i.fa.fa-fw.fa-thumbs-down{ "aria-hidden": "true"}
-
-              =link_to edit_description_path(d), title: "Edit this description", class: 'btn-sm btn btn-primary', "aria-describedby" => "small-table-description-#{d.id}" do
-                %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
+            =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-info', "aria-describedby" => "small-table-description-#{d.id}" do
+              Edit

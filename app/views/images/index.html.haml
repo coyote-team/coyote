@@ -141,8 +141,7 @@
               = link_to images_path(tag: tag.name), :class => css_class do
                 = tag.name
                 %span.sr-only ,
-                %span.badge
-                  = tag.count
+                "#{tag.count}"
 
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1
