@@ -1,7 +1,7 @@
 -title = 'Descriptions'
 -meta title: title
 - cache ['v1', admin?,  @descriptions] do
-  .index-outer
+  .container-fluid
     .index
       .index-inner
         %header
@@ -87,11 +87,11 @@
                       %td= description.user
                       %td.text-right
                         = link_to description, class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
-                          %i.fa.fa-fw.fa-eye{"aria-hidden" => "true"}
+                          View
                         = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
-                          %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
-                        = link_to description, title: "Delete this description" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
-                          %i.fa.fa-fw.fa-trash{"aria-hidden" => "true"}
+                          Edit
+                        = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
+                          Delete
 
         -else
           =render 'table', descriptions: @descriptions

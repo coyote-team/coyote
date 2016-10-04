@@ -64,7 +64,7 @@
                         Next image
                 %li
                   = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
-                    %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
+                    Edit
                     Edit
                 %li
                   = link_to new_description_path(user_id: current_user.id, image_id: @description.image_id) , class: 'btn btn-primary' do
@@ -72,7 +72,7 @@
                     Describe Again
                 %li
                   = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
-                    %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
+                    
                     Descriptions
         - if admin?
           - audits = @description.audits.reverse

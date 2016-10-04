@@ -61,7 +61,7 @@
                 -if admin?
                   %li
                     = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
-                      %i.fa.fa-fw.fa-pencil{"aria-hidden" => "true"}
+                      Edit
                       Edit
 
                   %li
@@ -78,8 +78,9 @@
               %ul.list-inline
                 %li
                   = link_to images_path, class: 'btn btn-info', title: "View the images index" do
-                    %i.fa.fa-fw.fa-list{"aria-hidden" => "true"}
+                    
                     Images
+                  -#TODO move to controller
                   - previous_image = Image.where("id < ?", @image.id).first
                 - if previous_image
                   %li

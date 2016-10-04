@@ -43,10 +43,10 @@
 <% end -%>
                 %td.text-right<
                   = link_to <%= singular_table_name %>, class: "btn btn-show", title: "Show this <%= singular_table_name %>" do
-                    %i.fa.fa-fw.fa-eye{"aria-hidden" => true}
+                    View
                   = link_to edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn btn-edit", title: "Edit this <%= singular_table_name %>"  do
                     %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
-                  = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-delete",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{<%= singular_table_name %>}?"} do
+                  = link_to <%= singular_table_name %>, title: "Delete this <%= singular_table_name %>" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{<%= singular_table_name %>}?"} do
                     %i.fa.fa-fw.fa-trash{"aria-hidden" => true}
 
         %nav.index-nav{role:"navigation"}

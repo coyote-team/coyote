@@ -18,7 +18,7 @@
 <% end -%>
         %nav.show-nav{role:"navigation"}
           = link_to <%= index_helper %>_path, class: 'btn btn-info', title: "View the <%= plural_table_name%> index" do
-            %i.fa.fa-fw.fa-list{"aria-hidden" => true}
+            
             <%= plural_table_name.capitalize %>
           = link_to edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), title: "Edit this <%= singular_table_name %>", class: 'btn btn-primary' do
             %i.fa.fa-fw.fa-pencil{"aria-hidden" => true}
