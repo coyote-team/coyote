@@ -75,13 +75,11 @@
                   %td<
                     = f.label "Search by tag", for: "q_tags_name_cont", class: "sr-only"
                     = f.search_field :tags_name_cont, :class => 'input-medium form-control', placeholder: "Search by tag"
-                  %td.search-btns<
-                    .btn-group
-                      = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
-                        %span.sr-only Clear
-                        %i.fa.fa-fw.fa-close{"aria-hidden" => "true"}
-                      = button_tag type: "submit", class: "btn btn-primary btn-sm" do
-                        Search
+                  %td.search-btns
+                    = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-info' do
+                      Clear
+                    = button_tag type: "submit", class: "btn btn-info btn-sm" do
+                      Search
 
               %tbody
                 - @images.each_with_index do |image, idx|

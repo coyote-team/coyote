@@ -27,13 +27,11 @@
                   %tr
                     %th{scope: "col", rowspan: 2}<
                       %span.sr-only Bulk Actions
-                      .btn-group
-                        %a{data: {status_id: 2, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-success'} 
-                          %span.sr-only Approve these descriptions
-                          %i.fa.fa-fw.fa-thumbs-up{ "aria-hidden": "true"}
-                        %a{data: {status_id: 3, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-danger'}
-                          %span.sr-only Disapprove these descriptions
-                          %i.fa.fa-fw.fa-thumbs-down{ "aria-hidden": "true"}
+                      %a{data: {status_id: 2, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-info'} 
+                        Approve 
+                      %a{data: {status_id: 3, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-info'}
+                        Disapprove
+                          
 
                       %br
                       <input type="checkbox" name="select-all" id="select-all" />
@@ -57,13 +55,10 @@
                       = f.search_field :text_cont, :class => 'input-medium form-control', placeholder: "Search by description"
                     %td= f.input  :user_id_eq, as: :select, include_blank: "Any author", label: "Select an author", required: false, collection: User.all , label_html: {class: 'sr-only'}
                     %td.search-btns<
-                      .btn-group
-                        = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-danger' do
-                          %span.sr-only Clear
-                          %i.fa.fa-fw.fa-close{"aria-hidden" => "true"}
-                        = button_tag type: "submit", class: "btn btn-primary btn-sm" do
-                          %span.sr-only Search
-                          %i.fa.fa-fw.fa-search{"aria-hidden" => "true"}
+                      = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-info' do
+                        Clear
+                      = button_tag type: "submit", class: "btn btn-info btn-sm" do
+                        Search
                 %tbody
                   - @descriptions.each_with_index do |description, idx|
                     - klass = "item "
