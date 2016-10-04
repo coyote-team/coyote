@@ -104,7 +104,7 @@ class Image < ActiveRecord::Base
    descriptions.collect{ |d| d.user_id}.compact.include?(user.id)
   end
 
-  #TODO?
+  #TODO consider locale
   #has 1 of each metum by this user  ? in any combo of locales and status'es
   def completed_by?(user)
     meta_ids = Metum.all.map{|m| m.id}

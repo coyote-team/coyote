@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
     next_image
   end
 
-  #TODO not working; for audited
+  #NOTE for audit log
   def username 
     to_s
   end

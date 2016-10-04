@@ -131,6 +131,10 @@ Ex:
 
   EOT
   def show
+    if request.format.html?
+      @previous_image = Image.where("id < ?", @image.id).first
+      @next_image = Image.where("id > ?", @image.id).first
+    end
     @status_ids = params[:status_ids]  if params[:status_ids]
     @status_ids ||= [2]
   end
@@ -197,6 +201,7 @@ Ex:
   end
 
   #returns hash of canonical_ids to titles from MCA 
+  #NOTE deprecated
   def titles
     canonical_ids = params["canonical_ids"]
 
