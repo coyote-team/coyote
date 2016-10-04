@@ -86,7 +86,8 @@
 
               %tbody
                 - @images.each_with_index do |image, idx|
-                  - klass = "item " + image_status_css_class(image.status_code)
+                  -#- klass = "item " + image_status_css_class(image.status_code)
+                  - klass = "item " 
                   %tr{class: klass}<
                     -if admin?
                       %td<
