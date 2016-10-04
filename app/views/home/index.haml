@@ -38,29 +38,6 @@
         %header
           %h1#page-title=title
     .row
-      .col-sm-6
-        %h2 Status
-        %table.table.table-no-grid
-          %tr<
-            %th.sr-only Total Images Described
-            %td= render "progress", value: @described_count, max: @image_count, title: "Described Images"
-          %tr<
-            %th.sr-only Assigned Images Described by You
-            %td= render "progress", value: @my_described_count, max: @my_images_count, title: "Assigned Images Described by You"
-          - if admin?
-            %tr<
-              %th.sr-only Images Assigned
-              %td= render "progress", value: @assigned_count, max: @image_count, title: "Images Assigned"
-          -#%tr<
-            -#%th Descriptions
-            -#%td #{@my_descriptions_count}
-          -#%tr<
-            -#%th Completed Images
-            -#%td #{@completed_count}
-          -#%tr<
-            %th Completed Images
-            %td #{@my_completed_count}
-    .row
       -if admin?
         .col-md-12
           %h2 Admin Queues
@@ -78,7 +55,72 @@
           %p You haven't been assigned any images.
           - if !admin?
             %p Ask an admin to assign you some.
-        =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
+        - else
+          =render "queue", queue: @my_queue, type: "Your Assigned Images", count: @my_queue_count
+    .row
+      .col-sm-6
+        %h2 Our Status
+        -#%table.table.table-no-grid
+          -#%tr<
+            -#%th Total Descriptions
+            -#%td.text-right= @description_count
+          -#%tr<
+            -#%th Total Images
+            -#%td.text-right= @image_count
+        %table.table.table-no-grid
+          %tr<
+            - title = "Described Images"
+            %th.sr-only= title
+            %td= render "progress", value: @described_count, max: @image_count, title: title
+          %tr<
+            - title = "Approved Descriptions"
+            %th.sr-only= title
+            %td= render "progress", value: @approved_count, max: @description_count, title: title
+          - if admin?
+            %tr<
+              - title = "Pending Descriptions Ready for Review"
+              %th.sr-only= title
+              %td= render "progress", value: @review_count, max: @description_count, title: title
+            %tr<
+              - title = "Unapproved Descriptions"
+              %th.sr-only= title
+              %td= render "progress", value: @unapproved_count, max: @description_count, title: title
+            %tr<
+              - title = "Undescribed Images with Open Assignments"
+              %th.sr-only= title
+              %td= render "progress", value: @open_assignment_count, max: @image_count, title: title
+            %tr<
+              - title = "Images Unassigned and Undescribed"
+              %th.sr-only= title
+              %td= render "progress", value: @unassigned_undescribed_count, max: @image_count, title: title
+            %tr<
+              - title = "Latest Image Timestamp"
+              %th.sr-only= title
+              %td
+                = "#{title}:"
+                = @latest_image_timestamp
+            -#%tr<
+              -#%th.sr-only Images Ready to Review
+              -#%td= render "progress", value: @assigned_count, max: @image_count, title: "Images Assigned"
+      .col-sm-6
+        %h2 Your Status
+        %table.table.table-no-grid
+          %tr<
+            - title = "Images Described"
+            %th.sr-only=title
+            %td= render "progress", value: @my_described_count, max: @described_count, title: title
+          %tr<
+            - title = "Approved Descriptions"
+            %th.sr-only=title
+            %td= render "progress", value: 0, max: @my_described_count, title: title
+          %tr<
+            - title = "Pending Descriptions"
+            %th.sr-only=title
+            %td= render "progress", value: 0, max: @my_described_count, title: title
+          %tr<
+            - title = "Unapproved Descriptions"
+            %th.sr-only=title
+            %td= render "progress", value: 0, max: @my_described_count, title: title
     -if admin?
       .row
         .col-md-6
