@@ -95,10 +95,11 @@
               %td= render "progress", value: @unassigned_undescribed_count, max: @image_count, title: title
             %tr<
               - title = "Latest Image Timestamp"
-              %th.sr-only= title
+              %th.sr-only = title
               %td
-                = "#{title}:"
-                = @latest_image_timestamp
+                %span{"aria-hidden" => true}= "#{title}: "
+                .pull-right
+                  = @latest_image_timestamp
             -#%tr<
               -#%th.sr-only Images Ready to Review
               -#%td= render "progress", value: @assigned_count, max: @image_count, title: "Images Assigned"
