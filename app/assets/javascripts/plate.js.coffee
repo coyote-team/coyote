@@ -47,19 +47,22 @@ plate =() ->
 
   initMarkdownToolbar = () ->
     $('textarea.wmd-input').each (i, input) ->
-      #console.log(input)
-      unless $(input).data('initialized')
+      #console.log $(input).data('initialized')
+      #unless $(input).data('initialized')
+      #console.log $(input).parent().find('.btn-toolbar').length
+      unless $(input).parent().find('.btn-toolbar').length > 0
         attr = $(input).attr('id').split('wmd-input')[1]
         converter = new Markdown.Converter()
         Markdown.Extra.init(converter)
-        help =
-          handler: () ->
-            window.open('http://daringfireball.net/projects/markdown/syntax')
-            return false
-          title: "<%= I18n.t('components.markdown_editor.help', default: 'Markdown Editing Help') %>"
-        editor = new Markdown.Editor(converter, attr, help)
+        #help =
+          #handler: () ->
+            #window.open('http://daringfireball.net/projects/markdown/syntax')
+            #return false
+          #title: "<%= I18n.t('components.markdown_editor.help', default: 'Markdown Editing Help') %>"
+        editor = new Markdown.Editor(converter, attr)
         editor.run()
         $(input).data('initialized', true)
+        console.log $(input).data('initialized')
   initMarkdownToolbar()
 
 $(document).on 'turbolinks:load', ->
