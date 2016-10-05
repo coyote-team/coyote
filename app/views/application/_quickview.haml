@@ -15,7 +15,7 @@
     .caption
       - unless type == "Unassigned Images" or type == "Undescribed Images"
         - if type.start_with? "Your"
-          -descriptions = image.descriptions.collect{ |d| d if @my_description_ids.include? d.id}.compact
+          -descriptions = image.descriptions.collect{ |d| d if @your_description_ids.include? d.id}.compact
         - else
           -descriptions = image.descriptions
           - if type == "Ready to Review Descriptions"

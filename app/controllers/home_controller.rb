@@ -19,20 +19,20 @@ class HomeController < ApplicationController
         @latest_image_timestamp = Image.except(:order).order(created_at: :desc).first.created_at
       end
 
-      #MY STATUS
-      my_descriptions = current_user.descriptions
-      @my_description_count = my_descriptions.count
-      @my_approved_count = my_descriptions.approved.count
-      @my_ready_to_review_count = my_descriptions.ready_to_review.count
-      @my_unapproved_count = my_descriptions.not_approved.count
+      #YOUR STATUS
+      your_descriptions = current_user.descriptions
+      @your_described_count = current_user.descriptions.collect{|d| d if d.user == current_user}.compact.count
+      @your_approved_count = your_descriptions.approved.count
+      @your_ready_to_review_count = your_descriptions.ready_to_review.count
+      @your_unapproved_count = your_descriptions.not_approved.count
 
       #QUEUES
-      my_images = current_user.images
-      @my_images_count = my_images.count
-      @my_queue = my_images.collect{|i| i if i.undescribed_by?(current_user)}.compact
-      @my_queue_count = @my_queue.count
-      @my_queue = @my_queue.first(limit)
-      @my_description_ids = current_user.descriptions.map{|d| d.id}
+      your_images = current_user.images
+      #@your_images_count = your_images.count
+      @your_queue = your_images.collect{|i| i if i.undescribed_by?(current_user)}.compact
+      @your_queue_count = @your_queue.count
+      @your_queue = @your_queue.first(limit)
+      @your_description_ids = current_user.descriptions.map{|d| d.id}
 
       if current_user.admin?
         @unassigned_count = Image.unassigned.count
