@@ -49,32 +49,32 @@
             -#%td.text-right= @image_count
         %table.table.table-no-grid
           %tr<
-            - title = "Described Images"
+            - title = "Described images of #{number_with_delimiter @image_count} images"
             %th.sr-only= title
             %td= render "progress", value: @described_count, max: @image_count, title: title
-          %tr<
-            - title = "Approved Descriptions"
-            %th.sr-only= title
-            %td= render "progress", value: @approved_count, max: @description_count, title: title
           - if admin?
             %tr<
-              - title = "Pending Descriptions Ready for Review"
-              %th.sr-only= title
-              %td= render "progress", value: @review_count, max: @description_count, title: title
-            %tr<
-              - title = "Unapproved Descriptions"
-              %th.sr-only= title
-              %td= render "progress", value: @unapproved_count, max: @description_count, title: title
-            %tr<
-              - title = "Undescribed Images with Open Assignments"
+              - title = "Images assigned and undescribed of #{number_with_delimiter @image_count} images"
               %th.sr-only= title
               %td= render "progress", value: @open_assignment_count, max: @image_count, title: title
             %tr<
-              - title = "Images Unassigned and Undescribed"
+              - title = "Images unassigned and undescribed of #{number_with_delimiter @image_count} images"
               %th.sr-only= title
               %td= render "progress", value: @unassigned_undescribed_count, max: @image_count, title: title
             %tr<
-              - title = "Latest Image Timestamp"
+              - title = "Descriptions ready for review of #{number_with_delimiter @description_count} descriptions"
+              %th.sr-only= title
+              %td= render "progress", value: @review_count, max: @description_count, title: title
+            -#%tr<
+              -#- title = "Unapproved Descriptions"
+              -#%th.sr-only= title
+              -#%td= render "progress", value: @unapproved_count, max: @description_count, title: title
+          %tr<
+            - title = "Approved descriptions of #{number_with_delimiter @description_count} descriptions"
+            %th.sr-only= title
+            %td= render "progress", value: @approved_count, max: @description_count, title: title
+            %tr<
+              - title = "Latest image timestamp"
               %th.sr-only = title
               %td
                 %span{"aria-hidden" => true}= "#{title}: "
@@ -87,19 +87,19 @@
         %h2 Your Status
         %table.table.table-no-grid
           %tr<
-            - title = "Images Described"
+            - title = "Described images of #{number_with_delimiter @described_count} images"
             %th.sr-only=title
             %td= render "progress", value: @your_described_count, max: @described_count, title: title
           %tr<
-            - title = "Approved Descriptions"
+            - title = "Approved descriptions of #{number_with_delimiter @your_described_count} descriptions"
             %th.sr-only=title
             %td= render "progress", value: @your_approved_count, max: @your_described_count, title: title
+          -#%tr<
+            -#- title = "Pending Descriptions"
+            -#%th.sr-only=title
+            -#%td= render "progress", value: @your_pending_count, max: @your_described_count, title: title
           %tr<
-            - title = "Pending Descriptions"
-            %th.sr-only=title
-            %td= render "progress", value: @your_pending_count, max: @your_described_count, title: title
-          %tr<
-            - title = "Unapproved Descriptions"
+            - title = "Unapproved descriptions of #{number_with_delimiter @your_described_count} descriptions"
             %th.sr-only=title
             %td= render "progress", value: @your_unapproved_count, max: @your_described_count, title: title
     .row

@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       @approved_count = Description.approved.count
       if current_user.admin?
         @review_count = Description.ready_to_review.count
-        @unapproved_count = Description.not_approved.count
+        #@unapproved_count = Description.not_approved.count
         @open_assignment_count = Image.assigned_undescribed.count
         @unassigned_undescribed_count = Image.unassigned_undescribed.count
         @latest_image_timestamp = Image.except(:order).order(created_at: :desc).first.created_at
@@ -23,7 +23,7 @@ class HomeController < ApplicationController
       your_descriptions = current_user.descriptions
       @your_described_count = current_user.descriptions.collect{|d| d if d.user == current_user}.compact.count
       @your_approved_count = your_descriptions.approved.count
-      @your_ready_to_review_count = your_descriptions.ready_to_review.count
+      #@your_ready_to_review_count = your_descriptions.ready_to_review.count
       @your_unapproved_count = your_descriptions.not_approved.count
 
       #QUEUES

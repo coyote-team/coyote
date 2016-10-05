@@ -7,9 +7,7 @@
 - percentage = 100 * value / diff
 .progress
   .progress-bar{"aria-valuemax" => max, "aria-valuemin" => min, "aria-valuenow" => value, :role => "progressbar", :style => "width: #{percentage}%"}
-- progress_label= "#{value} #{title}"
-- if max != 1
-  - progress_label += " of #{max}"
+- progress_label= "#{number_with_delimiter(value)} #{title}"
 %p.no-margin
   %span.progress-label= progress_label
   %span.progress-percentage= "#{percentage}%"
