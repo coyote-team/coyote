@@ -4,7 +4,7 @@
 
     visible : true,
     consumer : {
-      css : [], // could be an array or a string
+      css : ['/assets/coyote_bookmarklet.css'], // could be an array or a string
       methods : { // The methods that the producer can call
       
       }

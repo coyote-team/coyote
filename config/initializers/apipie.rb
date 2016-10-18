@@ -11,7 +11,7 @@ All API endppoints expect <code>.json</code> as an ending.  You can hit the endp
     X-User-Email alice@example.com
     X-User-Token 1G8_s7P-V-4MGojaKD7a
 Or a query string to authenticate:
-   GET http://coyote.mcachicago.com?user_email=alice@example.com&user_token=1G8_s7P-V-4MGojaKD7a
+   GET http://coyote.mcachicago.org?user_email=alice@example.com&user_token=1G8_s7P-V-4MGojaKD7a
 
 When a description is approved for an image, a PATCH request is sent out to its resource URI.
   EOT

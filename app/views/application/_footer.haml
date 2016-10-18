@@ -15,8 +15,7 @@
           
           %p>
             Drag your
-            - hash = { authentication_token: current_user.authentication_token}
-            = link_to 'bookmarklet', easymarklet_js('coyote_consumer.js')
+            = link_to 'bookmarklet', easymarklet_js('coyote_consumer', current_user.authentication_token)
             to your bookmarks and click it to add more images, describe them, and render their annotations
             %br
             %small
