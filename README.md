@@ -10,6 +10,7 @@ Image annotation site and API to enable the distributed annotation of museum ima
 
 - [Coyote Repo](http://github.com/coyote-team/coyote)
 - [Coyote.pics](https://coyote.pics/)
+- [Coyote Tech intro](https://github.com/coyote-team/coyote/blob/master/app/views/pages/_intro.md)
 - [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
 
 ## Setup
@@ -17,9 +18,9 @@ Image annotation site and API to enable the distributed annotation of museum ima
 ```bash
 bundle install
 
-#set up the .env, override at .env.development and .env.test if needed
+#Set up the .env, override at .env.development and .env.test if needed
 
-#create the DBs for dev and test
+#Create the DBs for dev and test
 bin/rake db:create db:migrate db:seed
 RAILS_ENV=test bin/rake db:create db:migrate
 ```
@@ -35,11 +36,16 @@ bin/rake factory_girl:lint
 
 ```
 
+Then, run the test suite:
+
 ```bash
+#Once
 bin/rspec
 
+#Or dynamically via the guard daemon
 guard
-#press enter or update a page and the test suite will run
+#Leave that running while you develop
+#Then press enter or update a page and the test suite will run
 
 ```
 
@@ -67,24 +73,28 @@ TASK="websites:update[60] bundle exec cap production rake"
 #run the server
 bin/rails s
 
-#automatically run tests as you work
-#you might need to install a shim for guard
+#Automatically run tests as you work
+#You might need to install a shim for guard
 guard
 
-#run the tests on their own
+#Run the tests on their own
 bin/rspec
 
-#run the console
+#Run the console
 bin/rails c
 ```
 
 ## Vagrant Setup
 
+Some folks like to use an enclosed dev environment.  Here's a virtual machine dev environment that can be run with the open source engine vagrant. This approach can reduce your dev setup time.
+
 Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`  Then, you can view the site like so:
 
 ```bash
 vagrant up
-ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 #vagrant is the password
+ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 
+#Vagrant is the password
+#In another terminal
 open http://localhost:3000
 ```
 
@@ -93,6 +103,7 @@ open http://localhost:3000
 Assuming a recent Ubuntu distribution...
 
 ```bash
+#For MariaDB 
 sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
 sudo apt-get update
 sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
@@ -106,24 +117,25 @@ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-buil
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 
+# Check .ruby-version to make sure this is up-to-date
 rbenv install -v 2.3.1
 rbenv global 2.3.1
 echo "gem: --no-document" > ~/.gemrc
 
 gem install bundler
 
-# edit config/thin.production.yml
-# edit config/nginx.site.conf 
-# then copy or link to your /etc/nginx/sites-available
-# enable it
+# Edit config/thin.production.yml
+# Edit config/nginx.site.conf 
+# Then copy or link to your /etc/nginx/sites-available
+# Enable it
 
-# finish mysql setup
+# Finish mysql setup
 
 
-# then locally edit your config/deploy/production.rb
-# and edit your config/deploy.rb
+# Then locally edit your config/deploy/production.rb
+# And edit your config/deploy.rb
 
-# then deploy
+# Then deploy
 bundle exec cap production deploy
 ```
 
@@ -154,10 +166,6 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [Status | id: int | title: string | description: text]
   [Meta| id: int| title: string | instructions: text]
 
-  [Website]->[Group]
-
-  [Image]->[Group]
-
   [Assignment]->[Image]
   [Assignment]->[User]
 
@@ -165,11 +173,14 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [Description]->[Meta]
   [Description]->[Status]
 
+  [Image]->[Group]
+  [Image]->[Website]
   [Image] +-> 0..* [Description]
   [Image] +-> 0..* [Tag]
 ]
 ```
 
+Descriptions have an audit log that tracks changes across most columns.
  
 ## Links
 
