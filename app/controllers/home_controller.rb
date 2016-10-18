@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   before_action :get_users
+  helper BookmarkletHelper
 
   def index
     if current_user
