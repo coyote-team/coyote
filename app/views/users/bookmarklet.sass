@@ -1,0 +1,335 @@
+/*  fix padding -- thank you Paul Irish:  http://paulirish.com/2012/box-sizing-border-box-ftw/
+
+*
+  box-sizing: border-box
+  -moz-box-sizing: border-box
+  -ms-box-sizing: border-box
+
+/* grid
+
+div
+  &#bg
+    position: fixed
+    top: 80px
+    left: 0px
+    right: 0px
+    bottom: 0px
+    height: 100%
+    width: 100%
+    background: #0a0e13
+    opacity: .8
+  &#bd
+    padding-top: 80px !important
+    text-align: center
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    right: 0
+    overflow: auto
+    div
+      &#hd
+        background: #0a0e13
+        opacity: .8
+        z-index: 1
+        position: fixed
+        width: 100%
+        top: 0
+        left: 0
+        right: 0
+        height: 80px
+        display: block
+        margin: 0
+        text-align: center
+        &.noHeader
+          height: 1px
+          background-color: #0a0e13
+      &#hd_container
+        z-index: 2
+        position: fixed
+        text-align: center
+        width: 750px
+        width: 100%
+        top: 0
+        left: 0
+        right: 0
+        height: 80px
+        line-height: 80px
+        margin: 0 auto
+        a
+          &#x
+            z-index: 10
+            opacity: .5
+            position: absolute
+            right: 5px
+            top: 0
+            cursor: pointer
+            height: 80px
+            width: 15px
+            background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTVweCIgd2lkdGg9IjE1cHgiIHZpZXdCb3g9IjAgMCAxNSAxNSI+PGc+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAsMCBMMSwwIEwxNSwxNCBMMTUsMTUgTDE0LDE1IEwwLDEgWiIgLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCwxNCBMMCwxNSBMMSwxNSBMMTUsMSBMMTUsMCBMMTQsMCBaIiAvPjwvZz48L3N2Zz4=) 50% 50% no-repeat
+            &:hover
+              opacity: 1
+          &#choosePin
+            text-align: left
+            position: absolute
+            left: 0
+            top: 0
+            right: 0
+            overflow: hidden
+            white-space: pre
+            font: 18px helvetica,arial,sans-serif
+            height: 80px
+            line-height: 80px
+            padding-left: 45px
+            display: inline-block
+            color: #fff
+            border: none
+            background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMzJweCIgd2lkdGg9IjMycHgiIHZpZXdCb3g9IjAgMCAzMCAzMCI+PGc+PHBhdGggZD0iTTI5LjQ0OSwxNC42NjIgQzI5LjQ0OSwyMi43MjIgMjIuODY4LDI5LjI1NiAxNC43NSwyOS4yNTYgQzYuNjMyLDI5LjI1NiAwLjA1MSwyMi43MjIgMC4wNTEsMTQuNjYyIEMwLjA1MSw2LjYwMSA2LjYzMiwwLjA2NyAxNC43NSwwLjA2NyBDMjIuODY4LDAuMDY3IDI5LjQ0OSw2LjYwMSAyOS40NDksMTQuNjYyIiBmaWxsPSIjZmZmIj48L3BhdGg+PHBhdGggZD0iTTE0LjczMywxLjY4NiBDNy41MTYsMS42ODYgMS42NjUsNy40OTUgMS42NjUsMTQuNjYyIEMxLjY2NSwyMC4xNTkgNS4xMDksMjQuODU0IDkuOTcsMjYuNzQ0IEM5Ljg1NiwyNS43MTggOS43NTMsMjQuMTQzIDEwLjAxNiwyMy4wMjIgQzEwLjI1MywyMi4wMSAxMS41NDgsMTYuNTcyIDExLjU0OCwxNi41NzIgQzExLjU0OCwxNi41NzIgMTEuMTU3LDE1Ljc5NSAxMS4xNTcsMTQuNjQ2IEMxMS4xNTcsMTIuODQyIDEyLjIxMSwxMS40OTUgMTMuNTIyLDExLjQ5NSBDMTQuNjM3LDExLjQ5NSAxNS4xNzUsMTIuMzI2IDE1LjE3NSwxMy4zMjMgQzE1LjE3NSwxNC40MzYgMTQuNDYyLDE2LjEgMTQuMDkzLDE3LjY0MyBDMTMuNzg1LDE4LjkzNSAxNC43NDUsMTkuOTg4IDE2LjAyOCwxOS45ODggQzE4LjM1MSwxOS45ODggMjAuMTM2LDE3LjU1NiAyMC4xMzYsMTQuMDQ2IEMyMC4xMzYsMTAuOTM5IDE3Ljg4OCw4Ljc2NyAxNC42NzgsOC43NjcgQzEwLjk1OSw4Ljc2NyA4Ljc3NywxMS41MzYgOC43NzcsMTQuMzk4IEM4Ljc3NywxNS41MTMgOS4yMSwxNi43MDkgOS43NDksMTcuMzU5IEM5Ljg1NiwxNy40ODggOS44NzIsMTcuNiA5Ljg0LDE3LjczMSBDOS43NDEsMTguMTQxIDkuNTIsMTkuMDIzIDkuNDc3LDE5LjIwMyBDOS40MiwxOS40NCA5LjI4OCwxOS40OTEgOS4wNCwxOS4zNzYgQzcuNDA4LDE4LjYyMiA2LjM4NywxNi4yNTIgNi4zODcsMTQuMzQ5IEM2LjM4NywxMC4yNTYgOS4zODMsNi40OTcgMTUuMDIyLDYuNDk3IEMxOS41NTUsNi40OTcgMjMuMDc4LDkuNzA1IDIzLjA3OCwxMy45OTEgQzIzLjA3OCwxOC40NjMgMjAuMjM5LDIyLjA2MiAxNi4yOTcsMjIuMDYyIEMxNC45NzMsMjIuMDYyIDEzLjcyOCwyMS4zNzkgMTMuMzAyLDIwLjU3MiBDMTMuMzAyLDIwLjU3MiAxMi42NDcsMjMuMDUgMTIuNDg4LDIzLjY1NyBDMTIuMTkzLDI0Ljc4NCAxMS4zOTYsMjYuMTk2IDEwLjg2MywyNy4wNTggQzEyLjA4NiwyNy40MzQgMTMuMzg2LDI3LjYzNyAxNC43MzMsMjcuNjM3IEMyMS45NSwyNy42MzcgMjcuODAxLDIxLjgyOCAyNy44MDEsMTQuNjYyIEMyNy44MDEsNy40OTUgMjEuOTUsMS42ODYgMTQuNzMzLDEuNjg2IiBmaWxsPSIjYmQwODFjIj48L3BhdGg+PC9nPjwvc3ZnPg==) 0 50% no-repeat
+      &#ct
+        opacity: 1
+        font: 11px helvetica,arial,san-serif
+        margin: 0 auto 80px
+        position: relative
+        transform: translateZ(0)
+        -moz-user-select: none
+        -webkit-user-select: none
+        -ms-user-select: none
+        user-select: none
+        span.thumb
+          background: #bbb
+          position: absolute
+          border-radius: 6px
+          box-shadow: rgba(0, 0, 0, 0.21961) 0px 1px 2px 0px
+          overflow: hidden
+          font-size: 0
+          text-align: center
+          img.thumbImg
+            border: none
+            margin: 0 auto
+            padding: 0
+            display: block
+          span
+            &.ft
+              cursor: pointer
+              display: block
+              background: #fff
+              text-align: left
+              span
+                &.ftItem
+                  display: block
+                  padding: 10px
+                  color: #333
+                  font-size: 13px
+                  line-height: 17px
+                  font-style: normal
+                  text-align: left
+                  border-top: 1px solid #e7e7e7
+                &.contentEditable
+                  -moz-user-select: auto
+                  -webkit-user-select: auto
+                  -ms-user-select: auto
+                  user-select: auto
+                  cursor: text
+                  background: #fff url(data:image/png;base64,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) 98% 90% no-repeat
+                  &:focus
+                    outline: 0
+                &.ftItem span
+                  &.ftItemHd
+                    font-size: 11px
+                    line-height: 15px
+                    display: block
+                    font-weight: bold
+                    color: #717171
+                  &.ftItemContents
+                    font-size: 11px
+                    line-height: 15px
+                    display: block
+                    font-weight: bold
+                    color: #b7b7b7
+            &.pin
+              position: absolute
+              top: 0
+              left: 0
+              width: 100%
+              cursor: pointer
+              zoom: 1
+              background-color: transparent
+              -moz-transition-property: background-color
+              -moz-transition-duration: .25s
+              -webkit-transition-property: background-color
+              -webkit-transition-duration: .25s
+              transition-property: background-color
+              transition-duration: .25s
+              &:hover
+                background-color: rgba(0, 0, 0, 0.2)
+              i
+                &.attrib
+                  height: 16px
+                  width: 16px
+                  position: absolute
+                  bottom: 8px
+                  right: 8px
+                &.dimensions
+                  height: 32px
+                  width: 236px
+                  position: absolute
+                  bottom: 0
+                  right: 0
+                  line-height: 32px
+                  text-align: center
+                  font-size: 11px
+                  font-style: normal
+                  color: transparent
+          &:hover span.pin i.dimensions
+            color: #fff
+          span.pin i.buttonPin
+            position: absolute
+            top: 10px
+            left: 10px
+            height: 36px
+            display: none
+            &.buttonSave
+              width: auto
+              border-radius: 4px
+              background: #bd081c url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjEwcHgiIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDEwIDIwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxnPgogICAgPHBhdGggZD0iTTAuNDgzMDc2OSwwIEMwLjQ4MzA3NjksMC43NzIxNDI5IDEuMzI1Mzg0NiwxLjQzMjg1NzEgMi4xMzc2OTIzLDEuNzg0Mjg1NyBMMi4xMzc2OTIzLDcuMzU3MTQyOSBDMC43NTg0NjE1LDguMTQyODU3MSAwLDkuNzUzNTcxNCAwLDExLjQyODU3MTQgTDQuMjAyMzA3NywxMS40Mjg1NzE0IEw0LjIwMTUzODUsMTcuMjEyMTQyOSBDNC4yMDE1Mzg1LDE3LjIxMjE0MjkgNC4zNDE1Mzg1LDE5LjY1OTI4NTcgNSwyMCBDNS42NTc2OTIzLDE5LjY1OTI4NTcgNS43OTc2OTIzLDE3LjIxMjE0MjkgNS43OTc2OTIzLDE3LjIxMjE0MjkgTDUuNzk2OTIzMSwxMS40Mjg1NzE0IEwxMCwxMS40Mjg1NzE0IEMxMCw5Ljc1MzU3MTQgOS4yNDE1Mzg1LDguMTQyODU3MSA3Ljg2MTUzODUsNy4zNTcxNDI5IEw3Ljg2MTUzODUsMS43ODQyODU3IEM4LjY3NDYxNTQsMS40MzI4NTcxIDkuNTE2MTUzOCwwLjc3MjE0MjkgOS41MTYxNTM4LDAgTDAuNDgzMDc2OSwwIEwwLjQ4MzA3NjksMCBaIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgPC9nPgo8L3N2Zz4=) 10px 9px no-repeat
+              background-size: 10px 20px
+              padding: 0 10px 0 0
+              text-indent: 26px
+              color: #fff
+              font-size: 14px
+              line-height: 36px
+              font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+              font-style: normal
+              font-weight: bold
+              text-align: left
+              -webkit-font-smoothing: antialiased
+              -moz-osx-font-smoothing: grayscale
+          &:hover span.pin i.buttonPin
+            display: block
+          i.imagelessText
+            -webkit-font-smoothing: antialiased
+            position: absolute
+            width: 205px
+            height: 205px
+            padding-top: 26px
+            overflow: hidden
+            left: 16px
+            top: 16px
+            color: #fff
+            font-size: 22px
+            line-height: 30px
+            font-family: Helvetica, 'Helvetica Neue', sans-serif
+            font-style: normal
+            font-weight: bold
+            text-align: left
+            span
+              -webkit-font-smoothing: antialiased
+              position: absolute
+              width: 205px
+              left: 0
+              top: 0
+              color: #fff
+              font-size: 10px
+              font-family: Helvetica, 'Helvetica Neue', sans-serif
+              font-style: normal
+              font-weight: normal
+              text-align: left
+        &.hazNag
+          margin-top: 260px
+          div#nag
+            display: block
+        div#nag
+          display: none
+          padding: 30px 0 0
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          margin-top: -250px
+          height: 240px
+          background: #eee
+          border: 1px solid #000
+          border-radius: 5px
+          font: 16px helvetica,arial,sans-serif
+          color: #000
+          p
+            height: 60px
+            line-height: 60px
+            margin: 0
+            padding: 0
+            &.hd
+              font-weight: bold
+              font-size: 22px
+          a.button
+            box-shadow: 0 2px 0 0 #9c1214
+            display: inline-block
+            text-align: center
+            font-size: 15px
+            color: #fff
+            font-style: normal
+            min-width: 60px
+            height: 36px
+            line-height: 40px
+            padding: 0 14px
+            border-radius: 3px
+            background: #cd1d1f
+            border: none
+            cursor: pointer
+            text-decoration: none
+            margin: 0 5px
+            &.gray
+              box-shadow: 0 2px 0 0 #bbb
+              color: #333
+              background: #ddd
+        &.hazEdu
+          margin-top: 140px
+          div#edu
+            display: block
+        div#edu
+          border-radius: 8px
+          display: none
+          padding: 30px 0 0
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          margin-top: -140px
+          height: 130px
+          background: #fff
+          text-align: left
+          font: 32px helvetica,arial,sans-serif
+          font-weight: bold
+          color: #555
+          p
+            line-height: 36px
+            margin: 0
+            padding: 0 0 0 32px
+            &.hd
+              color: #bd081c
+
+/* Pin It and Save buttons
+
+/* Save theme
+
+/* body opacity
+
+body
+  div#bd div#ct
+    transition: opacity .6s
+  &.out div#bd div#ct
+    opacity: 0 !important
+  div#bd div#hd_container a
+    transition: top .6s
+  &.out div#bd div#hd_container a
+    top: -100px !important
+
+/* header contents
+
+.hidden
+  display: none !important
+
+canvas
+  position: fixed
+  top: -1000px
+  left: 0

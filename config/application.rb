@@ -12,6 +12,7 @@ module Plate
     config.before_configuration do
       config.sass.preferred_syntax = :sass
     end
+    config.assets.precompile += %w( coyote_producer.js )
     
     # after_commit etc. callback transaction errors will raise
     config.active_record.raise_in_transactional_callbacks = true

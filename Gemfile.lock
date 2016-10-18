@@ -14,6 +14,14 @@ GIT
       activemodel (> 4, < 5.1)
 
 GIT
+  remote: https://github.com/seeread/easymarklet.git
+  revision: e869d2f9ae60597c88b685ae5d62c46b3d1a5929
+  specs:
+    easymarklet (0.0.12)
+      easyxdm-rails (~> 0.0.5)
+      rails (>= 3.2.9)
+
+GIT
   remote: https://github.com/seeread/mortise.git
   revision: 6752d880aaf798bb17f1210be9f71fafaa7b505f
   specs:
@@ -205,6 +213,8 @@ GEM
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
+    easyxdm-rails (0.0.8)
+      rails (>= 3.2.8)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -554,6 +564,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  easymarklet!
   execjs
   factory_girl_rails
   faker

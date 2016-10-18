@@ -1,4 +1,6 @@
 Plate::Application.routes.draw do
+  match 'coyote_producer/buffer' => 'coyote_producer#buffer', via: [:get]
+  match 'coyote_producer' => 'coyote_producer#index', via: [:get]
   apipie
   resources :assignments do
     collection do
