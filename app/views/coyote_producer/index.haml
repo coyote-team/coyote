@@ -1,0 +1,18 @@
+#coyote-overlay
+  .container
+    #coyote-header
+      %h1 Welcome to Coyote
+      = link_to "Close", '#', onclick: "coyote_producer.closeFrame()"
+
+    #coyote-items
+    #coyote-footer
+      %dl
+        %dt
+          Version
+        %dd
+          1.0
+        %dt
+          Root
+        %dd
+          = request.protocol + ENV["HOST"] + ENV["PORT"] + "/api/v1"
+
