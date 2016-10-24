@@ -118,7 +118,9 @@
         - if @your_queue and @your_queue.length == 0 #&& @your_completed_queue.length == 0 && @your_described_queue.length ==0
           %p You haven't been assigned any images.
           - if !admin?
-            %p Ask an admin to assign you some.
+            %p 
+              Ask an admin to assign you some images. Meanwhile, you can #{link_to "review some approved descriptions", descriptions_path(q: {status_id_eq: 2})}, and #{link_to "start describing images", images_path}.
+
         - else
           =render "queue", queue: @your_queue, type: "Your Assigned Images", count: @your_queue_count
     -if admin?
