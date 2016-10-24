@@ -39,8 +39,8 @@
 
           - if @user.assignments.count > 0
             %h3 
-              Assignments
-              %span.badge= @user.assignments.count
+              Assignments:
+              = @user.assignments.count
             = render "assignments/table", assignments: @user.assignments, paginated: true
 
         %nav.show-nav{role:"navigation"}
