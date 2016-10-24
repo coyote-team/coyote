@@ -63,7 +63,7 @@ bin/rake websites:update
 # update images from past 60 minutes on local
 bin/rake websites:update[60]
 # update images from past 60 minutes on production
-TASK="websites:update[60] bundle exec cap production rake"
+TASK="websites:update[60]" bundle exec cap production rake
 
 ```
 

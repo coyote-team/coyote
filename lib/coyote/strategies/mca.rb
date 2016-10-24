@@ -26,6 +26,7 @@ class MCAStrategy < Strategy
   end
 
   #returns true 
+  #http://mcachicago.org/api/v1/attachment_images.json?updated_at=2016-10-20T20:41:40Z&offset=0&limit=100
   def update(website, minutes_ago)
     require 'multi_json'
     require 'open-uri'
@@ -66,7 +67,7 @@ class MCAStrategy < Strategy
 
       length = images.length
 
-      Rails.logger.info "length is #{length}"
+      Rails.logger.info "Array length is #{length}"
       Rails.logger.info "Created: #{created}"
       Rails.logger.info "Updated: #{updated}"
       Rails.logger.info "Errors: #{errors}"

@@ -103,8 +103,8 @@
             %th.sr-only=title
             %td= render "progress", value: @your_unapproved_count, max: @your_described_count, title: title
     .row
-      -if admin?
-        .col-md-12
+      .col-md-12
+        -if admin?
           %h2 Admin Queues
           =render "queue", queue: @undescribed, type: "Undescribed Images", count: @undescribed_count
           =render "queue", queue: @unassigned, type: "Unassigned Images", count: @unassigned_count
@@ -114,7 +114,6 @@
           -#=render "queue", queue: @incomplete, type: "Incomplete Images"
           -#=render "queue", queue: @not_approved, type: "Images with Unapproved Descriptions"
           -#=render "queue", queue: @assigned, type: "Assigned Images"
-      .col-md-12
         %h2 Your Queues
         - if @your_queue and @your_queue.length == 0 #&& @your_completed_queue.length == 0 && @your_described_queue.length ==0
           %p You haven't been assigned any images.
