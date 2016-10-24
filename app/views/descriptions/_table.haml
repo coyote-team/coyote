@@ -1,56 +1,57 @@
-.table-responsive
-  - klass = "table index-table "
-  - klass += " paginated-table " unless !defined? paginated or paginated == false
-  %table{class: klass}
-    %caption.sr-only Table of descriptions
-    %thead
-      %tr
-        - if action_name == "index"
-          %th{scope: "col"}
-            Image
-        %th{scope: "col"}
-          Status
-        %th{scope: "col"}
-          Metum
-        %th{scope: "col"}
-          Locale
-        %th{scope: "col"}
-          Text
-        -if current_user
-          %th{scope: "col"}
-            Author
-          %th{scope: "col"}
-            Actions
-    %tbody
-      - descriptions.each_with_index do |description, idx|
-        - klass = "item "
-        -#- klass += "success" if description.status_id == 2
-        -#- klass += "warning" if description.status_id == 1
-        -#- klass += "danger" if description.status_id == 3
-        %tr{class: klass}
+.paginated-wrap
+  .table-responsive
+    - klass = "table index-table "
+    - klass += " paginated-table " unless !defined? paginated or paginated == false
+    %table{class: klass}
+      %caption.sr-only Table of descriptions
+      %thead
+        %tr
           - if action_name == "index"
-            %td
-              =link_to image_path(description.image) do
-                =image_tag description.image.url, alt: description.image.alt
-          %td
-            =render 'status', status: description.status
-          %td
-            %span.label.label-info= description.metum
-          %td
-            %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
-          %td.text-wrap
-            = to_html(description.text)
+            %th{scope: "col"}
+              Image
+          %th{scope: "col"}
+            Status
+          %th{scope: "col"}
+            Metum
+          %th{scope: "col"}
+            Locale
+          %th{scope: "col"}
+            Text
           -if current_user
-            %td= description.user
-            %td.text-right
-              = link_to description, class: "btn btn-show", title: "Show this description" do
-                View
-              -if admin? or current_user == description.user
-                = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
-                  Edit
-              -if admin?
-                = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
-                  Delete
-- unless !defined? paginated or paginated == false
-  .text-center
-    %ul.pagination.pagination-lg.pager
+            %th{scope: "col"}
+              Author
+            %th{scope: "col"}
+              Actions
+      %tbody
+        - descriptions.each_with_index do |description, idx|
+          - klass = "item "
+          -#- klass += "success" if description.status_id == 2
+          -#- klass += "warning" if description.status_id == 1
+          -#- klass += "danger" if description.status_id == 3
+          %tr{class: klass}
+            - if action_name == "index"
+              %td
+                =link_to image_path(description.image) do
+                  =image_tag description.image.url, alt: description.image.alt
+            %td
+              =render 'status', status: description.status
+            %td
+              %span.label.label-info= description.metum
+            %td
+              %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
+            %td.text-wrap
+              = to_html(description.text)
+            -if current_user
+              %td= description.user
+              %td.text-right
+                = link_to description, class: "btn btn-show", title: "Show this description" do
+                  View
+                -if admin? or current_user == description.user
+                  = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description"  do
+                    Edit
+                -if admin?
+                  = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"} do
+                    Delete
+  - unless !defined? paginated or paginated == false
+    .text-center
+      %ul.pagination.pagination-lg.pager

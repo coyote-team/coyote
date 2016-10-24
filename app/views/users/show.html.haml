@@ -30,18 +30,17 @@
               %td<
                 = @user.admin
 
-        .col-md-12
-          - if @user.descriptions.count > 0
-            %h3 
-              Descriptions:
-              =@user.descriptions.count
-            = render "descriptions/table", descriptions: @user.descriptions, paginated: true
+        - if @user.descriptions.count > 0
+          %h3 
+            Descriptions:
+            =@user.descriptions.count
+          = render "descriptions/table", descriptions: @user.descriptions, paginated: true
 
-          - if @user.assignments.count > 0
-            %h3 
-              Assignments:
-              = @user.assignments.count
-            = render "assignments/table", assignments: @user.assignments, paginated: true
+        - if @user.assignments.count > 0
+          %h3 
+            Assignments:
+            = @user.assignments.count
+          = render "assignments/table", assignments: @user.assignments, paginated: true
 
         %nav.show-nav{role:"navigation"}
           %ul.list-inline

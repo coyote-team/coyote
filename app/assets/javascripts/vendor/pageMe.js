@@ -10,15 +10,16 @@ $.fn.pageMe = function(opts){
     var listElement = $this;
     var perPage = settings.perPage; 
     var children = listElement.children();
-    var pager = $('.pager');
+
+    var pager = $this.parents('.paginated-wrap').first().find('.pager');
     
     if (typeof settings.childSelector!="undefined") {
         children = listElement.find(settings.childSelector);
     }
     
-    if (typeof settings.pagerSelector!="undefined") {
-        pager = $(settings.pagerSelector);
-    }
+    //if (typeof settings.pagerSelector!="undefined") {
+        //pager = $(settings.pagerSelector);
+    //}
     
     var numItems = children.size();
     var numPages = Math.ceil(numItems/perPage);

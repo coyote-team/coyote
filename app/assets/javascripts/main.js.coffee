@@ -20,11 +20,13 @@ $ ->
         $that.isotope('layout')
 
     #pagination on user pages
-    $('.paginated-table tbody').pageMe
-      pagerSelector:'.pager'
-      showPrevNext:true
-      hidePageNumbers:false
-      perPage:10
+    $('.paginated-table tbody').each ()->
+      $(this).addClass('paged')
+      if !$this.hasClass('paged')
+        $(this).pageMe
+          showPrevNext:true
+          hidePageNumbers:false
+          perPage:10
 
     #set focus on flash then shift to page title
     $flash = $('#flash-messages')
