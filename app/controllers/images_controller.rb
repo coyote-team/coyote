@@ -50,6 +50,7 @@ The image JSON also includes the text of the most recent English <code>alt</code
 
     else
 
+      @search_cache_key = search_params
       @q = Image.ransack(search_params)
 
       if params[:tag].present? 

@@ -1,6 +1,6 @@
 - title = 'Images'
 -meta title: title
-- cache ['v1', admin?,  @images, @q, @page] do
+- cache ['v1', admin?,  @images, @search_cache_key, @page] do
   .container-fluid
     .index
       .index-inner
@@ -16,11 +16,7 @@
             %br
             %h2.sr-only Actions
             = link_to new_image_path, class: 'btn btn-primary new-link' do
-              
               New Image
-
-
-
 
         = search_form_for @q, :html => {:class => "form-vertical"} do |f|
           .table-responsive
@@ -76,10 +72,8 @@
                     = f.label "Search by tag", for: "q_tags_name_cont", class: "sr-only"
                     = f.search_field :tags_name_cont, :class => 'input-medium form-control', placeholder: "Search by tag"
                   %td.search-btns
-                    = link_to images_path(search_cancel: true), class: 'btn btn-sm btn-info' do
-                      Clear
-                    = button_tag type: "submit", class: "btn btn-info btn-sm" do
-                      Search
+                    = link_to "Clear", images_path(search_cancel: true), class: 'btn btn-sm btn-info'
+                    = button_tag "Search", type: "submit", class: "btn btn-info btn-sm" 
 
               %tbody
                 - @images.each_with_index do |image, idx|

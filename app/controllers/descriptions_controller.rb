@@ -33,6 +33,7 @@ class DescriptionsController < ApplicationController
 
   def index
     if request.format.html? and current_user.admin?
+      @search_cache_key = search_params
       @q = Description.ransack(search_params)
       @descriptions = @q.result(distinct: true).page(params[:page]) 
     elsif request.format.html? and !current_user.admin?
