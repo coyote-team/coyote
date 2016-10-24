@@ -3,7 +3,7 @@
     %h3<
       #{type}:
       -if queue.size > 0
-        %span= count if count
+        %span= number_with_delimiter count if count
   -if queue.size > 0
     .row
       %ul

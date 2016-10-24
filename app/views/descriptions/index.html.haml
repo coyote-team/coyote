@@ -6,7 +6,7 @@
       .index-inner
         %header
           %h1#page-title{tabindex: -1}
-            #{title}: #{@descriptions.total_count}
+            #{title}: #{number_with_delimiter @descriptions.total_count}
 
         %nav.index-nav{role:"navigation"}
 
