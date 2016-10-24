@@ -12,7 +12,6 @@
           =paginate @assignments
           %h2.sr-only Actions
           = link_to new_assignment_path, class: 'btn btn-primary new-link' do
-            %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
             New Assignment
 
         =render "table", assignments: @assignments
@@ -21,5 +20,4 @@
           =paginate @assignments
           %h2.sr-only Actions
           = link_to new_assignment_path, class: 'btn btn-primary new-link' do
-            %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
             New Assignment

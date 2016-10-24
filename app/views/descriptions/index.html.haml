@@ -1,6 +1,6 @@
 -title = 'Descriptions'
 -meta title: title
-- cache ['v1', admin?,  @descriptions] do
+- cache ['v1', current_user,  @descriptions] do
   .container-fluid
     .index
       .index-inner
@@ -18,13 +18,13 @@
             -#%i.fa.fa-fw.fa-plus{"title" => "Plus", "aria-hidden" => "true"}
             -#New Description
 
-        -if admin?
-          = search_form_for @q, :html => {:class => "form-vertical"} do |f|
-            .table-responsive
-              %table.index-table.table
-                %caption.sr-only Index table for descriptions
-                %thead
-                  %tr
+        = search_form_for @q, :html => {:class => "form-vertical"} do |f|
+          .table-responsive
+            %table.index-table.table
+              %caption.sr-only Index table for descriptions
+              %thead
+                %tr
+                  -if admin?
                     %th{scope: "col", rowspan: 2}<
                       %span.sr-only Bulk Actions
                       %a{data: {status_id: 2, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-info'} 
@@ -37,60 +37,59 @@
                       <input type="checkbox" name="select-all" id="select-all" />
                       <label for="select-all" class="sr-only">Select all items on the page</label>
 
-                    %th{scope: "col", rowspan: 2} Image
-                    %th{scope: "col"}= sort_link @q, :status_id, 'Status'
-                    %th{scope: "col"}= sort_link @q, :metum_id, 'Metum'
-                    %th{scope: "col", rowspan: 2}= sort_link @q, :locale, 'Locale'
-                    %th{scope: "col"} Text
-                    %th{scope: "col"}= sort_link @q, :user_last_name, 'Author'
-                    %th{scope: "col"} Actions
+                  %th{scope: "col", rowspan: 2} Image
+                  %th{scope: "col"}= sort_link @q, :status_id, 'Status'
+                  %th{scope: "col"}= sort_link @q, :metum_id, 'Metum'
+                  %th{scope: "col", rowspan: 2}= sort_link @q, :locale, 'Locale'
+                  %th{scope: "col"} Text
+                  %th{scope: "col"}= sort_link @q, :user_last_name, 'Author'
+                  %th{scope: "col"} Actions
 
-                  %tr<
-                    %td= f.input  :status_id_eq, as: :select, include_blank: "Any status", label: "Select a status", required: false, collection: Status.all, label_html: {class: 'sr-only'}
+                %tr<
+                  %td= f.input  :status_id_eq, as: :select, include_blank: "Any status", label: "Select a status", required: false, collection: Status.all, label_html: {class: 'sr-only'}
 
-                    %td= f.input  :metum_id_eq, as: :select, include_blank: "Any metum", label: "Select a metum", required: false, collection: Metum.all , label_html: {class: 'sr-only'}
-                    -#%td= f.input  :locale_id_eq, as: :select, include_blank: "Any locale", label: "Select a locale", required: false, collection: Locale.all , label_html: {class: 'sr-only'}
-                    %td<
-                      =f.label "Search by description", for: "q_descriptions_text_cont", class: "sr-only"
-                      = f.search_field :text_cont, :class => 'input-medium form-control', placeholder: "Search by description"
-                    %td= f.input  :user_id_eq, as: :select, include_blank: "Any author", label: "Select an author", required: false, collection: User.all , label_html: {class: 'sr-only'}
-                    %td.search-btns<
-                      = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-info' do
-                        Clear
-                      = button_tag type: "submit", class: "btn btn-info btn-sm" do
-                        Search
-                %tbody
-                  - @descriptions.each_with_index do |description, idx|
-                    - klass = "item "
-                    -#- klass += "success" if description.status_id == 2
-                    -#- klass += "warning" if description.status_id == 1
-                    -#- klass += "danger" if description.status_id == 3
-                    %tr{class: klass}
+                  %td= f.input  :metum_id_eq, as: :select, include_blank: "Any metum", label: "Select a metum", required: false, collection: Metum.all , label_html: {class: 'sr-only'}
+                  -#%td= f.input  :locale_id_eq, as: :select, include_blank: "Any locale", label: "Select a locale", required: false, collection: Locale.all , label_html: {class: 'sr-only'}
+                  %td<
+                    =f.label "Search by description", for: "q_descriptions_text_cont", class: "sr-only"
+                    = f.search_field :text_cont, :class => 'input-medium form-control', placeholder: "Search by description"
+                  %td= f.input  :user_id_eq, as: :select, include_blank: "Any author", label: "Select an author", required: false, collection: User.all , label_html: {class: 'sr-only'}
+                  %td.search-btns<
+                    = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-info' do
+                      Clear
+                    = button_tag type: "submit", class: "btn btn-info btn-sm" do
+                      Search
+              %tbody
+                - @descriptions.each_with_index do |description, idx|
+                  - klass = "item "
+                  -#- klass += "success" if description.status_id == 2
+                  -#- klass += "warning" if description.status_id == 1
+                  -#- klass += "danger" if description.status_id == 3
+                  %tr{class: klass}
+                    -if admin?
                       %td= check_box("id-", description.id, class: "id", data: {"id" => description.id}, "aria-labeledby": "description-text-#{ description.id } ")
 
-                      %td
-                        =link_to image_path(description.image) do
-                          =image_tag description.image.url, alt: description.image.alt, "aria-describedby": "description-text-#{description.id}"
-                      %td
-                        =render 'status', status: description.status
-                      %td
-                        %span.label.label-info= description.metum
-                      %td
-                        %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
-                      %td{id: "description-text-#{description.id}"}
-                        .text-wrap= to_html(description.text)
-                      %td= description.user
-                      %td.text-right
-                        = link_to description, class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
-                          View
+                    %td
+                      =link_to image_path(description.image) do
+                        =image_tag description.image.url, alt: description.image.alt, "aria-describedby": "description-text-#{description.id}"
+                    %td
+                      =render 'status', status: description.status
+                    %td
+                      %span.label.label-info= description.metum
+                    %td
+                      %span.label.label-default= LanguageList::LanguageInfo.find(description.locale).name if description.locale
+                    %td{id: "description-text-#{description.id}"}
+                      .text-wrap= to_html(description.text)
+                    %td= description.user
+                    %td.text-right
+                      = link_to description, class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
+                        View
+                      - if admin? or current_user == description.user
                         = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
                           Edit
+                      -if admin?
                         = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
                           Delete
-
-        -else
-          =render 'table', descriptions: @descriptions
-
         %nav.index-nav{role:"navigation"}
           %h2.sr-only Pagination
           =paginate @descriptions

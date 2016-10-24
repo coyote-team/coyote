@@ -32,12 +32,10 @@ class DescriptionsController < ApplicationController
   EOT
 
   def index
-    if request.format.html? and current_user.admin?
+    if request.format.html? and current_user
       @search_cache_key = search_params
       @q = Description.ransack(search_params)
       @descriptions = @q.result(distinct: true).page(params[:page]) 
-    elsif request.format.html? and !current_user.admin?
-      @descriptions = current_user.descriptions.all.page params[:page]
     else
       @descriptions = Description.all.page params[:page]
     end

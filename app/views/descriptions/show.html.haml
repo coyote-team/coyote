@@ -1,7 +1,7 @@
 -title = "Showing #{@description}"
 -meta title: title
 - image = @description.image
--cache ['v1', admin?,  @description] do
+-cache ['v1', current_user,  @description] do
   .entity-outer
     .entity
       .entity-inner
@@ -62,9 +62,10 @@
                       = link_to new_description_path(user_id: current_user.id, image_id: next_image.id) , class: 'btn btn-primary' do
                         %i.fa.fa-fw.fa-play{"aria-hidden" => "true"}
                         Next image
-                %li
-                  = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
-                    Edit
+                -if @description.user == current_user or admin?
+                  %li
+                    = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
+                      Edit
                 %li
                   = link_to new_description_path(user_id: current_user.id, image_id: @description.image_id) , class: 'btn btn-primary' do
                     Describe Again

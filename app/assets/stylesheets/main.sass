@@ -46,6 +46,16 @@ dd
       border-top: 0px
 .paginated-table
   margin-bottom: 0px !important
+#main .pagination a
+  text-decoration: none
+  font-weight: bold
+  border: 1px solid black
+  text-transform: uppercase
+  &:hover
+    color: $white
+    background: $blue
+  
+  
 .text-wrap
   max-width: 300px
 
@@ -53,6 +63,7 @@ dd
 .btn-show, .btn-edit, .btn-destroy
   @extend .btn-sm
 .btn
+  font-weight: bold
   padding: 4px 7px 5px
 .btn-default:hover, .btn-success:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hoverdanger:hover, .btn-primary:hover, .btn-info:hover
   background: $blue
