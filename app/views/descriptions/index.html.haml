@@ -57,6 +57,7 @@
                   %td.search-btns<
                     = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-info' do
                       Clear
+                    %nbsp
                     = button_tag type: "submit", class: "btn btn-info btn-sm" do
                       Search
               %tbody
@@ -84,9 +85,11 @@
                     %td.text-right
                       = link_to description, class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
                         View
+                      %nbsp
                       - if admin? or current_user == description.user
                         = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
                           Edit
+                        %nbsp
                       -if admin?
                         = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
                           Delete

@@ -27,6 +27,7 @@
                 %td.text-right
                   = link_to website, class: "btn btn-show", title: "Show this website" do
                     View
+                  %nbsp
                   = link_to edit_website_path(website), class: "btn btn-edit", title: "Edit this website"  do
                     Edit
                   -#= link_to website, title: "Delete this website" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{website}?"} do

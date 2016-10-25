@@ -1,9 +1,10 @@
 - if queue
   .queue
     %h3<
-      #{type}:
-      -if queue.size > 0
-        %span= number_with_delimiter count if count
+      - if count
+        #{type}: #{number_with_delimiter count}
+      - else
+        #{type}
   -if queue.size > 0
     .row
       %ul
