@@ -34,6 +34,7 @@ class DescriptionsController < ApplicationController
   def index
     if request.format.html? and current_user
       @search_cache_key = search_params
+      search_params["text_cont_all"] = search_params["text_cont_all"].split(" ")
       @q = Description.ransack(search_params)
       @descriptions = @q.result(distinct: true).page(params[:page]) 
     else

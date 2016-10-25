@@ -51,8 +51,8 @@
                   %td= f.input  :metum_id_eq, as: :select, include_blank: "Any metum", label: "Select a metum", required: false, collection: Metum.all , label_html: {class: 'sr-only'}
                   -#%td= f.input  :locale_id_eq, as: :select, include_blank: "Any locale", label: "Select a locale", required: false, collection: Locale.all , label_html: {class: 'sr-only'}
                   %td<
-                    =f.label "Search by description", for: "q_descriptions_text_cont", class: "sr-only"
-                    = f.search_field :text_cont, :class => 'input-medium form-control', placeholder: "Search by description"
+                    =f.label "Search by description", for: "q_text_cont_all", class: "sr-only"
+                    = f.search_field :text_cont_all, :class => 'input-medium form-control', placeholder: "Search by description"
                   %td= f.input  :user_id_eq, as: :select, include_blank: "Any author", label: "Select an author", required: false, collection: User.all , label_html: {class: 'sr-only'}
                   %td.search-btns<
                     = link_to descriptions_path(search_cancel: true), class: 'btn btn-sm btn-info' do
