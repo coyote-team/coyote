@@ -12,13 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/sortable
-//= require jquery-ui/effect-highlight
 //= require cocoon
 //= require turbolinks
 //= require select2
 //= require pagedown_bootstrap
 //= require bootstrap-sprockets
-//= require_tree ./vendor/
+//= require vendor/bootstrap.file-input
+//= require vendor/imagesloaded.pkgd
+//= require vendor/isotope.pkgd.min
+//= require vendor/pageMe
+//= require vendor/rollbar
 //= require plate
 //= require main
