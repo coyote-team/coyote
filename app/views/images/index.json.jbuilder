@@ -1,8 +1,10 @@
 if @images
-  json._metadata do
-    json.page @images.current_page
-    json.pages @images.total_pages
-    json.total_count @images.total_count
+  if @image.respond_to? :current_page
+    json._metadata do
+      json.page @images.current_page
+      json.pages @images.total_pages
+      json.total_count @images.total_count
+    end
   end
 
   json.records  do

@@ -15,8 +15,8 @@ GIT
 
 GIT
   remote: https://github.com/seeread/easymarklet.git
-  revision: aa3aaca897ffc3b27297c6d4392c6ae03799f57d
-  ref: aa3aaca897ffc3b27297c6d4392c6ae03799f57d
+  revision: abca95adc362d96adb1c0dc996cea5c79b9629ad
+  ref: abca95a
   specs:
     easymarklet (0.0.12)
       easyxdm-rails (~> 0.0.5)

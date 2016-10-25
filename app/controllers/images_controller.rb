@@ -23,12 +23,13 @@ class ImagesController < ApplicationController
   # GET /images
   param :page, :number
   param :canonical_id,    String , optional: true
+  param :website_id,    String , optional: true
   param :status_ids,      Array, optional: true
   param :priority,        [true, false], optional: true
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.
-If the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code>.
+But if the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
 
 <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
@@ -38,18 +39,20 @@ If the params include <code>canonical_id</code>, an object is returned in the st
 - 2 : "Approved"
 - 3 : "Not approved"
 
-Accordingly, <code>status_id[]=1&status_id[]=2</code> should be used in the CMS view.
+You will likely want to us use <code>status_id[]=2</code> on your client.
 
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>. If an approved description is available, it will be supplied instead of any ready to review descriptions when <code>status_id[]=1&status_id[]=2</code> is requested.
+The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>, defaulted to <code>status_id=2</code/>. 
   EOT
   def index
-    if params[:canonical_id].present? 
+    @status_ids = [2]
+    @status_ids = params[:status_ids]  if params[:status_ids]
 
+    if params[:canonical_id].present? 
       #for ajax
       @image = Image.find_by(canonical_id: params[:canonical_id])
-
+    elsif params[:website_id].present?
+      @images = Image.where(website_id: params[:website_id])
     else
-
       @search_cache_key = search_params
       if search_params
         search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") 
@@ -69,12 +72,7 @@ The image JSON also includes the text of the most recent English <code>alt</code
           Image.tag_counts_on(:tags)
         end
       end
-
     end
-
-
-    @status_ids = [2]
-    @status_ids = params[:status_ids]  if params[:status_ids]
   end
 
   # GET /images/1
@@ -137,12 +135,12 @@ Ex:
 
   EOT
   def show
+    @status_ids = [2]
+    @status_ids = params[:status_ids]  if params[:status_ids]
     if request.format.html?
       @previous_image = Image.where("id < ?", @image.id).first
       @next_image = Image.where("id > ?", @image.id).first
     end
-    @status_ids = params[:status_ids]  if params[:status_ids]
-    @status_ids ||= [2]
   end
 
   # GET /images/new
@@ -160,9 +158,17 @@ Ex:
   def create
     @image = Image.new(image_params)
     if @image.save
-      redirect_to @image, notice: 'Image was successfully created.'
+      if request.format.html?
+        redirect_to @image, notice: 'Image was successfully created.'
+      else
+        render :json => @image.to_json
+      end
     else
-      render :new
+      if request.format.html?
+        render :new
+      else
+        render :json => { :errors => @image.errors.full_messages }
+      end
     end
   end
 
@@ -170,9 +176,17 @@ Ex:
   param_group :image
   def update
     if @image.update(image_params)
-      redirect_to @image, notice: 'Image was successfully updated.'
+      if request.format.html?
+        redirect_to @image, notice: 'Image was successfully updated.'
+      else
+        render @image
+      end
     else
-      render :edit
+      if request.format.html?
+        render :edit
+      else
+        render :json => { :errors => @image.errors.full_messages }
+      end
     end
   end
 

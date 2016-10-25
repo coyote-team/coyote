@@ -1,3 +1,4 @@
+#TODO move description look up into controller
 json.extract! image, 
   :id, 
   :canonical_id, 
@@ -14,11 +15,7 @@ json.alt image.alt(@status_ids)
 json.title image.title
 json.long image.long(@status_ids)
 
-if !@status_ids.empty?
-  descriptions = image.descriptions.where(status_id: @status_ids)
-else
-  descriptions = image.descriptions
-end
+descriptions = image.descriptions.where(status_id: @status_ids)
 json.descriptions descriptions  do |description|
   json.partial! "descriptions/description", description: description
 end

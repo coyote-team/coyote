@@ -76,7 +76,7 @@ gem 'roo' #spreadsheet interfaces
 gem 'iconv'
 gem "audited-activerecord"
 #gem 'easymarklet', :path=>'../easymarklet'
-gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => 'aa3aaca897ffc3b27297c6d4392c6ae03799f57d'
+gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => 'abca95a'
 
 gem 'rollbar', '~> 2.7'
 

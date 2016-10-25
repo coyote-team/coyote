@@ -59,6 +59,7 @@ class Image < ActiveRecord::Base
     path
   end
 
+  #TODO are these both the most recent? c.f. apipie doc in images#index
   def alt(status_ids=[2])
     d = descriptions.where(metum_id: 1, status_id: status_ids, locale: "en").first
     if d
@@ -86,9 +87,11 @@ class Image < ActiveRecord::Base
   end
 
 
-  def url(protocol="https")
+  def url(protocol="https:")
     if path.starts_with?("//")
       protocol + path
+    elsif path.starts_with?("http")
+      path
     elsif website
       website.url + path
     else 

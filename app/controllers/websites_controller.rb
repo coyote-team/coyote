@@ -32,7 +32,6 @@ class WebsitesController < ApplicationController
     @our_matched_ids = uniqs & our_c_ids
     @our_unmatched_ids =  our_c_ids - uniqs
     @their_unmatched_ids = uniqs - our_c_ids
-    
   end
 
   # GET /websites/new
@@ -49,18 +48,34 @@ class WebsitesController < ApplicationController
     @website = Website.new(website_params)
 
     if @website.save
-      redirect_to @website, notice: 'Website was successfully created.'
+      if request.format.html?
+        redirect_to @website, notice: 'Website was successfully created.'
+      else
+        render :json => @website.to_json
+      end
     else
-      render :new
+      if request.format.html?
+        render :new
+      else
+        render :json => { :errors => @website.errors.full_messages }
+      end
     end
   end
 
   # PATCH/PUT /websites/1
   def update
     if @website.update(website_params)
-      redirect_to @website, notice: 'Website was successfully updated.'
+      if request.format.html?
+        redirect_to @website, notice: 'Website was successfully updated.'
+      else
+        render @website
+      end
     else
-      render :edit
+      if request.format.html?
+        render :edit
+      else
+        render :json => { :errors => @website.errors.full_messages }
+      end
     end
   end
 
