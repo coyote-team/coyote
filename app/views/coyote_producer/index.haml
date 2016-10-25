@@ -3,10 +3,9 @@
     #coyote-header
       %h1 Welcome to Coyote
       = link_to "Close", '#', onclick: "coyote_producer.closeFrame()"
-
     #coyote-items
     #coyote-footer
-      %dl
+      %dl#info
         %dt
           Version
         %dd
@@ -15,4 +14,3 @@
           Root
         %dd
           = request.protocol + ENV["HOST"] + ENV["PORT"] + "/api/v1"
-
