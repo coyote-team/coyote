@@ -86,9 +86,13 @@ class Image < ActiveRecord::Base
   end
 
 
-  def url
-    if website
+  def url(protocol="https")
+    if path.starts_with?("//")
+      protocol + path
+    elsif website
       website.url + path
+    else 
+      path
     end
   end
 
