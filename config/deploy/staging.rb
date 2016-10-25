@@ -1,3 +1,3 @@
 set :stage, :staging
-server '', user: 'ubuntu', roles: %w{web app db}
+server ENV["STAGING_IP"], user: ENV["STAGING_USER"], roles: %w{web app db}
 set :linked_files, %w{.env .env.staging} 

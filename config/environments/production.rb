@@ -65,7 +65,6 @@ Plate::Application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.perform_caching = true
-  #config.action_controller.asset_host = ENV['S3_HOST_ALIAS']
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
@@ -93,15 +92,4 @@ Plate::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  #config.paperclip_defaults = {
-    #:storage => :fog,
-    #:fog_credentials => {
-      #:provider => ENV['FOG_PROVIDER'],
-      ##:region => ENV['FOG_REGION'] ,
-      #:aws_access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      #:aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    #},
-    #:fog_directory => ENV['FOG_DIRECTORY'],
-    #:fog_host => ENV['S3_HOST_ALIAS']
-  #}
 end

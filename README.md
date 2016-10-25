@@ -100,13 +100,20 @@ open http://localhost:3000
 
 ## Server Setup
 
-Assuming a recent Ubuntu distribution...
+Assuming a Ubuntu 16.04 LTS distribution...
 
 ```bash
-#For MariaDB 
-sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+#We add this first repo for MariaDB (which is bit compatible with MySQL) 
+sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu xenial main'
 sudo apt-get update
-sudo apt-get install -y software-properties-common graphviz git libpq-dev gawk build-essential libreadline6-dev zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc  zlib1g-dev  libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql 
+sudo apt-get install -y --allow-unauthenticated software-properties-common
+sudo apt-get install -y --allow-unauthenticated graphviz git libpq-dev gawk build-essential libreadline6-dev \
+zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool \
+bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc zlib1g-dev \
+libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 \
+libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
+libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config \
+libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql screen
 
 sudo apt-get upgrade -y
 git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -117,26 +124,27 @@ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-buil
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 
-# Check .ruby-version to make sure this is up-to-date
+# Check .ruby-version to make sure the version below is up-to-date
 rbenv install -v 2.3.1
 rbenv global 2.3.1
 echo "gem: --no-document" > ~/.gemrc
-
 gem install bundler
 
-# Edit config/thin.production.yml
-# Edit config/nginx.site.conf 
+# Edit config/thin.production.yml to adjust absolute path for the project on your server
+# Edit config/nginx.site.conf to set the log path into the correct absolute path
 # Then copy or link to your /etc/nginx/sites-available
-# Enable it
+# Then enable the site with symlink...
+# From /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
 
-# Finish mysql setup
-
-
-# Then locally edit your config/deploy/production.rb
-# And edit your config/deploy.rb
+# Finish creating your MariaDB/MySQL database and user
+# Then on your local box copy the bottom section of .env.example to .env.production (you should already have a .env)
+# You might as well double check if your .env and .env.production files are up to date (check against .env.example)
 
 # Then deploy
 bundle exec cap production deploy
+# And seed the database
+TASK="db:seed" bundle exec cap production rake
+
 ```
 
 ## Components
@@ -149,7 +157,7 @@ bundle exec cap production deploy
 - [SASS](http://sass-lang.com/)
 - [Coffeescript](http://coffeescript.org/)
 
-##Data model
+## Data model
 
 ![Data model](datamodel.png)
 
