@@ -18,7 +18,7 @@ Image annotation site and API to enable the distributed annotation of museum ima
 ```bash
 bundle install
 
-# Copy up the top block .env.example to .env and populate
+# Copy the top block .env.example to .env and populate
 # Copy the bottom block of .env.example to .env.development
 # Copy the bottom block of .env.example to .env.test
 # Create the DBs for dev and test
@@ -139,7 +139,7 @@ gem install bundler
 # Finish creating your MariaDB/MySQL database and user
 
 # Then on your local box 
-# Copy up the top block .env.example to .env and populate
+# Copy the top block .env.example to .env and populate if you haven't
 # Copy the bottom block of .env.example to .env.production and populate
 # Then deploy
 bundle exec cap production deploy
@@ -151,12 +151,12 @@ TASK="db:seed" bundle exec cap production rake
 ## Components
 
 - [RubyOnRails](http://rubyonrails.org/)
-- [accecess](http://lukyvj.github.io/accecss/)
 - [MariaDB](https://mariadb.org/) 
 - [rbenv](http://rbenv.org/) with [plugins](https://github.com/sstephenson/rbenv/wiki/Plugins) for gems, bundler, build, and binstubs
 - [bundler](http://bundler.io/)
 - [SASS](http://sass-lang.com/)
 - [Coffeescript](http://coffeescript.org/)
+- [accecess](http://lukyvj.github.io/accecss/)
 
 ## Data model
 
