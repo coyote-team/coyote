@@ -28,7 +28,9 @@
           = f.association :user, label: "Author", prompt: "Pick the author"
         - elsif action_name == 'new' and 
           = f.input :user_id,  as: :hidden, input_html: {value: @author.id}
-        = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type", :label_method => lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum ==metum}.compact.count})" }, selected:  params[:metum_id]
+        - metum_id = params[:metum_id]
+        - metum_id ||= @description.metum_id
+        = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type", :label_method => lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum ==metum}.compact.count})" }, selected:  metum_id
         .metum-instructions
           - @meta.each do |m|
             - if @description.metum_id == m.id or params[:metum_id].to_i == m.id
@@ -46,7 +48,9 @@
         - else
           = f.input :status_id, as: :hidden, input_html: {value: 1}
 
-        = f.input :text , :as => :pagedown, :input_html => { :preview => true }
+        - text = params[:text]
+        - text ||= @description.text
+        = f.input :text , :as => :pagedown, :input_html => { :preview => true, value: text}
 
         = f.button :submit
         - if action_name == 'edit'

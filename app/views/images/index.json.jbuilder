@@ -1,5 +1,5 @@
 if @images
-  if @image.respond_to? :current_page
+  if @images.respond_to? :current_page
     json._metadata do
       json.page @images.current_page
       json.pages @images.total_pages

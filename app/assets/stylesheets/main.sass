@@ -323,6 +323,15 @@ body#coyote-bookmarklet-buffer, body#coyote-bookmarklet
   iframe
     width: 100%
 #coyote-overlay
+  #coyote-header, #coyote-footer
+    color: $white
+    position: relative
+    a, a:hover
+      color: $white
+  .bookmarklet-close
+    position: absolute
+    right: 0
+    top: 0
   #coyote-items
     display: flex
     flex-wrap: wrap
@@ -331,14 +340,23 @@ body#coyote-bookmarklet-buffer, body#coyote-bookmarklet
 
   .item
     position: relative
-    margin-bottom: 20px
-    img
+    margin-bottom: 2em
+    p
+      color: $white
+      padding: 1em 0
+      border-bottom: 1px solid $white
+      min-height: 4em
+      a
+        margin-left: 1em
+        float: right
+        &:hover
+          color: $white
+    img, p 
       max-width: 300px
       margin-bottom: 10px
     button
       text-align: center
       width: 100%
       display: block
-      //&:hover
-        //background-color: $blue
-        //color: $white
+      &:hover
+        color: $white

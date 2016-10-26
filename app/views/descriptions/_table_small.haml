@@ -14,10 +14,9 @@
           -if d.user
             %p
               = render 'status', status: d.status
-              - metum_id= "#{queue_id}-#{d.id}-metum"
-              %span.label.label-info{id: metum_id}= d.metum
-              - locale_id= "#{queue_id}-#{d.id}-locale"
-              %span.label.label-default{id: locale_id}= LanguageList::LanguageInfo.find(d.locale).name
+              %nbsp
+              %span.label.label-info= d.metum
+              %span.label.label-default= LanguageList::LanguageInfo.find(d.locale).name
             %p
               from
               =d.user

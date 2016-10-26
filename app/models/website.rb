@@ -13,7 +13,8 @@
 class Website < ActiveRecord::Base
   validates_presence_of :title, :url
   validates_url :url
-  has_many :images, dependent: :nullify
+  validates_uniqueness_of :url
+  has_many :images, dependent: :destroy
 
   def to_s
     title
