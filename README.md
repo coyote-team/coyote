@@ -18,9 +18,10 @@ Image annotation site and API to enable the distributed annotation of museum ima
 ```bash
 bundle install
 
-#Set up the .env, override at .env.development and .env.test if needed
-
-#Create the DBs for dev and test
+# Copy up the top block .env.example to .env and populate
+# Copy the bottom block of .env.example to .env.development
+# Copy the bottom block of .env.example to .env.test
+# Create the DBs for dev and test
 bin/rake db:create db:migrate db:seed
 RAILS_ENV=test bin/rake db:create db:migrate
 ```
@@ -39,30 +40,31 @@ bin/rake factory_girl:lint
 Then, run the test suite:
 
 ```bash
-#Once
+# Once
 bin/rspec
 
-#Or dynamically via the guard daemon
+# Or dynamically via the guard daemon
 guard
-#Leave that running while you develop
-#Then press enter or update a page and the test suite will run
+# Leave that running while you develop
+# Then press enter or update a page and the test suite will run
 
 ```
 
 ## Deploy
 
 ```bash
+# Copy the .env.production from the server
 bundle exec cap production deploy
 ```
 
 ## Update website images
 
 ```bash
-# update images from past 2 minutes on local
+# Update images from past 2 minutes on local
 bin/rake websites:update
-# update images from past 60 minutes on local
+# Update images from past 60 minutes on local
 bin/rake websites:update[60]
-# update images from past 60 minutes on production
+# Update images from past 60 minutes on production
 TASK="websites:update[60]" bundle exec cap production rake
 
 ```
@@ -70,17 +72,17 @@ TASK="websites:update[60]" bundle exec cap production rake
 ## Usage 
 
 ```bash
-#run the server
+# Run the server
 bin/rails s
 
-#Automatically run tests as you work
-#You might need to install a shim for guard
+# Automatically run tests as you work
+# You might need to install a shim for guard
 guard
 
-#Run the tests on their own
+# Run the tests on their own
 bin/rspec
 
-#Run the console
+# Run the console
 bin/rails c
 ```
 
@@ -93,17 +95,17 @@ Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`
 ```bash
 vagrant up
 ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 
-#Vagrant is the password
-#In another terminal
+# Vagrant is the password
+# In another terminal
 open http://localhost:3000
 ```
 
 ## Server Setup
 
-Assuming a Ubuntu 16.04 LTS distribution...
+Assuming a Ubuntu 16.04 LTS distribution with a coyote user...
 
 ```bash
-#We add this first repo for MariaDB (which is bit compatible with MySQL) 
+# We add this first repo for MariaDB (which is bit compatible with MySQL) 
 sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu xenial main'
 sudo apt-get update
 sudo apt-get install -y --allow-unauthenticated software-properties-common
@@ -130,16 +132,15 @@ rbenv global 2.3.1
 echo "gem: --no-document" > ~/.gemrc
 gem install bundler
 
-# Edit config/thin.production.yml to adjust absolute path for the project on your server
 # Edit config/nginx.site.conf to set the log path into the correct absolute path
 # Then copy or link to your /etc/nginx/sites-available
 # Then enable the site with symlink...
 # From /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
-
 # Finish creating your MariaDB/MySQL database and user
-# Then on your local box copy the bottom section of .env.example to .env.production (you should already have a .env)
-# You might as well double check if your .env and .env.production files are up to date (check against .env.example)
 
+# Then on your local box 
+# Copy up the top block .env.example to .env and populate
+# Copy the bottom block of .env.example to .env.production and populate
 # Then deploy
 bundle exec cap production deploy
 # And seed the database
