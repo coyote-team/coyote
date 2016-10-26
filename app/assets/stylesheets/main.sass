@@ -66,7 +66,7 @@ dd
 .btn
   font-weight: bold
   padding: 4px 7px 5px
-.btn-default:hover, .btn-success:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hoverdanger:hover, .btn-primary:hover, .btn-info:hover
+.btn-default:hover, .btn-success:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hover, .btn-danger:hover, .btn-primary:hover, .btn-info:hover
   background: $blue
 .close
   +opacity(1)
@@ -313,17 +313,16 @@ td.text-right
 .file-input-wrapper i
   display: none
 
+a img:hover
+  +opacity(0.8)
 
+//bookmarklet iframe
 body#coyote-bookmarklet-buffer, body#coyote-bookmarklet
   background: none
   padding-top: none !important
   iframe
     width: 100%
 #coyote-overlay
-  color: white
-  a
-    color: white
-
   #coyote-items
     display: flex
     flex-wrap: wrap
@@ -335,18 +334,11 @@ body#coyote-bookmarklet-buffer, body#coyote-bookmarklet
     margin-bottom: 20px
     img
       max-width: 300px
-      margin-bottom: 0px
-    a
-      height: 50px
-      line-height: 50px
+      margin-bottom: 10px
+    button
       text-align: center
       width: 100%
-      background: black
-      color: white
       display: block
-      border: 1px solid white
-      &:hover
-        background: white
-        text-decoration: none
-        color: black
-        border: 1px solid black
+      //&:hover
+        //background-color: $blue
+        //color: $white

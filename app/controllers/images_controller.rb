@@ -28,10 +28,11 @@ class ImagesController < ApplicationController
   param :priority,        [true, false], optional: true
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code>.
-But if the params include <code>canonical_id</code>, an object is returned in the style of <code>GET</code> <code>/images/1</code>.
+If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code> (in which case there will be only one page and no <code>_metadata</code>).
 
-<code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
+If the params include <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET</code> <code>/images/1</code> if it is available.
+
+Also, <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
 <code>status_id[]</code> values can include:
 

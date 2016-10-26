@@ -12,6 +12,7 @@
         var pageIdCounter = 0;
         var domain = document.domain;
         var protocol = document.location.protocol;
+        var href = document.location.href;
         $images.each(function(){
           //mark them with an arbitrary counter so we can find them later for annotations
           $(this).data('coyote-page-id', pageIdCounter);
@@ -22,8 +23,7 @@
             "alt": $(this).attr('alt')
           });
         });
-        //coyote_token comes from body of bookmarklet coyote_consumer/index.js.erb
-        coyote_consumer.producer.populateImages(coyote_token, domain, protocol,  imgs);
+        coyote_consumer.producer.populateImages(domain, protocol, href,  imgs);
       },
       methods : { 
         annotateImages: function(imgs){
@@ -62,6 +62,7 @@
             }
           });
           getWebsites.fail(function(jqXHR, textStatus) {
+            //TODO is user logged in?
             console.log( "getWebsites failed: " + textStatus );
           });
         };
@@ -96,7 +97,7 @@
         coyote.showButtons = function(){
           var $items = $('#coyote-items .item');
           $items.each(function() {
-            var $btn = $('<button class="btn btn-primary">Describe</button>')
+            var $btn = $('<button class="btn btn-info">Describe</button>')
             var $img = $(this).find('img');
             var imgObj = {
               "css_id": $img.attr('id'),
@@ -113,23 +114,23 @@
                   return this[0].indexOf(src) !== -1;
                 });
                 if(img.length > 0){
-                  //TODO check page urls
-                  console.log(img);
-                  window.open("/descriptions/new?image_id="+img.id);
+                  //TODO add page url to image record if not present
+                  window.open("/descriptions/new?image_id="+img.id+"&metum_id=1");
                 } else {
                   coyote.postImage(imgObj);
                 }
               });
             });
             $(this).append($btn);
+            //annotate images
+            coyote.getImages();
           });
         }
 
         coyote.postImage = function(imgObj){
           console.log('postImage');
           var canonical_id = "bookmarklet_" + coyote.website_id + "_" + imgObj.css_id + "_"+ Date.now();
-          //TODO add page urls
-          //TODO path logic...
+          //TODO protocol match logic...
           //var path = imgObj.src.replace(/^(https?:|)\/\//, '//')
           //console.log(path);
           var data = {
@@ -138,7 +139,8 @@
              "title": imgObj.alt,
              "website_id" : coyote.website_id,
              "group_id" : "1",
-             "canonical_id" : canonical_id
+             "canonical_id" : canonical_id,
+             "page_urls": { coyote.href }
            }
           };
           var postImage = $.ajax({
@@ -159,6 +161,7 @@
           });
         };
 
+
         //TODO later for showing annotations
         coyote.getImages = function(callback){
           //console.log('getImages');
@@ -172,45 +175,43 @@
           });
           getImages.done(function( data ) {
             callback(data);
-            //var srcs = coyote.imgs.map(function(img){
-              //return img["src"];
-            //});
-            //var coyote_images = jsonQ(data);
-            //var coyote_matches = coyote_images.find('path', function () {
-              //srcs.indexOf(this[0]) !== -1;
-              ////TODO
-              ////return this[0].indexOf(coyote.domain) !== -1;
-              //return false;
-            //});
-            //if(coyote_matches.length == site_images.length){
-              ////TODO
-              ////coyote_producer.consumer.annotateImages();
-            //} else {
-              ////for each
-              ////post image
-            //}
+            var srcs = coyote.imgs.map(function(img){
+              return img["src"];
+            });
+            var coyote_images = jsonQ(data);
+            var coyote_matches = coyote_images.find('path', function () {
+              return srcs.indexOf(this[0]) !== -1;
+            });
+            $.each(coyote_matches, function() {
+              console.log(coyote_matches);
+              //TODO replace alts
+              //TODO show widget
+            });
           });
           getImages.fail(function(jqXHR, textStatus) {
             console.log( "getImages failed: " + textStatus );
           });
+        };
+        coyote.getDescription = function(){
         };
         //TODO later
         //coyote.postDescription = function(){
         //};
       },
       methods : { // The methods that the consumer can call
-        populateImages: function(token, domain, protocol, imgs) {
-          coyote.token = token;
+        populateImages: function(domain, protocol, href, imgs) {
+          console.log('populating imgs');
+          //set shared vars onto coyote object for ajax calls
           coyote.headers = { 
-            'X-Auth-Token' : coyote.token,
             'Accept': 'application/json'
           };
-          console.log('populating imgs');
           coyote.imgs = imgs;
           coyote.domain = domain;
           coyote.protocol = protocol;
+          coyote.href = href;
           coyote.full_domain = coyote.protocol + "//" + coyote.domain;
 
+          //add imgs to grid
           var $coyoteItems = $('#coyote-items');
           $.each(imgs, function() {
             var $img = $('<img/>', {
@@ -223,16 +224,8 @@
             $coyoteItems.append($item);
           });
           coyote.getWebsites();
-          //TODO insert descriptions
           return false;
-
         },
-        // The RPC method used by our consumer.
-        //fvbPost : function(vote,url,callback){
-          // Since this code will be executed inside of our producer page
-          // and not on the client, we can make use of JQuery
-          //$.post( '/pages', { page : { url : url, vote : vote } }, callback, 'json')
-        //}
       }
     }
   }
