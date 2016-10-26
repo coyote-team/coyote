@@ -52,7 +52,11 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/new
   def new
     @description = Description.new
-    @author = current_user
+    if params[:user_id] 
+      @author = User.find(params[:user_id])
+    else
+      @author = current_user
+    end
     if @image
       @description.image = @image
       @siblings = @description.image.descriptions
