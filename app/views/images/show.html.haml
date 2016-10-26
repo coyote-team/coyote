@@ -71,7 +71,7 @@
                     -#Assign
                 -if current_user
                   %li
-                    =link_to 'Describe', new_description_path(image_id: @image.id, user_id: current_user.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
+                    =link_to 'Describe', new_description_path(image_id: @image.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
                 %br
                 %br
               %ul.list-inline

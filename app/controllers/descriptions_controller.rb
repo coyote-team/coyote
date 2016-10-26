@@ -52,6 +52,7 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/new
   def new
     @description = Description.new
+    @author = current_user
     if @image
       @description.image = @image
       @siblings = @description.image.descriptions

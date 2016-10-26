@@ -22,7 +22,7 @@
             - descriptions = descriptions.sort_by{|a| a.status_id == 1 ? 0 : 1}
         =render "descriptions/table_small", descriptions: descriptions, queue_id: queue_id, image_id: css_id
 
-        - path = new_description_path(image_id: image.id, user_id: current_user.id )
+        - path = new_description_path(image_id: image.id )
         - unless type == "Ready to Review Descriptions"
           =link_to path, class: "btn btn-primary", title: "Add a description for Image #{image.id}", "aria-describedby" => css_id do
             Describe
