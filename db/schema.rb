@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160811173510) do
     t.integer  "assignments_count",  limit: 4,     default: 0
     t.integer  "descriptions_count", limit: 4,     default: 0
     t.text     "title",              limit: 65535
-    t.boolean  "priority",           limit: 1,     default: false
+    t.boolean  "priority",                         default: false
     t.integer  "status_code",        limit: 4,     default: 0
     t.text     "page_urls",          limit: 65535
   end
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20160811173510) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.boolean  "admin",                  limit: 1,   default: false
+    t.boolean  "admin",                              default: false
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
     t.string   "authentication_token",   limit: 255

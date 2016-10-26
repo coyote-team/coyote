@@ -24,10 +24,10 @@
 
 FactoryGirl.define do
   factory :image do
-    page_urls ["http://admin.mcachicago.org/Exhibitions/2004/Jose-Damasceno-Observation-Plan"]
-    path "/api/v1/attachment_images/thumbs/55917aaa6134300074000014.jpg"
-    canonical_id "55917aaa6134300074000014"
-    title "Installation view, _José Damasceno: Observation Plan_, MCA Chicago, lobby wall project, Jan 26, 2004–Jan 2, 2005"
+    page_urls [ "http://whatever.com"   ]
+    path { Faker::Internet.url }
+    canonical_id { Faker::Crypto.md5 }
+    title { Faker::Hipster.sentence(3) } 
     trait :priority do
       priority true
     end

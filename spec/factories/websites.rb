@@ -13,6 +13,6 @@
 FactoryGirl.define do
   factory :website do
     title "MCA"
-    url "https://mcachicago.org"
+    url {Faker::Internet.url}
   end
 end
