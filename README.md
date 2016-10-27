@@ -18,7 +18,7 @@ Image annotation site and API to enable the distributed annotation of museum ima
 ```bash
 bundle install
 
-# Copy the top block .env.example to .env and populate
+# Copy the top block of .env.example to .env and populate
 # Copy the bottom block of .env.example to .env.development
 # Copy the bottom block of .env.example to .env.test
 # Create the DBs for dev and test
