@@ -144,6 +144,7 @@ gem install bundler
 # Then deploy
 bundle exec cap production deploy
 # And seed the database
+# You might want to change the default user and admin credentials first in db/seeds.rb
 TASK="db:seed" bundle exec cap production rake
 
 ```
