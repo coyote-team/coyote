@@ -204,5 +204,12 @@ Descriptions have an audit log that tracks changes across most columns.
 - [Depict4](http://depictfor.us/)
 - [Autotune](https://github.com/voxmedia/autotune/)
 
+## Contributors
+- Tobey Albright, [MCA Chicago](https://mcachicago.org) - graphic design
+- Sina Bahram, [Prime Access Consulting](https://pac.bz/) - concept and direction
+- Susan Chun, [MCA Chicago](https://mcachicago.org) - project management
+- Anna Lavatelli, [MCA Chicago](https://mcachicago.org) - project management
+- Christopher Reed, [SEEREAD.info](http://seeread.info) - development
+
 ## License
 [MPLv2](http://choosealicense.com/licenses/mpl-2.0/#)
