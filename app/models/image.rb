@@ -13,7 +13,7 @@ require 'roo'
 #  canonical_id       :string(255)
 #  assignments_count  :integer          default(0)
 #  descriptions_count :integer          default(0)
-#  title              :text(65535)
+#  title              :text(65535) 
 #  priority           :boolean          default(FALSE)
 #  status_code        :integer          default(0)
 #  page_urls          :text(65535)
