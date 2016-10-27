@@ -5,7 +5,6 @@ environment: staging
 daemonize: true
 require: []
 pid: tmp/pids/thin.pid
-chdir: /home/seeread/data/coyote/current
 max_conns: 1024
 timeout: 30
 address: 0.0.0.0
