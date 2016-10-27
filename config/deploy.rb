@@ -50,7 +50,6 @@ end
 
 namespace :thin do
   commands = [:start, :stop, :restart]
-
   commands.each do |command|
     desc "thin #{command}"
     task command do
@@ -65,33 +64,33 @@ namespace :thin do
 end
 
 #https://gist.github.com/andrey-skat/10399224
-namespace :assets do
-  #Rake::Task['deploy:assets:precompile'].clear_actions
-  desc 'Precompile assets locally and upload to servers'
-  task :precompile do
-    run_locally do
-      with rails_env: fetch(:rails_env) do
-        execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:precompile"
-      end
-    end
-    on roles(:web) do
-      #upload assets & manifest
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          old_manifest_path = "#{current_path}/public/assets/manifest*"
-          execute :rm, old_manifest_path if test "[ -f #{old_manifest_path} ]"
-          upload!('./public/assets', "#{current_path}/public/", recursive: true)
-          execute :rake, "assets:clean"
-        end
-      end
-    end
-    run_locally do
-      with rails_env: fetch(:rails_env) do
-        execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:clean"
-      end
-    end
-  end
-end
+#namespace :assets do
+  ##Rake::Task['deploy:assets:precompile'].clear_actions
+  #desc 'Precompile assets locally and upload to servers'
+  #task :precompile do
+    #run_locally do
+      #with rails_env: fetch(:rails_env) do
+        #execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:precompile"
+      #end
+    #end
+    #on roles(:web) do
+      ##upload assets & manifest
+      #within release_path do
+        #with rails_env: fetch(:rails_env) do
+          #old_manifest_path = "#{current_path}/public/assets/manifest*"
+          #execute :rm, old_manifest_path if test "[ -f #{old_manifest_path} ]"
+          #upload!('./public/assets', "#{current_path}/public/", recursive: true)
+          #execute :rake, "assets:clean"
+        #end
+      #end
+    #end
+    #run_locally do
+      #with rails_env: fetch(:rails_env) do
+        #execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:clean"
+      #end
+    #end
+  #end
+#end
 
 set :format, :pretty
 #set :log_level, :trace
