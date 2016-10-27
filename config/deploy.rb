@@ -14,7 +14,7 @@ set :flowdock_deploy_tags, ["deploy"]
 set :flowdock_api_token, ENV['FLOWDOCK_API_TOKEN']
 
 set :user, ENV["USER"]
-set :deploy_to, ENV["USER"] + "data/#{fetch(:application)}"
+set :deploy_to, "/home/" + ENV["USER"] + "/data/#{fetch(:application)}"
 set :ssh_options, { :forward_agent => true, 
                     :keys => %w(~/.ssh/id_rsa),
                     :auth_methods => %w(publickey)}
