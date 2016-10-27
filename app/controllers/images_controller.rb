@@ -56,9 +56,9 @@ The image JSON also includes the text of the most recent English <code>alt</code
     else
       @search_cache_key = search_params
       if search_params
-        search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") 
-        search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") 
-        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ") 
+        search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"]
+        search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"]
+        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"]
       end
       @q = Image.ransack(search_params)
 
