@@ -47,6 +47,23 @@ namespace :dotenv do
   end
   before 'deploy:check:linked_files', 'dotenv:upload'
 end
+
+namespace :thin do
+  commands = [:start, :stop, :restart]
+
+  commands.each do |command|
+    desc "thin #{command}"
+    task command do
+      on roles(:app), in: :sequence, wait: 5 do
+        within current_path do
+          config_file = fetch(:thin_config_path, "config/thin/#{fetch(:stage)}.yml")
+          execute :bundle, "exec thin #{command} -c /home/#{ENV['USER']}/data/coyote/current -C #{config_file}"
+        end
+      end
+    end
+  end
+end
+
 #https://gist.github.com/andrey-skat/10399224
 namespace :assets do
   #Rake::Task['deploy:assets:precompile'].clear_actions
