@@ -16,7 +16,9 @@ class HomeController < ApplicationController
         #@unapproved_count = Description.not_approved.count
         @open_assignment_count = Image.assigned_undescribed.count
         @unassigned_undescribed_count = Image.unassigned_undescribed.count
-        @latest_image_timestamp = Image.except(:order).order(created_at: :desc).first.created_at
+        @latest_image_timestamp = nil
+        latest_image = Image.except(:order).order(created_at: :desc).first
+        @latest_image_timestamp = latest_image.created_at if latest_image
       end
 
       #YOUR STATUS
