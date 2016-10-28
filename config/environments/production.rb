@@ -29,7 +29,7 @@ Plate::Application.configure do
   config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true #must be true bc https://github.com/rumblelabs/asset_sync/issues/255
+  #config.assets.compile = true #must be true bc https://github.com/rumblelabs/asset_sync/issues/255
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -68,7 +68,7 @@ Plate::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( search.js coyote_producer.js coyote_consumer.js coyote_bookmarklet.js)
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.initialize_on_precompile = false
   config.assets.prefix = "/assets"
