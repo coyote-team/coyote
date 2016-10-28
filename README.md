@@ -132,10 +132,6 @@ rbenv global 2.3.1
 echo "gem: --no-document" > ~/.gemrc
 gem install bundler
 
-# Edit config/nginx.site.conf to set the log path into the correct absolute path
-# Then copy or link to your /etc/nginx/sites-available
-# Then enable the site with symlink...
-# From /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
 # Finish creating your MariaDB/MySQL database and user
 
 # Then on your local box 
@@ -147,7 +143,22 @@ bundle exec cap production deploy
 # You might want to change the default user and admin credentials first in db/seeds.rb
 TASK="db:seed" bundle exec cap production rake
 
+# Then on the server
+# Copy config/nginx.site.conf to the server and edit it to set the log path into the correct absolute path
+# Copy that file to your /etc/nginx/sites-available
+# Enable the site with symlink /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
+# Then restart nginx 
+sudo service nginx restart
+# Check your browser!
+
 ```
+
+## API
+
+API documentation is generated at `/apipie` and you can see MCA's version  [here](http://coyote.mcachicago.org/apipie).
+
+## Strategies
+We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file.  For an example, check out [/lib/coyote/strategies/mca.rb](https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb) 
 
 ## Components
 
