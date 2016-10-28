@@ -13,8 +13,8 @@ set :flowdock_project_name, ENV['FLOWDOCK_PROJECT_NAME']
 set :flowdock_deploy_tags, ["deploy"]
 set :flowdock_api_token, ENV['FLOWDOCK_API_TOKEN']
 
-set :user, ENV["USER"]
-set :deploy_to, "/home/" + ENV["USER"] + "/data/#{fetch(:application)}"
+set :user, ENV["SERVER_USER"]
+set :deploy_to, "/home/#{fetch(:user)}/data/#{fetch(:application)}"
 set :ssh_options, { :forward_agent => true, 
                     :keys => %w(~/.ssh/id_rsa),
                     :auth_methods => %w(publickey)}
@@ -56,41 +56,12 @@ namespace :thin do
       on roles(:app), in: :sequence, wait: 5 do
         within current_path do
           config_file = fetch(:thin_config_path, "config/thin/#{fetch(:stage)}.yml")
-          execute :bundle, "exec thin #{command} -c /home/#{ENV['USER']}/data/coyote/current -C #{config_file}"
+          execute :bundle, "exec thin #{command} -c /home/#{fetch(:user)}/data/#{fetch(:application)}/current -C #{config_file}"
         end
       end
     end
   end
 end
-
-#https://gist.github.com/andrey-skat/10399224
-#namespace :assets do
-  ##Rake::Task['deploy:assets:precompile'].clear_actions
-  #desc 'Precompile assets locally and upload to servers'
-  #task :precompile do
-    #run_locally do
-      #with rails_env: fetch(:rails_env) do
-        #execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:precompile"
-      #end
-    #end
-    #on roles(:web) do
-      ##upload assets & manifest
-      #within release_path do
-        #with rails_env: fetch(:rails_env) do
-          #old_manifest_path = "#{current_path}/public/assets/manifest*"
-          #execute :rm, old_manifest_path if test "[ -f #{old_manifest_path} ]"
-          #upload!('./public/assets', "#{current_path}/public/", recursive: true)
-          #execute :rake, "assets:clean"
-        #end
-      #end
-    #end
-    #run_locally do
-      #with rails_env: fetch(:rails_env) do
-        #execute "RAILS_ENV=#{fetch(:rails_env)} bundle exec rake assets:clean"
-      #end
-    #end
-  #end
-#end
 
 set :format, :pretty
 #set :log_level, :trace
