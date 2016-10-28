@@ -132,7 +132,11 @@ rbenv global 2.3.1
 echo "gem: --no-document" > ~/.gemrc
 gem install bundler
 
-# Finish creating your MariaDB/MySQL database and user
+# Login as your MariaDB/MySQL user
+# Create your database
+create database yourdatabase;
+# Set your charset to utf8
+ALTER DATABASE yourdatabase charset=utf8;
 
 # Then on your local box 
 # Copy the top block .env.example to .env and populate if you haven't
@@ -149,6 +153,7 @@ TASK="db:seed" bundle exec cap production rake
 # Enable the site with symlink /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
 # Then restart nginx 
 sudo service nginx restart
+# Edit your /etc/hosts and setup SSL if you like
 # Check your browser!
 
 ```
