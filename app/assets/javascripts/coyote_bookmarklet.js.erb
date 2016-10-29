@@ -2,9 +2,6 @@
   var coyote = {};
   var CoyoteBookmarklet = {
     visible : true,
-    <% if Rails.env.production? %>
-      protocol: 'https',
-    <% end %>
     consumer : {
       css : ["<%= asset_url('coyote_bookmarklet.css') %>"],
       init: function(){
@@ -14,7 +11,7 @@
         var imgs  = [];
         var pageIdCounter = 0;
         var domain = document.domain;
-        var protocol = document.protocol;
+        var protocol = document.location.protocol;
         var href = document.location.href;
         $images.each(function(){
           pageIdCounter += 1;
