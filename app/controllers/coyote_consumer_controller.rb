@@ -1,8 +1,6 @@
 class CoyoteConsumerController < ApplicationController
-  protect_from_forgery except: :index
-
   layout :false
-
-  def index
+  def iframe
+    redirect_to ActionController::Base.helpers.asset_path("coyote_consumer.js")
   end
 end

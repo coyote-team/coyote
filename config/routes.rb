@@ -1,7 +1,4 @@
 Plate::Application.routes.draw do
-  match 'coyote_producer' => 'coyote_producer#index', via: [:get]
-  #TODO maybe unnecessary
-  match 'coyote_consumer' => 'coyote_consumer#index', via: [:get]
   apipie
   resources :assignments do
     collection do
@@ -34,10 +31,12 @@ Plate::Application.routes.draw do
   scope "/admin" do
     resources :users
   end
-  root :to => "home#index"
-  get "/pages/*id" => 'pages#show', as: :page, format: false
-  #root :to => "pages#show", id: 'home'
   get '/login',  to: redirect('/users/sign_in')
   get '/logout',  to: redirect('/users/sign_out')
-  #
+  #bookmarklet
+  match 'coyote' => 'coyote_consumer#iframe', via: [:get]
+  match 'coyote_producer' => 'coyote_producer#index', via: [:get]
+  root :to => "home#index"
+  get "/pages/*id" => 'pages#show', as: :page, format: false
+
 end

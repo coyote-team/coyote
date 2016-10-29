@@ -7,7 +7,7 @@ gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate
 gem 'compass-rails', '~> 3.0.2'
 gem 'bootstrap-sass', '>= 3.2'
 gem 'sprockets'
-gem "sprockets-redirect"
+#gem "sprockets-redirect"
 gem 'sprockets-rails', '~> 3.0.3'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
@@ -51,7 +51,7 @@ gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
 gem 'iconv'
 gem "audited-activerecord"
-gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => 'e869d2f'
+gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '5f2c9f7'
 
 gem 'rollbar', '~> 2.7'
 

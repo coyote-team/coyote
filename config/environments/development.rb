@@ -27,8 +27,23 @@ Plate::Application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  config.assets.debug = false
   config.assets.raise_production_errors = true
+    config.assets.js_compressor = Uglifier.new(
+    output: { ascii_only: true, quote_keys: true }
+  )
+  config.assets.css_compressor = :sass
+  # Generate digests for assets URLs.
+  config.assets.digest = true
+
+  # Version of your assets, change this if you want to expire all your assets.
+  config.assets.version = '1.0'
+  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  config.assets.precompile << %w( coyote_bookmarklet.js coyote_consumer.js)
+  config.assets.initialize_on_precompile = false
+  config.assets.prefix = "/assets"
+
+
 
   ##SPROCKETS DEBUGGING
   #config.assets.debug = false
