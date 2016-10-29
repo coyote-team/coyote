@@ -7,6 +7,7 @@ gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate
 gem 'compass-rails', '~> 3.0.2'
 gem 'bootstrap-sass', '>= 3.2'
 gem 'sprockets'
+gem "sprockets-redirect"
 gem 'sprockets-rails', '~> 3.0.3'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
