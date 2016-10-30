@@ -1,8 +1,8 @@
 class WebsitesController < ApplicationController
-  before_filter :admin, only: [:create, :edit, :update, :destroy]
+  before_action :admin, only: [:edit, :update, :destroy]
+  before_action :users, only: [:create]
   before_action :set_website, only: [:show, :edit, :update, :destroy, :check_count]
   before_action :set_strategies_collection, only: [:new, :edit]
-  before_filter :users
 
   caches_action :check_count, :cache_path => { :cache_path => Proc.new { |c| c.params } }, :expires_in => 5.minutes
 

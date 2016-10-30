@@ -3,7 +3,8 @@ class ImagesController < ApplicationController
   before_action :clear_search, only: [:index]
   before_action :get_users, only: [:index, :show], unless: -> { request.xhr? }
 
-  before_action :admin, only: [:create, :edit, :update, :destroy, :toggle]
+  before_action :admin, only: [:edit, :update, :destroy, :toggle]
+  before_action :users, only: [:create]
 
   respond_to :html, :json
 
