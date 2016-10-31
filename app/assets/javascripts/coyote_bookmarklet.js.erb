@@ -83,7 +83,7 @@
             });
             request.fail(function(jqXHR, textStatus) {
               if(jqXHR.status == 401){
-              coyote.logError( "You must be logged in to use the Coyote bookmarklet");
+              coyote.logError( "Please login to Coyote to use this bookmarklet");
               var $coyoteItems = $('#coyote-items');
               $coyoteItems.hide();
               setTimeout(function(){
