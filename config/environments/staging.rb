@@ -63,7 +63,8 @@ Plate::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
-  config.assets.precompile << %w( coyote_bookmarklet.js coyote_consumer.js)
+  config.assets.precompile += %w( coyote_producer.js coyote_consumer.js coyote_bookmarklet.js coyote_bookmarklet.css)
+
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.initialize_on_precompile = false
   config.assets.prefix = "/assets"

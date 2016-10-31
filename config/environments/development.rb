@@ -27,8 +27,11 @@ Plate::Application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  config.assets.prefix = "/dev-assets"
   config.assets.raise_production_errors = true
+  config.assets.precompile << %w( coyote_consumer.js)
+  config.assets.digest = false
+  config.assets.debug = true
 
   ##SPROCKETS DEBUGGING
   #config.assets.debug = false

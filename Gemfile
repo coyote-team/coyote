@@ -51,7 +51,7 @@ gem 'jbuilder' #json builder
 gem 'roo' #spreadsheet interfaces
 gem 'iconv'
 gem "audited-activerecord"
-gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '57fd424'
+gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '53829a6'
 
 gem 'rollbar', '~> 2.7'
 
