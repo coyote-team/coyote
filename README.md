@@ -215,6 +215,7 @@ Descriptions have an audit log that tracks changes across most columns.
 - [A11Y Guidelines](http://a11yproject.com/)
 - [Sina's Links on Accessibility](http://www.sinabahram.com/resources.php)
 - [ARIA in HTML](http://rawgit.com/w3c/aria-in-html/master/index.html) and [ARIA](http://www.w3.org/TR/wai-aria/states_and_properties#global_states)
+- [ABS's Guidelines for Verbal Description](http://www.artbeyondsight.org/handbook/acs-guidelines.shtml)
 
 ## Versus
 - [Depict4](http://depictfor.us/)
