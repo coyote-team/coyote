@@ -56,14 +56,14 @@ We use the guidelines outlined below for describing artworks. Please visit their
 16. Tactile Illustrations of Artworks
 
 ## Image Description Guidelines from the Diagram Center
-These [guidelines](http://diagramcenter.org/table-of-contents-2.html) provide great information about describing charts, maps, and technical images.
+These [guidelines](http://diagramcenter.org/table-of-contents-2.html) provide great information about describing charts, maps, and technical images.  
 
-[Diagrams: Illustrated](http://diagramcenter.org/?p=2131)
-[Diagrams: Relational](http://diagramcenter.org/?p=2139)
-[Graphs](http://diagramcenter.org/?p=2156)
-[Maps](http://diagramcenter.org/?p=2170)
-[Text Only Images](http://diagramcenter.org/?p=2195)
-
-Still have questions about how to describe? Send an email to [webteam@mcachicago.org](mailto:webteam@mcachicago.org).
-
+[Diagrams: Illustrated](http://diagramcenter.org/?p=2131)  
+[Diagrams: Relational](http://diagramcenter.org/?p=2139)  
+[Graphs](http://diagramcenter.org/?p=2156)  
+[Maps](http://diagramcenter.org/?p=2170)  
+[Text Only Images](http://diagramcenter.org/?p=2195)  
+  
+Still have questions about how to describe? Send an email to [webteam@mcachicago.org](mailto:webteam@mcachicago.org).  
+  
 Do you have a recommendation for a feature that would improve your coyote describing experience? Please email [webteam@mcachicago.org](mailto:webteam@mcachicago.org). If you have encountered a bug in the software, please report it [here](https://mcachicago.org/-/Bug-Reporting).
