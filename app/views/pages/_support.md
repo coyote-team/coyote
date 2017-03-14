@@ -1,4 +1,4 @@
-#Support
+# Support
 
 
 This introduction to describing images, an institutional supplement to the [Art Beyond Sight guidelines](http://www.artbeyondsight.org/handbook/acs-guidelines.shtml), is posted here for MCA Coyote team members. The guidelines are in development and changing regularly. Check back here for updates. 
