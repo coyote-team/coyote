@@ -33,9 +33,10 @@ Plate::Application.routes.draw do
   end
   get '/login',  to: redirect('/users/sign_in')
   get '/logout',  to: redirect('/users/sign_out')
-  #bookmarklet
-  match 'coyote' => 'coyote_consumer#iframe', via: [:get]
-  match 'coyote_producer' => 'coyote_producer#index', via: [:get]
+  if ENV["BOOKMARKLET"] == "true"
+    match 'coyote' => 'coyote_consumer#iframe', via: [:get]
+    match 'coyote_producer' => 'coyote_producer#index', via: [:get]
+  end
   root :to => "home#index"
   get "/pages/*id" => 'pages#show', as: :page, format: false
 

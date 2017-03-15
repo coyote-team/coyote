@@ -13,10 +13,8 @@
             with your authentication token
             %code=current_user.authentication_token
           
-          %p>
-            Add this
-            = link_to 'Coyote bookmarklet', easymarklet_js('coyote')
-            to your bookmarks and click it to add more images, describe them, and render their annotations
-            %br
-            %small
-              Warning: this feature is in development
+          - if ENV["BOOKMARKLET"] == "true"
+            %p>
+              Add this
+              = link_to 'Coyote bookmarklet', easymarklet_js('coyote')
+              to your bookmarks then click it to add and view annotations for images on any webpage.
