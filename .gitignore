@@ -27,6 +27,7 @@ pickle-email-*.html
 #dotenv
 .env*
 !.env.example
+!.env.*.example
 
 #vagrant
 .vagrant
