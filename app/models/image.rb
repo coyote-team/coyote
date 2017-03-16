@@ -134,16 +134,11 @@ class Image < ActiveRecord::Base
   end
 
   def begun?
-    descriptions.count > 0
+    descriptions.begun.count > 0
   end
 
   def ready_to_review?
-    meta_ids = Metum.all.map{|m| m.id}
-    if meta_ids.count == (descriptions.approved +  descriptions.ready_to_review).map{|d| d.metum_id unless d.nil?  }.uniq.compact.count
-      true
-    else
-      false
-    end
+    descriptions.ready_to_review.count > 0
   end
 
   #completed all meta in any combo of locales

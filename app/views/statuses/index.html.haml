@@ -1,4 +1,4 @@
--title = 'Listing Statuses'
+-title = 'Listing Description Statuses'
 -meta title: title
 - cache ['v1', admin?,  @statuses] do
   .index-outer
@@ -13,16 +13,19 @@
               %th{scope: "col"}
                 Title
               %th{scope: "col"}
+                Count
+              %th{scope: "col"}
                 Actions
 
           %tbody
             - @statuses.each_with_index do |status, idx|
               %tr{class: "item"}
                 %td= status.title
-                %td= status.description
+                %td= status.descriptions.count
                 %td.text-right
                   = link_to status, class: "btn btn-show", title: "Show this status" do
                     View
+                  %nbsp
                   = link_to edit_status_path(status), class: "btn btn-edit", title: "Edit this status"  do
                     Edit
 

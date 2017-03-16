@@ -35,9 +35,11 @@ class Description < ActiveRecord::Base
 
   default_scope {order('status_id DESC, updated_at DESC')}
 
+  scope :begun, -> {where(status_id: [1,2])}
   scope :ready_to_review, -> {where("status_id = 1")}
   scope :approved, -> {where("status_id = 2")}
   scope :not_approved, -> {where("status_id = 3")}
+
 
   scope :alt, -> {where("metum_id = 1")}
   scope :caption, -> {where("metum_id = 2")}

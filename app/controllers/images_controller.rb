@@ -46,6 +46,7 @@ You will likely want to us use <code>status_id[]=2</code> on your client.
 The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>, defaulted to <code>status_id=2</code/>. 
   EOT
   def index
+    #the status_ids param is used by JSON endpoint only
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
 
