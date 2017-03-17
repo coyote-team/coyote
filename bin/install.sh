@@ -14,8 +14,8 @@ bison pkg-config libffi-dev mariadb-server libmariadb-client-lgpl-dev git make g
 libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 \
 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
 libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config \
-libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql screen \ mariadb-client
-
+libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql screen \
+mariadb-client letsencrypt
 
 # user
 useradd coyote -m
@@ -61,14 +61,21 @@ exit
 
 source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
+
 # create database
-export SQL="create database " + DATABASE_NAME + "; ALTER DATABASE " + DATABASE_NAME + " charset=utf8; CREATE USER " + DATABASE_USERNAME + " @localhost IDENTIFIED BY '" + DATABASE_PASSWORD +"'; grant all on " + DATABASE_NAME + ".* to " + DATABASE_USERNAME + "@localhost; use mysql; flush privileges;"
+export SQL="create database " $DATABASE_NAME "; ALTER DATABASE " $DATABASE_NAME " charset=utf8; CREATE USER " $DATABASE_USERNAME " @localhost IDENTIFIED BY '" $DATABASE_PASSWORD "'; grant all on " $DATABASE_NAME ".* to " $DATABASE_USERNAME "@localhost; use mysql; flush privileges;"
 mysql -uroot -p -e $SQL
 
+service nginx stop
+letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
+
+# TODO finish letsencrypt
+# TODO automate letsencrypt
 # TODO sed to change the user and domain
 cp /home/coyote/code/coyote/config/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
+
 service nginx restart
 
 su coyote
