@@ -21,4 +21,4 @@ production:
   <<: *default
   reconnect: true
   pool: 20
-
+  socket: /var/run/mysqld/mysqld.sock 
