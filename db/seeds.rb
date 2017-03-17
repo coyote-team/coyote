@@ -15,17 +15,13 @@ Status.create!([
   {id: 3, title: "Not approved"}
 ])
 User.create!([
-  {id: 1, email: "coyote_user@seeread.info", password: "asdfasdf", first_name: "Test", last_name: "User"},
-  {id: 2, email: "coyote_admin@seeread.info", admin: true , password: "asdfasdf", first_name: "Admin", last_name: "User"},
+  {id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User"}
 ])
 Website.create!([
-  {id: 1, title: "MCA Chicago", url: "https://mcachicago.org"}
-  #,{id: 2, title: "MCA Chicago", url: "http://www2.mcachicago.org/"}
+  {id: 1, title: ENV["WEBSITE_TITLE"], url: "#{ENV["WEBSITE_URL"]}"}
 ])
 #Image.create!([
   #{id: 1, path: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
-  #{id: 2, path: "/wp-content/uploads/2015/05/Danny_Volk-185x203.jpg", website_id: 2, group_id: 1, canonical_id: 2},
-  #{id: 3, path: "/wp-content/uploads/2013/09/sunglasses_grouped_edit.jpg", website_id: 2, group_id: 1, canonical_id: 3},
 #])
 #Assignment.create!([
   #{id: 1, user_id: 1, image_id: 1},
