@@ -15,7 +15,6 @@
 //= require cocoon
 //= require turbolinks
 //= require select2
-//= require pagedown_bootstrap
 //= require bootstrap-sprockets
 //= require vendor/bootstrap.file-input
 //= require vendor/imagesloaded.pkgd
