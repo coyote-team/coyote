@@ -73,10 +73,10 @@
                   = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
                     
                     Descriptions
-        - if admin?
+        - if admin? or current_user == @description.user
           - audits = @description.audits.reverse
           - if audits.length > 0
-            %h2 Audit log
+            %h2 Audit log of this description
             = render "descriptions/audits", audits: audits
           - other_descriptions = @description.siblings
           - if other_descriptions.length > 0
