@@ -2,6 +2,7 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy, :toggle]
   before_action :clear_search, only: [:index]
   before_action :get_users, only: [:index, :show], unless: -> { request.xhr? }
+  before_action :get_groups, only: [:index], unless: -> { request.xhr? }
 
   before_action :admin, only: [:edit, :update, :destroy, :toggle]
   before_action :users, only: [:create]

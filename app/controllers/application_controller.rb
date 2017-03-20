@@ -37,8 +37,9 @@ class ApplicationController < ActionController::Base
   end
 
   def get_users
-    if current_user and current_user.admin?
-      @users = User.sorted
-    end
+    @users = User.sorted
+  end
+  def get_groups
+    @groups = Group.all.sort{|a,b| a.to_s<=>b.to_s} 
   end
 end
