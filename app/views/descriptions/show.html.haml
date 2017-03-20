@@ -69,10 +69,6 @@
                 %li
                   = link_to new_description_path(image_id: @description.image_id) , class: 'btn btn-primary' do
                     Describe Again
-                %li
-                  = link_to descriptions_path, class: 'btn btn-info', title: "View the descriptions index" do
-                    
-                    Descriptions
         - if admin? or current_user == @description.user
           - audits = @description.audits.reverse
           - if audits.length > 0
