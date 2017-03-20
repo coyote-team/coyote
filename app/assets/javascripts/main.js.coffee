@@ -18,6 +18,11 @@ $ ->
       $that.addClass('isotoped').isotope() if $(@).hasClass('isotoped') == false
       $that.imagesLoaded().progress () ->
         $that.isotope('layout')
+    $('.arrange').off('click').on 'click', (e) ->
+      $isotope = $($(e.target).parents('.isotope')[0])
+      setTimeout ->
+        $isotope.isotope('arrange')
+      , 2000
 
     #pagination on user pages
     $('.paginated-table tbody').each ()->

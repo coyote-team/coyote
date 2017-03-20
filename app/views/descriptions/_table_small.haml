@@ -23,7 +23,7 @@
           -if admin?
             -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
             - klass= 'btn btn-info '
-            - form_klass = "inline-form "
+            - form_klass = "inline-form arrange"
             - disabled = false
             - if d.status_id == 2
               - form_klass += 'disabled'
@@ -34,7 +34,7 @@
               Approve 
 
             - klass='btn btn-info '
-            - form_klass = "inline-form "
+            - form_klass = "inline-form arrange"
             - disabled = false
             - if d.status_id == 3
               - form_klass += 'disabled'
