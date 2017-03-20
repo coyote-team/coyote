@@ -64,7 +64,7 @@
                     = f.search_field :title_cont_all, :class => 'input-medium form-control', placeholder: "Search by caption"
                   %td= f.input  :assignments_user_id_eq, as: :select, include_blank: "Any user", label: "Select a user", required: false, collection: @users, label_html: {class: 'sr-only'}
 
-                  %td= f.input  :group_id_eq, as: :select, include_blank: "Any group", label: "Select a group", required: false, collection: Group.all.sort{|a,b| a.to_s<=>b.to_s} , label_html: {class: 'sr-only'}
+                  %td= f.input  :group_id_eq, as: :select, include_blank: "Any group", label: "Select a group", required: false, collection: @groups, label_html: {class: 'sr-only'}
                   %td<
                     =f.label "Search by description", for: "q_descriptions_text_cont_all", class: "sr-only"
                     = f.search_field :descriptions_text_cont_all, :class => 'input-medium form-control', placeholder: "Search by description"
