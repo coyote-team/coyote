@@ -34,7 +34,7 @@
               %span.caret
             %ul.dropdown-menu<
               %li<
-                %a{href: "mailto:#{ENV["SUPPORT_EMAIL"]}", target: "_blank"}
+                =link_to "/pages/support" do
                   %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
                   Support
 
