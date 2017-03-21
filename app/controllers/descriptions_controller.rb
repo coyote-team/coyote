@@ -16,9 +16,9 @@ class DescriptionsController < ApplicationController
       param :locale, String, desc: "Must be a valid ISO 639-1 locale."
       param :text, String
       param :license, String, desc: "Options include cc0-1.0, cc-by-4.0, and cc-by-sa-4.0"
-      param :status_id, :number
-      param :image_id, :number
-      param :metum_id, :number
+      param :status_id, Integer
+      param :image_id, Integer
+      param :metum_id, Integer
       param :created_at,    DateTime
       param :updated_at,    DateTime
     end

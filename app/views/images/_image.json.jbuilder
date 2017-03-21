@@ -11,8 +11,8 @@ json.extract! image,
   :updated_at 
 
 json.url image_url(image, format: 'html')
-json.alt image.alt(@status_ids)
 json.title image.title
+json.alt image.alt(@status_ids)
 json.long image.long(@status_ids)
 
 descriptions = image.descriptions.where(status_id: @status_ids)

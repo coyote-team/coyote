@@ -13,8 +13,8 @@ class ImagesController < ApplicationController
     param :image, Hash do
       param :canonical_id,  String , required: true
       param :path,           String , required: true
-      param :website_id,    :number, required: true
-      param :group_id,      :number, required: true
+      param :website_id,    Integer, required: true
+      param :group_id,      Integer, required: true
       param :page_urls,     Array
       param :priority,      [true, false, "1", "0", 1, 0]
       param :created_at,    DateTime
@@ -26,15 +26,13 @@ class ImagesController < ApplicationController
   param :page, :number
   param :canonical_id,    String , optional: true
   param :website_id,    String , optional: true
-  param :status_ids,      Array, optional: true
-  param :priority,        [true, false], optional: true
+  param :updated_at,    DateTime, optional: true
+  param :status_ids,      Array, of: :integer,  optional: true
+  #param :priority,        [true, false], optional: true
+
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-If the result is multiple images, this endpoints returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code> (in which case there will be only one page and no <code>_metadata</code>).
-
-If the params include <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET</code> <code>/images/1</code> if it is available.
-
-Also, <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
+This endpoint returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code> (which matches by equality) or <code>updated_at</code> (which matches as greater than or equal to a unix timestamp).  <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
 
 <code>status_id[]</code> values can include:
 
@@ -42,27 +40,32 @@ Also, <code>status_id[]</code> can be used to filter the descriptions array. The
 - 2 : "Approved"
 - 3 : "Not approved"
 
-You will likely want to us use <code>status_id[]=2</code> on your client.
+The image objects also include key value pairs for the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
 
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>, defaulted to <code>status_id=2</code/>. 
+If the params include <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET /images/1</code> if it is available.
+
   EOT
   def index
     #the status_ids param is used by JSON endpoint only
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
-
     if params[:canonical_id].present? 
       #for ajax
       @image = Image.find_by(canonical_id: params[:canonical_id])
-    elsif params[:website_id].present?
-      @images = Image.where(website_id: params[:website_id])
     else
+      params["q"] = {} if params["updated_at"].present? or params["website_id"].present?
+      params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
+      params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
+
       @search_cache_key = search_params
-      if search_params
-        search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"]
-        search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"]
-        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"]
-      end
+      #if search_params
+        #search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"].present?
+
+        #search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"].present?
+
+        #search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
+
+      #end
       @q = Image.ransack(search_params)
 
       if params[:tag].present? 
