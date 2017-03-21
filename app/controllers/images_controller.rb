@@ -54,11 +54,13 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
       @image = Image.find_by(canonical_id: params[:canonical_id])
     else
       #ajax params to ransack params
-      params["q"] = {} if params["updated_at"].present? or params["website_id"].present?
-      params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
-      params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
+      if params["updated_at"].present? or params["website_id"].present?
+        params["q"]["s"] = "updated_at desc"
+        params["q"] = {} 
+        params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
+        params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
+      end
       #ajax default sort
-      params["q"]["s"] = "updated_at desc"
       @search_cache_key = params["q"]
 
       #clean up of html based search queries
