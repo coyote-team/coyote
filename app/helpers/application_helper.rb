@@ -108,4 +108,19 @@ module ApplicationHelper
     end
   end
 
+  def license_link(license)
+    "https://choosealicense.com/licenses/" + license
+  end
+
+  def license_title(license)
+    case license
+    when "cc0-1.0"
+      "Creative Commons Zero v1.0 Universal"
+    when "cc-by-sa-4.0"
+      "Creative Commons Attribution Share Alike 4.0"
+    when "cc-by-4.0"
+      "Creative Commons Attribution 4.0"
+    end
+  end
+
 end

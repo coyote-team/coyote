@@ -43,6 +43,12 @@
                   %td<
                     = @description.user
                 %tr
+                  %th{scope: "row"}<
+                    License
+                  %td>
+                    = link_to license_link(@description.license) do
+                      = license_title(@description.license)
+                %tr
                   %th{scope: "row"} Updated
                   %td
                     =@description.updated_at

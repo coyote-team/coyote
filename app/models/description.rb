@@ -11,6 +11,7 @@
 #  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  license    :string(255)      default("cc0-1.0")
 #
 # Indexes
 #
@@ -30,8 +31,9 @@ class Description < ActiveRecord::Base
   belongs_to :user
 
   validates_associated :image, :status, :metum, :user
-  validates_presence_of :image, :status, :metum, :locale, :text
+  validates_presence_of :image, :status, :metum, :locale, :text, :license
   validates :locale, iso639Code: true, length: { is: 2 } 
+  validate :license_exists
 
   default_scope {order('status_id DESC, updated_at DESC')}
 
@@ -86,5 +88,13 @@ class Description < ActiveRecord::Base
       Rails.logger.info "No strategy available for this description's image"
       return true
     end
+  end
+
+  def license_exists
+    errors.add(:string, "Must exist") unless available_licenses.include?(license)
+  end
+
+  def available_licenses
+    ["cc0-1.0", "cc-by-4.0", "cc-by-sa-4.0"]
   end
 end

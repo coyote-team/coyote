@@ -15,6 +15,7 @@ class DescriptionsController < ApplicationController
     param :description, Hash do
       param :locale, String, desc: "Must be a valid ISO 639-1 locale."
       param :text, String
+      param :license, String, desc: "Options include cc0-1.0, cc-by-4.0, and cc-by-sa-4.0"
       param :status_id, :number
       param :image_id, :number
       param :metum_id, :number
@@ -147,7 +148,7 @@ class DescriptionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def description_params
-      params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :user_id)
+      params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :license, :user_id)
     end
 
     def collect_meta

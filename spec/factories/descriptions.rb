@@ -11,6 +11,7 @@
 #  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  license    :string(255)      default("cc0-1.0")
 #
 # Indexes
 #
