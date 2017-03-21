@@ -24,15 +24,15 @@ class ImagesController < ApplicationController
 
   # GET /images
   param :page, :number
-  param :canonical_id,    String , optional: true
-  param :website_id,    String , optional: true
+  param :canonical_id,    Integer , optional: true
+  param :website_id,    Integer , optional: true
   param :updated_at,    DateTime, optional: true
   param :status_ids,      Array, of: :integer,  optional: true
   #param :priority,        [true, false], optional: true
 
   api :GET, "images", "Get an index of images"
   description  <<-EOT
-This endpoint returns an index object with <code>_metadata</code> and <code>results</code>.  You can filter these with <code>website_id</code> (which matches by equality) or <code>updated_at</code> (which matches as greater than or equal to a unix timestamp).  <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
+This endpoint returns an index object with <code>_metadata</code> and <code>results</code>.  It sorts by <code>updated_at</code> in descending order.  You can filter these with <code>website_id</code> (which matches by equality) or <code>updated_at</code> (which matches as greater than or equal to a unix timestamp).  <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view. 
 
 <code>status_id[]</code> values can include:
 
@@ -42,7 +42,7 @@ This endpoint returns an index object with <code>_metadata</code> and <code>resu
 
 The image objects also include key value pairs for the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
 
-If the params include <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET /images/1</code> if it is available.
+If the endpoint receives a <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET /images/1</code> (if it is available).
 
   EOT
   def index
@@ -53,27 +53,31 @@ If the params include <code>canonical_id</code>, a single matching image object 
       #for ajax
       @image = Image.find_by(canonical_id: params[:canonical_id])
     else
+      #ajax params to ransack params
       params["q"] = {} if params["updated_at"].present? or params["website_id"].present?
       params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
       params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
+      #ajax default sort
+      params["q"]["s"] = "updated_at desc"
+      @search_cache_key = params["q"]
 
-      @search_cache_key = search_params
-      #if search_params
-        #search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"].present?
+      #clean up of html based search queries
+      if search_params
+        search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"].present?
+        search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"].present?
+        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
+      end
 
-        #search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"].present?
-
-        #search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
-
-      #end
       @q = Image.ransack(search_params)
 
+      #tag filtering does not cooperate with ransack but can paginate
       if params[:tag].present? 
         @images = Image.tagged_with(params[:tag]).page(params[:page]) 
       else
         @images = @q.result(distinct: true).page(params[:page]) 
       end
 
+      #tagcloud
       if request.format.html?
         @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
           Image.tag_counts_on(:tags)
