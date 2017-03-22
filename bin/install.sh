@@ -67,16 +67,16 @@ export SQL="create database " $DATABASE_NAME "; ALTER DATABASE " $DATABASE_NAME 
 mysql -uroot -p -e $SQL
 
 service nginx stop
+# TODO  ask if ready for this step
 letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
 
-# TODO finish letsencrypt
-# TODO automate letsencrypt
 # TODO sed to change the user and domain
 cp /home/coyote/code/coyote/config/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
 
 service nginx restart
+echo "127.0.0.1       " $HOST >> /etc/hosts
 
 su coyote
 cd ~/code/coyote
@@ -88,6 +88,3 @@ source /home/coyote/code/coyote/.env.production
 TASK="db:seed" bundle exec cap production rake
 
 exit
-sudo service nginx restart
-echo "127.0.0.1       " $HOST >> /etc/hosts
-# TODO setup SSL if you like
