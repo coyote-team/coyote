@@ -9,14 +9,19 @@ apt-get upgrade -y
 # NOTE grub conflict on linode so keep current grub conf
 apt install software-properties-common -y
 add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu xenial main'
-apt-get install -y --allow-unauthenticated graphviz git libpq-dev gawk build-essential libreadline6-dev \
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -q -y --allow-unauthenticated graphviz git libpq-dev gawk build-essential libreadline6-dev \
 zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool \
 bison pkg-config libffi-dev mariadb-server libmariadb-client-lgpl-dev git make gcc zlib1g-dev \
 libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 \
 libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
 libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config \
 libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql screen \
-mariadb-client letsencrypt
+mariadb-client letsencrypt unattended-upgrades
+
+echo -e "APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-Upgrade \"1\";\n" > /etc/apt/apt.conf.d/20auto-upgrades
+/etc/init.d/unattended-upgrades restart
+
 
 # user
 useradd coyote -m
