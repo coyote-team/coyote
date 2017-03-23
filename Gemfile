@@ -53,7 +53,7 @@ gem 'iconv'
 gem "audited-activerecord"
 gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '53829a6'
 
-gem 'rollbar', '~> 2.7'
+gem 'rollbar', '~>2.11.3'
 
 group :development do
   gem "better_errors"

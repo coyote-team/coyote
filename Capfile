@@ -28,6 +28,7 @@ require 'capistrano/thin'
 require 'capistrano-nc/nc'
 #require 'capistrano/sitemap_generator'
 require "whenever/capistrano"
+require 'rollbar/capistrano3'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }

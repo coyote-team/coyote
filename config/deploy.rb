@@ -23,6 +23,11 @@ set :keep_releases, 5
 
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/assets}
 
+set :rollbar_token, ENV["ROLLBAR_ACCESS_TOKEN"]
+set :rollbar_env, Proc.new { fetch :stage }
+set :rollbar_role, Proc.new { :app }
+
+
 namespace :deploy do
   before :restart, "assets:precompile"
   after :publishing, :restart
