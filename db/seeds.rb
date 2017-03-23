@@ -15,7 +15,7 @@ Status.create!([
   {id: 3, title: "Not approved"}
 ])
 User.create!([
-  {id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User"}
+  {id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User", admin: true}
 ])
 Website.create!([
   {id: 1, title: ENV["WEBSITE_TITLE"], url: "#{ENV["WEBSITE_URL"]}"}
