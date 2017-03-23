@@ -104,7 +104,7 @@ $ ->
       data = {}
       data[bulk] = sets
 
-      #turbolinks transitions
+      #turbolinks transitions for bulk
       $('#main').addClass('fadeOut')
       $.ajax
         url: url
@@ -118,7 +118,6 @@ $ ->
           $('#main').addClass('fadeIn').removeClass('fadeOut')
 
 
-      #deploy status
-      $(document).on "ajax:success", "form.deploy", (evt, data, status, xhr) ->
-        console.log "deployed!"
-
+    #deploy button
+    $(document).on "ajax:complete", 'form.deploy', (e) ->
+      $(e.target).replaceWith("Deploying...")

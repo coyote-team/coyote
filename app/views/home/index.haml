@@ -148,12 +148,11 @@
           %h2 Deploy Status
           - if @latest_commit 
             - if @latest_commit != @current_commit 
-              - deploy_works = false
-              - if deploy_works #TODO
+              - if !Rails.env.development?
                 - if @deployed_at.nil? 
                   -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
                   - klass= 'btn btn-primary'
-                  - form_klass = "inline-form"
+                  - form_klass = "inline-form deploy"
                   - disabled = false
                   = button_to deploy_path, params: {},
                     form_class: form_klass, class: klass, disabled: disabled, method: :post, remote: true,
