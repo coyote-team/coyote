@@ -13,7 +13,7 @@ rsync -az  --copy-links ~/data/coyote/current/* $DIR
 RAILS_ENV=$1 bundle exec rake backup:db
 mv ../coyote*.sql $DIR
 
-tar -zcvf ~/backups/$DIR.tar.gz  ~/backups
+tar -zcvf $DIR.tar.gz  ~/backups
 rm -rf $DIR
 
 #deploy
