@@ -102,60 +102,21 @@ open http://localhost:3000
 
 ## Server Setup
 
-Assuming a Ubuntu 16.04 LTS distribution with a coyote user...
+Assuming you are logged into an Ubuntu 16.04 LTS as a root...
+
+You will need to set the domain name to the new IP and then to prepare the following
+
+1. A new Google Analytics UA identifier (for coyote UAs, click [here](https://analytics.google.com/analytics/web/#management/Settings/a86309615w128502418p132251424/)).
+2. The new domain for coyote, e.g.  `coyote.warhol.org`.
+3. The name of the client institution.
+4. The main website address.
+5. The access token from previous project in `.env.production`
+6. The production IP.
+
+Then you can run...
 
 ```bash
-# We add this first repo for MariaDB (which is bit compatible with MySQL) 
-sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu xenial main'
-sudo apt-get update
-sudo apt-get install -y --allow-unauthenticated software-properties-common
-sudo apt-get install -y --allow-unauthenticated graphviz git libpq-dev gawk build-essential libreadline6-dev \
-zlib1g-dev libssl-dev libyaml-dev autoconf libgdbm-dev libncurses5-dev automake libtool \
-bison pkg-config libffi-dev mariadb-server libmariadbclient-dev git make gcc zlib1g-dev \
-libssl-dev libreadline6-dev libxml2-dev libsqlite3-dev nginx openssl libreadline6 \
-libreadline6-dev curl git-core zlib1g libyaml-dev libsqlite3-dev sqlite3 libxml2-dev \
-libxslt-dev autoconf libc6-dev libgdbm-dev ncurses-dev automake libtool pkg-config \
-libffi-dev libv8-dev  imagemagick libmagickwand-dev fail2ban ruby-mysql screen
-
-sudo apt-get upgrade -y
-git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-source ~/.bash_profile
-git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
-source ~/.bash_profile
-
-# Check .ruby-version to make sure the version below is up-to-date
-rbenv install -v 2.3.1
-rbenv global 2.3.1
-echo "gem: --no-document" > ~/.gemrc
-gem install bundler
-
-# Login as your MariaDB/MySQL user
-# Create your database
-create database yourdatabase;
-# Set your charset to utf8
-ALTER DATABASE yourdatabase charset=utf8;
-
-# Then on your local box 
-# Copy the top block .env.example to .env and populate if you haven't
-# Copy the bottom block of .env.example to .env.production and populate
-# Then deploy
-bundle exec cap production deploy
-# And seed the database
-# You might want to change the default user and admin credentials first in db/seeds.rb
-TASK="db:seed" bundle exec cap production rake
-
-# Then on the server
-# Copy config/nginx.site.conf to the server and edit it to set the log path into the correct absolute path
-# Copy that file to your /etc/nginx/sites-available
-# Enable the site with symlink /etc/nginx/sites-available/nginx.site.conf to /etc/nginx/sites-enabled/nginx.site.conf
-# Then restart nginx 
-sudo service nginx restart
-# Edit your /etc/hosts and setup SSL if you like
-# Check your browser!
-
+wget -qO- https://raw.githubusercontent.com/coyote/coyote/bin/install.sh | bash
 ```
 
 ## API
@@ -216,6 +177,10 @@ Descriptions have an audit log that tracks changes across most columns.
 - [Sina's Links on Accessibility](http://www.sinabahram.com/resources.php)
 - [ARIA in HTML](http://rawgit.com/w3c/aria-in-html/master/index.html) and [ARIA](http://www.w3.org/TR/wai-aria/states_and_properties#global_states)
 - [ABS's Guidelines for Verbal Description](http://www.artbeyondsight.org/handbook/acs-guidelines.shtml)
+
+## Coyote Admin
+- [Rollbar](https://rollbar.com/coyote/Coyote/)
+- [Google Analytics: Coyote MCA](https://analytics.google.com/analytics/web/#report/defaultid/a86309615w128502418p132251424/)
 
 ## Versus
 - [Depict4](http://depictfor.us/)
