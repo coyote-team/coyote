@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   before_action :get_users
+  before_action :admin, only: [:deploy]
 
   def index
     if current_user
@@ -12,6 +13,7 @@ class HomeController < ApplicationController
       @description_count = Description.all.count
       @approved_count = Description.approved.count
       if current_user.admin?
+        check_commit
         @review_count = Description.ready_to_review.count
         #@unapproved_count = Description.not_approved.count
         @open_assignment_count = Image.assigned_undescribed.count
@@ -52,4 +54,32 @@ class HomeController < ApplicationController
     end
     @minimum_password_length = User.password_length.min
   end
+
+  def deploy
+    @deployed_at = Rails.cache.fetch("deployed_at", expires_in: 1.hour) do 
+      Time.now
+    end
+    Rails.logger.info "Deploying"
+    render nothing: true
+  end
+
+  protected
+  def check_commit
+    @current_commit = Rails.cache.fetch("current_commit", expires_in: 5.minutes) do 
+      `git rev-parse --short HEAD`.chomp
+    end
+    @latest_commit = Rails.cache.fetch("latest_commit", expires_in: 5.minutes) do 
+      require 'open-uri'
+      builds = JSON.load(open("https://api.travis-ci.org/repos/coyote-team/coyote/builds.json"))
+      builds = builds.map{|b| b if  b["result"]==0}.compact
+      builds[0]["commit"].first(7)
+    end
+    @deployed_at = Rails.cache.read("deployed_at")
+    #TODO if deployed at has value and has passed 5 minutes
+      # if current commit now equal latest commit
+        # reset deployed at to nil
+      # else
+        # problem with deploy
+  end
+
 end

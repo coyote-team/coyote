@@ -30,6 +30,7 @@ Plate::Application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
   scope "/admin" do
     resources :users
+    post :deploy, :to => "home#deploy"
   end
   get '/login',  to: redirect('/users/sign_in')
   get '/logout',  to: redirect('/users/sign_out')
