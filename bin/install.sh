@@ -3,6 +3,7 @@
 # usage:
 # wget -qO- https://raw.githubusercontent.com/coyote/coyote/bin/install.sh | bash`
 
+# aptitude
 apt update -y
 apt-get upgrade -y
 # NOTE grub conflict on linode so keep current grub conf
@@ -23,14 +24,15 @@ cp .ssh/authorized_keys /home/coyote/.ssh/
 chown coyote:coyote /home/coyote/.ssh/authorized_keys
 su coyote; cd 
 
+# can self ssh for deploy
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-#for capistrano
+# for capistrano
 cd
 mkdir data 
 
-# ruby
+# rbenv tools
 git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
@@ -38,12 +40,13 @@ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-buil
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 
-#for deploys
+# for deploys
 mkdir code
 cd code
 git clone https://github.com/coyote-team/coyote.git
 
 
+# ruby and gem install
 cd coyote
 bin/conf_creator.sh .env
 bin/conf_creator.sh .env.production
@@ -71,8 +74,8 @@ service nginx stop
 # TODO  ask if ready for this step
 letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
 
-# TODO sed to change the user and domain
-cp /home/coyote/code/coyote/config/nginx.coyote.conf /etc/nginx/sites-available/nginx.coyote.conf
+# nginx
+sed s/HOST/$HOST/g /home/coyote/code/coyote/config/nginx.coyote.conf > /etc/nginx/sites-available/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
 
@@ -80,8 +83,6 @@ service nginx restart
 echo "127.0.0.1       " $HOST >> /etc/hosts
 
 #logrotate
-
-# system-specific logs may be configured here
 LOG_CONFIG= << EOF
 /home/coyote/data/coyote/current/log/*.log{
     daily
@@ -93,14 +94,17 @@ LOG_CONFIG= << EOF
     copytruncate
 }
 EOF
+echo $LOG_CONFIG > /etc/logrotate.conf
 
+# deploy
 su coyote
 cd ~/code/coyote
 bundle exec cap production deploy
 
+# seed
 source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
 # TODO sed to change the default user and admin credentials first in db/seeds.rb
 TASK="db:seed" bundle exec cap production rake
-
 exit
+echo "Install completed!"
