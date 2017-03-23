@@ -158,14 +158,14 @@
                     form_class: form_klass, class: klass, disabled: disabled, method: :post, remote: true,
                     data: {disable_with: disable_with} do
                     Update
-                  %br
-                  Latest commit: 
-                  = link_to "https://github.com/coyote-team/coyote/commit/" + @latest_commit, target: "_blank" do
-                    =@latest_commit
-                  %br
-                  Current commit: 
-                  = link_to "https://github.com/coyote-team/coyote/commit/" + @current_commit, target: "_blank" do
-                    =@current_commit
+                  .sr-only
+                    Latest commit: 
+                    = link_to "https://github.com/coyote-team/coyote/commit/" + @latest_commit, target: "_blank" do
+                      =@latest_commit
+                    %br
+                    Current commit: 
+                    = link_to "https://github.com/coyote-team/coyote/commit/" + @current_commit, target: "_blank" do
+                      =@current_commit
                 - else
                   - if @deployed_at + 5.minutes >= Time.now
                     Deploying...

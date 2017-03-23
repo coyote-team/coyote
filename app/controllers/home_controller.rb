@@ -56,7 +56,7 @@ class HomeController < ApplicationController
   end
 
   def deploy
-    @deployed_at = Rails.cache.fetch("deployed_at", expires_in: 1.hour) do 
+    @deployed_at = Rails.cache.fetch("deployed_at", expires_in: 5.minutes) do 
       pid = spawn("bin/deploy_self.sh #{Rails.env}")
       Process.detach(pid)
       Time.now
@@ -68,7 +68,11 @@ class HomeController < ApplicationController
   protected
   def check_commit
     @current_commit = Rails.cache.fetch("current_commit", expires_in: 5.minutes) do 
-      `git rev-parse --short HEAD`.chomp
+      if Rails.env.development?
+        `git rev-parse --short HEAD`.chomp
+      else
+        `cat REVISION`.first(7)
+      end
     end
     @latest_commit = Rails.cache.fetch("latest_commit", expires_in: 5.minutes) do 
       require 'open-uri'
@@ -77,11 +81,5 @@ class HomeController < ApplicationController
       builds[0]["commit"].first(7)
     end
     @deployed_at = Rails.cache.read("deployed_at")
-    #TODO if deployed at has value and has passed 5 minutes
-      # if current commit now equal latest commit
-        # reset deployed at to nil
-      # else
-        # problem with deploy
   end
-
 end
