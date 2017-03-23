@@ -21,7 +21,7 @@ class Website < ActiveRecord::Base
   end
 
   def get_strategy
-    if strategy
+    if !strategy.nil? and !strategy.blank?
       strategy.constantize.new
     else
       false
