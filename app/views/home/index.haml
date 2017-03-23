@@ -41,6 +41,9 @@
           %h1#page-title=title
     .row
       .col-sm-6
+        - if admin?
+          =link_to "#ready_to_review_descriptions" do 
+            Skip to Ready to Review Descriptions
         %h2 Our Status
         -#%table.table.table-no-grid
           -#%tr<

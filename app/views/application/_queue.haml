@@ -1,5 +1,6 @@
 - if queue
   .queue
+    %a{id: type.downcase.gsub(" ", "_")}
     %h3<
       - if count
         #{type}: #{number_with_delimiter count}

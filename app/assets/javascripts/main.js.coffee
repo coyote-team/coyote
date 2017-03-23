@@ -1,7 +1,14 @@
 #Turbolinks.enableProgressBar()
 $ ->
-  $(document).on 'turbolinks:click', ->
-    $('#main').addClass('fadeOut')
+  $(document).on 'turbolinks:click', (event) ->
+    href = event.target.getAttribute('href')
+    if href.charAt(0) == '#'
+      $('html, body').animate
+        scrollTop: $(href).offset().top - $('#bs-navbar').height() - 10
+      , 200
+      return event.preventDefault()
+    else
+      $('#main').addClass('fadeOut')
 
   counter = 0
   $(document).on 'turbolinks:load', ->
@@ -114,5 +121,4 @@ $ ->
       #deploy status
       $(document).on "ajax:success", "form.deploy", (evt, data, status, xhr) ->
         console.log "deployed!"
-
 
