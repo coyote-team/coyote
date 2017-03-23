@@ -66,17 +66,33 @@ source /home/coyote/code/coyote/.env.production
 export SQL="create database " $DATABASE_NAME "; ALTER DATABASE " $DATABASE_NAME " charset=utf8; CREATE USER " $DATABASE_USERNAME " @localhost IDENTIFIED BY '" $DATABASE_PASSWORD "'; grant all on " $DATABASE_NAME ".* to " $DATABASE_USERNAME "@localhost; use mysql; flush privileges;"
 mysql -uroot -p -e $SQL
 
+# ssl
 service nginx stop
 # TODO  ask if ready for this step
 letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
 
 # TODO sed to change the user and domain
-cp /home/coyote/code/coyote/config/nginx.coyote.conf
+cp /home/coyote/code/coyote/config/nginx.coyote.conf /etc/nginx/sites-available/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
 
 service nginx restart
 echo "127.0.0.1       " $HOST >> /etc/hosts
+
+#logrotate
+
+# system-specific logs may be configured here
+LOG_CONFIG= << EOF
+/home/coyote/data/coyote/current/log/*.log{
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
+EOF
 
 su coyote
 cd ~/code/coyote
