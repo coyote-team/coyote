@@ -10,7 +10,6 @@ Image annotation site and API to enable the distributed annotation of museum ima
 
 - [Coyote Repo](http://github.com/coyote-team/coyote)
 - [Coyote.pics](https://coyote.pics/)
-- [Coyote Tech intro](https://github.com/coyote-team/coyote/blob/master/app/views/pages/_intro.md)
 - [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
 
 ## Setup
@@ -25,8 +24,26 @@ bundle install
 bin/rake db:create db:migrate db:seed
 RAILS_ENV=test bin/rake db:create db:migrate
 ```
+See [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) if you need some help on managing your ruby versions, etc.
 
 Secure creds are kept untracked in `.env`
+
+## Usage 
+
+```bash
+# Run the server
+bin/rails s
+
+# Automatically run tests as you work
+# You might need to install a shim for guard
+guard
+
+# Run the tests on their own
+bin/rspec
+
+# Run the console
+bin/rails c
+```
 
 ## Test
 
@@ -58,6 +75,7 @@ bundle exec cap production deploy
 ```
 
 ## Update website images
+This uses each website's strategy (see below)
 
 ```bash
 # Update images from past 2 minutes on local
@@ -67,23 +85,6 @@ bin/rake websites:update[60]
 # Update images from past 60 minutes on production
 TASK="websites:update[60]" bundle exec cap production rake
 
-```
-
-## Usage 
-
-```bash
-# Run the server
-bin/rails s
-
-# Automatically run tests as you work
-# You might need to install a shim for guard
-guard
-
-# Run the tests on their own
-bin/rspec
-
-# Run the console
-bin/rails c
 ```
 
 ## Vagrant Setup
@@ -134,7 +135,6 @@ We can extend the functionality of Coyote to better integrate with your particul
 - [bundler](http://bundler.io/)
 - [SASS](http://sass-lang.com/)
 - [Coffeescript](http://coffeescript.org/)
-- [accecess](http://lukyvj.github.io/accecss/)
 
 ## Data model
 
@@ -148,8 +148,8 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
   [Tag | id: int | title: string]
   [Group | id: int | title: string]
-  [Description | id: int | locale:str(en) | text: text ]
-  [Website | id: int | url: string | title: string ]
+  [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
+  [Website | id: int | url: string | title: string | strategy: string ]
   [Status | id: int | title: string | description: text]
   [Meta| id: int| title: string | instructions: text]
 
