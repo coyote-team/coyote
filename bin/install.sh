@@ -39,11 +39,11 @@ mkdir data
 
 # rbenv tools
 git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
+echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
 
 # for deploys
 mkdir code
@@ -103,6 +103,7 @@ echo $LOG_CONFIG > /etc/logrotate.conf
 
 # deploy
 su coyote
+source ~/.bash_profile
 cd ~/code/coyote
 bundle exec cap production deploy
 

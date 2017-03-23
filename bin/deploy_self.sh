@@ -17,4 +17,6 @@ tar -zcvf ~/backups/$DIR.tar.gz  ~/backups
 rm -rf $DIR
 
 #deploy
-git pull; bundle exec cap production deploy
+git pull
+bundle install
+bundle exec cap production deploy
