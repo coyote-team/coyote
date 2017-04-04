@@ -2,7 +2,6 @@
 # usage: 
 # bin/conf_creator.sh .env.production
 
-exec 3<> /dev/stdin
 IFS="="
 TIMESTAMP=$(date)
 
@@ -12,15 +11,21 @@ function populate {
     echo "#Created ${TIMESTAMP}" > $FILE
     while read -r NAME VALUE
     do
-        read -u 3 -p "$NAME? (default: $VALUE): " ANSWER
-        if [ ${#ANSWER} -eq 0 ]
+        if [ ${$NAME} -eq SECRET_KEY_BASE ]
         then
-            RESULT="$VALUE"
+            SECRET="$(bin/rake secret)"
+            echo "$NAME=$SECRET" >> $FILE
         else
-            RESULT="$ANSWER"
+            read -u 3 -p "$NAME? (default: $VALUE): " ANSWER
+            if [ ${#ANSWER} -eq 0 ]
+            then
+                RESULT="$VALUE"
+            else
+                RESULT="$ANSWER"
+            fi
+            echo "$NAME=$RESULT" >> $FILE
         fi
-        echo "$NAME=$RESULT" >> $FILE
     done < $SOURCE
-}
+} 3<&0
 
-populate .env
+populate $1

@@ -5,14 +5,13 @@ COYOTE
 [![Code Climate](https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg)](https://codeclimate.com/github/coyote-team/coyote)
 [![Test Coverage](https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg)](https://codeclimate.com/github/coyote-team/coyote/coverage)
 
+An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on RubyOnRails with MySQL (via MariaDB).  
 
-Image annotation site and API to enable the distributed annotation of museum images built on RubyOnRails with MySQL (via MariaDB). 
-
-- [Coyote Repo](http://github.com/coyote-team/coyote)
+- [Coyote repo](http://github.com/coyote-team/coyote)
 - [Coyote.pics](https://coyote.pics/)
 - [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
 
-## Setup
+## Developer Setup
 
 ```bash
 bundle install
@@ -24,9 +23,10 @@ bundle install
 bin/rake db:create db:migrate db:seed
 RAILS_ENV=test bin/rake db:create db:migrate
 ```
-See [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) if you need some help on managing your ruby versions, etc.
 
-Secure creds are kept untracked in `.env`
+For more information on environment or setup, see [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) or the `Vagrantfile`.
+
+Secure credentials are kept untracked in `.env` and  `.env.[development, test, staging, production]`. 
 
 ## Usage 
 
@@ -47,7 +47,7 @@ bin/rails c
 
 ## Test
 
-Lint the [FactoryGirls](https://github.com/thoughtbot/factory_girl)
+Lint the model factories ([more info](https://github.com/thoughtbot/factory_girl)):
 
 ```bash
 bin/rake factory_girl:lint
@@ -62,15 +62,15 @@ bin/rspec
 
 # Or dynamically via the guard daemon
 guard
-# Leave that running while you develop
-# Then press enter or update a page and the test suite will run
+# Leave that running while your server is running and
+# then press enter or update a page and the test suite will run
 
 ```
 
 ## Deploy
 
 ```bash
-# Copy the .env.production from the server
+# This command will also copy your .env and .env.production to the server
 bundle exec cap production deploy
 ```
 
@@ -107,17 +107,17 @@ Assuming you are logged into an Ubuntu 16.04 LTS as a root...
 
 You will need to set the domain name to the new IP and then to prepare the following
 
-1. A new Google Analytics UA identifier (for coyote UAs, click [here](https://analytics.google.com/analytics/web/#management/Settings/a86309615w128502418p132251424/)).
+1. The production IP address, e.g. `173.255.234.50`
 2. The new domain for coyote, e.g.  `coyote.warhol.org`.
-3. The name of the client institution.
-4. The main website address.
-5. The access token from previous project in `.env.production`
-6. The production IP.
+3. The name of the hostinginstitution, e.g. The Warhol.
+4. The main website address, e.g. `http://www.warhol.ora`
+5. (Optional) A new Google Analytics UA identifier (for coyote UAs, click [here](https://analytics.google.com/analytics/web/#management/Settings/a86309615w128502418p132251424/)).
+6. (Optional) The Rollbar access token from previous project in `.env.production`
 
 Then you can run...
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/coyote/coyote/bin/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
 ```
 
 ## API
@@ -151,13 +151,13 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
   [Website | id: int | url: string | title: string | strategy: string ]
   [Status | id: int | title: string | description: text]
-  [Meta| id: int| title: string | instructions: text]
+  [Metum| id: int| title: string | instructions: text]
 
   [Assignment]->[Image]
   [Assignment]->[User]
 
   [Description]->[User]
-  [Description]->[Meta]
+  [Description]->[Metum]
   [Description]->[Status]
 
   [Image]->[Group]
