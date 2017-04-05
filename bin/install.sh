@@ -70,12 +70,11 @@ source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
 
 # create database
-export SQL="create database " $DATABASE_NAME "; ALTER DATABASE " $DATABASE_NAME " charset=utf8; CREATE USER " $DATABASE_USERNAME " @localhost IDENTIFIED BY '" $DATABASE_PASSWORD "'; grant all on " $DATABASE_NAME ".* to " $DATABASE_USERNAME "@localhost; use mysql; flush privileges;"
-mysql -uroot -p -e $SQL
+SQL="create database ${DATABASE_NAME}; ALTER DATABASE ${DATABASE_NAME} charset=utf8; CREATE USER ${DATABASE_USERNAME}@${DATABASE_HOST} IDENTIFIED BY '${DATABASE_PASSWORD}'; grant all on ${DATABASE_NAME}.* to ${DATABASE_USERNAME}@${DATABASE_HOST}; use mysql; flush privileges;"
+mysql -uroot -e "${SQL}"
 
 # setup ssl
 service nginx stop
-# TODO  ask if ready for this step
 letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
 
 # nginx
