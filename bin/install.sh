@@ -109,9 +109,14 @@ bundle exec cap production deploy
 source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
 TASK="db:seed" bundle exec cap production rake
+
+git config --global user.email $SUPPORT_EMAIL
+git config --global user.name "{$WEBSITE_TITLE}"
+
 exit
 
 # nginx restart
 service nginx restart
 
 echo "Install, deploy and seed completed! Please open a browser and check your site"
+

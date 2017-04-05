@@ -7,7 +7,7 @@ Fork, then clone the repo:
 git clone git@github.com:your-username/coyote.git
 ```
 
-Push to your fork, refer to our issues, and submit a [pull request](https://github.com/coyote-team/coyote/compare/develop...) to develop when you have changes rebased into a clean set of commits.
+Push to your fork, refer to our issues, and submit a [pull request](https://github.com/coyote-team/coyote/compare) when you have changes rebased into a clean set of commits.
 
 ## Before you pull
 
@@ -32,4 +32,4 @@ git push
 
 
 ## Making changes
-The `master` branch is used for our auto-deploy process and should be deploy-ready. Minor changes should target or be made on the `develop` branch. Substantial, feature-related changes should be made on a corresponding feature branch based off of `develop` branch.  Commits should be rebased for conciseness and clarity before pull requests are made.
+The `master` branch is used for our auto-deploy process and should be deploy-ready. Substantial, feature-related changes should be made on a corresponding feature branch.  Commits should be rebased for conciseness and clarity before pull requests are made.
