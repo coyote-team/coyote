@@ -77,7 +77,7 @@ class HomeController < ApplicationController
     @latest_commit = Rails.cache.fetch("latest_commit", expires_in: 5.minutes) do 
       require 'open-uri'
       builds = JSON.load(open("https://api.travis-ci.org/repos/coyote-team/coyote/builds.json"))
-      builds = builds.map{|b| b if  b["result"]==0}.compact
+      builds = builds.map{|b| b if  b["branch"]=="master" && b["result"]==0}.compact
       builds[0]["commit"].first(7)
     end
     @deployed_at = Rails.cache.read("deployed_at")
