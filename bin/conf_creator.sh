@@ -11,7 +11,7 @@ function populate {
     echo "#Created ${TIMESTAMP}" > $FILE
     while read -r NAME VALUE
     do
-        if [ ${#NAME} = "SECRET_KEY_BASE" ]
+        if [ $NAME = "SECRET_KEY_BASE" ]
         then
             SECRET="$(bin/rake secret)"
             echo "$NAME=$SECRET" >> $FILE
