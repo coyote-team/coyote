@@ -33,9 +33,3 @@ git push
 
 ## Making changes
 The `master` branch is used for our auto-deploy process and should be deploy-ready. Minor changes should target or be made on the `develop` branch. Substantial, feature-related changes should be made on a corresponding feature branch based off of `develop` branch.  Commits should be rebased for conciseness and clarity before pull requests are made.
-
-Changes are merged into `master` with a squash:
-
-```
-git merge --squash develop
-```

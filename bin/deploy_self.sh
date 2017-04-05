@@ -17,6 +17,6 @@ tar -zcvf $DIR.tar.gz  ~/backups
 rm -rf $DIR
 
 #deploy
+source ~/.bash_profile
 git pull
-bundle install
-bundle exec cap production deploy
+RAILS_ENV=development bundle install; bundle exec cap production deploy

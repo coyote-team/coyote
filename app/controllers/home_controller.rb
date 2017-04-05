@@ -62,7 +62,6 @@ class HomeController < ApplicationController
       Process.detach(pid)
       Time.now
     end
-    Rails.logger.info "Deploying"
     render nothing: true
   end
 
