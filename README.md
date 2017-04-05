@@ -16,9 +16,12 @@ An open source image annotation app and API to enable the distributed annotation
 ```bash
 bundle install
 
-# Copy the top block of .env.example to .env and populate
-# Copy the bottom block of .env.example to .env.development
-# Copy the bottom block of .env.example to .env.test
+# Populate .env files
+bin/conf_creator.sh .env # Copy this and the next one from other developers if working on an existing project
+bin/conf_creator.sh .env.production
+bin/conf_creator.sh .env.development
+bin/conf_creator.sh .env.test
+
 # Create the DBs for dev and test
 bin/rake db:create db:migrate db:seed
 RAILS_ENV=test bin/rake db:create db:migrate
