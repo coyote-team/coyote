@@ -70,20 +70,17 @@ source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
 
 # create database
-export SQL="create database " $DATABASE_NAME "; ALTER DATABASE " $DATABASE_NAME " charset=utf8; CREATE USER " $DATABASE_USERNAME " @localhost IDENTIFIED BY '" $DATABASE_PASSWORD "'; grant all on " $DATABASE_NAME ".* to " $DATABASE_USERNAME "@localhost; use mysql; flush privileges;"
-mysql -uroot -p -e $SQL
+SQL="create database ${DATABASE_NAME}; ALTER DATABASE ${DATABASE_NAME} charset=utf8; CREATE USER ${DATABASE_USERNAME}@${DATABASE_HOST} IDENTIFIED BY '${DATABASE_PASSWORD}'; grant all on ${DATABASE_NAME}.* to ${DATABASE_USERNAME}@${DATABASE_HOST}; use mysql; flush privileges;"
+mysql -uroot -e "${SQL}"
 
 # setup ssl
 service nginx stop
-# TODO  ask if ready for this step
 letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos 
 
 # nginx
 sed s/HOST/$HOST/g /home/coyote/code/coyote/config/nginx.coyote.conf > /etc/nginx/sites-available/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
-
-service nginx restart
 echo "127.0.0.1       " $HOST >> /etc/hosts
 
 #logrotate
@@ -103,6 +100,7 @@ echo "Install completed!"
 
 # deploy
 su coyote
+cd
 source ~/.bash_profile
 cd ~/code/coyote
 bundle exec cap production deploy
@@ -110,7 +108,10 @@ bundle exec cap production deploy
 # seed
 source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
-# TODO sed to change the default user and admin credentials first in db/seeds.rb
 TASK="db:seed" bundle exec cap production rake
 exit
-echo "Deploy and seed completed!"
+
+# nginx restart
+service nginx restart
+
+echo "Install, deploy and seed completed! Please open a browser and check your site"
