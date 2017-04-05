@@ -81,8 +81,6 @@ letsencrypt certonly --standalone -d $HOST -t --email $SUPPORT_EMAIL --agree-tos
 sed s/HOST/$HOST/g /home/coyote/code/coyote/config/nginx.coyote.conf > /etc/nginx/sites-available/nginx.coyote.conf
 ln -s /etc/nginx/sites-available/nginx.coyote.conf /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/default
-
-service nginx restart
 echo "127.0.0.1       " $HOST >> /etc/hosts
 
 #logrotate
@@ -102,6 +100,7 @@ echo "Install completed!"
 
 # deploy
 su coyote
+cd
 source ~/.bash_profile
 cd ~/code/coyote
 bundle exec cap production deploy
@@ -109,7 +108,10 @@ bundle exec cap production deploy
 # seed
 source /home/coyote/code/coyote/.env
 source /home/coyote/code/coyote/.env.production
-# TODO sed to change the default user and admin credentials first in db/seeds.rb
 TASK="db:seed" bundle exec cap production rake
 exit
-echo "Deploy and seed completed!"
+
+# nginx restart
+service nginx restart
+
+echo "Install, deploy and seed completed! Please open a browser and check your site"
