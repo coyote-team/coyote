@@ -15,7 +15,7 @@ No merge bubbles please.
 
 ```
 git pull --rebase
-# or default rebase instead of merge
+# or default your pull to use rebase instead of merge
 git config branch.autosetuprebase always # Force all new branches to automatically use rebase
 git config branch.*branch-name*.rebase true # Force existing branches to use rebase.
 ```
@@ -32,9 +32,9 @@ git push
 
 
 ## Making changes
-The `master` branch is used for our auto-deploy process and should be deploy-ready. Minor changes should target or be made on the `develop` branch. Substantial, feature-related changes should be made on a corresponding feature branch based off of `develop` branch.  Commits should be rebased for conciseness and clarity before pull requests are made and within the `develop` branch and feature branches.
+The `master` branch is used for our auto-deploy process and should be deploy-ready. Minor changes should target or be made on the `develop` branch. Substantial, feature-related changes should be made on a corresponding feature branch based off of `develop` branch.  Commits should be rebased for conciseness and clarity before pull requests are made.
 
-Changes are merged into `master` with a sauash:
+Changes are merged into `master` with a squash:
 
 ```
 git merge --squash develop
