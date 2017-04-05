@@ -58,6 +58,7 @@ class HomeController < ApplicationController
   def deploy
     @deployed_at = Rails.cache.fetch("deployed_at", expires_in: 5.minutes) do 
       pid = spawn("bin/deploy_self.sh #{Rails.env}")
+      Rails.logger.info("Deploying with pid #{pid.to_s}")
       Process.detach(pid)
       Time.now
     end
