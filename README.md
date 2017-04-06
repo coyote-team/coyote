@@ -1,4 +1,4 @@
-COYOTE
+Coyote
 ====
 
 [![Travis CI](https://travis-ci.org/coyote-team/coyote.svg?branch=master)](https://travis-ci.org/coyote-team/coyote)
@@ -7,9 +7,15 @@ COYOTE
 
 An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on RubyOnRails with MySQL (via MariaDB).  
 
-- [Coyote repo](http://github.com/coyote-team/coyote)
-- [Coyote.pics](https://coyote.pics/)
-- [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
+## Quick Server Setup
+
+1. Determine the values for [.env.example](https://github.com/coyote-team/coyote/blob/master/.env.example) and [.env.production.example](https://github.com/coyote-team/coyote/blob/master/.env.production.example).
+2. Point a domain towards the server coyote, e.g.  `coyote.warhol.org`.
+3. Run this one liner as the root user on a 16.04 Ubuntu server to install and start coyote:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
+```
 
 ## Developer Setup
 
@@ -104,25 +110,6 @@ ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222
 open http://localhost:3000
 ```
 
-## Server Setup
-
-Assuming you are logged into an Ubuntu 16.04 LTS as a root...
-
-You will need to set the domain name to the new IP and then to prepare the following
-
-1. The production IP address, e.g. `173.255.234.50`
-2. The new domain for coyote, e.g.  `coyote.warhol.org`.
-3. The name of the hostinginstitution, e.g. The Warhol.
-4. The main website address, e.g. `http://www.warhol.ora`
-5. (Optional) A new Google Analytics UA identifier (for coyote UAs, click [here](https://analytics.google.com/analytics/web/#management/Settings/a86309615w128502418p132251424/)).
-6. (Optional) The Rollbar access token from previous project in `.env.production`
-
-Then you can run...
-
-```bash
-wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
-```
-
 ## API
 
 API documentation is generated at `/apipie` and you can see MCA's version  [here](http://coyote.mcachicago.org/apipie).
@@ -174,8 +161,13 @@ Descriptions have an audit log that tracks changes across most columns.
  
 ## Links
 
-- [MCA Coyote Repo](https://github.com/mcachicago/coyote)
+- [Coyote repo](http://github.com/coyote-team/coyote)
+- [Coyote.pics](https://coyote.pics/)
+- [Museum of Contemporary Art Chicago's Coyote](http://coyote.mcachicago.org)
 - [Museum of Contemporary Art Chicago](http://www2.mcachicago.org/) 
+
+More info regarding accessibility:
+
 - [A11Y Guidelines](http://a11yproject.com/)
 - [Sina's Links on Accessibility](http://www.sinabahram.com/resources.php)
 - [ARIA in HTML](http://rawgit.com/w3c/aria-in-html/master/index.html) and [ARIA](http://www.w3.org/TR/wai-aria/states_and_properties#global_states)
