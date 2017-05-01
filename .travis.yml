@@ -4,6 +4,7 @@ services:
 - mysql
 before_script:
 - export RAILS_ENV=test
+- export SECRET_KEY_BASE=bf2f15bef324004a9120768f26e1a202e7b90969599dad3325d1507940b0f24527ba6694a06e159d2842ab2f0e832188698cdbf9beec017f13c124ff4f6eb796
 - bundle exec rake db:create
 - bundle exec rake db:schema:load
 addons:
