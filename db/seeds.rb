@@ -1,3 +1,8 @@
+require "factory_girl"
+require_relative "../spec/factories"
+require_relative "../spec/factories/users"
+require_relative "../spec/factories/websites"
+
 Group.create!([
   {id: 1, title: "collection"},
   {id: 2, title: "website"},
@@ -14,12 +19,16 @@ Status.create!([
   {id: 2, title: "Approved"},
   {id: 3, title: "Not approved"}
 ])
-User.create!([
-  {id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User", admin: true}
-])
-Website.create!([
-  {id: 1, title: ENV["WEBSITE_TITLE"], url: "#{ENV["WEBSITE_URL"]}"}
-])
+#User.create!([
+  #{id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User", admin: true}
+#])
+
+FactoryGirl.create(:user,:admin,email: ENV["SUPPORT_EMAIL"],first_name: "Support", last_name: "User")
+FactoryGirl.create(:website)
+
+#Website.create!([
+  #{id: 1, title: ENV["WEBSITE_TITLE"], url: "#{ENV["WEBSITE_URL"]}"}
+#])
 #Image.create!([
   #{id: 1, path: "/wp-content/uploads/2015/05/smlxl_carousel_image_2x-975x549.jpg", website_id: 2, group_id: 1, canonical_id: 1},
 #])
