@@ -32,7 +32,8 @@ FactoryGirl.define do
     authentication_token { generate(:token) }
     email {Faker::Internet.email}
     password {Faker::Internet.password}
-    factory :admin do
+
+    trait :admin do
       admin true
     end
   end

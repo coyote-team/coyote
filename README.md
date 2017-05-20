@@ -70,7 +70,8 @@ Then, run the test suite:
 bin/rspec
 
 # Or dynamically via the guard daemon
-guard
+bundle exec guard
+
 # Leave that running while your server is running and
 # then press enter or update a page and the test suite will run
 
