@@ -9,16 +9,21 @@ default: &default
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
   database: <%= ENV['DATABASE_NAME'] %>
-development: 
+
+development:
   <<: *default
+
 staging:
   <<: *default
+
 test: &test
   <<: *default
+
 cucumber:
   <<: *test
+
 production:
   <<: *default
   reconnect: true
   pool: 20
-  socket: /var/run/mysqld/mysqld.sock 
+  socket: /var/run/mysqld/mysqld.sock
