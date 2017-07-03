@@ -3,7 +3,7 @@ gem 'dotenv-rails'
 gem 'rails', '4.2.5.1'
 gem 'language_list'
 gem 'iso639-validator'
-gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate 
+gem 'sass-rails', '~> 5.0.1' #sass and sprockets upgrades can be delicate
 gem 'compass-rails', '~> 3.0.2'
 gem 'bootstrap-sass', '>= 3.2'
 gem 'sprockets'
@@ -39,7 +39,7 @@ gem 'markdown-rails'
 gem 'high_voltage' #static pages
 gem 'coffee-rails', '>= 4.1.0'
 gem 'jquery-rails', ">= 4.0.4"
-gem 'execjs' 
+gem 'execjs'
 gem 'uglifier', '>= 2.7.1' #js compression
 gem "validate_url"
 gem 'tilt' #template interface
@@ -85,14 +85,14 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rb-fsevent' #osx file system changes
   gem 'factory_girl_rails', require: false
-  gem 'faker'
+  gem 'database_cleaner'
+  gem 'faker', :git => 'git://github.com/stympy/faker.git', :branch => 'master'
 end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'shoulda-matchers'
   gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
   gem 'webmock'
   gem 'selenium-webdriver'
   gem 'capybara-accessible'

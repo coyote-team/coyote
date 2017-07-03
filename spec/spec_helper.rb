@@ -3,6 +3,7 @@ require 'rspec/rails'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require "codeclimate-test-reporter"
+
 CodeClimate::TestReporter.start
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }

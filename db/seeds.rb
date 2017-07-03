@@ -1,30 +1,54 @@
-require "factory_girl"
-require_relative "../spec/factories"
-require_relative "../spec/factories/users"
-require_relative "../spec/factories/websites"
+# require 'factory_girl_rails'
+# require_relative "../spec/factories"
+# require_relative "../spec/factories/users"
+# require_relative "../spec/factories/websites"
 
-Group.create!([
-  {id: 1, title: "collection"},
-  {id: 2, title: "website"},
-  {id: 3, title: "exhibitions"},
-  {id: 4, title: "events "},
-])
-Metum.create!([
-  {id: 1, title: "Alt", instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a . comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs."},
-  #{id: 2, title: "Caption", instructions: "This is the caption text to be displayed visibly. This text will also be read to a blind user so it is best not to repeat info from this item in the alt text."},
-  {id: 3, title: "Long", instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a . comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs."}
-])
-Status.create!([
-  {id: 1, title: "Ready to review"},
-  {id: 2, title: "Approved"},
-  {id: 3, title: "Not approved"}
-])
-#User.create!([
-  #{id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User", admin: true}
-#])
+class Seed
 
-FactoryGirl.create(:user,:admin,email: ENV["SUPPORT_EMAIL"],first_name: "Support", last_name: "User")
-FactoryGirl.create(:website)
+  def initialize
+    generate_groups
+    generate_metum
+    generate_status
+    generate_admin_user
+  end
+
+  def generate_groups
+    Group.create!([
+      {id: 1, title: "collection"},
+      {id: 2, title: "website"},
+      {id: 3, title: "exhibitions"},
+      {id: 4, title: "events "},
+    ])
+    puts "groups created"
+  end
+
+  def generate_metum
+    Metum.create!([
+      {id: 1, title: "Alt", instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a . comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs."},
+      #{id: 2, title: "Caption", instructions: "This is the caption text to be displayed visibly. This text will also be read to a blind user so it is best not to repeat info from this item in the alt text."},
+      {id: 3, title: "Long", instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a . comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs."}
+    ])
+    puts "metums created"
+  end
+
+  def generate_status
+    Status.create!([
+      {id: 1, title: "Ready to review"},
+      {id: 2, title: "Approved"},
+      {id: 3, title: "Not approved"}
+    ])
+    puts "statuses created"
+  end
+
+  def generate_admin_user
+    # User.create!([
+    #   {id: 1, email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User", admin: true}
+    # ])
+    FactoryGirl.create(:user,:admin,email: ENV["SUPPORT_EMAIL"], password: ENV["SUPPORT_PASSWORD"], first_name: "Support", last_name: "User")
+    FactoryGirl.create(:website)
+    puts "1 admin user created"
+  end
+
 
 #Website.create!([
   #{id: 1, title: ENV["WEBSITE_TITLE"], url: "#{ENV["WEBSITE_URL"]}"}
@@ -44,3 +68,7 @@ FactoryGirl.create(:website)
   #{id: 5, locale: "en", text: "This is a test caption for image 2.", status_id: 2, image_id: 2, metum_id: 2, user_id: 1},
   #{id: 6, locale: "en", text: "This is a test long description for image 2.", status_id: 1, image_id: 2, metum_id: 3, user_id: 1}
 #])
+
+end
+
+Seed.new
