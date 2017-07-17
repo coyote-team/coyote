@@ -26,10 +26,15 @@ def setup!
 end
 
 def check_for_mysql
-  # TODO should actually try to connect to the database using values in config/database.yml, maybe directly with the MySQL gem
-  if `ps aux`.split(/\n/).grep(/mysql/).empty?
-    warn "it doesn't look like MySQL is running, so database setup may fail. Try 'brew install mysql' if you are on macOS."
-  end
+  command = ["begin"]
+  command << %q|ActiveRecord::Base.connection.select_value("SELECT 1")|
+  command << %q|rescue Mysql2::Error|
+  command << %q|warn "We were unable to connect to your database. Please check that you have MySQL installed and that it is currently running (#{$!.message})"|
+  command << %q|else| 
+  command << %q|puts "Successfully connected to MySQL"|
+  command << %q|end|
+
+  run "bin/rails runner '#{command.join(";")}'"
 end
 
 def within_project_root
