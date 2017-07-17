@@ -9,6 +9,10 @@
   },
   "image": "heroku/ruby",
   "env": {
+    "RAILS_ENV": {
+      "description": "The name of the environment we should run the app in",
+      "value": "production"
+    },
     "SECRET_KEY_BASE": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"

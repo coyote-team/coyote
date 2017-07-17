@@ -1,12 +1,15 @@
 default: &default
   adapter: mysql2
+  host: <%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+development: 
+  <<: *default
   host: <%= ENV.fetch("DATABASE_HOST")         { abort "Must set ENV variable DATABASE_HOST; check .env.* files" } %> 
   username: <%= ENV.fetch("DATABASE_USERNAME") { abort "Must set ENV variable DATABASE_USERNAME; check .env.* files" } %>
   password: <%= ENV.fetch("DATABASE_PASSWORD","") %>
   database: <%= ENV.fetch("DATABASE_NAME")     { abort "Must set ENV variable DATABASE_NAME; check .env.* files" } %>
-  socket:   <%= ENV.fetch("DATABASE_SOCKET_PATH","/tmp/mysql.sock") %>
-development: 
-  <<: *default
 staging:
   <<: *default
 test: &test
