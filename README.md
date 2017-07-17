@@ -193,6 +193,7 @@ More info regarding accessibility:
 - Susan Chun, [MCA Chicago](https://mcachicago.org) - project management
 - Anna Lavatelli, [MCA Chicago](https://mcachicago.org) - project management
 - Christopher Reed, [SEEREAD.info](http://seeread.info) - development
+- Mike Subelsky, [subelsky.com](http://subelsky.com) - development
 
 ## License
 [MPLv2](http://choosealicense.com/licenses/mpl-2.0/#)
