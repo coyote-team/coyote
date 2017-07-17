@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.9
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1>Coyote</h1>
+
+<p><a href="https://travis-ci.org/coyote-team/coyote"><img src="https://travis-ci.org/coyote-team/coyote.svg?branch=master" alt="Travis CI"></a>
+<a href="https://codeclimate.com/github/coyote-team/coyote"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://codeclimate.com/github/coyote-team/coyote/coverage"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg" alt="Test Coverage"></a></p>
+
+<p>An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on RubyOnRails with MySQL (via MariaDB).  </p>
+
+<h2>Quick Server Setup</h2>
+
+<ol>
+<li>Determine the values for <a href="https://github.com/coyote-team/coyote/blob/master/.env.example">.env.example</a> and <a href="https://github.com/coyote-team/coyote/blob/master/.env.production.example">.env.production.example</a>.</li>
+<li>Point a domain towards the server coyote, e.g.  <code>coyote.warhol.org</code>.</li>
+<li>Run this one liner as the root user on a 16.04 Ubuntu server to install and start coyote:</li>
+</ol>
+
+<pre class="code bash"><code class="bash">wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
+</code></pre>
+
+<h2>Developer Setup</h2>
+
+<pre class="code bash"><code class="bash"># installs gems, walks you through setting .env variables, creates databases, and adds seed data
+bin/setup
+</code></pre>
+
+<p>Secure credentials are kept untracked in <code>.env</code> and  <code>.env.[development, test, staging, production]</code>. </p>
+
+<p>For more information on environment or setup, see <a href="https://github.com/coyote-team/coyote/blob/master/bin/install.sh">bin/install.sh</a> or the <code>Vagrantfile</code>.</p>
+
+<h2>Usage</h2>
+
+<pre class="code bash"><code class="bash"># Run the server
+bin/rails s
+
+# Automatically run tests as you work
+# You might need to install a shim for guard
+guard
+
+# Run the tests on their own
+bin/rspec
+
+# Run the console
+bin/rails c
+</code></pre>
+
+<h2>Test</h2>
+
+<p>Lint the model factories (<a href="https://github.com/thoughtbot/factory_girl">more info</a>):</p>
+
+<pre class="code bash"><code class="bash">bin/rake factory_girl:lint
+
+</code></pre>
+
+<p>Then, run the test suite:</p>
+
+<pre class="code bash"><code class="bash"># Once
+bin/rspec
+
+# Or dynamically via the guard daemon
+bundle exec guard
+
+# Leave that running while your server is running and
+# then press enter or update a page and the test suite will run
+
+</code></pre>
+
+<h2>Deploy</h2>
+
+<pre class="code bash"><code class="bash"># This command will also copy your .env and .env.production to the server
+bundle exec cap production deploy
+</code></pre>
+
+<h2>Update website images</h2>
+
+<p>This uses each website&#39;s strategy (see below)</p>
+
+<pre class="code bash"><code class="bash"># Update images from past 2 minutes on local
+bin/rake websites:update
+# Update images from past 60 minutes on local
+bin/rake websites:update[60]
+# Update images from past 60 minutes on production
+TASK=&quot;websites:update[60]&quot; bundle exec cap production rake
+
+</code></pre>
+
+<h2>Vagrant Setup</h2>
+
+<p>Some folks like to use an enclosed dev environment.  Here&#39;s a virtual machine dev environment that can be run with the open source engine vagrant. This approach can reduce your dev setup time.</p>
+
+<p>Install <a href="https://www.vagrantup.com/downloads.html">vagrant</a> and run <code>vagrant up</code>  Then, you can view the site like so:</p>
+
+<pre class="code bash"><code class="bash">vagrant up
+ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 
+# Vagrant is the password
+# In another terminal
+open http://localhost:3000
+</code></pre>
+
+<h2>API</h2>
+
+<p>API documentation is generated at <code>/apipie</code> and you can see MCA&#39;s version  <a href="http://coyote.mcachicago.org/apipie">here</a>.</p>
+
+<h2>Strategies</h2>
+
+<p>We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file.  For an example, check out <a href="https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb">/lib/coyote/strategies/mca.rb</a> </p>
+
+<h2>Components</h2>
+
+<ul>
+<li><a href="http://rubyonrails.org/">RubyOnRails</a></li>
+<li><a href="https://mariadb.org/">MariaDB</a> </li>
+<li><a href="http://rbenv.org/">rbenv</a> with <a href="https://github.com/sstephenson/rbenv/wiki/Plugins">plugins</a> for gems, bundler, build, and binstubs</li>
+<li><a href="http://bundler.io/">bundler</a></li>
+<li><a href="http://sass-lang.com/">SASS</a></li>
+<li><a href="http://coffeescript.org/">Coffeescript</a></li>
+</ul>
+
+<h2>Data model</h2>
+
+<p><img src="datamodel.png" alt="Data model"></p>
+
+<p>For use on <a href="http://www.nomnoml.com/">nomnoml</a></p>
+
+<pre class="code ruby"><code class="ruby">[&lt;frame&gt;Coyote data model|
+  [User | id: int | first_name: string | last_name: string |  email: string | admin: bool ]
+  [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
+  [Tag | id: int | title: string]
+  [Group | id: int | title: string]
+  [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
+  [Website | id: int | url: string | title: string | strategy: string ]
+  [Status | id: int | title: string | description: text]
+  [Metum| id: int| title: string | instructions: text]
+
+  [Assignment]-&gt;[Image]
+  [Assignment]-&gt;[User]
+
+  [Description]-&gt;[User]
+  [Description]-&gt;[Metum]
+  [Description]-&gt;[Status]
+
+  [Image]-&gt;[Group]
+  [Image]-&gt;[Website]
+  [Image] +-&gt; 0..* [Description]
+  [Image] +-&gt; 0..* [Tag]
+]
+</code></pre>
+
+<p>Descriptions have an audit log that tracks changes across most columns.</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://github.com/coyote-team/coyote">Coyote repo</a></li>
+<li><a href="https://coyote.pics/">Coyote.pics</a></li>
+<li><a href="http://coyote.mcachicago.org">Museum of Contemporary Art Chicago&#39;s Coyote</a></li>
+<li><a href="http://www2.mcachicago.org/">Museum of Contemporary Art Chicago</a> </li>
+</ul>
+
+<p>More info regarding accessibility:</p>
+
+<ul>
+<li><a href="http://a11yproject.com/">A11Y Guidelines</a></li>
+<li><a href="http://www.sinabahram.com/resources.php">Sina&#39;s Links on Accessibility</a></li>
+<li><a href="http://rawgit.com/w3c/aria-in-html/master/index.html">ARIA in HTML</a> and <a href="http://www.w3.org/TR/wai-aria/states_and_properties#global_states">ARIA</a></li>
+<li><a href="http://www.artbeyondsight.org/handbook/acs-guidelines.shtml">ABS&#39;s Guidelines for Verbal Description</a></li>
+</ul>
+
+<h2>Coyote Admin</h2>
+
+<ul>
+<li><a href="https://rollbar.com/coyote/Coyote/">Rollbar</a></li>
+<li><a href="https://analytics.google.com/analytics/web/#report/defaultid/a86309615w128502418p132251424/">Google Analytics: Coyote MCA</a></li>
+</ul>
+
+<h2>Versus</h2>
+
+<ul>
+<li><a href="http://depictfor.us/">Depict4</a></li>
+<li><a href="https://github.com/voxmedia/autotune/">Autotune</a></li>
+</ul>
+
+<h2>Contributors</h2>
+
+<ul>
+<li>Tobey Albright, <a href="https://mcachicago.org">MCA Chicago</a> - graphic design</li>
+<li>Sina Bahram, <a href="https://pac.bz/">Prime Access Consulting</a> - concept and direction</li>
+<li>Susan Chun, <a href="https://mcachicago.org">MCA Chicago</a> - project management</li>
+<li>Anna Lavatelli, <a href="https://mcachicago.org">MCA Chicago</a> - project management</li>
+<li>Christopher Reed, <a href="http://seeread.info">SEEREAD.info</a> - development</li>
+</ul>
+
+<h2>License</h2>
+
+<p><a href="http://choosealicense.com/licenses/mpl-2.0/#">MPLv2</a></p>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon Jul 17 14:34:03 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.9 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>
