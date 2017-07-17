@@ -21,8 +21,9 @@ More information about image description projects at the MCA and elsewhere is av
 # installs gems, walks you through setting .env variables, creates databases, and adds seed data
 bin/setup
 rails server && open http://localhost:3000
-rake spec
 ```
+
+The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `user@example.com`.
 
 ## Documentation
 
@@ -48,8 +49,7 @@ For more information on environment or setup, see [bin/install.sh](https://githu
 # Run the server
 bin/rails s
 
-# Automatically run tests as you work
-# You might need to install a shim for guard
+# Automatically run tests as you work. You might need to install a shim for guard.
 guard
 
 # Run the tests on their own

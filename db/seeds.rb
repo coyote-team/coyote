@@ -17,5 +17,11 @@ Status.create!([
   {id: 3, title: "Not approved"}
 ])
 
-FactoryGirl.create(:user,:admin,email: ENV["SUPPORT_EMAIL"],first_name: "Support", last_name: "User")
+email = "user@example.com"
+password = "password" # obviously this is only appropriate for the development environment
+
+FactoryGirl.create(:user,:admin,email: email,password: password)
+
+puts "Admin user created with email '#{email}' and password '#{password}'"
+
 FactoryGirl.create(:website)
