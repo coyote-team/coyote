@@ -52,7 +52,7 @@ gem 'roo' #spreadsheet interfaces
 gem 'iconv'
 gem "audited-activerecord"
 gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '53829a6'
-
+gem 'factory_girl_rails', require: false # for one-click installer
 gem 'rollbar', '~>2.11.3'
 
 group :development do
@@ -85,7 +85,6 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent' #osx file system changes
-  gem 'factory_girl_rails', require: false
   gem 'faker'
 end
 
