@@ -18,7 +18,7 @@ Status.create!([
 ])
 
 email = "user@example.com"
-password = "password" # obviously this is only appropriate for the development environment
+password = ENV.fetch("COYOTE_SEED_USER_PASSWORD","password") # obviously this is only appropriate for the development environment
 
 FactoryGirl.create(:user,:admin,email: email,password: password)
 
