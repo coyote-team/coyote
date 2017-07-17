@@ -20,22 +20,13 @@ wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/instal
 ## Developer Setup
 
 ```bash
-bundle install
-
-# Populate .env files
-bin/conf_creator.sh .env # Copy this and the next one from other developers if working on an existing project
-bin/conf_creator.sh .env.production
-bin/conf_creator.sh .env.development
-bin/conf_creator.sh .env.test
-
-# Create the DBs for dev and test
-bin/rake db:create db:migrate db:seed
-RAILS_ENV=test bin/rake db:create db:migrate
+# installs gems, walks you through setting .env variables, creates databases, and adds seed data
+bin/setup
 ```
 
-For more information on environment or setup, see [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) or the `Vagrantfile`.
-
 Secure credentials are kept untracked in `.env` and  `.env.[development, test, staging, production]`. 
+
+For more information on environment or setup, see [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) or the `Vagrantfile`.
 
 ## Usage 
 
