@@ -20,7 +20,7 @@ More information about image description projects at the MCA and elsewhere is av
 ```bash
 # installs gems, walks you through setting .env variables, creates databases, and adds seed data
 bin/setup
-rails server && open http://localhost:3000
+bin/rails server && open http://localhost:3000
 ```
 
 The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `user@example.com`.
