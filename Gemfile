@@ -77,6 +77,7 @@ group :development do
   gem 'capistrano-rbenv', '>= 2.0'
   gem 'capistrano-thin'
   gem 'capistrano-flowdock'
+  gem 'yard'
 end
 
 group :development, :test do
