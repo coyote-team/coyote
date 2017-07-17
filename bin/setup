@@ -5,7 +5,7 @@
 
 def setup!
   within_project_root do
-    test "ruby -v" => ruby_version
+    check_ruby_version
     run  "gem install bundler --no-document --conservative"
     run  "bundle install"
 
@@ -38,12 +38,17 @@ def within_project_root
   end
 end
 
-def ruby_version
-  return IO.read(".ruby-version").strip
+def check_ruby_version
+  desired_version = IO.read(".ruby-version").strip
+  running_version = RUBY_VERSION
+
+  unless desired_version == running_version
+    warn "You are running Ruby #{running_version} but Coyote is developed with #{desired_version} (found in .ruby-version). This may cause problems."
+  end
 end
 
 def run(command)
-  puts "run 'command'"
+  puts "run '#{command}'"
 
   with_clean_bundler_env do
     system(command) || abort("#{command} exited with non-zero status")
