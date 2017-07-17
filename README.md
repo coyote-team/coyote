@@ -5,7 +5,28 @@ Coyote
 [![Code Climate](https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg)](https://codeclimate.com/github/coyote-team/coyote)
 [![Test Coverage](https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg)](https://codeclimate.com/github/coyote-team/coyote/coverage)
 
-An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on RubyOnRails with MySQL (via MariaDB).  
+An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on [Ruby-on-Rails](http://rubyonrails.org/) with MySQL (via MariaDB).  
+
+The software was developed by the [Museum of Contemporary Art Chicago](https://mcachicago.org/) to support a distributed workflow for describing their images and publishing those descriptions to the web. 
+See [coyote.pics](https://coyote.pics/) for an example annotation.
+
+Coyote offers role-based logins to facilitate image description tasks. Administrators approve, assign, and review descriptions. Cataloguers create descriptions from an assignment queue or select images to describe. 
+To provide additional context for cataloguers, Coyote presents the image caption, where available. Coyote allows multiple cataloguers to describe an image; it also allows a single cataloguer to create multiple description– potentially in multiple languages –of the same image.
+
+More information about image description projects at the MCA and elsewhere is available at [coyote.pics](http://coyote.pics), along with contact information for the project team. You can also view or hear image descriptions on the [MCA website](http://mcachicago.org).
+
+## Developer Setup
+
+```bash
+# installs gems, walks you through setting .env variables, creates databases, and adds seed data
+bin/setup
+rails server && open http://localhost:3000
+rake spec
+```
+
+## Documentation
+
+Our YARD documentation is hosted at [coyote-team.github.io][https://coyote-team.github.io/coyote/].
 
 ## Quick Server Setup
 
@@ -15,13 +36,6 @@ An open source image annotation app and API to enable the distributed annotation
 
 ```bash
 wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
-```
-
-## Developer Setup
-
-```bash
-# installs gems, walks you through setting .env variables, creates databases, and adds seed data
-bin/setup
 ```
 
 Secure credentials are kept untracked in `.env` and  `.env.[development, test, staging, production]`. 

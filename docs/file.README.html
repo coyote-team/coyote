@@ -63,7 +63,22 @@
 <a href="https://codeclimate.com/github/coyote-team/coyote"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg" alt="Code Climate"></a>
 <a href="https://codeclimate.com/github/coyote-team/coyote/coverage"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg" alt="Test Coverage"></a></p>
 
-<p>An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on RubyOnRails with MySQL (via MariaDB).  </p>
+<p>An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on <a href="http://rubyonrails.org/">Ruby-on-Rails</a> with MySQL (via MariaDB).  </p>
+
+<p>The software was developed by the <a href="https://mcachicago.org/">Museum of Contemporary Art Chicago</a> to support a distributed workflow for describing their images and publishing those descriptions to the web. 
+See <a href="https://coyote.pics/">coyote.pics</a> for an example annotation.</p>
+
+<p>Coyote offers role-based logins to facilitate image description tasks. Administrators approve, assign, and review descriptions. Cataloguers create descriptions from an assignment queue or select images to describe. 
+To provide additional context for cataloguers, Coyote presents the image caption, where available. Coyote allows multiple cataloguers to describe an image; it also allows a single cataloguer to create multiple description– potentially in multiple languages –of the same image.</p>
+
+<p>More information about image description projects at the MCA and elsewhere is available at <a href="http://coyote.pics">coyote.pics</a>, along with contact information for the project team. You can also view or hear image descriptions on the MCA website at <a href="http://mcachicago.org">www.mcachicago.org</a>.</p>
+
+<h2>Developer Setup</h2>
+
+<pre class="code bash"><code class="bash"># installs gems, walks you through setting .env variables, creates databases, and adds seed data
+bin/setup
+rails server &amp;&amp; open http://localhost:3000
+</code></pre>
 
 <h2>Quick Server Setup</h2>
 
@@ -74,12 +89,6 @@
 </ol>
 
 <pre class="code bash"><code class="bash">wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
-</code></pre>
-
-<h2>Developer Setup</h2>
-
-<pre class="code bash"><code class="bash"># installs gems, walks you through setting .env variables, creates databases, and adds seed data
-bin/setup
 </code></pre>
 
 <p>Secure credentials are kept untracked in <code>.env</code> and  <code>.env.[development, test, staging, production]</code>. </p>
@@ -254,7 +263,7 @@ open http://localhost:3000
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jul 17 14:34:03 2017 by
+  Generated on Mon Jul 17 14:47:02 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.1).
 </div>
