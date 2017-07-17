@@ -6,10 +6,6 @@ default: &default
   database: <%= ENV['DATABASE_NAME'] %>
 development: 
   <<: *default
-  host: <%= ENV.fetch("DATABASE_HOST")         { abort "Must set ENV variable DATABASE_HOST; check .env.* files" } %> 
-  username: <%= ENV.fetch("DATABASE_USERNAME") { abort "Must set ENV variable DATABASE_USERNAME; check .env.* files" } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD","") %>
-  database: <%= ENV.fetch("DATABASE_NAME")     { abort "Must set ENV variable DATABASE_NAME; check .env.* files" } %>
 staging:
   <<: *default
 test: &test
