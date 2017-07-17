@@ -1,0 +1,26 @@
+{
+  "name": "Coyote",
+  "description": "An open source image annotation app and API to enable the distributed annotation of museum images",
+  "website": "http://coyote.pics/",
+  "repository": "https://github.com/coyote-team/coyote",
+  "keywords": ["rails"],
+  "scripts": {
+    "postdeploy": "bin/rake db:create db:migrate db:test:prepare db:seed"
+  },
+  "image": "heroku/ruby",
+  "env": {
+    "SECRET_KEY_BASE": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    }
+  },
+  "addons": [
+    {
+      "plan": "cleardb:ignite",
+      "as": "DATABASE",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ]
+}
