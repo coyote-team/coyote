@@ -1,19 +1,24 @@
 default: &default
   adapter: mysql2
-  host: <%= ENV['DATABASE_HOST'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  database: <%= ENV['DATABASE_NAME'] %>
 development: 
   <<: *default
+  url: <%= ENV.fetch("COYOTE_DEVELOPMENT_DATABASE_URL") { abort("Please set environment variable COYOTE_DEVELOPMENT_DATABASE_URL (see .env file)") } %>
 staging:
   <<: *default
+  url: <%= ENV.fetch("COYOTE_STAGING_DATABASE_URL")     { abort("Please set environment variable COYOTE_STAGING_DATABASE_URL (see .env file)") } %>
 test: &test
   <<: *default
+  url: <%= ENV.fetch("COYOTE_TEST_DATABASE_URL")        { abort("Please set environment variable COYOTE_TEST_DATABASE_URL (see .env file)") } %>
 cucumber:
   <<: *test
 production:
   <<: *default
+  # CLEARDB_DATABASE_URL comes from the Heroku one-click installer
+  url: <%= 
+      ENV["COYOTE_PRODUCTION_DATABASE_URL"] || 
+      ENV["CLEARDB_DATABASE_URL"] ||
+      abort("Please set COYOTE_PRODUCTION_DATABASE_URL")
+    %>
   reconnect: true
   pool: 20
   socket: /var/run/mysqld/mysqld.sock 

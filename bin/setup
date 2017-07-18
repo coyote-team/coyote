@@ -3,24 +3,39 @@
 # This is the developer setup script. To install on a production server, see install.sh
 # Based on https://github.com/mattbrictson/rails-template/blob/master/bin/setup
 
+require "pathname"
+require "fileutils"
+
 def setup!
-  within_project_root do
+  within_project_root do |working_path|
     check_ruby_version
     run  "gem install bundler --no-document --conservative"
     run  "bundle install"
 
-    puts "Setting up initial default values for your development environment. You can just hit return for most of these, to use default values.\n"
-    puts "First the general environmental settings for all environments:\n"
-    run "bin/conf_creator.sh .env"
+    env_path = working_path.join(".env")
 
-    puts "Now the settings for the development environment:\n"
-    run "bin/conf_creator.sh .env.development"
+    copy_flag = if env_path.exist?
+                  puts "It looks like you already have a .env file at #{env_path}. Should we overwrite it with the default values in sample.env? (Y/N)"
+                  answer = gets.strip.upcase
+                  answer == "Y"
+                else
+                  true
+                end
 
-    puts "Now the settings for the test environment:\n"
-    run "bin/conf_creator.sh .env.test"
+    if copy_flag
+      sample_path = working_path.join("sample.env")
+      puts "Copying #{sample_path} to #{env_path}"
+      FileUtils.cp sample_path, env_path
+
+      puts "Generating and appending SECRET_KEY_BASE to #{env_path}"
+      secret = `bin/rake secret`.strip
+
+      env_path.open("a") do |io|
+        io.puts("SECRET_KEY_BASE=#{secret}")
+      end
+    end
 
     check_for_mysql
-
     run("bin/rake db:drop db:create db:migrate db:test:prepare db:seed")
   end
 end
@@ -38,8 +53,10 @@ def check_for_mysql
 end
 
 def within_project_root
-  Dir.chdir(File.expand_path("../",__dir__)) do
-    yield
+  working_dir = Pathname(__dir__).parent
+
+  Dir.chdir(working_dir) do
+    yield working_dir
   end
 end
 

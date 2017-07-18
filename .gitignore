@@ -25,9 +25,7 @@ pickle-email-*.html
 .rvmrc
 
 #dotenv
-.env*
-!.env.example
-!.env.*.example
+.env
 
 #vagrant
 .vagrant
