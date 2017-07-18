@@ -16,8 +16,7 @@ production:
   # CLEARDB_DATABASE_URL comes from the Heroku one-click installer
   url: <%= 
       ENV["COYOTE_PRODUCTION_DATABASE_URL"] || 
-      ENV["CLEARDB_DATABASE_URL"] ||
-      abort("Please set COYOTE_PRODUCTION_DATABASE_URL")
+      ENV["CLEARDB_DATABASE_URL"]
     %>
   reconnect: true
   pool: 20
