@@ -1,0 +1,6 @@
+default: &default
+  adapter: mysql2
+production:
+  <<: *default 
+  # we have to do the below because Heroku one click installer won't attach the ClearDB MySQL DB as DATABASE_URL
+  url: <%= ENV.fetch("CLEARDB_DATABASE_URL") { abort("expected to have CLEARDB_DATABASE_URL ENV variable set, check app.json") } %>

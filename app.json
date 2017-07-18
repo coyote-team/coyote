@@ -5,7 +5,7 @@
   "repository": "https://github.com/coyote-team/coyote",
   "keywords": ["rails"],
   "scripts": {
-    "postdeploy": "bin/rake db:create db:migrate db:test:prepare db:seed"
+    "postdeploy": "cp config/database.yml.heroku config/database.yml && bin/rake db:create db:migrate db:test:prepare db:seed"
   },
   "image": "heroku/ruby",
   "env": {

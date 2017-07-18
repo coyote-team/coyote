@@ -2,22 +2,17 @@ default: &default
   adapter: mysql2
 development: 
   <<: *default
-  url: <%= ENV["COYOTE_DEVELOPMENT_DATABASE_URL"] %>
+  database: <%= ENV.fetch("COYOTE_DEV_DATABASE_NAME","coyote_dev") %>
 staging:
   <<: *default
-  url: <%= ENV["COYOTE_STAGING_DATABASE_URL"] %>
+  database: <%= ENV.fetch("COYOTE_STAGING_DATABASE_NAME","coyote_staging") %>
 test: &test
   <<: *default
-  url: <%= ENV.fetch["COYOTE_TEST_DATABASE_URL"] %>
+  database: <%= ENV.fetch("COYOTE_TEST_DATABASE_NAME","coyote_test") %>
 cucumber:
   <<: *test
 production:
   <<: *default
-  # CLEARDB_DATABASE_URL comes from the Heroku one-click installer
-  url: <%= 
-      ENV["COYOTE_PRODUCTION_DATABASE_URL"] || 
-      ENV["CLEARDB_DATABASE_URL"]
-    %>
   reconnect: true
   pool: 20
   socket: /var/run/mysqld/mysqld.sock 
