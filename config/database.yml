@@ -2,13 +2,13 @@ default: &default
   adapter: mysql2
 development: 
   <<: *default
-  url: <%= ENV.fetch("COYOTE_DEVELOPMENT_DATABASE_URL") { abort("Please set environment variable COYOTE_DEVELOPMENT_DATABASE_URL (see .env file)") } %>
+  url: <%= ENV["COYOTE_DEVELOPMENT_DATABASE_URL"] %>
 staging:
   <<: *default
-  url: <%= ENV.fetch("COYOTE_STAGING_DATABASE_URL")     { abort("Please set environment variable COYOTE_STAGING_DATABASE_URL (see .env file)") } %>
+  url: <%= ENV["COYOTE_STAGING_DATABASE_URL"] %>
 test: &test
   <<: *default
-  url: <%= ENV.fetch("COYOTE_TEST_DATABASE_URL")        { abort("Please set environment variable COYOTE_TEST_DATABASE_URL (see .env file)") } %>
+  url: <%= ENV.fetch["COYOTE_TEST_DATABASE_URL"] %>
 cucumber:
   <<: *test
 production:
