@@ -18,16 +18,13 @@
       "generator": "secret"
     },
     "COYOTE_SEED_USER_PASSWORD": {
-      "description": "The initial password used for the first DB user",
+      "description": "The initial password used for the first Coyote admin user",
       "generator": "secret"
     }
   },
   "addons": [
     {
-      "plan": "cleardb:ignite",
-      "options": {
-        "version": "9.5"
-      }
+      "plan": "jawsdb-maria:kitefin"
     }
   ]
 }
