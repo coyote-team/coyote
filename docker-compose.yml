@@ -1,3 +1,4 @@
+# NOTE: this is a work-in-progress. So far it can't start rails properly.
 version: '2'
 services:
   web:
