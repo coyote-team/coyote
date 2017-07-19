@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports: 
+      - 3000:3000
+    env_file: .env
+    volumes:
+      - .:/opt/webapp
+    command: ["bundle","exec","rails","server","-b","0.0.0.0"]
+    depends_on:
+      - db
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes # obviously this is for development use only
+    ports:
+      - 5432:5432
