@@ -3,6 +3,7 @@ require 'rspec/rails'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require "codeclimate-test-reporter"
+require 'airborne'
 
 CodeClimate::TestReporter.start
 
@@ -22,7 +23,6 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.fail_fast = true
   config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'

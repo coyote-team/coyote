@@ -97,7 +97,7 @@ group :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'selenium-webdriver'
-  gem 'capybara-accessible'
+  gem 'capybara'
   gem 'airborne'
   gem 'launchy' # to use save_and_open_page from Capybara
 end
