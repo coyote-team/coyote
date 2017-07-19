@@ -1,0 +1,93 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.travis-ci.org/repos/coyote-team/coyote/builds.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Date:
+      - Wed, 19 Jul 2017 20:17:43 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - Content-Type, Cache-Control, Expires, Etag, Last-Modified
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Endpoint:
+      - Travis::Api::App::Endpoint::Repos
+      X-Pattern:
+      - "/:owner_name/:name/builds"
+      X-Oauth-Scopes:
+      - public
+      X-Accepted-Oauth-Scopes:
+      - public
+      Vary:
+      - Accept,Accept-Encoding
+      Cache-Control:
+      - no-cache
+      X-Rack-Cache:
+      - miss
+      X-Request-Id:
+      - 7b9f4c60-bdbd-47ae-bf45-df15ceafe3b4
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"id":255354942,"repository_id":9942526,"number":"208","state":"finished","result":0,"started_at":"2017-07-19T17:32:58Z","finished_at":"2017-07-19T17:34:57Z","duration":119,"commit":"e1b271ef3a237efb5c34af147c440fc7749c4f6c","branch":"master","message":"More
+        accurate feature test for logging in and out #106","event_type":"push"},{"id":255349499,"repository_id":9942526,"number":"207","state":"finished","result":0,"started_at":"2017-07-19T17:14:59Z","finished_at":"2017-07-19T17:17:19Z","duration":140,"commit":"b8bf165c49d238d712693e88b4e56b3e89a3475c","branch":"master","message":"Minor
+        request API refactoring/test cleanup","event_type":"push"},{"id":255100452,"repository_id":9942526,"number":"206","state":"finished","result":0,"started_at":"2017-07-19T02:22:27Z","finished_at":"2017-07-19T02:24:36Z","duration":129,"commit":"0ee145ae9699e6b26467f429885c80e5a72ab5d8","branch":"master","message":"Remove
+        more unneeded gems #105","event_type":"push"},{"id":255093968,"repository_id":9942526,"number":"205","state":"finished","result":0,"started_at":"2017-07-19T01:47:00Z","finished_at":"2017-07-19T01:48:51Z","duration":111,"commit":"22b148bf2507909fee7ad835a315294db9240dce","branch":"master","message":"Remove
+        one-click installer, focus on Docker installs\n(too difficult to get all the
+        databases pieces working together)","event_type":"push"},{"id":255092385,"repository_id":9942526,"number":"204","state":"finished","result":0,"started_at":"2017-07-19T01:39:33Z","finished_at":"2017-07-19T01:41:39Z","duration":126,"commit":"7428b22777dbc22e864a9b82a87ce40fef12d25b","branch":"master","message":"fix
+        value of COYOTE_ONE_CLICK_INSTALLATION to appease app.json schema","event_type":"push"},{"id":255091831,"repository_id":9942526,"number":"203","state":"finished","result":0,"started_at":"2017-07-19T01:36:07Z","finished_at":"2017-07-19T01:39:21Z","duration":194,"commit":"49aeef204fef6ce2ef8c9f2c4a5edb8c1ff53b5b","branch":"master","message":"Isolate
+        gems we need for one-click production installation, only during \ninitial
+        setup [#103]","event_type":"push"},{"id":255087912,"repository_id":9942526,"number":"202","state":"finished","result":0,"started_at":"2017-07-19T01:15:04Z","finished_at":"2017-07-19T01:17:39Z","duration":155,"commit":"7a9d00cbb6d009fc689b9f1c0b2d32204af558ac","branch":"master","message":"Mark
+        2 potentially unused gems (commented-out for now out of caution, \nwill delete
+        eventually). Also shifting Mortise dependency to coyotet-team org.","event_type":"push"},{"id":255084921,"repository_id":9942526,"number":"201","state":"finished","result":0,"started_at":"2017-07-19T00:58:18Z","finished_at":"2017-07-19T01:01:16Z","duration":178,"commit":"8245445c1279ccf7bce7c4eb12468c6841665612","branch":"master","message":"Switch
+        Heroku one-click installer to Jaws MariaDB addon #103","event_type":"push"},{"id":255081558,"repository_id":9942526,"number":"200","state":"finished","result":0,"started_at":"2017-07-19T00:41:35Z","finished_at":"2017-07-19T00:44:48Z","duration":193,"commit":"0eef917dabe74ae0686669877e8d9285baff9395","branch":"master","message":"add
+        a coda to our Docker work till we can revisit","event_type":"push"},{"id":255081124,"repository_id":9942526,"number":"199","state":"finished","result":0,"started_at":"2017-07-19T00:39:28Z","finished_at":"2017-07-19T00:41:18Z","duration":110,"commit":"80b40c677bac3dbc5c0a95ae45caa2a4143c2a3c","branch":"master","message":"Heroku
+        one-click installer uses MariaDB and correct mysql2 gem #103","event_type":"push"},{"id":255078844,"repository_id":9942526,"number":"198","state":"finished","result":0,"started_at":"2017-07-19T00:28:06Z","finished_at":"2017-07-19T00:30:52Z","duration":166,"commit":"524867ce8e1f3968740a3aa8cc0d52a44d0a0e1f","branch":"master","message":"Add
+        realistic DATABASE_URL value to sample.env, closes #104","event_type":"push"},{"id":255076321,"repository_id":9942526,"number":"197","state":"finished","result":0,"started_at":"2017-07-19T00:16:29Z","finished_at":"2017-07-19T00:18:15Z","duration":106,"commit":"08538a011ea19f012e69f4aa99e25e0ca63ffdf2","branch":"master","message":"Initial
+        attempt at Dockerization - WIP\n(got MySQL running no problem, but getting
+        strange Rails issue)","event_type":"push"},{"id":255071338,"repository_id":9942526,"number":"196","state":"finished","result":0,"started_at":"2017-07-18T23:51:45Z","finished_at":"2017-07-18T23:53:31Z","duration":106,"commit":"dac329785063b6d4b51963b9b9050204bb77df13","branch":"master","message":"Revert
+        to standard Rails way of configuring the DB #104","event_type":"push"},{"id":255026145,"repository_id":9942526,"number":"195","state":"finished","result":0,"started_at":"2017-07-18T21:08:56Z","finished_at":"2017-07-18T21:10:50Z","duration":114,"commit":"dac329785063b6d4b51963b9b9050204bb77df13","branch":"overhaul_env","message":"Revert
+        to standard Rails way of configuring the DB #104","event_type":"push"},{"id":254950252,"repository_id":9942526,"number":"194","state":"finished","result":null,"started_at":"2017-07-18T17:21:09Z","finished_at":"2017-07-18T17:22:39Z","duration":90,"commit":"568c0f3785bd604addf37cbe2bbf77d8dcf80649","branch":"overhaul_env","message":"fix
+        travis build with correct database ENV var #104","event_type":"push"},{"id":254949193,"repository_id":9942526,"number":"193","state":"finished","result":null,"started_at":"2017-07-18T17:17:40Z","finished_at":"2017-07-18T17:19:55Z","duration":135,"commit":"2ecc899b12fcc2b8c31f77c6eb5c2d6238c52416","branch":"overhaul_env","message":"simplify
+        ENV fetches in database config file, can come up with something smarter later
+        #104","event_type":"push"},{"id":254947731,"repository_id":9942526,"number":"192","state":"finished","result":null,"started_at":"2017-07-18T17:13:09Z","finished_at":"2017-07-18T17:15:28Z","duration":139,"commit":"8890cd1247f3820745e189f7a5f55ab42884b82e","branch":"overhaul_env","message":"update
+        travis with new URL #104","event_type":"push"},{"id":254945163,"repository_id":9942526,"number":"191","state":"finished","result":null,"started_at":"2017-07-18T17:06:10Z","finished_at":"2017-07-18T17:08:41Z","duration":151,"commit":"aef6ee44713eb7ffc17ecbf16b9c682baabf83d7","branch":"overhaul_env","message":"weaken
+        requirement for COYOTE_PRODUCTION_DATABASE_URL when in dev mode","event_type":"push"},{"id":254943536,"repository_id":9942526,"number":"190","state":"finished","result":null,"started_at":"2017-07-18T17:02:19Z","finished_at":"2017-07-18T17:03:46Z","duration":87,"commit":"84e3f328a62a8df43a359a2f2068df689a95a42b","branch":"overhaul_env","message":"Initial
+        effort to overhaul ENV configuration;\nthis brings us up to current Rails
+        standards and\nshould help with future deployment to cloud systems","event_type":"push"},{"id":254602589,"repository_id":9942526,"number":"189","state":"finished","result":0,"started_at":"2017-07-17T20:33:24Z","finished_at":"2017-07-17T20:35:15Z","duration":111,"commit":"6f4b72b65c3cb99248cb7da265384e0b2c133ca4","branch":"master","message":"revert
+        to original database configuration, keep it simple #103","event_type":"push"},{"id":254599799,"repository_id":9942526,"number":"188","state":"finished","result":0,"started_at":"2017-07-17T20:27:23Z","finished_at":"2017-07-17T20:30:30Z","duration":187,"commit":"cc83968bd465826516dd508e69bf9de65c4db8a5","branch":"master","message":"Simplify
+        config/database.yml so one click installer can use DATABASE_URL #103","event_type":"push"},{"id":254594608,"repository_id":9942526,"number":"187","state":"finished","result":0,"started_at":"2017-07-17T20:16:01Z","finished_at":"2017-07-17T20:19:11Z","duration":190,"commit":"036fac6860a8c154cdfda8b59936acd0e3f6ec44","branch":"master","message":"Supply
+        .slugignore so Heroku avoids using our database.yml in favor of DATABASE_URL","event_type":"push"},{"id":254591684,"repository_id":9942526,"number":"186","state":"finished","result":0,"started_at":"2017-07-17T20:08:14Z","finished_at":"2017-07-17T20:10:04Z","duration":110,"commit":"cdcc90c86e4ec2785a12e8d293877306191eb365","branch":"master","message":"Generate
+        more secure seed user password [#103]","event_type":"push"},{"id":254587471,"repository_id":9942526,"number":"185","state":"finished","result":0,"started_at":"2017-07-17T19:57:12Z","finished_at":"2017-07-17T19:59:04Z","duration":112,"commit":"ef95376b3462afe18745a09d9fa2719778e42eb6","branch":"master","message":"cannot
+        deploy heroku mysql with an addon name [#103]","event_type":"push"},{"id":254585101,"repository_id":9942526,"number":"184","state":"finished","result":0,"started_at":"2017-07-17T19:50:05Z","finished_at":"2017-07-17T19:53:00Z","duration":175,"commit":"0c33ed58a1a9a7a0faacca654b3c4d1df477d9a2","branch":"master","message":"Initial
+        attempt at Heroku one-click installation [#103]","event_type":"push"}]'
+    http_version: 
+  recorded_at: Wed, 19 Jul 2017 20:17:43 GMT
+recorded_with: VCR 3.0.3
