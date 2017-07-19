@@ -6,6 +6,13 @@ GIT
       thor (~> 0.14)
 
 GIT
+  remote: https://github.com/coyote-team/mortise
+  revision: 6752d880aaf798bb17f1210be9f71fafaa7b505f
+  specs:
+    mortise (0.3.0)
+      httparty (~> 0.13)
+
+GIT
   remote: https://github.com/plataformatec/simple_form.git
   revision: b440a6cfbfd02d898ba0cdaf4bb6e8cae7b879a9
   specs:
@@ -21,13 +28,6 @@ GIT
     easymarklet (0.0.12)
       easyxdm-rails (~> 0.0.5)
       rails (>= 3.2.9)
-
-GIT
-  remote: https://github.com/seeread/mortise.git
-  revision: 6752d880aaf798bb17f1210be9f71fafaa7b505f
-  specs:
-    mortise (0.3.0)
-      httparty (~> 0.13)
 
 GEM
   remote: https://rubygems.org/
@@ -107,7 +107,6 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     brakeman (3.3.3)
-    browser (2.2.0)
     builder (3.2.2)
     capistrano (3.5.0)
       airbrussh (>= 1.0.0)
@@ -289,8 +288,6 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
-    html2markdown (0.0.3)
-      nokogiri
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
@@ -548,7 +545,6 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (>= 3.2)
   brakeman
-  browser
   capistrano (>= 3.2.1)
   capistrano-bundler
   capistrano-flowdock
@@ -581,7 +577,6 @@ DEPENDENCIES
   haml-rails
   high_voltage
   html2haml
-  html2markdown
   iconv
   iso639-validator
   jbuilder

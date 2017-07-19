@@ -24,14 +24,12 @@ gem "select2-rails", git: 'https://github.com/argerim/select2-rails.git'
 gem 'cocoon' #nested forms
 gem 'analytical' #analytics
 gem 'metamagic' #meta
-gem 'browser' #browser detection
 gem "therubyracer" #node for compiling js
 gem 'oj' #optimized json
 gem "thin", ">= 1.6.3" # webserver
 gem 'turbolinks' #crazy fake ajax
 gem 'responders' #respond_with ala  http://www.justinweiss.com/blog/2014/11/03/respond-to-without-all-the-pain/
 gem 'redcarpet'
-gem 'html2markdown'
 gem 'markdown-rails'
 gem 'high_voltage' #static pages
 gem 'coffee-rails', '>= 4.1.0'
@@ -51,6 +49,11 @@ gem "audited-activerecord"
 gem 'easymarklet', :git=>'https://github.com/seeread/easymarklet.git', :ref => '53829a6'
 gem 'factory_girl_rails', require: false # for one-click installer
 gem 'rollbar', '~>2.11.3'
+
+# These gems appear not to be used. Because we don't have full test coverage I want to leave these lines here for easy grepping later,
+# 'till we're sure they are not needed
+#gem 'browser' #browser detection
+#gem 'html2markdown'
 
 group :development do
   gem "better_errors"
@@ -96,6 +99,6 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara-accessible'
   gem 'be_valid_asset'
-  gem 'mortise', :git=>'https://github.com/seeread/mortise.git' #tenon
   gem 'airborne'
+  gem 'mortise', git: 'https://github.com/coyote-team/mortise'
 end
