@@ -8,16 +8,13 @@ gem 'compass-rails', '~> 3.0.2'
 gem 'bootstrap-sass', '>= 3.2'
 gem 'sprockets'
 gem "lograge"
-#gem "sprockets-redirect"
 gem 'sprockets-rails', '~> 3.0.3'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
 gem 'mysql2', '~> 0.3.18'
-gem 'seed_dump'
 gem 'actionpack-action_caching' #caching
-gem 'annotate'
 gem 'kaminari'
 gem 'ransack'
 gem 'simple_form', :git=>'https://github.com/plataformatec/simple_form.git'  #forms
@@ -77,7 +74,9 @@ group :development do
   gem 'capistrano-rbenv', '>= 2.0'
   gem 'capistrano-thin'
   gem 'capistrano-flowdock'
+  gem 'seed_dump'
   gem 'yard'
+  gem 'annotate'
 end
 
 group :development, :test do
