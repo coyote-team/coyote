@@ -1,12 +1,10 @@
-module RequestHeaders
-  def set_headers(user)
-    {
-      'X-User-Email' => user.email,
-      'X-User-Token' => user.authentication_token
-    }
+module Coyote
+  module RequestHeaders
+    def api_user_headers(user)
+      {
+        "X-User-Email" => user.email,
+        "X-User-Token" => user.authentication_token
+      }
+    end
   end
-end
-
-RSpec.configure do |config|
-  config.include RequestHeaders
 end
