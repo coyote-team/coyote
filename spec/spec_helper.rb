@@ -13,6 +13,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include ControllerMacros, :type => :controller
   config.include FactoryGirl::Syntax::Methods
+  config.include Coyote::FeatureUserLogin, :type => :feature
   config.include Coyote::RequestHeaders
 
   config.expect_with :rspec do |expectations|
