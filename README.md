@@ -116,6 +116,10 @@ ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222
 open http://localhost:3000
 ```
 
+## Docker Setup
+
+This is work-in-progress. See `docker-compose.yml`.
+
 ## API
 
 API documentation is generated at `/apipie` and you can see MCA's version  [here](http://coyote.mcachicago.org/apipie).
