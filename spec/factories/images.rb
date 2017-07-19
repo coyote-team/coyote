@@ -28,11 +28,11 @@ FactoryGirl.define do
     path { Faker::Internet.url }
     canonical_id { Faker::Crypto.md5 }
     title { Faker::Hipster.sentence(3) } 
+    website 
+    group 
+
     trait :priority do
       priority true
     end
-    status_code 0
-    website 
-    group 
   end
 end

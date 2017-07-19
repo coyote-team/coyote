@@ -1,4 +1,4 @@
-feature "Logging in and out" do
+RSpec.feature "Logging in and out" do
   let(:password) { "abc123PDQ" }
   let!(:user) { create(:user,password: password) }
 

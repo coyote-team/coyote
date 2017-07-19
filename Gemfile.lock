@@ -483,6 +483,7 @@ GEM
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
+    vcr (3.0.3)
     warden (1.2.6)
       rack (>= 1.0)
     webmock (2.1.0)
@@ -583,6 +584,7 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 2.7.1)
   validate_url
+  vcr
   webmock
   whenever
   yard

@@ -98,4 +98,5 @@ group :test do
   gem 'capybara'
   gem 'airborne'
   gem 'launchy' # to use save_and_open_page from Capybara
+  gem 'vcr'
 end
