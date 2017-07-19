@@ -11,7 +11,7 @@
 
 FactoryGirl.define do
   factory :metum do
-    title "MyString"
-    instructions Faker::Lorem.sentence
+    title "Long"
+    instructions "A long description is a lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs."
   end
 end

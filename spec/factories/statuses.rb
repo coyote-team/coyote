@@ -10,6 +10,6 @@
 
 FactoryGirl.define do
   factory :status do
-    title Faker::Lorem.word
+    title "Ready to review"
   end
 end
