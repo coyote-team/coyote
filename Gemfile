@@ -98,7 +98,6 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver'
   gem 'capybara-accessible'
-  gem 'be_valid_asset'
   gem 'airborne'
-  gem 'mortise', git: 'https://github.com/coyote-team/mortise'
+  gem 'launchy' # to use save_and_open_page from Capybara
 end
