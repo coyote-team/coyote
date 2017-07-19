@@ -102,11 +102,3 @@ group :test do
   gem 'airborne'
   gem 'mortise', git: 'https://github.com/coyote-team/mortise'
 end
-
-group :production do
-  if ENV["COYOTE_ONE_CLICK_INSTALLATION"] == "true"
-    # HACK but we only want these gems available for the db:seed task during one-click installation
-    gem 'faker'
-    gem 'factory_girl_rails'
-  end
-end
