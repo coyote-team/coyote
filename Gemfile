@@ -54,6 +54,15 @@ gem 'rollbar', '~>2.11.3'
 #gem 'browser' #browser detection
 #gem 'html2markdown'
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'spring-commands-rspec'
+  gem 'rb-fsevent' #osx file system changes
+  gem 'factory_girl_rails', require: false
+  gem 'faker'
+end
+
 group :development do
   gem "better_errors"
   gem "html2haml"
@@ -63,7 +72,6 @@ group :development do
   gem 'brakeman', :require => false
   gem 'spring'
   gem 'guard'
-  gem 'guard-cucumber'
   gem 'guard-brakeman'
   gem 'guard-bundler'
   gem 'guard-coffeescript'
@@ -81,19 +89,9 @@ group :development do
   gem 'annotate'
 end
 
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'guard-rspec'
-  gem 'spring-commands-rspec'
-  gem 'rb-fsevent' #osx file system changes
-  gem 'factory_girl_rails', require: false
-  gem 'faker'
-end
-
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'shoulda-matchers'
-  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'webmock'
   gem 'selenium-webdriver'

@@ -9,8 +9,6 @@ staging:
 test: &test
   <<: *default
   database: <%= ENV.fetch("COYOTE_TEST_DATABASE_NAME","coyote_test") %>
-cucumber:
-  <<: *test
 production:
   <<: *default
   reconnect: true

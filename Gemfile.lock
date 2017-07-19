@@ -168,23 +168,6 @@ GEM
     concurrent-ruby (1.0.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    cucumber (2.4.0)
-      builder (>= 2.1.2)
-      cucumber-core (~> 1.5.0)
-      cucumber-wire (~> 0.0.1)
-      diff-lcs (>= 1.1.3)
-      gherkin (~> 4.0)
-      multi_json (>= 1.7.5, < 2.0)
-      multi_test (>= 0.1.2)
-    cucumber-core (1.5.0)
-      gherkin (~> 4.0)
-    cucumber-rails (1.4.3)
-      capybara (>= 1.1.2, < 3)
-      cucumber (>= 1.3.8, < 3)
-      mime-types (>= 1.16, < 4)
-      nokogiri (~> 1.5)
-      railties (>= 3, < 5)
-    cucumber-wire (0.0.1)
     daemons (1.2.3)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
@@ -222,7 +205,6 @@ GEM
       httparty (~> 0.7)
       multi_json
     formatador (0.2.5)
-    gherkin (4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     guard (2.14.0)
@@ -246,10 +228,6 @@ GEM
       guard (>= 2.1.0)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
-    guard-cucumber (2.1.2)
-      cucumber (~> 2.0)
-      guard-compat (~> 1.0)
-      nenv (~> 0.1)
     guard-livereload (2.5.2)
       em-websocket (~> 0.5)
       guard (~> 2.8)
@@ -329,7 +307,6 @@ GEM
     modular-scale (2.1.1)
       compass (>= 0.12.0)
     multi_json (1.12.1)
-    multi_test (0.1.2)
     multi_xml (0.5.5)
     mysql2 (0.3.21)
     nenv (0.3.0)
@@ -548,7 +525,6 @@ DEPENDENCIES
   coffee-rails (>= 4.1.0)
   compass-h5bp
   compass-rails (~> 3.0.2)
-  cucumber-rails
   database_cleaner
   devise
   dotenv-rails
@@ -560,7 +536,6 @@ DEPENDENCIES
   guard-brakeman
   guard-bundler
   guard-coffeescript
-  guard-cucumber
   guard-livereload
   guard-rspec
   guard-sass

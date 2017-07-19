@@ -9,6 +9,8 @@ before_script:
 - export DATABASE_URL=mysql2://travis@127.0.0.1/coyote_test
 - bundle exec rake db:create
 - bundle exec rake db:schema:load db:migrate
+script:
+  - bin/rake spec
 addons:
   code_climate:
     repo_token:
