@@ -5,7 +5,7 @@
   "repository": "https://github.com/coyote-team/coyote",
   "keywords": ["rails"],
   "scripts": {
-    "postdeploy": "cp config/database.yml.heroku config/database.yml && bin/rake db:create db:migrate db:test:prepare db:seed"
+    "postdeploy": "cp config/database.yml.heroku config/database.yml && bin/rake RAILS_ENV=production db:create db:migrate db:test:prepare db:seed"
   },
   "image": "heroku/ruby",
   "env": {
@@ -20,7 +20,8 @@
     "COYOTE_SEED_USER_PASSWORD": {
       "description": "The initial password used for the first Coyote admin user",
       "generator": "secret"
-    }
+    },
+    "COYOTE_ONE_CLICK_INSTALLATION": true
   },
   "addons": [
     {
