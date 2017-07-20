@@ -21,14 +21,10 @@ guard :rspec, cmd:"spring rspec" do
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
-  watch('spec/rails_helper.rb')                       { "spec" }
+  watch('spec/spec_helper.rb')                        { "spec" }
 
   # Capybara features specs
-  #watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
-
-  # Turnip features and steps
-  #watch(%r{^spec/acceptance/(.+)\.feature$})
-  #watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
+  watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
 end
 
 guard :bundler do
@@ -37,7 +33,6 @@ guard :bundler do
   # watch(/^.+\.gemspec/)
 end
 
-guard 'brakeman', :run_on_start => true do
   watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
   watch(%r{^config/.+\.rb$})
   watch(%r{^lib/.+\.rb$})

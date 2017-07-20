@@ -1,5 +1,9 @@
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
+abort("The Rails environment is running in production mode!") if Rails.env.production?  # Extra check to prevent database changes if the environment is production
+
 require 'rspec/rails'
+require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require "codeclimate-test-reporter"
@@ -7,15 +11,26 @@ require 'airborne'
 require 'vcr'
 require "pathname"
 
-CodeClimate::TestReporter.start
+SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
+CodeClimate::TestReporter.start
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Coyote::FeatureUserLogin, :type => :feature
   config.include Coyote::RequestHeaders
-  config.include Coyote::RequestHeaders
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
+  config.include Devise::TestHelpers, :type => :view
+
+  config.order = "random"
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
+  config.disable_monkey_patching! 
+  config.infer_spec_type_from_file_location!
+  config.infer_base_class_for_anonymous_controllers = false
+  config.use_transactional_fixtures = false
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -26,12 +41,6 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.order = 'random'
-
-  config.filter_run focus: true
-  config.run_all_when_everything_filtered = true
-  config.disable_monkey_patching! 
-
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -41,28 +50,22 @@ RSpec.configure do |config|
   end
 
   config.before(:each,:type => :feature) do
-    # :rack_test driver's Rack app under test shares database connection
-    # with the specs, so continue to use transaction strategy for speed.
-    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-
-    if !driver_shares_db_connection_with_specs
+    unless Capybara.current_driver == :rack_test
       # Driver is probably for an external browser with an app
       # under test that does *not* share a database connection with the
-      # specs, so use truncation strategy.
+      # specs, so use truncation strategy. With rack, we can get away with transactions.
       DatabaseCleaner.strategy = :truncation
     end
   end
 
-  config.before(:each,:type => [:request,:feature]) do
+  config.around(:each,type: %i(request feature)) do |example|
     DatabaseCleaner.start
-  end
-
-  config.append_after(:each,:type => [:request,:feature]) do
+    example.run
     DatabaseCleaner.clean
   end
 end
 
-SPEC_DATA_PATH = Pathname(__dir__).join("data")
+ActiveRecord::Migration.maintain_test_schema!
 
 VCR.configure do |config|
   config.cassette_library_dir = "vcr"
