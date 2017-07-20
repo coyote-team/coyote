@@ -3,7 +3,7 @@
 # Table name: statuses
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
+#  title      :string
 #  created_at :datetime
 #  updated_at :datetime
 #

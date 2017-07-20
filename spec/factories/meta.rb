@@ -3,8 +3,8 @@
 # Table name: meta
 #
 #  id           :integer          not null, primary key
-#  title        :string(255)
-#  instructions :text(65535)
+#  title        :string
+#  instructions :text
 #  created_at   :datetime
 #  updated_at   :datetime
 #

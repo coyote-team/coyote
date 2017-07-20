@@ -15,7 +15,7 @@ gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
-gem 'mysql2', '~> 0.3.18'
+gem 'pg'
 gem 'actionpack-action_caching' #caching
 gem 'kaminari'
 gem 'ransack'

@@ -3,11 +3,11 @@
 # Table name: websites
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
-#  url        :string(255)
+#  title      :string
+#  url        :string
 #  created_at :datetime
 #  updated_at :datetime
-#  strategy   :string(255)
+#  strategy   :string
 #
 
 FactoryGirl.define do

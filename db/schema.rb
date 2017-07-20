@@ -13,9 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20170320174821) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "assignments", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "image_id",   limit: 4
+    t.integer  "user_id"
+    t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,19 +27,19 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "assignments", ["user_id"], name: "index_assignments_on_user_id", using: :btree
 
   create_table "audits", force: :cascade do |t|
-    t.integer  "auditable_id",    limit: 4
-    t.string   "auditable_type",  limit: 255
-    t.integer  "associated_id",   limit: 4
-    t.string   "associated_type", limit: 255
-    t.integer  "user_id",         limit: 4
-    t.string   "user_type",       limit: 255
-    t.string   "username",        limit: 255
-    t.string   "action",          limit: 255
-    t.text     "audited_changes", limit: 65535
-    t.integer  "version",         limit: 4,     default: 0
-    t.string   "comment",         limit: 255
-    t.string   "remote_address",  limit: 255
-    t.string   "request_uuid",    limit: 255
+    t.integer  "auditable_id"
+    t.string   "auditable_type"
+    t.integer  "associated_id"
+    t.string   "associated_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "username"
+    t.string   "action"
+    t.text     "audited_changes"
+    t.integer  "version",         default: 0
+    t.string   "comment"
+    t.string   "remote_address"
+    t.string   "request_uuid"
     t.datetime "created_at"
   end
 
@@ -47,15 +50,15 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "descriptions", force: :cascade do |t|
-    t.string   "locale",     limit: 255,   default: "en"
-    t.text     "text",       limit: 65535
-    t.integer  "status_id",  limit: 4
-    t.integer  "image_id",   limit: 4
-    t.integer  "metum_id",   limit: 4
-    t.integer  "user_id",    limit: 4
+    t.string   "locale",     default: "en"
+    t.text     "text"
+    t.integer  "status_id"
+    t.integer  "image_id"
+    t.integer  "metum_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "license",    limit: 255,   default: "cc0-1.0"
+    t.string   "license",    default: "cc0-1.0"
   end
 
   add_index "descriptions", ["image_id"], name: "index_descriptions_on_image_id", using: :btree
@@ -64,48 +67,48 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "descriptions", ["user_id"], name: "index_descriptions_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
-    t.string   "title",      limit: 255
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "images", force: :cascade do |t|
-    t.string   "path",               limit: 255
-    t.integer  "website_id",         limit: 4
-    t.integer  "group_id",           limit: 4
+    t.string   "path"
+    t.integer  "website_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "canonical_id",       limit: 255
-    t.integer  "assignments_count",  limit: 4,     default: 0
-    t.integer  "descriptions_count", limit: 4,     default: 0
-    t.text     "title",              limit: 65535
-    t.boolean  "priority",                         default: false
-    t.integer  "status_code",        limit: 4,     default: 0
-    t.text     "page_urls",          limit: 65535
+    t.string   "canonical_id"
+    t.integer  "assignments_count",  default: 0
+    t.integer  "descriptions_count", default: 0
+    t.text     "title"
+    t.boolean  "priority",           default: false
+    t.integer  "status_code",        default: 0
+    t.text     "page_urls"
   end
 
   add_index "images", ["group_id"], name: "index_images_on_group_id", using: :btree
   add_index "images", ["website_id"], name: "index_images_on_website_id", using: :btree
 
   create_table "meta", force: :cascade do |t|
-    t.string   "title",        limit: 255
-    t.text     "instructions", limit: 65535
+    t.string   "title"
+    t.text     "instructions"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "statuses", force: :cascade do |t|
-    t.string   "title",      limit: 255
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id",        limit: 4
-    t.integer  "taggable_id",   limit: 4
-    t.string   "taggable_type", limit: 255
-    t.integer  "tagger_id",     limit: 4
-    t.string   "tagger_type",   limit: 255
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -114,29 +117,29 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name",           limit: 255
-    t.integer "taggings_count", limit: 4,   default: 0
+    t.string  "name"
+    t.integer "taggings_count", default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "",    null: false
-    t.string   "encrypted_password",     limit: 255, default: "",    null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "admin",                              default: false
-    t.string   "first_name",             limit: 255
-    t.string   "last_name",              limit: 255
-    t.string   "authentication_token",   limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "admin",                  default: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
@@ -144,11 +147,11 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "url",        limit: 255
+    t.string   "title"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "strategy",   limit: 255
+    t.string   "strategy"
   end
 
   add_foreign_key "assignments", "images"

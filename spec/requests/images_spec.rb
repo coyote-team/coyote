@@ -3,18 +3,18 @@
 # Table name: images
 #
 #  id                 :integer          not null, primary key
-#  path               :string(255)
+#  path               :string
 #  website_id         :integer
 #  group_id           :integer
 #  created_at         :datetime
 #  updated_at         :datetime
-#  canonical_id       :string(255)
+#  canonical_id       :string
 #  assignments_count  :integer          default(0)
 #  descriptions_count :integer          default(0)
-#  title              :text(65535)
+#  title              :text
 #  priority           :boolean          default(FALSE)
 #  status_code        :integer          default(0)
-#  page_urls          :text(65535)
+#  page_urls          :text
 #
 # Indexes
 #

@@ -3,15 +3,15 @@
 # Table name: descriptions
 #
 #  id         :integer          not null, primary key
-#  locale     :string(255)      default("en")
-#  text       :text(65535)
+#  locale     :string           default("en")
+#  text       :text
 #  status_id  :integer
 #  image_id   :integer
 #  metum_id   :integer
 #  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime
-#  license    :string(255)      default("cc0-1.0")
+#  license    :string           default("cc0-1.0")
 #
 # Indexes
 #
