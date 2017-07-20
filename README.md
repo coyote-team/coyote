@@ -140,8 +140,11 @@ heroku run bin/rake db:schema:load db:migrate
 # adds Metum, Group, and Status objects to start you off
 heroku run bin/rake coyote:db:start
 
-# will prompt you for a password
+# setup the first user, will prompt you for a password
 heroku run bin/rake coyote:admin:create[user@example.com] 
+
+# Configure the app to respond to your host name; requires you to create a DNS CNAME entry
+domains:add coyote.example.com
 
 # Workflow
 heroku open              # opens the app in your browser
@@ -149,7 +152,6 @@ heroku ps                # displays list of active processes, corresponding to c
 herou logs --tail        # watch application log stream
 heroku run rails console # access production console
 ```
-
 
 ## Docker Setup
 
