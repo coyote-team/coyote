@@ -1,0 +1,25 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SSL Verification Bypass",
+      "warning_code": 71,
+      "fingerprint": "b0f43db2c2489b44ab4fb64cc0169becfcb997408734acfb6570acc082ab5c04",
+      "message": "SSL certificate verification was bypassed",
+      "file": "lib/coyote/strategies/mca.rb",
+      "line": 20,
+      "link": "http://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
+      "code": "Net::HTTP.start(URI.parse(((image.website.url + \"/api/v1/attachment_images/\") + image.canonical_id)).host, URI.parse(((image.website.url + \"/api/v1/attachment_images/\") + image.canonical_id)).port, :use_ssl => (URI.parse(((image.website.url + \"/api/v1/attachment_images/\") + image.canonical_id)).scheme == \"https\"), :verify_mode => (OpenSSL::SSL::VERIFY_NONE))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MCAStrategy",
+        "method": "patch"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": "This code is only used to fetch images, so MITM threat is not an issue"
+    }
+  ],
+  "updated": "2017-07-20 11:09:23 -0400",
+  "brakeman_version": "3.3.3"
+}
