@@ -1,5 +1,6 @@
 default: &default
   adapter: mysql2
+  pool: <%= ENV["COYOTE_DB_POOL_SIZE"] || ENV["COYOTE_NUM_THREADS"] || 5 %>
 development: 
   <<: *default
   database: <%= ENV.fetch("COYOTE_DEV_DATABASE_NAME","coyote_dev") %>

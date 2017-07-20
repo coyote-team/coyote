@@ -1,5 +1,5 @@
 # NOTE: this is a work-in-progress. So far it can't start rails properly.
-version: '2'
+version: '3'
 services:
   web:
     build: .
@@ -7,8 +7,8 @@ services:
       - 3000:3000
     env_file: .env
     volumes:
-      - .:/opt/webapp
-    command: ["bundle","exec","rails","server","-b","0.0.0.0"]
+      - .:/coyote
+    command: bin/rails server thin -b 0.0.0.0
     depends_on:
       - db
   db:
