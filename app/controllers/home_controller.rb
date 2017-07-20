@@ -13,7 +13,6 @@ class HomeController < ApplicationController
       @description_count = Description.all.count
       @approved_count = Description.approved.count
       if current_user.admin?
-        check_commit
         @review_count = Description.ready_to_review.count
         #@unapproved_count = Description.not_approved.count
         @open_assignment_count = Image.assigned_undescribed.count
@@ -53,33 +52,5 @@ class HomeController < ApplicationController
     else
     end
     @minimum_password_length = User.password_length.min
-  end
-
-  def deploy
-    @deployed_at = Rails.cache.fetch("deployed_at", expires_in: 5.minutes) do 
-      pid = spawn("bin/deploy_self.sh #{Rails.env}")
-      Rails.logger.info("Deploying with pid #{pid.to_s}")
-      Process.detach(pid)
-      Time.now
-    end
-    render nothing: true
-  end
-
-  protected
-  def check_commit
-    @current_commit = Rails.cache.fetch("current_commit", expires_in: 5.minutes) do 
-      if Rails.env.development?
-        `git rev-parse --short HEAD`.chomp
-      else
-        `cat REVISION`.first(7)
-      end
-    end
-    @latest_commit = Rails.cache.fetch("latest_commit", expires_in: 5.minutes) do 
-      require 'open-uri'
-      builds = JSON.load(open("https://api.travis-ci.org/repos/coyote-team/coyote/builds.json"))
-      builds = builds.map{|b| b if  b["branch"]=="master" && b["result"]==0}.compact
-      builds[0]["commit"].first(7)
-    end
-    @deployed_at = Rails.cache.read("deployed_at")
   end
 end
