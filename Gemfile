@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+ruby '2.3.1'
+
 gem 'dotenv-rails'
 gem 'rails', '4.2.5.1'
 gem 'language_list'
