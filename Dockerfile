@@ -5,5 +5,5 @@ RUN mkdir /coyote
 WORKDIR /coyote
 ADD Gemfile /coyote/Gemfile
 ADD Gemfile.lock /coyote/Gemfile.lock
-RUN bundle install
+RUN gem install bundler && bundle install
 ADD . /coyote

@@ -29,20 +29,6 @@ The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb)
 
 Our YARD documentation is hosted at [coyote-team.github.io][https://coyote-team.github.io/coyote/].
 
-## Quick Server Setup
-
-1. Determine the values for [.env.example](https://github.com/coyote-team/coyote/blob/master/.env.example) and [.env.production.example](https://github.com/coyote-team/coyote/blob/master/.env.production.example).
-2. Point a domain towards the server coyote, e.g.  `coyote.warhol.org`.
-3. Run this one liner as the root user on a 16.04 Ubuntu server to install and start coyote:
-
-```bash
-wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
-```
-
-Secure credentials are kept untracked in `.env` and  `.env.[development, test, staging, production]`. 
-
-For more information on environment or setup, see [bin/install.sh](https://github.com/coyote-team/coyote/blob/master/bin/install.sh) or the `Vagrantfile`.
-
 ## Usage 
 
 ```bash
@@ -102,20 +88,6 @@ TASK="websites:update[60]" bundle exec cap production rake
 
 ```
 
-## Vagrant Setup
-
-Some folks like to use an enclosed dev environment.  Here's a virtual machine dev environment that can be run with the open source engine vagrant. This approach can reduce your dev setup time.
-
-Install [vagrant](https://www.vagrantup.com/downloads.html) and run `vagrant up`  Then, you can view the site like so:
-
-```bash
-vagrant up
-ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 
-# Vagrant is the password
-# In another terminal
-open http://localhost:3000
-```
-
 ## Heroku Deployment
 
 Requires installation of [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
@@ -155,7 +127,12 @@ heroku run rails console # access production console
 
 ## Docker Setup
 
-This is work-in-progress. See `docker-compose.yml`.
+The app can run in a self-contained environment, which you can use for development.
+
+1) Install [Docker Community Edition](https://www.docker.com/get-docker).
+2) `docker-compose up`
+
+The app should then be accessible at http://localhost:3000/. For more details see [local development with Docker Compose](https://devcenter.heroku.com/articles/local-development-with-docker-compose).
 
 ## API
 
