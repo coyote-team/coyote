@@ -67,6 +67,7 @@ SPEC_DATA_PATH = Pathname(__dir__).join("data")
 VCR.configure do |config|
   config.cassette_library_dir = "vcr"
   config.hook_into :webmock
+  config.ignore_hosts "codeclimate.com"
 end
 
 SimpleCov.start do
