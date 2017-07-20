@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.use_transactional_fixtures = false
+  config.default_formatter = "doc" if config.files_to_run.one?
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -59,9 +60,9 @@ RSpec.configure do |config|
   end
 
   config.around(:each,type: %i(request feature)) do |example|
-    DatabaseCleaner.start
-    example.run
-    DatabaseCleaner.clean
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end
 
