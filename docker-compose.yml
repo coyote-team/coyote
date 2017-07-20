@@ -12,8 +12,6 @@ services:
     depends_on:
       - db
   db:
-    image: mysql
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes # obviously this is for development use only
+    image: postgres:latest
     ports:
       - 5432:5432
