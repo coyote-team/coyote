@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?  # Extra check to prevent database changes if the environment is production
 
 require 'rspec/rails'
+require 'factory_girl_rails'
 require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
@@ -23,6 +24,7 @@ RSpec.configure do |config|
   config.include Coyote::RequestHeaders
   config.include Devise::TestHelpers, :type => :controller
   config.include Devise::TestHelpers, :type => :view
+  config.include ResponseJSON
 
   config.order = "random"
   config.filter_run focus: true
@@ -59,11 +61,14 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each,type: %i(request feature)) do |example|
+  db_cleaning = ->(example) do
     DatabaseCleaner.cleaning do
       example.run
     end
   end
+
+  config.around(:each,:type => :feature,&db_cleaning) 
+  config.around(:each,:type => :request,&db_cleaning) 
 end
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -83,3 +88,5 @@ end
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end
+
+WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])
