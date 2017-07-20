@@ -10,7 +10,7 @@ RSpec.feature "Adding and describing an image" do
     attributes_for(:image).tap(&:symbolize_keys!)
   end
 
-  scenario "succeeds" do
+  scenario "succeeds" do |meta|
     click_link "Images"
 
     first(:link,"New Image").click
