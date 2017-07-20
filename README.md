@@ -125,7 +125,7 @@ git clone https://github.com/coyote-team/coyote.git
 cd coyote
 
 heroku whoami # ensure you are logged-in
-heroku apps:create --name example-coyote
+heroku apps:create --name example-coyote-app-name
 
 # This line adds a free MySQL database to your app. They may still require you to enter a credit card before allowing this step.
 heroku addons:create jawsdb --as DATABASE --name coyote-production-mysql-db
@@ -136,13 +136,20 @@ bin/rake deploy
 
 # Prepare the production database
 heroku run bin/rake db:schema:load db:migrate
-heroku run bin/rake coyote:admin:create[user@example.com] # will prompt you for a password
+
+# adds Metum, Group, and Status objects to start you off
+heroku run bin/rake coyote:db:start
+
+# will prompt you for a password
+heroku run bin/rake coyote:admin:create[user@example.com] 
 
 # Workflow
-heroku open       # opens the app in your browser
-heroku ps         # displays list of active processes, corresponding to contents of Procfile
-herou logs --tail # watch application log stream
+heroku open              # opens the app in your browser
+heroku ps                # displays list of active processes, corresponding to contents of Procfile
+herou logs --tail        # watch application log stream
+heroku run rails console # access production console
 ```
+
 
 ## Docker Setup
 

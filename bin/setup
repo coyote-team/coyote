@@ -36,7 +36,7 @@ def setup!
     end
 
     check_for_mysql
-    run("bin/rake db:drop db:create db:migrate db:test:prepare db:seed")
+    run("bin/rake db:drop db:create db:migrate db:test:prepare db:seed coyote:admin:create[user@example.com,password]")
   end
 end
 
