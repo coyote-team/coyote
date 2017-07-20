@@ -100,3 +100,7 @@ group :test do
   gem 'launchy' # to use save_and_open_page from Capybara
   gem 'vcr'
 end
+
+group :production do
+  gem "rails_12factor"
+end

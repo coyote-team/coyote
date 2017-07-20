@@ -1,1 +1,1 @@
-web: bin/rails server
+web: bin/rails server thin -p $PORT

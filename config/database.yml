@@ -11,6 +11,8 @@ test: &test
   database: <%= ENV.fetch("COYOTE_TEST_DATABASE_NAME","coyote_test") %>
 production:
   <<: *default
+  # needed because various Heroku MySQL addon vendors use mysql:// when we need mysql2:// to activate the right driver
+  url: <%= ENV.values_at(*%w(DATABASE_URL JAWSDB_MARIA_URL COYOTE_PRODUCTION_DATABASE_URL)).first.to_s.sub(/^mysql2?/,"mysql2") %>
   reconnect: true
   pool: 20
   socket: /var/run/mysqld/mysqld.sock 

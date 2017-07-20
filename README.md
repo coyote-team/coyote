@@ -116,6 +116,34 @@ ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222
 open http://localhost:3000
 ```
 
+## Heroku Deployment
+
+Requires installation of [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
+
+```bash
+git clone https://github.com/coyote-team/coyote.git
+cd coyote
+
+heroku whoami # ensure you are logged-in
+heroku apps:create --name example-coyote
+
+# This line adds a free MySQL database to your app. They may still require you to enter a credit card before allowing this step.
+heroku addons:create jawsdb --as DATABASE --name coyote-production-mysql-db
+
+# this just runs "git push heroku", but we'll be adding bells and whistles
+# The first time you run this, it will take a while to install gems and prepare the environment
+bin/rake deploy 
+
+# Prepare the production database
+heroku run bin/rake db:schema:load db:migrate
+heroku run bin/rake coyote:admin:create[user@example.com] # will prompt you for a password
+
+# Workflow
+heroku open       # opens the app in your browser
+heroku ps         # displays list of active processes, corresponding to contents of Procfile
+herou logs --tail # watch application log stream
+```
+
 ## Docker Setup
 
 This is work-in-progress. See `docker-compose.yml`.
