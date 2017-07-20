@@ -279,7 +279,6 @@ GEM
     language_list (1.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.15)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -382,7 +381,6 @@ GEM
       ffi (>= 0.5.0)
     rdiscount (1.6.8)
     redcarpet (3.3.4)
-    ref (2.0.0)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (2.0.0)
@@ -465,9 +463,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     terminal-notifier (1.6.3)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thin (1.7.0)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -584,7 +579,6 @@ DEPENDENCIES
   spring-commands-rspec
   sprockets
   sprockets-rails (~> 3.0.3)
-  therubyracer
   thin (>= 1.6.3)
   tilt
   turbolinks

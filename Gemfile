@@ -24,7 +24,6 @@ gem "select2-rails", git: 'https://github.com/argerim/select2-rails.git'
 gem 'cocoon' #nested forms
 gem 'analytical' #analytics
 gem 'metamagic' #meta
-gem "therubyracer" #node for compiling js
 gem 'oj' #optimized json
 gem "thin", ">= 1.6.3" # webserver
 gem 'turbolinks' #crazy fake ajax
