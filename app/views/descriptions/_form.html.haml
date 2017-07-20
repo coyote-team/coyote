@@ -30,7 +30,7 @@
           = f.input :user_id,  as: :hidden, input_html: {value: @author.id}
         - metum_id = params[:metum_id]
         - metum_id ||= @description.metum_id
-        = f.association :metum, prompt: "Choose the description type", prompt: "Pick the description type", :label_method => lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum ==metum}.compact.count})" }, selected:  metum_id
+        = f.association :metum, prompt: "Choose the description type", label_method: lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum == metum}.compact.count})" }, selected:  metum_id
         .metum-instructions
           - @meta.each do |m|
             - if @description.metum_id == m.id or params[:metum_id].to_i == m.id

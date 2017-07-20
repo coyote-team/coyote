@@ -22,7 +22,7 @@
 #  index_images_on_website_id  (website_id)
 #
 
-RSpec.describe "Image API requests" do#, :type => :request do
+RSpec.describe "Image API requests" do
   let(:user) { create(:user) }
   let(:image ) { create(:image) }
 

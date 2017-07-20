@@ -15,8 +15,8 @@ RSpec.feature "Adding and describing an image" do
 
     first(:link,"New Image").click
 
-    select(website.title,from: "Website")
-    select(group.title,from: "Group")
+    select(website.title,:from => "Website",:match => :first)
+    select(group.title,from: "Group",:match => :first)
 
     fill_in "Canonical ID", with: image_attributes[:canonical_id]
     fill_in "Path",         with: image_attributes[:path]

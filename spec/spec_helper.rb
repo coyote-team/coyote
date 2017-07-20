@@ -19,9 +19,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Coyote::FeatureUserLogin, :type => :feature
+  config.extend  Coyote::ControllerMacros, :type => :controller
   config.include Coyote::RequestHeaders
   config.include Devise::TestHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
   config.include Devise::TestHelpers, :type => :view
 
   config.order = "random"
@@ -67,6 +67,12 @@ RSpec.configure do |config|
 end
 
 ActiveRecord::Migration.maintain_test_schema!
+
+FactoryGirl.define do
+  sequence :token do
+    SecureRandom.hex(3)
+  end
+end
 
 VCR.configure do |config|
   config.cassette_library_dir = "vcr"
