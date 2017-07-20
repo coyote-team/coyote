@@ -14,6 +14,8 @@ module Plate
     end
     config.assets.precompile += %w( coyote_producer.js )
     
+    config.autoload_paths << "#{Rails.root}/lib/coyote"
+
     # after_commit etc. callback transaction errors will raise
     config.active_record.raise_in_transactional_callbacks = true
 
