@@ -1,4 +1,4 @@
-Plate::Application.routes.draw do
+Coyote::Application.routes.draw do
   apipie
   resources :assignments do
     collection do
