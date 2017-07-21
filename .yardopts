@@ -1,1 +1,1 @@
--o docs - CONTRIBUTING.md LICENSE.txt
+--title Coyote -c -o docs --files CONTRIBUTING.md,LICENSE.txt

@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Coyote
   
 </title>
 
@@ -63,129 +63,139 @@
 <a href="https://codeclimate.com/github/coyote-team/coyote"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/gpa.svg" alt="Code Climate"></a>
 <a href="https://codeclimate.com/github/coyote-team/coyote/coverage"><img src="https://codeclimate.com/github/coyote-team/coyote/badges/coverage.svg" alt="Test Coverage"></a></p>
 
-<p>An open source image annotation app and API to enable the distributed annotation of museum images. Coyote is built on <a href="http://rubyonrails.org/">Ruby-on-Rails</a> with MySQL (via MariaDB).  </p>
+<p>An open source image annotation app enabling the distributed annotation and comprehensive representation of images. Long descriptions can range from one sentence to several paragraphs. The software was developed by the <a href="https://mcachicago.org/">Museum of Contemporary Art Chicago</a> to support a distributed workflow for describing their images and publishing those descriptions to the web. </p>
 
-<p>The software was developed by the <a href="https://mcachicago.org/">Museum of Contemporary Art Chicago</a> to support a distributed workflow for describing their images and publishing those descriptions to the web. 
-See <a href="https://coyote.pics/">coyote.pics</a> for an example annotation.</p>
+<h2>Example</h2>
 
-<p>Coyote offers role-based logins to facilitate image description tasks. Administrators approve, assign, and review descriptions. Cataloguers create descriptions from an assignment queue or select images to describe. 
-To provide additional context for cataloguers, Coyote presents the image caption, where available. Coyote allows multiple cataloguers to describe an image; it also allows a single cataloguer to create multiple description– potentially in multiple languages –of the same image.</p>
+<p>An image like this would traditionally be described by <a href="https://en.wikipedia.org/wiki/Alt_attribute">alt text</a> like <q>A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.</q>: </p>
 
-<p>More information about image description projects at the MCA and elsewhere is available at <a href="http://coyote.pics">coyote.pics</a>, along with contact information for the project team. You can also view or hear image descriptions on the MCA website at <a href="http://mcachicago.org">www.mcachicago.org</a>.</p>
+<p><img src="doc_assets/mca_sample.png" alt="MCAChicago sample image T.Y.F.F.S.H" title="A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway."></p>
 
-<h2>Developer Setup</h2>
+<p><em>Kris Martin, Belgian, b. 1972. T.Y.F.F.S.H., 2011. Collection: Museum of Contemporary Art. Photo: Nathan Keay, © MCA Chicago.</em></p>
 
-<pre class="code bash"><code class="bash"># installs gems, walks you through setting .env variables, creates databases, and adds seed data
+<p>Coyote aims to provide more comprehensive representations:</p>
+
+<blockquote>
+<p>This is an installation that viewers are invited to walk inside of. From this viewpoint you are looking through a doorway at a slight distance, as if standing inside of a large cave and looking out of its narrow entrance at the world outside. 
+The walls of this cave are alternating stripes of red, white, and blue material that seems to be made of some kind of thin fabric. These colored stripes spiral around toward the entrance, as if being sucked out of the opening. 
+The inside of the cave is more shadowed and the area outside is brightly lit. Gradually you notice that there are in fact two openings lined up in front of each other, straight ahead of you: the first one is a tall rectangle—the red, white and blue 
+fabric is wrapped through the edges of a standard doorway; beyond that it continues to spiral around toward another circular opening. The center of this circle is much brighter, as if one had finally escape from the cave. 
+At the center of that circular opening you see two large white fans facing your direction, blowing air into the cave-like opening. Beyond the fans you see a brown, square form, which is the bottom of a huge wicker basket. 
+This basket, lying on its side, helps to reveal the truth about what you are seeing: You are standing inside of a huge hot air balloon, which is lying on its side. Blown by the fans, the fabric billows out to press out against the existing w
+alls of a large room, the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.</p>
+</blockquote>
+
+<p>More information about image description projects at the MCA and elsewhere is available at <a href="http://coyote.pics">coyote.pics</a>, along with contact information for the project team. You can also view or hear image descriptions on the <a href="http://mcachicago.org">MCA website</a>.</p>
+
+<h2>Table of contents</h2>
+
+<ul>
+<li><a href="#developer-setup">Developer Setup</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#heroku-deployment">Heroku Deployment</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#strategies">Strategies</a></li>
+<li><a href="#data-model">Data Model</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#contributors">Contributors</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+
+<h2><a name="developer-setup"></a>Developer Setup</h2>
+
+<p><em>Beginning Developers</em></p>
+
+<p>The app can run in a self-contained Docker container, which you can use for development. For more details see <a href="https://devcenter.heroku.com/articles/local-development-with-docker-compose">local development with Docker Compose</a>.</p>
+
+<p>1) Install <a href="https://www.docker.com/get-docker">Docker Community Edition</a></p>
+
+<p>2) Run the following commands:</p>
+
+<pre class="code bash"><code class="bash">git clone https://github.com/coyote-team/coyote.git
+cd coyote
+docker-compose build # downloads images, builds containers
+docker-compose up    # start running containers
+docker-compose exec web bin/rake db:setup db:migrate db:seed                    # prepare database, add seed data
+docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] # create initial user
+</code></pre>
+
+<p>3) Open <code>http://localhost:3000</code> in your browser.</p>
+
+<p>Once the app is running you can interact with it using commands like this:</p>
+
+<pre class="code bash"><code class="bash">docker ps                                 # list running containers
+docker-compose build                      # rebuild web container when new gems are installed
+docker-compose exec web pumactl restart   # restart Puma
+docker-compose exec web bin/rails console # access Rails console
+</code></pre>
+
+<p><em>Experienced Developers</em></p>
+
+<p>The app can also run in your local development environment, but requires a bit more know-how.</p>
+
+<p>1) <a href="https://www.postgresql.org/">Install Postgres</a> (on MacOS try <a href="http://postgresapp.com/">Postgres.app</a>).</p>
+
+<p>2) Run the following commands:</p>
+
+<pre class="code bash"><code class="bash">git clone https://github.com/coyote-team/coyote.git
+cd coyote
 bin/setup
-rails server &amp;&amp; open http://localhost:3000
+bin/rails server &amp;&amp; open http://localhost:3000
 </code></pre>
 
-<h2>Quick Server Setup</h2>
+<p>The <a href="https://github.com/coyote-team/coyote/blob/master/db/seeds.rb">seed script</a> builds a simple user, so you can login as <code>user@example.com</code>.</p>
 
-<ol>
-<li>Determine the values for <a href="https://github.com/coyote-team/coyote/blob/master/.env.example">.env.example</a> and <a href="https://github.com/coyote-team/coyote/blob/master/.env.production.example">.env.production.example</a>.</li>
-<li>Point a domain towards the server coyote, e.g.  <code>coyote.warhol.org</code>.</li>
-<li>Run this one liner as the root user on a 16.04 Ubuntu server to install and start coyote:</li>
-</ol>
+<p>We have setup a <code>Guardfile</code> to speed up development. Try <code>bundle exec guard</code>.</p>
 
-<pre class="code bash"><code class="bash">wget -qO- https://raw.githubusercontent.com/coyote-team/coyote/master/bin/install.sh | bash
+<h2><a name="documentation"></a> Documentation</h2>
+
+<p>YARD documentation is hosted at <a href="https://coyote-team.github.io/coyote/">coyote-team.github.io</a>.</p>
+
+<h2><a name="heroku-deployment"> Heroku Deployment</h2>
+
+<p>Requires installation of <a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a>.</p>
+
+<pre class="code bash"><code class="bash">git clone https://github.com/coyote-team/coyote.git
+cd coyote
+
+heroku whoami # ensure you are logged-in
+heroku apps:create --name example-coyote-app-name
+
+# this just runs &quot;git push heroku&quot;, but we&#39;ll be adding bells and whistles
+# The first time you run this, it will take a while to install gems and prepare the environment
+
+bin/rake deploy 
+
+# Prepare the production database
+heroku run bin/rake db:schema:load db:migrate
+
+# adds Metum, Group, and Status objects to start you off
+heroku run bin/rake coyote:db:start
+
+# setup the first user, will prompt you for a password
+heroku run bin/rake coyote:admin:create[user@example.com] 
+
+# Configure the app to respond to your host name; requires you to create a DNS CNAME entry
+domains:add coyote.example.com
+
+# Workflow
+heroku open              # opens the app in your browser
+heroku ps                # displays list of active processes, corresponding to contents of Procfile
+herou logs --tail        # watch application log stream
+heroku run rails console # access production console
 </code></pre>
 
-<p>Secure credentials are kept untracked in <code>.env</code> and  <code>.env.[development, test, staging, production]</code>. </p>
-
-<p>For more information on environment or setup, see <a href="https://github.com/coyote-team/coyote/blob/master/bin/install.sh">bin/install.sh</a> or the <code>Vagrantfile</code>.</p>
-
-<h2>Usage</h2>
-
-<pre class="code bash"><code class="bash"># Run the server
-bin/rails s
-
-# Automatically run tests as you work
-# You might need to install a shim for guard
-guard
-
-# Run the tests on their own
-bin/rspec
-
-# Run the console
-bin/rails c
-</code></pre>
-
-<h2>Test</h2>
-
-<p>Lint the model factories (<a href="https://github.com/thoughtbot/factory_girl">more info</a>):</p>
-
-<pre class="code bash"><code class="bash">bin/rake factory_girl:lint
-
-</code></pre>
-
-<p>Then, run the test suite:</p>
-
-<pre class="code bash"><code class="bash"># Once
-bin/rspec
-
-# Or dynamically via the guard daemon
-bundle exec guard
-
-# Leave that running while your server is running and
-# then press enter or update a page and the test suite will run
-
-</code></pre>
-
-<h2>Deploy</h2>
-
-<pre class="code bash"><code class="bash"># This command will also copy your .env and .env.production to the server
-bundle exec cap production deploy
-</code></pre>
-
-<h2>Update website images</h2>
-
-<p>This uses each website&#39;s strategy (see below)</p>
-
-<pre class="code bash"><code class="bash"># Update images from past 2 minutes on local
-bin/rake websites:update
-# Update images from past 60 minutes on local
-bin/rake websites:update[60]
-# Update images from past 60 minutes on production
-TASK=&quot;websites:update[60]&quot; bundle exec cap production rake
-
-</code></pre>
-
-<h2>Vagrant Setup</h2>
-
-<p>Some folks like to use an enclosed dev environment.  Here&#39;s a virtual machine dev environment that can be run with the open source engine vagrant. This approach can reduce your dev setup time.</p>
-
-<p>Install <a href="https://www.vagrantup.com/downloads.html">vagrant</a> and run <code>vagrant up</code>  Then, you can view the site like so:</p>
-
-<pre class="code bash"><code class="bash">vagrant up
-ssh -N -L 3000:localhost:3000 vagrant@localhost -p 2222 
-# Vagrant is the password
-# In another terminal
-open http://localhost:3000
-</code></pre>
-
-<h2>API</h2>
+<h2><a name="api"> API</h2>
 
 <p>API documentation is generated at <code>/apipie</code> and you can see MCA&#39;s version  <a href="http://coyote.mcachicago.org/apipie">here</a>.</p>
 
-<h2>Strategies</h2>
+<h2><a name="strategies"> Strategies</h2>
 
-<p>We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file.  For an example, check out <a href="https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb">/lib/coyote/strategies/mca.rb</a> </p>
+<p>We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file. For an example, check out <a href="https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb">/lib/coyote/strategies/mca.rb</a>.</p>
 
-<h2>Components</h2>
+<h2><a name="data-mode"> Data Model</h2>
 
-<ul>
-<li><a href="http://rubyonrails.org/">RubyOnRails</a></li>
-<li><a href="https://mariadb.org/">MariaDB</a> </li>
-<li><a href="http://rbenv.org/">rbenv</a> with <a href="https://github.com/sstephenson/rbenv/wiki/Plugins">plugins</a> for gems, bundler, build, and binstubs</li>
-<li><a href="http://bundler.io/">bundler</a></li>
-<li><a href="http://sass-lang.com/">SASS</a></li>
-<li><a href="http://coffeescript.org/">Coffeescript</a></li>
-</ul>
-
-<h2>Data model</h2>
-
-<p><img src="datamodel.png" alt="Data model"></p>
+<p><img src="doc_assets/datamodel.png" alt="Data model diagram" title="An entity-relationship diagram demonstrating belongs-to/has-many relationships between database tables with connecting arrows"></p>
 
 <p>For use on <a href="http://www.nomnoml.com/">nomnoml</a></p>
 
@@ -215,7 +225,7 @@ open http://localhost:3000
 
 <p>Descriptions have an audit log that tracks changes across most columns.</p>
 
-<h2>Links</h2>
+<h2><a name="links"> Links</h2>
 
 <ul>
 <li><a href="http://github.com/coyote-team/coyote">Coyote repo</a></li>
@@ -233,21 +243,7 @@ open http://localhost:3000
 <li><a href="http://www.artbeyondsight.org/handbook/acs-guidelines.shtml">ABS&#39;s Guidelines for Verbal Description</a></li>
 </ul>
 
-<h2>Coyote Admin</h2>
-
-<ul>
-<li><a href="https://rollbar.com/coyote/Coyote/">Rollbar</a></li>
-<li><a href="https://analytics.google.com/analytics/web/#report/defaultid/a86309615w128502418p132251424/">Google Analytics: Coyote MCA</a></li>
-</ul>
-
-<h2>Versus</h2>
-
-<ul>
-<li><a href="http://depictfor.us/">Depict4</a></li>
-<li><a href="https://github.com/voxmedia/autotune/">Autotune</a></li>
-</ul>
-
-<h2>Contributors</h2>
+<h2><a name="contributors"> Contributors</h2>
 
 <ul>
 <li>Tobey Albright, <a href="https://mcachicago.org">MCA Chicago</a> - graphic design</li>
@@ -255,15 +251,16 @@ open http://localhost:3000
 <li>Susan Chun, <a href="https://mcachicago.org">MCA Chicago</a> - project management</li>
 <li>Anna Lavatelli, <a href="https://mcachicago.org">MCA Chicago</a> - project management</li>
 <li>Christopher Reed, <a href="http://seeread.info">SEEREAD.info</a> - development</li>
+<li>Mike Subelsky, <a href="http://subelsky.com">subelsky.com</a> - development</li>
 </ul>
 
-<h2>License</h2>
+<h2><a name="license"> License</h2>
 
 <p><a href="http://choosealicense.com/licenses/mpl-2.0/#">MPLv2</a></p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jul 17 14:47:02 2017 by
+  Generated on Fri Jul 21 14:40:04 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.1).
 </div>

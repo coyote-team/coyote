@@ -6,7 +6,7 @@
 <title>
   Class: Image
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Coyote
   
 </title>
 
@@ -109,18 +109,18 @@
 <p>Table name: images</p>
 
 <pre class="code ruby"><code class="ruby">id                 :integer          not null, primary key
-path               :string(255)
+path               :string
 website_id         :integer
 group_id           :integer
 created_at         :datetime
 updated_at         :datetime
-canonical_id       :string(255)
+canonical_id       :string
 assignments_count  :integer          default(0)
 descriptions_count :integer          default(0)
-title              :text(65535)
+title              :text
 priority           :boolean          default(FALSE)
 status_code        :integer          default(0)
-page_urls          :text(65535)</code></pre>
+page_urls          :text</code></pre>
 
 <p>Indexes</p>
 
@@ -1338,7 +1338,7 @@ locales and status&#39;es</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 17 14:47:03 2017 by
+  Generated on Fri Jul 21 14:22:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.1).
 </div>
