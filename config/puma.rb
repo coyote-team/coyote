@@ -11,6 +11,10 @@ rackup      DefaultRackup
 port        ENV["PORT"]     || 3000
 environment ENV["RACK_ENV"] || "development"
 
+# Use "path" as the file to store the server info state. Used by "pumactl" to query and control the server
+
+state_path '/tmp/puma.state'
+
 on_worker_boot do
   ActiveRecord::Base.establish_connection
 end

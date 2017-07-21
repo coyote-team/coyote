@@ -129,10 +129,25 @@ heroku run rails console # access production console
 
 The app can run in a self-contained environment, which you can use for development.
 
-1) Install [Docker Community Edition](https://www.docker.com/get-docker).
-2) `docker-compose up`
+First, install [Docker Community Edition](https://www.docker.com/get-docker). Then:
+
+```bash
+docker-compose build # downloads images, builds containers
+docker-compose up    # start running containers
+docker-compose exec web bin/rake db:setup db:migrate db:seed                    # prepare database, add seed data
+docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] # create initial user
+```
 
 The app should then be accessible at http://localhost:3000/. For more details see [local development with Docker Compose](https://devcenter.heroku.com/articles/local-development-with-docker-compose).
+
+## Docker Workflow
+
+```bash
+docker ps                                 # list running containers
+docker-compose build                      # rebuild web container when new gems are installed
+docker-compose exec web pumactl restart   # restart Puma
+docker-compose exec web bin/rails console # access Rails console
+```
 
 ## API
 
