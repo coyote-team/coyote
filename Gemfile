@@ -88,6 +88,7 @@ group :development do
   gem 'seed_dump'
   gem 'yard'
   gem 'annotate'
+  gem 'guard-rubocop'
 end
 
 group :test do
