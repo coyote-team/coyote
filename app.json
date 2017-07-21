@@ -5,7 +5,7 @@
   "repository": "https://github.com/coyote-team/coyote",
   "keywords": ["rails"],
   "scripts": {
-    "postdeploy": "bin/rake RAILS_ENV=production db:schema:load db:migrate db:test:prepare db:seed"
+    "postdeploy": "echo DB=$DATABASE_URL; bin/rake RAILS_ENV=production db:schema:load db:migrate db:test:prepare db:seed"
   },
   "image": "heroku/ruby",
   "env": {
