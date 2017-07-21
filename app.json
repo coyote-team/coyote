@@ -1,0 +1,31 @@
+{
+  "name": "Coyote",
+  "description": "An open source image annotation app and API to enable the distributed annotation of museum images",
+  "website": "http://coyote.pics/",
+  "repository": "https://github.com/coyote-team/coyote",
+  "keywords": ["rails"],
+  "scripts": {
+    "postdeploy": "bin/rake RAILS_ENV=production db:create db:migrate db:test:prepare db:seed"
+  },
+  "image": "heroku/ruby",
+  "env": {
+    "RAILS_ENV": {
+      "description": "The name of the environment we should run the app in",
+      "value": "production"
+    },
+    "SECRET_KEY_BASE": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "COYOTE_SEED_USER_PASSWORD": {
+      "description": "The initial password used for the first Coyote admin user",
+      "generator": "secret"
+    },
+    "COYOTE_ONE_CLICK_INSTALLATION": "true"
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    }
+  ]
+}
