@@ -1,4 +1,5 @@
 require "factory_girl_rails"
+FactoryGirl.find_definitions rescue FactoryGirl::DuplicateDefinitionError # necessary to be able to use the rake db:seed task where we want, argh
 
 Group.create!([
   { title: "collection" },

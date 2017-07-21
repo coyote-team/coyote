@@ -1,14 +1,12 @@
-# A sample Guardfile
-# More info at https://github.com/guard/guard#readme
+ignore(/doc_assets/)
 
-# This group allows to skip running RuboCop when RSpec failed.
 group :red_green_refactor, halt_on_fail: true do
+  # This group allows to skip running RuboCop when RSpec failed.
   guard :rspec, cmd: "spring rspec" do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')  { "spec" }
 
-    # Rails example
     watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
     watch(%r{^app/(.*)(\.erb|\.haml|\.slim)$})          { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
     watch(%r{^app/controllers/(.+)_(controller)\.rb$})  { |m| ["spec/routing/#{m[1]}_routing_spec.rb", "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb", "spec/acceptance/#{m[1]}_spec.rb"] }
@@ -17,7 +15,6 @@ group :red_green_refactor, halt_on_fail: true do
     watch('app/controllers/application_controller.rb')  { "spec/controllers" }
     watch('spec/spec_helper.rb')                        { "spec" }
 
-    # Capybara features specs
     watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
   end
 
@@ -36,11 +33,7 @@ end
 
 guard :bundler do
   watch('Gemfile')
-  # Uncomment next line if your Gemfile contains the `gemspec' command.
-  # watch(/^.+\.gemspec/)
 end
-
-#guard 'coffeescript', :input => 'app/assets/javascripts'
 
 guard 'sass', :input => 'sass', :output => 'css'
 
@@ -49,6 +42,7 @@ guard 'livereload' do
   watch(%r{app/helpers/.+\.rb})
   watch(%r{public/.+\.(css|js|html)})
   watch(%r{config/locales/.+\.yml})
+  
   # Rails Assets Pipeline
   watch(%r{(app|vendor)(/assets/\w+/(.+\.(css|js|html|png|jpg))).*}) { |m| "/assets/#{m[3]}" }
 end
