@@ -3,3 +3,4 @@
 /.yardoc
 /spec
 /coverage
+bin/setup
