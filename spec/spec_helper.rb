@@ -73,12 +73,6 @@ end
 
 ActiveRecord::Migration.maintain_test_schema!
 
-FactoryGirl.define do
-  sequence :token do
-    SecureRandom.hex(3)
-  end
-end
-
 VCR.configure do |config|
   config.cassette_library_dir = "vcr"
   config.hook_into :webmock

@@ -28,10 +28,14 @@
 #
 
 FactoryGirl.define do
+  sequence :token do
+    SecureRandom.hex(3)
+  end
+
   factory :user do
     authentication_token { generate(:token) }
-    email {Faker::Internet.email}
-    password {Faker::Internet.password}
+    email { Faker::Internet.email }
+    password { Faker::Internet.password }
 
     trait :admin do
       admin true
