@@ -153,36 +153,23 @@ bin/rails server &amp;&amp; open http://localhost:3000
 
 <h2><a name="heroku-deployment"> Heroku Deployment</h2>
 
-<p>Click this button:</p>
+<p>Click this button to automatically deploy Coyote to your <a href="http://heroku.com/">Heroku</a> account in Heroku&#39;s free &quot;hobby&quot; tier:</p>
 
-<p><a href="https://heroku.com/deploy?template=https://github.com/coyote-team/coyote/"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy" title="Button reading &#39;Deploy to Heroku&#39;"></a></p>
+<p><a href="https://heroku.com/deploy?template=https://github.com/coyote-team/coyote/"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy" title="Purple button reading &#39;Deploy to Heroku&#39;"></a></p>
 
-<p>Requires installation of <a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a>.</p>
+<p><em>Heroku Workflow</em></p>
 
-<pre class="code bash"><code class="bash">git clone https://github.com/coyote-team/coyote.git
-cd coyote
-
-heroku whoami # ensure you are logged-in
-heroku apps:create --name example-coyote-app-name
-
-# this just runs &quot;git push heroku&quot;, but we&#39;ll be adding bells and whistles
-# The first time you run this, it will take a while to install gems and prepare the environment
-
-bin/rake deploy 
-
-# Prepare the production database
-heroku run bin/rake db:schema:load db:migrate
-
-# adds Metum, Group, and Status objects to start you off
-heroku run bin/rake coyote:db:start
-
-# setup the first user, will prompt you for a password
+<pre class="code bash"><code class="bash"># setup the first user, will prompt you for a password
 heroku run bin/rake coyote:admin:create[user@example.com] 
+
+# This pushes new code to Heroku by running &quot;git push heroku&quot;, but we add some pre-deployment checks.
+# The first time you run this, it will take a while to install gems and prepare the environment
+bin/rake deploy 
 
 # Configure the app to respond to your host name; requires you to create a DNS CNAME entry
 domains:add coyote.example.com
 
-# Workflow
+# Other useful commands
 heroku open              # opens the app in your browser
 heroku ps                # displays list of active processes, corresponding to contents of Procfile
 herou logs --tail        # watch application log stream
@@ -264,7 +251,7 @@ heroku run rails console # access production console
 </div></div>
 
       <div id="footer">
-  Generated on Sat Jul 22 10:00:05 2017 by
+  Generated on Sat Jul 22 10:04:37 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.1).
 </div>

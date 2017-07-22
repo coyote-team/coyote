@@ -93,37 +93,24 @@ YARD documentation is hosted at [coyote-team.github.io](https://coyote-team.gith
 
 ## <a name="heroku-deployment"> Heroku Deployment
 
-Click this button:
+Click this button to automatically deploy Coyote to your [Heroku](http://heroku.com/) account in Heroku's free "hobby" tier:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg "Purple button reading 'Deploy to Heroku'")](https://heroku.com/deploy?template=https://github.com/coyote-team/coyote/)
 
-Requires installation of [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
+_Heroku Workflow_
 
 ```bash
-git clone https://github.com/coyote-team/coyote.git
-cd coyote
-
-heroku whoami # ensure you are logged-in
-heroku apps:create --name example-coyote-app-name
-
-# this just runs "git push heroku", but we'll be adding bells and whistles
-# The first time you run this, it will take a while to install gems and prepare the environment
-
-bin/rake deploy 
-
-# Prepare the production database
-heroku run bin/rake db:schema:load db:migrate
-
-# adds Metum, Group, and Status objects to start you off
-heroku run bin/rake coyote:db:start
-
 # setup the first user, will prompt you for a password
 heroku run bin/rake coyote:admin:create[user@example.com] 
+
+# This pushes new code to Heroku by running "git push heroku", but we add some pre-deployment checks.
+# The first time you run this, it will take a while to install gems and prepare the environment
+bin/rake deploy 
 
 # Configure the app to respond to your host name; requires you to create a DNS CNAME entry
 domains:add coyote.example.com
 
-# Workflow
+# Other useful commands
 heroku open              # opens the app in your browser
 heroku ps                # displays list of active processes, corresponding to contents of Procfile
 herou logs --tail        # watch application log stream
