@@ -93,6 +93,8 @@ YARD documentation is hosted at [coyote-team.github.io](https://coyote-team.gith
 
 ## <a name="heroku-deployment"> Heroku Deployment
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/coyote-team/coyote/)
+
 Requires installation of [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
 
 ```bash
