@@ -1,5 +1,11 @@
 require "factory_girl_rails"
-FactoryGirl.find_definitions rescue FactoryGirl::DuplicateDefinitionError # necessary to be able to use the rake db:seed task where we want, argh
+
+begin
+  FactoryGirl.find_definitions 
+rescue FactoryGirl::DuplicateDefinitionError 
+  # necessary to be able to use the rake db:seed task where we want, argh
+  Rails.logger.debug "Factory Girl definitions previously loaded"
+end
 
 Group.create!([
   { title: "collection" },

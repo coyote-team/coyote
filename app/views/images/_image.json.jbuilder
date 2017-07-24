@@ -1,14 +1,17 @@
-#TODO move description look up into controller
-json.extract! image, 
-  :id, 
-  :canonical_id, 
-  :path, 
-  :page_urls, 
-  :priority, 
-  :group_id, 
-  :website_id, 
-  :created_at, 
+# TODO move description look up into controller
+
+json.extract!(
+  image,
+  :id,
+  :canonical_id,
+  :path,
+  :page_urls,
+  :priority,
+  :group_id,
+  :website_id,
+  :created_at,
   :updated_at 
+)
 
 json.url image_url(image, format: 'html')
 json.title image.title

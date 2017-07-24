@@ -6,29 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: with_first_parameter, with_fixed_indentation
-Layout/AlignParameters:
-  Exclude:
-    - 'app/views/images/_image.json.jbuilder'
-    - 'bin/_guard-core'
-    - 'bin/guard'
-    - 'bin/puma'
-    - 'bin/pumactl'
-    - 'bin/yard'
-    - 'bin/yardoc'
-    - 'bin/yri'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
 # Offense count: 24
 # Cop supports --auto-correct.
 Layout/CommentIndentation:
@@ -48,19 +25,6 @@ Layout/DotPosition:
   Exclude:
     - 'app/controllers/images_controller.rb'
     - 'spec/features/adding_and_describing_an_image_spec.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'bin/_guard-core'
-    - 'bin/guard'
-    - 'bin/puma'
-    - 'bin/pumactl'
-    - 'bin/yard'
-    - 'bin/yardoc'
-    - 'bin/yri'
-    - 'db/schema.rb'
 
 # Offense count: 6
 # Cop supports --auto-correct.
@@ -223,21 +187,6 @@ Layout/MultilineOperationIndentation:
 Layout/SpaceAfterColon:
   Exclude:
     - 'Guardfile'
-
-# Offense count: 39
-# Cop supports --auto-correct.
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/description.rb'
-    - 'config/puma.rb'
-    - 'db/seeds.rb'
-    - 'lib/tasks/coyote.rake'
-    - 'spec/features/adding_and_describing_an_image_spec.rb'
-    - 'spec/features/logging_in_and_out_spec.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/feature_user_login.rb'
-    - 'spec/support/logged_in_user_contexts.rb'
 
 # Offense count: 5
 # Cop supports --auto-correct.

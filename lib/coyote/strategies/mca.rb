@@ -17,7 +17,8 @@ module Coyote
           url = URI.parse(url)
           req = Net::HTTP::Patch.new(url)
 
-          Net::HTTP.start(url.host,url.port,:use_ssl => url.scheme == 'https',:verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+          # Deciding to use VERIFY_NONE here because this is binary image date we are sending; not likely to be an MITM threat
+          Net::HTTP.start(url.host,url.port,use_ssl: url.scheme == 'https',verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
             http.request(req)
           end
 
@@ -44,16 +45,18 @@ module Coyote
         errors = 0
         images = {}
         while length != 0 do
-          #some images have a null updated at
-          if updated_at
-            url = root + "/api/v1/attachment_images?updated_at=#{updated_at}&offset=#{offset}&limit=#{limit}"
-          else
-            url = root + "/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
-          end
+          path = if updated_at
+                   "/api/v1/attachment_images?updated_at=#{updated_at}&offset=#{offset}&limit=#{limit}"
+                 else
+                   "/api/v1/attachment_images?offset=#{offset}&limit=#{limit}"
+                 end
+
+          url = root + path 
+
           Rails.logger.info "grabbing images for #{url}"
 
           begin
-            content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+            content = open(url,"Content-Type" => "application/json",ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
           rescue OpenURI::HTTPError => error
             response = error.io
             Rails.logger.error response.string
