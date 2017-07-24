@@ -5,10 +5,10 @@
 #  id         :integer          not null, primary key
 #  locale     :string           default("en")
 #  text       :text
-#  status_id  :integer
-#  image_id   :integer
-#  metum_id   :integer
-#  user_id    :integer
+#  status_id  :integer          not null
+#  image_id   :integer          not null
+#  metum_id   :integer          not null
+#  user_id    :integer          not null
 #  created_at :datetime
 #  updated_at :datetime
 #  license    :string           default("cc0-1.0")

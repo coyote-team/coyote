@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320174821) do
+ActiveRecord::Schema.define(version: 20170724200105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "assignments", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "image_id"
+    t.integer  "user_id",    null: false
+    t.integer  "image_id",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "assignments", ["user_id"], name: "index_assignments_on_user_id", using: :btree
 
   create_table "audits", force: :cascade do |t|
-    t.integer  "auditable_id"
-    t.string   "auditable_type"
-    t.integer  "associated_id"
-    t.string   "associated_type"
+    t.integer  "auditable_id",                null: false
+    t.string   "auditable_type",              null: false
+    t.integer  "associated_id",               null: false
+    t.string   "associated_type",             null: false
     t.integer  "user_id"
     t.string   "user_type"
     t.string   "username"
@@ -52,10 +52,10 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   create_table "descriptions", force: :cascade do |t|
     t.string   "locale",     default: "en"
     t.text     "text"
-    t.integer  "status_id"
-    t.integer  "image_id"
-    t.integer  "metum_id"
-    t.integer  "user_id"
+    t.integer  "status_id",                      null: false
+    t.integer  "image_id",                       null: false
+    t.integer  "metum_id",                       null: false
+    t.integer  "user_id",                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "license",    default: "cc0-1.0"
@@ -74,16 +74,16 @@ ActiveRecord::Schema.define(version: 20170320174821) do
 
   create_table "images", force: :cascade do |t|
     t.string   "path"
-    t.integer  "website_id"
-    t.integer  "group_id"
+    t.integer  "website_id",                         null: false
+    t.integer  "group_id",                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "canonical_id"
-    t.integer  "assignments_count",  default: 0
-    t.integer  "descriptions_count", default: 0
+    t.integer  "assignments_count",  default: 0,     null: false
+    t.integer  "descriptions_count", default: 0,     null: false
     t.text     "title"
-    t.boolean  "priority",           default: false
-    t.integer  "status_code",        default: 0
+    t.boolean  "priority",           default: false, null: false
+    t.integer  "status_code",        default: 0,     null: false
     t.text     "page_urls"
   end
 
@@ -104,11 +104,11 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
+    t.integer  "tag_id",                    null: false
+    t.integer  "taggable_id",               null: false
+    t.string   "taggable_type",             null: false
+    t.integer  "tagger_id",                 null: false
+    t.string   "tagger_type",               null: false
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(version: 20170320174821) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.string  "name",                       null: false
+    t.integer "taggings_count", default: 0, null: false
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree

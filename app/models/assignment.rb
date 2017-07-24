@@ -3,8 +3,8 @@
 # Table name: assignments
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
-#  image_id   :integer
+#  user_id    :integer          not null
+#  image_id   :integer          not null
 #  created_at :datetime
 #  updated_at :datetime
 #

@@ -4,16 +4,16 @@
 #
 #  id                 :integer          not null, primary key
 #  path               :string
-#  website_id         :integer
-#  group_id           :integer
+#  website_id         :integer          not null
+#  group_id           :integer          not null
 #  created_at         :datetime
 #  updated_at         :datetime
 #  canonical_id       :string
-#  assignments_count  :integer          default(0)
-#  descriptions_count :integer          default(0)
+#  assignments_count  :integer          default(0), not null
+#  descriptions_count :integer          default(0), not null
 #  title              :text
-#  priority           :boolean          default(FALSE)
-#  status_code        :integer          default(0)
+#  priority           :boolean          default(FALSE), not null
+#  status_code        :integer          default(0), not null
 #  page_urls          :text
 #
 # Indexes
