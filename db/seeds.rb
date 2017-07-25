@@ -14,9 +14,9 @@ Group.create!([
   { title: "events" },
 ])
 
-alt_metum, long_metum = Metum.create!([
-  { title: "Alt",  instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision" },
-  { title: "Long", instructions: "A lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs." }
+short_metum, long_metum = Metum.create!([
+  { title: "Short", instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision" },
+  { title: "Long",  instructions: "A lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs." }
 ])
 
 Status.create!([
@@ -46,7 +46,7 @@ hot air balloon, which is lying on its side. Blown by the fans, the fabric billo
 the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 TEXT
 
-FactoryGirl.create(:description,image: image,metum: alt_metum,text: alt_text)
+FactoryGirl.create(:description,image: image,metum: short_metum,text: alt_text)
 FactoryGirl.create(:description,image: image,metum: long_metum,text: long_text)
 
 # to create an admin user, run bin/rake coyote:admin:create[user@example.com]

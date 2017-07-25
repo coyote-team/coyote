@@ -25,8 +25,8 @@ namespace :coyote do
       ])
 
       Metum.create!([
-        { title: "Alt",  instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision" },
-        { title: "Long", instructions: "A lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs." }
+        { title: "Short", instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision" },
+        { title: "Long",  instructions: "A lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs." }
       ])
 
       Status.create!([
