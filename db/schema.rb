@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724200105) do
+ActiveRecord::Schema.define(version: 20170724203045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,12 +154,12 @@ ActiveRecord::Schema.define(version: 20170724200105) do
     t.string   "strategy"
   end
 
-  add_foreign_key "assignments", "images"
-  add_foreign_key "assignments", "users"
-  add_foreign_key "descriptions", "images"
-  add_foreign_key "descriptions", "meta"
-  add_foreign_key "descriptions", "statuses"
-  add_foreign_key "descriptions", "users"
-  add_foreign_key "images", "groups"
-  add_foreign_key "images", "websites"
+  add_foreign_key "assignments", "images", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "assignments", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "descriptions", "images", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "descriptions", "meta", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "descriptions", "statuses", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "descriptions", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "images", "groups", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "images", "websites", on_update: :cascade, on_delete: :cascade
 end
