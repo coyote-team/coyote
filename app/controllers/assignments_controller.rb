@@ -7,7 +7,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments
   def index
-    @assignments = Assignment.all.page params[:page]
+    @assignments = Assignment.all.page(params[:page])
   end
 
   # GET /assignments/1
@@ -87,21 +87,22 @@ class AssignmentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_assignment
-      @assignment = Assignment.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_assignment
+    @assignment = Assignment.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def assignment_params
-      params.require(:assignment).permit(:user_id, :image_id)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def assignment_params
+    params.require(:assignment).permit(:user_id, :image_id)
+  end
 
-    def assignments_params
-      params.permit(:assignments => [:user_id, :image_id])
-    end
+  def assignments_params
+    params.permit(:assignments => [:user_id, :image_id])
+  end
 
-    def next_image
-      @next_image = Image.unassigned.first
-    end
+  def next_image
+    @next_image = Image.unassigned.first
+  end
 end

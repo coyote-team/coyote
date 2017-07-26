@@ -1,7 +1,7 @@
 *.rbc
 *.sassc
 .sass-cache
-capybara-*.html
+.capybara.html
 /log
 /tmp
 /db/*.sqlite3

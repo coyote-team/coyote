@@ -9,7 +9,7 @@ namespace :coyote do
         password = STDIN.gets.chomp.upcase
       end
 
-      user = User.create!(email: args[:email],password: password)
+      user = User.create!(email: args[:email],password: password,admin: true)
       puts "Created #{user} (#{user.email}) with password '#{password}'"
     end
   end

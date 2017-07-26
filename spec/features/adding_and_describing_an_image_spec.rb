@@ -13,7 +13,7 @@ RSpec.feature "Adding and describing an image" do
   scenario "succeeds" do |meta|
     click_link "Images"
 
-    first(:link,"New Image").click
+    click_first_link("New Image")
 
     select(website.title,:from => "Website",:match => :first)
     select(group.title,from: "Group",:match => :first)
