@@ -32,8 +32,13 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, password_length: 8..128
+  devise :database_authenticatable, 
+         :registerable, 
+         :recoverable, 
+         :rememberable, 
+         :trackable, 
+         :validatable, 
+         :password_length => 8..128
 
   has_many :assignments, dependent: :destroy
   has_many :images, through: :assignments
@@ -48,10 +53,6 @@ class User < ActiveRecord::Base
       email
     end
   end
-
-  #def sorted
-    #all.sort{|a,b| a.last_name.dropcase <=> a.last_name.dropcase}
-  #end
 
   def next_image(current_image=nil)
     next_image = nil
@@ -73,7 +74,7 @@ class User < ActiveRecord::Base
     next_image
   end
 
-  #NOTE for audit log
+  # @note for audit log
   def username 
     to_s
   end

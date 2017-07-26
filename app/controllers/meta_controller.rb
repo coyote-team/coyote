@@ -45,18 +45,19 @@ class MetaController < ApplicationController
 
   # DELETE /meta/1
   #def destroy
-    #@metum.destroy
-    #redirect_to meta_url, notice: 'Metum was successfully destroyed.'
+  #@metum.destroy
+  #redirect_to meta_url, notice: 'Metum was successfully destroyed.'
   #end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_metum
-      @metum = Metum.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def metum_params
-      params.require(:metum).permit(:title, :instructions)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_metum
+    @metum = Metum.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def metum_params
+    params.require(:metum).permit(:title, :instructions)
+  end
 end
