@@ -28,18 +28,20 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
   def admin
-    redirect_to(root_url) unless current_user and current_user.admin?
+    redirect_to(root_url) unless current_user.try(:admin?)
   end
 
   def users
-    redirect_to(root_url) if current_user.nil?
+    redirect_to(root_url) unless current_user
   end
 
   def get_users
     @users = User.sorted
   end
+
   def get_groups
-    @groups = Group.all.sort{|a,b| a.to_s<=>b.to_s} 
+    @groups = Group.all.sort { |a,b| a.to_s <=> b.to_s } 
   end
 end

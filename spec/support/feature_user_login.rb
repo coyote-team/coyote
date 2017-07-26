@@ -12,11 +12,7 @@ module Coyote
         fill_in "Password", with: password
       end
 
-      # When admins login, the system calls out to Travis; we record that interaction to make our tests
-      # deterministic
-      VCR.use_cassette "Travis CI build notification check" do
-        click_button "Log in"
-      end
+      click_button "Log in"
     end
 
     # Completes a user's session

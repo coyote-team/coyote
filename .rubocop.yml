@@ -26,3 +26,6 @@ Metrics/MethodLength:
 
 Layout/DotPosition:
   Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining

@@ -1,8 +1,7 @@
 class WebsitesController < ApplicationController
-  before_action :admin, only: [:edit, :update, :destroy]
-  before_action :users, only: [:create]
-  before_action :set_website, only: [:show, :edit, :update, :destroy, :check_count]
-  before_action :set_strategies_collection, only: [:new, :edit]
+  before_action :admin, only: %i[new edit update destroy]
+  before_action :set_website, only: %i[show edit update destroy check_count]
+  before_action :set_strategies_collection, only: %i[new edit]
 
   caches_action :check_count, :cache_path => { :cache_path => Proc.new { |c| c.params } }, :expires_in => 5.minutes
 
@@ -86,17 +85,20 @@ class WebsitesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_website
-      @website = Website.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_website
+    @website = Website.find(params[:id])
+  end
 
-    def set_strategies_collection
-      @strategies_collection = Strategy.subclasses.map{|s| s = s.new; [s.title, s.class.name]}
+  def set_strategies_collection
+    @strategies_collection = Coyote::Strategies.all.map do |s| 
+      s = s.new 
+      [s.title, s.class.name]
     end
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def website_params
-      params.require(:website).permit(:title, :url, :strategy)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def website_params
+    params.require(:website).permit(:title,:url,:strategy)
+  end
 end

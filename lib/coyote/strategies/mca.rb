@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Coyote
-  module Strategy
+  module Strategies
     # Responsible for linking Coyote to the MCA CMS
     # @see https://mcachicago.org/
-    class MCAStrategy
+    class MCA
       def title
         "MCA"
       end
