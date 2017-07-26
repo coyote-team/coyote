@@ -1,17 +1,16 @@
 default: &default
   adapter: postgresql
-  pool: <%= ENV["COYOTE_DB_POOL_SIZE"] || ENV["COYOTE_NUM_THREADS"] || 5 %>
+  pool: <%= (ENV["COYOTE_DB_POOL_SIZE"] || ENV["COYOTE_NUM_THREADS"] || 5).to_i %>
 development: 
   <<: *default
-  database: <%= ENV.fetch("COYOTE_DEV_DATABASE_NAME","coyote_dev") %>
-staging:
-  <<: *default
-  database: <%= ENV.fetch("COYOTE_STAGING_DATABASE_NAME","coyote_staging") %>
+  url: <%= ENV["COYOTE_DEV_DATABASE_URL"] %>
 test: &test
   <<: *default
-  database: <%= ENV.fetch("COYOTE_TEST_DATABASE_NAME","coyote_test") %>
+  url: <%= ENV["COYOTE_TEST_DATABASE_URL"] %>
+staging:
+  <<: *default
+  url: <%= ENV.values_at(*%w(COYOTE_STAGING_DATABASE_URL DATABASE_URL)).first %>
 production:
   <<: *default
   url: <%= ENV.values_at(*%w(COYOTE_PRODUCTION_DATABASE_URL DATABASE_URL)).first %>
   reconnect: true
-  pool: 20
