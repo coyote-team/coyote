@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_filter :check_admin
+  before_filter :check_authorization
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
   before_action :next_image
 

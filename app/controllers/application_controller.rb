@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :users, :contexts
 
-  def check_admin
+  def check_authorization
     redirect_to(root_url) unless current_user.try(:admin?)
   end
 
