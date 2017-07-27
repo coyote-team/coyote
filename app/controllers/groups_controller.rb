@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
+  # NOTE currently there are no controls for who can access Groups, see https://github.com/coyote-team/coyote/issues/116
   before_filter :users
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-
 
   def_param_group :group do
     param :group, Hash do
@@ -63,13 +63,14 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def group_params
-      params.require(:group).permit(:title)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def group_params
+    params.require(:group).permit(:title)
+  end
 end
