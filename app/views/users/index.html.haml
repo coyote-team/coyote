@@ -1,12 +1,12 @@
 -title = 'Users'
 -meta title: title
-- cache ['v1', admin?,  @users] do
+- cache ['v1',admin?,users] do
   .index-outer
     .index
       .index-inner
         %header
           %h1#page-title{tabindex: -1}
-            #{title}: #{@users.count}
+            #{title}: #{users.count}
         %table.index-table
           %caption.sr-only Index table for users
           %thead
@@ -25,8 +25,8 @@
                 Actions
 
           %tbody
-            - @users.each_with_index do |user, idx|
-              %tr{class: "item"}
+            - users.each_with_index do |user,idx|
+              %tr.item[user]
                 %td= user.first_name
                 %td= user.last_name
                 %td= user.email
@@ -39,7 +39,7 @@
                   = link_to edit_user_path(user), class: "btn btn-edit", title: "Edit this user"  do
                     Edit
                   %nbsp
-                  = link_to user, title: "Delete this user" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{user}?"} do
+                  = link_to user, title: "Delete this user" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{user}?"}, :disabled => (user == current_user) do
                     Delete
 
         %nav.index-nav{role:"navigation"}
