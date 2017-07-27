@@ -7,7 +7,7 @@ rescue FactoryGirl::DuplicateDefinitionError
   Rails.logger.debug "Factory Girl definitions previously loaded"
 end
 
-Group.create!([
+Context.create!([
   { title: "collection" },
   { title: "website" },
   { title: "exhibitions" },

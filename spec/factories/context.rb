@@ -9,7 +9,7 @@
 #
 
 FactoryGirl.define do
-  factory :group do
+  factory :context do
     title Faker::Lorem.word
   end
 end

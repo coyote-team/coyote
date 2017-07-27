@@ -7,7 +7,7 @@ json.extract!(
   :path,
   :page_urls,
   :priority,
-  :group_id,
+  :context_id,
   :website_id,
   :created_at,
   :updated_at 

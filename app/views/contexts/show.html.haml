@@ -1,25 +1,25 @@
--title = "Showing Group #{@group}"
+-title = "Showing context #{context}"
 -meta title: title
--cache ['v1', admin?,  @group] do
+-cache ['v1',admin?,@context] do
   .entity-outer
     .entity
       .entity-inner
         %header
           %h1#page-title{tabindex: -1}=title
         %table.entity-table
-          %caption.sr-only Key value pairs for this group
+          %caption.sr-only Key value pairs for this context
           %tbody
             %tr
               %th{scope: "row"}
                 Title:
               %td
-                = @group.title
+                = context.title
         %nav.show-nav{role:"navigation"}
           %ul.list-inline
             %li
-              = link_to groups_path, class: 'btn btn-info', title: "View the groups index" do
+              = link_to contexts_path, class: 'btn btn-info', title: "View the contexts index" do
                 
-                Groups
+                contexts
             %li
-              = link_to edit_group_path(@group), title: "Edit this group", class: 'btn btn-primary' do
+              = link_to edit_context_path(context), title: "Edit this context", class: 'btn btn-primary' do
                 Edit

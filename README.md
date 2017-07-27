@@ -136,7 +136,7 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [User | id: int | first_name: string | last_name: string |  email: string | admin: bool ]
   [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
   [Tag | id: int | title: string]
-  [Group | id: int | title: string]
+  [Context | id: int | title: string]
   [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
   [Website | id: int | url: string | title: string | strategy: string ]
   [Status | id: int | title: string | description: text]
@@ -149,7 +149,7 @@ For use on [nomnoml](http://www.nomnoml.com/)
   [Description]->[Metum]
   [Description]->[Status]
 
-  [Image]->[Group]
+  [Image]->[Context]
   [Image]->[Website]
   [Image] +-> 0..* [Description]
   [Image] +-> 0..* [Tag]

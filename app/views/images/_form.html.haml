@@ -8,7 +8,7 @@
 
       = f.input :canonical_id, as: :hidden
     = f.input :path
-    = f.association :group, prompt: "Pick a group"
+    = f.association :context, prompt: "Pick a context"
     = f.input :title, readonly: @image.persisted?
     = f.input :priority
     = f.input :tag_list, as: :tags, label: "Tags", input_html: {class: 'autocomplete'}, collection: ActsAsTaggableOn::Tag.most_used(30), hint: "Use a comma to separate new tags"

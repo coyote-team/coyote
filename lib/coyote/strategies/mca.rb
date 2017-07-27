@@ -83,9 +83,9 @@ module Coyote
               image = Image.find_or_create_by(canonical_id:  i["id"], website: website)
               if image.new_record?
                 image.website = website
-                group = Group.find_or_create_by(title: i["group"])
-                group.save if group.new_record?
-                image.group = group
+                context = Context.find_or_create_by(title: i["context"])
+                context.save if context.new_record?
+                image.context = context
                 image.path = i["thumb_url"]
                 image.created_at = i["created_at"]
                 image.updated_at = i["updated_at"]

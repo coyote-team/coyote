@@ -2,19 +2,21 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy, :toggle]
   before_action :clear_search, only: [:index]
   before_action :get_users, only: [:index, :show], unless: -> { request.xhr? }
-  before_action :get_groups, only: [:index], unless: -> { request.xhr? }
+  before_action :get_contexts, only: [:index], unless: -> { request.xhr? }
 
   before_action :admin, only: [:edit, :update, :destroy, :toggle]
   before_action :users, only: [:create]
+
+  helper_method :contexts
 
   respond_to :html, :json
 
   def_param_group :image do
     param :image, Hash do
       param :canonical_id,  String , required: true
-      param :path,           String , required: true
+      param :path,          String , required: true
       param :website_id,    Integer, required: true
-      param :group_id,      Integer, required: true
+      param :context_id,    Integer, required: true
       param :page_urls,     Array
       param :priority,      [true, false, "1", "0", 1, 0]
       param :created_at,    DateTime
@@ -113,7 +115,7 @@ Ex:
     "long": "A long detailed description.",
     "path": "55917aaa613430007400000a.jpg?sha=72066b7eb6b6152ed511d52b099365afcd8b23e5",
     "url": "http://coyote.mcachicago.org/images/1"
-    "group_id": 2,
+    "context_id": 2,
     "website_id": 1,
     "page_urls": ["http://url1withimage.com/", "http://url2withimage.com/"],
     "title": "This is also called a caption",
@@ -251,18 +253,16 @@ Ex:
         url += "ids[]=" + i + "&"
       end
 
-      #request
       Rails.logger.info "grabbing images json at #{url}"
+
       begin
         content = open(url, { "Content-Type" => "application/json", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, read_timeout: 10}).read
-        #parse
         begin
           images_received = JSON.parse(content)
 
           #match ids, add titles to image cache, and set titles
           canonical_ids.each do |id|
-            i = images_received.find{|i| i["id"].to_s == id.to_s}
-            #puts i
+            i = images_received.find { |ir| ir["id"].to_s == id.to_s}
             if i
               title = Rails.cache.fetch([id, 'title'].hash, expires_in: 1.minute) do
                 i["title"]
@@ -288,34 +288,34 @@ Ex:
     render :json => ids_titles.to_json
   end
 
-	def toggle
+  def toggle
     @image.toggle!(params[:column].to_sym)
     render nothing: true
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_image
-      @image = Image.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_image
+    @image = Image.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def image_params
-      params.require(:image).permit(:path, :group_id, :website_id, :canonical_id, :title, :priority, :page_urls, :tag_list => [])
-    end
+  # Only allow a trusted parameter "white list" through.
+  def image_params
+    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:title,:priority,:page_urls,tag_list: [])
+  end
 
-    def search_params
-      params[:q]
-    end
-     
-    def clear_search
-      if params[:search_cancel]
-        params.delete(:search_cancel)
-        if(!search_params.nil?)
-          search_params.each do |key, param|
-            search_params[key] = nil
-          end
+  def search_params
+    params[:q]
+  end
+
+  def clear_search
+    if params[:search_cancel]
+      params.delete(:search_cancel)
+      if(!search_params.nil?)
+        search_params.each do |key, param|
+          search_params[key] = nil
         end
       end
     end
+  end
 end

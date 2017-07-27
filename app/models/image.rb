@@ -7,7 +7,7 @@ require 'roo'
 #  id                 :integer          not null, primary key
 #  path               :string
 #  website_id         :integer          not null
-#  group_id           :integer          not null
+#  context_id         :integer          not null
 #  created_at         :datetime
 #  updated_at         :datetime
 #  canonical_id       :string
@@ -20,7 +20,7 @@ require 'roo'
 #
 # Indexes
 #
-#  index_images_on_group_id    (group_id)
+#  index_images_on_context_id  (context_id)
 #  index_images_on_website_id  (website_id)
 #
 
@@ -31,7 +31,7 @@ class Image < ActiveRecord::Base
   before_validation :update_status_code
 
   belongs_to :website, touch: true
-  belongs_to :group, touch: true
+  belongs_to :context, touch: true
 
   has_many :descriptions, dependent: :destroy
   has_associated_audits
@@ -40,8 +40,8 @@ class Image < ActiveRecord::Base
 
   validates :path, :presence => true, :uniqueness => {:scope => :website_id}
   validates :canonical_id, :presence => true, :uniqueness => {:scope => :website_id}
-  validates_associated :website, :group
-  validates_presence_of :website, :group
+  validates_associated :website, :context
+  validates_presence_of :website, :context
 
   default_scope {order('priority DESC, created_at DESC')}
 

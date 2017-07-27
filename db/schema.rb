@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724203045) do
+ActiveRecord::Schema.define(version: 20170727163758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(version: 20170724203045) do
   add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
+  create_table "contexts", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "descriptions", force: :cascade do |t|
     t.string   "locale",     default: "en"
     t.text     "text"
@@ -66,16 +72,10 @@ ActiveRecord::Schema.define(version: 20170724203045) do
   add_index "descriptions", ["status_id"], name: "index_descriptions_on_status_id", using: :btree
   add_index "descriptions", ["user_id"], name: "index_descriptions_on_user_id", using: :btree
 
-  create_table "groups", force: :cascade do |t|
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "images", force: :cascade do |t|
     t.string   "path"
     t.integer  "website_id",                         null: false
-    t.integer  "group_id",                           null: false
+    t.integer  "context_id",                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "canonical_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20170724203045) do
     t.text     "page_urls"
   end
 
-  add_index "images", ["group_id"], name: "index_images_on_group_id", using: :btree
+  add_index "images", ["context_id"], name: "index_images_on_context_id", using: :btree
   add_index "images", ["website_id"], name: "index_images_on_website_id", using: :btree
 
   create_table "meta", force: :cascade do |t|
@@ -160,6 +160,6 @@ ActiveRecord::Schema.define(version: 20170724203045) do
   add_foreign_key "descriptions", "meta", on_update: :cascade, on_delete: :cascade
   add_foreign_key "descriptions", "statuses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "descriptions", "users", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "images", "groups", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "images", "contexts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "images", "websites", on_update: :cascade, on_delete: :cascade
 end

@@ -15,9 +15,9 @@ namespace :coyote do
   end
 
   namespace :db do
-    desc "Create initial Group, Metum, and Status"
+    desc "Create initial Context, Metum, and Status"
     task :start => :environment do
-      Group.create!([
+      Context.create!([
         { title: "collection" },
         { title: "website" },
         { title: "exhibitions" },
@@ -40,7 +40,7 @@ namespace :coyote do
         { title: "Not approved" }
       ])
 
-      puts "Created Groups, Metums, and Statuses"
+      puts "Created Contexts, Metums, and Statuses"
     end
   end
 end

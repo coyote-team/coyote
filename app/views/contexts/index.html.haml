@@ -1,0 +1,34 @@
+-title = 'Contexts'
+-meta title: title
+- cache ['v1',admin?,contexts] do
+  .index-outer
+    .index
+      .index-inner
+        %header
+          %h1#page-title{tabindex: -1}=title
+        %table.index-table
+          %caption.sr-only Index table for contexts
+          %thead
+            %tr
+              %th{scope: "col"}
+                Title
+              %th{scope: "col"}
+                Actions
+
+          %tbody
+            - contexts.each_with_index do |context,idx|
+              %tr.item[context]
+                %td= context.title
+                %td.text-right
+                  = link_to context, class: "btn btn-show", title: "Show this context" do
+                    View
+                  %nbsp
+                  = link_to edit_context_path(context), class: "btn btn-edit", title: "Edit this context"  do
+                    Edit
+                  %nbsp
+                  = link_to context, title: "Delete this context" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{context}?"} do
+                    Delete
+
+        %nav.index-nav{role:"navigation"}
+          = link_to new_context_path, class: 'btn btn-primary new-link' do
+            New Context

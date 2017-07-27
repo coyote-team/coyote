@@ -12,7 +12,7 @@
       -if admin?
         %h2.sr-only Navigation
         %ul.nav.navbar-nav
-          - models = [ "images", "descriptions", "assignments", "users", "groups", "websites" ]
+          - models = [ "images", "descriptions", "assignments", "users", "contexts", "websites" ]
           - models.each do |m|
             %li{ class: active_controller_check(m)}<
               = link_to  m.capitalize, send("#{m}_path")
