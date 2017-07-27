@@ -19,6 +19,7 @@
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
+#  role                   :enum
 #
 # Indexes
 #
