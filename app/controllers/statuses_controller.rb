@@ -1,8 +1,6 @@
 class StatusesController < ApplicationController
-  before_filter :admin, only: [:create, :edit, :update, :destroy]
+  before_filter :check_admin, only: [:create, :edit, :update, :destroy]
   before_action :set_status, only: [:show, :edit, :update, :destroy]
-  before_filter :users
-
 
   # GET /statuses
   api :GET, "statuses", "Get an index of statuses"

@@ -1,7 +1,6 @@
 class MetaController < ApplicationController
-  before_filter :admin, only: [:create, :edit, :update, :destroy]
+  before_filter :check_admin, only: [:create, :edit, :update, :destroy]
   before_action :set_metum, only: [:show, :edit, :update, :destroy]
-  before_filter :users
 
   # GET /meta
   api :GET, "meta", "Get an index of meta"

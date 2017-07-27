@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :admin
+  before_filter :check_admin
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json
 
