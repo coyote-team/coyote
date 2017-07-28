@@ -5,7 +5,7 @@ class AddRolesEnumeratedType < ActiveRecord::Migration
     ('viewer','author','editor','admin','super_admin','staff')
     SQL
 
-    add_column :users, :role, :user_role, index: true
+    add_column :users, :role, :user_role, index: true, null: false, default: 'viewer'
   end
 
   def down

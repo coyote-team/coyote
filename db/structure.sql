@@ -385,11 +385,10 @@ CREATE TABLE users (
     last_sign_in_ip character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    admin boolean DEFAULT false,
     first_name character varying,
     last_name character varying,
     authentication_token character varying,
-    role user_role
+    role user_role DEFAULT 'viewer'::user_role NOT NULL
 );
 
 
@@ -730,6 +729,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
+-- Name: index_users_on_role; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_role ON users USING btree (role);
+
+
+--
 -- Name: taggings_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -887,4 +893,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170727161448');
 INSERT INTO schema_migrations (version) VALUES ('20170727163758');
 
 INSERT INTO schema_migrations (version) VALUES ('20170727190212');
+
+INSERT INTO schema_migrations (version) VALUES ('20170727192426');
+
+INSERT INTO schema_migrations (version) VALUES ('20170728134702');
 

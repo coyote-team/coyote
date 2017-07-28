@@ -1,5 +1,5 @@
 class WebsitesController < ApplicationController
-  before_action :check_authorization, only: %i[new edit update destroy]
+  before_action :authorize_admin!, only: %i[new edit update destroy]
   before_action :set_website, only: %i[show edit update destroy check_count]
   before_action :set_strategies_collection, only: %i[new edit]
 

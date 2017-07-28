@@ -26,9 +26,9 @@
                 = @user.email
             %tr
               %th{scope: "row"}<
-                Admin
+                Role
               %td<
-                = @user.admin
+                = @user.role
 
         - if @user.descriptions.count > 0
           %h3 

@@ -15,17 +15,17 @@
 #  last_sign_in_ip        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  admin                  :boolean          default(FALSE)
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
-#  role                   :enum
+#  role                   :enum             default("viewer"), not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_role                  (role)
 #
 
 FactoryGirl.define do
@@ -38,8 +38,10 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
 
-    trait :admin do
-      admin true
+    User.roles.keys.each do |role_name|
+      trait role_name.to_sym do
+        role role_name
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
-  before_filter :check_authorization
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin!
+  before_action :set_assignment, only: %i[show edit update destroy]
   before_action :next_image
 
   respond_to :html, :js, :json
@@ -28,15 +28,14 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    @assigntment = Assignment.new(assignment_params)
-    flash[:notice] = "#{@assigntment} was successfully created." if @assigntment.save
-    respond_with @assigntment
+    @assignment = Assignment.create(assignment_params)
+    flash[:notice] = "#{@assignment} was successfully created." if @assignment.valid?
+    respond_with @assignment
   end
 
   # PATCH/PUT /assignments/1
   def update
     if @assignment.update(assignment_params)
-      #redirect_to @assignment, notice: 'Assignment was successfully updated.'
       redirect_to root_path, notice: 'Assignment was successfully created.'
     else
       render :edit

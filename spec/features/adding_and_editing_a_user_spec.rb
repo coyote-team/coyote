@@ -5,8 +5,6 @@ RSpec.feature "Editing a user" do
     let!(:user) { create(:user) }
 
     it "succeeds" do
-      # NOTE there is a bug where you can't add users, since there's no way to specify a password
-      # once we can do that, easy to fill that part of the spec in
       click_first_link "Users"
       
       expect(page).to have_content(user.email)
@@ -23,6 +21,8 @@ RSpec.feature "Editing a user" do
         click_button "Update User"
         user.reload
       }.to change(user,:first_name).to("Joe")
+
+      skip "can't test adding a user yet"
     end
   end
 
@@ -34,13 +34,13 @@ RSpec.feature "Editing a user" do
     it "is not allowed" do
       expect(page).not_to have_link("Users")
       visit new_user_path
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(new_user_session_path)
 
       visit user_path(user)
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(new_user_session_path)
 
       visit edit_user_path(user)
-      expect(page.current_path).to eq(root_path)
+      expect(page.current_path).to eq(new_user_session_path)
     end
   end
 end

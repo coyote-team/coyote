@@ -1,6 +1,6 @@
 -title = 'Users'
 -meta title: title
-- cache ['v1',admin?,users] do
+- cache ['v1',current_user.admin?,users] do
   .index-outer
     .index
       .index-inner
@@ -31,7 +31,7 @@
                 %td= user.last_name
                 %td= user.email
                 %td= user.descriptions.count
-                %td= user.admin ? "Admin" : "Regular"
+                %td= user.role
                 %td.text-right<
                   = link_to user, class: "btn btn-show", title: "Show this user" do
                     View

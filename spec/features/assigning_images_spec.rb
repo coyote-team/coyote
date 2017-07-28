@@ -48,4 +48,3 @@ RSpec.describe "Assigning images" do
     end
   end
 end
-

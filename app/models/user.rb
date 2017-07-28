@@ -15,17 +15,17 @@
 #  last_sign_in_ip        :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  admin                  :boolean          default(FALSE)
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
-#  role                   :enum
+#  role                   :enum             default("viewer"), not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_role                  (role)
 #
 
 class User < ActiveRecord::Base
@@ -40,6 +40,15 @@ class User < ActiveRecord::Base
          :trackable, 
          :validatable, 
          :password_length => 8..128
+
+  enum role: {
+    viewer:      'viewer',
+    author:      'author',
+    editor:      'editor',
+    admin:       'admin',
+    super_admin: 'super_admin',
+    staff:       'staff'
+  }
 
   has_many :assignments, dependent: :destroy
   has_many :images, through: :assignments
