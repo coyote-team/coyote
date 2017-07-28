@@ -456,8 +456,6 @@ GEM
       websocket (~> 1.0)
     sexp_processor (4.7.0)
     shellany (0.0.1)
-    shoulda-matchers (3.1.1)
-      activesupport (>= 4.0.0)
     simple_token_authentication (1.14.0)
       actionmailer (>= 3.2.6, < 6)
       actionpack (>= 3.2.6, < 6)
@@ -594,7 +592,6 @@ DEPENDENCIES
   seed_dump
   select2-rails!
   selenium-webdriver
-  shoulda-matchers
   simple_form!
   simple_token_authentication
   spring
@@ -614,4 +611,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
