@@ -1,3 +1,5 @@
+# rubocop:disable ClassLength
+
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy, :toggle]
   before_action :clear_search, only: [:index]
@@ -319,3 +321,5 @@ Ex:
     end
   end
 end
+
+# rubocop:enable ClassLength

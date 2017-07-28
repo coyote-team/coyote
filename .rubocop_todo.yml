@@ -539,23 +539,6 @@ Style/EmptyElse:
   Exclude:
     - 'app/controllers/home_controller.rb'
 
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Exclude:
-    - 'app/controllers/assignments_controller.rb'
-    - 'app/controllers/coyote_producer_controller.rb'
-    - 'app/controllers/descriptions_controller.rb'
-    - 'app/controllers/groups_controller.rb'
-    - 'app/controllers/images_controller.rb'
-    - 'app/controllers/meta_controller.rb'
-    - 'app/controllers/statuses_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/controllers/websites_controller.rb'
-    - 'lib/coyote/strategy.rb'
-
 # Offense count: 152
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

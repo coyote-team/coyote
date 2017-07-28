@@ -29,3 +29,6 @@ Layout/DotPosition:
 
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
+
+Style/EmptyMethod:
+  Enabled: false
