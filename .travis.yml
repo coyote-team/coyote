@@ -6,9 +6,8 @@ before_script:
 - export RAILS_ENV=test
 # note this key is for CI, so it's not sensitive. Just used to create secure session tokens in production, where it is a sensitive value
 - export SECRET_KEY_BASE=bf2f15bef324004a9120768f26e1a202e7b90969599dad3325d1507940b0f24527ba6694a06e159d2842ab2f0e832188698cdbf9beec017f13c124ff4f6eb796
-- export DATABASE_URL=postgresql://travis@127.0.0.1/coyote_test
-- bundle exec rake db:create
-- bundle exec rake db:schema:load db:migrate
+- export COYOTE_TEST_DATABASE_URL=postgresql://travis@127.0.0.1/coyote_test
+- bundle exec rake db:create db:structure:load db:migrate
 script:
   - bin/rake spec
 addons:
