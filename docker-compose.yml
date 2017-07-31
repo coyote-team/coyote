@@ -9,6 +9,7 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
+      COYOTE_DEV_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
     volumes:
       - ./:/coyote
     command: bundle exec puma -C config/puma.rb
