@@ -327,7 +327,7 @@ GEM
     parallel (1.11.2)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg (0.21.0)
+    pg (0.20.0)
     pkg-config (1.1.7)
     polyamorous (1.3.1)
       activerecord (>= 3.0)
@@ -574,7 +574,7 @@ DEPENDENCIES
   metamagic
   modular-scale
   oj
-  pg
+  pg (~> 0.20.0)
   puma
   quiet_assets
   rails (= 4.2.5.1)

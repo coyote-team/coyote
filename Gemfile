@@ -17,7 +17,7 @@ gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
-gem 'pg'
+gem 'pg', '~> 0.20.0' # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p 
 gem 'actionpack-action_caching' # caching
 gem 'kaminari'
 gem 'ransack'
