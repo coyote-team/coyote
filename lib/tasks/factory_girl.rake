@@ -7,6 +7,7 @@ namespace :factory_girl do
       begin
         DatabaseCleaner.start
         FactoryGirl.lint
+        puts "OK"
       ensure
         DatabaseCleaner.clean
       end

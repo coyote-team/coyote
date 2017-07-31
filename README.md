@@ -62,10 +62,11 @@ docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] 
 Once the app is running you can interact with it using commands like this:
 
 ```bash
-docker ps                                 # list running containers
-docker-compose build                      # rebuild web container when new gems are installed
-docker-compose exec web pumactl restart   # restart Puma
-docker-compose exec web bin/rails console # access Rails console
+docker ps                                   # list running containers
+docker-compose build                        # rebuild web container when new gems are installed
+docker-compose exec web pumactl restart     # restart Puma
+docker-compose exec web bin/rails console   # access Rails console
+docker-compose exec web bin/rake db:migrate # update the Postgres server managed by Docker
 ```
 
 _Experienced Developers_
