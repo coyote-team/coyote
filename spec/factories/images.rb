@@ -24,7 +24,7 @@
 
 FactoryGirl.define do
   factory :image do
-    page_urls [ "http://whatever.com"   ]
+    page_urls ["http://whatever.com"]
     path { Faker::Internet.url }
     canonical_id { Faker::Crypto.md5 }
     title { Faker::Hipster.sentence(3) } 

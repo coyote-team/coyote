@@ -35,13 +35,14 @@ module Coyote
     ActsAsTaggableOn.remove_unused_tags = true
     ActsAsTaggableOn.force_lowercase = true
     ActsAsTaggableOn.force_parameterize = true
-    #config.middleware.use 'Rack::RawUpload'
+
     config.generators do |g|
       g.stylesheets false
       g.javascripts false
       g.test_framework :rspec
-      g.fallbacks[:rspec] = :test_unit
       g.fixture_replacement :factory_girl
+      g.template_engine :haml
+      g.factory_girl dir: Rails.root.join("spec/factories")
     end
   end
 end

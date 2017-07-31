@@ -25,8 +25,6 @@ require 'roo'
 #
 
 class Image < ActiveRecord::Base
-  serialize :page_urls, JSON
-
   acts_as_taggable_on :tags
   before_validation :update_status_code
 

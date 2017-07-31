@@ -84,7 +84,7 @@ namespace :coyote do
 
       File.open("/tmp/groups.txt").each do |line|
         attribs = import_tsv(context_headers,line)
-        pp Context.create!(attribs)
+        Context.create!(attribs)
       end
 
       File.open("/tmp/images.json") do |file|
@@ -110,8 +110,6 @@ namespace :coyote do
 
           unless context_id =~ /^\d$/
             warn "cannot process image '#{attribs[:id]}' - missing data: #{context_id}"
-            pp attribs
-            puts "*" * 50
             next
           end
 
@@ -151,16 +149,12 @@ namespace :coyote do
             attribs[:user] = User.find(user_id)
           rescue
             warn "unable to import description '#{attribs[:id]}' because of an orphaned record: #{$!}"
-            pp attribs
-            puts "*" * 50
             next
           end
 
           begin
             Description.create!(attribs)
           rescue
-            pp attribs
-            require "pry"; binding.pry
             warn "Could not import description '#{attribs[:id]}' due to invalid data (#{$!})"
             next
           end
