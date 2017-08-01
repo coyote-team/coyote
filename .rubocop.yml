@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
+    - 'lib/tasks/coyote.rake'
 
 Bundler/OrderedGems:
   Enabled: false

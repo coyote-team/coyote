@@ -23,13 +23,13 @@ RSpec.describe AssignmentsController do
 
   context "GET #index" do
     context "as an admin" do
-      include_context "signed-in admin"
+      include_context "stubbed controller admin user"
       before { get :index }
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
-      include_context "signed-in editor"
+      include_context "stubbed controller editor user"
       before { get :index }
       it_behaves_like "an unsuccessful controller response"
     end
@@ -37,13 +37,13 @@ RSpec.describe AssignmentsController do
 
   context "GET #show" do
     context "as an admin" do
-      include_context "signed-in admin"
+      include_context "stubbed controller admin user"
       before { get :show, id: 1 }
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
-      include_context "signed-in editor"
+      include_context "stubbed controller editor user"
       before { get :show, id: 1 }
       it_behaves_like "an unsuccessful controller response"
     end
@@ -51,13 +51,13 @@ RSpec.describe AssignmentsController do
 
   context "GET #new" do
     context "as an admin" do
-      include_context "signed-in admin"
+      include_context "stubbed controller admin user"
       before { get :new }
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
-      include_context "signed-in editor"
+      include_context "stubbed controller editor user"
       before { get :new }
       it_behaves_like "an unsuccessful controller response"
     end
@@ -65,13 +65,13 @@ RSpec.describe AssignmentsController do
 
   context "GET #edit" do
     context "as an admin" do
-      include_context "signed-in admin"
+      include_context "stubbed controller admin user"
       before { get :edit, id: 1 }
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
-      include_context "signed-in editor"
+      include_context "stubbed controller editor user"
       before { get :edit, id: 1 }
       it_behaves_like "an unsuccessful controller response"
     end
@@ -87,14 +87,13 @@ RSpec.describe AssignmentsController do
     end
 
     context "as an admin" do
-      include_context "signed-in admin"
-
+      include_context "stubbed controller admin user"
       before { post :create, assignment: creation_params }
       specify { expect(response).to redirect_to(assignment_path(assignment)) }
     end
 
     context "as a non-admin" do
-      include_context "signed-in editor"
+      include_context "stubbed controller editor user"
 
       before { post :create, assignment: creation_params }
 

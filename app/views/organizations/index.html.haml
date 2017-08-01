@@ -1,0 +1,23 @@
+- meta title: title
+
+.index-outer
+  .index
+    .index-inner
+      %header
+        %h1#page-title{tabindex: -1}
+          = title
+
+      %nav.index-nav{role:"navigation"}
+        = paginate organizations
+        %h2.sr-only Actions
+        = link_to new_organization_path, class: 'btn btn-primary new-link' do
+          New Organization
+
+      -#= render "table", organizations: organizations
+
+      %nav.index-nav{role:"navigation"}
+        = paginate organizations
+
+        %h2.sr-only Actions
+        = link_to new_organization_path, class: 'btn btn-primary new-link' do
+          New Organization

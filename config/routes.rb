@@ -18,6 +18,7 @@ Coyote::Application.routes.draw do
   resources :meta 
   resources :statuses
   resources :contexts 
+  resources :organizations
 
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 

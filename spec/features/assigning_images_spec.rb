@@ -1,6 +1,6 @@
 RSpec.describe "Assigning images" do
   let!(:image) { create(:image) } 
-  let!(:user) { create(:user) }
+  let!(:other_user) { create(:user) }
 
   context "when logged-in as an admin" do
     include_context "as a logged-in admin user"
@@ -21,12 +21,12 @@ RSpec.describe "Assigning images" do
       expect(page.current_path).to eq(assignment_path(assignment))
 
       click_link "Edit"
-      select(admin_user.email,from: "User")
+      select(other_user.email,from: "User")
 
       expect {
         click_button "Update Assignment"
         assignment.reload
-      }.to change(assignment,:user).from(user).to(admin_user)
+      }.to change(assignment,:user).from(user).to(other_user)
     end
   end
 

@@ -1,0 +1,24 @@
+- meta title: title
+
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}= title
+      %table.entity-table
+        %caption.sr-only Key value pairs for this organization
+        %tbody
+          %tr
+            %th{scope: "row"}<
+              Title
+            %td<
+              = organization.title
+
+      %nav.show-nav{role:"navigation"}
+        %ul.list-inline
+          %li
+            = link_to organizations_path, class: 'btn btn-info', title: "View all organizations" do
+              Organizations
+          %li
+            = link_to edit_organization_path(organization), title: "Edit this organization", class: 'btn btn-primary' do
+              Edit

@@ -263,6 +263,37 @@ ALTER SEQUENCE meta_id_seq OWNED BY meta.id;
 
 
 --
+-- Name: organizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE organizations (
+    id integer NOT NULL,
+    title text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: organizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE organizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -487,6 +518,13 @@ ALTER TABLE ONLY meta ALTER COLUMN id SET DEFAULT nextval('meta_id_seq'::regclas
 
 
 --
+-- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
+
+
+--
 -- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -567,6 +605,14 @@ ALTER TABLE ONLY images
 
 ALTER TABLE ONLY meta
     ADD CONSTRAINT meta_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY organizations
+    ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
 
 
 --
@@ -897,4 +943,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170727190212');
 INSERT INTO schema_migrations (version) VALUES ('20170727192426');
 
 INSERT INTO schema_migrations (version) VALUES ('20170728134702');
+
+INSERT INTO schema_migrations (version) VALUES ('20170731150808');
+
+INSERT INTO schema_migrations (version) VALUES ('20170731182230');
 

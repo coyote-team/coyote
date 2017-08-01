@@ -2,25 +2,25 @@ RSpec.feature "Editing a user" do
   context "when logged-in as an admin" do
     include_context "as a logged-in admin user"
 
-    let!(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
 
     it "succeeds" do
       click_first_link "Users"
       
-      expect(page).to have_content(user.email)
+      expect(page).to have_content(other_user.email)
 
-      within "#user_#{user.id}" do
+      within "#user_#{other_user.id}" do
         click_link "Edit"
       end
 
-      expect(page.current_path).to eq(edit_user_path(user))
+      expect(page.current_path).to eq(edit_user_path(other_user))
 
       fill_in "First name", with: "Joe"
 
       expect {
         click_button "Update User"
-        user.reload
-      }.to change(user,:first_name).to("Joe")
+        other_user.reload
+      }.to change(other_user,:first_name).to("Joe")
 
       skip "can't test adding a user yet"
     end

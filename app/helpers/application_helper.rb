@@ -1,3 +1,5 @@
+# rubocop:disable ModuleLength
+ 
 # Contains general, simple view helper code. Designed to keep code out of our views 
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
@@ -133,3 +135,5 @@ module ApplicationHelper
     end
   end
 end
+
+# rubocop:enable ModuleLength
