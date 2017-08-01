@@ -44,5 +44,7 @@ module Coyote
       g.template_engine :haml
       g.factory_girl dir: Rails.root.join("spec/factories")
     end
+
+    config.x.site_name = ENV.fetch("COYOTE_SITE_NAME","Coyote")
   end
 end

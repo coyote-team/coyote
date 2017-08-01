@@ -40,7 +40,6 @@ Coyote::Application.routes.draw do
 
   scope "/admin" do
     resources :users
-    post :deploy, :to => "home#deploy"
   end
 
   get '/login',  to: redirect('/users/sign_in')
