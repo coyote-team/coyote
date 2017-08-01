@@ -1,4 +1,14 @@
+# Contains general, simple view helper code. Designed to keep code out of our views 
+# as much as possible
+# @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @return [String] welcome message, including the user's name if someone is logged-in
+  def welcome_message
+    msg =  "Welcome to Coyote"
+    msg << ", #{current_user}!" if current_user
+    msg
+  end
+  
   def resource_name
     :user
   end

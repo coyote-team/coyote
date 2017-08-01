@@ -1,10 +1,6 @@
-- title= "Welcome to Coyote"
-- if current_user
-  -title += ", #{current_user}!"
--meta title: title,
-  og: { title: title,
-    url: request.url,
-  }
+= welcome_message
+- meta title: title, og: { title: title, url: request.url }
+
 .container
   - if !current_user
     .row

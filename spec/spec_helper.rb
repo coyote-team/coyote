@@ -20,6 +20,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, :type => :helper
   config.include Coyote::FeatureHelpers, :type => :feature
   config.include Coyote::ControllerTestMacros, :type => :controller
   config.include Coyote::RequestHeaders
