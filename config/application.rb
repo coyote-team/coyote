@@ -5,6 +5,7 @@ Bundler.require(:default, Rails.env)
 Dotenv.load
 require 'csv'
 require 'iconv'
+require_relative '../lib/ext/active_record'
 
 module Coyote
   class Application < Rails::Application
@@ -12,7 +13,7 @@ module Coyote
     config.before_configuration do
       config.sass.preferred_syntax = :sass
     end
-    config.assets.precompile += %w( coyote_producer.js )
+    config.assets.precompile += %w[coyote_producer.js]
     
     config.autoload_paths << "#{Rails.root}/lib"
 
