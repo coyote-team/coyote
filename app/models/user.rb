@@ -28,7 +28,7 @@
 #  index_users_on_role                  (role)
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   acts_as_token_authenticatable
 
   # Include default devise modules. Others available are:

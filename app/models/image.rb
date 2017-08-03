@@ -24,7 +24,7 @@ require 'roo'
 #  index_images_on_website_id  (website_id)
 #
 
-class Image < ActiveRecord::Base
+class Image < ApplicationRecord
   acts_as_taggable_on :tags
   before_validation :update_status_code
 
@@ -181,6 +181,8 @@ class Image < ActiveRecord::Base
     end
   end
 
+  private
+
   def update_status_code
     if begun? 
       if completed?
@@ -193,6 +195,7 @@ class Image < ActiveRecord::Base
     else
       self.status_code = 0
     end
+
     return true
   end
 end
