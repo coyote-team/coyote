@@ -16,12 +16,11 @@ Coyote::Application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
   config.lograge.enabled = true
-
 
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
@@ -44,5 +43,4 @@ Coyote::Application.configure do
     #output: { ascii_only: true, quote_keys: true, beautify: false }
   #)
   #config.assets.css_compressor = :sass
-
 end

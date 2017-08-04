@@ -54,24 +54,10 @@ namespace :coyote do
       File.open("/tmp/users.txt").each do |line|
         attribs = import_tsv(user_headers,line)
         attribs[:role] = "editor" # we'll adjust these later
-        attribs[:password] = "password" # we'll bulk reset these later
+        attribs[:password] = "password"
         attribs.delete(:reset_password_token)
 
         User.create!(attribs)
-      end
-
-      File.open("/tmp/assignments.txt").each do |line|
-        attribs = import_tsv(assignment_headers,line)
-
-        begin
-          attribs[:user] = User.find(attribs.delete(:user_id))
-          attribs[:image] = Image.find(attribs.delete(:image_id))
-        rescue ActiveRecord::RecordNotFound
-          looks like there are some orphaned records
-          next
-        end
-
-        Assignment.create!(attribs)
       end
 
       File.open("/tmp/websites.txt").each do |line|
@@ -92,77 +78,104 @@ namespace :coyote do
         Context.create!(attribs)
       end
 
+      contexts = Context.all.inject({}) { |t,c| t.merge(c.id => c) }
+      statuses = Status.all.inject({}) { |t,c| t.merge(c.id => c) }
+      meta = Metum.all.inject({}) { |t,c| t.merge(c.id => c) }
+      users = User.all.inject({}) { |t,c| t.merge(c.id => c) }
+
       File.open("/tmp/images.json") do |file|
-        images = JSON.parse(file.read)
+        images = JSON.parse(file.read,symbolize_names: true)
 
-        images.each do |attribs|
-          attribs.symbolize_keys!
-          page_urls = attribs.delete(:page_urls)
+        images.in_groups_of(1000,false) do |group|
+          group.map! do |attribs|
+            page_urls = attribs.delete(:page_urls)
 
-          page_urls = if page_urls.present?
-                        begin
-                          JSON.parse(page_urls)
-                        rescue
-                          warn "unable to import page urls '#{page_urls}' for image ID #{attribs[:id]}"
+            page_urls = if page_urls.present?
+                          begin
+                            JSON.parse(page_urls)
+                          rescue
+                            warn "unable to import page urls '#{page_urls}' for image ID #{attribs[:id]}"
+                          end
+                        else
+                          nil
                         end
-                      else
-                        nil
-                      end
 
-          attribs[:page_urls] = page_urls
+            attribs[:page_urls] = page_urls
 
-          context_id = attribs.delete(:group_id)
+            context_id = attribs.delete(:group_id)
 
-          unless context_id =~ /^\d$/
-            warn "cannot process image '#{attribs[:id]}' - missing data: #{context_id}"
-            next
+            attribs[:context] = contexts.fetch(context_id.to_i) do
+              warn "unable to import Image '#{attribs[:id]}' due to orphaned records (#{$!})"
+              next
+            end
+
+            attribs[:priority] = !!attribs[:priority]
+            attribs
           end
 
-          begin
-            attribs[:context] = Context.find(context_id)
-          rescue
-            warn "unable to import Image '#{attribs[:id]}' due to orphaned records (#{$!})"
-            next
-          end
+          group.compact!
+          images = Image.create!(group)
 
-          attribs[:priority] = !!attribs[:priority]
-
-          Image.create!(attribs)
+          puts "Imported #{images.count}"
         end
+      end
+
+      images = Image.all.inject({}) { |t,c| t.merge(c.id => c) }
+      
+      File.open("/tmp/assignments.txt").each do |line|
+        attribs = import_tsv(assignment_headers,line)
+
+        user_id = attribs.delete(:user_id)
+        image_id = attribs.delete(:image_id)
+
+        attribs[:user] = users.fetch(user_id.to_i) do
+          warn "Unable to import assignment #{attribs[:id]}: missing user"
+          next
+        end
+
+        attribs[:image] = images.fetch(image_id.to_i) do
+          warn "Unable to import assignment #{attribs[:id]}: missing image"
+          next
+        end
+
+        Assignment.create!(attribs)
       end
 
       File.open("/tmp/descriptions.json") do |file|
         descriptions = JSON.parse(file.read,symbolize_names: true)
 
-        descriptions.each do |attribs|
-          status_id = attribs.delete(:status_id)
-          next if status_id.blank?
+        descriptions.in_groups_of(1000,false).each do |group|
+          group.map! do |attribs|
+            status_id = attribs.delete(:status_id).to_i
+            image_id = attribs.delete(:image_id).to_i
+            metum_id = attribs.delete(:metum_id).to_i
+            user_id = attribs.delete(:user_id).to_i
 
-          image_id = attribs.delete(:image_id)
-          next if image_id.blank?
+            attribs[:status] = statuses.fetch(status_id) do
+              warn "unable to import description '#{attribs[:id]}' because of bad status: #{status_id}"
+              next
+            end
 
-          metum_id = attribs.delete(:metum_id)
-          next if metum_id.blank?
+            attribs[:image] = images.fetch(image_id) do
+              warn "unable to import description '#{attribs[:id]}' because of bad image ID: #{image_id}"
+              next
+            end
 
-          user_id = attribs.delete(:user_id)
-          next if user_id.blank?
+            attribs[:metum] = meta.fetch(metum_id) do
+              warn "unable to import description '#{attribs[:id]}' because of bad metum_id: #{metum_id}"
+              next
+            end
 
-          begin
-            attribs[:status] = Status.find(status_id)
-            attribs[:image] = Image.find(image_id)
-            attribs[:metum] = Metum.find(metum_id)
-            attribs[:user] = User.find(user_id)
-          rescue
-            warn "unable to import description '#{attribs[:id]}' because of an orphaned record: #{$!}"
-            next
+            attribs[:user] = users.fetch(user_id) do
+              warn "unable to import description '#{attribs[:id]}' because of bad status: #{user_id}"
+              next
+            end
+
+            attribs
           end
 
-          begin
-            Description.create!(attribs)
-          rescue
-            warn "Could not import description '#{attribs[:id]}' due to invalid data (#{$!})"
-            next
-          end
+          desc = Description.create!(group)
+          puts "Created #{desc.count} descriptions"
         end
       end
     end
