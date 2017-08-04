@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 gem 'dotenv-rails'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.5'
 gem 'language_list'
 gem 'iso639-validator'
 gem 'sass-rails', '~> 5.0.1' # sass and sprockets upgrades can be delicate
