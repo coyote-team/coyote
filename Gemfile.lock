@@ -75,8 +75,8 @@ GEM
     annotate (2.7.1)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
-    apipie-rails (0.3.6)
-      json
+    apipie-rails (0.5.1)
+      rails (>= 4.1)
     arel (7.1.4)
     ast (2.3.0)
     audited (4.5.0)
