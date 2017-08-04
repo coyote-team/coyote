@@ -1,5 +1,5 @@
 class StatusesController < ApplicationController
-  before_filter :authorize_admin!, only: [:create, :edit, :update, :destroy]
+  before_action :authorize_admin!, only: [:create, :edit, :update, :destroy]
   before_action :set_status, only: [:show, :edit, :update, :destroy]
 
   # GET /statuses

@@ -3,7 +3,7 @@
 class ContextsController < ApplicationController
   # NOTE currently there are no controls for who can access Contexts, see https://github.com/coyote-team/coyote/issues/116
   before_action :set_context, only: %i[show edit update destroy]
-  before_filter :get_contexts, only: %i[index]
+  before_action :get_contexts, only: %i[index]
 
   helper_method :context, :contexts, :users
 

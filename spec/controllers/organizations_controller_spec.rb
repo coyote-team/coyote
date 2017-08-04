@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: organizations
+#
+#  id         :integer          not null, primary key
+#  title      :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 RSpec.describe OrganizationsController do
   let(:organization) { build_stubbed(:organization) }
   let(:organizations) { build_stubbed_list(:organization,3) }
@@ -23,12 +33,19 @@ RSpec.describe OrganizationsController do
   context "GET #show" do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
-      before { get :show, id: 1 }
+
+      before do 
+        get :show, params: { id: 1 } 
+      end
+
       it_behaves_like "a successful controller response"
     end
 
     context "without a logged-in user" do
-      before { get :show, id: 1 }
+      before do 
+        get :show, params: { id: 1 } 
+      end
+
       it_behaves_like "a sign-in redirect controller response"
     end
   end
@@ -50,28 +67,41 @@ RSpec.describe OrganizationsController do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
 
-      before { get :edit, id: 1 }
+      before do 
+        get :edit, params: { id: 1 } 
+      end
+
       it_behaves_like "a successful controller response"
     end
 
     context "without a logged-in user" do
-      before { get :edit, id: 1 }
+      before do 
+        get :edit, params: { id: 1 }
+      end
+
       it_behaves_like "a sign-in redirect controller response"
     end
   end
 
   context "POST #create" do
     let(:creation_params) do
-      { "title" => "XYZ  Museum" }
+      { title: "XYZ  Museum" }
     end
 
     before do
-      allow(Organization).to receive(:create).with(creation_params).and_return(organization)
+      allow(Organization).
+        to receive(:create).
+        with(an_instance_of(ActionController::Parameters)).
+        and_return(organization)
     end
 
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
-      before { post :create, organization: creation_params }
+
+      before do
+        post :create, params: { organization: creation_params }
+      end
+
       specify { expect(response).to redirect_to(organization_path(organization)) }
     end
 
@@ -80,14 +110,16 @@ RSpec.describe OrganizationsController do
 
       before do 
         allow(organization).to receive_messages(valid?: false)
-        post :create, organization: creation_params 
+        post :create, params: { organization: creation_params }
       end
 
-      specify { expect(response).to render_template("new") }
+      specify { expect(response.status).to eq(200) }
     end
     
     context "without a logged-in user" do
-      before { post :create, organization: creation_params }
+      before do 
+        post :create, params: { organization: creation_params }
+      end
 
       it_behaves_like "a sign-in redirect controller response"
 
@@ -99,16 +131,23 @@ RSpec.describe OrganizationsController do
 
   context "PATCH #update" do
     let(:update_params) do
-      { "title" => "123 Space" }
+      { title: "123 Space" }
     end
 
     before do
-      allow(organization).to receive(:update_attributes).with(update_params).and_return(true)
+      allow(organization).
+        to receive(:update_attributes).
+        with(an_instance_of(ActionController::Parameters)).
+        and_return(true)
     end
 
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
-      before { patch :update, id: "1", organization: update_params }
+
+      before do 
+        patch :update, params: { id: "1", organization: update_params } 
+      end
+
       specify { expect(response).to redirect_to(organization_path(organization)) }
     end
 
@@ -117,14 +156,16 @@ RSpec.describe OrganizationsController do
 
       before do
         allow(organization).to receive_messages(update_attributes: false)
-        patch :update, id: "1", organization: update_params 
+        patch :update, params: { id: "1", organization: update_params  }
       end
 
-      specify { expect(response).to render_template("edit") }
+      specify { expect(response.status).to eq(200) }
     end
     
     context "without a logged-in user" do
-      before { patch :update, id: "1", organization: update_params }
+      before do 
+        patch :update,params: { id: "1", organization: update_params  }
+      end
 
       it_behaves_like "a sign-in redirect controller response"
 

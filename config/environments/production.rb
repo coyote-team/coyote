@@ -17,7 +17,7 @@ Coyote::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_files = false
+  config.public_file_server.enabled = false
 
   # Compress JavaScripts and CSS.
   #https://github.com/mishoo/UglifyJS2/issues/328
@@ -42,7 +42,6 @@ Coyote::Application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
-  config.lograge.enabled = true
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

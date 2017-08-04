@@ -38,13 +38,21 @@ RSpec.describe AssignmentsController do
   context "GET #show" do
     context "as an admin" do
       include_context "stubbed controller admin user"
-      before { get :show, id: 1 }
+
+      before do 
+        get :show, params: { id: 1 }
+      end
+
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
       include_context "stubbed controller editor user"
-      before { get :show, id: 1 }
+
+      before do 
+        get :show, params: { id: 1 }
+      end
+
       it_behaves_like "an unsuccessful controller response"
     end
   end
@@ -66,36 +74,53 @@ RSpec.describe AssignmentsController do
   context "GET #edit" do
     context "as an admin" do
       include_context "stubbed controller admin user"
-      before { get :edit, id: 1 }
+
+      before do 
+        get :edit, params: { id: 1 }
+      end
+
       it_behaves_like "a successful controller response"
     end
 
     context "as a non-admin" do
       include_context "stubbed controller editor user"
-      before { get :edit, id: 1 }
+
+      before do 
+        get :edit, params: { id: 1 }
+      end
+
       it_behaves_like "an unsuccessful controller response"
     end
   end
 
   context "POST #create" do
     let(:creation_params) do
-      { "user_id" => "1", "image_id" => "1" }
+      { user_id: 1, image_id: 1 }
     end
 
     before do
-      allow(Assignment).to receive(:create).with(creation_params).and_return(assignment)
+      allow(Assignment).
+        to receive(:create).
+        with(an_instance_of(ActionController::Parameters)).
+        and_return(assignment)
     end
 
     context "as an admin" do
       include_context "stubbed controller admin user"
-      before { post :create, assignment: creation_params }
+
+      before do 
+        post :create, params: { assignment: creation_params } 
+      end
+
       specify { expect(response).to redirect_to(assignment_path(assignment)) }
     end
 
     context "as a non-admin" do
       include_context "stubbed controller editor user"
 
-      before { post :create, assignment: creation_params }
+      before do 
+        post :create, params: { assignment: creation_params }
+      end
 
       it_behaves_like "an unsuccessful controller response"
 
