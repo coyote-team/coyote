@@ -3,8 +3,6 @@ class WebsitesController < ApplicationController
   before_action :set_website, only: %i[show edit update destroy check_count]
   before_action :set_strategies_collection, only: %i[new edit]
 
-  caches_action :check_count, :cache_path => { :cache_path => Proc.new { |c| c.params } }, :expires_in => 5.minutes
-
   respond_to :html, :json
 
   # GET /websites
@@ -19,18 +17,20 @@ class WebsitesController < ApplicationController
   end
 
   def check_count
-    @our_count = @website.images.count
-    @their_count = 0
+    Rails.cache("website_check_count/#{c.params}",expires_in: 5.minutes) do
+      @our_count = @website.images.count
+      @their_count = 0
 
-    uniqs = @website.strategy_check_count
-    @their_count = uniqs.count
+      uniqs = @website.strategy_check_count
+      @their_count = uniqs.count
 
-    our_c_ids = @website.images.collect{|i| i.canonical_id}
-    @our_count = @website.images.count
+      our_c_ids = @website.images.collect{|i| i.canonical_id}
+      @our_count = @website.images.count
 
-    @our_matched_ids = uniqs & our_c_ids
-    @our_unmatched_ids =  our_c_ids - uniqs
-    @their_unmatched_ids = uniqs - our_c_ids
+      @our_matched_ids = uniqs & our_c_ids
+      @our_unmatched_ids =  our_c_ids - uniqs
+      @their_unmatched_ids = uniqs - our_c_ids
+    end
   end
 
   # GET /websites/new

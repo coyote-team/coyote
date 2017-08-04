@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 gem 'dotenv-rails'
-gem 'rails', '4.2.9'
+gem 'rails', '5.1.3'
 gem 'language_list'
 gem 'iso639-validator'
 gem 'sass-rails', '~> 5.0.1' # sass and sprockets upgrades can be delicate
@@ -18,10 +18,9 @@ gem 'compass-h5bp'
 gem 'modular-scale'
 gem 'sass-mediaqueries-rails'
 gem 'pg', '~> 0.20.0' # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p 
-gem 'actionpack-action_caching' # caching
 gem 'kaminari'
 gem 'ransack'
-gem 'simple_form', git: 'https://github.com/plataformatec/simple_form.git'
+gem 'simple_form' # , git: 'https://github.com/plataformatec/simple_form.git'
 gem 'devise' # user auth
 gem 'acts-as-taggable-on' # automplete tags
 gem 'select2-rails', git: 'https://github.com/argerim/select2-rails.git'
@@ -41,14 +40,14 @@ gem 'execjs'
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'validate_url'
 gem 'tilt' # template interface
-gem 'haml-rails'
+gem 'haml-rails', '>= 1.0.0'
 gem 'whenever'
 gem 'apipie-rails'
 gem 'simple_token_authentication' # token auth for api
 gem 'jbuilder' # json builder
 gem 'roo' # spreadsheet interfaces
 gem 'iconv'
-gem 'audited-activerecord'
+gem 'audited'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
 gem 'rollbar', '~>2.11.3'
 gem 'factory_girl_rails', require: false
@@ -65,7 +64,6 @@ group :development do
   gem 'better_errors'
   gem 'html2haml'
   gem 'binding_of_caller'
-  gem 'quiet_assets'
   gem 'rails_real_favicon'
   gem 'brakeman', :require => false
   gem 'spring'
@@ -75,7 +73,6 @@ group :development do
   gem 'guard-coffeescript'
   gem 'guard-sass'
   gem 'guard-livereload'
-  gem 'seed_dump'
   gem 'yard'
   gem 'annotate'
   gem 'guard-rubocop'

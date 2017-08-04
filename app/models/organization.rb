@@ -8,5 +8,5 @@
 #  updated_at :datetime         not null
 #
 
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
 end

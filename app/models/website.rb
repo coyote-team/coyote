@@ -10,7 +10,7 @@
 #  strategy   :string
 #
 
-class Website < ActiveRecord::Base
+class Website < ApplicationRecord
   validates_presence_of :title, :url
   validates_url :url
   validates_uniqueness_of :url

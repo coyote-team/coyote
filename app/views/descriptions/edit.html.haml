@@ -1,9 +1,10 @@
--title = "Editing #{@description}"
--meta title: title
--cache ['v1', admin?,  @description] do
+- title = "Editing #{@description}"
+- meta title: title
+
+- cache ['v1',admin?,@description] do
   .entity-outer
     .entity
       .entity-inner
         %header
           %h1#page-title{tabindex: -1}=title
-        = render 'form'
+        = render partial: 'form'

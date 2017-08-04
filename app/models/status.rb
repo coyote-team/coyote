@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-class Status < ActiveRecord::Base
+class Status < ApplicationRecord
   has_many :descriptions
 
   validates_presence_of :title

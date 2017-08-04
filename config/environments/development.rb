@@ -18,29 +18,28 @@ Coyote::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
-  config.lograge.enabled = true
-
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
+  
   config.assets.prefix = "/dev-assets"
   config.assets.raise_production_errors = true
   config.assets.precompile << %w( coyote_consumer.js)
   config.assets.digest = false
   config.assets.debug = true
 
-  ##SPROCKETS DEBUGGING
-  #config.assets.debug = false
-  #config.assets.digest = true
-  #config.assets.compile = true
-  ##https://github.com/mishoo/UglifyJS2/issues/328
-  #config.assets.js_compressor = Uglifier.new(
-    #output: { ascii_only: true, quote_keys: true, beautify: false }
-  #)
-  #config.assets.css_compressor = :sass
+  config.active_support.deprecation = :stderr # :raise
+  
+  # Sprockets debugging
+  # config.assets.debug = false
+  # config.assets.digest = true
+  # config.assets.compile = true
+  # # https://github.com/mishoo/UglifyJS2/issues/328
+  # config.assets.js_compressor = Uglifier.new({
+  #   output: { ascii_only: true, quote_keys: true, beautify: false }
+  # })
+  # config.assets.css_compressor = :sass
 end

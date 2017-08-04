@@ -14,7 +14,7 @@
 #  index_assignments_on_user_id   (user_id)
 #
 
-class Assignment < ActiveRecord::Base
+class Assignment < ApplicationRecord
   belongs_to :user, touch: true
   belongs_to :image, counter_cache: true, touch: true
 

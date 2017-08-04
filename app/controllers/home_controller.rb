@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   before_action :get_users
-
-  skip_before_filter :authenticate_user!
+  skip_before_action :authenticate_user!
 
   def index
     if current_user

@@ -24,7 +24,7 @@ require 'roo'
 #  index_images_on_website_id  (website_id)
 #
 
-class Image < ActiveRecord::Base
+class Image < ApplicationRecord
   acts_as_taggable_on :tags
   before_validation :update_status_code
 
@@ -32,7 +32,6 @@ class Image < ActiveRecord::Base
   belongs_to :context, touch: true
 
   has_many :descriptions, dependent: :destroy
-  has_associated_audits
   has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
 
@@ -41,7 +40,9 @@ class Image < ActiveRecord::Base
   validates_associated :website, :context
   validates_presence_of :website, :context
 
-  default_scope {order('priority DESC, created_at DESC')}
+  audited
+
+  default_scope ->() { order('priority DESC, created_at DESC') } # TODO: this will come back to haunt us, better to make this a regular scope you have to explicitly request
 
   scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
   scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
@@ -193,6 +194,7 @@ class Image < ActiveRecord::Base
     else
       self.status_code = 0
     end
+
     return true
   end
 end
