@@ -1,7 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
 require 'rails/all'
-Bundler.require(:default, Rails.env)
+
+Bundler.require(:default,Rails.env)
 Dotenv.load
 require 'csv'
 require 'iconv'
