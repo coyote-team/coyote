@@ -21,7 +21,7 @@
 #  index_descriptions_on_user_id    (user_id)
 #
 
-class Description < ActiveRecord::Base
+class Description < ApplicationRecord
   require 'net/http'
   include Iso639::Validator
   audited associated_with: :image
