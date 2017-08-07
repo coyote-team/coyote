@@ -29,7 +29,8 @@ Coyote::Application.configure do
   config.assets.raise_production_errors = true
   config.assets.precompile << %w( coyote_consumer.js)
   config.assets.digest = false
-  config.assets.debug = true
+  config.assets.quiet = true
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.active_support.deprecation = :stderr # :raise
   

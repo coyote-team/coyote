@@ -1,8 +1,8 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
 require 'rails/all'
 
-Bundler.require(:default,Rails.env)
+Bundler.require(*Rails.groups)
 Dotenv.load
 
 module Coyote
@@ -10,6 +10,8 @@ module Coyote
     config.before_configuration do
       config.sass.preferred_syntax = :sass
     end
+
+    config.load_defaults 5.1
 
     config.assets.precompile += %w[coyote_producer.js]
     config.autoload_paths << "#{Rails.root}/lib"
