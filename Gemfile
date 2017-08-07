@@ -7,12 +7,12 @@ gem 'dotenv-rails'
 gem 'rails', '5.1.3'
 gem 'language_list'
 gem 'iso639-validator'
-gem 'sass-rails', '~> 5.0.1' # sass and sprockets upgrades can be delicate
-gem 'compass-rails', '~> 3.0.2'
-gem 'bootstrap-sass', '>= 3.2'
+gem 'sass-rails'
+gem 'compass-rails'
+gem 'bootstrap-sass'
 gem 'sprockets'
 gem 'lograge'
-gem 'sprockets-rails', '~> 3.0.3'
+gem 'sprockets-rails'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
 gem 'modular-scale'
@@ -47,7 +47,7 @@ gem 'roo' # spreadsheet interfaces
 gem 'iconv'
 gem 'audited'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
-gem 'rollbar', '~>2.11.3'
+gem 'rollbar'
 gem 'factory_girl_rails', require: false
 
 group :development, :test do
