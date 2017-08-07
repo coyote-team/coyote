@@ -10,7 +10,6 @@ require_relative '../lib/ext/active_record'
 
 module Coyote
   class Application < Rails::Application
-    # Pulls in values from config_secure for initialization
     config.before_configuration do
       config.sass.preferred_syntax = :sass
     end
@@ -25,10 +24,8 @@ module Coyote
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 
-    ActsAsTaggableOn.remove_unused_tags = true
-    ActsAsTaggableOn.force_lowercase = true
-    ActsAsTaggableOn.force_parameterize = true
-
+    Rails.application.config.active_record.belongs_to_required_by_default = true
+    
     config.generators do |g|
       g.stylesheets false
       g.javascripts false
