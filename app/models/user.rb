@@ -31,8 +31,9 @@
 class User < ApplicationRecord
   acts_as_token_authenticatable
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  has_many :memberships
+  has_many :organizations, :through => :memberships
+
   devise :database_authenticatable, 
          :registerable, 
          :recoverable, 
@@ -50,7 +51,7 @@ class User < ApplicationRecord
     staff:       'staff'
   }
 
-  has_many :assignments, dependent: :destroy
+  has_many :assignments, dependent: :destroy # TODO: all 3 of these need to be moved into DB foreign key constraint cascades
   has_many :images, through: :assignments
   has_many :descriptions, dependent: :nullify
 

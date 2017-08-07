@@ -236,6 +236,38 @@ ALTER SEQUENCE images_id_seq OWNED BY images.id;
 
 
 --
+-- Name: memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE memberships (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    organization_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
+
+
+--
 -- Name: meta; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -516,6 +548,13 @@ ALTER TABLE ONLY images ALTER COLUMN id SET DEFAULT nextval('images_id_seq'::reg
 
 
 --
+-- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships ALTER COLUMN id SET DEFAULT nextval('memberships_id_seq'::regclass);
+
+
+--
 -- Name: meta id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -610,6 +649,14 @@ ALTER TABLE ONLY descriptions
 
 ALTER TABLE ONLY images
     ADD CONSTRAINT images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: memberships memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
 
 
 --
@@ -753,6 +800,13 @@ CREATE INDEX index_images_on_website_id ON images USING btree (website_id);
 
 
 --
+-- Name: index_memberships_on_user_id_and_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_memberships_on_user_id_and_organization_id ON memberships USING btree (user_id, organization_id);
+
+
+--
 -- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -840,11 +894,27 @@ ALTER TABLE ONLY descriptions
 
 
 --
+-- Name: memberships fk_rails_64267aab58; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_64267aab58 FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
+
+
+--
 -- Name: assignments fk_rails_79515876ef; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY assignments
     ADD CONSTRAINT fk_rails_79515876ef FOREIGN KEY (image_id) REFERENCES images(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: memberships fk_rails_99326fb65d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_99326fb65d FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 
 --
@@ -924,6 +994,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170728134702'),
 ('20170731150808'),
 ('20170731182230'),
-('20170804131408');
+('20170804131408'),
+('20170807153011');
 
 
