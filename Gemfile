@@ -36,12 +36,10 @@ gem 'markdown-rails'
 gem 'high_voltage' # static pages
 gem 'coffee-rails', '>= 4.1.0'
 gem 'jquery-rails', '>= 4.0.4'
-#gem 'execjs' 
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'validate_url'
 gem 'tilt' # template interface
 gem 'haml-rails', '>= 1.0.0'
-#gem 'whenever'
 gem 'apipie-rails'
 gem 'simple_token_authentication' # token auth for api
 gem 'jbuilder' # json builder
@@ -54,7 +52,6 @@ gem 'factory_girl_rails', require: false
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'guard-rspec'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent' # osx file system changes
   gem 'faker'
@@ -65,17 +62,18 @@ group :development do
   gem 'html2haml'
   gem 'binding_of_caller'
   gem 'rails_real_favicon'
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false
   gem 'spring'
-  gem 'guard'
-  gem 'guard-brakeman'
-  gem 'guard-bundler'
-  gem 'guard-coffeescript'
-  gem 'guard-sass'
-  gem 'guard-livereload'
   gem 'yard'
   gem 'annotate'
-  gem 'guard-rubocop'
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard-brakeman', require: false
+  gem 'guard-bundler', require: false
+  gem 'guard-coffeescript', require: false
+  gem 'guard-sass', require: false
+  gem 'guard-livereload', require: false
+  gem 'guard-rubocop', require: false
 end
 
 group :test do
