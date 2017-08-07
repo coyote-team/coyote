@@ -36,12 +36,12 @@ gem 'markdown-rails'
 gem 'high_voltage' # static pages
 gem 'coffee-rails', '>= 4.1.0'
 gem 'jquery-rails', '>= 4.0.4'
-gem 'execjs' 
+#gem 'execjs' 
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'validate_url'
 gem 'tilt' # template interface
 gem 'haml-rails', '>= 1.0.0'
-gem 'whenever'
+#gem 'whenever'
 gem 'apipie-rails'
 gem 'simple_token_authentication' # token auth for api
 gem 'jbuilder' # json builder
