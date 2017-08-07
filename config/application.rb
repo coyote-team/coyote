@@ -18,8 +18,6 @@ module Coyote
 
     config.active_record.schema_format = :sql
 
-    config.lograge.enabled = true
-    
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 

@@ -11,11 +11,10 @@ gem 'sass-rails'
 gem 'compass-rails'
 gem 'bootstrap-sass'
 gem 'sprockets'
-gem 'lograge'
 gem 'sprockets-rails'
 gem 'autoprefixer-rails'
 gem 'compass-h5bp'
-gem 'modular-scale'
+gem 'modular-scale', require: false
 gem 'sass-mediaqueries-rails'
 gem 'pg', '~> 0.20.0' # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p 
 gem 'kaminari'
@@ -38,7 +37,6 @@ gem 'coffee-rails', '>= 4.1.0'
 gem 'jquery-rails', '>= 4.0.4'
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'validate_url'
-gem 'tilt' # template interface
 gem 'haml-rails', '>= 1.0.0'
 gem 'apipie-rails'
 gem 'simple_token_authentication' # token auth for api

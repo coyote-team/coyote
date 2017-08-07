@@ -1,4 +1,3 @@
-Coyote::Application.configure do
 Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -69,7 +68,7 @@ Rails.application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w( coyote_producer.js coyote_consumer.js coyote_bookmarklet.js coyote_bookmarklet.css)
+  config.assets.precompile += %w(coyote_producer.js coyote_consumer.js coyote_bookmarklet.js coyote_bookmarklet.css)
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.initialize_on_precompile = false
   config.assets.prefix = "/assets"
@@ -87,12 +86,7 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
 end
