@@ -1,4 +1,6 @@
 require 'roo'
+require 'csv'
+
 #
 # == Schema Information
 #

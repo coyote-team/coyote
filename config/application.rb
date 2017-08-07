@@ -4,9 +4,6 @@ require 'rails/all'
 
 Bundler.require(:default,Rails.env)
 Dotenv.load
-require 'csv'
-require 'iconv'
-require_relative '../lib/ext/active_record'
 
 module Coyote
   class Application < Rails::Application
