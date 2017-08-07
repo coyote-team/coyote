@@ -11,7 +11,7 @@ before_script:
 script:
   - bin/rake spec
 addons:
-  postgresql: "9.6.3"
+  #postgresql: "9.6.3" # build failure, see https://travis-ci.org/coyote-team/coyote/builds/261613741
   code_climate:
     repo_token:
       secure: RRJer1xn1EIjov8dplpSO92f3pa5uTri8TBFZOEXLN15NRutopdWCjNSj82fnRfeqJRA35JvOu9XFr2EPQzdTPnNxELe7pQBKRf7E+D0r+ZPT8HJ82z+3CNfD7FNv0iD0Msx4feUdaDVDxjReW/uEKEDRBbJvpGMA6RO6r5355DgGcpSvBOrAyVMazId+FWTnDUfrwnFGgJkO8mXswqVjszIquUPo1hG47DCCdx6UMqgXTZZaSoSKtzqiZ10w16FFlfONMr7FtvE5gFIYObO5i02zALvyNwvFFo6IpKGo08QTNdGs0/0dP58ipqvg8BH28YCWpUaEhli9OXCoMr8BfeRcERfzlXzZdCrFAKR6VIFcWOPa0PluAfuxHXhhiSr0glnbwh/heQb2ov9cdMwGfzPCWpgb2hhLNSsn3SJctkangE8/4E+s84FLuttkM8V8hFEwD4ErOe0fprq+uZMqP4ZZpW40Iw8QShZR+a5ECWME9CxHgqrQWSsgnmMGx0OL1crVrEmox/vQz4HYBs3HduJXrBwNp0zJcZapoaUL9kQqWMoBySlXB6pJfubHAPYYwyMiHjVyQK9LHT7X4FgTEj9fMMdc4h/NI3jGQs3jlRHe7/BwzjPsbeb4E2OBbqvS9eE+yM0ZBrtEQhiAs8J+iN3TJhiaXD1i7fxBvCSzZI=
