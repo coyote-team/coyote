@@ -1,6 +1,6 @@
 - if item.is_a? Image
   - image = item
-- else #is a description
+- else
   - description = item
   - image = description.image
 
@@ -32,4 +32,4 @@
           -#- assignments = image.assignments
           -#= render "assignments/list", assignments: assignments, title: true
         - unless type == "Ready to Review Descriptions"
-          = render "assign_to", css_id: css_id, image: image, users: @users, full_width: true
+          = render "assign_to", css_id: css_id, image: image, users: users, full_width: true

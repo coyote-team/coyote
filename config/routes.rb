@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: "home#index"
+  root to: "high_voltage/pages#show", id: "index"
 
   apipie
 
@@ -50,6 +50,4 @@ Rails.application.routes.draw do
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]
     match 'coyote_producer' => 'coyote_producer#index', via: [:get]
   end
-
-  get "/pages/*id" => 'pages#show', as: :page, format: false
 end

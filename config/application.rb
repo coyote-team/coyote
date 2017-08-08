@@ -32,6 +32,7 @@ module Coyote
       g.factory_girl dir: Rails.root.join("spec/factories").to_s
     end
 
-    config.x.site_name = ENV.fetch("COYOTE_SITE_NAME","Coyote")
+    config.x.site_name                      = ENV.fetch("COYOTE_SITE_NAME","Coyote")
+    config.x.dashboard_top_items_queue_size = ENV.fetch("COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE",10).to_i
   end
 end

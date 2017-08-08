@@ -5,20 +5,46 @@
     .entity-inner
       %header
         %h1#page-title{tabindex: -1}= title
-      %table.entity-table
-        %caption.sr-only Key value pairs for this organization
-        %tbody
-          %tr
-            %th{scope: "row"}<
-              Title
-            %td<
-              = organization.title
 
-      %nav.show-nav{role:"navigation"}
-        %ul.list-inline
-          %li
-            = link_to organizations_path, class: 'btn btn-info', title: "View all organizations" do
-              Organizations
-          %li
-            = link_to edit_organization_path(organization), title: "Edit this organization", class: 'btn btn-primary' do
-              Edit
+  .row
+    .col-sm-6
+      - if admin?
+        =link_to "#ready_to_review_descriptions" do 
+          Skip to Ready to Review Descriptions
+
+      %h2 Our Status
+      %table.table.table-no-grid
+        = render partial: "organizations/show/progress",   locals: { title: "Described images of #{image_count(dashboard)}", value: dashboard.organization_described_image_count, max: dashboard.organization_image_count }
+
+        - if current_user.admin?
+          = render partial: "organizations/show/progress", locals: { title: "Images assigned and undescribed of #{image_count(dashboard.organization_image_count)}",           value: dashboard.organization_open_assignment_count,        max: dashboard.organization_image_count }
+          = render partial: "organizations/show/progress", locals: { title: "Images unassigned and undescribed of #{image_count(dashboard.organization_image_count)}",         value: dashboard.organization_unassigned_undescribed_count, max: dashboard.organization_image_count }
+          = render partial: "organizations/show/progress", locals: { title: "Descriptions ready for review of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_description_count }
+
+        = render partial: "organizations/show/progress", locals: { title: "Approved descriptions of #{description_count(dashboard)}", value: dashboard.organization_approved_description_count, max: dashboard.organization_description_count }
+        = render partial: "organizations/show/latest_image_timestamp", object: dashboard.organization_latest_image_timestamp
+
+    .col-sm-6
+      %h2 Your Status
+      %table.table.table-no-grid
+        = render partial: "organizations/show/progress", locals: { title: "Described images of #{image_count(dashboard.current_user_described_images_count)}",          value: dashboard.current_user_described_images_count,      max: dashboard.current_user_described_images_count }
+        = render partial: "organizations/show/progress", locals: { title: "Approved descriptions of #{description_count(dashboard.current_user_description_count)}",   value: dashboard.current_user_approved_description_count,   max: dashboard.current_user_description_count }
+        = render partial: "organizations/show/progress", locals: { title: "Unapproved descriptions of #{description_count(dashboard.current_user_description_count)}", value: dashboard.current_user_unapproved_description_count, max: dashboard.current_user_description_count }
+
+  .row
+    .col-md-12
+      - if current_user.admin?
+        %h2 Admin Queues
+
+        = render partial: "organizations/show/queue", locals: { queue: dashboard.organization_top_undescribed_items_queue,     type: "Undescribed Images",           count: dashboard.organization_undescribed_count,     users: dashboard.organization_users }
+        = render partial: "organizations/show/queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned Images",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
+        = render partial: "organizations/show/queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review Descriptions", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
+
+      %h2 Your Queues
+
+      - if dashboard.current_user_queue_empty?
+        = render partial: "organizations/show/empty_queue"
+      - else
+        = render partial: "organizations/show/queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Images", count: dashboard.current_user_assigned_items_count }
+
+    = render partial: "organizations/show/file_operations" if current_user.admin?

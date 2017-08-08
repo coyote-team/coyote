@@ -212,7 +212,8 @@ CREATE TABLE images (
     title text,
     priority boolean DEFAULT false NOT NULL,
     status_code integer DEFAULT 0 NOT NULL,
-    page_urls text
+    page_urls character varying[] DEFAULT ARRAY[]::character varying[] NOT NULL,
+    organization_id bigint NOT NULL
 );
 
 
@@ -793,6 +794,13 @@ CREATE INDEX index_images_on_context_id ON images USING btree (context_id);
 
 
 --
+-- Name: index_images_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_on_organization_id ON images USING btree (organization_id);
+
+
+--
 -- Name: index_images_on_website_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -875,6 +883,14 @@ CREATE INDEX user_index ON audits USING btree (user_id, user_type);
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT fk_rails_1baaf0e406 FOREIGN KEY (metum_id) REFERENCES meta(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: images fk_rails_21cb428019; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY images
+    ADD CONSTRAINT fk_rails_21cb428019 FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -995,6 +1011,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170731150808'),
 ('20170731182230'),
 ('20170804131408'),
-('20170807153011');
+('20170807153011'),
+('20170808141238'),
+('20170808141713');
 
 

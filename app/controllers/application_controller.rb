@@ -10,8 +10,11 @@ class ApplicationController < ActionController::Base
   # see https://github.com/gonzalo-bulnes/simple_token_authentication/issues/268#issuecomment-318651424
   # TODO: investigate removing this gem, there are probably simpler ways of handling tokens
   looks_like_an_api_request = ->(controller) { controller.request.format.json? }
+
   before_action :authenticate_user!, unless: looks_like_an_api_request
   acts_as_token_authentication_handler_for User, if: looks_like_an_api_request
+
+  skip_before_action :authenticate_user!, if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) }
 
   analytical
 
@@ -46,5 +49,13 @@ class ApplicationController < ActionController::Base
 
   def get_contexts
     self.contexts = Context.all.sort { |a,b| a.to_s <=> b.to_s } # TODO: needs to be moved into Context scope, sorted via SQL
+  end
+
+  def after_sign_in_path_for(user)
+    if user.organizations.one?
+      organization_path(user.organizations.first)
+    else
+      organizations_path
+    end
   end
 end

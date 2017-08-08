@@ -1,14 +1,18 @@
 # Manges requests to view and manipulate Organization objects
 # @see Organization
 class OrganizationsController < ApplicationController
+  # @!attribute [w] dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard
+  # @see Dashboard
+  attr_writer :dashboard
+
   before_action :find_organization, only: %i[show edit update delete]
 
-  helper_method :title, :organizations, :organization
+  helper_method :title, :organizations, :organization, :dashboard
 
   # GET /organizations
   def index
     self.title = "Organizations"
-    self.organizations = Organization.all.page(params[:page]) # TODO: scope this by User memberships
+    self.organizations = current_user.organizations
   end
 
   # GET /organizations/1
@@ -62,5 +66,9 @@ class OrganizationsController < ApplicationController
 
   def find_organization
     self.organization = Organization.find(params[:id])
+  end
+
+  def dashboard
+    @dashboard ||= Dashboard.new(current_user,organization)
   end
 end

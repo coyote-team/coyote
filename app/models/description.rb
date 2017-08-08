@@ -24,11 +24,13 @@
 class Description < ApplicationRecord
   require 'net/http'
   include Iso639::Validator
-  audited associated_with: :image
+
+  audited :associated_with => :image
+
   belongs_to :status
-  belongs_to :image, touch: true, counter_cache: true
-  belongs_to :metum
-  belongs_to :user
+  belongs_to :image, touch: true, counter_cache: true, inverse_of: :descriptions
+  belongs_to :metum, :inverse_of => :descriptions
+  belongs_to :user, :inverse_of => :descriptions
 
   validates_associated :image, :status, :metum, :user
   validates_presence_of :image, :status, :metum, :locale, :text, :license
@@ -46,6 +48,8 @@ class Description < ApplicationRecord
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
+  # uses Coyote::Strategies::* to trigger updates
+  # TODO: this procedure needs to be done async in a worker
   after_commit :patch_image, :update_image
 
   paginates_per 50

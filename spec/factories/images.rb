@@ -14,12 +14,14 @@
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :text
+#  page_urls          :string           not null, is an Array
+#  organization_id    :integer          not null
 #
 # Indexes
 #
-#  index_images_on_context_id  (context_id)
-#  index_images_on_website_id  (website_id)
+#  index_images_on_context_id       (context_id)
+#  index_images_on_organization_id  (organization_id)
+#  index_images_on_website_id       (website_id)
 #
 
 FactoryGirl.define do

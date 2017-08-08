@@ -12,4 +12,6 @@
 class Organization < ApplicationRecord
   has_many :memberships
   has_many :users, :through => :memberships
+  has_many :images, :dependent => :restrict_with_exception
+  has_many :descriptions, :through => :images
 end

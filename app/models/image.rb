@@ -18,20 +18,23 @@ require 'csv'
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :text
+#  page_urls          :string           not null, is an Array
+#  organization_id    :integer          not null
 #
 # Indexes
 #
-#  index_images_on_context_id  (context_id)
-#  index_images_on_website_id  (website_id)
+#  index_images_on_context_id       (context_id)
+#  index_images_on_organization_id  (organization_id)
+#  index_images_on_website_id       (website_id)
 #
 
 class Image < ApplicationRecord
   acts_as_taggable_on :tags
   before_validation :update_status_code
 
-  belongs_to :website, touch: true
-  belongs_to :context, touch: true
+  belongs_to :website, touch: true, :inverse_of => :images
+  belongs_to :context, touch: true, :inverse_of => :images
+  belongs_to :organization, :inverse_of => :images
 
   has_many :descriptions, dependent: :destroy
   has_many :assignments, dependent: :destroy
@@ -44,17 +47,27 @@ class Image < ApplicationRecord
 
   audited
 
-  default_scope ->() { order('priority DESC, created_at DESC') } # TODO: this will come back to haunt us, better to make this a regular scope you have to explicitly request
-
-  scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
-  scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
-  scope :assigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count > n} }
-  scope :unassigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count == n} }
-  scope :described, -> (n = 0) { select { |i| i.descriptions_count > n } }
-  scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
-  scope :prioritized, -> { order('priority DESC')}
+  scope :described,              -> { joins(:descriptions) }
+  scope :assigned,               -> { joins(:assignments) }
+  scope :unassigned,             -> { left_outer_joins(:assignments).where(assignments: { image_id: nil }) }
+  scope :undescribed,            -> { left_outer_joins(:descriptions).where(descriptions: { image_id: nil }) }
+  scope :assigned_undescribed,   -> { undescribed.joins(:assignments) }
+  scope :unassigned_undescribed, -> { undescribed.left_outer_joins(:assignments).where(assignments: { image_id: nil }) }
+  scope :prioritized,            -> { order(:priority => :desc, :created_at => :desc) }
+  #scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
+  #scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
+  #scope :assigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count > n} }
+  #scope :unassigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count == n} }
+  #scope :described, -> (n = 0) { select { |i| i.descriptions_count > n } }
+  #scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
 
   paginates_per 50
+
+  # @return [ActiveSupport::TimeWithZone] if one more images exist, this is the created_at time for the most recently-created image
+  # @return [nil] if no images exist
+  def self.latest_timestamp
+    self.order(:created_at).last
+  end
 
   def to_s
     path

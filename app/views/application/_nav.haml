@@ -26,8 +26,6 @@
       -if current_user
         .navbar-right.navbar-nav
           %h2.sr-only Global Actions
-          -#%ul.nav.navbar-nav
-            -#%li<
           %span.dropdown
             %button{type: "button", class: "dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions'}
               =current_user
@@ -52,4 +50,3 @@
                   = link_to user_session_path do
                     %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
                     Log in
-

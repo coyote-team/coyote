@@ -4,11 +4,7 @@
     = f.input :first_name, autofocus: true
     = f.input :last_name
     = f.input :email, required: true
-    -#= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
-    -#= f.input :password_confirmation, required: true
-
     = f.input :role, :as => :select, :collection => User.roles, include_blank: false
-
 
   .form-actions
     .form-actions-inner

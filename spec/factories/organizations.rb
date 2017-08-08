@@ -10,6 +10,6 @@
 
 FactoryGirl.define do
   factory :organization do
-    title "ACME Museum"
+    title Faker::Company.unique.name
   end
 end
