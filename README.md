@@ -109,13 +109,14 @@ heroku run bin/rake coyote:admin:create[user@example.com]
 bin/rake deploy 
 
 # Configure the app to respond to your host name; requires you to create a DNS CNAME entry
-domains:add coyote.example.com
+heroku domains:add coyote.example.com
 
 # Other useful commands
 heroku open              # opens the app in your browser
 heroku ps                # displays list of active processes, corresponding to contents of Procfile
 herou logs --tail        # watch application log stream
 heroku run rails console # access production console
+heroku pg:pull DATABASE coyote_development # pull production DB data into dev environment
 ```
 
 ## <a name="api"> API
