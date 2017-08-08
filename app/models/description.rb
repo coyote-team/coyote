@@ -42,13 +42,11 @@ class Description < ApplicationRecord
   scope :approved, -> {where("status_id = 2")}
   scope :not_approved, -> {where("status_id = 3")}
 
-
   scope :alt, -> {where("metum_id = 1")}
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
   after_commit :patch_image, :update_image
-  #after_destroy :update_image
 
   paginates_per 50
 

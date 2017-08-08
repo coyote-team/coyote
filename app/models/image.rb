@@ -87,7 +87,6 @@ class Image < ApplicationRecord
     end
   end
 
-
   def url(protocol="https:")
     if path.starts_with?("//")
       protocol + path

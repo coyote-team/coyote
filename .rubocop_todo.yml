@@ -17,23 +17,6 @@ Layout/EmptyLineBetweenDefs:
     - 'app/models/image.rb'
     - 'db/migrate/20160811173510_add_strategy_to_website.rb'
 
-# Offense count: 15
-# Cop supports --auto-correct.
-Layout/EmptyLines:
-  Exclude:
-    - 'app/controllers/coyote_producer_controller.rb'
-    - 'app/controllers/descriptions_controller.rb'
-    - 'app/controllers/groups_controller.rb'
-    - 'app/controllers/statuses_controller.rb'
-    - 'app/models/description.rb'
-    - 'app/models/image.rb'
-    - 'config/compass.rb'
-    - 'config/deploy.rb'
-    - 'config/environments/development.rb'
-    - 'config/environments/production.rb'
-    - 'config/initializers/rollbar.rb'
-    - 'db/migrate/20150625124853_devise_create_users.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundAccessModifier:

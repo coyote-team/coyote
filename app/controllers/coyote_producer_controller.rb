@@ -6,8 +6,8 @@ class CoyoteProducerController < ApplicationController
   def index
   end
 
+  private
 
-  protected
   def allow_iframe_requests
     response.headers.delete('X-Frame-Options')
   end
