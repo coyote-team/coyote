@@ -7,6 +7,7 @@ RSpec.describe "Adding and changing an organization" do
 
   it "succeeds" do
     click_link "Organizations"
+    expect(current_path).to eq(organizations_path)
     click_first_link "New Organization"
     expect(page.current_path).to eq(new_organization_path)
 
@@ -19,13 +20,5 @@ RSpec.describe "Adding and changing an organization" do
     organization = Organization.first
     expect(page.current_path).to eq(organization_path(organization))
     expect(page).to have_content("Acme Museum")
-
-    click_link "Edit"
-    fill_in "Title", with: "ABC Museum"
-
-    expect {
-      click_button "Update Organization"
-      organization.reload
-    }.to change(organization,:title).to("ABC Museum")
   end
 end

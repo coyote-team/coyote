@@ -32,6 +32,7 @@ FactoryGirl.define do
     title { Faker::Hipster.sentence(3) } 
     website 
     context 
+    organization
 
     trait :priority do
       priority true

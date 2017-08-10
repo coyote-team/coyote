@@ -22,7 +22,7 @@
           = render partial: "progress", locals: { title: "Descriptions ready for review of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_description_count }
 
         = render partial: "progress", locals: { title: "Approved descriptions of #{description_count(dashboard.organization_approved_description_count)}", value: dashboard.organization_approved_description_count, max: dashboard.organization_description_count }
-        = render partial: "latest_image_timestamp", object: dashboard.organization_latest_image_timestamp
+        = render partial: "latest_image_timestamp", object: dashboard.organization_latest_image_timestamp if dashboard.organization_latest_image_timestamp  
 
     .col-sm-6
       %h2 Your Status
@@ -40,11 +40,15 @@
         = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned Images",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
         = render partial: "queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review Descriptions", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
 
+  .row
+    .col-md-12
       %h2 Your Queues
 
       - if dashboard.current_user_queue_empty?
-        = render partial: "empty_queue"
+        = render partial: "your_queue_empty"
       - else
         = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Images", count: dashboard.current_user_assigned_items_count }
 
+  .row
+    .col-md-12
     = render partial: "file_operations" if current_user.admin?

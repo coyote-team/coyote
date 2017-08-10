@@ -1,12 +1,18 @@
 module OrganizationsHelper
+  # @param count [Integer]
+  # @return [String] formatted number of images, with correct pluralization
   def image_count(count)
     "#{number_with_delimiter(count)} #{'image'.pluralize(count)}"
   end
 
+  # @param count [Integer]
+  # @return [String] formatted number of descriptions, with correct pluralization
   def description_count(count)
     "#{number_with_delimiter(count)} #{'description'.pluralize(count)}"
   end
 
+  # @param local_vars [Hash] passed to the partial as "local assigns"; lets our templates optionally specify certain parameters
+  # @return [Hash] aria and style attributes for drawing a progress bar
   # @see http://guides.rubyonrails.org/layouts_and_rendering.html#passing-local-variables
   def progress_bar_attributes(local_vars)
     { :"aria-valuemax" => progress_max(local_vars), 
@@ -16,24 +22,24 @@ module OrganizationsHelper
       :style => "width: #{progress_bar_percentage(local_vars)}%" }
   end
 
+  # @param (see progress_bar_attributes)
+  # @return [String] formatted progress percentage of value vs max 
   def progress_bar_percentage(local_vars)
-    max   = progress_max(local_vars)
+    max = progress_max(local_vars)
+    return "" if max.zero?
+
     value = progress_val(local_vars)
     percentage = 100 * (value / max.to_f)
     number_to_percentage(percentage,precision: 0)
   end
 
-  def progress_label(local_vars)
-    value = progress_val(local_vars)
-    title = progress_title(local_vars)
+  # @param title [String] string to use for the label
+  # @param value [Integer] numerical value for the label
+  def progress_label(title,value)
     "#{number_with_delimiter(value)} #{title}"
   end
 
   private
-
-  def progress_title(vars)
-    vars.fetch(:title,"?")
-  end
 
   def progress_max(vars)
     vars.fetch(:max,1)

@@ -3,6 +3,11 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 gem 'dotenv-rails'
 gem 'rails', '5.1.3'
 gem 'language_list'
@@ -49,7 +54,13 @@ gem 'rollbar'
 gem 'factory_girl_rails', require: false
 
 group :development, :test do
-  gem 'rspec-rails'
+  #gem 'rspec-rails'
+
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    # Temporary work around till next release of rspec: https://github.com/rspec/rspec-rails/issues/1825
+    gem lib, github: "rspec/#{lib}"
+  end
+
   gem 'spring-commands-rspec'
   gem 'rb-fsevent' # osx file system changes
   gem 'faker'

@@ -85,11 +85,6 @@ class Dashboard
     organization_ready_to_review_queue.first(top_items_queue_size)
   end
 
-  # @return [Integer] total number of images owned by the organization which have unreviewed descriptions
-  def organization_ready_to_review_count
-    organization_ready_to_review_queue.size
-  end
-
   # @return [Integer] total number of images described by the current user
   def current_user_described_images_count
     current_user.images.described.size
