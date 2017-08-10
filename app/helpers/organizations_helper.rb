@@ -20,7 +20,7 @@ module OrganizationsHelper
     max   = progress_max(local_vars)
     value = progress_val(local_vars)
     percentage = 100 * (value / max.to_f)
-    number_to_percentage(percentage,precision: 1) 
+    number_to_percentage(percentage,precision: 0)
   end
 
   def progress_label(local_vars)

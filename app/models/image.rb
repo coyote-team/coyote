@@ -66,7 +66,7 @@ class Image < ApplicationRecord
   # @return [ActiveSupport::TimeWithZone] if one more images exist, this is the created_at time for the most recently-created image
   # @return [nil] if no images exist
   def self.latest_timestamp
-    self.order(:created_at).last
+    self.order(:created_at).last.try(:created_at)
   end
 
   def to_s
