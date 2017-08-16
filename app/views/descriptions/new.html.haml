@@ -1,10 +1,9 @@
--title = 'New Description'
-- if @image
-  - title +=" for #{@image}"
--meta title: title
+- title = %q|New Description#{@image ? " for #{@image} : ""}|
+- meta title: title
+
 .entity-outer
   .entity
     .entity-inner
       %header
-        %h1#page-title{tabindex: -1}=title
-      = render 'form'
+        %h1#page-title{tabindex: -1}= title
+      = render partial: 'form'

@@ -24,7 +24,6 @@ class DescriptionsController < ApplicationController
     end
   end
 
-
   # GET /descriptions
   api :GET, "descriptions", "Get an index of descriptions"
   param :page, :number
@@ -125,60 +124,59 @@ class DescriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_description
-      @description = Description.find(params[:id])
-    end
 
-    def set_author
-      if params[:user_id]
-        @author = User.find(params[:user_id])
-      elsif current_user and !current_user.admin?
-        @author = current_user
-      end
-    end
+  def set_description
+    @description = Description.find(params[:id])
+  end
 
-    def set_image
-      if params[:image_id]
-        @image = Image.find(params[:image_id])
-      else
-        @image = @description.image if @description
-      end
+  def set_author
+    if params[:user_id]
+      @author = User.find(params[:user_id])
+    elsif current_user and !current_user.admin?
+      @author = current_user
     end
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def description_params
-      params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :license, :user_id)
+  def set_image
+    if params[:image_id]
+      @image = Image.find(params[:image_id])
+    else
+      @image = @description.image if @description
     end
+  end
 
-    def collect_meta
-      @meta = Metum.all
+  # Only allow a trusted parameter "white list" through.
+  def description_params
+    params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :license, :user_id)
+  end
+
+  def collect_meta
+    @meta = Metum.all
+  end
+
+  def admin_or_owner
+    #puts "filter ran"
+    unless current_user and (current_user.admin? or current_user.id == @description.user_id)
+      redirect_to(descriptions_path)
     end
+  end
 
-    def admin_or_owner
-      #puts "filter ran"
-      unless current_user and (current_user.admin? or current_user.id == @description.user_id)
-        redirect_to(descriptions_path)
-      end
-    end
+  def search_params
+    params[:q]
+  end
 
-    def search_params
-      params[:q]
-    end
-
-    def clear_search
-      if params[:search_cancel]
-        params.delete(:search_cancel)
-        if(!search_params.nil?)
-          search_params.each do |key, param|
-            search_params[key] = nil
-          end
+  def clear_search
+    if params[:search_cancel]
+      params.delete(:search_cancel)
+      if(!search_params.nil?)
+        search_params.each do |key, param|
+          search_params[key] = nil
         end
       end
     end
+  end
 
-
-    def descriptions_params
-      params.permit(:descriptions => [:id, :status_id])
-    end
+  def descriptions_params
+    params.permit(:descriptions => [:id, :status_id])
+  end
 end

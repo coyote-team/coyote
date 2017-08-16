@@ -173,8 +173,10 @@ Ex:
   api :POST, "images", "Create an image"
   param_group :image
   def create
-    @image = Image.new(image_params)
-    if @image.save
+    @image = Image.create(image_params)
+
+    if @image.valid?
+      # TODO: make these use Rails responders instead of format conditionals
       if request.format.html?
         redirect_to @image, notice: 'Image was successfully created.'
       else

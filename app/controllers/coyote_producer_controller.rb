@@ -1,13 +1,13 @@
 class CoyoteProducerController < ApplicationController
-  before_filter :allow_iframe_requests
+  before_action :allow_iframe_requests
 
   layout 'coyote_producer'
 
   def index
   end
 
+  private
 
-  protected
   def allow_iframe_requests
     response.headers.delete('X-Frame-Options')
   end

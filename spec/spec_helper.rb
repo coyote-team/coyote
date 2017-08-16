@@ -7,14 +7,13 @@ require 'factory_girl_rails'
 require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
-require "codeclimate-test-reporter"
+require 'simplecov'
 require 'airborne'
 require 'vcr'
 require "pathname"
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
-CodeClimate::TestReporter.start
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
@@ -79,8 +78,8 @@ VCR.configure do |config|
   config.ignore_hosts "codeclimate.com"
 end
 
+WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])
+
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end
-
-WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])

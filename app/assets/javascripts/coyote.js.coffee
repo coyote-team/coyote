@@ -1,4 +1,4 @@
-plate =() ->
+coyote =() ->
   #REGEX
   #http://james.padolsey.com/javascript/regex-selector-for-jquery/
   jQuery.expr[":"].regex = (elem, index, match) ->
@@ -66,7 +66,7 @@ plate =() ->
   initMarkdownToolbar()
 
 $(document).on 'turbolinks:load', ->
-  plate()
+  coyote()
 
 # Override Rails handling of confirmation
 # https://gist.github.com/postpostmodern/1862479

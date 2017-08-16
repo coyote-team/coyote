@@ -21,5 +21,5 @@
 //= require vendor/isotope.pkgd.min
 //= require vendor/pageMe
 //= require vendor/rollbar
-//= require plate
+//= require coyote
 //= require main

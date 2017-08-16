@@ -21,7 +21,7 @@
 #  index_descriptions_on_user_id    (user_id)
 #
 
-class Description < ActiveRecord::Base
+class Description < ApplicationRecord
   require 'net/http'
   include Iso639::Validator
   audited associated_with: :image
@@ -42,13 +42,11 @@ class Description < ActiveRecord::Base
   scope :approved, -> {where("status_id = 2")}
   scope :not_approved, -> {where("status_id = 3")}
 
-
   scope :alt, -> {where("metum_id = 1")}
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
   after_commit :patch_image, :update_image
-  #after_destroy :update_image
 
   paginates_per 50
 

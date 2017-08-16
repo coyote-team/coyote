@@ -9,8 +9,7 @@
 #  updated_at   :datetime
 #
 
-class Metum < ActiveRecord::Base
-
+class Metum < ApplicationRecord
   validates_presence_of :title
 
   def to_s
