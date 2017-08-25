@@ -1,4 +1,6 @@
 sudo: required
+install: true
+
 services:
   - docker
 
