@@ -4,6 +4,10 @@ install: true
 services:
   - docker
 
+before_install:
+  - sudo service postgresql stop # stop built-in postgres service, so the one in the db container can bind to port 5432 properly
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done # wait for postgresql to shutdown
+
 script:
   - docker-compose build test && docker-compose up test
 
