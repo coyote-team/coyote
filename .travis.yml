@@ -5,8 +5,8 @@ services:
   - docker
 
 script:
-  - docker-compose build
-  - docker-compose run test
+  - docker-compose build test
+  - docker-compose up test
 
 addons:
   code_climate:

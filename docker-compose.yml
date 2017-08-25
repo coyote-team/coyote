@@ -16,7 +16,7 @@ services:
       - db
   test:
     build: .
-    env_file: .env
+    env_file: sample.env
     environment:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:docker@db:5432/coyote_test
