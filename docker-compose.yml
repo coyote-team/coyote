@@ -15,8 +15,20 @@ services:
     command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
+  test:
+    build: .
+    env_file: .env
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:docker@db:5432/coyote_test
+      COYOTE_TEST_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
+    volumes:
+      - ./:/coyote
+    command: bundle exec rspec
+    depends_on:
+      - db
   db:
-    image: postgres:latest
+    image: postgres:9.6
     ports:
       - 5432:5432
     environment:
