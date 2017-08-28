@@ -1,22 +1,32 @@
-# NOTE: this is a work-in-progress. So far it can't start rails properly.
 version: '3'
 services:
   web:
     build: .
     ports: 
       - 3000:3000
-    env_file: .env
     environment:
-      RAILS_ENV: development
-      DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
       COYOTE_DEV_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
+      RAILS_ENV: development
+      SECRET_KEY_BASE: TEST_ONLY_09f0f5a7621eb1835061d53c0f1ebc105d4104058f5c8d42827e48abe133dbbff85b63a4b40176290336082141f2e84a150bb0ce8dc2db72d
     volumes:
       - ./:/coyote
     command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
+  test:
+    build: .
+    env_file: sample.env
+    environment:
+      COYOTE_TEST_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
+      RAILS_ENV: test
+      SECRET_KEY_BASE: TEST_ONLY_09f0f5a7621eb1835061d53c0f1ebc105d4104058f5c8d42827e48abe133dbbff85b63a4b40176290336082141f2e84a150bb0ce8dc2db72d
+    volumes:
+      - ./:/coyote
+    command: bundle exec rspec
+    depends_on:
+      - db
   db:
-    image: postgres:latest
+    image: postgres:9.6
     ports:
       - 5432:5432
     environment:

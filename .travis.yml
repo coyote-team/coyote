@@ -1,22 +1,17 @@
-language: ruby
-
-cache: bundler
+sudo: required
+install: true
 
 services:
-- postgresql
+  - docker
 
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
-  - export RAILS_ENV=test
-  - export SECRET_KEY_BASE=bf2f15bef324004a9120768f26e1a202e7b90969599dad3325d1507940b0f24527ba6694a06e159d2842ab2f0e832188698cdbf9beec017f13c124ff4f6eb796 # note this key is for CI, so it's not sensitive. Just used to create secure session tokens in production, where it is a sensitive value
-  - bundle exec rake db:create db:structure:load db:migrate
+before_install:
+  - sudo service postgresql stop # stop built-in postgres service, so the one in the db container can bind to port 5432 properly
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done # wait for postgresql to shutdown
 
 script:
-  - bin/rake spec
+  - docker-compose build test && docker-compose up test
 
 addons:
-  postgresql: "9.6.3"
   code_climate:
     repo_token:
       secure: RRJer1xn1EIjov8dplpSO92f3pa5uTri8TBFZOEXLN15NRutopdWCjNSj82fnRfeqJRA35JvOu9XFr2EPQzdTPnNxELe7pQBKRf7E+D0r+ZPT8HJ82z+3CNfD7FNv0iD0Msx4feUdaDVDxjReW/uEKEDRBbJvpGMA6RO6r5355DgGcpSvBOrAyVMazId+FWTnDUfrwnFGgJkO8mXswqVjszIquUPo1hG47DCCdx6UMqgXTZZaSoSKtzqiZ10w16FFlfONMr7FtvE5gFIYObO5i02zALvyNwvFFo6IpKGo08QTNdGs0/0dP58ipqvg8BH28YCWpUaEhli9OXCoMr8BfeRcERfzlXzZdCrFAKR6VIFcWOPa0PluAfuxHXhhiSr0glnbwh/heQb2ov9cdMwGfzPCWpgb2hhLNSsn3SJctkangE8/4E+s84FLuttkM8V8hFEwD4ErOe0fprq+uZMqP4ZZpW40Iw8QShZR+a5ECWME9CxHgqrQWSsgnmMGx0OL1crVrEmox/vQz4HYBs3HduJXrBwNp0zJcZapoaUL9kQqWMoBySlXB6pJfubHAPYYwyMiHjVyQK9LHT7X4FgTEj9fMMdc4h/NI3jGQs3jlRHe7/BwzjPsbeb4E2OBbqvS9eE+yM0ZBrtEQhiAs8J+iN3TJhiaXD1i7fxBvCSzZI=

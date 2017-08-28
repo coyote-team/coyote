@@ -51,8 +51,9 @@ The app can run in a self-contained Docker container, which you can use for deve
 ```bash
 git clone https://github.com/coyote-team/coyote.git
 cd coyote
-docker-compose build # downloads images, builds containers
-docker-compose up    # start running containers
+docker-compose build   # downloads images, builds containers
+docker-compose up      # start running containers
+docker-compose up test # run the test suite
 docker-compose exec web bin/rake db:setup db:migrate db:seed                    # prepare database, add seed data
 docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] # create initial user
 ```
