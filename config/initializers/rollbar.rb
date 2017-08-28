@@ -1,9 +1,8 @@
-if ENV['ROLLBAR_ACCESS_TOKEN'] and (Rails.env.production? or Rails.env.staging?)
+if ENV['ROLLBAR_ACCESS_TOKEN'].present?
   Rollbar.configure do |config|
     # Without configuration, Rollbar is enabled in all environments.
     # To disable in specific environments, set config.enabled=false.
     config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
-
 
     # By default, Rollbar will try to call the `current_user` controller method
     # to fetch the logged-in user object, and then call that object's `id`,
