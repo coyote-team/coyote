@@ -3,34 +3,36 @@ Rails.application.routes.draw do
 
   apipie
 
-  resources :assignments do
-    collection do
-      post :bulk
-    end
-  end
-
-  resources :descriptions do
-    collection do
-      post :bulk
-    end
-  end
-
   resources :meta 
   resources :statuses
   resources :contexts 
-  resources :organizations
+  resources :organizations do
+    resources :images do
+      get :toggle, on: :member
 
-  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
+      collection do
+        # FIXME: all of these need to be moved to their own resources/REST controllers, not using custom controller actions
+        post :import
+        get :export 
+        post :titles
+      end
+    end
 
-  resources :images do
-    get :toggle, on: :member
+    resources :assignments do
+      collection do
+        post :bulk
+      end
+    end
 
-    collection do
-      post :import
-      get :export 
-      post :titles
+    resources :descriptions do
+      collection do
+        post :bulk
+      end
     end
   end
+
+
+  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
   resources :websites  do
     member do
@@ -38,7 +40,9 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
+  scope "/organizations/:organization_id" do
+    devise_for :users, :controllers => { registrations: 'registrations' }
+  end
 
   scope "/admin" do
     resources :users

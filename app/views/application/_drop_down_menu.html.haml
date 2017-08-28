@@ -1,0 +1,26 @@
+.navbar-right.navbar-nav
+  %h2.sr-only Global Actions
+  %span.dropdown
+    %button{type: "button", class: "dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions'}
+      = current_user
+      %span.caret
+    %ul.dropdown-menu<
+      %li<
+        =link_to "/pages/support" do
+          %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
+          Support
+
+      - if current_user
+        %li<
+          = link_to organizations_path do
+            %i.fa.fa-fw.fa-users{"aria-hidden" => "true"}
+            Organizations
+        %li<
+          = link_to destroy_user_session_path, :method => :delete do 
+            %i.fa.fa-fw.fa-sign-out{"aria-hidden" => "true"}
+            Log out
+      - else
+        %li<
+          = link_to user_session_path do
+            %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
+            Log in

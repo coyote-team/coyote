@@ -3,4 +3,4 @@
 - unless current_user.admin?
   %p 
     Ask an admin to assign you some images. Meanwhile, you can #{link_to("review some approved descriptions",descriptions_path(q: { status_id_eq: 2 }))}, 
-    and #{link_to("start describing images",images_path)}.
+    and #{link_to("start describing images",organization_images_path(current_organization))}.

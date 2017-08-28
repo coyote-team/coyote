@@ -38,19 +38,15 @@ FactoryGirl.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password }
 
-    User.roles.keys.each do |role_name|
-      trait role_name.to_sym do
-        role role_name
+    trait :with_membership do
+      after(:create) do |user,_|
+        create(:membership,user: user)
       end
     end
 
-    factory :user_with_memberships do
-      transient do
-        membership_count 3
-      end
-
-      after(:create) do |user,evaluator|
-        create_list(:membership,evaluator.membership_count,user: user)
+    User.roles.keys.each do |role_name|
+      trait role_name.to_sym do
+        role role_name
       end
     end
   end

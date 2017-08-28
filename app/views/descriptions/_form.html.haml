@@ -17,7 +17,7 @@
   -else
     -klass = "col-md-12"
   %div{class: klass}
-    = simple_form_for @description, validate: true, html: {multipart: true} do |f|
+    = simple_form_for @description, url: organization_descriptions_path(current_organization), validate: true, html: { multipart: true } do |f|
       = f.error_notification
       .form-inputs
         - if @image

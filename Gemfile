@@ -54,13 +54,7 @@ gem 'rollbar'
 gem 'factory_girl_rails', require: false
 
 group :development, :test do
-  #gem 'rspec-rails'
-
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    # Temporary work around till next release of rspec: https://github.com/rspec/rspec-rails/issues/1825
-    gem lib, github: "rspec/#{lib}"
-  end
-
+  gem 'rspec-rails', '>= 3.6.1'
   gem 'spring-commands-rspec'
   gem 'rb-fsevent' # osx file system changes
   gem 'faker'
@@ -68,8 +62,9 @@ end
 
 group :development do
   gem 'better_errors'
-  gem 'html2haml'
-  gem 'binding_of_caller'
+  gem 'binding_of_caller' # optional dependency of better_errors
+  gem 'pry-rails'
+  #gem 'html2haml'
   gem 'rails_real_favicon'
   gem 'brakeman', require: false
   gem 'spring'

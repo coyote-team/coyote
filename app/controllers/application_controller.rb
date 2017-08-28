@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # @!attribute [w] current_user Used for unit testing, this is normally managed by Devise
   attr_writer :current_user
 
+  helper_method :current_organization
+
   protect_from_forgery :with => :exception
   protect_from_forgery :with => :null_session, if: ->(c) { c.request.format.json? }
 
@@ -57,5 +59,14 @@ class ApplicationController < ActionController::Base
     else
       organizations_path
     end
+  end
+
+  def current_organization
+    @current_organization ||= current_user.organizations.find(params[:organization_id])
+  end
+
+  def self.default_url_options
+    # see http://www.rubydoc.info/github/plataformatec/devise/master/ActionDispatch/Routing/Mapper%3Adevise_for
+    { locale: I18n.locale }
   end
 end

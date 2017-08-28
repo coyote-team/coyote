@@ -31,11 +31,15 @@
   %body{class: content_for?(:body_class) ? yield(:body_class) : body_class_default}
     = raw analytical.body_prepend_javascript
     = link_to "Skip to content", "#main", class: "sr-only"
-    = render "nav"
-    = render "alerts"
+    = render partial: "nav" if current_user
+    = render partial: "alerts"
+
     %main#main{role: "main", tabindex: "-1"}
       = yield
-    = render "footer"
+
+    = render partial: "footer"
+
     #loading
     = raw analytical.body_append_javascript
+
 = body_class

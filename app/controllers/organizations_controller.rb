@@ -5,9 +5,7 @@ class OrganizationsController < ApplicationController
   # @see Dashboard
   attr_writer :dashboard
 
-  before_action :find_organization, only: %i[show edit update delete]
-
-  helper_method :title, :organizations, :organization, :dashboard
+  helper_method :title, :organizations, :current_organization, :dashboard
 
   # GET /organizations
   def index
@@ -17,7 +15,7 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/1
   def show
-    self.title = organization.title
+    self.title = current_organization.title
   end
 
   # GET /organizations/new
@@ -58,17 +56,18 @@ class OrganizationsController < ApplicationController
 
   private
 
-  attr_accessor :title, :organizations, :organization
+  attr_accessor :title, :organizations, :current_organization
 
   def organization_params
     params.require(:organization).permit(:title)
   end
 
-  def find_organization
-    self.organization = Organization.find(params[:id])
+  def current_organization
+    # overrides ApplicationController method which works in nested resource contexts
+    @current_organization ||= current_user.organizations.find(params[:id])
   end
 
   def dashboard
-    @dashboard ||= Dashboard.new(current_user,organization)
+    @dashboard ||= Dashboard.new(current_user,current_organization)
   end
 end

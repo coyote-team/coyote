@@ -15,10 +15,10 @@
           - if admin?
             %br
             %h2.sr-only Actions
-            = link_to new_image_path, class: 'btn btn-primary new-link' do
+            = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do
               New Image
 
-        = search_form_for @q, :html => {:class => "form-vertical"} do |f|
+        = search_form_for @q, url: organization_images_path(current_organization), html: { class: "form-vertical" } do |f|
           .table-responsive
             %table.index-table
               %caption.sr-only Index table for images
@@ -39,7 +39,7 @@
                         %ul.dropdown-menu<
                           - @users.each do |u|
                             %li<
-                              %a{data: {user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_assignments_path}, href: "#", class: 'bulk', 'aria-describedby' => 'assign-to'}=u
+                              %a{data: { user_id: u.id, actor: "user_id", selector: "image_id", bulk: "assignments", url: bulk_organization_assignments_path(current_organization) }, href: "#", class: 'bulk', 'aria-describedby' => 'assign-to'}=u
 
                       %br
                       <input type="checkbox" name="select-all" id="select-all" />
@@ -72,7 +72,7 @@
                     = f.label "Search by tag", for: "q_tags_name_cont_all", class: "sr-only"
                     = f.search_field :tags_name_cont_all, :class => 'input-medium form-control', placeholder: "Search by tag"
                   %td.search-btns
-                    = link_to "Clear", images_path(search_cancel: true), class: 'btn btn-sm btn-info'
+                    = link_to "Clear", organization_images_path(current_organization,search_cancel: true), class: 'btn btn-sm btn-info'
                     %nbsp
                     = button_tag "Search", type: "submit", class: "btn btn-info btn-sm" 
 
@@ -112,7 +112,7 @@
                         %ul<
                           -image.tags.each do |tag|
                             %li<
-                              = link_to images_path(tag: tag.name) do
+                              = link_to organization_images_path(current_organization,tag: tag.name) do
                                 = tag.name
                     %td<
                       =image.created_at
@@ -134,7 +134,7 @@
         -if @tags and @tags.length > 0
           %p
             - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-              = link_to images_path(tag: tag.name), :class => css_class do
+              = link_to organization_images_path(current_organization,tag: tag.name), :class => css_class do
                 = tag.name
                 %span.sr-only ,
                 "#{tag.count}"
@@ -146,6 +146,5 @@
           -if admin?
             %br
             %h2.sr-only Actions
-            = link_to new_image_path, class: 'btn btn-primary new-link' do
-              
+            = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do
               New Image

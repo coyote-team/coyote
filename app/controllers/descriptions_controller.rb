@@ -74,7 +74,7 @@ class DescriptionsController < ApplicationController
   def create
     @description = Description.new(description_params)
     flash[:notice] = "#{@description} was successfully created." if @description.save
-    respond_with(@description)
+    respond_with(current_organization,@description)
   end
 
   # PATCH/PUT /descriptions/1

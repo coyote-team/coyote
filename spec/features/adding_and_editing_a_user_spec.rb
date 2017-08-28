@@ -2,12 +2,17 @@ RSpec.feature "Editing a user" do
   context "when logged-in as an admin" do
     include_context "as a logged-in admin user"
 
-    let!(:other_user) { create(:user) }
+    let!(:other_user) do 
+      user.organization.create!(attributes_for(:user))
+    end
+
+    let!(:foreign_user) { create(:user) }
 
     it "succeeds" do
       click_first_link "Users"
       
       expect(page).to have_content(other_user.email)
+      expect(page).not_to have_content(foreign_user.email)
 
       within "#user_#{other_user.id}" do
         click_link "Edit"

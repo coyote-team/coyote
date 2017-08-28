@@ -65,15 +65,15 @@
                   - next_image = current_user.next_image(@description.image)
                   - if next_image
                     %li
-                      = link_to new_description_path(image_id: next_image.id) , class: 'btn btn-primary' do
+                      = link_to new_organization_description_path(current_organization,image_id: next_image.id) , class: 'btn btn-primary' do
                         %i.fa.fa-fw.fa-play{"aria-hidden" => "true"}
                         Next image
                 -if @description.user == current_user or admin?
                   %li
-                    = link_to edit_description_path(@description), title: "Edit this description", class: 'btn btn-primary' do
+                    = link_to edit_organization_description_path(current_organization,@description), title: "Edit this description", class: 'btn btn-primary' do
                       Edit
                 %li
-                  = link_to new_description_path(image_id: @description.image_id) , class: 'btn btn-primary' do
+                  = link_to new_organization_description_path(image_id: @description.image_id) , class: 'btn btn-primary' do
                     Describe Again
         - if admin? or current_user == @description.user
           - audits = @description.audits.reverse

@@ -10,7 +10,7 @@ RSpec.feature "Adding and describing an image" do
     attributes_for(:image).tap(&:symbolize_keys!)
   end
 
-  scenario "succeeds" do |meta|
+  scenario "succeeds" do
     click_link "Images"
 
     click_first_link("New Image")
@@ -29,7 +29,7 @@ RSpec.feature "Adding and describing an image" do
 
     image = Image.first
 
-    expect(page.current_path).to eq(image_path(image))
+    expect(page.current_path).to eq(organization_image_path(image.organization,image))
     expect(page).to have_content(image_attributes[:title])
 
     click_link "Describe"
@@ -46,7 +46,7 @@ RSpec.feature "Adding and describing an image" do
     from(0).to(1)
 
     desc = Description.first
-    expect(page.current_path).to eq(description_path(desc))
+    expect(page.current_path).to eq(organization_description_path(image.organization,desc))
     expect(page).to have_content(text)
   end
 end

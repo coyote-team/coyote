@@ -5,9 +5,6 @@
 -unless image.title.blank?
   %div{id: "image-title-#{image.id}"}= to_html image.title
   %p 
-    -#%ul.list-inline.label-list
-      -#%li
-    -#%span.sr-only from
     %span.label.label-info Caption
     from
     #{image.website}

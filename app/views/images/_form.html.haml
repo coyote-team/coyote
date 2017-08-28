@@ -1,31 +1,26 @@
-= simple_form_for @image, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, boolean: :horizontal_boolean, file: :horizontal_file_input} do |f|
+= simple_form_for [current_organization,image], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, boolean: :horizontal_boolean, file: :horizontal_file_input} do |f|
   = f.error_notification
 
   .form-inputs
-    = f.association :website, prompt: "Pick a website"
-    - if current_user.organizations.one?
-      = f.input :organization_id, :value => current_user.organizations.first, :as => :hidden
-    - else
-      = f.input :organization_id, prompt: "Pick an organization", collection: current_user.organizations
-    = f.association :website, prompt: "Pick a website"
+    = f.association :website, prompt: "Pick a website", collection: websites
     = f.input :canonical_id, label: "Canonical ID", :as => (current_user.admin? ? :string : :hidden)
     = f.input :path
-    = f.association :context, prompt: "Pick a context"
-    = f.input :title, readonly: @image.persisted?
+    = f.association :context, prompt: "Pick a context", collection: contexts
+    = f.input :title, readonly: image.persisted?
     = f.input :priority
-    = f.input :tag_list, as: :tags, label: "Tags", input_html: { class: 'autocomplete' }, collection: ActsAsTaggableOn::Tag.most_used(30), hint: "Use a comma to separate new tags"
+    = f.input :tag_list, as: :tags, label: "Tags", input_html: { class: 'autocomplete' }, collection: tag_list, hint: "Use a comma to separate new tags"
 
 
   .form-actions
     .form-actions-inner
       = f.button :submit
 
-      - unless @image.new_record?
+      - unless image.new_record?
         %br
         %br
-        = link_to @image, class: 'btn btn-info' do
+        = link_to image, class: 'btn btn-info' do
           View this image
       %br
       %br
-      = link_to images_path, class: 'btn btn-info' do
+      = link_to organization_images_path(current_organization), class: 'btn btn-info' do
         View all Images

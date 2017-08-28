@@ -2,7 +2,7 @@ RSpec.feature "Logging in and out" do
   let(:password) { "abc123PDQ" }
 
   let!(:user) do 
-    create(:user_with_memberships,membership_count: 2,password: password) 
+    create(:user,:with_membership,password: password) 
   end
 
   scenario "Logging in with correct credentials and logging out" do
@@ -13,9 +13,6 @@ RSpec.feature "Logging in and out" do
     user.organizations.each do |org|
       expect(page).to have_content(org.title)
     end
-
-    #visit images_path
-    #expect(page.current_url).to eq(images_url)
 
     logout
 

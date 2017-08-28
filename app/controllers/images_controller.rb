@@ -1,28 +1,28 @@
 # rubocop:disable ClassLength
 
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy, :toggle]
-  before_action :clear_search, only: [:index]
-  before_action :get_users, only: [:index, :show], unless: -> { request.xhr? }
-  before_action :get_contexts, only: [:index], unless: -> { request.xhr? }
+  before_action :set_image, only: %i[show edit update destroy toggle]
+  before_action :clear_search, only: %i[index]
+  before_action :get_users, only: %i[index show], unless: -> { request.xhr? }
 
-  before_action :admin, only: [:edit, :update, :destroy, :toggle]
-  before_action :users, only: [:create]
+  before_action :admin, only: %i[edit update destroy toggle]
+  before_action :users, only: %i[create]
 
-  helper_method :contexts
+  helper_method :image, :contexts, :websites, :tag_list
 
   respond_to :html, :json
 
   def_param_group :image do
     param :image, Hash do
-      param :canonical_id,  String , required: true
-      param :path,          String , required: true
-      param :website_id,    Integer, required: true
-      param :context_id,    Integer, required: true
-      param :page_urls,     Array
-      param :priority,      [true, false, "1", "0", 1, 0]
-      param :created_at,    DateTime
-      param :updated_at,    DateTime
+      param :canonical_id,    String , required: true
+      param :path,            String , required: true
+      param :website_id,      Integer, required: true
+      param :context_id,      Integer, required: true
+      param :organization_id, Integer, required: true
+      param :page_urls,       Array
+      param :priority,        [true, false, "1", "0", 1, 0]
+      param :created_at,      DateTime
+      param :updated_at,      DateTime
     end
   end
 
@@ -53,9 +53,10 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
     #the status_ids param is used by JSON endpoint only
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
+
     if params[:canonical_id].present? 
       #for ajax
-      @image = Image.find_by(canonical_id: params[:canonical_id])
+      self.image = current_user.images.find_by(canonical_id: params[:canonical_id])
     else
       #ajax params to ransack params
       if params["updated_at"].present? or params["website_id"].present?
@@ -74,11 +75,11 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
         search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
       end
 
-      @q = Image.ransack(search_params)
+      @q = current_user.images.ransack(search_params)
 
       #tag filtering does not cooperate with ransack but can paginate
       if params[:tag].present? 
-        @images = Image.tagged_with(params[:tag]).page(params[:page]) 
+        @images = current_user.images.tagged_with(params[:tag]).page(params[:page]) 
       else
         @images = @q.result(distinct: true).page(params[:page]) 
       end
@@ -155,14 +156,14 @@ Ex:
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
     if request.format.html?
-      @previous_image = Image.where("id < ?", @image.id).first
-      @next_image = Image.where("id > ?", @image.id).first
+      @previous_image = Image.where("id < ?", image.id).first
+      @next_image = Image.where("id > ?", image.id).first
     end
   end
 
   # GET /images/new
   def new
-    @image = Image.new
+    self.image = current_organization.images.new
   end
 
   # GET /images/1/edit
@@ -173,20 +174,23 @@ Ex:
   api :POST, "images", "Create an image"
   param_group :image
   def create
-    @image = Image.create(image_params)
+    self.image = current_organization.images.create(image_params)
 
-    if @image.valid?
+    if image.valid?
       # TODO: make these use Rails responders instead of format conditionals
       if request.format.html?
-        redirect_to @image, notice: 'Image was successfully created.'
+        logger.info "Succesfully created #{image}"
+        redirect_to [current_organization,image], notice: 'Image was successfully created.'
       else
-        render :json => @image.to_json
+        render json: image
       end
     else
+      logger.warn "Unabled to create image: '#{image.errors.full_messages.to_sentence}'"
+
       if request.format.html?
         render :new
       else
-        render :json => { :errors => @image.errors.full_messages }
+        render json: { errors: image.errors.full_messages }
       end
     end
   end
@@ -194,17 +198,17 @@ Ex:
   api :PUT, "images/:id", "Update an image"
   param_group :image
   def update
-    if @image.update(image_params)
+    if image.update(image_params)
       if request.format.html?
-        redirect_to @image, notice: 'Image was successfully updated.'
+        redirect_to [current_organization,image], notice: 'Image was successfully updated.'
       else
-        render @image
+        render image
       end
     else
       if request.format.html?
         render :edit
       else
-        render :json => { :errors => @image.errors.full_messages }
+        render json: { errors: image.errors.full_messages }
       end
     end
   end
@@ -212,14 +216,15 @@ Ex:
   # DELETE /images/1
   api :DELETE, "images/:id", "Delete an image"
   def destroy
-    @image.destroy
-    redirect_to images_url, notice: 'Image was successfully destroyed.'
+    image.destroy
+    redirect_to organization_images_url(current_organization), notice: 'Image was successfully destroyed.'
   end
 
   def autocomplete_tags
     @tags = ActsAsTaggableOn::Tag.
       where("name LIKE ?", "#{params[:q]}%").
       order(:name)
+
     respond_to do |format|
       format.json { render json: @tags.map{|t| {id: t.name, name: t.name}}}
     end
@@ -275,7 +280,7 @@ Ex:
             end
           end
 
-        rescue Exception => e
+        rescue StandardError => e
           Rails.logger.error "JSON parsing exception"
           Rails.logger.error e
           length = 0
@@ -289,23 +294,36 @@ Ex:
       ids_titles
     end
 
-    render :json => ids_titles.to_json
+    render json: ids_titles
   end
 
   def toggle
-    @image.toggle!(params[:column].to_sym)
+    image.toggle!(params[:column].to_sym)
     render nothing: true
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_image
-    @image = Image.find(params[:id])
+
+  attr_accessor :image
+
+  def contexts
+    @contexts ||= Context.all
   end
 
-  # Only allow a trusted parameter "white list" through.
+  def websites
+    @websites ||= Website.all # TODO: should this be scoped by organization?
+  end
+
+  def tag_list
+    @tag_list ||= ActsAsTaggableOn::Tag.most_used(30)
+  end
+
+  def set_image
+    self.image = current_user.images.find(params[:id])
+  end
+
   def image_params
-    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:title,:priority,:page_urls,tag_list: [])
+    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:organization_id,:title,:priority,:page_urls,tag_list: [])
   end
 
   def search_params

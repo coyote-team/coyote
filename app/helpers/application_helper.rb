@@ -104,11 +104,14 @@ module ApplicationHelper
     h to_text(content)
   end
 
-  def active_controller_check(c_name)
-    if controller.controller_name == c_name
-      'active '
-    else
-      ''
+  # Used to render top-level navigation, so the current page gets an "active" CSS class applied
+  # @param text [String] the link text to display
+  # @param path [String] the target of the link
+  def nav_menu_link(text,path)
+    link_class = current_page?(path) ? "active" : ""
+
+    content_tag(:li,class: link_class) do
+      link_to(text,path)
     end
   end
 

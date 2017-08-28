@@ -292,6 +292,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     public_suffix (2.0.5)
     puma (3.9.1)
     rack (2.0.3)
@@ -368,7 +370,7 @@ GEM
     rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
-    rspec-rails (3.6.0)
+    rspec-rails (3.6.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -497,7 +499,6 @@ DEPENDENCIES
   guard-sass
   haml-rails (>= 1.0.0)
   high_voltage
-  html2haml
   iconv
   iso639-validator
   jbuilder
@@ -510,6 +511,7 @@ DEPENDENCIES
   modular-scale
   oj
   pg (~> 0.20.0)
+  pry-rails
   puma
   rails (= 5.1.3)
   rails_12factor
@@ -520,7 +522,7 @@ DEPENDENCIES
   responders
   rollbar
   roo
-  rspec-rails
+  rspec-rails (>= 3.6.1)
   sass-mediaqueries-rails
   sass-rails
   select2-rails!

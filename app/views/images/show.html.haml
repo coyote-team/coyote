@@ -38,7 +38,7 @@
                   %th{scope: "row"} Tags
                   %td
                     - tag_cloud(@image.tags, %w(css1 css2 css3 css4)) do |tag, css_class|
-                      = link_to images_path(tag: tag.name), :class => css_class do
+                      = link_to organization_images_path(current_organization,tag: tag.name), :class => css_class do
                         = tag.name
                 %tr
                   %th{scope: "row"} Context
@@ -60,33 +60,31 @@
               %ul.list-inline
                 -if admin?
                   %li
-                    = link_to edit_image_path(@image), title: "Edit this image", class: 'btn btn-primary' do
+                    = link_to edit_organization_image_path(current_organization,@image), title: "Edit this image", class: 'btn btn-primary' do
                       Edit
 
                   %li
                     - css_id = "quick-assign"
                     = render "assign_to", css_id: css_id, image: @image, users: @users
 
-                  -#= link_to new_assignment_path(image_id: @image.id), class: 'btn btn-primary', title: "Assign image #{@image.id} to a user" do
-                    -#Assign
                 -if current_user
                   %li
-                    =link_to 'Describe', new_description_path(image_id: @image.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
+                    =link_to 'Describe', new_organization_description_path(current_organization,image_id: @image.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
                 %br
                 %br
               %ul.list-inline
                 %li
-                  = link_to images_path, class: 'btn btn-info', title: "View the images index" do
+                  = link_to organization_images_path(current_organization), class: 'btn btn-info', title: "View the images index" do
                     
                     Images
                 - if @previous_image
                   %li
-                    = link_to image_path(@previous_image), class: 'btn btn-info', title: "View the previous image" do
+                    = link_to organization_image_path(@previous_image), class: 'btn btn-info', title: "View the previous image" do
                       %i.fa.fa-fw.fa-arrow-left{"aria-hidden" => "true"}
                       Previous
                 - if @next_image
                   %li
-                    = link_to image_path(@next_image), class: 'btn btn-info', title: "View the next image" do
+                    = link_to organization_image_path(current_organization,@next_image), class: 'btn btn-info', title: "View the next image" do
                       %i.fa.fa-fw.fa-arrow-right{"aria-hidden" => "true"}
                       Next
               %br
