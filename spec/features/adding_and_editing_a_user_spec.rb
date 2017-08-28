@@ -21,8 +21,6 @@ RSpec.feature "Editing a user" do
         click_button "Update User"
         other_user.reload
       }.to change(other_user,:first_name).to("Joe")
-
-      skip "can't test adding a user yet"
     end
   end
 
