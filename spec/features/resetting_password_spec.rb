@@ -1,7 +1,7 @@
 RSpec.feature "Resetting a password" do
   let(:user) { create(:user) }
 
-  scenario "succeeds", :focus do
+  scenario "succeeds" do
     visit new_user_password_path
 
     fill_in "user[email]", with: user.email
@@ -14,6 +14,8 @@ RSpec.feature "Resetting a password" do
     ActionMailer::Base.deliveries.first.tap do |email|
       expect(email.to).to eq([user.email])
       expect(email.subject).to match(/reset password/i)
+
+      skip "need to check clicking the link here"
     end
   end
 end
