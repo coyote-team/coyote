@@ -2,16 +2,17 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?  # Extra check to prevent database changes if the environment is production
 
-require "rspec/rails"
-require "factory_girl_rails"
-require "devise"
-require "webmock/rspec"
-require "capybara/rspec"
-require "simplecov"
-require "airborne"
-require "vcr"
-require "pathname"
-require "database_cleaner"
+require 'rspec/rails'
+require 'factory_girl_rails'
+require 'devise'
+require 'webmock/rspec'
+require 'capybara/rspec'
+require 'simplecov'
+require 'airborne'
+require 'vcr'
+require 'pathname'
+require 'database_cleaner'
+require 'pry'
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
