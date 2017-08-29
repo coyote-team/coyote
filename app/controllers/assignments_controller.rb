@@ -1,13 +1,15 @@
 class AssignmentsController < ApplicationController
   before_action :authorize_admin!
   before_action :set_assignment, only: %i[show edit update destroy]
-  before_action :next_image
+  before_action :set_next_image, only: %i[show]
+
+  helper_method :image, :assignment, :assignments, :next_image
 
   respond_to :html, :js, :json
 
   # GET /assignments
   def index
-    @assignments = Assignment.all.page(params[:page])
+    self.assignments = current_organization.assignments.page(params[:page])
   end
 
   # GET /assignments/1
@@ -16,39 +18,57 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/new
   def new
-    @assignment = Assignment.new
-    @assignment.image = Image.find(params[:image_id]) if params[:image_id]
-    @assignment.user = Image.find(params[:user_id]) if params[:user_id]
+    self.assignment = current_organization.assignments.new
+    assignment.image = current_organization.images.find(params[:image_id]) if params[:image_id]
+    assignment.user  = current_organization.users.find(params[:user_id])    if params[:user_id]
   end
 
   # GET /assignments/1/edit
   def edit
-    @image = @assignment.image
+    self.image = assignment.image
   end
 
   # POST /assignments
   def create
-    @assignment = Assignment.create(assignment_params)
-    flash[:notice] = "#{@assignment} was successfully created." if @assignment.valid?
-    respond_with @assignment
+    assigned_user = current_organization.users.find(assignment_params[:user_id])
+    assigned_image = current_organization.images.find(assignment_params[:image_id])
+
+    self.assignment = Assignment.create(user: assigned_user,image: assigned_image)
+
+    if assignment.valid?
+      logger.info "Created '#{assignment}'"
+      flash[:notice] = "#{assignment} was successfully created."
+    else
+      logger.warn "Unable to create assignment: '#{assignment.error_sentence}'"
+    end
+
+    redirect_to [current_organization,assignment]
   end
 
   # PATCH/PUT /assignments/1
   def update
-    if @assignment.update(assignment_params)
-      redirect_to root_path, notice: 'Assignment was successfully created.'
+    if assignment.update(assignment_params)
+      redirect_to [current_organization,assignment], notice: 'Assignment was successfully updated.'
     else
+      logger.warn "Unable to update #{assignment}: '#{assignment.error_sentence}'"
       render :edit
     end
   end
 
   # DELETE /assignments/1
   def destroy
-    @assignment.destroy
-    if request.xhr?
-      render nothing: true
+    if assignment.destroy
+      logger.info "Deleted #{assignment}"
+
+      if request.xhr?
+        render nothing: true
+      else
+        redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
+      end
     else
-      redirect_to assignments_url, notice: 'Assignment was successfully destroyed.'
+      logger.warn "Unable to delete #{assignment}: '#{assignment.error_sentence}'"
+      flash[:error] = "We were unable to delete the assignment"
+      redirect_to :back 
     end
   end
 
@@ -61,8 +81,8 @@ class AssignmentsController < ApplicationController
     errors = ""
 
     assignments.each do |k, a|
-      puts a
       assignment = Assignment.new(user_id: a[:user_id], image_id: a[:image_id])
+
       if assignment.save
         success_count += 1
       else
@@ -87,21 +107,22 @@ class AssignmentsController < ApplicationController
 
   private
   
+  attr_accessor :image, :assignment, :assignments, :next_image
+
   # Use callbacks to share common setup or constraints between actions.
   def set_assignment
-    @assignment = Assignment.find(params[:id])
+    self.assignment = current_organization.assignments.find(params[:id])
   end
 
-  # Only allow a trusted parameter "white list" through.
   def assignment_params
-    params.require(:assignment).permit(:user_id, :image_id)
+    params.require(:assignment).permit(:user_id,:image_id)
   end
 
   def assignments_params
-    params.permit(:assignments => [:user_id, :image_id])
+    params.permit(assignments: %i[user_id image_id])
   end
 
-  def next_image
-    @next_image = Image.unassigned.first
+  def set_next_image
+    self.next_image = current_organization.images.unassigned.first
   end
 end

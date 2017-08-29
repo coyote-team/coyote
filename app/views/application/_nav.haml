@@ -12,13 +12,5 @@
     %nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
       %h2.sr-only Navigation
       %ul.nav.navbar-nav
-        = nav_menu_link("Images",organization_images_path(current_organization))
-        = nav_menu_link("Descriptions",organization_descriptions_path(current_organization))
-
-        - if current_user.admin?
-          = nav_menu_link("Assignments",organization_assignments_path(current_organization))
-          = nav_menu_link("Users",users_path(current_organization)) # TODO: this will need to be scoped by organization eventually
-          = nav_menu_link("Contexts",contexts_path)
-          = nav_menu_link("Websites",websites_path)
-
+        = render partial: "navbar_items" if current_organization?
         = render partial: "drop_down_menu" if current_user

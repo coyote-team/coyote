@@ -21,6 +21,7 @@ class Dashboard
     organization.descriptions.size
   end
 
+  # @return [Integer] total number of described images owned by the organization
   def organization_described_image_count
     organization.images.described.size
   end
@@ -90,6 +91,7 @@ class Dashboard
     current_user.images.described.size
   end
 
+  # @return [Integer] total number of descriptions written by the current user
   def current_user_description_count
     current_user.descriptions.size
   end
@@ -110,16 +112,19 @@ class Dashboard
     current_user_assigned_items_queue.first(top_items_queue_size)
   end
 
+  # @return [Integer] total number of items assigned to the user
   def current_user_assigned_items_count
     current_user_assigned_items_queue.size
   end
 
+  # @return [Boolean] whether or not the user has any assigned items
   def current_user_queue_empty?
     current_user_assigned_items_queue.empty?
   end
 
+  # @return [ActiveRecord::Associations::CollectionProxy] all of the users in the organization
   def organization_users
-    organization.users
+    organization.users.sorted
   end
 
   private

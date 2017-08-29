@@ -15,9 +15,9 @@ RSpec.describe "Adding and changing an organization" do
 
     expect {
       click_button "Create Organization"
-    }.to change(Organization,:count).from(0).to(1)
+    }.to change(Organization,:count).from(1).to(2)
 
-    organization = Organization.first
+    organization = user.organizations.find_by!(title: "Acme Museum")
     expect(page.current_path).to eq(organization_path(organization))
     expect(page).to have_content("Acme Museum")
   end

@@ -1,9 +1,13 @@
 # Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
-  # @!attribute [w] current_user Used for unit testing, this is normally managed by Devise
+  # @!attribute [w] current_user [User] Used for unit testing to isolated DB lookups 
+  # @note this variable is normally managed by Devise
   attr_writer :current_user
 
-  helper_method :current_organization
+  # @!attribute [w] current_organization [Organization] Used for unit testing, this is normally scoped by the current user's access
+  attr_writer :current_organization
+  
+  helper_method :current_organization, :current_organization?
 
   protect_from_forgery :with => :exception
   protect_from_forgery :with => :null_session, if: ->(c) { c.request.format.json? }
@@ -41,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_admin!
     unless current_user.admin?
-      redirect_to(root_url,alert: "You are not authorized to perform that action")
+      redirect_to(current_organization,alert: "You are not authorized to perform that action")
     end
   end
 
@@ -61,12 +65,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_organization
-    @current_organization ||= current_user.organizations.find(params[:organization_id])
+  def current_organization?
+    current_user.organizations.exists?(current_organization_id)
   end
 
-  def self.default_url_options
-    # see http://www.rubydoc.info/github/plataformatec/devise/master/ActionDispatch/Routing/Mapper%3Adevise_for
-    { locale: I18n.locale }
+  def current_organization
+    @current_organization ||= current_user.organizations.find(current_organization_id)
+  end
+
+  def current_organization_id
+    params[:organization_id] # intended to be overridden in the OrganizationController
   end
 end

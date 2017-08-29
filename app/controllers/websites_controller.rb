@@ -1,14 +1,16 @@
+# CRUD actions for adding websites to Organizations
 class WebsitesController < ApplicationController
   before_action :authorize_admin!, only: %i[new edit update destroy]
   before_action :set_website, only: %i[show edit update destroy check_count]
   before_action :set_strategies_collection, only: %i[new edit]
+
+  helper_method :website, :websites, :strategies_collection
 
   respond_to :html, :json
 
   # GET /websites
   api :GET, "websites", "Get an index of websites"
   def index
-    @websites = Website.all
   end
 
   # GET /websites/1
@@ -35,7 +37,7 @@ class WebsitesController < ApplicationController
 
   # GET /websites/new
   def new
-    @website = Website.new
+    @website = current_organization.websites.new
   end
 
   # GET /websites/1/edit
@@ -43,20 +45,23 @@ class WebsitesController < ApplicationController
   end
 
   # POST /websites
+  # TODO: need to use responders here vs if statements
   def create
-    @website = Website.new(website_params)
+    @website = current_organization.websites.new(website_params)
 
     if @website.save
       if request.format.html?
-        redirect_to @website, notice: 'Website was successfully created.'
+        logger.info "Created #{@website}"
+        redirect_to [current_organization,@website], notice: 'Website was successfully created.'
       else
-        render :json => @website.to_json
+        logger.warn "Could not create website: '#{@website.errors.full_messages.to_sentence}'"
+        render json: @website
       end
     else
       if request.format.html?
         render :new
       else
-        render :json => { :errors => @website.errors.full_messages }
+        render json: { errors: @website.errors.full_messages }
       end
     end
   end
@@ -65,7 +70,7 @@ class WebsitesController < ApplicationController
   def update
     if @website.update(website_params)
       if request.format.html?
-        redirect_to @website, notice: 'Website was successfully updated.'
+        redirect_to [current_organization,@website], notice: 'Website was successfully updated.'
       else
         render @website
       end
@@ -73,7 +78,7 @@ class WebsitesController < ApplicationController
       if request.format.html?
         render :edit
       else
-        render :json => { :errors => @website.errors.full_messages }
+        render json: { errors: @website.errors.full_messages }
       end
     end
   end
@@ -81,17 +86,24 @@ class WebsitesController < ApplicationController
   # DELETE /websites/1
   def destroy
     @website.destroy
-    redirect_to websites_url, notice: 'Website was successfully destroyed.'
+    redirect_to organization_websites_url(current_organization), notice: 'Website was successfully destroyed.'
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+
+  attr_accessor :website, :strategies_collection
+
+  def websites
+    current_organization.websites
+  end
+
+  # Use callbacks to share common setup or constraints between actions
   def set_website
-    @website = Website.find(params[:id])
+    self.website = current_organization.websites.find(params[:id])
   end
 
   def set_strategies_collection
-    @strategies_collection = Coyote::Strategies.all.map do |s| 
+    self.strategies_collection = Coyote::Strategies.all.map do |s| 
       s = s.new 
       [s.title, s.class.name]
     end

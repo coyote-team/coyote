@@ -14,7 +14,7 @@
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :string           not null, is an Array
+#  page_urls          :text
 #  organization_id    :integer          not null
 #
 # Indexes
@@ -30,12 +30,15 @@ FactoryGirl.define do
     path { Faker::Internet.url }
     canonical_id { Faker::Crypto.md5 }
     title { Faker::Hipster.sentence(3) } 
-    website 
-    context 
     organization
 
     trait :priority do
       priority true
+    end
+
+    before(:create) do |image|
+      image.website = build :website, organization: image.organization
+      image.context = build :context, organization: image.organization
     end
   end
 end

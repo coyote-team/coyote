@@ -12,15 +12,22 @@ RSpec.describe OrganizationsController do
   let(:organization) { build_stubbed(:organization) }
   let(:organizations) { build_stubbed_list(:organization,3) }
 
-  before do
-    allow(Organization).to receive(:find).with('1').and_return(organization)
-    allow(Organization).to receive_message_chain(:all,:page).and_return(organizations)
+  shared_context "organization retrieval scoped by user" do
+    before do
+      subject.organization = organization
+    end
   end
 
   context "GET #index" do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
-      before { get :index }
+      include_context "organization retrieval scoped by user"
+
+      before do
+        allow(user).to receive_messages(organizations: organizations)
+        get :index
+      end
+
       it_behaves_like "a successful controller response"
     end
 
@@ -33,6 +40,7 @@ RSpec.describe OrganizationsController do
   context "GET #show" do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
+      include_context "organization retrieval scoped by user"
 
       before do 
         get :show, params: { id: 1 } 
@@ -53,7 +61,10 @@ RSpec.describe OrganizationsController do
   context "GET #new" do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
+      include_context "organization retrieval scoped by user"
+
       before { get :new }
+
       it_behaves_like "a successful controller response"
     end
 
@@ -66,6 +77,7 @@ RSpec.describe OrganizationsController do
   context "GET #edit" do
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
+      include_context "organization retrieval scoped by user"
 
       before do 
         get :edit, params: { id: 1 } 
@@ -84,6 +96,8 @@ RSpec.describe OrganizationsController do
   end
 
   context "POST #create" do
+    let(:organization_users_stub) { double(:organization_users_stub,:<< => nil) }
+
     let(:creation_params) do
       { title: "XYZ  Museum" }
     end
@@ -93,6 +107,8 @@ RSpec.describe OrganizationsController do
         to receive(:create).
         with(an_instance_of(ActionController::Parameters)).
         and_return(organization)
+
+      allow(organization).to receive_messages(users: organization_users_stub)
     end
 
     context "as a logged-in viewer user" do
@@ -103,6 +119,12 @@ RSpec.describe OrganizationsController do
       end
 
       specify { expect(response).to redirect_to(organization_path(organization)) }
+
+      it "adds the user as the first member of the new organization" do
+        expect(organization_users_stub).
+          to have_received(:<<).
+          with(user)
+      end
     end
 
     context "with bad data" do
@@ -143,6 +165,7 @@ RSpec.describe OrganizationsController do
 
     context "as a logged-in viewer user" do
       include_context "stubbed controller viewer user"
+      include_context "organization retrieval scoped by user"
 
       before do 
         patch :update, params: { id: "1", organization: update_params } 
@@ -153,6 +176,7 @@ RSpec.describe OrganizationsController do
 
     context "with invalid data" do
       include_context "stubbed controller viewer user"
+      include_context "organization retrieval scoped by user"
 
       before do
         allow(organization).to receive_messages(update_attributes: false)

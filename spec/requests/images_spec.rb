@@ -14,7 +14,7 @@
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :string           not null, is an Array
+#  page_urls          :text
 #  organization_id    :integer          not null
 #
 # Indexes
@@ -25,8 +25,9 @@
 #
 
 RSpec.describe "Image API requests" do
-  let(:user) { create(:user) }
-  let(:image ) { create(:image) }
+  let(:user) { create(:user,:with_membership) }
+  let(:user_organization) { user.organizations.first }
+  let(:image ) { create(:image,organization: user_organization) }
 
   describe 'GET /images/:id.json' do |meta|
     it 'returns image record' do
@@ -45,7 +46,7 @@ RSpec.describe "Image API requests" do
     end
 
     it 'returns all image records to user' do
-      get "/images.json", headers: api_user_headers(user)
+      get "/organizations/#{user_organization.id}/images.json", headers: api_user_headers(user)
       expect_json_keys([:_metadata, :records])
     end
   end

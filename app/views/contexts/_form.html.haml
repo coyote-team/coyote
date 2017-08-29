@@ -1,4 +1,4 @@
-= simple_form_for context, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
+= simple_form_for [current_organization,context], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
   = f.error_notification
   .form-inputs
     = f.input :title
@@ -10,9 +10,9 @@
       - if action_name == 'edit'
         %br
         %br
-        = link_to context, class: 'btn btn-info' do
+        = link_to [current_organization,context], class: 'btn btn-info' do
           View this context
       %br
       %br
-      = link_to contexts_path, class: 'btn btn-info' do
+      = link_to organization_contexts_path(current_organization), class: 'btn btn-info' do
         View all Contexts

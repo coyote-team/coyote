@@ -1,6 +1,6 @@
--title = "Showing Website #{@website}"
+-title = "Showing Website #{website}"
 -meta title: title
--cache ['v1', admin?,  @website] do
+-cache ['v1', admin?,  website] do
   .entity-outer
     .entity
       .entity-inner
@@ -13,21 +13,21 @@
               %th{scope: "row"}
                 Title
               %td
-                = @website.title
+                = website.title
             %tr
               %th{scope: "row"}
                 Url
               %td
-                = @website.url
+                = website.url
             %tr
               %th{scope: "row"}
                 Strategy
               %td
-                = @website.strategy_title
+                = website.strategy_title
 
         -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
-        - if !@website.strategy.blank?
-          =link_to check_count_website_path(@website), class: "btn btn-primary", data: {disable_with: disable_with} do
+        - if !website.strategy.blank?
+          =link_to check_count_organization_website_path(current_organization,website), class: "btn btn-primary", data: {disable_with: disable_with} do
             CHECK COUNT
         %br
         %br
@@ -35,9 +35,9 @@
         %nav.show-nav{role:"navigation"}
           %ul.list-inline
             %li
-              = link_to websites_path, class: 'btn btn-info', title: "View the websites index" do
+              = link_to organization_websites_path(current_organization), class: 'btn btn-info', title: "View the websites index" do
                 
                 Websites
             %li
-              = link_to edit_website_path(@website), title: "Edit this website", class: 'btn btn-primary' do
+              = link_to edit_organization_website_path(current_organization,website), title: "Edit this website", class: 'btn btn-primary' do
                 Edit

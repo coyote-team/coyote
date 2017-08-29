@@ -18,7 +18,7 @@ require 'csv'
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :string           not null, is an Array
+#  page_urls          :text
 #  organization_id    :integer          not null
 #
 # Indexes
@@ -30,11 +30,12 @@ require 'csv'
 
 class Image < ApplicationRecord
   acts_as_taggable_on :tags
+
   before_validation :update_status_code
 
   belongs_to :website, touch: true, :inverse_of => :images
   belongs_to :context, touch: true, :inverse_of => :images
-  belongs_to :organization, :inverse_of => :images
+  belongs_to :organization, :inverse_of => :images, optional: true
 
   has_many :descriptions, dependent: :destroy
   has_many :assignments, dependent: :destroy
@@ -43,7 +44,6 @@ class Image < ApplicationRecord
   validates :path, :presence => true, :uniqueness => {:scope => :website_id}
   validates :canonical_id, :presence => true, :uniqueness => {:scope => :website_id}
   validates_associated :website, :context
-  validates_presence_of :website, :context
 
   audited
 

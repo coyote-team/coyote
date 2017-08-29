@@ -11,8 +11,6 @@
       %ul
         .isotope
           = render :partial => "quickview", :collection => queue, :as => :item, locals: { type: type, users: users }
-          -#- queue.each_with_index do |item,idx|
-            -#= render partial: "quickview", locals: { type: type, item: item, idx: idx, queue: queue, users: users }
 
   -if queue.size == 0
     %p This queue is empty.

@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 RSpec.feature 'Resetting a password' do
-  let(:user) { create(:user) }
+  let(:user) { create(:user,:with_membership) }
 
   scenario 'succeeds' do
     visit new_user_password_path
@@ -29,7 +29,7 @@ RSpec.feature 'Resetting a password' do
       new_password = 'abcdefgh'
 
       fill_in 'New password', with: new_password
-      fill_in 'Confirm your new password', with: new_password
+      fill_in 'Confirm new password', with: new_password
 
       click_button 'Change my password'
       expect(page).to have_content('Your password has been changed')

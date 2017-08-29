@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    self.users = User.sorted
+    self.users = current_organization.users.sorted
   end
 
   # GET /users/1
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    self.user = User.new
+    self.user = current_organization.users.new
   end
 
   # GET /users/1/edit
@@ -27,34 +27,49 @@ class UsersController < ApplicationController
   # POST /users
   def create
     self.user = User.new(user_params)
-    flash[:notice] = "#{@user} was successfully created." if @user.save
-    respond_with @user
+
+    if user.save
+      current_organization.users << user
+      logger.info "Created user '#{user}'"
+      flash[:notice] = "#{user} was successfully added to #{current_organization}." 
+      redirect_to [current_organization,user]
+    else
+      logger.warn "Unable to create User: '#{user.errors.full_messages.to_sentence}'"
+      render :new
+    end
   end
 
   # PATCH/PUT /users/1
   def update
-    flash[:notice] = "#{user} was successfully updated." if user.update(user_params)
-    respond_with user
+    if user.update(user_params)
+      flash[:notice] = "#{user} was successfully updated."
+      redirect_to [current_organization,user]
+    else
+      logger.warn "Unable to update #{user}: '#{user.errors.full_messages.to_sentence}'"
+      render :edit
+    end
   end
 
   # DELETE /users/1
   def destroy
-    user.destroy
-    flash[:notice] = 'User was successfully destroyed.'
-    respond_with user
+    if user.destroy
+      flash[:notice] = 'User was successfully destroyed.'
+    else
+      logger.warn "Unable to delete #{user}: '#{user.errors.full_messages.to_sentence}'"
+    end
+
+    redirect_to [current_organization,user]
   end
 
   private
   
   attr_accessor :user, :users
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:id])
+    self.user = current_organization.users.find(params[:id])
   end
 
-  # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :admin, :password, :password_confirmation)
+    params.require(:user).permit(:first_name,:last_name,:email,:admin,:password,:password_confirmation,:role)
   end
 end

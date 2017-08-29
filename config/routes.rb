@@ -5,8 +5,10 @@ Rails.application.routes.draw do
 
   resources :meta 
   resources :statuses
-  resources :contexts 
+
   resources :organizations do
+    resources :users
+
     resources :images do
       get :toggle, on: :member
 
@@ -29,24 +31,25 @@ Rails.application.routes.draw do
         post :bulk
       end
     end
-  end
 
+    resources :contexts 
 
-  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
-
-  resources :websites  do
-    member do
-      get :check_count
+    resources :websites  do
+      member do
+        get :check_count
+      end
     end
   end
 
+  resources :images, only: %i[show] # so API can continue to use direct image URLs like /images/1.json
+
   scope "/organizations/:organization_id" do
-    devise_for :users, :controllers => { registrations: 'registrations' }
+    devise_for :users, skip: %i[registrations sessions passwords]
   end
 
-  scope "/admin" do
-    resources :users
-  end
+  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
+
+  devise_for :users, only: %i[sessions passwords]
 
   get '/login',  to: redirect('/users/sign_in')
   get '/logout', to: redirect('/users/sign_out')

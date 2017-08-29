@@ -28,35 +28,9 @@
 #  index_users_on_role                  (role)
 #
 
-FactoryGirl.define do
-  sequence :token do
-    SecureRandom.hex(3)
-  end
-
-  factory :user do
-    authentication_token { generate(:token) }
-    email { Faker::Internet.unique.email }
-    password { Faker::Internet.password }
-
-    trait :with_membership do
-      after(:create) do |user,_|
-        create(:membership,user: user)
-      end
-    end
-
-    transient do
-      # useful for when you've created one user with the :with_membership trait, and want to have other users join that same org
-      organization nil
-    end
-
-    after(:create) do |user,evaluator|
-      evaluator.organization.users << user if evaluator.organization
-    end
-
-    User.roles.keys.each do |role_name|
-      trait role_name.to_sym do
-        role role_name
-      end
-    end
+RSpec.describe User, :type => :integration do
+  it "new users are created with default role 'guest'" do
+    new_user = create(:user)
+    expect(new_user).to be_guest
   end
 end

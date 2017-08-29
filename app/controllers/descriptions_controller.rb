@@ -157,7 +157,7 @@ class DescriptionsController < ApplicationController
   def admin_or_owner
     #puts "filter ran"
     unless current_user and (current_user.admin? or current_user.id == @description.user_id)
-      redirect_to(descriptions_path)
+      redirect_to(organization_descriptions_path(current_organization))
     end
   end
 

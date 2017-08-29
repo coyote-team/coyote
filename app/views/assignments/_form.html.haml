@@ -1,14 +1,14 @@
-= simple_form_for @assignment, validate: true, html: {multipart: true, class: 'form-horizontal'}, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input} do |f|
+= simple_form_for [current_organization,assignment], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input } do |f|
   = f.error_notification
   .form-inputs
-    - if @assignment.image  and action_name == "new"
-      = f.input :image_id,  as: :hidden, input_html: {value: @assignment.image.id}
+    - if assignment.image && assignment.new_record?
+      = f.input :image_id,  as: :hidden, input_html: { value: assignment.image_id }
       .row
         .col-md-9.col-md-push-3
-          = image_tag  @assignment.image.url, alt: @assignment.image.alt, "aria-describedby": "image-title-#{@assignment.image.id}"
+          = image_tag assignment.image.url, alt: assignment.image.alt, "aria-describedby": "image-title-#{assignment.image.id}"
           %br
           %br
-          = to_html @assignment.image.title
+          = to_html assignment.image.title
     - else
       = f.association :image,  prompt: "Choose an image"
     = f.association :user, prompt: "Choose a user"
@@ -16,14 +16,12 @@
   .form-actions
     .form-actions-inner
       = f.button :submit
-      - if action_name == 'edit'
+      - if assignment.persisted?
         %br
         %br
-        = link_to @assignment, class: 'btn btn-info' do
-          
+        = link_to [current_organization,assignment], class: 'btn btn-info' do
           View this assignment
       %br
       %br
-      = link_to assignments_path, class: 'btn btn-info' do
-        
+      = link_to organization_assignments_path(current_organization), class: 'btn btn-info' do
         View all Assignments

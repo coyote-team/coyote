@@ -1,8 +1,8 @@
 RSpec.feature "Adding and describing an image" do
   include_context "as a logged-in admin user"
 
-  let!(:website) { create(:website) }
-  let!(:context)   { create(:context) }
+  let!(:website) { create(:website,organization: user_organization) }
+  let!(:context) { create(:context,organization: user_organization) }
   let!(:metum)   { create(:metum) }
   let!(:status)  { create(:status) }
 

@@ -28,6 +28,7 @@ SET search_path = public, pg_catalog;
 --
 
 CREATE TYPE user_role AS ENUM (
+    'guest',
     'viewer',
     'author',
     'editor',
@@ -135,7 +136,8 @@ CREATE TABLE contexts (
     id integer NOT NULL,
     title character varying,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    organization_id integer NOT NULL
 );
 
 
@@ -212,7 +214,7 @@ CREATE TABLE images (
     title text,
     priority boolean DEFAULT false NOT NULL,
     status_code integer DEFAULT 0 NOT NULL,
-    page_urls character varying[] DEFAULT ARRAY[]::character varying[] NOT NULL,
+    page_urls text,
     organization_id bigint NOT NULL
 );
 
@@ -457,7 +459,7 @@ CREATE TABLE users (
     first_name character varying,
     last_name character varying,
     authentication_token character varying,
-    role user_role DEFAULT 'viewer'::user_role NOT NULL
+    role user_role DEFAULT 'guest'::user_role NOT NULL
 );
 
 
@@ -490,7 +492,8 @@ CREATE TABLE websites (
     url character varying,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    strategy character varying
+    strategy character varying,
+    organization_id integer NOT NULL
 );
 
 
@@ -759,6 +762,13 @@ CREATE INDEX index_audits_on_request_uuid ON audits USING btree (request_uuid);
 
 
 --
+-- Name: index_contexts_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contexts_on_organization_id ON contexts USING btree (organization_id);
+
+
+--
 -- Name: index_descriptions_on_image_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -857,6 +867,13 @@ CREATE INDEX index_users_on_role ON users USING btree (role);
 
 
 --
+-- Name: index_websites_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_websites_on_organization_id ON websites USING btree (organization_id);
+
+
+--
 -- Name: taggings_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -923,6 +940,22 @@ ALTER TABLE ONLY memberships
 
 ALTER TABLE ONLY assignments
     ADD CONSTRAINT fk_rails_79515876ef FOREIGN KEY (image_id) REFERENCES images(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: contexts fk_rails_8e9711c31f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY contexts
+    ADD CONSTRAINT fk_rails_8e9711c31f FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: websites fk_rails_97f7066bae; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY websites
+    ADD CONSTRAINT fk_rails_97f7066bae FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1013,6 +1046,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170804131408'),
 ('20170807153011'),
 ('20170808141238'),
-('20170808141713');
+('20170808141713'),
+('20170829152556'),
+('20170829153738'),
+('20170829173615'),
+('20170829174112');
 
 

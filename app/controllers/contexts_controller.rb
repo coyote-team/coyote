@@ -27,7 +27,7 @@ class ContextsController < ApplicationController
 
   # GET /contexts/new
   def new
-    self.context = Context.new
+    self.context = current_organization.contexts.new
   end
 
   # GET /contexts/1/edit
@@ -38,11 +38,13 @@ class ContextsController < ApplicationController
   api :POST, "contexts/:id", "Create a context"
   param_group :context
   def create
-    self.context = Context.new(context_params)
+    self.context = current_organization.contexts.new(context_params)
 
     if context.save
-      redirect_to context, notice: 'Context was successfully created.'
+      logger.info "Created #{context}"
+      redirect_to [current_organization,context], notice: 'Context was successfully created.'
     else
+      logger.warn "Unable to create context: '#{context.error_sentence}'"
       render :new
     end
   end
@@ -52,7 +54,7 @@ class ContextsController < ApplicationController
   param_group :context
   def update
     if context.update(context_params)
-      redirect_to context, notice: 'Context was successfully updated.'
+      redirect_to [current_organization,context], notice: 'Context was successfully updated.'
     else
       render :edit
     end
@@ -62,19 +64,17 @@ class ContextsController < ApplicationController
   api :DELETE, "contexts/:id", "Delete a context"
   def destroy
     context.destroy
-    redirect_to contexts_url, notice: 'Context was successfully destroyed.'
+    redirect_to organization_contexts_url(current_organization), notice: 'Context was successfully destroyed.'
   end
 
   private
 
   attr_accessor :user, :context, :contexts
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_context
-    self.context = Context.find(params[:id])
+    self.context = current_organization.contexts.find(params[:id])
   end
 
-  # Only allow a trusted parameter "white list" through.
   def context_params
     params.require(:context).permit(:title)
   end

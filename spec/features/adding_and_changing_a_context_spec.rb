@@ -9,7 +9,7 @@ RSpec.feature "Adding and editing a context" do
     it "succeeds" do
       click_link "Contexts"
       click_link "New Context"
-      expect(page.current_path).to eq(new_context_path)
+      expect(page.current_path).to eq(new_organization_context_path(user_organization))
 
       fill_in "Title", with: "Scavenger Hunt"
 
@@ -18,7 +18,7 @@ RSpec.feature "Adding and editing a context" do
       }.to change(Context,:count).from(0).to(1)
 
       context = Context.first
-      expect(page.current_path).to eq(context_path(context))
+      expect(page.current_path).to eq(organization_context_path(user_organization,context))
 
       click_link "Edit"
       fill_in "Title", with: "Treasure Hunt"
@@ -27,6 +27,8 @@ RSpec.feature "Adding and editing a context" do
         click_button "Update Context"
         context.reload
       }.to change(context,:title).to("Treasure Hunt")
+
+      expect(page.current_path).to eq(organization_context_path(user_organization,context))
     end
   end
 end

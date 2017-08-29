@@ -17,9 +17,9 @@
         %nav.show-nav{role:"navigation"}
           %ul.list-inline
             %li
-              = link_to contexts_path, class: 'btn btn-info', title: "View the contexts index" do
+              = link_to organization_contexts_path(current_organization, class: 'btn btn-info', title: "View the contexts index") do
                 
                 contexts
             %li
-              = link_to edit_context_path(context), title: "Edit this context", class: 'btn btn-primary' do
+              = link_to edit_organization_context_path(current_organization,context), title: "Edit this context", class: 'btn btn-primary' do
                 Edit

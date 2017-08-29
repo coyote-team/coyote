@@ -9,7 +9,7 @@ RSpec.describe "Adding and changing a Website" do
     it "succeeds" do
       click_link "Websites"
       click_link "New Website"
-      expect(page.current_path).to eq(new_website_path)
+      expect(page.current_path).to eq(new_organization_website_path(user_organization))
 
       fill_in "Title", with: "XYZ Museum"
       fill_in "Url",   with: "http://example.com"
@@ -18,10 +18,10 @@ RSpec.describe "Adding and changing a Website" do
 
       expect {
         click_button "Create Website"
-      }.to change(Website,:count).from(0).to(1)
+      }.to change(user_organization.websites,:count).from(0).to(1)
 
-      website = Website.first
-      expect(page.current_path).to eq(website_path(website))
+      website = user_organization.websites.first
+      expect(page.current_path).to eq(organization_website_path(user_organization,website))
 
       click_link "Edit"
       fill_in "Title", with: "ABC Museum"
@@ -38,11 +38,11 @@ RSpec.describe "Adding and changing a Website" do
 
     it "is not allowed" do
       expect(page).not_to have_link("Websites")
-      visit new_website_path
-      expect(page.current_path).to eq(root_path)
+      visit new_organization_website_path(user_organization)
+      expect(page.current_path).to eq(organization_path(user_organization))
 
-      visit edit_website_path(create(:website))
-      expect(page.current_path).to eq(root_path)
+      visit edit_organization_website_path(user_organization,create(:website))
+      expect(page.current_path).to eq(organization_path(user_organization))
     end
   end
 end

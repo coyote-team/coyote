@@ -17,7 +17,7 @@ RSpec.feature 'Logging in and out' do
     logout
 
     expect(page).to have_content 'Signed out successfully'
-    visit images_path
+    visit organization_images_path(user.organizations.first)
     expect(page.current_url).to eq(new_user_session_url)
   end
 

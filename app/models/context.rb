@@ -2,10 +2,15 @@
 #
 # Table name: contexts
 #
-#  id         :integer          not null, primary key
-#  title      :string
-#  created_at :datetime
-#  updated_at :datetime
+#  id              :integer          not null, primary key
+#  title           :string
+#  created_at      :datetime
+#  updated_at      :datetime
+#  organization_id :integer          not null
+#
+# Indexes
+#
+#  index_contexts_on_organization_id  (organization_id)
 #
 
 # Context represents the situation in which a subject is being considered. The Context determines what strategy we use to present a description of a subject.
@@ -14,6 +19,8 @@
 class Context < ApplicationRecord
   validates_presence_of :title
   has_many :images, :dependent => :nullify
+
+  belongs_to :organization, :inverse_of => :contexts
 
   # @return [String] title of this context
   def to_s

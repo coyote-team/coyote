@@ -22,6 +22,10 @@ Metrics/MethodLength:
   Exclude:
     - 'lib/coyote/strategies/mca.rb'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/controllers/*'
+      
 Layout/DotPosition:
   Enabled: false
 

@@ -4,8 +4,14 @@ class OrganizationsController < ApplicationController
   # @!attribute [w] dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard
   # @see Dashboard
   attr_writer :dashboard
+  
+  # @!attribute [w] organization Dependency injection affordance used for unit testing; normally an instance of Organization
+  # @see organization
+  attr_writer :organization
 
-  helper_method :title, :organizations, :current_organization, :dashboard
+  before_action :set_organization, only: %i[show edit update destroy]
+
+  helper_method :title, :organization, :organizations, :dashboard, :users
 
   # GET /organizations
   def index
@@ -15,7 +21,7 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/1
   def show
-    self.title = current_organization.title
+    self.title = organization.title
   end
 
   # GET /organizations/new
@@ -30,8 +36,11 @@ class OrganizationsController < ApplicationController
     self.organization = Organization.create(organization_params)
 
     if organization.valid?
+      organization.users << current_user
+      logger.info "Created #{organization} and assigned #{current_user}"
       redirect_to organization, success: "Created #{organization.title}"
     else
+      logger.warn "Unable to create Organization: #{organization.error_sentence}"
       flash.now[:alert] = "There was an error creating this Organization"
       render action: "new"
     end
@@ -56,18 +65,27 @@ class OrganizationsController < ApplicationController
 
   private
 
-  attr_accessor :title, :organizations, :current_organization
+  attr_accessor :title, :organizations
+  attr_reader :organization
+
+  def set_organization
+    @organization ||= current_user.organizations.find(params[:id])
+  end
 
   def organization_params
     params.require(:organization).permit(:title)
   end
 
-  def current_organization
-    # overrides ApplicationController method which works in nested resource contexts
-    @current_organization ||= current_user.organizations.find(params[:id])
+  # overrides ApplicationController method which works in nested resource contexts
+  def current_organization_id
+    params[:id]
   end
 
   def dashboard
-    @dashboard ||= Dashboard.new(current_user,current_organization)
+    @dashboard ||= Dashboard.new(current_user,organization)
+  end
+
+  def users
+    organization.users
   end
 end

@@ -62,11 +62,10 @@ end
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller' # optional dependency of better_errors
-  gem 'pry-rails'
-  #gem 'html2haml'
-  gem 'rails_real_favicon'
-  gem 'brakeman', require: false
+  gem 'binding_of_caller'         # optional dependency of better_errors
+  gem 'pry-rails'                 # gives us binding.pry calls
+  gem 'rails_real_favicon'        # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
+  gem 'brakeman', require: false  # basic security checks
   gem 'spring'
   gem 'yard'
   gem 'annotate'

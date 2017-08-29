@@ -18,7 +18,7 @@
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
-#  role                   :enum             default("viewer"), not null
+#  role                   :enum             default("guest"), not null
 #
 # Indexes
 #
@@ -43,6 +43,7 @@ class User < ApplicationRecord
          :password_length => 8..128
 
   enum role: {
+    guest:       'guest',
     viewer:      'viewer',
     author:      'author',
     editor:      'editor',

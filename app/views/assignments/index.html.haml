@@ -1,23 +1,25 @@
--title = 'Assignments'
--meta title: title
-- cache ['v1', admin?,  @assignments] do
+- title = 'Assignments'
+- meta title: title
+- cache ['v1', admin?,  assignments] do
   .index-outer
     .index
       .index-inner
         %header
           %h1#page-title{tabindex: -1}
-            #{title}: #{number_with_delimiter @assignments.total_count}
+            #{title}: #{number_with_delimiter assignments.total_count}
 
         %nav.index-nav{role:"navigation"}
-          =paginate @assignments
+          = paginate assignments
+
           %h2.sr-only Actions
-          = link_to new_assignment_path, class: 'btn btn-primary new-link' do
+          = link_to new_organization_assignment_path(current_organization), class: 'btn btn-primary new-link' do
             New Assignment
 
-        =render "table", assignments: @assignments
+        =render "table", assignments: assignments
 
         %nav.index-nav{role:"navigation"}
-          =paginate @assignments
+          = paginate assignments
+
           %h2.sr-only Actions
-          = link_to new_assignment_path, class: 'btn btn-primary new-link' do
+          = link_to new_organization_assignment_path(current_organization), class: 'btn btn-primary new-link' do
             New Assignment

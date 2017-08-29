@@ -1,6 +1,6 @@
--title = "Showing Assignment #{@assignment}"
+-title = "Showing Assignment #{assignment}"
 -meta title: title
--cache ['v1', admin?,  @assignment] do
+-cache ['v1', admin?, assignment] do
   .entity-outer
     .entity
       .entity-inner
@@ -13,24 +13,26 @@
               %th{scope: "row"}
                 Image
               %td
-                = link_to @assignment.image do
-                  = image_tag @assignment.image.url, class: "description-image"
+                = link_to [current_organization,assignment.image] do
+                  = image_tag assignment.image.url, class: "description-image"
             %tr
               %th{scope: "row"}
                 User
               %td
-                =link_to @assignment.user
+                = link_to [current_organization,assignment.user]
+
         %nav.show-nav{role:"navigation"}
           %ul.list-inline
             %li
-              = link_to assignments_path, class: 'btn btn-info', title: "View the assignments index" do
-                
+              = link_to organization_assignments_path(current_organization), class: 'btn btn-info', title: "View the assignments index" do
                 Assignments
+
             %li
-              = link_to edit_assignment_path(@assignment), title: "Edit this assignment", class: 'btn btn-primary' do
+              = link_to edit_organization_assignment_path(current_organization,assignment), title: "Edit this assignment", class: 'btn btn-primary' do
                 Edit
                 Edit
-            -if @next_image
+
+            - if next_image
               %li
-                = link_to new_assignment_path(image_id: @next_image.id), class: 'btn btn-primary', title: "Assign image #{@next_image.id} to a user" do
+                = link_to new_organization_assignment_path(current_organization,image_id: next_image.id), class: 'btn btn-primary', title: "Assign image #{next_image.id} to a user" do
                   Assign next image

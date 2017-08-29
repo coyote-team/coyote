@@ -27,9 +27,9 @@
                   -if admin?
                     %th{scope: "col", rowspan: 2}<
                       %span.sr-only Bulk Actions
-                      %a{data: {status_id: 2, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-info'} 
+                      %a{data: { status_id: 2, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_organization_descriptions_path(current_organization) }, href: "#", class: 'bulk btn btn-sm btn-info'} 
                         Approve 
-                      %a{data: {status_id: 3, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_descriptions_path}, href: "#", class: 'bulk btn btn-sm btn-info'}
+                      %a{data: { status_id: 3, actor: "status_id", selector: "id", bulk: "descriptions", url: bulk_organization_descriptions_path(current_organization) }, href: "#", class: 'bulk btn btn-sm btn-info'}
                         Disapprove
                           
 

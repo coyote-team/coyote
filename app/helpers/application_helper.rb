@@ -4,6 +4,14 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @return [Hash] a collection of User roles with human friendly labels
+  # @see User
+  def user_role_collection
+    User.roles.inject({}) do |result,(role_name,role_value)| 
+      result.merge!(role_name.titleize => role_value) 
+    end
+  end
+
   # @return [String] welcome message, including the user's name if someone is logged-in
   def welcome_message
     msg =  "Welcome to Coyote"
