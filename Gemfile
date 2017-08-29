@@ -70,14 +70,18 @@ group :development do
   gem 'spring'
   gem 'yard'
   gem 'annotate'
-  gem 'guard', require: false
-  gem 'guard-rspec', require: false
-  gem 'guard-brakeman', require: false
-  gem 'guard-bundler', require: false
-  gem 'guard-coffeescript', require: false
-  gem 'guard-sass', require: false
-  gem 'guard-livereload', require: false
-  gem 'guard-rubocop', require: false
+
+  unless ENV["TRAVIS"]
+    # having a weird bundler/docker-compose issue on travis
+    gem 'guard', require: false
+    gem 'guard-rspec', require: false
+    gem 'guard-brakeman', require: false
+    gem 'guard-bundler', require: false
+    gem 'guard-coffeescript', require: false
+    gem 'guard-sass', require: false
+    gem 'guard-livereload', require: false
+    gem 'guard-rubocop', require: false
+  end
 end
 
 group :test do
