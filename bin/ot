@@ -1,0 +1,2 @@
+# open travisci so we can monitor latest builds
+open https://travis-ci.org/coyote-team/coyote/
