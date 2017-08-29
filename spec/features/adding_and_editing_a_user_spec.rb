@@ -1,44 +1,46 @@
-RSpec.feature "Editing a user" do
-  context "when logged-in as an admin" do
-    include_context "as a logged-in admin user"
+RSpec.feature 'Editing a user' do
+  context 'when logged-in as an admin' do
+    include_context 'as a logged-in admin user'
 
     let!(:other_user) { create(:user) }
 
-    it "succeeds" do
-      click_first_link "Users"
+    it 'succeeds' do
+      click_first_link 'Users'
       
       expect(page).to have_content(other_user.email)
 
       within "#user_#{other_user.id}" do
-        click_link "Edit"
+        click_link 'Edit'
       end
 
       expect(page.current_path).to eq(edit_user_path(other_user))
 
-      fill_in "First name", with: "Joe"
+      fill_in 'First name', with: 'Joe'
 
       expect {
-        click_button "Update User"
+        click_button 'Update User'
         other_user.reload
-      }.to change(other_user,:first_name).to("Joe")
+      }.to change(other_user,:first_name).to('Joe')
     end
   end
 
-  context "when logged-in as a user" do
-    include_context "as a logged-in user"
+  context 'when logged-in as a regular user' do
+    include_context 'as a logged-in user'
 
-    let(:user) { create(:user) }
+    let(:another_user) { create(:user) }
 
-    it "is not allowed" do
-      expect(page).not_to have_link("Users")
+    it 'is not allowed', :focus do
+      expect(page).not_to have_link('Users')
       visit new_user_path
-      expect(page.current_path).to eq(new_user_session_path)
+      expect(page).to have_content('You are not authorized')
 
-      visit user_path(user)
-      expect(page.current_path).to eq(new_user_session_path)
+      [user,another_user].each do |u|
+        visit user_path(u)
+        expect(page).to have_content('You are not authorized')
 
-      visit edit_user_path(user)
-      expect(page.current_path).to eq(new_user_session_path)
+        visit edit_user_path(u)
+        expect(page).to have_content('You are not authorized')
+      end
     end
   end
 end
