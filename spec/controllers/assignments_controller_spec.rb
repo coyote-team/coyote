@@ -31,7 +31,7 @@ RSpec.describe AssignmentsController do
 
     before do
       allow(user_organization).
-        to receive_message_chain(:assignments,:page).
+        to receive_message_chain(:assignments,:by_created_at,:page).
         with('2').
         and_return(assignments)
     end

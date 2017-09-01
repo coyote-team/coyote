@@ -42,8 +42,8 @@ class Image < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :users, through: :assignments
 
-  validates :path, :presence => true, :uniqueness => {:scope => :website_id}
-  validates :canonical_id, :presence => true, :uniqueness => {:scope => :website_id}
+  validates :path, :presence => true, :uniqueness => { :scope => :website_id }
+  validates :canonical_id, :presence => true, :uniqueness => { :scope => :website_id }
   validates_associated :website, :context
 
   audited

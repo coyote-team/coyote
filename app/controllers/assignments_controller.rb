@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments
   def index
-    self.assignments = current_organization.assignments.page(params[:page])
+    self.assignments = current_organization.assignments.by_created_at.page(params[:page])
   end
 
   # GET /assignments/1
@@ -24,7 +24,6 @@ class AssignmentsController < ApplicationController
 
     assignment.image = current_organization.images.find(params[:image_id]) if params[:image_id]
     assignment.user  = current_organization.users.find(params[:user_id])   if params[:user_id]
-
   end
 
   # GET /assignments/1/edit

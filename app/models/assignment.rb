@@ -23,7 +23,7 @@ class Assignment < ApplicationRecord
 
   validates :user, uniqueness: {scope: :image}
   
-  default_scope {order('created_at DESC')}
+  scope :by_created_at, -> { order(:created_at => :desc) }
 
   paginates_per 50
 

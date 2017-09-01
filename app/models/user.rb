@@ -57,7 +57,7 @@ class User < ApplicationRecord
   has_many :images, through: :organizations
   has_many :descriptions, dependent: :nullify
 
-  scope :sorted, -> { order('LOWER(last_name) asc') }
+  scope :sorted, -> { order('LOWER(users.last_name) asc') }
 
   def to_s
     if !first_name.blank? or !last_name.blank?
