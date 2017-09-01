@@ -1,6 +1,6 @@
 -title = 'Descriptions'
 -meta title: title
-- cache ['v1', current_user,  @descriptions] do
+- cache_if(false,['v1',current_user,@descriptions]) do # disabling for now because there's weird stuff happening between ransack and Rails 5 cache logic
   .container-fluid
     .index
       .index-inner
@@ -44,7 +44,6 @@
                   %td= f.input  :status_id_eq, as: :select, include_blank: "Any status", label: "Select a status", required: false, collection: Status.all, label_html: {class: 'sr-only'}
 
                   %td= f.input  :metum_id_eq, as: :select, include_blank: "Any metum", label: "Select a metum", required: false, collection: Metum.all , label_html: {class: 'sr-only'}
-                  -#%td= f.input  :locale_id_eq, as: :select, include_blank: "Any locale", label: "Select a locale", required: false, collection: Locale.all , label_html: {class: 'sr-only'}
                   %td<
                     =f.label "Search by description", for: "q_text_cont_all", class: "sr-only"
                     = f.search_field :text_cont_all, :class => 'input-medium form-control', placeholder: "Search by description"
@@ -78,13 +77,14 @@
                       = link_to [current_organization,description], class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
                         View
                       %nbsp
-                      - if admin? or current_user == description.user
-                        = link_to edit_description_path(description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
+                      - if admin? || current_user == description.user
+                        = link_to edit_organization_description_path(current_organization,description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
                           Edit
                         %nbsp
                       -if admin?
-                        = link_to description, title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
+                        = link_to [current_organization,description], title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
                           Delete
+
         %nav.index-nav{role:"navigation"}
           %h2.sr-only Pagination
-          =paginate @descriptions
+          = paginate @descriptions

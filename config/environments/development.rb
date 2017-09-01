@@ -46,4 +46,6 @@ Coyote::Application.configure do
   #   output: { ascii_only: true, quote_keys: true, beautify: false }
   # })
   # config.assets.css_compressor = :sass
+
+  #config.action_controller.perform_caching = true
 end
