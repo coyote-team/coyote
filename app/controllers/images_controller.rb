@@ -3,12 +3,12 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[show edit update destroy toggle]
   before_action :clear_search, only: %i[index]
-  before_action :get_users, only: %i[index show], unless: -> { request.xhr? }
+  before_action :set_users, only: %i[index show], unless: -> { request.xhr? }
 
   before_action :admin, only: %i[edit update destroy toggle]
   before_action :users, only: %i[create]
 
-  helper_method :image, :contexts, :websites, :tag_list
+  helper_method :image, :contexts, :websites, :tag_list, :users
 
   respond_to :html, :json
 
@@ -304,18 +304,22 @@ Ex:
 
   private
 
-  attr_accessor :image
+  attr_accessor :image, :users
 
   def contexts
     @contexts ||= Context.all
   end
 
   def websites
-    @websites ||= Website.all # TODO: should this be scoped by organization?
+    @websites ||= current_organization.websites
   end
 
   def tag_list
     @tag_list ||= ActsAsTaggableOn::Tag.most_used(30)
+  end
+
+  def set_users
+    self.users = current_organization.users
   end
 
   def set_image

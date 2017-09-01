@@ -32,7 +32,7 @@ RSpec.describe "Image API requests" do
 
   describe 'GET /images/:id.json' do |meta|
     it 'returns image record' do
-      get "/images/#{image.id}.json", headers: api_user_headers(user)
+      get "/images/#{image.id}.json", headers: api_user_headers(user), xhr: true
       expect_json_keys(%i(id canonical_id  path  page_urls  priority  context_id  website_id  created_at  updated_at url alt title long))
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe "Image API requests" do
     end
 
     it 'returns all image records to user' do
-      get "/organizations/#{user_organization.id}/images.json", headers: api_user_headers(user)
+      get "/organizations/#{user_organization.id}/images.json", headers: api_user_headers(user), xhr: true
       expect_json_keys([:_metadata, :records])
     end
   end

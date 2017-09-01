@@ -49,10 +49,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_users
-    self.users = User.sorted
-  end
-
   def get_contexts
     self.contexts = Context.all.sort { |a,b| a.to_s <=> b.to_s } # TODO: needs to be moved into Context scope, sorted via SQL
   end
