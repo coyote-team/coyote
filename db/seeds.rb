@@ -7,7 +7,9 @@ rescue FactoryGirl::DuplicateDefinitionError
   Rails.logger.debug "Factory Girl definitions previously loaded"
 end
 
-Context.create!([
+organization = FactoryGirl.create(:organization,title: "Acme Museum")
+
+organization.contexts.create!([
   { title: "collection" },
   { title: "website" },
   { title: "exhibitions" },
@@ -26,6 +28,7 @@ Status.create!([
 ])
 
 image = FactoryGirl.create(:image,{
+  organization: organization,
   path: "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
   title: "T.Y.F.F.S.H., 2011"
 })
@@ -49,4 +52,17 @@ TEXT
 FactoryGirl.create(:description,image: image,metum: short_metum,text: alt_text)
 FactoryGirl.create(:description,image: image,metum: long_metum,text: long_text)
 
-# to create an admin user, run bin/rake coyote:admin:create[user@example.com]
+undescribed_image = FactoryGirl.create(:image,{
+  organization: organization,
+  path: 'http://example.com/image123.png',
+  title: 'Mona Lisa'
+})
+
+user = User.create!(email: "admin@example.com",password: "password")
+organization.users << user
+
+Assignment.create(image: undescribed_image,user: user)
+
+puts "Created test admin user 'admin@example.com' with password 'password'"
+
+# to create other admin users, run bin/rake coyote:admin:create[user@example.com]
