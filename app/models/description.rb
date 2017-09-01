@@ -37,7 +37,7 @@ class Description < ApplicationRecord
   validates :locale, iso639Code: true, length: { is: 2 } 
   validate :license_exists
 
-  scope :ordered, -> do
+  scope :ordered, lambda do
     order(:status_id => :desc,:updated_at => :desc)
   end
 
