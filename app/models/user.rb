@@ -48,7 +48,7 @@ class User < ApplicationRecord
     author:      'author',
     editor:      'editor',
     admin:       'admin',
-    super_admin: 'super_admin',
+    owner:       'owner',
     staff:       'staff'
   }
 
