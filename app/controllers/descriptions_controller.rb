@@ -32,15 +32,18 @@ class DescriptionsController < ApplicationController
   EOT
 
   def index
-    if request.format.html? and current_user
+    if request.format.html? && current_user
       @search_cache_key = search_params
+
       if search_params
         search_params["text_cont_all"] = search_params["text_cont_all"].split(" ")  if search_params["text_cont_all"]
       end
-      @q = Description.ransack(search_params)
+
+      @q = current_organization.descriptions.ordered.ransack(search_params)
+
       @descriptions = @q.result(distinct: true).page(params[:page]) 
     else
-      @descriptions = Description.all.page params[:page]
+      @descriptions = current_organization.descriptions.ordered.page(params[:page])
     end
   end
 
@@ -131,7 +134,7 @@ class DescriptionsController < ApplicationController
   private
 
   def set_description
-    @description = Description.find(params[:id])
+    @description = current_organization.descriptions.find(params[:id])
   end
 
   def set_author
@@ -144,7 +147,7 @@ class DescriptionsController < ApplicationController
 
   def set_image
     if params[:image_id]
-      @image = Image.find(params[:image_id])
+      @image = current_organization.images.find(params[:image_id])
     else
       @image = @description.image if @description
     end
