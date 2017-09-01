@@ -15,6 +15,7 @@ module Coyote
 
     config.assets.precompile += %w[coyote_producer.js]
     config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/app/presenters"
 
     config.active_record.schema_format = :sql
 
