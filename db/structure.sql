@@ -214,8 +214,9 @@ CREATE TABLE images (
     title text,
     priority boolean DEFAULT false NOT NULL,
     status_code integer DEFAULT 0 NOT NULL,
-    page_urls text,
-    organization_id bigint NOT NULL
+    old_page_urls text,
+    organization_id bigint NOT NULL,
+    page_urls text[] DEFAULT '{}'::text[] NOT NULL
 );
 
 
@@ -1061,6 +1062,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170901140040'),
 ('20170901140852'),
 ('20170901142505'),
-('20170901142712');
+('20170901142712'),
+('20170901151655');
 
 

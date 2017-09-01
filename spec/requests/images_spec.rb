@@ -14,8 +14,9 @@
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :text
+#  old_page_urls      :text
 #  organization_id    :integer          not null
+#  page_urls          :text             default([]), not null, is an Array
 #
 # Indexes
 #

@@ -18,8 +18,9 @@ require 'csv'
 #  title              :text
 #  priority           :boolean          default(FALSE), not null
 #  status_code        :integer          default(0), not null
-#  page_urls          :text
+#  old_page_urls      :text
 #  organization_id    :integer          not null
+#  page_urls          :text             default([]), not null, is an Array
 #
 # Indexes
 #
@@ -54,12 +55,6 @@ class Image < ApplicationRecord
   scope :assigned_undescribed,   -> { undescribed.joins(:assignments) }
   scope :unassigned_undescribed, -> { undescribed.left_outer_joins(:assignments).where(assignments: { image_id: nil }) }
   scope :prioritized,            -> { order(:priority => :desc, :created_at => :desc) }
-  #scope :unassigned, -> (n = 0) { select { |i| i.assignments_count == n } }
-  #scope :undescribed, -> (n = 0) { select { |i| i.descriptions_count == n } }
-  #scope :assigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count > n} }
-  #scope :unassigned_undescribed, -> (n = 0) { select { |i| i.descriptions_count == n && i.assignments_count == n} }
-  #scope :described, -> (n = 0) { select { |i| i.descriptions_count > n } }
-  #scope :assigned, -> (n = 0) { select { |i| i.assignments_count > n } }
 
   paginates_per 50
 
