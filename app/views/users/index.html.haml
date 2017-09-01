@@ -40,8 +40,7 @@
                   = link_to(edit_organization_user_path(current_organization,user),class: "btn btn-edit",title: "Edit this user") do
                     Edit
                   %nbsp
-                  = link_to([current_organization,user],title: "Delete this user",class: "btn btn-destroy",method: :delete,data: { confirm: "Are you sure you want to delete #{user}?" }, disabled: (user == current_user)) do
-                    Delete
+                  = link_to_unless(user == current_user,"Delete",[current_organization,user],title: "Delete this user",class: "btn btn-destroy",method: :delete,data: { confirm: "Are you sure you want to delete #{user}?" })
 
         %nav.index-nav(role="navigation")
           = link_to new_organization_user_path(current_organization), class: 'btn btn-primary new-link' do

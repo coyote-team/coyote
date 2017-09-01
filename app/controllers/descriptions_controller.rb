@@ -81,8 +81,13 @@ class DescriptionsController < ApplicationController
   api :PUT, "descriptions/:id", "Create a description"
   param_group :description
   def update
-    flash[:notice] = "#{@description} was successfully updated." if @description.update(description_params)
-    respond_with @description
+    if @description.update(description_params)
+      flash[:notice] = "#{@description} was successfully updated."
+      redirect_to [current_organization,@description]
+    else
+      logger.warn "Unable to update #{@description}: #{@description.error_sentence}"
+      render :edit
+    end
   end
 
   # DELETE /descriptions/1

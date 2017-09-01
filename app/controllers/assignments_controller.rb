@@ -2,8 +2,10 @@ class AssignmentsController < ApplicationController
   before_action :authorize_admin!
   before_action :set_assignment, only: %i[show edit update destroy]
   before_action :set_next_image, only: %i[show]
+  before_action :set_users, only: %i[new edit]
+  before_action :set_images, only: %i[new edit]
 
-  helper_method :image, :assignment, :assignments, :next_image
+  helper_method :image, :assignment, :assignments, :next_image, :users, :images
 
   respond_to :html, :js, :json
 
@@ -19,8 +21,10 @@ class AssignmentsController < ApplicationController
   # GET /assignments/new
   def new
     self.assignment = current_organization.assignments.new
+
     assignment.image = current_organization.images.find(params[:image_id]) if params[:image_id]
-    assignment.user  = current_organization.users.find(params[:user_id])    if params[:user_id]
+    assignment.user  = current_organization.users.find(params[:user_id])   if params[:user_id]
+
   end
 
   # GET /assignments/1/edit
@@ -107,11 +111,19 @@ class AssignmentsController < ApplicationController
 
   private
   
-  attr_accessor :image, :assignment, :assignments, :next_image
+  attr_accessor :image, :assignment, :assignments, :next_image, :users, :images
 
   # Use callbacks to share common setup or constraints between actions.
   def set_assignment
     self.assignment = current_organization.assignments.find(params[:id])
+  end
+
+  def set_users
+    self.users = current_organization.users.sorted
+  end
+
+  def set_images
+    self.images = current_organization.images
   end
 
   def assignment_params

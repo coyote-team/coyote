@@ -7,17 +7,16 @@
         #id-for-queue-ref.panel
           %h2.panel-heading Other descriptions 
           = render "descriptions/table_small", descriptions: other_descriptions, image_id: "description-image", queue_id: "id-for-queue-ref"
-      -if @image.page_urls
+      - if @image.page_urls
         %h3 Context
         - @image.page_urls.each do |u|
-          %li=link_to u, u, target: "_blank"
+          %li= link_to u, u, target: "_blank"
 
-
-    -klass = "col-md-6"
+    - klass = "col-md-6"
   -else
-    -klass = "col-md-12"
+    - klass = "col-md-12"
   %div{class: klass}
-    = simple_form_for @description, url: organization_descriptions_path(current_organization), validate: true, html: { multipart: true } do |f|
+    = simple_form_for [current_organization,@description], validate: true, html: { multipart: true } do |f|
       = f.error_notification
       .form-inputs
         - if @image
@@ -56,5 +55,5 @@
         - if action_name == 'edit'
           %br
           %br
-          = link_to @description, class: 'btn btn-info' do
+          = link_to [current_organization,@description], class: 'btn btn-info' do
             View this description

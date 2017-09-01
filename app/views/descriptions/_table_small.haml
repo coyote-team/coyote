@@ -4,7 +4,6 @@
       Descriptions: #{descriptions.count} 
   %tbody<
     - descriptions.each do |d|
-      -#%tr{class: description_css_class(d) + " description"}<
       %tr{class: "description"}<
         %td<
           %div{id: "small-table-description-#{d.id}"}
@@ -28,7 +27,7 @@
             - if d.status_id == 2
               - form_klass += 'disabled'
               - disabled = true
-            = button_to description_path(d), params: {"description[status_id]": 2},
+            = button_to [current_organization,d], params: {"description[status_id]": 2},
               form_class: form_klass, class: klass, disabled: disabled, method: :patch, remote: true,
               data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}"  do
               Approve 
@@ -39,10 +38,10 @@
             - if d.status_id == 3
               - form_klass += 'disabled'
               - disabled = true
-            = button_to description_path(d), params: {"description[status_id]": 3},
+            = button_to [current_organization,d], params: {"description[status_id]": 3},
               form_class: form_klass, class: klass, disabled: disabled, method: :patch, remote: true,
               data: {disable_with: disable_with}, "aria-describedby" => "small-table-description-#{d.id}" do
               Reject
 
-            =link_to edit_description_path(d), title: "Edit this description", class: 'btn btn-info', "aria-describedby" => "small-table-description-#{d.id}" do
+            =link_to edit_organization_description_path(current_organization,d), title: "Edit this description", class: 'btn btn-info', "aria-describedby" => "small-table-description-#{d.id}" do
               Edit

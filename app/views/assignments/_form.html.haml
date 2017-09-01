@@ -10,8 +10,9 @@
           %br
           = to_html assignment.image.title
     - else
-      = f.association :image,  prompt: "Choose an image"
-    = f.association :user, prompt: "Choose a user"
+      = f.association :image,  prompt: "Choose an image", collection: images
+
+    = f.association :user, prompt: "Choose a user", collection: users
 
   .form-actions
     .form-actions-inner
