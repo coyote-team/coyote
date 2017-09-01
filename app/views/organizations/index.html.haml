@@ -8,6 +8,6 @@
           = title
 
       = list_of(current_user.organizations) do |org|
-        = link_to(org,organization_path(org))
+        = link_to(org.title,organization_path(org))
 
       = render partial: "new_organization"

@@ -90,7 +90,7 @@
                       - else
                         - klass += "label-default"
                         - text = "None"
-                      =link_to toggle_image_path(image, column: 'priority'), remote: true, title: "Click to toggle priority", class: klass do
+                      = link_to toggle_organization_image_path(current_organization,image,column: 'priority'), remote: true, title: "Click to toggle priority", class: klass do
                         = text
                     %td
                       -klass = 'label label-' + image_status_css_class(image.status_code)
@@ -128,7 +128,7 @@
                           Delete
                         %nbsp
                       -if current_user and !admin?
-                        =link_to 'Describe', new_description_path(image_id: image.id), class: "btn btn-edit", title: "Add a description for Image #{image.id}" 
+                        =link_to 'Describe', new_organization_description_path(current_organization,image_id: image.id), class: "btn btn-edit", title: "Add a description for Image #{image.id}" 
 
 
         -if @tags and @tags.length > 0
