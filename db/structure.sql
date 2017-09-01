@@ -308,7 +308,7 @@ ALTER SEQUENCE meta_id_seq OWNED BY meta.id;
 
 CREATE TABLE organizations (
     id integer NOT NULL,
-    title text,
+    title text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -825,6 +825,13 @@ CREATE UNIQUE INDEX index_memberships_on_user_id_and_organization_id ON membersh
 
 
 --
+-- Name: index_organizations_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_organizations_on_title ON organizations USING btree (title);
+
+
+--
 -- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1052,6 +1059,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170829173615'),
 ('20170829174112'),
 ('20170901140040'),
-('20170901140852');
+('20170901140852'),
+('20170901142505'),
+('20170901142712');
 
 
