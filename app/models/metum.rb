@@ -9,6 +9,7 @@
 #  updated_at   :datetime
 #
 
+# @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
   validates_presence_of :title
 
