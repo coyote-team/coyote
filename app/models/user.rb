@@ -53,7 +53,7 @@ class User < ApplicationRecord
   }
 
   has_many :assignments, dependent: :destroy # TODO: all 3 of these need to be moved into DB foreign key constraint cascades
-  has_many :assigned_images, class_name: "Image", through: :assignments
+  has_many :assigned_images, class_name: "Image", through: :assignments, source: :image
   has_many :images, through: :organizations
   has_many :descriptions, dependent: :nullify
 

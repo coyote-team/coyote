@@ -10,6 +10,21 @@
 
 FactoryGirl.define do
   factory :status do
-    title "Ready to review"
+    title "Generic"
+
+    factory :ready_to_review_status do
+      id Coyote::Statuses::READY_TO_REVIEW
+      title "Ready to review"
+    end
+
+    factory :approved_status do
+      id Coyote::Statuses::APPROVED
+      title "Approved"
+    end
+
+    factory :not_approved_status do
+      id Coyote::Statuses::NOT_APPROVED
+      title "Not approved"
+    end
   end
 end

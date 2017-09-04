@@ -37,9 +37,14 @@ FactoryGirl.define do
       priority true
     end
 
-    before(:create) do |image|
-      image.website = build :website, organization: image.organization
-      image.context = build :context, organization: image.organization
+    transient do
+      website nil
+      context nil
+    end
+    
+    before(:create) do |image,evaluator|
+      image.website = evaluator.website || build(:website,organization: image.organization)
+      image.context = evaluator.context || build(:context,organization: image.organization)
     end
   end
 end

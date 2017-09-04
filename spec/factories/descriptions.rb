@@ -29,5 +29,17 @@ FactoryGirl.define do
     image 
     metum 
     user 
+
+    trait :ready_to_review do
+      association :status, :factory => :ready_to_review_status
+    end
+
+    trait :approved do
+      association :status, :factory => :approved_status
+    end
+
+    trait :not_approved do
+      association :status, :factory => :not_approved_status
+    end
   end
 end

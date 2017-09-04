@@ -148,6 +148,6 @@ class Dashboard
   end
 
   def current_user_assigned_items_queue
-    current_user.images.undescribed.prioritized
+    current_user.assigned_images.undescribed.prioritized
   end
 end
