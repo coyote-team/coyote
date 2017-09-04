@@ -21,7 +21,8 @@
           = render partial: "progress", locals: { title: "Images unassigned and undescribed of #{image_count(dashboard.organization_image_count)}",         value: dashboard.organization_unassigned_undescribed_count, max: dashboard.organization_image_count }
           = render partial: "progress", locals: { title: "Descriptions ready for review of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_description_count }
 
-        = render partial: "progress", locals: { title: "Approved descriptions of #{description_count(dashboard.organization_approved_description_count)}", value: dashboard.organization_approved_description_count, max: dashboard.organization_description_count }
+        = render partial: "progress", locals: { title: "Approved descriptions of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_approved_description_count, max: dashboard.organization_description_count }
+
         = render partial: "latest_image_timestamp", object: dashboard.organization_latest_image_timestamp if dashboard.organization_latest_image_timestamp  
 
     .col-sm-6
