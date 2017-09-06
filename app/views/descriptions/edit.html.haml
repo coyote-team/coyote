@@ -1,7 +1,7 @@
 - title = "Editing #{@description}"
 - meta title: title
 
-- cache ['v1',admin?,@description] do
+- cache ['v1',organization_user.admin?,@description] do
   .entity-outer
     .entity
       .entity-inner

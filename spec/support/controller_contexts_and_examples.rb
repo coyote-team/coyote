@@ -1,12 +1,30 @@
 # see https://github.com/plataformatec/devise/wiki/How-To:-Stub-authentication-in-controller-specs
 
-%i[viewer author editor admin super_admin staff].each do |role_name|
-  RSpec.shared_context "stubbed controller #{role_name} user" do
-    let(:user) { build_stubbed(:user,role_name) }
+RSpec.shared_context "signed-out user" do
+  before do
+    sign_in nil, :scope => :user
+  end
+end
+
+Membership.each_role do |_,role_name|
+  RSpec.shared_context "signed-in #{role_name} user" do
+    let(:user) do 
+      create(:user,organization: organization,role: role_name) 
+    end
 
     before do
-      controller_login(user)
+      sign_in(user) # uses https://github.com/plataformatec/devise/blob/master/lib/devise/test/controller_helpers.rb
     end
+  end
+end
+
+RSpec.shared_context "signed-in staff user" do
+  let(:user) do 
+    create(:user,:staff,organization: organization)
+  end
+
+  before do
+    sign_in(user) # uses https://github.com/plataformatec/devise/blob/master/lib/devise/test/controller_helpers.rb
   end
 end
 

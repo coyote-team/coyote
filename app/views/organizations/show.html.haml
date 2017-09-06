@@ -8,7 +8,7 @@
 
   .row
     .col-sm-6
-      - if admin?
+      - if organization_user.admin?
         =link_to "#ready_to_review_descriptions" do 
           Skip to Ready to Review Descriptions
 
@@ -16,7 +16,7 @@
       %table.table.table-no-grid
         = render partial: "progress",   locals: { title: "Described images of #{image_count(dashboard.organization_image_count)}", value: dashboard.organization_described_image_count, max: dashboard.organization_image_count }
 
-        - if current_user.admin?
+        - if organization_user.admin?
           = render partial: "progress", locals: { title: "Images assigned and undescribed of #{image_count(dashboard.organization_image_count)}",           value: dashboard.organization_open_assignment_count,        max: dashboard.organization_image_count }
           = render partial: "progress", locals: { title: "Images unassigned and undescribed of #{image_count(dashboard.organization_image_count)}",         value: dashboard.organization_unassigned_undescribed_count, max: dashboard.organization_image_count }
           = render partial: "progress", locals: { title: "Descriptions ready for review of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_description_count }
@@ -34,7 +34,7 @@
 
   .row
     .col-md-12
-      - if current_user.admin?
+      - if organization_user.admin?
         %h2 Admin Queues
 
         = render partial: "queue", locals: { queue: dashboard.organization_top_undescribed_items_queue,     type: "Undescribed Images",           count: dashboard.organization_undescribed_count,     users: dashboard.organization_users }
@@ -52,4 +52,4 @@
 
   .row
     .col-md-12
-    = render partial: "file_operations" if current_user.admin?
+    = render partial: "file_operations" if organization_user.admin?

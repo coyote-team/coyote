@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authorize_admin!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_general_access, only: %i[new index create]
+  before_action :authorize_unit_access,    only: %i[show edit update destroy]
 
   respond_to :html, :json
 
@@ -15,28 +15,8 @@ class UsersController < ApplicationController
   def show
   end
 
-  # GET /users/new
-  def new
-    self.user = current_organization.users.new
-  end
-
   # GET /users/1/edit
   def edit
-  end
-
-  # POST /users
-  def create
-    self.user = User.new(user_params)
-
-    if user.save
-      current_organization.users << user
-      logger.info "Created user '#{user}'"
-      flash[:notice] = "#{user} was successfully added to #{current_organization}." 
-      redirect_to [current_organization,user]
-    else
-      logger.warn "Unable to create User: '#{user.errors.full_messages.to_sentence}'"
-      render :new
-    end
   end
 
   # PATCH/PUT /users/1
@@ -58,18 +38,26 @@ class UsersController < ApplicationController
       logger.warn "Unable to delete #{user}: '#{user.errors.full_messages.to_sentence}'"
     end
 
-    redirect_to [current_organization,user]
+    redirect_to organization_users_url(current_organization)
   end
 
   private
   
   attr_accessor :user, :users
 
-  def set_user
+  def user
     self.user = current_organization.users.find(params[:id])
   end
 
   def user_params
     params.require(:user).permit(:first_name,:last_name,:email,:admin,:password,:password_confirmation,:role)
+  end
+
+  def authorize_general_access
+    authorize User
+  end
+
+  def authorize_unit_access
+    authorize(user)
   end
 end

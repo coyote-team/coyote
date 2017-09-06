@@ -1,5 +1,5 @@
 RSpec.describe "Adding and changing an organization" do
-  include_context "as a logged-in viewer user"
+  include_context "as a logged-in staff user"
 
   let(:organization_attributes) do
     attributes_for(:organization).tap(&:symbolize_keys!)

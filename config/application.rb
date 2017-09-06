@@ -22,7 +22,10 @@ module Coyote
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 
-    Rails.application.config.active_record.belongs_to_required_by_default = true
+    config.active_record.belongs_to_required_by_default = true
+    
+    # see https://github.com/elabs/pundit#rescuing-a-denied-authorization-in-rails
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :forbidden
     
     config.generators do |g|
       g.stylesheets false

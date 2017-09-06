@@ -1,6 +1,6 @@
 - title = 'Users'
 - meta title: title
-- cache ['v1',current_user.admin?,users] do
+- cache ['v1',organization_user.staff?,users] do
   .index-outer
     .index
       .index-inner
@@ -32,16 +32,17 @@
                 %td= user.last_name
                 %td= user.email
                 %td= user.descriptions.count
-                %td= user.role
+                %td= organization_user.role
                 %td.text-right<
                   = link_to([current_organization,user],class: "btn btn-show",title: "Show this user") do
                     View
                   %nbsp
-                  = link_to(edit_organization_user_path(current_organization,user),class: "btn btn-edit",title: "Edit this user") do
+                  = link_to_if(policy(user).edit?,edit_organization_user_path(current_organization,user),class: "btn btn-edit",title: "Edit this user") do
                     Edit
                   %nbsp
-                  = link_to_unless(user == current_user,"Delete",[current_organization,user],title: "Delete this user",class: "btn btn-destroy",method: :delete,data: { confirm: "Are you sure you want to delete #{user}?" })
+                  = link_to_if(policy(user).destroy?,"Delete",[current_organization,user],title: "Delete this user",class: "btn btn-destroy",method: :delete,data: { confirm: "Are you sure you want to delete #{user}?" })
 
-        %nav.index-nav(role="navigation")
-          = link_to new_organization_user_path(current_organization), class: 'btn btn-primary new-link' do
-            New User
+        - if policy(:user).new?
+          %nav.index-nav(role="navigation")
+            = link_to new_organization_user_path(current_organization), class: 'btn btn-primary new-link' do
+              New User

@@ -13,6 +13,7 @@ require 'vcr'
 require 'pathname'
 require 'database_cleaner'
 require 'pry'
+require 'pundit/matchers'
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
@@ -22,11 +23,12 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Devise::Test::ControllerHelpers, :type => :helper
-  config.include Coyote::FeatureHelpers, :type => :feature
-  config.include Coyote::ControllerTestMacros, :type => :controller
+  config.include Coyote::Testing::FeatureHelpers, :type => :feature
   config.include Coyote::RequestHeaders
   config.include ResponseJSON
 
+  config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
+  
   config.order = "random"
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
@@ -68,6 +70,7 @@ RSpec.configure do |config|
     end
   end
 
+  config.around(:each,:type => :controller,&db_cleaning) 
   config.around(:each,:type => :feature,&db_cleaning) 
   config.around(:each,:type => :request,&db_cleaning) 
 end

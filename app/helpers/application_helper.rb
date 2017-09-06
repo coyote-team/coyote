@@ -6,9 +6,9 @@
 module ApplicationHelper
   # @return [Hash] a collection of User roles with human friendly labels
   # @see User
-  def user_role_collection
-    User.roles.inject({}) do |result,(role_name,role_value)| 
-      result.merge!(role_name.titleize => role_value) 
+  def user_organization_role_collection
+    Membership.role_names.inject({}) do |result,(role_name,role_value)| 
+      result.merge!(role_name.to_s.titleize => role_value) 
     end
   end
 

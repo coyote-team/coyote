@@ -52,6 +52,7 @@ gem 'audited'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
 gem 'rollbar'
 gem 'factory_girl_rails', require: false
+gem 'pundit' # role-based authorization
 
 group :development, :test do
   gem 'rspec-rails', '>= 3.6.1'
@@ -92,6 +93,7 @@ group :test do
   gem 'airborne'
   gem 'launchy' #  to use save_and_open_page from Capybara
   gem 'vcr'
+  gem 'pundit-matchers' # better rspec testing of policies
 end
 
 group :production do

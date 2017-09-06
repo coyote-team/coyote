@@ -23,7 +23,7 @@
             = link_to [current_organization,assignment], class: "btn btn-show", title: "Show this assignment" do
               View
             %nbsp
-            - if admin?
+            - if organization_user.admin?
               = link_to edit_organization_assignment_path(current_organization,assignment), class: "btn btn-edit", title: "Edit this assignment" do
                 Edit
               %nbsp

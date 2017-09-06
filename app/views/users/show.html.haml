@@ -28,7 +28,7 @@
               %th{scope: "row"}<
                 Role
               %td<
-                = @user.role
+                = Coyote::OrganizationUser.new(user,current_organization).role
 
         - if @user.descriptions.count > 0
           %h3 

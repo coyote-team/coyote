@@ -6,7 +6,7 @@
     = f.input :last_name
     = f.input :email, required: true
     = f.input :password, required: true, hint: "#{User.password_length.min} characters minimum" if user.new_record?
-    = f.input :role, :as => :select, collection: user_role_collection, include_blank: false
+    -#= f.input :role, :as => :select, collection: user_organization_role_collection, include_blank: false
 
   .form-actions
     .form-actions-inner

@@ -19,7 +19,7 @@
             %p
               from
               =d.user
-          -if admin?
+          -if organization_user.admin?
             -disable_with = "<i id='disable-me' class='fa fa-spinner fa-spin fa-fw'></i>"
             - klass= 'btn btn-info '
             - form_klass = "inline-form arrange"

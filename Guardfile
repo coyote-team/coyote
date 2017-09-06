@@ -26,7 +26,7 @@ group :red_green_refactor, halt_on_fail: true do
     watch('Gemfile')
   end
 
-  guard :rubocop, all_on_start: false, cli: '-c .rubocop.yml' do
+  guard :rubocop, all_on_start: false, cli: '-D -c .rubocop.yml' do
     watch(%r{.+\.rb$})
     watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
   end

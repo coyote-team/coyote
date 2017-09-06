@@ -21,17 +21,14 @@
       .form-inputs
         - if @image
           = f.input :image_id,  as: :hidden, input_html: {value: @image.id}
-        -else
+        - else
           = f.association :image, prompt: "Pick an image"
-        - if @author.nil?
-          = f.association :user, label: "Author", prompt: "Pick the author"
-        - elsif action_name == 'new'
-          = f.input :user_id,  as: :hidden, input_html: { value: @author.id }
+          = f.association :user, collection: users, label: "Author", prompt: "Pick the author", input_html: { value: current_user.id }
         - metum_id = params[:metum_id]
         - metum_id ||= @description.metum_id
-        = f.association :metum, prompt: "Choose the description type", label_method: lambda { |metum| "#{metum} (#{@siblings.collect{|d| d if d.metum == metum}.compact.count})" }, selected:  metum_id
+        = f.association :metum, prompt: "Choose the description type", selected:  metum_id
         .metum-instructions
-          - @meta.each do |m|
+          - Array(@meta).each do |m|
             - if @description.metum_id == m.id or params[:metum_id].to_i == m.id
               - style = 'display: block;'
             -else
@@ -42,7 +39,7 @@
 
         - f.object.new_record? ? selected = "en" : selected = f.object.locale
         = f.input :locale, collection: LanguageList::COMMON_LANGUAGES, :label_method => :name,:value_method => :iso_639_1, as: :select, prompt: "Pick the locale", selected: selected
-        - if admin?
+        - if organization_user.admin?
           = f.association :status, prompt: "Pick the status"
         - else
           = f.input :status_id, as: :hidden, input_html: {value: 1}

@@ -24,17 +24,16 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- Name: user_role; Type: TYPE; Schema: public; Owner: -
+-- Name: membership_role; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE user_role AS ENUM (
+CREATE TYPE membership_role AS ENUM (
     'guest',
     'viewer',
     'author',
     'editor',
     'admin',
-    'owner',
-    'staff'
+    'owner'
 );
 
 
@@ -248,7 +247,8 @@ CREATE TABLE memberships (
     user_id bigint NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    role membership_role DEFAULT 'guest'::membership_role NOT NULL
 );
 
 
@@ -460,7 +460,7 @@ CREATE TABLE users (
     first_name character varying,
     last_name character varying,
     authentication_token character varying,
-    role user_role DEFAULT 'guest'::user_role NOT NULL
+    staff boolean DEFAULT false NOT NULL
 );
 
 
@@ -868,13 +868,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
--- Name: index_users_on_role; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_role ON users USING btree (role);
-
-
---
 -- Name: index_websites_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1063,6 +1056,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170901140852'),
 ('20170901142505'),
 ('20170901142712'),
-('20170901151655');
+('20170901151655'),
+('20170905125227'),
+('20170905125501'),
+('20170905125542');
 
 

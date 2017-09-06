@@ -1,13 +1,11 @@
 # Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
-  # @!attribute [w] current_user [User] Used for unit testing to isolated DB lookups 
-  # @note this variable is normally managed by Devise
-  attr_writer :current_user
+  include Pundit
 
-  # @!attribute [w] current_organization [Organization] Used for unit testing, this is normally scoped by the current user's access
-  attr_writer :current_organization
+  #after_action :verify_authorized, except: :index, unless: Rails.env.production?
+  #after_action :verify_policy_scoped, only: :index, unless: Rails.env.production?
   
-  helper_method :current_organization, :current_organization?
+  helper_method :current_organization, :current_organization?, :organization_user
 
   protect_from_forgery :with => :exception
   protect_from_forgery :with => :null_session, if: ->(c) { c.request.format.json? }
@@ -43,11 +41,19 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :users, :contexts
 
+  # TODO: eventually we want to remove this action and use pundit's .authorize method; just leaving this in so that 
+  # controllers that don't have pundit included can still be protected
   def authorize_admin!
-    unless current_user.admin?
+    unless pundit_user.admin?
       redirect_to(current_organization,alert: "You are not authorized to perform that action")
     end
   end
+
+  def organization_user
+    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+  end
+
+  alias pundit_user organization_user
 
   def get_contexts
     self.contexts = Context.all.sort { |a,b| a.to_s <=> b.to_s } # TODO: needs to be moved into Context scope, sorted via SQL

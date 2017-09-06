@@ -8,6 +8,6 @@
     - assignments.each do |assignment|
       %li.deletable
         = assignment.user
-        - if admin?
+        - if organization_user.admin?
           = link_to [current_organization,assignment], title: "Delete this assignment", class: "quick-delete", :method => :delete, :remote => true do
             %i.fa.fa-times{"aria-hidden" => "true"}

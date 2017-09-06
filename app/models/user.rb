@@ -18,14 +18,13 @@
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
-#  role                   :enum             default("guest"), not null
+#  staff                  :boolean          default(FALSE), not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_role                  (role)
 #
 
 class User < ApplicationRecord
@@ -41,16 +40,6 @@ class User < ApplicationRecord
          :trackable, 
          :validatable, 
          :password_length => 8..128
-
-  enum role: {
-    guest:       'guest',
-    viewer:      'viewer',
-    author:      'author',
-    editor:      'editor',
-    admin:       'admin',
-    owner:       'owner',
-    staff:       'staff'
-  }
 
   has_many :assignments, dependent: :destroy # TODO: all 3 of these need to be moved into DB foreign key constraint cascades
   has_many :assigned_images, class_name: "Image", through: :assignments, source: :image

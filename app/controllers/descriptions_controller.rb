@@ -1,15 +1,13 @@
 class DescriptionsController < ApplicationController
-  before_action :set_description, only: [:show, :edit, :update, :destroy]
-  before_action :set_image, only: [:new, :edit]
-  before_action :collect_meta, only: [:new, :edit]
-  before_action :clear_search, only: [:index]
-  before_action :set_author, only: [:new]
-  before_action :clear_search_index, :only => [:index]
-  before_action :users
-  before_action :admin_or_owner, only: [:update, :edit]
-  before_action :admin, only: [:delete, :bulk]
+  before_action :set_description,    only: %i[show edit update destroy]
+  before_action :set_image,          only: %i[new edit]
+  before_action :collect_meta,       only: %i[new edit]
+  before_action :clear_search,       only: %i[index]
+  before_action :clear_search_index, only: %i[index]
 
   respond_to :html, :json, :js
+
+  helper_method :users
 
   def_param_group :description do
     param :description, Hash do
@@ -32,11 +30,13 @@ class DescriptionsController < ApplicationController
   EOT
 
   def index
+    authorize Description
+
     if request.format.html? && current_user
       @search_cache_key = search_params
 
       if search_params
-        search_params["text_cont_all"] = search_params["text_cont_all"].split(" ")  if search_params["text_cont_all"]
+        search_params["text_cont_all"] = search_params["text_cont_all"].split(" ") if search_params["text_cont_all"]
       end
 
       @q = current_organization.descriptions.ordered.ransack(search_params)
@@ -50,16 +50,20 @@ class DescriptionsController < ApplicationController
   # GET /descriptions/1
   api :GET, "descriptions/:id", "Get a description"
   def show
+    authorize @description
   end
 
   # GET /descriptions/new
   def new
+    authorize Description
     @description = Description.new
+
     if params[:user_id] 
       @author = User.find(params[:user_id])
     else
       @author = current_user
     end
+
     if @image
       @description.image = @image
       @siblings = @description.image.descriptions
@@ -68,6 +72,7 @@ class DescriptionsController < ApplicationController
 
   # GET /descriptions/1/edit
   def edit
+    authorize @description
     @siblings = @description.image.descriptions
   end
 
@@ -75,8 +80,18 @@ class DescriptionsController < ApplicationController
   api :POST, "descriptions", "Create a description"
   param_group :description
   def create
+    authorize Description
+
     @description = Description.new(description_params)
-    flash[:notice] = "#{@description} was successfully created." if @description.save
+    @description.user = current_user
+
+    if @description.save
+      flash[:notice] = "#{@description} was successfully created."
+    else
+      flash[:error] = "We were unable to complete the description, please see errors below."
+      logger.warn "Unable to create Description: #{@description.error_sentence}"
+    end
+
     respond_with(current_organization,@description)
   end
 
@@ -84,6 +99,8 @@ class DescriptionsController < ApplicationController
   api :PUT, "descriptions/:id", "Create a description"
   param_group :description
   def update
+    authorize @description
+
     if @description.update(description_params)
       flash[:notice] = "#{@description} was successfully updated."
       redirect_to [current_organization,@description]
@@ -96,9 +113,10 @@ class DescriptionsController < ApplicationController
   # DELETE /descriptions/1
   api :DELETE, "descriptions/:id", "Delete a description"
   def destroy
+    authorize @description
     @description.destroy
     flash[:notice] = "Description was successfully destroyed."
-    respond_with(@description)
+    respond_with(current_organization,@description)
   end
 
   def bulk
@@ -137,14 +155,6 @@ class DescriptionsController < ApplicationController
     @description = current_organization.descriptions.find(params[:id])
   end
 
-  def set_author
-    if params[:user_id]
-      @author = User.find(params[:user_id])
-    elsif current_user and !current_user.admin?
-      @author = current_user
-    end
-  end
-
   def set_image
     if params[:image_id]
       @image = current_organization.images.find(params[:image_id])
@@ -153,20 +163,12 @@ class DescriptionsController < ApplicationController
     end
   end
 
-  # Only allow a trusted parameter "white list" through.
   def description_params
-    params.require(:description).permit(:image_id, :status_id, :metum_id, :locale, :text, :license, :user_id)
+    params.require(:description).permit(:image_id,:status_id,:metum_id,:locale,:text,:license,:user_id)
   end
 
   def collect_meta
     @meta = Metum.all
-  end
-
-  def admin_or_owner
-    #puts "filter ran"
-    unless current_user and (current_user.admin? or current_user.id == @description.user_id)
-      redirect_to(organization_descriptions_path(current_organization))
-    end
   end
 
   def search_params
@@ -186,5 +188,9 @@ class DescriptionsController < ApplicationController
 
   def descriptions_params
     params.permit(:descriptions => [:id, :status_id])
+  end
+
+  def users
+    current_organization.users
   end
 end

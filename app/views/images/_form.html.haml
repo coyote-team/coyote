@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.association :website, prompt: "Pick a website", collection: websites
-    = f.input :canonical_id, label: "Canonical ID", :as => (current_user.admin? ? :string : :hidden)
+    = f.input :canonical_id, label: "Canonical ID", :as => (policy(image).update? ? :string : :hidden)
     = f.input :path
     = f.association :context, prompt: "Pick a context", collection: contexts
     = f.input :title, readonly: image.persisted?

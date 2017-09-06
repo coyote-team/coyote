@@ -1,8 +1,6 @@
-= nav_menu_link("Images",organization_images_path(current_organization))
-= nav_menu_link("Descriptions",organization_descriptions_path(current_organization))
-
-- if current_user.admin?
-  = nav_menu_link("Assignments",organization_assignments_path(current_organization))
-  = nav_menu_link("Users",organization_users_path(current_organization))
-  = nav_menu_link("Contexts",organization_contexts_path(current_organization))
-  = nav_menu_link("Websites",organization_websites_path(current_organization))
+= nav_menu_link("Images",organization_images_path(current_organization))             if policy(Image).index?
+= nav_menu_link("Descriptions",organization_descriptions_path(current_organization)) if policy(Description).index?
+= nav_menu_link("Assignments",organization_assignments_path(current_organization))   if organization_user.admin? # temporary, will reset to policy(Assignment).new?
+= nav_menu_link("Users",organization_users_path(current_organization))               if policy(User).new?
+= nav_menu_link("Contexts",organization_contexts_path(current_organization))         if organization_user.admin? # temporary, will reset to policy(::Context).new?
+= nav_menu_link("Websites",organization_websites_path(current_organization))         if organization_user.admin? # temporary, will reset to policy(Website).new?

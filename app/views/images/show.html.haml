@@ -58,7 +58,7 @@
 
             %nav.show-nav{role:"navigation"}
               %ul.list-inline
-                -if admin?
+                -if organization_user.admin?
                   %li
                     = link_to edit_organization_image_path(current_organization,@image), title: "Edit this image", class: 'btn btn-primary' do
                       Edit

@@ -10,16 +10,28 @@ RSpec.shared_context "as a logged-in user" do
   end
 end
 
-%i[viewer author editor admin super_admin staff].each do |role_name|
+%i[viewer author editor admin super_admin].each do |role_name|
   RSpec.shared_context "as a logged-in #{role_name} user" do
     let(:password) { "ABCD1234" }
     let(:user_organization) { create(:organization) }
     let(:user) do 
-      create(:user,role_name,organization: user_organization,password: password)
+      create(:user,organization: user_organization,role: role_name,password: password)
     end
 
     before do
       login(user,password)
     end
+  end
+end
+
+RSpec.shared_context "as a logged-in staff user" do
+  let(:password) { "ABCD1234" }
+  let(:user_organization) { create(:organization) }
+  let(:user) do 
+    create(:user,:staff,organization: user_organization,password: password)
+  end
+
+  before do
+    login(user,password)
   end
 end

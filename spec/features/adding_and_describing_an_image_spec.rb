@@ -4,7 +4,7 @@ RSpec.feature "Adding and describing an image" do
   let!(:website) { create(:website,organization: user_organization) }
   let!(:context) { create(:context,organization: user_organization) }
   let!(:metum)   { create(:metum) }
-  let!(:status)  { create(:status) }
+  let!(:status)  { create(:ready_to_review_status) }
 
   let(:image_attributes) do
     attributes_for(:image).tap(&:symbolize_keys!)

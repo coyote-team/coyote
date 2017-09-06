@@ -18,14 +18,13 @@
 #  first_name             :string
 #  last_name              :string
 #  authentication_token   :string
-#  role                   :enum             default("guest"), not null
+#  staff                  :boolean          default(FALSE), not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_role                  (role)
 #
 
 FactoryGirl.define do
@@ -38,25 +37,23 @@ FactoryGirl.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password }
 
+    transient do
+      organization nil
+      role :guest
+    end
+
     trait :with_membership do
-      after(:create) do |user,_|
-        create(:membership,user: user)
+      after(:create) do |user,evaluator|
+        create(:membership,user: user,role: evaluator.role)
       end
     end
 
-    transient do
-      # useful for when you've created one user with the :with_membership trait, and want to have other users join that same org
-      organization nil
+    trait :staff do
+      staff true
     end
 
     after(:create) do |user,evaluator|
-      evaluator.organization.users << user if evaluator.organization
-    end
-
-    User.roles.keys.each do |role_name|
-      trait role_name.to_sym do
-        role role_name
-      end
+      create(:membership,user: user,organization: evaluator.organization,role: evaluator.role) if evaluator.organization
     end
   end
 end

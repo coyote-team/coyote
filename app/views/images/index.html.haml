@@ -12,7 +12,7 @@
           - if @images.total_pages > 1
             %h2.sr-only Pagination
             =paginate @images
-          - if admin?
+          - if organization_user.admin?
             %br
             %h2.sr-only Actions
             = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do
@@ -24,7 +24,7 @@
               %caption.sr-only Index table for images
               %thead
                 %tr
-                  -if admin?
+                  -if organization_user.admin?
                     %th{scope: "col", rowspan: 2}<
                       %span.sr-only Bulk Actions
 
@@ -79,7 +79,7 @@
               %tbody
                 - @images.each_with_index do |image,idx|
                   %tr.item[image]
-                    - if admin?
+                    - if organization_user.admin?
                       %td<
                         = check_box("image-id", image.id, class: "image-id", data: {"image-id" => image.id}, "aria-labeledby": "image-file-#{ image.id } ")
                     %td<
@@ -120,14 +120,14 @@
                       = link_to [current_organization,image], class: "btn btn-sm btn-show", title: "Show this image", "aria-describedby": "image-title-#{image.id}" do
                         View
                       %nbsp
-                      -if admin?
+                      -if organization_user.admin?
                         = link_to edit_image_path(image), class: "btn btn-sm btn-edit", title: "Edit this image", "aria-describedby": "image-title-#{image.id}" do
                           Edit
                         %nbsp
                         = link_to image, title: "Delete this image" , class: "btn btn-sm btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{image}?"}, "aria-describedby": "image-title-#{image.id}" do
                           Delete
                         %nbsp
-                      -if current_user and !admin?
+                      - if current_user && !organization_user.admin?
                         =link_to 'Describe', new_organization_description_path(current_organization,image_id: image.id), class: "btn btn-edit", title: "Add a description for Image #{image.id}" 
 
 
@@ -143,7 +143,7 @@
           - if @images.total_pages > 1
             %h2.sr-only Pagination
             =paginate @images
-          -if admin?
+          -if organization_user.admin?
             %br
             %h2.sr-only Actions
             = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do

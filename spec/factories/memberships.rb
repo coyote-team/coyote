@@ -7,6 +7,7 @@
 #  organization_id :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  role            :enum             default("guest"), not null
 #
 # Indexes
 #
@@ -17,5 +18,11 @@ FactoryGirl.define do
   factory :membership do
     user
     organization
+
+    Membership.each_role.each do |_,role_name|
+      trait role_name do
+        role role_name
+      end
+    end
   end
 end

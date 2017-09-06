@@ -5,7 +5,7 @@ class ImagesController < ApplicationController
   before_action :clear_search, only: %i[index]
   before_action :set_users, only: %i[index show], unless: -> { request.xhr? }
 
-  before_action :admin, only: %i[edit update destroy toggle]
+  #before_action :admin, only: %i[edit update destroy toggle]
   before_action :users, only: %i[create]
 
   helper_method :image, :contexts, :websites, :tag_list, :users
@@ -50,42 +50,40 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
 
   EOT
   def index
-    #the status_ids param is used by JSON endpoint only
+    authorize(Image)
+
     @status_ids = [2]
-    @status_ids = params[:status_ids]  if params[:status_ids]
+    @status_ids = params[:status_ids] if params[:status_ids]
 
     if params[:canonical_id].present? 
-      #for ajax
-      self.image = current_user.images.find_by(canonical_id: params[:canonical_id])
+      self.image = current_organization.images.find_by(canonical_id: params[:canonical_id]) # for ajax
     else
-      #ajax params to ransack params
       if params["updated_at"].present? or params["website_id"].present?
         params["q"] = {} 
         params["q"]["s"] = "updated_at desc"
         params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
         params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
       end
-      #ajax default sort
+
       @search_cache_key = params["q"]
 
-      #clean up of html based search queries
       if search_params
         search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"].present?
         search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"].present?
         search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
       end
 
-      @q = current_user.images.ransack(search_params)
+      @q = current_organization.images.ransack(search_params)
 
-      #tag filtering does not cooperate with ransack but can paginate
+      # tag filtering does not cooperate with ransack but can paginate
       if params[:tag].present? 
-        @images = current_user.images.tagged_with(params[:tag]).page(params[:page]) 
+        @images = current_organization.images.tagged_with(params[:tag]).page(params[:page]) 
       else
         @images = @q.result(distinct: true).page(params[:page]) 
       end
 
-      #tagcloud
       if request.format.html?
+        # for tagcloud
         @tags = Rails.cache.fetch('tags', expires_in: 15.minutes) do
           Image.tag_counts_on(:tags)
         end
@@ -153,8 +151,10 @@ Ex:
 
   EOT
   def show
+    authorize(image)
     @status_ids = [2]
     @status_ids = params[:status_ids]  if params[:status_ids]
+
     if request.format.html?
       @previous_image = Image.where("id < ?", image.id).first
       @next_image = Image.where("id > ?", image.id).first
@@ -163,17 +163,24 @@ Ex:
 
   # GET /images/new
   def new
+    authorize Image
     self.image = current_organization.images.new
   end
 
   # GET /images/1/edit
   def edit
+    authorize(image)
   end
 
   # POST /images
   api :POST, "images", "Create an image"
   param_group :image
   def create
+    authorize Image
+
+    image_params[:website] = current_organization.websites.find_by(id: image_params.delete(:website_id))
+    image_params[:context] = current_organization.contexts.find_by(id: image_params.delete(:context_id))
+
     self.image = current_organization.images.create(image_params)
 
     if image.valid?
@@ -198,6 +205,8 @@ Ex:
   api :PUT, "images/:id", "Update an image"
   param_group :image
   def update
+    authorize(image)
+
     if image.update(image_params)
       if request.format.html?
         redirect_to [current_organization,image], notice: 'Image was successfully updated.'
@@ -216,6 +225,7 @@ Ex:
   # DELETE /images/1
   api :DELETE, "images/:id", "Delete an image"
   def destroy
+    authorize(image)
     image.destroy
     redirect_to organization_images_url(current_organization), notice: 'Image was successfully destroyed.'
   end
@@ -307,7 +317,7 @@ Ex:
   attr_accessor :image, :users
 
   def contexts
-    @contexts ||= Context.all
+    @contexts ||= current_organization.contexts
   end
 
   def websites
@@ -327,7 +337,7 @@ Ex:
   end
 
   def image_params
-    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:organization_id,:title,:priority,:page_urls,tag_list: [])
+    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:organization_id,:title,:priority,:page_urls,tag_list: [],page_urls: [])
   end
 
   def search_params
