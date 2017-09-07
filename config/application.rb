@@ -14,9 +14,9 @@ module Coyote
     config.load_defaults 5.1
 
     config.assets.precompile += %w[coyote_producer.js]
-    config.autoload_paths << "#{Rails.root}/lib"
+    config.eager_load_paths << Rails.root.join("lib") # http://blog.arkency.com/2014/11/dont-forget-about-eager-load-when-extending-autoload/
     config.autoload_paths << "#{Rails.root}/app/presenters"
-
+    
     config.active_record.schema_format = :sql
 
     config.action_controller.per_form_csrf_tokens = true
