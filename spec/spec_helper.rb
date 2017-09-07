@@ -28,7 +28,7 @@ RSpec.configure do |config|
   config.include ResponseJSON
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
-  
+
   config.order = "random"
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
@@ -73,6 +73,10 @@ RSpec.configure do |config|
   config.around(:each,:type => :controller,&db_cleaning) 
   config.around(:each,:type => :feature,&db_cleaning) 
   config.around(:each,:type => :request,&db_cleaning) 
+
+  config.after(:all) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
 end
 
 ActiveRecord::Migration.maintain_test_schema!
