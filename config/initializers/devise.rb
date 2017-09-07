@@ -6,13 +6,15 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = ENV.fetch("SECRET_KEY_BASE") { abort("Please set ENV variable SECRET_KEY_BASE (see .env file)") }
+  config.secret_key = ENV.fetch("SECRET_KEY_BASE") do 
+    abort("Please set ENV variable SECRET_KEY_BASE (see .env file)") 
+  end
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'coyote@mcachicago.org'
+  config.mailer_sender = ENV.fetch("DEVISE_MAILER_SENDER",'coyote@exampe.org')
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -72,7 +74,7 @@ Devise.setup do |config|
   # It will change confirmation, password recovery and other workflows
   # to behave the same regardless if the e-mail provided was right or wrong.
   # Does not affect registerable.
-  # config.paranoid = true
+  config.paranoid = true
 
   # By default Devise will store the user in session. You can skip storage for
   # particular strategies by setting this option.
