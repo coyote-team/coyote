@@ -120,6 +120,16 @@ heroku run rails console # access production console
 heroku pg:pull DATABASE coyote_development # pull production DB data into dev environment
 ```
 
+_Testing Mailers in Development Mode_
+
+The settings in [sample.env] work with [mailcatcher](https://mailcatcher.me/):
+
+```bash
+gem install mailcatcher     # runs independently of the app, so this gem is not part of our Gemfile
+mailcatcher -f              # much better to run this in foreground vs. the default daemon mode
+open http://127.0.0.1:1080/ # mail delivery console
+```
+
 ## <a name="api"> API
 
 API documentation is generated at `/apipie` and you can see MCA's version  [here](http://coyote.mcachicago.org/apipie).
