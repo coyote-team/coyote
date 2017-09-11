@@ -6,7 +6,7 @@ RSpec.shared_context "signed-out user" do
   end
 end
 
-Membership.each_role do |_,role_name|
+Coyote::Membership.each_role do |_,role_name|
   RSpec.shared_context "signed-in #{role_name} user" do
     let(:user) do 
       create(:user,organization: organization,role: role_name) 

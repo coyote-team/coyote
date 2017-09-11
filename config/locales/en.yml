@@ -30,4 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  invitation_mailer:
+    new_user:
+      subject: 'You are invited to join Coyote'
+    existing_user:
+      subject: 'You are invited to join a Coyote organization'

@@ -4,12 +4,25 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
-  # @return [Hash] a collection of User roles with human friendly labels
+  # @return [Integer] minimum number of password characters we accept
   # @see User
-  def user_organization_role_collection
-    Membership.role_names.inject({}) do |result,(role_name,role_value)| 
-      result.merge!(role_name.to_s.titleize => role_value) 
+  def minimum_password_length
+    User.password_length.min
+  end
+
+  # @return [Hash] a collection of User roles with human friendly labels that the current organizational user can assign
+  # @see User
+  def organizational_user_assignable_roles
+    max_assignable_role_rank = organization_user.role_rank
+
+    roles = []
+
+    Coyote::Membership.each_role do |label,role_name,role_rank|
+      break if role_rank >= max_assignable_role_rank
+      roles << [label,role_name]
     end
+
+    roles
   end
 
   # @return [String] welcome message, including the user's name if someone is logged-in

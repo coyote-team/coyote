@@ -19,7 +19,7 @@ FactoryGirl.define do
     user
     organization
 
-    Membership.each_role.each do |_,role_name|
+    Coyote::Membership.each_role do |_,role_name|
       trait role_name do
         role role_name
       end

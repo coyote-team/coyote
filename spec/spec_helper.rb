@@ -56,6 +56,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each,:type => :feature) do
+    ActionMailer::Base.deliveries.clear
+
     unless Capybara.current_driver == :rack_test
       # Driver is probably for an external browser with an app
       # under test that does *not* share a database connection with the

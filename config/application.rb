@@ -16,6 +16,7 @@ module Coyote
     config.assets.precompile += %w[coyote_producer.js]
     config.eager_load_paths << Rails.root.join("lib") # http://blog.arkency.com/2014/11/dont-forget-about-eager-load-when-extending-autoload/
     config.autoload_paths << "#{Rails.root}/app/presenters"
+    config.autoload_paths << "#{Rails.root}/app/services/"
     
     config.active_record.schema_format = :sql
 
@@ -36,7 +37,12 @@ module Coyote
       g.factory_girl dir: Rails.root.join("spec/factories").to_s
     end
 
-    config.x.site_name                      = ENV.fetch("COYOTE_SITE_NAME","Coyote")
-    config.x.dashboard_top_items_queue_size = ENV.fetch("COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE",10).to_i
+    config.x.site_name                      = ENV.fetch('COYOTE_SITE_NAME','Coyote')
+    config.x.host_name                      = ENV.fetch('HOST','coyote.example.org')
+    config.x.project_url                    = ENV.fetch('COYOTE_PROJECT_URL','http://coyote.pics')
+    config.x.dashboard_top_items_queue_size = ENV.fetch('COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE',10).to_i
+    config.x.default_email_from_address     = ENV.fetch('COYOTE_DEFAULT_EMAIL_FROM_ADDRESS',"support@#{config.x.host_name}")
+
+    config.action_mailer.default_url_options = { host: config.x.host_name }
   end
 end
