@@ -85,7 +85,7 @@ RSpec.describe Dashboard, :type => :integration do
         expect(subject.organization_assigned_count).to eq(4)
         expect(subject.organization_open_assignment_count).to eq(2)
         expect(subject.organization_unassigned_count).to eq(1)
-        expect(subject.organization_latest_image_timestamp).to eq(latest_timestamp)
+        expect(subject.organization_latest_image_timestamp).to be_within(1.second).of(latest_timestamp)
         expect(subject.organization_top_ready_to_review_items_queue).to eq([ready_to_review_description_of_third_image_by_user])
         expect(subject.organization_top_unassigned_items_queue).to eq([unassigned_image])
         expect(subject.organization_top_undescribed_items_queue).to match_array([second_image,unassigned_image,other_user_image])
