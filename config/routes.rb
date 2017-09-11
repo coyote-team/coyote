@@ -39,6 +39,8 @@ Rails.application.routes.draw do
         get :check_count
       end
     end
+
+    resources :invitations, only: %i[new create]
   end
 
   resources :images, only: %i[show] # so API can continue to use direct image URLs like /images/1.json
@@ -49,7 +51,8 @@ Rails.application.routes.draw do
 
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
-  devise_for :users, only: %i[sessions passwords]
+  devise_for :users, only: %i[passwords sessions]
+  resource :registration, only: %i[new update]
 
   get '/login',  to: redirect('/users/sign_in')
   get '/logout', to: redirect('/users/sign_out')

@@ -58,15 +58,13 @@ undescribed_image = FactoryGirl.create(:image,{
   title: 'Mona Lisa'
 })
 
-User.role.each do |role|
-  email = "#{role}@example.com"
+Coyote::Membership.each_role do |_,role_id|
+  email = "#{role_id}@example.com"
 
-  user = FactoryGirl.create(role,email: email,password: "password")
-  organization.users << user
-
+  user = FactoryGirl.create(:user,organization: organization,role: role_id,email: email,password: "password")
   Assignment.create(image: undescribed_image,user: user)
 
-  puts "Created #{role} user '#{email}' with password 'password'"
+  puts "Created #{role_id} user '#{email}' with password 'password'"
 end
 
 # to create other admin users, run bin/rake coyote:admin:create[user@example.com]

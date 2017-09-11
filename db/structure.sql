@@ -239,6 +239,43 @@ ALTER SEQUENCE images_id_seq OWNED BY images.id;
 
 
 --
+-- Name: invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE invitations (
+    id bigint NOT NULL,
+    recipient_email character varying NOT NULL,
+    token character varying NOT NULL,
+    sender_user_id bigint NOT NULL,
+    recipient_user_id bigint NOT NULL,
+    organization_id bigint NOT NULL,
+    redeemed_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    role membership_role DEFAULT 'viewer'::membership_role NOT NULL
+);
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invitations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invitations_id_seq OWNED BY invitations.id;
+
+
+--
 -- Name: memberships; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -553,6 +590,13 @@ ALTER TABLE ONLY images ALTER COLUMN id SET DEFAULT nextval('images_id_seq'::reg
 
 
 --
+-- Name: invitations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations ALTER COLUMN id SET DEFAULT nextval('invitations_id_seq'::regclass);
+
+
+--
 -- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -654,6 +698,14 @@ ALTER TABLE ONLY descriptions
 
 ALTER TABLE ONLY images
     ADD CONSTRAINT images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invitations invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations
+    ADD CONSTRAINT invitations_pkey PRIMARY KEY (id);
 
 
 --
@@ -819,6 +871,34 @@ CREATE INDEX index_images_on_website_id ON images USING btree (website_id);
 
 
 --
+-- Name: index_invitations_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_organization_id ON invitations USING btree (organization_id);
+
+
+--
+-- Name: index_invitations_on_recipient_email_and_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_recipient_email_and_token ON invitations USING btree (recipient_email, token);
+
+
+--
+-- Name: index_invitations_on_recipient_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_recipient_user_id ON invitations USING btree (recipient_user_id);
+
+
+--
+-- Name: index_invitations_on_sender_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_sender_user_id ON invitations USING btree (sender_user_id);
+
+
+--
 -- Name: index_memberships_on_user_id_and_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -896,6 +976,14 @@ CREATE INDEX user_index ON audits USING btree (user_id, user_type);
 
 
 --
+-- Name: invitations fk_rails_0fe4c14f0e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations
+    ADD CONSTRAINT fk_rails_0fe4c14f0e FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: descriptions fk_rails_1baaf0e406; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -944,6 +1032,14 @@ ALTER TABLE ONLY assignments
 
 
 --
+-- Name: invitations fk_rails_7c153aa738; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations
+    ADD CONSTRAINT fk_rails_7c153aa738 FOREIGN KEY (sender_user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: contexts fk_rails_8e9711c31f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -989,6 +1085,14 @@ ALTER TABLE ONLY images
 
 ALTER TABLE ONLY assignments
     ADD CONSTRAINT fk_rails_aa6b76dac2 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: invitations fk_rails_ad7a61abab; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations
+    ADD CONSTRAINT fk_rails_ad7a61abab FOREIGN KEY (recipient_user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1059,6 +1163,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170901151655'),
 ('20170905125227'),
 ('20170905125501'),
-('20170905125542');
+('20170905125542'),
+('20170907200258'),
+('20170911173601');
 
 

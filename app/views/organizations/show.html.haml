@@ -50,6 +50,5 @@
       - else
         = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Images", count: dashboard.current_user_assigned_items_count }
 
-  .row
-    .col-md-12
-    = render partial: "file_operations" if organization_user.admin?
+  = render partial: "issue_invitation" if organization_user.admin?
+  = render partial: "file_operations" if organization_user.admin?

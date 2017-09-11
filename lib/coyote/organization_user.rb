@@ -36,14 +36,10 @@ module Coyote
     # @!attribute [r] owner?
     #   @return [Boolean] is the user at least an owner of this organization?
     #   @note (see #viewer?)
-    Membership.each_role do |_,role_name|
-      define_method :"#{role_name}?" do
-        return true if staff?
-
-        role_rank = role_order.index(role)
-        return false unless role_rank
-
-        role_rank >= role_order.index(role_name)
+    Coyote::Membership.each_role do |_,test_role_name,test_role_rank|
+      define_method :"#{test_role_name}?" do
+        return true if staff? # staff members automatically have all admin owner powers regardless of whatever role they nominally hold in an organization
+        role_rank >= test_role_rank
       end
     end
 
@@ -52,12 +48,12 @@ module Coyote
       @role ||= (user.memberships.find_by(organization: organization)&.role || :none).to_sym
     end
 
+    def role_rank
+      @role_rank ||= Coyote::Membership.role_rank(role)
+    end
+
     private
 
     attr_reader :user, :organization
-
-    def role_order
-      @role_order ||= Membership.role_names
-    end
   end
 end

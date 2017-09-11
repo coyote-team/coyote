@@ -1,4 +1,4 @@
-# Base class for all Coyote controllers
+# @abstract Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
   include Pundit
 
