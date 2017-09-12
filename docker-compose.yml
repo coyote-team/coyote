@@ -22,7 +22,7 @@ services:
       SECRET_KEY_BASE: TEST_ONLY_09f0f5a7621eb1835061d53c0f1ebc105d4104058f5c8d42827e48abe133dbbff85b63a4b40176290336082141f2e84a150bb0ce8dc2db72d
     volumes:
       - ./:/coyote
-    command: ["rails","db:structure:load","db:migrate","spec"]
+    command: ["rails","db:environment:set","db:test:prepare","db:migrate","spec"]
     depends_on:
       - db
 
