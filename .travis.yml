@@ -9,7 +9,7 @@ before_install:
   - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done # wait for postgresql to shutdown
 
 script:
-  - docker-compose build test && docker-compose up test
+  - docker-compose up --exit-code-from test test
 
 addons:
   code_climate:
