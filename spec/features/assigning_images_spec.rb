@@ -35,29 +35,4 @@ RSpec.describe "Assigning images" do
       }.to change(assignment,:user).from(user).to(other_user)
     end
   end
-
-  context "when logged-in as a user" do
-    include_context "as a logged-in user"
-
-    let!(:image) do 
-      create(:image,organization: user_organization)  
-    end
-
-    let(:assignment) do 
-      create(:assignment,image: image)
-    end
-
-    it "is not allowed" do
-      expect(page).not_to have_link("Assignments")
-      
-      visit new_organization_assignment_path(user_organization)
-      expect(page.current_path).to eq(organization_path(user_organization))
-
-      visit organization_assignment_path(user_organization,assignment)
-      expect(page.current_path).to eq(organization_path(user_organization))
-
-      visit edit_organization_assignment_path(user_organization,assignment)
-      expect(page.current_path).to eq(organization_path(user_organization))
-    end
-  end
 end
