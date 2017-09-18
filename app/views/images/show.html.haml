@@ -58,7 +58,7 @@
 
             %nav.show-nav{role:"navigation"}
               %ul.list-inline
-                -if organization_user.admin?
+                - if policy(@image).edit?
                   %li
                     = link_to edit_organization_image_path(current_organization,@image), title: "Edit this image", class: 'btn btn-primary' do
                       Edit
@@ -67,7 +67,7 @@
                     - css_id = "quick-assign"
                     = render "assign_to", css_id: css_id, image: @image, users: @users
 
-                -if current_user
+                - if policy(Description).new?
                   %li
                     =link_to 'Describe', new_organization_description_path(current_organization,image_id: @image.id), class: "btn btn-primary", title: "Add a description for Image #{@image.id}" 
                 %br

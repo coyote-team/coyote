@@ -12,7 +12,7 @@
           - if @images.total_pages > 1
             %h2.sr-only Pagination
             =paginate @images
-          - if organization_user.admin?
+          - if policy(Image).new?
             %br
             %h2.sr-only Actions
             = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do
@@ -142,8 +142,8 @@
         %nav.index-nav{role:"navigation"}
           - if @images.total_pages > 1
             %h2.sr-only Pagination
-            =paginate @images
-          -if organization_user.admin?
+            = paginate @images
+          - if policy(Image).new?
             %br
             %h2.sr-only Actions
             = link_to new_organization_image_path(current_organization), class: 'btn btn-primary new-link' do
