@@ -11,5 +11,6 @@
 FactoryGirl.define do
   factory :context do
     title Faker::Lorem.word
+    organization
   end
 end

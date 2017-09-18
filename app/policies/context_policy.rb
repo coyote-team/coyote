@@ -1,14 +1,19 @@
 # Protects Context objects
 class ContextPolicy < ApplicationPolicy
-  # @return [Boolean] if the user is a admin, they can work with contexts
+  # @return [Boolean] all users can view contexts
   def index?
-    user.admin?
+    true
   end
 
   alias show? index?
-  alias create? index?
-  alias new? index?
-  alias update? index?
-  alias edit? index?
-  alias destroy? index?
+
+  # @return [Boolean] only admins can create or edit contects
+  def create?
+    user.admin?
+  end
+
+  alias new? create?
+  alias update? create?
+  alias edit? create?
+  alias destroy? create?
 end
