@@ -15,7 +15,7 @@ def setup!
     env_path = working_path.join(".env")
 
     copy_flag = if env_path.exist?
-                  puts "It looks like you already have a .env file at #{env_path}. Should we overwrite it with the default values in sample.env? (Y/N)"
+                  puts "\nIt looks like you already have a .env file at #{env_path}. Should we overwrite it with the default values in sample.env? (Y/N)"
                   answer = gets.strip.upcase
                   answer == "Y"
                 else
@@ -35,18 +35,18 @@ def setup!
       end
     end
 
-    check_for_mysql
-    run("bin/rake db:drop db:create db:migrate db:test:prepare db:seed coyote:admin:create[user@example.com,password]")
+    check_for_database()
+    run("bin/rake db:drop db:create db:structure:load db:migrate db:test:prepare db:seed")
   end
 end
 
-def check_for_mysql
+def check_for_database
   command = ["begin"]
   command << %q|ActiveRecord::Base.connection.select_value("SELECT 1")|
-  command << %q|rescue Mysql2::Error|
+  command << %q|rescue|
   command << %q|warn "We were unable to connect to your database. Please check that you have MySQL installed and that it is currently running (#{$!.message})"|
   command << %q|else| 
-  command << %q|puts "Successfully connected to MySQL"|
+  command << %q|puts "Successfully connected to database"|
   command << %q|end|
 
   run "bin/rails runner '#{command.join(";")}'"

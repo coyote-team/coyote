@@ -1,24 +1,4 @@
 namespace :coyote do
-  namespace :admin do
-    desc "Create an admin user"
-    task :create, [:email,:password] => :environment do |_,args|
-      password = args[:password]
-
-      if password.blank?
-        puts "Please enter a password for this user (minimum 8 characters):"
-        password = STDIN.gets.chomp.upcase
-      end
-
-      user = User.create!({
-        :email => args[:email],
-        :password => password,
-        :role => :admin
-      })
-
-      puts "Created #{user} (#{user.email}) with password '#{password}'"
-    end
-  end
-
   def import_tsv(headers,line)
     line = line.encode(line.encoding,universal_newline: true) # see https://stackoverflow.com/questions/1836046/normalizing-line-endings-in-ruby
     line.chomp!

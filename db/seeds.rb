@@ -66,5 +66,3 @@ Coyote::Membership.each_role do |_,role_id|
 
   puts "Created #{role_id} user '#{email}' with password 'password'"
 end
-
-# to create other admin users, run bin/rake coyote:admin:create[user@example.com]

@@ -1,5 +1,5 @@
 -id ||= "description-image"
-= link_to image_path(image) do
+= link_to [current_organization,image] do
   = image_tag  image.url, class: "description-image", id: id, alt: image.alt, "aria-describedby": "image-title-#{image.id}"
 
 -unless image.title.blank?
