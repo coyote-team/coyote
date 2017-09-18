@@ -161,13 +161,10 @@ class Image < ApplicationRecord
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
-    puts "YAML:"
-    puts spreadsheet.to_yaml #DEBUG
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       image = find_by_id(row["id"]) || new
-      #image.attributes = row.to_hash.slice(*accessible_attributes)
       image.attributes = row.to_hash
       image.save!
     end

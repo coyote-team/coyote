@@ -22,6 +22,7 @@ class InvitationsController < ApplicationController
 
     user_invitation_service.call(invitation) do |err_msg|
       logger.warn "Unable to create Invitation: #{err_msg}"
+      flash.now[:error] = err_msg
       render :new
       return nil
     end

@@ -7,7 +7,7 @@
       %header
         %h1#page-title{tabindex: -1}= title
       %p
-        Issue an invitation to join <%= current_organization.title %>
+        Issue an invitation to join #{current_organization.title}:
 
       = simple_form_for [current_organization,invitation], validate: true do |f|
         = f.error_notification

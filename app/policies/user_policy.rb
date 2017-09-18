@@ -11,11 +11,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
-  # @return [true] if the user is a staff member
+  # @return [true] if the user is an admin of the organization
   # @return [false] otherwise
-  # @note eventually we will only add users by invitation, so this whole permission won't be needed
   def create?
-    organization_user.staff?
+    organization_user.admin?
   end
 
   # @return (see #create?)

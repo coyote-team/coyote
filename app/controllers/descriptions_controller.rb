@@ -127,7 +127,6 @@ class DescriptionsController < ApplicationController
     errors = ""
 
     descriptions.each do |k, a|
-      puts a
       if Description.find(a[:id]).update(status_id: a[:status_id])
         success_count += 1
       else
