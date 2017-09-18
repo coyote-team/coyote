@@ -1,9 +1,6 @@
 # @abstract Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
   include Pundit
-
-  #after_action :verify_authorized, except: :index, unless: Rails.env.production?
-  #after_action :verify_policy_scoped, only: :index, unless: Rails.env.production?
   
   helper_method :current_organization, :current_organization?, :organization_user
 

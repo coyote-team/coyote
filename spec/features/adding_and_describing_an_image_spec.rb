@@ -1,13 +1,16 @@
 RSpec.feature "Adding and describing an image" do
   include_context "as a logged-in admin user"
 
+  let!(:preexisting_image) { create(:image) }
   let!(:website) { create(:website,organization: user_organization) }
   let!(:context) { create(:context,organization: user_organization) }
   let!(:metum)   { create(:metum) }
   let!(:status)  { create(:ready_to_review_status) }
 
+  let(:title) { "Boxcar" }
+
   let(:image_attributes) do
-    attributes_for(:image).tap(&:symbolize_keys!)
+    attributes_for(:image).tap(&:symbolize_keys!).merge(title: title)
   end
 
   scenario "succeeds" do
@@ -25,12 +28,12 @@ RSpec.feature "Adding and describing an image" do
     expect {
       click_button("Create Image")
     }.to change(Image,:count).
-    from(0).to(1)
+    from(1).to(2)
 
-    image = Image.first
+    image = Image.find_by!(title: title)
 
     expect(page.current_path).to eq(organization_image_path(image.organization,image))
-    expect(page).to have_content(image_attributes[:title])
+    expect(page).to have_content(title)
 
     click_link "Describe"
 
