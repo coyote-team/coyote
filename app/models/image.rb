@@ -38,8 +38,8 @@ class Image < ApplicationRecord
   belongs_to :context, touch: true, :inverse_of => :images
   belongs_to :organization, :inverse_of => :images, optional: true
 
-  has_many :descriptions, dependent: :destroy
-  has_many :assignments, dependent: :destroy
+  has_many :descriptions, :dependent => :destroy
+  has_many :assignments, :inverse_of => :image, :dependent => :destroy
   has_many :users, through: :assignments
 
   validates :path, :presence => true, :uniqueness => { :scope => :website_id }

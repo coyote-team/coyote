@@ -14,6 +14,12 @@
 #  role              :enum             default("viewer"), not null
 #
 # Indexes
+#
+#  index_invitations_on_organization_id            (organization_id)
+#  index_invitations_on_recipient_email_and_token  (recipient_email,token)
+#  index_invitations_on_recipient_user_id          (recipient_user_id)
+#  index_invitations_on_sender_user_id             (sender_user_id)
+#
 
 #  index_invitations_on_organization_id            (organization_id)
 #  index_invitations_on_recipient_email_and_token  (recipient_email,token)

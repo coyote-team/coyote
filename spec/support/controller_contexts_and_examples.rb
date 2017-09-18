@@ -28,14 +28,6 @@ RSpec.shared_context "signed-in staff user" do
   end
 end
 
-RSpec.shared_context "injected user organization" do
-  let(:user_organization) { build_stubbed(:organization) }
-
-  before do
-    subject.current_organization = user_organization
-  end
-end
-
 RSpec.shared_examples "a successful controller response" do
   it "succeeds" do
     expect(response).to have_http_status(:ok)

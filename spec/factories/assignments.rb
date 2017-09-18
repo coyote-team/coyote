@@ -10,8 +10,7 @@
 #
 # Indexes
 #
-#  index_assignments_on_image_id  (image_id)
-#  index_assignments_on_user_id   (user_id)
+#  index_assignments_on_user_id_and_image_id  (user_id,image_id) UNIQUE
 #
 
 FactoryGirl.define do

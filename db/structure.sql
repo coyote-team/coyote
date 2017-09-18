@@ -787,17 +787,10 @@ CREATE INDEX auditable_index ON audits USING btree (auditable_id, auditable_type
 
 
 --
--- Name: index_assignments_on_image_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_assignments_on_user_id_and_image_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_assignments_on_image_id ON assignments USING btree (image_id);
-
-
---
--- Name: index_assignments_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_assignments_on_user_id ON assignments USING btree (user_id);
+CREATE UNIQUE INDEX index_assignments_on_user_id_and_image_id ON assignments USING btree (user_id, image_id);
 
 
 --
@@ -1165,6 +1158,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170905125501'),
 ('20170905125542'),
 ('20170907200258'),
-('20170911173601');
+('20170911173601'),
+('20170918155037');
 
 
