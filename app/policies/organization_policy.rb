@@ -25,9 +25,8 @@ class OrganizationPolicy < ApplicationPolicy
 
   alias edit? update?
 
-  # @return [true] if the user is an owner of the organization
-  # @return [false] otherwise
+  # @return [false] we don't currently support destruction of organizations
   def destroy?
-    organization_user.owner?
+    false
   end
 end

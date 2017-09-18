@@ -1,16 +1,9 @@
 # Manges requests to view and manipulate Organization objects
 # @see Organization
 class OrganizationsController < ApplicationController
-  # @!attribute [w] dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard
-  # @see Dashboard
-  attr_writer :dashboard
+  before_action :authorize_general_access, only: %i[new index create]
+  before_action :authorize_unit_access,    only: %i[show edit update destroy]
   
-  # @!attribute [w] organization Dependency injection affordance used for unit testing; normally an instance of Organization
-  # @see organization
-  attr_writer :organization
-
-  before_action :set_organization, only: %i[show edit update destroy]
-
   helper_method :title, :organization, :organizations, :dashboard, :users
 
   # GET /organizations
@@ -36,7 +29,7 @@ class OrganizationsController < ApplicationController
     self.organization = Organization.create(organization_params)
 
     if organization.valid?
-      organization.users << current_user
+      organization.memberships.owner.create!(user: current_user)
       logger.info "Created #{organization} and assigned #{current_user}"
       redirect_to organization, success: "Created #{organization.title}"
     else
@@ -65,11 +58,16 @@ class OrganizationsController < ApplicationController
 
   private
 
+  attr_writer :organization
   attr_accessor :title, :organizations
-  attr_reader :organization
 
-  def set_organization
-    @organization ||= current_user.organizations.find(params[:id])
+  def organization
+    @organization ||= current_user.organizations.find_by(id: params[:id])
+  end
+
+  def pundit_user
+    # necessary to override ApplicationController's method here because in this controller we may not be dealing with a particular organization
+    @pundit_user ||= Coyote::OrganizationUser.new(current_user,organization)
   end
 
   def organization_params
@@ -87,5 +85,13 @@ class OrganizationsController < ApplicationController
 
   def users
     organization.users
+  end
+
+  def authorize_general_access
+    authorize Organization
+  end
+
+  def authorize_unit_access
+    authorize(organization)
   end
 end
