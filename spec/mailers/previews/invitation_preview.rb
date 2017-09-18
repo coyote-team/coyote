@@ -1,6 +1,5 @@
 # Preview all emails at http://localhost:3000/rails/mailers/invitation
 class InvitationPreview < ActionMailer::Preview
-
   # Preview this email at http://localhost:3000/rails/mailers/invitation/new_user
   def new_user
     InvitationMailer.new_user
@@ -10,5 +9,4 @@ class InvitationPreview < ActionMailer::Preview
   def existing_user
     InvitationMailer.existing_user
   end
-
 end

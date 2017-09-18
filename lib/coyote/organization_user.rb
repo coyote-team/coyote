@@ -48,6 +48,7 @@ module Coyote
       @role ||= (user.memberships.find_by(organization: organization)&.role || :none).to_sym
     end
 
+    # @return (see Coyote::Membership#role_rank)
     def role_rank
       @role_rank ||= Coyote::Membership.role_rank(role)
     end

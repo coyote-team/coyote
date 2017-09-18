@@ -28,7 +28,7 @@ module Coyote
       ROLES.keys
     end
 
-    # @yieldparam role_rank [Integer] for sorting and comparison purposes; higher numbers are associated with higher-ranking/more-powerful roles
+    # @return role_rank [Integer] for sorting and comparison purposes; higher numbers are associated with higher-ranking/more-powerful roles
     def self.role_rank(role_name)
       role_names.index(role_name.to_sym) || -1
     end

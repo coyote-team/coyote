@@ -46,3 +46,6 @@ Performance/RedundantMerge:
 Style/BracesAroundHashParameters:
   Enabled: false
   # reason: I think adding a brace to hashes in a multiline set of parameters is easier to read/more clear
+
+Style/DoubleNegation:
+  Enabled: false

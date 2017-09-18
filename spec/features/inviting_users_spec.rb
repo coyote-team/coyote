@@ -24,7 +24,7 @@ RSpec.feature 'Inviting users' do
         click_button 'Send invitation'
         expect(page.current_path).to eq(organization_path(user_organization))
       }.to change(user_organization.users,:count).
-      from(1).to(2)
+        from(1).to(2)
 
       Membership.find_by!(user: preexisting_user,organization: user_organization).tap do |m|
         expect(m).to be_editor
@@ -54,7 +54,7 @@ RSpec.feature 'Inviting users' do
         click_button 'Send invitation'
         expect(page.current_path).to eq(organization_path(user_organization))
       }.to change(User,:count).
-      from(1).to(2)
+        from(1).to(2)
 
       new_user = User.find_by!(email: new_member_email)
 
@@ -68,7 +68,7 @@ RSpec.feature 'Inviting users' do
       expect(email.to).to eq([new_member_email])
       expect(email.subject).to match(/You are invited to join/i)
 
-      html_part = email.parts.find { |p| p.content_type =~ %r|text/html| }
+      html_part = email.parts.find { |p| p.content_type =~ %r{text/html} }
       html_body = Nokogiri::HTML(html_part.body.to_s)
 
       invite_link = html_body.at_xpath("//a[@id='signup_link']/@href").value

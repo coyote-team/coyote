@@ -23,7 +23,7 @@ class InvitationsController < ApplicationController
     user_invitation_service.call(invitation) do |err_msg|
       logger.warn "Unable to create Invitation: #{err_msg}"
       render :new
-      return
+      return nil
     end
 
     logger.info "Created #{invitation} for #{invitation.recipient_email} to #{invitation.organization}"
