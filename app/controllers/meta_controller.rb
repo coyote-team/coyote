@@ -1,21 +1,23 @@
+# Handles CRUD operations for Metum objects
+# @see Metum
 class MetaController < ApplicationController
-  before_action :authorize_admin!, only: [:create, :edit, :update, :destroy]
-  before_action :set_metum, only: [:show, :edit, :update, :destroy]
+  before_action :set_metum, only: %i[show edit update destroy]
+  before_action :authorize_general_access, only: %i[new index create]
+  before_action :authorize_unit_access,    only: %i[show edit update destroy]
+
+  helper_method :title, :list_of_meta, :metum
 
   # GET /meta
-  api :GET, "meta", "Get an index of meta"
   def index
-    @meta = Metum.all
   end
 
   # GET /meta/1
-  api :GET, "meta/:id", "Get a metum"
   def show
   end
 
   # GET /meta/new
   def new
-    @metum = Metum.new
+    self.metum = current_organization.meta.new
   end
 
   # GET /meta/1/edit
@@ -24,39 +26,48 @@ class MetaController < ApplicationController
 
   # POST /meta
   def create
-    @metum = Metum.new(metum_params)
+    self.metum = current_organization.meta.new(metum_params)
 
-    if @metum.save
-      redirect_to @metum, notice: 'Metum was successfully created.'
+    if metum.save
+      logger.info "Created #{metum}"
+      redirect_to [current_organization,metum], notice: 'Metum was successfully created.'
     else
+      logger.warn "Unable to create Metum: '#{metum.error_sentence}'"
       render :new
     end
   end
 
-  # PATCH/PUT /meta/1
+  # PATCH /meta/1
   def update
-    if @metum.update(metum_params)
-      redirect_to @metum, notice: 'Metum was successfully updated.'
+    if metum.update(metum_params)
+      redirect_to [current_organization,metum], notice: 'Metum was successfully updated.'
     else
+      logger.warn "Unable to update #{metum}: '#{metum.error_sentence}'"
       render :edit
     end
   end
 
-  # DELETE /meta/1
-  #def destroy
-  #@metum.destroy
-  #redirect_to meta_url, notice: 'Metum was successfully destroyed.'
-  #end
-
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_metum
-    @metum = Metum.find(params[:id])
+  attr_accessor :title, :metum
+
+  def list_of_meta
+    current_organization.meta
   end
 
-  # Only allow a trusted parameter "white list" through.
+  def set_metum
+    self.metum = current_organization.meta.find(params[:id])
+  end
+
   def metum_params
-    params.require(:metum).permit(:title, :instructions)
+    params.require(:metum).permit(:title,:instructions)
+  end
+
+  def authorize_general_access
+    authorize Metum
+  end
+
+  def authorize_unit_access
+    authorize(metum)
   end
 end

@@ -1,28 +1,27 @@
--title = "Showing Metum #{@metum}"
--meta title: title
--cache ['v1', organization_user.admin?,  @metum] do
-  .entity-outer
-    .entity
-      .entity-inner
-        %header
-          %h1#page-title{tabindex: -1}=title
-        %table.entity-table
-          %caption.sr-only Key value pairs for this metum
-          %tbody
-            %tr
-              %th{scope: "row"}
-                Title:
-              %td
-                = @metum.title
-            %tr
-              %th{scope: "row"}
-                Instructions:
-              %td
-                = @metum.instructions
-        %nav.show-nav{role:"navigation"}
-          = link_to meta_path, class: 'btn btn-info', title: "View the meta index" do
-            
-            Meta
-          = link_to edit_metum_path(@metum), title: "Edit this metum", class: 'btn btn-primary' do
-            Edit
-            Edit
+- meta title: title
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}=title
+      %table.entity-table
+        %caption.sr-only Key value pairs for this metum
+        %tbody
+          %tr
+            %th{scope: "row"}
+              Title:
+            %td
+              = metum.title
+          %tr
+            %th{scope: "row"}
+              Instructions:
+            %td
+              = metum.instructions
+
+      %nav.show-nav{role:"navigation"}
+        = link_to organization_meta_path(current_organization), class: 'btn btn-info', title: "View the meta index" do
+          
+          Meta
+        = link_to edit_organization_metum_path(current_organization,metum), title: "Edit this metum", class: 'btn btn-primary' do
+          Edit
+          Edit

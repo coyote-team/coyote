@@ -16,5 +16,129 @@
 #
 
 RSpec.describe MetaController do
-  skip 'TODO'
+  let(:organization) { create(:organization) }
+  let(:metum) { create(:metum,organization: organization) }
+
+  let(:base_params) do
+    { organization_id: organization.id }
+  end
+
+  let(:metum_params) do
+    base_params.merge(id: metum.id)
+  end
+
+  let(:new_metum_params) do 
+    base_params.merge(metum: attributes_for(:metum))
+  end
+
+  let(:update_metum_params) do
+    metum_params.merge(metum: { title: "NEWTITLE" })
+  end
+
+  let(:foreign_metum) { create(:metum) }
+
+  let(:foreign_metum_params) do
+    { id: foreign_metum.id, 
+      organization_id: foreign_metum.organization_id, 
+      metum: { title: 'SHOULDNOTBEALLOWED' } }
+  end
+
+  context "as a signed-out user" do
+    include_context "signed-out user"
+
+    it "requires login for all actions" do
+      aggregate_failures do
+        get :index, params: base_params
+        expect(response).to redirect_to(new_user_session_url)
+
+        get :show, params: metum_params
+        expect(response).to redirect_to(new_user_session_url)
+
+        get :edit, params: metum_params
+        expect(response).to redirect_to(new_user_session_url)
+
+        get :new, params: base_params
+        expect(response).to redirect_to(new_user_session_url)
+
+        post :create, params: new_metum_params
+        expect(response).to redirect_to(new_user_session_url)
+
+        patch :update, params: update_metum_params
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+  end
+
+  context "as an editor" do
+    include_context "signed-in editor user"
+
+    let!(:metum) { create(:metum,organization: organization) }
+
+    it "permits read-only actions, forbids create/update/delete" do
+      get :index, params: base_params
+      expect(response).to be_success
+
+      get :show, params: metum_params
+      expect(response).to be_success
+
+      expect {
+        get :edit, params: metum_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        get :new, params: base_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        post :create, params: new_metum_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        patch :update, params: update_metum_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
+  end
+
+  context "as an admin" do
+    include_context "signed-in admin user"
+
+    it "succeeds for all actions involving organization-owned metums" do
+      get :show, params: metum_params
+      expect(response).to be_success
+
+      get :index, params: base_params
+      expect(response).to be_success
+
+      get :edit, params: metum_params
+      expect(response).to be_success
+
+      get :new, params: base_params
+      expect(response).to be_success
+
+      expect {
+        post :create, params: new_metum_params
+      }.to change(organization.meta,:count).
+        by(1)
+
+      post :create, params: base_params.merge(metum: { title: '' })
+      expect(response).to render_template(:new)
+
+      expect {
+        patch :update, params: update_metum_params
+        metum.reload
+      }.to change(metum,:title).
+        to("NEWTITLE")
+
+      patch :update, params: metum_params.merge(metum: { title: '' })
+      expect(response).to render_template(:edit)
+
+      expect {
+        get :edit, params: foreign_metum_params
+      }.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect {
+        patch :update, params: foreign_metum_params
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

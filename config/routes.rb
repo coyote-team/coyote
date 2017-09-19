@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   apipie
 
-  resources :meta 
   resources :statuses
 
   resources :organizations do
@@ -40,6 +39,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]
   end
 
