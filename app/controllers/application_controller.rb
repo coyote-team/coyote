@@ -38,14 +38,6 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :users, :contexts
 
-  # TODO: eventually we want to remove this action and use pundit's .authorize method; just leaving this in so that 
-  # controllers that don't have pundit included can still be protected
-  def authorize_admin!
-    unless pundit_user.admin?
-      redirect_to(current_organization,alert: "You are not authorized to perform that action")
-    end
-  end
-
   def organization_user
     @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
   end
