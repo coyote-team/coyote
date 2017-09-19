@@ -15,17 +15,10 @@
 #  index_meta_on_organization_id_and_title  (organization_id,title) UNIQUE
 #
 
-# Represents a classification for Descriptions, such as 'Alt' or 'Long'
-# @see https://github.com/coyote-team/coyote/issues/113
-class Metum < ApplicationRecord
-  validates_presence_of :title, :instructions
-  validates_uniqueness_of :title, :scope => :organization_id
+RSpec.describe Metum do
+  subject { build(:metum) }
 
-  belongs_to :organization, :inverse_of => :meta
-  has_many :descriptions, :inverse_of => :metum
-
-  # @return [String] human-friendly description of this Metum
-  def to_s
-    title
-  end
+  it { is_expected.to validate_presence_of(:title) }
+  it { is_expected.to validate_presence_of(:instructions) }
+  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) } 
 end

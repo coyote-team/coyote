@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: websites
+#
+#  id              :integer          not null, primary key
+#  title           :string           not null
+#  url             :string           not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  strategy        :string
+#  organization_id :integer          not null
+#
+# Indexes
+#
+#  index_websites_on_organization_id  (organization_id)
+#
+
 RSpec.describe WebsitesController do
   let(:organization) { create(:organization) }
   let(:website) { create(:website,organization: organization) }

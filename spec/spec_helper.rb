@@ -8,6 +8,7 @@ require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require 'simplecov'
+require 'shoulda-matchers'
 require 'airborne'
 require 'vcr'
 require 'pathname'
@@ -90,6 +91,13 @@ VCR.configure do |config|
 end
 
 WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
 
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.

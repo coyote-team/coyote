@@ -133,7 +133,7 @@ ALTER SEQUENCE audits_id_seq OWNED BY audits.id;
 
 CREATE TABLE contexts (
     id integer NOT NULL,
-    title character varying,
+    title character varying NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     organization_id integer NOT NULL
@@ -314,10 +314,11 @@ ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
 
 CREATE TABLE meta (
     id integer NOT NULL,
-    title character varying,
-    instructions text,
+    title character varying NOT NULL,
+    instructions text DEFAULT ''::text NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    organization_id bigint NOT NULL
 );
 
 
@@ -526,8 +527,8 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 CREATE TABLE websites (
     id integer NOT NULL,
-    title character varying,
-    url character varying,
+    title character varying NOT NULL,
+    url character varying NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     strategy character varying,
@@ -808,10 +809,10 @@ CREATE INDEX index_audits_on_request_uuid ON audits USING btree (request_uuid);
 
 
 --
--- Name: index_contexts_on_organization_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_contexts_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_contexts_on_organization_id ON contexts USING btree (organization_id);
+CREATE UNIQUE INDEX index_contexts_on_organization_id_and_title ON contexts USING btree (organization_id, title);
 
 
 --
@@ -896,6 +897,20 @@ CREATE INDEX index_invitations_on_sender_user_id ON invitations USING btree (sen
 --
 
 CREATE UNIQUE INDEX index_memberships_on_user_id_and_organization_id ON memberships USING btree (user_id, organization_id);
+
+
+--
+-- Name: index_meta_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_meta_on_organization_id ON meta USING btree (organization_id);
+
+
+--
+-- Name: index_meta_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_meta_on_organization_id_and_title ON meta USING btree (organization_id, title);
 
 
 --
@@ -1159,6 +1174,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170905125542'),
 ('20170907200258'),
 ('20170911173601'),
-('20170918155037');
+('20170918155037'),
+('20170919130347'),
+('20170919131343'),
+('20170919131540'),
+('20170919131733'),
+('20170919132337');
 
 

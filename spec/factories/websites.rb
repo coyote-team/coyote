@@ -3,8 +3,8 @@
 # Table name: websites
 #
 #  id              :integer          not null, primary key
-#  title           :string
-#  url             :string
+#  title           :string           not null
+#  url             :string           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #  strategy        :string

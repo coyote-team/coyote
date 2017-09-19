@@ -10,7 +10,7 @@
 
 FactoryGirl.define do
   factory :context do
-    title Faker::Lorem.word
+    title { Faker::Lorem.unique.word }
     organization
   end
 end

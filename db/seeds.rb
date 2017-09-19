@@ -16,10 +16,8 @@ organization.contexts.create!([
   { title: "events" },
 ])
 
-short_metum, long_metum = Metum.create!([
-  { title: "Short", instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision" },
-  { title: "Long",  instructions: "A lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs." }
-])
+short_metum = FactoryGirl.create(:metum,:short)
+long_metum  = FactoryGirl.create(:metum,:long)
 
 Status.create!([
   { title: "Ready to review" },

@@ -22,5 +22,6 @@ class Organization < ApplicationRecord
   has_many :descriptions, :through => :images
   has_many :contexts, :inverse_of => :organization
   has_many :websites, :inverse_of => :organization
+  has_many :meta, :inverse_of => :organization
   has_many :assignments, :through => :images
 end
