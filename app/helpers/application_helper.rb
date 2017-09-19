@@ -18,7 +18,7 @@ module ApplicationHelper
     roles = []
 
     Coyote::Membership.each_role do |label,role_name,role_rank|
-      break if role_rank >= max_assignable_role_rank
+      break if role_rank > max_assignable_role_rank
       roles << [label,role_name]
     end
 

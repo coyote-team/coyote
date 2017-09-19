@@ -10,6 +10,6 @@ class InvitationPolicy < ApplicationPolicy
   # @return [Boolean] whether or not the user can create an invitation like this one
   def create?
     return true if organization_user.owner?
-    organization_user.admin? && record.role_rank < organization_user.role_rank
+    organization_user.admin? && record.role_rank <= organization_user.role_rank
   end
 end

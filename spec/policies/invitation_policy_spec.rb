@@ -33,7 +33,7 @@ RSpec.describe InvitationPolicy do
     it { is_expected.to forbid_action(:index)          }
     it { is_expected.to forbid_action(:show)           }
     it { is_expected.to permit_action(:new)            }
-    it { is_expected.to forbid_action(:create)         }
+    it { is_expected.to permit_action(:create)         }
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy)        }
   end

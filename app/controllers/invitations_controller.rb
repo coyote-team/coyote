@@ -5,12 +5,13 @@
 class InvitationsController < ApplicationController
   before_action :authenticate_user!
 
-  helper_method :invitation
+  helper_method :invitation, :title
 
   attr_writer :user_invitation_service
 
   # GET /organizations/1/invitations/new
   def new
+    self.title = "Invite a user to join #{current_organization.title}"
     self.invitation = Invitation.new
     authorize invitation
   end
@@ -21,6 +22,7 @@ class InvitationsController < ApplicationController
     authorize invitation
 
     user_invitation_service.call(invitation) do |err_msg|
+      self.title = "Inviting a user to join #{current_organization.title}"
       logger.warn "Unable to create Invitation: #{err_msg}"
       flash.now[:error] = err_msg
       render :new
@@ -33,7 +35,7 @@ class InvitationsController < ApplicationController
 
   private
 
-  attr_accessor :invitation
+  attr_accessor :invitation, :title
 
   def invitation_params
     params.require(:invitation).permit(:recipient_email,:role)
