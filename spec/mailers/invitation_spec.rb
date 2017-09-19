@@ -1,5 +1,6 @@
 RSpec.describe InvitationMailer do
-  let(:invitation) { build_stubbed(:invitation) }
+  let(:organization) { build_stubbed(:organization) }
+  let(:invitation) { build_stubbed(:invitation,organization: organization) }
 
   describe "new_user" do
     let(:mail) do 
@@ -7,7 +8,7 @@ RSpec.describe InvitationMailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to match(/you are invited/i)
+      expect(mail.subject).to match(organization.title)
       expect(mail.to).to eq([invitation.recipient_email])
     end
 
@@ -26,7 +27,7 @@ RSpec.describe InvitationMailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to match(/You are invited/i)
+      expect(mail.subject).to match(organization.title)
       expect(mail.to).to eq([invitation.recipient_email])
     end
 
