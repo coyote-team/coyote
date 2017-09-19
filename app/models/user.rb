@@ -39,6 +39,7 @@ class User < ApplicationRecord
          :rememberable, 
          :trackable, 
          :validatable, 
+         :lockable,
          :password_length => 8..128
 
   has_many :assignments, :inverse_of => :user, :dependent => :destroy
