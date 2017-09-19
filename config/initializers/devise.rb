@@ -14,7 +14,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ENV.fetch("DEVISE_MAILER_SENDER",'coyote@exampe.org')
+  config.mailer_sender = ENV.fetch("DEVISE_MAILER_SENDER",'coyote@example.org')
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -180,7 +180,7 @@ Devise.setup do |config|
   config.maximum_attempts = Rails.configuration.x.maximum_login_attempts
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
-  config.unlock_in = Rails.configuration.x.unlock_user_accounts_after_this_many_hours
+  config.unlock_in = Rails.configuration.x.unlock_user_accounts_after_this_many_minutes
 
   # Warn on the last attempt before the account is locked.
   config.last_attempt_warning = true
