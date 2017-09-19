@@ -46,12 +46,12 @@ Rails.application.routes.draw do
   resources :images, only: %i[show] # so API can continue to use direct image URLs like /images/1.json
 
   scope "/organizations/:organization_id" do
-    devise_for :users, skip: %i[registrations sessions passwords]
+    devise_for :users, skip: %i[registrations sessions passwords unlocks]
   end
 
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
-  devise_for :users, only: %i[passwords sessions]
+  devise_for :users, only: %i[passwords sessions unlocks]
   resource :registration, only: %i[new update]
 
   get '/login',  to: redirect('/users/sign_in')
