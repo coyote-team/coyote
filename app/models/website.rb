@@ -23,43 +23,8 @@ class Website < ApplicationRecord
   has_many :images, dependent: :destroy
   belongs_to :organization, :inverse_of => :websites
 
+  # @return [String] human-friendly name for this Website record
   def to_s
-    title
-  end
-
-  def get_strategy
-    if !strategy.nil? and !strategy.blank?
-      strategy.constantize.new
-    else
-      false
-    end
-  end
-
-  def strategy_title
-    s = get_strategy
-    if s
-      s.title
-    else
-      ""
-    end
-  end
-
-  #TODO should record on website record
-  def strategy_check_count
-    s = get_strategy
-    if s
-      s.check_count(self)
-    else
-      []
-    end
-  end
-
-  def strategy_update_images(minutes)
-    s = get_strategy
-    if s
-      s.update(self, minutes)
-    else
-      Rails.logger.info("No strategy set for #{title}")
-    end
+    "Website #{title}"
   end
 end

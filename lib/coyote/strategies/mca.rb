@@ -4,9 +4,11 @@ module Coyote
   module Strategies
     # Responsible for linking Coyote to the MCA CMS
     # @see https://mcachicago.org/
+    # TODO: this needs massive refactoring, needs to be moved into a worker
     class MCA
-      def title
-        "MCA"
+      # @return [String] human-friendly name for this strategy
+      def self.title
+        'MCA'
       end
 
       #returns true
@@ -24,6 +26,7 @@ module Coyote
 
           Rails.logger.info "Patched to #{url.to_s}"
         end
+
         return true
       end
 

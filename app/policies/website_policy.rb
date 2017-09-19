@@ -1,14 +1,19 @@
 # Protects Website objects
 class WebsitePolicy < ApplicationPolicy
-  # @return [Boolean] if the user is a admin, they can work with websites
+  # @return [Boolean] all users can view websites
   def index?
-    user.admin?
+    true
   end
 
   alias show? index?
-  alias create? index?
-  alias new? index?
-  alias update? index?
-  alias edit? index?
-  alias destroy? index?
+
+  # @return [Boolean] only admins can create/edit/destroy websites
+  def create?
+    user.admin?
+  end
+
+  alias new? create?
+  alias update? create?
+  alias edit? create?
+  alias destroy? create?
 end

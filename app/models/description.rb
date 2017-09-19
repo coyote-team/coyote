@@ -48,10 +48,6 @@ class Description < ApplicationRecord
   scope :caption, -> {where("metum_id = 2")}
   scope :long, -> {where("metum_id = 3")}
 
-  # uses Coyote::Strategies::* to trigger updates
-  # TODO: this procedure needs to be done async in a worker
-  after_commit :patch_image, :update_image
-
   paginates_per 50
 
   def to_s
@@ -80,16 +76,6 @@ class Description < ApplicationRecord
     image.update_status_code
     image.save
     return true
-  end
-
-  def patch_image
-    s = image.website.get_strategy
-    if s
-      s.patch(image)
-    else
-      Rails.logger.info "No strategy available for this description's image"
-      return true
-    end
   end
 
   def license_exists

@@ -32,17 +32,4 @@ RSpec.describe "Adding and changing a Website" do
       }.to change(website,:title).to("ABC Museum")
     end
   end
-
-  context "when logged-in as a user" do
-    include_context "as a logged-in user"
-
-    it "is not allowed" do
-      expect(page).not_to have_link("Websites")
-      visit new_organization_website_path(user_organization)
-      expect(page.current_path).to eq(organization_path(user_organization))
-
-      visit edit_organization_website_path(user_organization,create(:website))
-      expect(page.current_path).to eq(organization_path(user_organization))
-    end
-  end
 end

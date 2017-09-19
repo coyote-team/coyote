@@ -94,6 +94,7 @@ group :test do
   gem 'launchy' #  to use save_and_open_page from Capybara
   gem 'vcr'
   gem 'pundit-matchers' # better rspec testing of policies
+  gem 'rails-controller-testing' # so we can use render_template matcher in controller functional specs
 end
 
 group :production do

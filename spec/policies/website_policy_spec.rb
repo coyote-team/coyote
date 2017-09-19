@@ -5,8 +5,8 @@ RSpec.describe WebsitePolicy do
 
   subject { WebsitePolicy.new(org_user,record) }
 
-  it { is_expected.to forbid_action(:index)          }
-  it { is_expected.to forbid_action(:show)           }
+  it { is_expected.to permit_action(:index)          }
+  it { is_expected.to permit_action(:show)           }
   it { is_expected.to forbid_new_and_create_actions  }
   it { is_expected.to forbid_edit_and_update_actions }
   it { is_expected.to forbid_action(:destroy)        }
