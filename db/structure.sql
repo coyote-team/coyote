@@ -938,7 +938,7 @@ CREATE UNIQUE INDEX index_tags_on_name ON tags USING btree (name);
 -- Name: index_users_on_authentication_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_users_on_authentication_token ON users USING btree (authentication_token);
+CREATE UNIQUE INDEX index_users_on_authentication_token ON users USING btree (authentication_token);
 
 
 --
@@ -1179,6 +1179,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170919131343'),
 ('20170919131540'),
 ('20170919131733'),
-('20170919132337');
+('20170919132337'),
+('20170919142450');
 
 
