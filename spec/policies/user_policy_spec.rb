@@ -1,54 +1,35 @@
 RSpec.describe UserPolicy do
+  let(:org_user) do
+    double(:organization_user,id: 1,staff?: false)
+  end
+
   let(:user_record) do 
-    double(:user,class: User,id: org_user.id)
+    double(:user,id: 2)
   end
 
   subject { UserPolicy.new(org_user,user_record) }
 
+  it { is_expected.to forbid_action(:index)   }
+  it { is_expected.to permit_action(:show)    }
+  it { is_expected.to forbid_action(:destroy) }
+  it { is_expected.to forbid_new_and_create_actions  }
+  it { is_expected.to forbid_edit_and_update_actions }
+
   context 'as a user, with own record' do
-    include_context "editor organization user"
+    let(:user_record) do 
+      double(:user,id: org_user.id)
+    end
 
-    it { is_expected.to permit_action(:index)          }
-    it { is_expected.to permit_action(:show)           }
     it { is_expected.to permit_edit_and_update_actions }
-    it { is_expected.to forbid_new_and_create_actions  }
-    it { is_expected.to forbid_action(:destroy)        }
+    it { is_expected.to forbid_action(:destroy) }
   end
 
-  context "as a user, when attempting ot access another user's record" do
-    include_context "editor organization user"
-
+  context 'as a staff member, with any record' do
     before do
-      allow(user_record).to receive_messages(id: 123456)
+      allow(org_user).to receive_messages(staff?: true)
     end
 
-    it { is_expected.to forbid_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy)        }
-  end
-
-  context 'as an admin' do
-    include_context "admin organization user"
-
-    it { is_expected.to permit_new_and_create_actions  }
     it { is_expected.to permit_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy)        }
-  end
-
-  context "as an owner" do
-    include_context "staff organization user"
-
-    it { is_expected.to permit_action(:index)          }
-    it { is_expected.to permit_action(:show)           }
-    it { is_expected.to permit_new_and_create_actions  }
-    it { is_expected.to permit_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy)        }
-
-    context "when accessing another user's record" do
-      before do
-        allow(user_record).to receive_messages(id: 123456)
-      end
-
-      it { is_expected.to permit_action(:destroy)       }
-    end
+    it { is_expected.to permit_action(:destroy) }
   end
 end

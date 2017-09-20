@@ -57,9 +57,11 @@ class Description < ApplicationRecord
   def approved?
     status_id ==2
   end
+
   def not_approved?
     status_id ==3
   end
+
   def ready_to_review?
     status_id == 1
   end
@@ -79,10 +81,9 @@ class Description < ApplicationRecord
   end
 
   def license_exists
-    errors.add(:string, "Must exist") unless available_licenses.include?(license)
+    errors.add(:string, "Must exist") unless AVAILABLE_LICENSES.include?(license)
   end
 
-  def available_licenses
-    ["cc0-1.0", "cc-by-4.0", "cc-by-sa-4.0"]
-  end
+  # All licenses we currently support
+  AVAILABLE_LICENSES = %w[cc0-1.0 cc-by-4.0 cc-by-sa-4.0].freeze
 end

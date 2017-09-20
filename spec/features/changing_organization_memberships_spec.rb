@@ -24,7 +24,7 @@ RSpec.describe "Changing organizational memberships" do
       Coyote::OrganizationUser.new(member_user,user_organization).role
     }.from(:viewer).to(:editor)
 
-    expect(current_path).to eq(organization_memberships_path(user_organization))
+    click_first_link 'Members'
 
     within "#membership_#{membership.id}" do
       expect {

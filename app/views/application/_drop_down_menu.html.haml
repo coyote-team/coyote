@@ -1,9 +1,10 @@
 .navbar-right.navbar-nav
   %h2.sr-only Global Actions
   %span.dropdown
-    %button{type: "button", class: "dropdown-toggle", data: {toggle: "dropdown"}, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions'}
+    %button{type: "button", class: "dropdown-toggle", data: { toggle: "dropdown" }, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions' }
       = current_user
       %span.caret
+
     %ul.dropdown-menu<
       %li<
         = link_to page_path("support") do
@@ -11,6 +12,10 @@
           Support
 
       - if current_user
+        %li<
+          = link_to edit_user_registration_path do
+            %i.fa.fa-fw.fa-user{"aria-hidden" => "true"}
+            Profile
         %li<
           = link_to organizations_path do
             %i.fa.fa-fw.fa-users{"aria-hidden" => "true"}

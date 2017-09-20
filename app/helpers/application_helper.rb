@@ -53,19 +53,21 @@ module ApplicationHelper
     content_for :body_class, class_name
   end
 
-  def current_tag?(*tag)
-    #logger.info(tag)
-    #logger.info(params[:tag])
-    tag.include?(params[:tag])
-  end
-
-  def flash_class(level)
-    case level.to_sym
-    when :notice then "alert alert-info alert-dismissable"
-    when :success then "alert alert-success alert-dismissable"
-    when :error then "alert alert-warning alert-dismissable"
-    when :alert then "alert alert-danger alert-dismissable"
+  # Unwraps Devise error messages so they look like flash messages, the way regular application alerts work
+  # @param errors [ActiveModel::Errors] a list of model errors set by Devise
+  # @note similar approach to https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap
+  def devise_form_errors(errors)
+    capture do
+      errors.full_messages.each_with_index.map do |msg,idx|
+        concat render partial: 'alert', locals: { :flash_type => :error, :flash_message => msg, flash_id: "devise_flash_#{idx}" }
+      end
     end
+  end
+  
+  # @param level [String] level of flash message to be styled
+  # @return [String] CSS class to use when styling a flash message
+  def flash_class(level)
+    FLASH_CLASSES.fetch(level.to_sym)
   end
 
   def image_status_css_class(status_code)
@@ -158,6 +160,13 @@ module ApplicationHelper
       "Creative Commons Attribution 4.0"
     end
   end
+
+  FLASH_CLASSES = {
+    notice: 'alert-info',
+    success: 'alert-success',
+    error: 'alert-warning',
+    alert: 'alert-danger'
+  }.freeze
 end
 
 # rubocop:enable ModuleLength

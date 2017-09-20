@@ -1,8 +1,7 @@
 - meta title: title
--cache ['v1', organization_user.admin?,metum] do
-  .entity-outer
-    .entity
-      .entity-inner
-        %header
-          %h1#page-title{tabindex: -1}=title
-        = render partial: 'form'
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}=title
+      = render partial: 'form'

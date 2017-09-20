@@ -1,37 +1,34 @@
 # Authorizes access to User objects
 # @see (see ApplicationPolicy)
 class UserPolicy < ApplicationPolicy
-  # @return [true] everyone can list users in their organizations
+  # @return [false] we don't allow all users to be enumerated
+  # @note will change when we build a separate admin UI
   def index?
-    true
+    false
   end
 
-  # @return [true] anyone can view an user belonging to their organization
+  # @return [true] anyone can view any user's profile
   def show?
     true
   end
 
-  # @return [true] if the user is an admin of the organization
-  # @return [false] otherwise
+  # @return [false] users only are created via invitation
   def create?
-    organization_user.admin?
+    false
   end
 
-  # @return (see #create?)
   alias new? create?
 
-  # @return [true] if the user is self-editing, or is a staff member
-  # @return [false] otherwise
-  def update?
-    self? || organization_user.admin?
+  # @return [Boolean] whether or not the user is editing his/her own user record
+  def edit?
+    self? || organization_user.staff?
   end
 
-  # @return (see #update?)
-  alias edit? update?
+  alias update? edit?
 
+  # @return [Boolean] whether or not the user is a staff member
   def destroy?
-    return false if self?
-    organization_user.staff? 
+    organization_user.staff?
   end
 
   private

@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :authenticate_user!, if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) }
 
+  before_action :configure_permitted_parameters, :if => :devise_controller?
+  
   analytical
 
   def search_params
@@ -66,5 +68,9 @@ class ApplicationController < ActionController::Base
 
   def current_organization_id
     params[:organization_id] # intended to be overridden in the OrganizationController
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:account_update,keys: %i[first_name last_name])
   end
 end

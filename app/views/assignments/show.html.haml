@@ -1,37 +1,36 @@
 -title = "Showing Assignment #{assignment}"
 -meta title: title
--cache ['v1',organization_user.admin?,assignment] do
-  .entity-outer
-    .entity
-      .entity-inner
-        %header
-          %h1#page-title{tabindex: -1}=title
-        %table.entity-table
-          %caption.sr-only Key value pairs for this assignment
-          %tbody
-            %tr
-              %th{scope: "row"}
-                Image
-              %td
-                = link_to [current_organization,assignment.image] do
-                  = image_tag assignment.image.url, class: "description-image"
-            %tr
-              %th{scope: "row"}
-                User
-              %td
-                = link_to assignment.user, [current_organization,assignment.user]
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}=title
+      %table.entity-table
+        %caption.sr-only Key value pairs for this assignment
+        %tbody
+          %tr
+            %th{scope: "row"}
+              Image
+            %td
+              = link_to [current_organization,assignment.image] do
+                = image_tag assignment.image.url, class: "description-image"
+          %tr
+            %th{scope: "row"}
+              User
+            %td
+              = link_to assignment.user, assignment.user
 
-        %nav.show-nav{role:"navigation"}
-          %ul.list-inline
+      %nav.show-nav{role:"navigation"}
+        %ul.list-inline
+          %li
+            = link_to organization_assignments_path(current_organization), class: 'btn btn-info', title: "View the assignments index" do
+              Assignments
+
+          %li
+            = link_to edit_organization_assignment_path(current_organization,assignment), title: "Edit this assignment", class: 'btn btn-primary' do
+              Edit
+
+          - if next_image
             %li
-              = link_to organization_assignments_path(current_organization), class: 'btn btn-info', title: "View the assignments index" do
-                Assignments
-
-            %li
-              = link_to edit_organization_assignment_path(current_organization,assignment), title: "Edit this assignment", class: 'btn btn-primary' do
-                Edit
-
-            - if next_image
-              %li
-                = link_to new_organization_assignment_path(current_organization,image_id: next_image.id), class: 'btn btn-primary', title: "Assign image #{next_image.id} to a user" do
-                  Assign next image
+              = link_to new_organization_assignment_path(current_organization,image_id: next_image.id), class: 'btn btn-primary', title: "Assign image #{next_image.id} to a user" do
+                Assign next image

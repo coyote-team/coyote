@@ -44,7 +44,7 @@
         - else
           = f.input :status_id, as: :hidden, input_html: {value: 1}
 
-        = f.input :license, collection: @description.available_licenses, label_method: :upcase, prompt: "Select a license", hint: raw("Read more about licenses <a target='_blank' href='//choosealicense.com/non-software/'>here</a>")
+        = f.input :license, collection: Description::AVAILABLE_LICENSES, label_method: :upcase, prompt: "Select a license", hint: raw("Read more about licenses <a target='_blank' href='//choosealicense.com/non-software/'>here</a>")
         - text = params[:text]
         - text ||= @description.text
         = f.input :text, input_html: {rows: "10"}

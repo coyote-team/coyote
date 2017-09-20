@@ -1,7 +1,4 @@
 RSpec.feature "Home page viewing" do
-  let(:password) { "abc123PDQ" }
-  let!(:user) { create(:user,password: password) }
-
   scenario "succeeds" do
     visit root_url
 

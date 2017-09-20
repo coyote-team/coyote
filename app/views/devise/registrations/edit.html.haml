@@ -1,0 +1,10 @@
+- meta title: 'Edit Profile'
+- content_for :devise_form_errors, devise_form_errors(resource.errors)
+
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1} 
+          Edit Profile
+      = render partial: 'form', locals: { user: current_user }
