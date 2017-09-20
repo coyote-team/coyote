@@ -20,4 +20,14 @@ class Membership < ApplicationRecord
   belongs_to :organization
 
   enum role: Coyote::Membership::ROLES
+
+  # @return [Boolean] whether this membership represents the last owner of an organization
+  def last_owner?
+    owner? && Membership.where(organization: organization).owner.one?
+  end
+
+  # @return (see Coyote::Membership#role_rank)
+  def role_rank
+    Coyote::Membership.role_rank(role)
+  end
 end

@@ -8,8 +8,11 @@ end
 
 Coyote::Membership.each_role do |_,role_name|
   RSpec.shared_context "signed-in #{role_name} user" do
-    let(:user) do 
-      create(:user,organization: organization,role: role_name) 
+    # Assumes that in your spec you will define the organization
+    let(:user) { create(:user) }
+
+    let!(:user_membership) do
+      create(:membership,role_name,user: user,organization: organization)
     end
 
     before do

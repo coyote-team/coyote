@@ -1,0 +1,14 @@
+= simple_form_for [current_organization,membership], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form, wrapper_mappings: { check_boxes: :horizontal_radio_and_checkboxes, radio_buttons: :horizontal_radio_and_checkboxes, file: :horizontal_file_input, boolean: :horizontal_boolean } do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :role, label: 'Organization Role', collection: organizational_user_assignable_roles, include_blank: false  if organizational_user_assignable_roles.any?
+
+  .form-actions
+    .form-actions-inner
+      = f.button :submit, 'Save'
+
+      %br
+      %br
+      = link_to organization_memberships_path(current_organization), class: 'btn btn-info' do
+        View all members

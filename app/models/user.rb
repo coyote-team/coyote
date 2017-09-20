@@ -49,6 +49,7 @@ class User < ApplicationRecord
 
   scope :sorted, -> { order('LOWER(users.last_name) asc') }
 
+  # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
     if !first_name.blank? or !last_name.blank?
       [first_name, last_name].join(' ')

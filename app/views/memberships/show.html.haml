@@ -1,0 +1,52 @@
+-title = "Showing  #{@user}"
+-meta title: title
+-cache ['v1', admin?,  @user] do
+  .entity-outer
+    .entity
+      .entity-inner
+        %header
+          %h1#page-title{tabindex: -1}=title
+        %table.entity-table
+          %caption.sr-only Key value pairs for this user
+          %tbody
+            %tr
+              %th{scope: "row"}<
+                First name
+              %td<
+                = @user.first_name
+            %tr
+              %th{scope: "row"}<
+                Last name
+              %td<
+                = @user.last_name
+            %tr
+              %th{scope: "row"}<
+                Email
+              %td<
+                = @user.email
+            %tr
+              %th{scope: "row"}<
+                Role
+              %td<
+                = Coyote::OrganizationUser.new(user,current_organization).role
+
+        - if @user.descriptions.count > 0
+          %h3 
+            Descriptions:
+            =@user.descriptions.count
+          = render "descriptions/table", descriptions: @user.descriptions, paginated: true
+
+        - if @user.assignments.count > 0
+          %h3 
+            Assignments:
+            = @user.assignments.count
+          = render "assignments/table", assignments: @user.assignments, paginated: true
+
+        %nav.show-nav{role:"navigation"}
+          %ul.list-inline
+            %li
+              = link_to organization_users_path(current_organization), class: 'btn btn-info', title: "View the users index" do
+                Users
+            %li
+              = link_to edit_organization_user_path(current_organization,@user), title: "Edit this user", class: 'btn btn-primary' do
+                Edit

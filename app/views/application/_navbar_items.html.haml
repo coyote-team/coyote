@@ -1,6 +1,6 @@
-= nav_menu_link("Images",organization_images_path(current_organization))             if policy(Image).index?
-= nav_menu_link("Descriptions",organization_descriptions_path(current_organization)) if policy(Description).index?
-= nav_menu_link("Assignments",organization_assignments_path(current_organization))   if policy(Assignment).index?
-= nav_menu_link("Users",organization_users_path(current_organization))               if policy(User).index?
-= nav_menu_link("Contexts",organization_contexts_path(current_organization))         if policy(::Context).index?
-= nav_menu_link("Websites",organization_websites_path(current_organization))         if policy(::Website).index?
+= nav_menu_link("Images",       organization_images_path(current_organization))       if policy(Image).index?
+= nav_menu_link("Descriptions", organization_descriptions_path(current_organization)) if policy(Description).index?
+= nav_menu_link("Assignments",  organization_assignments_path(current_organization))  if policy(Assignment).index?
+= nav_menu_link("Members",      organization_memberships_path(current_organization))  if policy(Membership).index?
+= nav_menu_link("Contexts",     organization_contexts_path(current_organization))     if policy(::Context).index?
+= nav_menu_link("Websites",     organization_websites_path(current_organization))     if policy(::Website).index?

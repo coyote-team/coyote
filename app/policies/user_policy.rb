@@ -23,7 +23,7 @@ class UserPolicy < ApplicationPolicy
   # @return [true] if the user is self-editing, or is a staff member
   # @return [false] otherwise
   def update?
-    self? || organization_user.staff?
+    self? || organization_user.admin?
   end
 
   # @return (see #update?)

@@ -10,7 +10,11 @@ module Coyote
     #   @return [Boolean] whether or not the user is a Coyote staff member with cross-organizational authority
     # @!attribute [r] id
     #   @return [Integer] database ID of the underlying User object
-    delegate :id, :staff?, :to => :user
+    delegate :id, :staff?, :first_name, :last_name, :email, :to => :user
+
+    # @!attribute [r] user
+    #   @return [User] the user whose membership we are modeling
+    attr_reader :user
 
     # @param user [User] the user who is acting
     # @param organization [Organization] the organization being acted upon/within
@@ -43,9 +47,14 @@ module Coyote
       end
     end
 
-    # @return [Symbol] the name of the role held by this user in the current organization
+    # @return [Membership] the membership we are modeling
+    def membership
+      @membership ||= user.memberships.find_by(organization: organization)
+    end
+
+    # @return [Symbol] the name of the role held by this user in the current organization. Will return :none if the user is not a member of the organization.
     def role
-      @role ||= (user.memberships.find_by(organization: organization)&.role || :none).to_sym
+      (membership&.role || :none).to_sym
     end
 
     # @return (see Coyote::Membership#role_rank)
@@ -55,6 +64,6 @@ module Coyote
 
     private
 
-    attr_reader :user, :organization
+    attr_reader :organization
   end
 end

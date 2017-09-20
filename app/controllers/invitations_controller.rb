@@ -26,7 +26,7 @@ class InvitationsController < ApplicationController
       logger.warn "Unable to create Invitation: #{err_msg}"
       flash.now[:error] = err_msg
       render :new
-      return nil
+      return :unable_to_create_invitation # avoid leaking nil
     end
 
     logger.info "Created #{invitation} for #{invitation.recipient_email} to #{invitation.organization}"
