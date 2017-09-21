@@ -25,6 +25,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Devise::Test::ControllerHelpers, :type => :helper
   config.include Coyote::Testing::FeatureHelpers, :type => :feature
+  config.include Coyote::Testing::EmailHelpers, :type => :feature
   config.include Coyote::RequestHeaders
   config.include ResponseJSON
 
