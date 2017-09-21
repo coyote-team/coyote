@@ -27,7 +27,8 @@
                 = link_to edit_organization_metum_path(current_organization,metum), class: "btn btn-edit", title: "Edit this metum"  do
                   Edit
 
-      %nav.index-nav{role:"navigation"}
-        = link_to new_organization_metum_path(current_organization), class: 'btn btn-primary new-link' do
-          %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
-          New Metum
+      - if policy(Metum).new?
+        %nav.index-nav{role:"navigation"}
+          = link_to new_organization_metum_path(current_organization), class: 'btn btn-primary new-link' do
+            %i.fa.fa-fw.fa-plus{"aria-hidden" => true}
+            New Metum

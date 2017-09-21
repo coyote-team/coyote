@@ -16,7 +16,7 @@
       - assignments.each_with_index do |assignment, idx|
         %tr{class: "item"}
           %td
-            = link_to assignment.user, [current_organization,assignment.user]
+            = link_to assignment.user, assignment.user
           %td 
             = link_to assignment.image, [current_organization,assignment.image]
           %td.text-right

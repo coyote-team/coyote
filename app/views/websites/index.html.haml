@@ -30,6 +30,7 @@
                 = link_to edit_organization_website_path(current_organization,website), class: "btn btn-edit", title: "Edit this website"  do
                   Edit
 
-      %nav.index-nav{role:"navigation"}
-        = link_to new_organization_website_path(current_organization), class: 'btn btn-primary new-link' do
-          New Website
+      - if policy(Website).new?
+        %nav.index-nav{role:"navigation"}
+          = link_to new_organization_website_path(current_organization), class: 'btn btn-primary new-link' do
+            New Website
