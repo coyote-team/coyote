@@ -83,7 +83,7 @@ module Coyote
 
           images.each do |i|
             begin
-              image = Image.find_or_create_by(canonical_id:  i["id"], website: website)
+              image = Image.find_or_create_by(canonical_id: i["id"], website: website)
               if image.new_record?
                 image.website = website
                 context = Context.find_or_create_by(title: i["context"])
@@ -112,8 +112,7 @@ module Coyote
                   errors += 1
                 end
               end
-
-            rescue Exception => e
+            rescue StandardError => e
               Rails.logger.error "image creation error"
               Rails.logger.error i
               Rails.logger.error e

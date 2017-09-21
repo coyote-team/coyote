@@ -78,7 +78,7 @@ RSpec.describe Coyote::OrganizationUser do
   context "as a admin user" do
     let(:role) { "admin" }
 
-    specify { expect(subject.role).to eq(:admin) }
+    specify { expect(subject.role).to eq(:admin)  }
     specify { expect(subject).to be_guest         }
     specify { expect(subject).to be_viewer        }
     specify { expect(subject).to be_author        }
@@ -91,7 +91,7 @@ RSpec.describe Coyote::OrganizationUser do
   context "as an owner user" do
     let(:role) { "owner" }
 
-    specify { expect(subject.role).to eq(:owner) }
+    specify { expect(subject.role).to eq(:owner)  }
     specify { expect(subject).to be_guest         }
     specify { expect(subject).to be_viewer        }
     specify { expect(subject).to be_author        }
@@ -122,7 +122,7 @@ RSpec.describe Coyote::OrganizationUser do
 
     specify { expect(subject.role).to eq(:none) }
 
-    specify { expect(subject).not_to be_guest      }
+    specify { expect(subject).not_to be_guest }
     specify { expect(subject).not_to be_viewer }
     specify { expect(subject).not_to be_author }
     specify { expect(subject).not_to be_editor }

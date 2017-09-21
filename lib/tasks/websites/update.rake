@@ -1,6 +1,6 @@
 namespace :websites do
   desc "Update images and image info"
-  task :update, [:minutes]  => :environment do |t, args|
+  task :update, [:minutes] => :environment do |t, args|
     args.with_defaults(:minutes => 2)
     Rails.logger.info "Checking for images from #{args.minutes} minutes ago"
     Website.all.each do |w|

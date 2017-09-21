@@ -5,30 +5,11 @@ class DescriptionsController < ApplicationController
   before_action :clear_search,       only: %i[index]
   before_action :clear_search_index, only: %i[index]
 
-  respond_to :html, :json, :js
-
   helper_method :users
 
-  def_param_group :description do
-    param :description, Hash do
-      param :locale, String, desc: "Must be a valid ISO 639-1 locale."
-      param :text, String
-      param :license, String, desc: "Options include cc0-1.0, cc-by-4.0, and cc-by-sa-4.0"
-      param :status_id, Integer
-      param :image_id, Integer
-      param :metum_id, Integer
-      param :created_at,    DateTime
-      param :updated_at,    DateTime
-    end
-  end
-
+  respond_to :html
+  
   # GET /descriptions
-  api :GET, "descriptions", "Get an index of descriptions"
-  param :page, :number
-  description  <<-EOT
-  Returns an object with <code>_metadata</code> and <code>results</code>
-  EOT
-
   def index
     authorize Description
 
@@ -48,7 +29,6 @@ class DescriptionsController < ApplicationController
   end
 
   # GET /descriptions/1
-  api :GET, "descriptions/:id", "Get a description"
   def show
     authorize @description
   end
@@ -77,8 +57,6 @@ class DescriptionsController < ApplicationController
   end
 
   # POST /descriptions
-  api :POST, "descriptions", "Create a description"
-  param_group :description
   def create
     authorize Description
 
@@ -96,8 +74,6 @@ class DescriptionsController < ApplicationController
   end
 
   # PATCH/PUT /descriptions/1
-  api :PUT, "descriptions/:id", "Create a description"
-  param_group :description
   def update
     authorize @description
 
@@ -111,41 +87,11 @@ class DescriptionsController < ApplicationController
   end
 
   # DELETE /descriptions/1
-  api :DELETE, "descriptions/:id", "Delete a description"
   def destroy
     authorize @description
     @description.destroy
     flash[:notice] = "Description was successfully destroyed."
     respond_with(current_organization,@description)
-  end
-
-  def bulk
-    descriptions = descriptions_params[:descriptions]
-
-    success_count = 0
-    fail_count = 0
-    errors = ""
-
-    descriptions.each do |k, a|
-      if Description.find(a[:id]).update(status_id: a[:status_id])
-        success_count += 1
-      else
-        fail_count += 1
-      end
-    end
-
-    if fail_count == 0 and success_count > 0
-      flash[:success] = success_count.to_s + " descriptions updated."
-    elsif fail_count == 0 and success_count == 0
-      flash[:notice] = "No descriptions updated."
-    else
-      error = fail_count.to_s + " descriptions failed.  " + errors  
-      if success_count > 0 
-        error +=  success_count.to_s + " descriptions updated."
-      end
-      flash[:error]  = error
-    end
-    render nothing: true
   end
 
   private
@@ -186,7 +132,7 @@ class DescriptionsController < ApplicationController
   end
 
   def descriptions_params
-    params.permit(:descriptions => [:id, :status_id])
+    params.permit(descriptions: %i[id status_id])
   end
 
   def users

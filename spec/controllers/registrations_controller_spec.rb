@@ -20,7 +20,7 @@ RSpec.describe RegistrationsController do
     bad_params = user_params.merge(password_confirmation: '1')
 
     expect {
-      patch :update, params: { user: bad_params  }
+      patch :update, params: { user: bad_params }
       invitation.reload
     }.not_to change(invitation,:redeemed?)
 

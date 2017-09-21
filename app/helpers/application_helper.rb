@@ -45,11 +45,11 @@ module ApplicationHelper
   end
 
   def body_class_default
-    [controller_name, action_name].join('-') + ' '  + controller_name + ' ' + action_name
+    [controller_name, action_name].join('-') + "#{controller_name} #{action_name}"
   end
 
   def body_class(class_name="")
-    class_name =  body_class_default + ' ' + class_name
+    class_name = "#{body_class_default} #{class_name}"
     content_for :body_class, class_name
   end
 

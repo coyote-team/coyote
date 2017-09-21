@@ -65,7 +65,7 @@ class User < ApplicationRecord
       described_by_me = i.descriptions.detect{ |d| d.user_id == id}
 
       if current_image
-        if described_by_me.nil?  and current_image.id != i.id
+        if described_by_me.nil? && current_image.id != i.id
           next_image = i
           break
         end
@@ -73,8 +73,8 @@ class User < ApplicationRecord
         next_image = i
         break
       end
-
     end
+
     next_image
   end
 

@@ -1,54 +1,14 @@
-# rubocop:disable ClassLength
-
 class ImagesController < ApplicationController
   before_action :set_image, only: %i[show edit update destroy toggle]
   before_action :clear_search, only: %i[index]
   before_action :set_users, only: %i[index show], unless: -> { request.xhr? }
 
-  #before_action :admin, only: %i[edit update destroy toggle]
   before_action :users, only: %i[create]
 
   helper_method :image, :contexts, :websites, :tag_list, :users
 
-  respond_to :html, :json
+  respond_to :html
 
-  def_param_group :image do
-    param :image, Hash do
-      param :canonical_id,    String , required: true
-      param :path,            String , required: true
-      param :website_id,      Integer, required: true
-      param :context_id,      Integer, required: true
-      param :organization_id, Integer, required: true
-      param :page_urls,       Array
-      param :priority,        [true, false, "1", "0", 1, 0]
-      param :created_at,      DateTime
-      param :updated_at,      DateTime
-    end
-  end
-
-  # GET /images
-  param :page, :number
-  param :canonical_id,    Integer , optional: true
-  param :website_id,    Integer , optional: true
-  param :updated_at,    DateTime, optional: true
-  param :status_ids,      Array, of: :integer,  optional: true
-  #param :priority,        [true, false], optional: true
-
-  api :GET, "images", "Get an index of images"
-  description  <<-EOT
-This endpoint returns an index object with <code>_metadata</code> and <code>results</code>.  It sorts by <code>updated_at</code> in descending order.  You can filter these with <code>website_id</code> (which matches by equality) or <code>updated_at</code> (which matches as greater than or equal to a unix timestamp).  <code>status_id[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view. 
-
-<code>status_id[]</code> values can include:
-
-- 1 : "Ready to review"
-- 2 : "Approved"
-- 3 : "Not approved"
-
-The image objects also include key value pairs for the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>.
-
-If the endpoint receives a <code>canonical_id</code>, a single matching image object is returned in the style of <code>GET /images/1</code> (if it is available).
-
-  EOT
   def index
     authorize(Image)
 
@@ -62,7 +22,7 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
         params["q"] = {} 
         params["q"]["s"] = "updated_at desc"
         params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
-        params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"])  if params["updated_at"].present?
+        params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"]) if params["updated_at"].present?
       end
 
       @search_cache_key = params["q"]
@@ -70,7 +30,7 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
       if search_params
         search_params["title_cont_all"] = search_params["title_cont_all"].split(" ") if search_params["title_cont_all"].present?
         search_params["descriptions_text_cont_all"] = search_params["descriptions_text_cont_all"].split(" ") if search_params["descriptions_text_cont_all"].present?
-        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ")  if search_params["tags_name_cont_all"].present?
+        search_params["tags_name_cont_all"] = search_params["tags_name_cont_all"].split(" ") if search_params["tags_name_cont_all"].present?
       end
 
       @q = current_organization.images.ransack(search_params)
@@ -92,68 +52,10 @@ If the endpoint receives a <code>canonical_id</code>, a single matching image ob
   end
 
   # GET /images/1
-  api :GET, "images/:id", "Get an image"
-  param :status_ids, Array, optional: true
-  description  <<-EOT
-<code>status_ids[]</code> can be used to filter the descriptions array. The default is <code>[2]</code> for the public view.
-
-<code>status_ids[]</code> values can include:
-
-- 1 : "Ready to review"
-- 2 : "Approved"
-- 3 : "Not approved"
-
-Accordingly, <code>status_ids[]=1&status_ids[]=2</code> should be used in the CMS view.
-
-The image JSON also includes the text of the most recent English <code>alt</code> and <code>long</code> as filtered by the <code>status_id</code>. If an approved description is available, it will be supplied instead of any ready to review descriptions when <code>status_id[]=1&status_id[]=2</code> is requested.
-
-Ex:
-
-  {
-    "id": 1,
-    "canonical_id": "55917aaa613430007400000a",
-    "alt": "A short title.",
-    "long": "A long detailed description.",
-    "path": "55917aaa613430007400000a.jpg?sha=72066b7eb6b6152ed511d52b099365afcd8b23e5",
-    "url": "http://coyote.mcachicago.org/images/1"
-    "context_id": 2,
-    "website_id": 1,
-    "page_urls": ["http://url1withimage.com/", "http://url2withimage.com/"],
-    "title": "This is also called a caption",
-    "priority": false,
-    "created_at": "2015-06-29T17:04:42.000Z",
-    "updated_at": "2015-07-30T16:26:30.000Z"
-    "descriptions": [
-      {
-        "id": 1,
-        "image_id": 1,
-        "status_id": 2,
-        "metum_id": 1,
-        "locale": "en",
-        "text": "A short title.",
-        "user_id": 1,
-        "created_at": "2015-07-28T14:54:58.000Z",
-        "updated_at": "2015-07-28T19:39:17.000Z"
-      },
-      {
-        "id": 6,
-        "image_id": 1,
-        "status_id": 2,
-        "metum_id": 3,
-        "locale": "en",
-        "text": "A long detailed description.",
-        "user_id": 2,
-        "created_at": "2015-07-30T16:26:30.000Z",
-        "updated_at": "2015-07-30T16:26:30.000Z"
-      }
-    ]
-  }
-
-  EOT
   def show
     authorize(image)
     @status_ids = [2]
-    @status_ids = params[:status_ids]  if params[:status_ids]
+    @status_ids = params[:status_ids] if params[:status_ids]
 
     if request.format.html?
       @previous_image = Image.where("id < ?", image.id).first
@@ -173,8 +75,6 @@ Ex:
   end
 
   # POST /images
-  api :POST, "images", "Create an image"
-  param_group :image
   def create
     authorize Image
 
@@ -202,8 +102,6 @@ Ex:
     end
   end
 
-  api :PUT, "images/:id", "Update an image"
-  param_group :image
   def update
     authorize(image)
 
@@ -223,7 +121,6 @@ Ex:
   end
 
   # DELETE /images/1
-  api :DELETE, "images/:id", "Delete an image"
   def destroy
     authorize(image)
     image.destroy
@@ -254,8 +151,6 @@ Ex:
     end
   end
 
-  #returns hash of canonical_ids to titles from MCA 
-  #NOTE deprecated
   def titles
     canonical_ids = params["canonical_ids"]
 
@@ -289,13 +184,11 @@ Ex:
               ids_titles[id] = title
             end
           end
-
         rescue StandardError => e
           Rails.logger.error "JSON parsing exception"
           Rails.logger.error e
           length = 0
         end
-
       rescue OpenURI::HTTPError => error
         response = error.io
         Rails.logger.error response.string
@@ -355,5 +248,3 @@ Ex:
     end
   end
 end
-
-# rubocop:enable ClassLength
