@@ -1,5 +1,5 @@
 class InvitationMailer < ApplicationMailer
-  helper_method :invitation, :sender_name, :signup_link, :organization_title
+  helper_method :invitation, :recipient_email, :role, :organization_title, :sender_name, :organization, :signup_link
 
   def new_user(invitation)
     self.invitation = invitation
@@ -16,12 +16,24 @@ class InvitationMailer < ApplicationMailer
   
   attr_accessor :invitation, :signup_link
 
-  def sender_name
-    invitation.sender_name
+  def recipient_email
+    invitation.recipient_email
+  end
+
+  def role
+    invitation.role
   end
 
   def organization_title
     invitation.organization_title
+  end
+
+  def sender_name
+    invitation.sender_name
+  end
+
+  def organization
+    invitation.organization
   end
 
   def subject 

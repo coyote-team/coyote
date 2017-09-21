@@ -38,6 +38,15 @@ module Coyote
       g.factory_girl dir: Rails.root.join("spec/factories").to_s
     end
 
+    config.x.site_name                      = ENV.fetch('COYOTE_SITE_NAME','Coyote')
+    config.x.host_name                      = ENV.fetch('HOST','coyote.example.org')
+    config.x.project_url                    = ENV.fetch('COYOTE_PROJECT_URL','http://coyote.pics')
+    config.x.dashboard_top_items_queue_size = ENV.fetch('COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE',10).to_i
+    config.x.default_email_from_address     = ENV.fetch('COYOTE_DEFAULT_EMAIL_FROM_ADDRESS',"support@#{config.x.host_name}")
+ 
+    config.x.maximum_login_attempts                       = ENV.fetch('COYOTE_MAXIMUM_LOGIN_ATTEMPTS',5).to_i
+    config.x.unlock_user_accounts_after_this_many_minutes = ENV.fetch('COYOTE_UNLOCK_USER_ACCOUNTS_AFTER_THIS_MANY_MINUTES',10).to_i
+
     config.action_mailer.default_url_options = { host: config.x.host_name }
 
     config.action_mailer.smtp_settings = {
@@ -49,14 +58,5 @@ module Coyote
       authentication:       ENV.fetch('MAIL_AUTHENTICATION',:plain).to_sym,
       enable_starttls_auto: ENV.fetch('MAIL_ENABLE_STARTTLS_AUTO','true').downcase == 'true'
     }
-
-    config.x.site_name                      = ENV.fetch('COYOTE_SITE_NAME','Coyote')
-    config.x.host_name                      = ENV.fetch('HOST','coyote.example.org')
-    config.x.project_url                    = ENV.fetch('COYOTE_PROJECT_URL','http://coyote.pics')
-    config.x.dashboard_top_items_queue_size = ENV.fetch('COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE',10).to_i
-    config.x.default_email_from_address     = ENV.fetch('COYOTE_DEFAULT_EMAIL_FROM_ADDRESS',"support@#{config.x.host_name}")
- 
-    config.x.maximum_login_attempts                       = ENV.fetch('COYOTE_MAXIMUM_LOGIN_ATTEMPTS',5).to_i
-    config.x.unlock_user_accounts_after_this_many_minutes = ENV.fetch('COYOTE_UNLOCK_USER_ACCOUNTS_AFTER_THIS_MANY_MINUTES',10).to_i
   end
 end

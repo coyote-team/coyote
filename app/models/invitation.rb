@@ -49,10 +49,12 @@ class Invitation < ApplicationRecord
   end
 
   # @return [String] identifies the user who sent this invitation
+  # @see User#to_s
   def sender_name
-    sender_user.email
+    sender_user.to_s
   end
 
+  # @return [String] identifies the organization that sent this invitation
   def organization_title
     organization.title
   end
