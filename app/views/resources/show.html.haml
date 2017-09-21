@@ -1,0 +1,46 @@
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}
+          = title "Showing resource #{resource.identifier}"
+      .row
+        .col-md-9
+          %table.entity-table
+            %caption.sr-only Key value pairs for this resource
+            %tbody
+              %tr
+                %th{scope: "row"} Identifier
+                %td= resource.identifier
+              %tr
+                %th{scope: "row"} Title
+                %td= resource.title
+              %tr
+                %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/')
+                %td= resource.resource_type
+              %tr
+                %th{scope: "row"} Canonical ID
+                %td= resource.canonical_id
+              %tr
+                %th{scope: "row"} Context
+                %td= link_to(resource.context,[current_organization,resource.context])
+              %tr
+                %th{scope: "row"} Updated
+                %td
+                  = resource.updated_at
+              %tr
+                %th{scope: "row"} Created 
+                %td
+                  = resource.created_at
+
+          %nav.show-nav{role:"navigation"}
+            %ul.list-inline
+              - if policy(resource).edit?
+                %li
+                  = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn btn-primary' do
+                    Edit
+              %br
+              %br
+            %ul.list-inline
+              %li
+                = link_to 'View resources', organization_resources_path(current_organization), class: 'btn btn-info', title: "View the resources index"

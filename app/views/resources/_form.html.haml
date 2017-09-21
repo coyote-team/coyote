@@ -1,0 +1,24 @@
+= simple_form_for [current_organization,resource], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names
+    = f.input :canonical_id, required: true, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
+    = f.input :identifier, hint: 'This should be a unique string that does not change - used to identify the resource within Coyote. If blank, we will attempt to set one for you based on the title field.'
+    = f.association :context, prompt: "Pick a context", collection: contexts
+    = f.input :source_uri, :as => :url, label: 'Source URI', hint: 'Identifies the canonical location of the resource, if available', required: false
+
+  .form-actions
+    .form-actions-inner
+      = f.button :submit, 'Save'
+
+      - if resource.persisted?
+        %br
+        %br
+        = link_to [current_organization,resource], class: 'btn btn-info' do
+          View this resource
+      %br
+      %br
+      = link_to organization_resources_path(current_organization), class: 'btn btn-info' do
+        View all resources

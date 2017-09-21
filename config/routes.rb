@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :memberships, only: %i[index edit update destroy]
 
+    resources :resources
+
     resources :images do
       get :toggle, on: :member
 
@@ -43,8 +45,6 @@ Rails.application.routes.draw do
     resources :invitations, only: %i[new create]
   end
 
-  resources :images, only: %i[show] # so API can continue to use direct image URLs like /images/1.json
-
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
   devise_for :users, 
@@ -55,7 +55,6 @@ Rails.application.routes.draw do
     }
 
   resource :registration, only: %i[new update]
-
   resources :users, only: %i[show] # for viewing other user profiles
 
   namespace :staff do
