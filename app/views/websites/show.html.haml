@@ -1,37 +1,36 @@
 - meta title: title
-- cache ['v1',admin?,website] do
-  .entity-outer
-    .entity
-      .entity-inner
-        %header
-          %h1#page-title{tabindex: -1}=title
-        %table.entity-table
-          %caption.sr-only Key value pairs for this website
-          %tbody
-            %tr
-              %th{scope: "row"}
-                Title
-              %td
-                = website.title
-            %tr
-              %th{scope: "row"}
-                Url
-              %td
-                = website.url
-            %tr
-              %th{scope: "row"}
-                Strategy
-              %td
-                = website.strategy
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}=title
+      %table.entity-table
+        %caption.sr-only Key value pairs for this website
+        %tbody
+          %tr
+            %th{scope: "row"}
+              Title
+            %td
+              = website.title
+          %tr
+            %th{scope: "row"}
+              Url
+            %td
+              = website.url
+          %tr
+            %th{scope: "row"}
+              Strategy
+            %td
+              = website.strategy
 
-        %br
+      %br
 
-        %nav.show-nav{role:"navigation"}
-          %ul.list-inline
-            %li
-              = link_to organization_websites_path(current_organization), class: 'btn btn-info', title: "View the websites index" do
-                
-                Websites
-            %li
-              = link_to edit_organization_website_path(current_organization,website), title: "Edit this website", class: 'btn btn-primary' do
-                Edit
+      %nav.show-nav{role:"navigation"}
+        %ul.list-inline
+          %li
+            = link_to organization_websites_path(current_organization), class: 'btn btn-info', title: "View the websites index" do
+              
+              Websites
+          %li
+            = link_to edit_organization_website_path(current_organization,website), title: "Edit this website", class: 'btn btn-primary' do
+              Edit

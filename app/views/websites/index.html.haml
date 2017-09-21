@@ -1,36 +1,35 @@
 -title = 'Websites'
 -meta title: title
-- cache ['v1', admin?,  websites] do
-  .index-outer
-    .index
-      .index-inner
-        %header
-          %h1#page-title{tabindex: -1}=title
-        %table.index-table
-          %caption.sr-only Index table for websites
-          %thead
-            %tr
-              %th{scope: "col"}
-                Title
-              %th{scope: "col"}
-                Url
-              %th{scope: "col"}
-                Actions
+.index-outer
+  .index
+    .index-inner
+      %header
+        %h1#page-title{tabindex: -1}=title
+      %table.index-table
+        %caption.sr-only Index table for websites
+        %thead
+          %tr
+            %th{scope: "col"}
+              Title
+            %th{scope: "col"}
+              Url
+            %th{scope: "col"}
+              Actions
 
-          %tbody
-            - websites.each_with_index do |website,idx|
-              %tr{class: "item"}
-                %td= website.title
-                %td>
-                  =link_to website.url, html: {target: "_blank"} do
-                    =website.url
-                %td.text-right
-                  = link_to [current_organization,website], class: "btn btn-show", title: "Show this website" do
-                    View
-                  %nbsp
-                  = link_to edit_organization_website_path(current_organization,website), class: "btn btn-edit", title: "Edit this website"  do
-                    Edit
+        %tbody
+          - websites.each_with_index do |website,idx|
+            %tr{class: "item"}
+              %td= website.title
+              %td>
+                =link_to website.url, html: {target: "_blank"} do
+                  =website.url
+              %td.text-right
+                = link_to [current_organization,website], class: "btn btn-show", title: "Show this website" do
+                  View
+                %nbsp
+                = link_to edit_organization_website_path(current_organization,website), class: "btn btn-edit", title: "Edit this website"  do
+                  Edit
 
-        %nav.index-nav{role:"navigation"}
-          = link_to new_organization_website_path(current_organization), class: 'btn btn-primary new-link' do
-            New Website
+      %nav.index-nav{role:"navigation"}
+        = link_to new_organization_website_path(current_organization), class: 'btn btn-primary new-link' do
+          New Website

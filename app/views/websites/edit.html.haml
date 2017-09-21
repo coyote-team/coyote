@@ -1,9 +1,8 @@
 - title = 'Editing Website'
 - meta title: title
-- cache ['v1',admin?,website] do
-  .entity-outer
-    .entity
-      .entity-inner
-        %header
-          %h1#page-title{tabindex: -1}= title
-        = render partial: 'form'
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}= title
+      = render partial: 'form'
