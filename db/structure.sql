@@ -498,7 +498,10 @@ CREATE TABLE users (
     first_name character varying,
     last_name character varying,
     authentication_token character varying,
-    staff boolean DEFAULT false NOT NULL
+    staff boolean DEFAULT false NOT NULL,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone
 );
 
 
@@ -956,6 +959,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_unlock_token ON users USING btree (unlock_token);
+
+
+--
 -- Name: index_websites_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1180,6 +1190,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170919131540'),
 ('20170919131733'),
 ('20170919132337'),
-('20170919142450');
+('20170919140456'),
+('20170919142450'),
 
 
