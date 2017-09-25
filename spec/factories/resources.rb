@@ -37,7 +37,7 @@ FactoryGirl.define do
     
     before(:create) do |resource,evaluator|
       resource.organization = evaluator.organization || build(:organization)
-      resource.context      = evaluator.context      || build(:context,organization: organization)
+      resource.context      = evaluator.context      || build(:context,organization: resource.organization)
     end
     
     Coyote::Resource.each_type do |_,type_name|

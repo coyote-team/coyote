@@ -1,11 +1,11 @@
-RSpec.describe ResourcePolicy do
+RSpec.describe RepresentationPolicy do
   include_context "viewer organization user"
 
   let(:description) do 
     double(:description,class: Description,user_id: org_user.id)
   end
 
-  subject { ResourcePolicy.new(org_user,description) }
+  subject { RepresentationPolicy.new(org_user,description) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }

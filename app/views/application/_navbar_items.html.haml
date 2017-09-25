@@ -1,8 +1,8 @@
 = nav_menu_link("Images",          organization_images_path(current_organization))          if policy(Image).index?
 = nav_menu_link("Descriptions",    organization_descriptions_path(current_organization))    if policy(Description).index?
 = nav_menu_link("Assignments",     organization_assignments_path(current_organization))     if policy(Assignment).index?
-= nav_menu_link("Resources",       organization_resources_path(current_organization))       if policy(Image).index?
--#= nav_menu_link("Representations", organization_representations_path(current_organization)) if policy(Image).index?
+= nav_menu_link("Resources",       organization_resources_path(current_organization))       if policy(Resource).index?
+= nav_menu_link("Representations", organization_representations_path(current_organization)) if policy(Representation).index?
 = nav_menu_link("Members",         organization_memberships_path(current_organization))     if policy(Membership).index?
 = nav_menu_link("Meta",            organization_meta_path(current_organization))            if policy(::Metum).index?
 = nav_menu_link("Contexts",        organization_contexts_path(current_organization))        if policy(::Context).index?

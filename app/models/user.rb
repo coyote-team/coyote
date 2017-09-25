@@ -50,6 +50,7 @@ class User < ApplicationRecord
   has_many :assigned_images, class_name: "Image", through: :assignments, source: :image
   has_many :images, through: :organizations
   has_many :descriptions, dependent: :nullify
+  has_many :representations, :dependent => :restrict_with_exception, :inverse_of => :author
 
   scope :sorted, -> { order('LOWER(users.last_name) asc') }
 

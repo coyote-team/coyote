@@ -19,6 +19,10 @@ organization.contexts.create!([
 short_metum = FactoryGirl.create(:metum,:short)
 long_metum  = FactoryGirl.create(:metum,:long)
 
+FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
+  FactoryGirl.create(:license,trait)
+end
+
 Status.create!([
   { title: "Ready to review" },
   { title: "Approved" },

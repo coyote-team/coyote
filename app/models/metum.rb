@@ -22,7 +22,9 @@ class Metum < ApplicationRecord
   validates_uniqueness_of :title, :scope => :organization_id
 
   belongs_to :organization, :inverse_of => :meta
+
   has_many :descriptions, :inverse_of => :metum
+  has_many :representations, :inverse_of => :metum
 
   # @return [String] human-friendly description of this Metum
   def to_s

@@ -31,6 +31,8 @@ class Resource < ApplicationRecord
   belongs_to :context, :inverse_of => :resources
   belongs_to :organization, :inverse_of => :resources
 
+  has_many :representations, :inverse_of => :resource
+
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
   validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id } 

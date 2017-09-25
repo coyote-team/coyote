@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   resources :statuses
 
   resources :organizations do
-    resources :memberships, only: %i[index edit update destroy]
-
     resources :resources
+    resources :representations
+
+    resources :memberships, only: %i[index edit update destroy]
 
     resources :images do
       get :toggle, on: :member

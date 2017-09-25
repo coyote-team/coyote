@@ -37,8 +37,12 @@
             %ul.list-inline
               - if policy(resource).edit?
                 %li
-                  = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn btn-primary' do
+                  = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn' do
                     Edit
+              - if policy(Representation).new?
+                %li
+                  = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new representation for this resource', class: 'btn btn-primary' do
+                    Create Representation
               %br
               %br
             %ul.list-inline

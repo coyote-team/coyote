@@ -1,0 +1,60 @@
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}
+          = title "Showing #{representation}"
+      .row
+        .col-md-9
+          %table.entity-table
+            %caption.sr-only Key value pairs for this representation
+            %tbody
+              %tr
+                %th{scope: "row"} Resource
+                %td= link_to(representation.resource_title,[current_organization,representation.resource])
+              %tr
+                %th{scope: "row"} Author
+                %td= link_to(representation.author,representation.author)
+              %tr
+                %th{scope: "row"} Content Type
+                %td= representation.content_type
+              %tr
+                %th{scope: "row"} Language
+                %td= representation.language
+              %tr
+                %th{scope: "row"} Status
+                %td= representation.status
+              %tr
+                %th{scope: "row"} Metum
+                %td= link_to(representation.metum_title,[current_organization,representation.metum])
+              %tr
+                %th{scope: "row"} License
+                %td= representation.license_title
+              %tr
+                %th{scope: "row"} Content URI
+                %td= link_to(nil,representation.content_uri)
+              %tr
+                %th{scope: "row"} Text
+                %td= to_html(representation.text)
+              %tr
+                %th{scope: "row"} Updated
+                %td= representation.updated_at
+              %tr
+                %th{scope: "row"} Created 
+                %td= representation.created_at
+
+          %nav.show-nav{role:"navigation"}
+            %ul.list-inline
+              - if policy(representation).edit?
+                %li
+                  = link_to edit_organization_representation_path(current_organization,representation), title: "Edit this representation", class: 'btn' do
+                    Edit
+              - if policy(Representation).new?
+                %li
+                  = link_to new_organization_representation_path(current_organization,representation_id: representation.id), title: 'Create new representation for this representation', class: 'btn btn-primary' do
+                    Create Representation
+              %br
+              %br
+            %ul.list-inline
+              %li
+                = link_to 'View representations', organization_representations_path(current_organization), class: 'btn btn-info', title: "View the representations index"

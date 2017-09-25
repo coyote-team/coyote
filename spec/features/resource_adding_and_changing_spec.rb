@@ -28,7 +28,5 @@ RSpec.feature "Resource adding and changing" do
 
     expect(page.current_path).to eq(organization_resource_path(user_organization,resource))
     expect(page).to have_content(resource.title)
-
-    pending 'add representation'
   end
 end
