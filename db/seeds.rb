@@ -64,3 +64,7 @@ Coyote::Membership.each_role do |_,role_id|
 
   puts "Created #{role_id} user '#{email}' with password 'password'"
 end
+
+email = 'staff@example.com'
+create(:user,:staff,email: email,password: 'password')
+puts "Created staff user '#{email}' with password 'password'"
