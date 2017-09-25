@@ -1,11 +1,9 @@
-- meta title: title
-
 .index-outer
   .index
     .index-inner
       %header
         %h1#page-title{tabindex: -1}
-          = title
+          = title 'Your Organizations'
 
       = list_of(current_user.organizations) do |org|
         = link_to(org.title,organization_path(org))

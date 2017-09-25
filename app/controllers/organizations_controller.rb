@@ -4,28 +4,24 @@ class OrganizationsController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
   
-  helper_method :title, :organization, :organizations, :dashboard, :users
+  helper_method :organization, :organizations, :dashboard, :users
 
   # GET /organizations
   def index
-    self.title = "Organizations"
     self.organizations = current_user.organizations
   end
 
   # GET /organizations/1
   def show
-    self.title = organization.title
   end
 
   # GET /organizations/new
   def new
-    self.title = "New Organization"
     self.organization = Organization.new
   end
 
   # POST /organizations
   def create
-    self.title = "Create Organization"
     self.organization = Organization.create(organization_params)
 
     if organization.valid?
@@ -41,13 +37,10 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/1/edit
   def edit
-    self.title = "Edit #{organization.title}"
   end
 
   # PATCH /organizations/1
   def update
-    self.title = "Update #{organization.title}"
-
     if organization.update_attributes(organization_params)
       redirect_to organization, success: "Saved changes to #{organization.title}"
     else
@@ -59,7 +52,7 @@ class OrganizationsController < ApplicationController
   private
 
   attr_writer :organization
-  attr_accessor :title, :organizations
+  attr_accessor :organizations
 
   def organization
     @organization ||= current_user.organizations.find_by(id: params[:id])
