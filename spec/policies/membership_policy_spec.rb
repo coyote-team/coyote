@@ -1,6 +1,6 @@
 RSpec.describe MembershipPolicy do
   let(:org_user) do 
-    double(:organization_user,admin?: false,id: 2,role_rank: 1)
+    double(:organization_user,admin?: false,id: 2,role_rank: 1,staff?: false)
   end
 
   let(:record) do 
@@ -54,6 +54,15 @@ RSpec.describe MembershipPolicy do
     end
 
     it { is_expected.to forbid_edit_and_update_actions }
+    it { is_expected.to permit_action(:destroy)        }
+  end
+
+  context "as a staff member attempting to change self membership" do
+    before do
+      allow(org_user).to receive_messages(staff?: true,id: 1)
+    end
+
+    it { is_expected.to permit_edit_and_update_actions }
     it { is_expected.to permit_action(:destroy)        }
   end
 end
