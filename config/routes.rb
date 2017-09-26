@@ -57,7 +57,11 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new update]
 
   resources :users, only: %i[show] # for viewing other user profiles
-  #resource :profile, only: %i[show edit update] # for the logged-in user changing his/her own profile
+
+  namespace :staff do
+    resources :users, except: %i[new create]
+    resource :user_password_resets, only: %i[create]
+  end
 
   get '/login',  to: redirect('/users/sign_in')
   get '/logout', to: redirect('/users/sign_out')

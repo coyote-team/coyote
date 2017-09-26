@@ -4,6 +4,23 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @param text [String] the link text to show the user
+  # @param path [String] the link target
+  # @param icon_name [String] what Font Awesome icon to associate with the link. Optional, defaults to nil.
+  # @param options [Hash] passed on to the Rails link_to helper
+  # @return [String] HTML link with the given icon attached
+  # @see http://fontawesome.io/icons/
+  def drop_down_menu_link(text,path,icon_name = nil,options = {})
+    classes = %w[fa fa-fw]
+    classes << "fa-#{icon_name}" if icon_name
+
+    link_to(path,options) do
+      concat tag.i('',class: classes,:'aria-hidden' => true)
+      concat "\n"
+      concat text
+    end
+  end
+
   # @return [Integer] minimum number of password characters we accept
   # @see User
   def minimum_password_length

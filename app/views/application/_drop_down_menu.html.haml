@@ -6,26 +6,8 @@
       %span.caret
 
     %ul.dropdown-menu<
-      %li<
-        = link_to page_path("support") do
-          %i.fa.fa-fw.fa-support{"aria-hidden" => "true"}
-          Support
-
-      - if current_user
-        %li<
-          = link_to edit_user_registration_path do
-            %i.fa.fa-fw.fa-user{"aria-hidden" => "true"}
-            Profile
-        %li<
-          = link_to organizations_path do
-            %i.fa.fa-fw.fa-users{"aria-hidden" => "true"}
-            Organizations
-        %li<
-          = link_to destroy_user_session_path, :method => :delete do 
-            %i.fa.fa-fw.fa-sign-out{"aria-hidden" => "true"}
-            Log out
-      - else
-        %li<
-          = link_to user_session_path do
-            %i.fa.fa-fw.fa-sign-in{"aria-hidden" => "true"}
-            Log in
+      %li<= drop_down_menu_link('Support',page_path('support'),'support')
+      %li<= drop_down_menu_link('Profile',edit_user_registration_path,'user')
+      %li<= drop_down_menu_link('Organizations',organizations_path,'users')
+      %li<= drop_down_menu_link('User Management (Staff)',staff_users_path,'list') if current_user.staff?
+      %li<= drop_down_menu_link('Log out',destroy_user_session_path,'sign-out', :method => :delete)

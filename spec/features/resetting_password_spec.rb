@@ -17,10 +17,7 @@ RSpec.feature 'Resetting a password' do
       expect(email.to).to eq([user.email])
       expect(email.subject).to match(/reset password/i)
 
-      email_body = email.body.to_s
-      email_dom = Nokogiri::HTML(email_body)
-
-      reset_link = email_dom.at_xpath('//a/@href').value
+      reset_link = extract_email_link(email)
       expect(reset_link).to be_present
 
       visit reset_link
