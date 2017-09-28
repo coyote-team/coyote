@@ -32,6 +32,10 @@ RSpec.describe Staff::UserPasswordResetsController do
   context "as a staff member" do
     include_context "signed-in staff user"
 
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+
     it "succeeds for all actions involving organization-owned contexts" do
       expect(resetable_user.reset_password_token).to be_blank
 
