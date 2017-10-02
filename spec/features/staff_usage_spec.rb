@@ -52,6 +52,6 @@ RSpec.describe 'Staff usage' do
     }.to change { User.exists?(editable_user.id) }.
       from(true).to(false)
 
-    expect(page.current_path).to eq(staff_user_path(editable_user))
+    expect(page.current_path).to eq(staff_users_path)
   end
 end

@@ -26,13 +26,12 @@ module Staff
 
     def destroy
       user.destroy
-      flash[:notice] = "Deleted #{user}"
+      msg = "Deleted #{user}"
+      redirect_to staff_users_path, notice: msg
     rescue ActiveRecord::DeleteRestrictionError => e
       msg = "Unable to delete '#{user}' due to '#{e}'"
       logger.error msg
-      flash[:alert] = msg
-    ensure
-      redirect_to staff_user_path(user)
+      redirect_to staff_user_path(user), alert: msg
     end
 
     private
