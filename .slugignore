@@ -4,3 +4,4 @@
 /spec
 /coverage
 bin/setup
+/lib/tasks/dev_only.rake
