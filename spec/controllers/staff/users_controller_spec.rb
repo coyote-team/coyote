@@ -65,6 +65,8 @@ RSpec.describe Staff::UsersController do
     include_context "signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
+      dependent_representation = create(:representation,author: editable_user)
+
       get :show, params: user_params
       expect(response).to be_success
 
@@ -79,6 +81,15 @@ RSpec.describe Staff::UsersController do
         editable_user.reload
       }.to change(editable_user,:first_name).
         to('XYZ')
+
+      expect {
+        delete :destroy, params: user_params
+      }.not_to change { User.exists?(editable_user.id) }.
+        from(true)
+
+      expect(response).to be_redirect
+
+      dependent_representation.delete
 
       expect {
         delete :destroy, params: user_params
