@@ -42,8 +42,8 @@ class Representation < ApplicationRecord
   private
 
   def must_have_text_or_content_uri
-    if text.blank? && content_uri.blank? 
-      errors.add(:base,:text_and_content_uri_blank,message: 'either text or content URI must be present')
-    end
+    return if text.present?
+    return if content_uri.present?
+    errors.add(:base,:text_and_content_uri_blank,message: 'either text or content URI must be present')
   end
 end

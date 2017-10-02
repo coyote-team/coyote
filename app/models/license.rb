@@ -14,7 +14,7 @@
 # @see Representation
 class License < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  validates :url,  presence: true, uniqueness: true
+  validates :url,  presence: true
 
   has_many :representations, :inverse_of => :license
 end

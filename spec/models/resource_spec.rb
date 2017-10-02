@@ -22,13 +22,40 @@
 #
 
 RSpec.describe Resource do
-  subject { build(:resource) }
+  let(:source_uri) { 'http://example.com/100.jpg' }
+
+  subject do 
+    build(:resource,:image,source_uri: source_uri)
+  end
 
   it { is_expected.to validate_presence_of(:identifier) }
-  it { is_expected.to validate_uniqueness_of(:identifier) }
-
   it { is_expected.to validate_presence_of(:resource_type) }
-
   it { is_expected.to validate_presence_of(:canonical_id) }
+
+  it { is_expected.to validate_uniqueness_of(:identifier) }
   it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) } 
+
+  specify do
+    expect { |b| subject.as_viewable(&b) }.to yield_with_args(source_uri)
+  end
+
+  context 'without the presence of a source URI' do
+    subject do 
+      build(:resource,:image,source_uri: '')
+    end
+
+    specify do
+      expect { |b| subject.as_viewable(&b) }.not_to yield_control
+    end
+  end
+
+  context 'with a non-image resource type' do
+    subject do
+      build(:resource,:physical_object)
+    end
+
+    specify do
+      expect { |b| subject.as_viewable(&b) }.not_to yield_control
+    end
+  end
 end

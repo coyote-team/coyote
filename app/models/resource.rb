@@ -38,4 +38,13 @@ class Resource < ApplicationRecord
   validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id } 
 
   enum resource_type: Coyote::Resource::TYPES
+
+  # Yields to the caller if this resource is image-like, and is capable of being displayed as a static image
+  # @yieldparam uri [URI] location of the image file
+  # @note Will not yield if the resource is image-like, yet we we are missing a URI
+  # @see Coyote::Resource::IMAGE_LIKE_TYPES
+  def as_viewable
+    return if source_uri.blank?
+    yield source_uri if Coyote::Resource::IMAGE_LIKE_TYPES.include?(resource_type.to_sym)
+  end
 end

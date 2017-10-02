@@ -16,8 +16,9 @@ RSpec.feature "Resource adding and changing" do
 
     fill_in "Identifier",    with: resource_attributes[:identifier]
     fill_in "Title",         with: resource_attributes[:title]
-    select  resource_attributes[:resource_type], from: 'Type'
     fill_in "Canonical ID",  with: resource_attributes[:canonical_id]
+
+    select(resource_attributes[:resource_type],from: 'Type')
 
     expect {
       click_button('Save')

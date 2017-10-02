@@ -45,10 +45,10 @@ class RepresentationsController < ApplicationController
     end
   end
 
-  #def destroy
-    #representation.destroy
-    #redirect_to organization_representations_url(current_organization), notice: 'Representation was successfully destroyed.'
-  #end
+  def destroy
+    representation.destroy
+    redirect_to organization_representations_url(current_organization), notice: 'Representation was successfully destroyed.'
+  end
 
   private
 
@@ -64,7 +64,7 @@ class RepresentationsController < ApplicationController
   end
 
   def representations
-    @representations ||= current_organization.representations
+    @representations ||= current_organization.representations.page(params[:page])
   end
 
   def representation_params

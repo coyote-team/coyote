@@ -1,24 +1,24 @@
 %tr.item
   %td
     = link_to [current_organization,representation.resource] do
-      = resource_link_target(representation.resource,dom_id(representation))
+      = resource_link_target(representation.resource,dom_id(representation),alt: representation.text)
   %td
-    = representation.status.humanize
+    = link_to([current_organization,representation],representation.status.humanize)
   %td
     %span.label.label-info= representation.metum_title
   %td
     %span.label.label-default= LanguageList::LanguageInfo.find(representation.language)&.name
   %td.text-right
-    = link_to [current_organization,description], class: "btn btn-show", title: "Show this description", "aria-describedby": "description-text-#{description.id}" do
+    = link_to [current_organization,representation], class: "btn btn-show", title: "Show this representation", "aria-describedby": "representation-text-#{representation.id}" do
       View
     %nbsp
-    - if policy(description).edit?
-      = link_to edit_organization_description_path(current_organization,description), class: "btn btn-edit", title: "Edit this description", "aria-describedby": "description-text-#{description.id}" do
+    - if policy(representation).edit?
+      = link_to edit_organization_representation_path(current_organization,representation), class: "btn btn-edit", title: "Edit this representation", "aria-describedby": "representation-text-#{representation.id}" do
         Edit
       %nbsp
-    - if policy(description).destroy?
-      = link_to [current_organization,description], title: "Delete this description" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{description}?"}, "aria-describedby": "description-text-#{description.id}" do
+    - if policy(representation).destroy?
+      = link_to [current_organization,representation], title: "Delete this representation" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, "aria-describedby": "representation-text-#{representation.id}" do
         Delete
 %tr
   %td{id: dom_id(representation)}
-    .text-wrap= to_html(description.text)
+    .text-wrap= to_html(representation.text)

@@ -24,6 +24,7 @@
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
   let(:context) { create(:context,organization: organization) }
+  let(:resource) { create(:resource,organization: organization) }  
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -42,8 +43,6 @@ RSpec.describe ResourcesController do
   let(:update_resource_params) do
     resource_params.merge(resource: { title: "NEWTITLE" })
   end
-
-  let(:resource) { create(:resource,organization: organization) }  
 
   context "as a signed-out user" do
     include_context "signed-out user"
@@ -78,23 +77,23 @@ RSpec.describe ResourcesController do
     include_context "signed-in author user"
 
     it "succeeds for basic actions" do
-      get :index, params: base_params
+      get :show, params: resource_params
       expect(response).to be_success
 
-      get :show, params: resource_params
+      get :index, params: base_params
       expect(response).to be_success
 
       expect {
         get :edit, params: resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
-      expect {
-        get :new, params: base_params
-      }.to raise_error(Pundit::NotAuthorizedError)
+      get :new, params: base_params
+      expect(response).to be_success
 
       expect {
         post :create, params: new_resource_params
-      }.to raise_error(Pundit::NotAuthorizedError)
+        expect(response).to be_redirect
+      }.to change(organization.resources,:count).by(1)
 
       expect {
         patch :update, params: update_resource_params
@@ -113,11 +112,6 @@ RSpec.describe ResourcesController do
       get :new, params: base_params
       expect(response).to be_success
 
-      expect {
-        post :create, params: new_resource_params
-        expect(response).to be_redirect
-      }.to change(organization.resources,:count).by(1)
-      
       get :edit, params: resource_params
       expect(response).to be_success
 

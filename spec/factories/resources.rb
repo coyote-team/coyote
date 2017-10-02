@@ -35,14 +35,14 @@ FactoryGirl.define do
       organization nil
     end
     
-    before(:create) do |resource,evaluator|
-      resource.organization = evaluator.organization || build(:organization)
-      resource.context      = evaluator.context      || build(:context,organization: resource.organization)
+    after(:build) do |resource,evaluator|
+      resource.organization ||= evaluator.organization || build(:organization)
+      resource.context      ||= evaluator.context      || build(:context,organization: resource.organization)
     end
     
     Coyote::Resource.each_type do |_,type_name|
       trait type_name do
-        type type_name
+        resource_type type_name
       end
     end
   end

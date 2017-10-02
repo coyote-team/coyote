@@ -12,11 +12,14 @@
 
 FactoryGirl.define do
   factory :license do
-    name 'cc0-1.0'
-    title 'Universal Public Domain Dedication'
-    url 'https://creativecommons.org/publicdomain/zero/1.0/'
+    name { Faker::Lorem.unique.word }
+    title { Faker::Lorem.paragraph }
+    url 'https://example.org/license'
 
     trait :universal do
+      name 'cc0-1.0'
+      title 'Universal Public Domain Dedication'
+      url 'https://creativecommons.org/publicdomain/zero/1.0/'
     end
 
     trait :attribution_international do

@@ -18,6 +18,8 @@ module Coyote
       text:                 'text'
     }.freeze
 
+    IMAGE_LIKE_TYPES = %i[image moving_image still_image].freeze
+
     module_function
 
     # Iterates through all possible Resource types

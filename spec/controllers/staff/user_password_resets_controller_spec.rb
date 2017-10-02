@@ -50,4 +50,3 @@ RSpec.describe Staff::UserPasswordResetsController do
     end
   end
 end
-  

@@ -19,9 +19,10 @@ class RepresentationPolicy < ApplicationPolicy
 
   alias new? create?
 
-  # @return [Boolean] if the user can change an representation belonging to this organization
+  # @return [Boolean] if the user can change the representation
   def update?
-    organization_user.editor?
+    return true if organization_user.editor?
+    organization_user.author? && organization_user == record.author
   end
 
   alias edit? update?

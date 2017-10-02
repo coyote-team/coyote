@@ -36,6 +36,9 @@ RSpec.describe Coyote::OrganizationUser do
   specify { expect(subject).not_to be_owner  }
   specify { expect(subject).not_to be_staff  }
 
+  specify { expect(subject == user).to eq(true) }
+  specify { expect(subject == build_stubbed(:user)).to eq(false) }
+
   context "as a viewer user" do
     let(:role) { "viewer" }
 

@@ -53,15 +53,15 @@ class ResourcesController < ApplicationController
   attr_accessor :resource
 
   def set_resource
-    self.resource = current_organization.resources.find(params[:id])
+    self.resource = resources.find(params[:id])
   end
 
   def resources
-    @resources ||= current_organization.resources
+    current_organization.resources
   end
 
   def contexts
-    @contexts ||= current_organization.contexts
+    current_organization.contexts
   end
 
   def resource_params
