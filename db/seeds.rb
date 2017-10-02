@@ -70,5 +70,5 @@ Coyote::Membership.each_role do |_,role_id|
 end
 
 email = 'staff@example.com'
-create(:user,:staff,email: email,password: 'password')
+FactoryGirl.create(:user,:staff,email: email,password: 'password')
 puts "Created staff user '#{email}' with password 'password'"
