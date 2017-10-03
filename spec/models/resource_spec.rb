@@ -36,6 +36,14 @@ RSpec.describe Resource do
   it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) } 
 
   specify do
+    expect(subject).to have_many(:subject_resource_links).class_name(:ResourceLink).with_foreign_key(:subject_resource_id).inverse_of(:subject_resource)
+  end
+
+  specify do
+    expect(subject).to have_many(:object_resource_links).class_name(:ResourceLink).with_foreign_key(:object_resource_id).inverse_of(:object_resource)
+  end
+
+  specify do
     expect { |b| subject.as_viewable(&b) }.to yield_with_args(source_uri)
   end
 

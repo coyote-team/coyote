@@ -58,15 +58,14 @@ FactoryGirl.define do
       metum nil
       author nil
       license nil
-      organization nil
+      organization { build(:organization) }
     end
     
     before(:create) do |representation,evaluator|
-      representation.resource     = evaluator.resource     || build(:resource)
-      representation.organization = evaluator.organization || build(:organization)
-      representation.metum        = evaluator.metum        || build(:metum,organization: representation.organization)
-      representation.author       = evaluator.author       || build(:user,organization: representation.organization)
-      representation.license      = evaluator.license      || build(:license)
+      representation.resource = evaluator.resource     || build(:resource,organization: evaluator.organization)
+      representation.metum    = evaluator.metum        || build(:metum,organization: evaluator.organization)
+      representation.author   = evaluator.author       || build(:user,organization: evaluator.organization)
+      representation.license  = evaluator.license      || build(:license)
     end
   end
 end

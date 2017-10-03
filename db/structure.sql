@@ -37,6 +37,37 @@ CREATE TYPE membership_role AS ENUM (
 );
 
 
+--
+-- Name: representation_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE representation_status AS ENUM (
+    'ready_to_review',
+    'approved',
+    'not_approved'
+);
+
+
+--
+-- Name: resource_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE resource_type AS ENUM (
+    'collection',
+    'dataset',
+    'event',
+    'image',
+    'interactive_resource',
+    'moving_image',
+    'physical_object',
+    'service',
+    'software',
+    'sound',
+    'still_image',
+    'text'
+);
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -203,7 +234,6 @@ ALTER SEQUENCE descriptions_id_seq OWNED BY descriptions.id;
 CREATE TABLE images (
     id integer NOT NULL,
     path character varying,
-    website_id integer NOT NULL,
     context_id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -273,6 +303,39 @@ CREATE SEQUENCE invitations_id_seq
 --
 
 ALTER SEQUENCE invitations_id_seq OWNED BY invitations.id;
+
+
+--
+-- Name: licenses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE licenses (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    title character varying NOT NULL,
+    url character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: licenses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE licenses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: licenses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE licenses_id_seq OWNED BY licenses.id;
 
 
 --
@@ -370,6 +433,115 @@ CREATE SEQUENCE organizations_id_seq
 --
 
 ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
+
+
+--
+-- Name: representations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE representations (
+    id bigint NOT NULL,
+    resource_id bigint NOT NULL,
+    text text,
+    content_uri character varying,
+    status representation_status DEFAULT 'ready_to_review'::representation_status NOT NULL,
+    metum_id bigint NOT NULL,
+    author_id bigint NOT NULL,
+    content_type character varying DEFAULT 'text/plain'::character varying NOT NULL,
+    language character varying NOT NULL,
+    license_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: representations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE representations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: representations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE representations_id_seq OWNED BY representations.id;
+
+
+--
+-- Name: resource_links; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE resource_links (
+    id bigint NOT NULL,
+    subject_resource_id bigint NOT NULL,
+    verb character varying NOT NULL,
+    object_resource_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE resource_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE resource_links_id_seq OWNED BY resource_links.id;
+
+
+--
+-- Name: resources; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE resources (
+    id bigint NOT NULL,
+    identifier character varying NOT NULL,
+    title character varying DEFAULT 'Unknown'::character varying NOT NULL,
+    resource_type resource_type NOT NULL,
+    canonical_id character varying NOT NULL,
+    source_uri character varying,
+    context_id bigint NOT NULL,
+    organization_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: resources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE resources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE resources_id_seq OWNED BY resources.id;
 
 
 --
@@ -525,40 +697,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: websites; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE websites (
-    id integer NOT NULL,
-    title character varying NOT NULL,
-    url character varying NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    strategy character varying,
-    organization_id integer NOT NULL
-);
-
-
---
--- Name: websites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE websites_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: websites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE websites_id_seq OWNED BY websites.id;
-
-
---
 -- Name: assignments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -601,6 +739,13 @@ ALTER TABLE ONLY invitations ALTER COLUMN id SET DEFAULT nextval('invitations_id
 
 
 --
+-- Name: licenses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY licenses ALTER COLUMN id SET DEFAULT nextval('licenses_id_seq'::regclass);
+
+
+--
 -- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -619,6 +764,27 @@ ALTER TABLE ONLY meta ALTER COLUMN id SET DEFAULT nextval('meta_id_seq'::regclas
 --
 
 ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
+
+
+--
+-- Name: representations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations ALTER COLUMN id SET DEFAULT nextval('representations_id_seq'::regclass);
+
+
+--
+-- Name: resource_links id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resource_links ALTER COLUMN id SET DEFAULT nextval('resource_links_id_seq'::regclass);
+
+
+--
+-- Name: resources id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resources ALTER COLUMN id SET DEFAULT nextval('resources_id_seq'::regclass);
 
 
 --
@@ -647,13 +813,6 @@ ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclas
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
-
-
---
--- Name: websites id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY websites ALTER COLUMN id SET DEFAULT nextval('websites_id_seq'::regclass);
 
 
 --
@@ -713,6 +872,14 @@ ALTER TABLE ONLY invitations
 
 
 --
+-- Name: licenses licenses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY licenses
+    ADD CONSTRAINT licenses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: memberships memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -734,6 +901,30 @@ ALTER TABLE ONLY meta
 
 ALTER TABLE ONLY organizations
     ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: representations representations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT representations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_links resource_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resource_links
+    ADD CONSTRAINT resource_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resources resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resources
+    ADD CONSTRAINT resources_pkey PRIMARY KEY (id);
 
 
 --
@@ -766,14 +957,6 @@ ALTER TABLE ONLY tags
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: websites websites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY websites
-    ADD CONSTRAINT websites_pkey PRIMARY KEY (id);
 
 
 --
@@ -861,13 +1044,6 @@ CREATE INDEX index_images_on_organization_id ON images USING btree (organization
 
 
 --
--- Name: index_images_on_website_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_images_on_website_id ON images USING btree (website_id);
-
-
---
 -- Name: index_invitations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -924,6 +1100,90 @@ CREATE UNIQUE INDEX index_organizations_on_title ON organizations USING btree (t
 
 
 --
+-- Name: index_representations_on_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_author_id ON representations USING btree (author_id);
+
+
+--
+-- Name: index_representations_on_license_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_license_id ON representations USING btree (license_id);
+
+
+--
+-- Name: index_representations_on_metum_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_metum_id ON representations USING btree (metum_id);
+
+
+--
+-- Name: index_representations_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_resource_id ON representations USING btree (resource_id);
+
+
+--
+-- Name: index_representations_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_status ON representations USING btree (status);
+
+
+--
+-- Name: index_resource_links; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_links ON resource_links USING btree (subject_resource_id, verb, object_resource_id);
+
+
+--
+-- Name: index_resource_links_on_object_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_links_on_object_resource_id ON resource_links USING btree (object_resource_id);
+
+
+--
+-- Name: index_resource_links_on_subject_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_links_on_subject_resource_id ON resource_links USING btree (subject_resource_id);
+
+
+--
+-- Name: index_resources_on_context_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_context_id ON resources USING btree (context_id);
+
+
+--
+-- Name: index_resources_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resources_on_identifier ON resources USING btree (identifier);
+
+
+--
+-- Name: index_resources_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_organization_id ON resources USING btree (organization_id);
+
+
+--
+-- Name: index_resources_on_organization_id_and_canonical_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resources_on_organization_id_and_canonical_id ON resources USING btree (organization_id, canonical_id);
+
+
+--
 -- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -966,13 +1226,6 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON users USING btree (unlock_tok
 
 
 --
--- Name: index_websites_on_organization_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_websites_on_organization_id ON websites USING btree (organization_id);
-
-
---
 -- Name: taggings_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1002,6 +1255,14 @@ ALTER TABLE ONLY invitations
 
 
 --
+-- Name: representations fk_rails_15f6769de2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_15f6769de2 FOREIGN KEY (author_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: descriptions fk_rails_1baaf0e406; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1018,11 +1279,19 @@ ALTER TABLE ONLY images
 
 
 --
--- Name: images fk_rails_3245e98929; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_links fk_rails_34c53ccf50; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY images
-    ADD CONSTRAINT fk_rails_3245e98929 FOREIGN KEY (website_id) REFERENCES websites(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY resource_links
+    ADD CONSTRAINT fk_rails_34c53ccf50 FOREIGN KEY (subject_resource_id) REFERENCES resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: resources fk_rails_445f527f69; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resources
+    ADD CONSTRAINT fk_rails_445f527f69 FOREIGN KEY (context_id) REFERENCES contexts(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1031,6 +1300,14 @@ ALTER TABLE ONLY images
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT fk_rails_58ab0d4634 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: representations fk_rails_5dbc0cf401; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_5dbc0cf401 FOREIGN KEY (metum_id) REFERENCES meta(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1063,14 +1340,6 @@ ALTER TABLE ONLY invitations
 
 ALTER TABLE ONLY contexts
     ADD CONSTRAINT fk_rails_8e9711c31f FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: websites fk_rails_97f7066bae; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY websites
-    ADD CONSTRAINT fk_rails_97f7066bae FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1114,11 +1383,43 @@ ALTER TABLE ONLY invitations
 
 
 --
+-- Name: resources fk_rails_b7c74d1aaf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resources
+    ADD CONSTRAINT fk_rails_b7c74d1aaf FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: representations fk_rails_bdad6334d2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_bdad6334d2 FOREIGN KEY (resource_id) REFERENCES resources(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: representations fk_rails_d040284b2b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_d040284b2b FOREIGN KEY (license_id) REFERENCES licenses(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: descriptions fk_rails_d1b03e17ed; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT fk_rails_d1b03e17ed FOREIGN KEY (image_id) REFERENCES images(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: resource_links fk_rails_e34756464a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resource_links
+    ADD CONSTRAINT fk_rails_e34756464a FOREIGN KEY (object_resource_id) REFERENCES resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1191,6 +1492,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170919131733'),
 ('20170919132337'),
 ('20170919140456'),
-('20170919142450');
+('20170919142450'),
+('20170921185109'),
+('20170922154933'),
+('20170922160337'),
+('20170922160701'),
+('20171003125652'),
+('20171003131534'),
+('20171003131931');
 
 

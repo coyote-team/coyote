@@ -1,0 +1,15 @@
+- if related_resources.any?
+  .row
+    .col-md-9
+      %table
+        %caption Related Resources
+        %thead
+          %tr
+            %th Link
+            %th Resource
+
+        %tbody
+          - related_resources.each do |verb,link,related_resource|
+            %tr
+              %td #{link_to(verb,link)}
+              %td #{link_to(related_resource.label,[related_resource.organization,related_resource])}

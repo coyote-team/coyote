@@ -32,6 +32,8 @@ class Resource < ApplicationRecord
   belongs_to :organization, :inverse_of => :resources
 
   has_many :representations, :inverse_of => :resource
+  has_many :subject_resource_links, :foreign_key => :subject_resource_id, :class_name => :ResourceLink, :inverse_of => :subject_resource
+  has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
 
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
@@ -46,5 +48,27 @@ class Resource < ApplicationRecord
   def as_viewable
     return if source_uri.blank?
     yield source_uri if Coyote::Resource::IMAGE_LIKE_TYPES.include?(resource_type.to_sym)
+  end
+
+  # @return [String] a human-friendly means of identifying this resource in titles and select boxes
+  def label
+    "#{title} (#{identifier})"
+  end
+
+  # @return [Array<Symbol,ResourceLink,Resource>] 
+  #   each triplet represents a resource that is linked to this resource, with verbs given
+  #   from this resource's perspective
+  def related_resources
+    result = []
+
+    subject_resource_links.each do |link|
+      result << [link.verb,link,link.object_resource]
+    end
+
+    object_resource_links.each do |link|
+      result << [link.reverse_verb,link,link.subject_resource]
+    end
+
+    result
   end
 end

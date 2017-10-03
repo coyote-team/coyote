@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     resources :invitations, only: %i[new create]
   end
 
+  resources :resource_links
+
   get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
   devise_for :users, 

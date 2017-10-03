@@ -51,6 +51,8 @@ class User < ApplicationRecord
   has_many :images, through: :organizations
   has_many :descriptions, dependent: :nullify
   has_many :representations, :dependent => :restrict_with_exception, :inverse_of => :author, :foreign_key => :author_id
+  has_many :resources, :through => :organizations
+  has_many :resource_links, :through => :organizations
 
   scope :sorted, -> { order('LOWER(users.last_name) asc') }
 
