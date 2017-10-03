@@ -8,7 +8,6 @@ require 'csv'
 #
 #  id                 :integer          not null, primary key
 #  path               :string
-#  website_id         :integer          not null
 #  context_id         :integer          not null
 #  created_at         :datetime
 #  updated_at         :datetime
@@ -26,7 +25,6 @@ require 'csv'
 #
 #  index_images_on_context_id       (context_id)
 #  index_images_on_organization_id  (organization_id)
-#  index_images_on_website_id       (website_id)
 #
 
 class Image < ApplicationRecord
@@ -34,7 +32,6 @@ class Image < ApplicationRecord
 
   before_validation :update_status_code
 
-  belongs_to :website, touch: true, :inverse_of => :images
   belongs_to :context, touch: true, :inverse_of => :images
   belongs_to :organization, :inverse_of => :images, optional: true
 
@@ -42,9 +39,9 @@ class Image < ApplicationRecord
   has_many :assignments, :inverse_of => :image, :dependent => :destroy
   has_many :users, through: :assignments
 
-  validates :path, :presence => true, :uniqueness => { :scope => :website_id }
-  validates :canonical_id, :presence => true, :uniqueness => { :scope => :website_id }
-  validates_associated :website, :context
+  validates :path, :presence => true
+  validates :canonical_id, :presence => true
+  validates_associated :context
 
   audited
 
@@ -88,11 +85,7 @@ class Image < ApplicationRecord
   end
 
   def is_mca?
-    if website.url.include?("mcachicago")
-      true
-    else 
-      false
-    end
+    true
   end
 
   def url(protocol="https:")
@@ -100,8 +93,6 @@ class Image < ApplicationRecord
       protocol + path
     elsif path.starts_with?("http")
       path
-    elsif website
-      website.url + path
     else 
       path
     end

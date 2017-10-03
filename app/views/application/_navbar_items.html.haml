@@ -6,4 +6,3 @@
 = nav_menu_link("Members",         organization_memberships_path(current_organization))     if policy(Membership).index?
 = nav_menu_link("Meta",            organization_meta_path(current_organization))            if policy(::Metum).index?
 = nav_menu_link("Contexts",        organization_contexts_path(current_organization))        if policy(::Context).index?
-= nav_menu_link("Websites",        organization_websites_path(current_organization))        if policy(Website).index?

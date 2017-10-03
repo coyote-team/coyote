@@ -3,7 +3,7 @@
 # Table name: representations
 #
 #  id           :integer          not null, primary key
-#  representation_id  :integer          not null
+#  resource_id  :integer          not null
 #  text         :text
 #  content_uri  :string
 #  status       :enum             default("ready_to_review"), not null
@@ -20,7 +20,7 @@
 #  index_representations_on_author_id    (author_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
-#  index_representations_on_representation_id  (representation_id)
+#  index_representations_on_resource_id  (resource_id)
 #  index_representations_on_status       (status)
 #
 

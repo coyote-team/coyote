@@ -22,7 +22,6 @@ class Organization < ApplicationRecord
   has_many :resources, :dependent => :restrict_with_exception, :inverse_of => :organization 
   has_many :descriptions, :through => :images
   has_many :contexts, :inverse_of => :organization
-  has_many :websites, :inverse_of => :organization
   has_many :meta, :inverse_of => :organization
   has_many :assignments, :through => :images
   has_many :representations, :through => :resources

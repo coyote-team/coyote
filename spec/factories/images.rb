@@ -4,7 +4,6 @@
 #
 #  id                 :integer          not null, primary key
 #  path               :string
-#  website_id         :integer          not null
 #  context_id         :integer          not null
 #  created_at         :datetime
 #  updated_at         :datetime
@@ -22,7 +21,6 @@
 #
 #  index_images_on_context_id       (context_id)
 #  index_images_on_organization_id  (organization_id)
-#  index_images_on_website_id       (website_id)
 #
 
 FactoryGirl.define do
@@ -38,12 +36,10 @@ FactoryGirl.define do
     end
 
     transient do
-      website nil
       context nil
     end
     
     before(:create) do |image,evaluator|
-      image.website = evaluator.website || build(:website,organization: image.organization)
       image.context = evaluator.context || build(:context,organization: image.organization)
     end
   end

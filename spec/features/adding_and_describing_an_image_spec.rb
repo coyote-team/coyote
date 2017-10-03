@@ -2,7 +2,6 @@ RSpec.feature "Adding and describing an image" do
   include_context "as a logged-in admin user"
 
   let!(:preexisting_image) { create(:image) }
-  let!(:website) { create(:website,organization: user_organization) }
   let!(:context) { create(:context,organization: user_organization) }
   let!(:metum)   { create(:metum) }
   let!(:status)  { create(:ready_to_review_status) }
@@ -18,7 +17,6 @@ RSpec.feature "Adding and describing an image" do
 
     click_first_link("New Image")
 
-    select(website.title,:from => "Website",:match => :first)
     select(context.title,from: "Context",:match => :first)
 
     fill_in "Canonical ID", with: image_attributes[:canonical_id]

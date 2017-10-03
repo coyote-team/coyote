@@ -1,6 +1,5 @@
 RSpec.describe ImagesController do
   let(:organization) { create(:organization) }
-  let(:website) { create(:website,organization: organization) }
   let(:context) { create(:context,organization: organization) }
 
   let(:base_params) do
@@ -13,7 +12,7 @@ RSpec.describe ImagesController do
 
   let(:new_image_params) do
     image = attributes_for(:image)
-    image.merge!(website_id: website.id,context_id: context.id)
+    image.merge!(context_id: context.id)
     base_params.merge(image: image)
   end
 

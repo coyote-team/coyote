@@ -5,7 +5,7 @@ class ImagesController < ApplicationController
 
   before_action :users, only: %i[create]
 
-  helper_method :image, :contexts, :websites, :tag_list, :users
+  helper_method :image, :contexts, :tag_list, :users
 
   respond_to :html
 
@@ -18,10 +18,9 @@ class ImagesController < ApplicationController
     if params[:canonical_id].present? 
       self.image = current_organization.images.find_by(canonical_id: params[:canonical_id]) # for ajax
     else
-      if params["updated_at"].present? or params["website_id"].present?
+      if params["updated_at"].present?
         params["q"] = {} 
         params["q"]["s"] = "updated_at desc"
-        params["q"]["website_id_eq"] = params["website_id"].to_i if params["website_id"].present?
         params["q"]["updated_at_gteq"] = Time.parse(params["updated_at"]) if params["updated_at"].present?
       end
 
@@ -78,7 +77,6 @@ class ImagesController < ApplicationController
   def create
     authorize Image
 
-    image_params[:website] = current_organization.websites.find_by(id: image_params.delete(:website_id))
     image_params[:context] = current_organization.contexts.find_by(id: image_params.delete(:context_id))
 
     self.image = current_organization.images.create(image_params)
@@ -213,10 +211,6 @@ class ImagesController < ApplicationController
     @contexts ||= current_organization.contexts
   end
 
-  def websites
-    @websites ||= current_organization.websites
-  end
-
   def tag_list
     @tag_list ||= ActsAsTaggableOn::Tag.most_used(30)
   end
@@ -230,7 +224,7 @@ class ImagesController < ApplicationController
   end
 
   def image_params
-    params.require(:image).permit(:path,:context_id,:website_id,:canonical_id,:organization_id,:title,:priority,:page_urls,tag_list: [],page_urls: [])
+    params.require(:image).permit(:path,:context_id,:canonical_id,:organization_id,:title,:priority,:page_urls,tag_list: [],page_urls: [])
   end
 
   def search_params

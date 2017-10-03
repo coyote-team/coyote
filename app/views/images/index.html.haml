@@ -50,7 +50,6 @@
                 %th{scope: "col"}= sort_link @q, :title, 'Caption'
                 %th{scope: "col"}= sort_link @q, :assignments_count, 'Assigned to', html: {title: "Sort by assignment count"}
                 %th{scope: "col"}= sort_link @q, :context_name, 'Context'
-                -#%th{scope: "col"}< Website
                 %th{scope: "col"}= sort_link @q, :descriptions_count, 'Descriptions'
                 %th{scope: "col"} Tags
                 %th{scope: "col", rowspan: 2}= sort_link @q, :created_at, 'Date'

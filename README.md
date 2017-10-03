@@ -138,39 +138,6 @@ API documentation is generated at `/apipie` and you can see MCA's version  [here
 
 We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file. For an example, check out [/lib/coyote/strategies/mca.rb](https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb).
 
-## <a name="data-mode"> Data Model
-
-![Data model diagram](doc_assets/datamodel.png "An entity-relationship diagram demonstrating belongs-to/has-many relationships between database tables with connecting arrows")
-
-For use on [nomnoml](http://www.nomnoml.com/)
-
-```
-[<frame>Coyote data model|
-  [User | id: int | first_name: string | last_name: string |  email: string | admin: bool ]
-  [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
-  [Tag | id: int | title: string]
-  [Context | id: int | title: string]
-  [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
-  [Website | id: int | url: string | title: string | strategy: string ]
-  [Status | id: int | title: string | description: text]
-  [Metum| id: int| title: string | instructions: text]
-
-  [Assignment]->[Image]
-  [Assignment]->[User]
-
-  [Description]->[User]
-  [Description]->[Metum]
-  [Description]->[Status]
-
-  [Image]->[Context]
-  [Image]->[Website]
-  [Image] +-> 0..* [Description]
-  [Image] +-> 0..* [Tag]
-]
-```
-
-Descriptions have an audit log that tracks changes across most columns.
- 
 ## <a name="links"> Links
 
 - [Coyote repo](http://github.com/coyote-team/coyote)

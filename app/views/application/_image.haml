@@ -4,9 +4,5 @@
 
 -unless image.title.blank?
   %div{id: "image-title-#{image.id}"}= to_html image.title
-  %p 
-    %span.label.label-info Caption
-    from
-    #{image.website}
 -else
   %p{id: "image-title-#{image.id}"} No caption available.

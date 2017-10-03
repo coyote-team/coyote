@@ -14,7 +14,6 @@ namespace :coyote do
       # mysqldump -u root --tab=/tmp coyote images
       # mysql2json --user=root --password= --database=coyote --execute "select * from images" > /tmp/images.json
 
-      website_headers      = %i[id title url created_at updated_at strategy]
       context_headers      = %i[id title created_at updated_at]
       metum_headers        = %i[id title instructions created_at updated_at]
       status_headers       = %i[id title created_at updated_at]
@@ -38,19 +37,6 @@ namespace :coyote do
         attribs.delete(:reset_password_token)
 
         User.create!(attribs)
-      end
-
-      File.open("/tmp/websites.txt").each do |line|
-        attribs = import_tsv(website_headers,line)
-        strategy = attribs.delete(:strategy)
-
-        if strategy =~ /MCA/
-          strategy = "Coyote::Strategies::MCA"
-        end
-
-        attribs[:strategy] = strategy
-
-        Website.create!(attribs)
       end
 
       File.open("/tmp/groups.txt").each do |line|

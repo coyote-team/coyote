@@ -38,11 +38,10 @@ RSpec.describe Dashboard, :type => :integration do
   end
 
   context "with images and descriptions" do
-    let(:website) { create(:website,organization: organization) }
     let(:context) { create(:context,organization: organization) }
 
     let!(:images) do 
-      create_list(:image,5,organization: organization,website: website,context: context)
+      create_list(:image,5,organization: organization,context: context)
     end
 
     let(:first_image)      { images[0] }
