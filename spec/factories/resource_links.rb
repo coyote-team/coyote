@@ -21,5 +21,12 @@ FactoryGirl.define do
     subject_resource
     verb Coyote::ResourceLink::VERB_NAMES.first
     object_resource
+
+    Coyote::ResourceLink::VERB_NAMES.each do |verb_name|
+      # is_version, has_version, etc.
+      trait verb_name.to_s.underscore.to_sym do
+        verb verb_name
+      end
+    end
   end
 end

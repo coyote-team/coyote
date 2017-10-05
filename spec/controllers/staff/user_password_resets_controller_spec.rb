@@ -6,10 +6,6 @@ RSpec.describe Staff::UserPasswordResetsController do
     { user_id: resetable_user.id }
   end
 
-  let(:update_user_params) do
-    user_params.merge(user: { first_name: 'XYZ' })
-  end
-
   context "as a signed-out user" do
     include_context "signed-out user"
 

@@ -76,10 +76,6 @@ class OrganizationsController < ApplicationController
     @dashboard ||= Dashboard.new(current_user,organization)
   end
 
-  def users
-    organization.users
-  end
-
   def authorize_general_access
     authorize Organization
   end

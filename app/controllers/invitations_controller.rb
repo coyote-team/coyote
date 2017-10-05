@@ -7,8 +7,6 @@ class InvitationsController < ApplicationController
 
   helper_method :invitation, :title
 
-  attr_writer :user_invitation_service
-
   # GET /organizations/1/invitations/new
   def new
     self.title = "Invite a user to join #{current_organization.title}"

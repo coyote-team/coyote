@@ -25,7 +25,7 @@ RSpec.describe Resource do
   let(:source_uri) { 'http://example.com/100.jpg' }
 
   subject do 
-    build(:resource,:image,source_uri: source_uri)
+    build(:resource,:image,title: 'Mona Lisa',identifier: 'abc123',source_uri: source_uri)
   end
 
   it { is_expected.to validate_presence_of(:identifier) }
@@ -34,6 +34,8 @@ RSpec.describe Resource do
 
   it { is_expected.to validate_uniqueness_of(:identifier) }
   it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) } 
+
+  specify { expect(subject.label).to eq("Mona Lisa (abc123)") }
 
   specify do
     expect(subject).to have_many(:subject_resource_links).class_name(:ResourceLink).with_foreign_key(:subject_resource_id).inverse_of(:subject_resource)
@@ -64,6 +66,21 @@ RSpec.describe Resource do
 
     specify do
       expect { |b| subject.as_viewable(&b) }.not_to yield_control
+    end
+  end
+
+  context '#related_resources' do
+    # this test requires the database as rspec stubs don't completely replicate has_many behaviors
+    let!(:resource_link) do 
+      create(:resource_link,verb: 'hasPart')
+    end
+
+    let(:subject_resource) { resource_link.subject_resource }
+    let(:object_resource) { resource_link.object_resource }
+
+    it 'returns correctly labeled predicates' do
+      expect(subject_resource.related_resources).to eq([['hasPart',resource_link,object_resource]])
+      expect(object_resource.related_resources).to eq([['isPartOf',resource_link,subject_resource]])
     end
   end
 end

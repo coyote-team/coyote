@@ -14,8 +14,10 @@
 #  index_memberships_on_user_id_and_organization_id  (user_id,organization_id) UNIQUE
 #
 
-RSpec.describe Membership, :type => :integration do
+RSpec.describe Membership do
   subject { create(:membership) }
+
+  it { is_expected.to validate_presence_of(:role) }
 
   it { is_expected.not_to be_last_owner }
 

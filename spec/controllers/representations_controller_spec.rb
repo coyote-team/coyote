@@ -137,6 +137,9 @@ RSpec.describe RepresentationsController do
       }.to change(resource.representations,:count).
         from(0).to(1)
 
+      post :create, params: base_params.merge(representation: { metum_id: metum.id },resource_id: resource.id)
+      expect(response).not_to be_redirect
+        
       expect {
         patch :update, params: update_representation_params
         representation.reload
@@ -145,6 +148,9 @@ RSpec.describe RepresentationsController do
 
       expect(response).to redirect_to(organization_representation_url(organization,representation))
 
+      patch :update, params: representation_params.merge(representation: { license_id: nil })
+      expect(response).not_to be_redirect
+      
       expect {
         delete :destroy, params: update_representation_params
       }.to change { Representation.exists?(representation.id) }.

@@ -69,6 +69,17 @@ RSpec.describe ResourceLinksController do
         expect(response).to be_redirect
       }.to change(subject_resource.subject_resource_links,:count).by(1)
 
+      bad_params = { 
+        resource_link: { 
+          subject_resource_id: subject_resource.id,
+          verb: '',
+          object_resource_id: object_resource.id 
+        }
+      }
+
+      post :create, params: bad_params
+      expect(response).not_to be_redirect
+
       expect {
         patch :update, params: update_resource_link_params
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -95,6 +106,12 @@ RSpec.describe ResourceLinksController do
         resource_link.reload
       }.to change(resource_link,:verb).to('hasFormat')
 
+      bad_params = update_resource_link_params.dup
+      bad_params[:resource_link][:verb] = ''
+
+      patch :update, params: bad_params
+      expect(response).not_to be_redirect
+      
       expect {
         delete :destroy, params: resource_link_params
         expect(response).to redirect_to([organization,subject_resource])

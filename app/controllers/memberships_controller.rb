@@ -30,7 +30,7 @@ class MembershipsController < ApplicationController
       redirect_back fallback_location: organization_memberships_url
     else
       self.title = "Changing membership of #{membership.user}"
-      logger.warn "Unable to update #{membership}: '#{user.errors.full_messages.to_sentence}'"
+      logger.warn "Unable to update #{membership}: '#{membership.errors.full_messages.to_sentence}'"
       render :edit
     end
   end

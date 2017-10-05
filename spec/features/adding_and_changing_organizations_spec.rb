@@ -1,10 +1,6 @@
 RSpec.describe "Adding and changing an organization" do
   include_context "as a logged-in user"
 
-  let(:organization_attributes) do
-    attributes_for(:organization).tap(&:symbolize_keys!)
-  end
-
   it "succeeds" do
     click_link "Organizations"
     expect(current_path).to eq(organizations_path)

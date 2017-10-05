@@ -73,10 +73,6 @@ class ResourceLinksController < ApplicationController
                          find(params[:id])
   end
 
-  def object_resource_choices
-    current_user.resources
-  end
-
   def authorize_access
     authorize(resource_link)
   end

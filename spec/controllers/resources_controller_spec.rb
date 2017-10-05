@@ -95,6 +95,9 @@ RSpec.describe ResourcesController do
         expect(response).to be_redirect
       }.to change(organization.resources,:count).by(1)
 
+      post :create, params: base_params.merge(resource: { context_id: nil })
+      expect(response).not_to be_redirect
+      
       expect {
         patch :update, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -120,6 +123,9 @@ RSpec.describe ResourcesController do
         expect(response).to redirect_to([organization,resource])
         resource.reload
       }.to change(resource,:title).to("NEWTITLE")
+
+      post :update, params: update_resource_params.merge(resource: { resource_type: '' })
+      expect(response).not_to be_redirect
 
       expect {
         delete :destroy, params: update_resource_params

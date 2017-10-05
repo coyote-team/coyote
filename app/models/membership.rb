@@ -19,6 +19,8 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :organization
 
+  validates :role, presence: true
+
   enum role: Coyote::Membership::ROLES
 
   # @return [Boolean] whether this membership represents the last owner of an organization

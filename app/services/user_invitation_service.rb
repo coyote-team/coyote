@@ -34,7 +34,8 @@ class UserInvitationService
                         end
 
       if invitation.save
-        organization.memberships.find_or_create_by!(user: recipient_user,role: invitation.role)
+        membership = organization.memberships.find_or_create_by!(user: recipient_user,role: invitation.role)
+        Rails.logger.info "Created #{membership}"
         InvitationMailer.public_send(delivery_method,invitation).deliver_now
       else
         yield invitation.error_sentence

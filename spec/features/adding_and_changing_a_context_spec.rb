@@ -2,10 +2,6 @@ RSpec.feature "Adding and editing a context" do
   context "when logged-in as an admin" do
     include_context "as a logged-in admin user"
 
-    let(:context_attributes) do
-      attributes_for(:context).tap(&:symbolize_keys!)
-    end
-
     it "succeeds" do
       click_link "Contexts"
       click_link "New Context"

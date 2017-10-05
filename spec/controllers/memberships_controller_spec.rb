@@ -108,6 +108,9 @@ RSpec.describe MembershipsController do
       }.to change(membership,:role).
         from('guest').to('editor')
 
+      patch :update, params: membership_params.merge(membership: { role: '' })
+      expect(response).not_to be_redirect
+        
       expect {
         delete :destroy, params: membership_params
         expect(response).to be_redirect

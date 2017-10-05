@@ -77,6 +77,9 @@ RSpec.describe OrganizationsController do
         user.memberships.owner.where.not(organization: organization).count
       }.from(0).to(1)
 
+      post :create, params: { organization: { title: '' } }
+      expect(response).not_to be_redirect
+      
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -94,6 +97,9 @@ RSpec.describe OrganizationsController do
         patch :update, params: existing_organization_params.merge(update_organization_params)
         organization.reload
       }.to change(organization,:title).to("NEWTITLE")
+
+      patch :update, params: existing_organization_params.merge(organization: { title: '' })
+      expect(response).not_to be_redirect
     end
   end
 end
