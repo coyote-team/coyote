@@ -91,9 +91,9 @@ CREATE TABLE ar_internal_metadata (
 CREATE TABLE assignments (
     id integer NOT NULL,
     user_id integer NOT NULL,
-    image_id integer NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    resource_id integer NOT NULL
 );
 
 
@@ -974,10 +974,10 @@ CREATE INDEX auditable_index ON audits USING btree (auditable_id, auditable_type
 
 
 --
--- Name: index_assignments_on_user_id_and_image_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_assignments_on_resource_id_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_assignments_on_user_id_and_image_id ON assignments USING btree (user_id, image_id);
+CREATE UNIQUE INDEX index_assignments_on_resource_id_and_user_id ON assignments USING btree (resource_id, user_id);
 
 
 --
@@ -1279,6 +1279,14 @@ ALTER TABLE ONLY images
 
 
 --
+-- Name: assignments fk_rails_24272542fc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY assignments
+    ADD CONSTRAINT fk_rails_24272542fc FOREIGN KEY (resource_id) REFERENCES resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: resource_links fk_rails_34c53ccf50; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1316,14 +1324,6 @@ ALTER TABLE ONLY representations
 
 ALTER TABLE ONLY memberships
     ADD CONSTRAINT fk_rails_64267aab58 FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
-
-
---
--- Name: assignments fk_rails_79515876ef; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY assignments
-    ADD CONSTRAINT fk_rails_79515876ef FOREIGN KEY (image_id) REFERENCES images(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1499,6 +1499,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170922160701'),
 ('20171003125652'),
 ('20171003131534'),
-('20171003131931');
+('20171003131931'),
+('20171006172008');
 
 

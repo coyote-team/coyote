@@ -1,14 +1,14 @@
 module OrganizationsHelper
   # @param count [Integer]
   # @return [String] formatted number of images, with correct pluralization
-  def image_count(count)
-    "#{number_with_delimiter(count)} #{'image'.pluralize(count)}"
+  def resource_count(count)
+    "#{number_with_delimiter(count)} #{'resource'.pluralize(count)}"
   end
 
   # @param count [Integer]
-  # @return [String] formatted number of descriptions, with correct pluralization
-  def description_count(count)
-    "#{number_with_delimiter(count)} #{'description'.pluralize(count)}"
+  # @return [String] formatted number of representations, with correct pluralization
+  def representation_count(count)
+    "#{number_with_delimiter(count)} #{'representation'.pluralize(count)}"
   end
 
   # @param local_vars [Hash] passed to the partial as "local assigns"; lets our templates optionally specify certain parameters

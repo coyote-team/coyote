@@ -32,12 +32,16 @@ class Representation < ApplicationRecord
 
   has_one :organization, :through => :resource
   
+  enum status: Coyote::Representation::STATUSES
+
   validates :language, presence: true
   validate :must_have_text_or_content_uri
 
   delegate :title, :to => :resource, :prefix => true
   delegate :title, :to => :metum,    :prefix => true
   delegate :title, :to => :license,  :prefix => true
+
+  audited
 
   private
 

@@ -2,15 +2,15 @@
 #
 # Table name: assignments
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer          not null
-#  image_id   :integer          not null
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  user_id     :integer          not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#  resource_id :integer          not null
 #
 # Indexes
 #
-#  index_assignments_on_user_id_and_image_id  (user_id,image_id) UNIQUE
+#  index_assignments_on_resource_id_and_user_id  (resource_id,user_id) UNIQUE
 #
 
 RSpec.describe AssignmentsController do
@@ -20,9 +20,9 @@ RSpec.describe AssignmentsController do
     { organization_id: organization.id }
   end
 
-  let(:image) { create(:image,organization: organization) }
+  let(:resource) { create(:resource,organization: organization) }
 
-  let(:assignment) { create(:assignment,user: user,image: image) }
+  let(:assignment) { create(:assignment,user: user,resource: resource) }
 
   let(:assignment_params) do
     base_params.merge(id: assignment.id)
@@ -30,14 +30,14 @@ RSpec.describe AssignmentsController do
 
   let(:new_assignment_user) { create(:user,organization: organization) }
 
-  let(:new_assignment_image) { create(:image,organization: organization) }
+  let(:new_assignment_resource) { create(:resource,organization: organization) }
 
   let(:new_assignment_params) do
-    base_params.merge(assignment: { user_id: new_assignment_user.id, image_id: new_assignment_image.id })
+    base_params.merge(assignment: { user_id: new_assignment_user.id, resource_id: new_assignment_resource.id })
   end
 
   let(:update_assignment_params) do
-    assignment_params.merge(assignment: { image_id: image.id, user_id: new_assignment_user.id })
+    assignment_params.merge(assignment: { resource_id: resource.id, user_id: new_assignment_user.id })
   end
 
   context "as a signed-out user" do
@@ -127,7 +127,7 @@ RSpec.describe AssignmentsController do
         assignment.reload
       }.to change(assignment,:user).
         to(new_assignment_user)
-
+        
       expect {
         delete :destroy, params: assignment_params
         expect(response).to be_redirect

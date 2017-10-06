@@ -7,37 +7,37 @@
   .row
     .col-sm-6
       - if organization_user.admin?
-        =link_to "#ready_to_review_descriptions" do 
-          Skip to Ready to Review Descriptions
+        =link_to "#ready_to_review_representations" do 
+          Skip to Ready to Review representations
 
       %h2 Our Status
       %table.table.table-no-grid
-        = render partial: "progress",   locals: { title: "Described images of #{image_count(dashboard.organization_image_count)}", value: dashboard.organization_described_image_count, max: dashboard.organization_image_count }
+        = render partial: "progress",   locals: { title: "Represented resources of #{resource_count(dashboard.organization_resource_count)}", value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }
 
         - if organization_user.admin?
-          = render partial: "progress", locals: { title: "Images assigned and undescribed of #{image_count(dashboard.organization_image_count)}",           value: dashboard.organization_open_assignment_count,        max: dashboard.organization_image_count }
-          = render partial: "progress", locals: { title: "Images unassigned and undescribed of #{image_count(dashboard.organization_image_count)}",         value: dashboard.organization_unassigned_undescribed_count, max: dashboard.organization_image_count }
-          = render partial: "progress", locals: { title: "Descriptions ready for review of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_description_count }
+          = render partial: "progress", locals: { title: "Resources assigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",     value: dashboard.organization_open_assignment_count,        max: dashboard.organization_resource_count }
+          = render partial: "progress", locals: { title: "Resources unassigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",   value: dashboard.organization_unassigned_unrepresented_count, max: dashboard.organization_resource_count }
+          = render partial: "progress", locals: { title: "representations ready for review of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_representation_count }
 
-        = render partial: "progress", locals: { title: "Approved descriptions of #{description_count(dashboard.organization_description_count)}", value: dashboard.organization_approved_description_count, max: dashboard.organization_description_count }
+        = render partial: "progress", locals: { title: "Approved representations of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_approved_representation_count, max: dashboard.organization_representation_count }
 
-        = render partial: "latest_image_timestamp", object: dashboard.organization_latest_image_timestamp if dashboard.organization_latest_image_timestamp  
+        = render partial: "latest_resource_timestamp", object: dashboard.organization_latest_resource_timestamp if dashboard.organization_latest_resource_timestamp  
 
     .col-sm-6
       %h2 Your Status
       %table.table.table-no-grid
-        = render partial: "progress", locals: { title: "Described images of #{image_count(dashboard.current_user_described_images_count)}",         value: dashboard.current_user_described_images_count,       max: dashboard.current_user_described_images_count }
-        = render partial: "progress", locals: { title: "Approved descriptions of #{description_count(dashboard.current_user_description_count)}",   value: dashboard.current_user_approved_description_count,   max: dashboard.current_user_description_count }
-        = render partial: "progress", locals: { title: "Unapproved descriptions of #{description_count(dashboard.current_user_description_count)}", value: dashboard.current_user_unapproved_description_count, max: dashboard.current_user_description_count }
+        = render partial: "progress", locals: { title: "Represented resources of #{resource_count(dashboard.current_user_represented_resources_count)}",         value: dashboard.current_user_represented_resources_count,       max: dashboard.current_user_represented_resources_count }
+        = render partial: "progress", locals: { title: "Approved representations of #{representation_count(dashboard.current_user_representation_count)}",   value: dashboard.current_user_approved_representation_count,   max: dashboard.current_user_representation_count }
+        = render partial: "progress", locals: { title: "Unapproved representations of #{representation_count(dashboard.current_user_representation_count)}", value: dashboard.current_user_unapproved_representation_count, max: dashboard.current_user_representation_count }
 
   .row
     .col-md-12
       - if organization_user.admin?
         %h2 Admin Queues
 
-        = render partial: "queue", locals: { queue: dashboard.organization_top_undescribed_items_queue,     type: "Undescribed Images",           count: dashboard.organization_undescribed_count,     users: dashboard.organization_users }
-        = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned Images",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
-        = render partial: "queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review Descriptions", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
+        = render partial: "queue", locals: { queue: dashboard.organization_top_unrepresented_items_queue,     type: "Unrepresented resources",           count: dashboard.organization_unrepresented_count,     users: dashboard.organization_users }
+        = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned resources",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
+        = render partial: "queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review representations", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
 
   .row
     .col-md-12
@@ -46,7 +46,6 @@
       - if dashboard.current_user_queue_empty?
         = render partial: "your_queue_empty"
       - else
-        = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Images", count: dashboard.current_user_assigned_items_count }
+        = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned resources", count: dashboard.current_user_assigned_items_count }
 
   = render partial: "issue_invitation" if policy(Invitation).new?
-  = render partial: "file_operations" if organization_user.admin?

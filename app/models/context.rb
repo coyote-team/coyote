@@ -20,7 +20,6 @@ class Context < ApplicationRecord
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :organization_id
 
-  has_many :images, :dependent => :nullify
   has_many :resources, :inverse_of => :context
 
   belongs_to :organization, :inverse_of => :contexts

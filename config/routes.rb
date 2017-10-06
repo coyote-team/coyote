@@ -8,40 +8,9 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :resources
     resources :representations
-
     resources :memberships, only: %i[index edit update destroy]
-
-    resources :images do
-      get :toggle, on: :member
-
-      collection do
-        # FIXME: all of these need to be moved to their own resources/REST controllers, not using custom controller actions
-        post :import
-        get :export 
-        post :titles
-      end
-    end
-
-    resources :assignments do
-      collection do
-        post :bulk
-      end
-    end
-
-    resources :descriptions do
-      collection do
-        post :bulk
-      end
-    end
-
+    resources :assignments
     resources :contexts 
-
-    resources :websites  do
-      member do
-        get :check_count
-      end
-    end
-
     resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]
   end

@@ -1,5 +1,3 @@
-= nav_menu_link("Images",          organization_images_path(current_organization))          if policy(Image).index?
-= nav_menu_link("Descriptions",    organization_descriptions_path(current_organization))    if policy(Description).index?
 = nav_menu_link("Assignments",     organization_assignments_path(current_organization))     if policy(Assignment).index?
 = nav_menu_link("Resources",       organization_resources_path(current_organization))       if policy(Resource).index?
 = nav_menu_link("Representations", organization_representations_path(current_organization)) if policy(Representation).index?

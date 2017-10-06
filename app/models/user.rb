@@ -47,9 +47,7 @@ class User < ApplicationRecord
          :password_length => 8..128
 
   has_many :assignments, :inverse_of => :user, :dependent => :destroy
-  has_many :assigned_images, class_name: "Image", through: :assignments, source: :image
-  has_many :images, through: :organizations
-  has_many :descriptions, dependent: :nullify
+  has_many :assigned_resources, :class_name => :Resource, :through => :assignments, :source => :resource
   has_many :representations, :dependent => :restrict_with_exception, :inverse_of => :author, :foreign_key => :author_id
   has_many :resources, :through => :organizations
   has_many :resource_links, :through => :organizations
@@ -63,26 +61,6 @@ class User < ApplicationRecord
     else
       email
     end
-  end
-
-  def next_image(current_image=nil)
-    next_image = nil
-    images.each do |i|
-      described_by_me = nil
-      described_by_me = i.descriptions.detect{ |d| d.user_id == id}
-
-      if current_image
-        if described_by_me.nil? && current_image.id != i.id
-          next_image = i
-          break
-        end
-      elsif described_by_me.nil?
-        next_image = i
-        break
-      end
-    end
-
-    next_image
   end
 
   # @note for audit log

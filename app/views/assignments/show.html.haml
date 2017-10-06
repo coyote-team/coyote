@@ -1,19 +1,17 @@
--title = "Showing Assignment #{assignment}"
--meta title: title
 .entity-outer
   .entity
     .entity-inner
       %header
-        %h1#page-title{tabindex: -1}=title
+        %h1#page-title{tabindex: -1}= title "Showing #{assignment}"
       %table.entity-table
         %caption.sr-only Key value pairs for this assignment
         %tbody
           %tr
             %th{scope: "row"}
-              Image
+              Resource
             %td
-              = link_to [current_organization,assignment.image] do
-                = image_tag assignment.image.url, class: "description-image"
+              = link_to [current_organization,assignment.resource] do
+                = resource_link_target(assignment.resource)
           %tr
             %th{scope: "row"}
               User
@@ -30,7 +28,7 @@
             = link_to edit_organization_assignment_path(current_organization,assignment), title: "Edit this assignment", class: 'btn btn-primary' do
               Edit
 
-          - if next_image
+          - if next_resource
             %li
-              = link_to new_organization_assignment_path(current_organization,image_id: next_image.id), class: 'btn btn-primary', title: "Assign image #{next_image.id} to a user" do
-                Assign next image
+              = link_to new_organization_assignment_path(current_organization,resource_id: next_resource_image.id) do
+                Assign next resource to a user

@@ -34,12 +34,29 @@ class Resource < ApplicationRecord
   has_many :representations, :inverse_of => :resource
   has_many :subject_resource_links, :foreign_key => :subject_resource_id, :class_name => :ResourceLink, :inverse_of => :subject_resource
   has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
+  has_many :assignments, :inverse_of => :resource
 
+  scope :represented,              -> { joins(:representations) }
+  scope :assigned,                 -> { joins(:assignments) }
+  scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
+  scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
+  scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
+  scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
+  
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
   validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id } 
 
   enum resource_type: Coyote::Resource::TYPES
+
+  audited
+  paginates_per 50
+
+  # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
+  # @return [nil] if no resources exist
+  def self.latest_timestamp
+    order(:created_at).last.try(:created_at)
+  end
 
   # Yields to the caller if this resource is image-like, and is capable of being displayed as a static image
   # @yieldparam uri [URI] location of the image file

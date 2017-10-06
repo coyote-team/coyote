@@ -8,9 +8,9 @@ module ApplicationHelper
   # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
   # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
-  def resource_link_target(target_resource,representation_dom_id,options = {})
+  def resource_link_target(target_resource,representation_dom_id = nil,options = {})
     target_resource.as_viewable do |uri|
-      options = options.merge(:"aria-describedby" => representation_dom_id)
+      options = options.merge(:"aria-describedby" => representation_dom_id) if representation_dom_id
       return image_tag uri, options
     end
 
