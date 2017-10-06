@@ -19,6 +19,9 @@
                 %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/')
                 %td= resource.resource_type
               %tr
+                %th{scope: "row"} Source URI
+                %td= link_to(nil,resource.source_uri)
+              %tr
                 %th{scope: "row"} Canonical ID
                 %td= resource.canonical_id
               %tr
