@@ -26,6 +26,8 @@ class ResourceLink < ApplicationRecord
   validates :verb, presence: true, inclusion: { in: Coyote::ResourceLink::VERB_NAMES, message: "%<value>s is not one of Coyote's accepted verbs: #{Coyote::ResourceLink::VERB_NAMES.to_sentence(last_word_connector: 'or')}" }
   validates_uniqueness_of :verb, scope: %i[subject_resource_id object_resource_id]
 
+  audited
+
   # @return [String] name of the reversed version of this resource link's verb (hasPart vs isPartOf, etc.)
   # @see Coyote::ResourceLink::Verb
   def reverse_verb
