@@ -39,8 +39,7 @@ FactoryGirl.define do
       blue and maroon and light yellow stripes.
     TEXT
 
-    language "en"
-    content_uri "MyString"
+    language 'en'
 
     trait :audio do
       content_type 'audio/mp3'

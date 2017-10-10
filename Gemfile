@@ -8,7 +8,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'apipie-rails'
 gem 'dotenv-rails'
+gem 'jsonapi-rails'
 gem 'rails', '5.1.3'
 gem 'language_list'
 gem 'iso639-validator'
@@ -43,8 +45,6 @@ gem 'jquery-rails', '>= 4.0.4'
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'validate_url'
 gem 'haml-rails', '>= 1.0.0'
-gem 'apipie-rails'
-gem 'simple_token_authentication' # token auth for api
 gem 'jbuilder' # json builder
 gem 'roo' # spreadsheet interfaces
 gem 'iconv'
@@ -55,10 +55,9 @@ gem 'factory_girl_rails', require: false
 gem 'pundit' # role-based authorization
 
 group :development, :test do
+  gem 'faker'
   gem 'rspec-rails', '>= 3.6.1'
   gem 'spring-commands-rspec'
-  gem 'rb-fsevent' # osx file system changes
-  gem 'faker'
 end
 
 group :development do
@@ -81,6 +80,7 @@ group :development do
     gem 'guard-sass', require: false
     gem 'guard-livereload', require: false
     gem 'guard-rubocop', require: false
+    gem 'rb-fsevent' # osx file system changes
   end
 end
 

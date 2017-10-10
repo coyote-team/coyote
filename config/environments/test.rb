@@ -41,4 +41,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # So we don't have to create more than 3 records to test API pagination
+  config.x.resource_api_page_size = ENV.fetch('COYOTE_API_RESOURCE_PAGE_SIZE',2).to_i
 end

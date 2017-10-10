@@ -233,6 +233,17 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.1.0)
+    jsonapi-deserializable (0.2.0)
+    jsonapi-parser (0.1.1)
+    jsonapi-rails (0.3.1)
+      jsonapi-parser (~> 0.1.0)
+      jsonapi-rb (~> 0.5.0)
+    jsonapi-rb (0.5.0)
+      jsonapi-deserializable (~> 0.2.0)
+      jsonapi-serializable (~> 0.3.0)
+    jsonapi-renderer (0.2.0)
+    jsonapi-serializable (0.3.0)
+      jsonapi-renderer (~> 0.2.0)
     kaminari (1.0.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.0.1)
@@ -419,10 +430,6 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
-    simple_token_authentication (1.15.1)
-      actionmailer (>= 3.2.6, < 6)
-      actionpack (>= 3.2.6, < 6)
-      devise (>= 3.2, < 6)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -512,6 +519,7 @@ DEPENDENCIES
   iso639-validator
   jbuilder
   jquery-rails (>= 4.0.4)
+  jsonapi-rails
   kaminari
   language_list
   launchy
@@ -541,7 +549,6 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
-  simple_token_authentication
   spring
   spring-commands-rspec
   sprockets

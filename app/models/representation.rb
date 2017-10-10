@@ -40,6 +40,7 @@ class Representation < ApplicationRecord
   delegate :title, :to => :resource, :prefix => true
   delegate :title, :to => :metum,    :prefix => true
   delegate :title, :to => :license,  :prefix => true
+  delegate :name,  :to => :author,   :prefix => true
 
   audited
 

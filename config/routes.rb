@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root to: "high_voltage/pages#show", id: "home"
 
-  apipie
-
   resources :statuses
 
   resources :organizations do
@@ -29,6 +27,16 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new update]
   resources :users, only: %i[show] # for viewing other user profiles
 
+  namespace :api, defaults: { format: 'json' } do
+    scope :v1 do
+      root to: 'root#show'
+
+      resources :resources, only: %i[index show] do
+        resources :representations, only: %i[index show]
+      end
+    end
+  end
+
   namespace :staff do
     resources :users, except: %i[new create]
     resource :user_password_resets, only: %i[create]
@@ -36,6 +44,8 @@ Rails.application.routes.draw do
 
   get '/login',  to: redirect('/users/sign_in')
   get '/logout', to: redirect('/users/sign_out')
+
+  apipie
 
   if ENV["BOOKMARKLET"] == "true"
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]

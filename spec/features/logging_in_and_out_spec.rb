@@ -18,7 +18,7 @@ RSpec.feature 'Logging in and out' do
 
     expect(page).to have_content 'Signed out successfully'
     visit organization_resources_path(user.organizations.first)
-    expect(page.current_url).to eq(new_user_session_url)
+    expect(page.current_path).to eq(new_user_session_path)
   end
 
   scenario 'Logging in with the wrong password' do

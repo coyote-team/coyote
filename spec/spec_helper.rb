@@ -26,8 +26,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :helper
   config.include Coyote::Testing::FeatureHelpers, :type => :feature
   config.include Coyote::Testing::EmailHelpers, :type => :feature
-  config.include Coyote::RequestHeaders
-  config.include ResponseJSON
+  config.include Coyote::Testing::RequestHelpers, :type => :request
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
 
@@ -103,3 +102,5 @@ end
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end
+
+Rails.application.routes.default_url_options = { host: 'coyote.example' } # so serializable specs work

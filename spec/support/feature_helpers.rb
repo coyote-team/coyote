@@ -10,7 +10,7 @@ module Coyote
       # @param password [Password] the password to use
       # @password check_success [Boolean] whether to automatically check for login success (useful for testing login failure paths, defaults to true)
       def login(user = create(:user),password = '',check_success = true)
-        visit login_path
+        visit new_user_session_path
 
         within('.new_user') do
           fill_in 'Email', with: user.email

@@ -32,8 +32,6 @@
 #
 
 class User < ApplicationRecord
-  acts_as_token_authenticatable
-
   has_many :memberships
   has_many :organizations, :through => :memberships
 

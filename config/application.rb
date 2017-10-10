@@ -43,8 +43,9 @@ module Coyote
     config.x.project_url                    = ENV.fetch('COYOTE_PROJECT_URL','http://coyote.pics')
     config.x.dashboard_top_items_queue_size = ENV.fetch('COYOTE_DASHBOARD_TOP_ITEMS_QUEUE_SIZE',10).to_i
     config.x.default_email_from_address     = ENV.fetch('COYOTE_DEFAULT_EMAIL_FROM_ADDRESS',"support@#{config.x.host_name}")
- 
-    config.x.maximum_login_attempts                       = ENV.fetch('COYOTE_MAXIMUM_LOGIN_ATTEMPTS',5).to_i
+    config.x.resource_api_page_size         = ENV.fetch('COYOTE_API_RESOURCE_PAGE_SIZE',50).to_i
+    config.x.maximum_login_attempts         = ENV.fetch('COYOTE_MAXIMUM_LOGIN_ATTEMPTS',5).to_i
+
     config.x.unlock_user_accounts_after_this_many_minutes = ENV.fetch('COYOTE_UNLOCK_USER_ACCOUNTS_AFTER_THIS_MANY_MINUTES',10).to_i
 
     config.action_mailer.default_url_options = { host: config.x.host_name }
