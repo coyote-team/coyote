@@ -8,10 +8,9 @@
           Coyote is a project of the <a target="_blank" href="//mcachicago.org/">Museum of Contemporary Art Chicago</a> in collaboration with Prime Access Consulting. It has been generously supported by Lois and Steve Eisen.
         -if current_user
           %p>
-            Check out our  
-            =link_to "API", apipie_apipie_path
-            with your authentication token
-            %code=current_user.authentication_token
+            Check out our #{link_to 'API','https://coyote-team.github.io/coyote/api/'}
+            using your authentication token:
+            %code= current_user.authentication_token
           
           - if ENV["BOOKMARKLET"] == "true"
             %p>
