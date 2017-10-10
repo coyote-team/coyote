@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/coyote/strategy.rb<span class="defines">,<br />
-  lib/coyote/strategies/mca.rb</span>
+  lib/coyote/strategies/mca.rb,<br /> lib/coyote/strategies.rb,<br /> lib/coyote/resource.rb,<br /> lib/coyote/statuses.rb,<br /> lib/coyote/exceptions.rb,<br /> lib/coyote/membership.rb,<br /> lib/coyote/resource_link.rb,<br /> lib/coyote/representation.rb,<br /> lib/coyote/organization_user.rb</span>
 </dd>
   </dl>
   
@@ -89,12 +89,56 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Coyote/Strategy.html" title="Coyote::Strategy (module)">Strategy</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Coyote/Membership.html" title="Coyote::Membership (module)">Membership</a></span>, <span class='object_link'><a href="Coyote/Representation.html" title="Coyote::Representation (module)">Representation</a></span>, <span class='object_link'><a href="Coyote/Resource.html" title="Coyote::Resource (module)">Resource</a></span>, <span class='object_link'><a href="Coyote/ResourceLink.html" title="Coyote::ResourceLink (module)">ResourceLink</a></span>, <span class='object_link'><a href="Coyote/Statuses.html" title="Coyote::Statuses (module)">Statuses</a></span>, <span class='object_link'><a href="Coyote/Strategies.html" title="Coyote::Strategies (module)">Strategies</a></span>, <span class='object_link'><a href="Coyote/Strategy.html" title="Coyote::Strategy (module)">Strategy</a></span>
     
   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Coyote/OrganizationUser.html" title="Coyote::OrganizationUser (class)">OrganizationUser</a></span>
     
   
 </p>
+
+  <h2>Constant Summary</h2>
+  <dl class="constants">
+    
+      <dt id="Exception-constant" class="">Exception =
+        <div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This constant is abstract.</strong>
+  <div class='inline'>
+<p>base class for all Coyote application-specific exceptions</p>
+</div>
+</div>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>StandardError</span><span class='rparen'>)</span></pre></dd>
+    
+      <dt id="SecurityError-constant" class="">SecurityError =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>Raised when a security violation is detected by application code (vs. by
+Pundit or by Rails itself)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='const'>Class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#Exception-constant" title="Coyote::Exception (constant)">Exception</a></span></span><span class='rparen'>)</span></pre></dd>
+    
+  </dl>
 
 
 
@@ -107,9 +151,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:56 2017 by
+  Generated on Tue Oct 10 15:13:09 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

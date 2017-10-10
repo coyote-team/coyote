@@ -69,12 +69,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">ActiveRecord::Base</span>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></li>
           
             <li class="next">Metum</li>
           
@@ -96,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/metum.rb</dd>
+    <dd>app/models/metum.rb<span class="defines">,<br />
+  app/models/metum.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -104,21 +108,21 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h2 id="label-Schema+Information">Schema Information</h2>
-
-<p>Table name: meta</p>
-
-<pre class="code ruby"><code class="ruby">id           :integer          not null, primary key
-title        :string
-instructions :text
-created_at   :datetime
-updated_at   :datetime</code></pre>
+<p>Represents a classification for Descriptions, such as &#39;Alt&#39; or
+&#39;Long&#39;</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/coyote-team/coyote/issues/113" target="_parent" title="https://github.com/coyote-team/coyote/issues/113">https://github.com/coyote-team/coyote/issues/113</a></li>
+    
+  </ul>
 
 </div>
 
@@ -138,7 +142,7 @@ updated_at   :datetime</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; Object </a>
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
     
 
     
@@ -152,7 +156,9 @@ updated_at   :datetime</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Human-friendly description of this Metum.</p>
+</div></span>
   
 </li>
 
@@ -162,6 +168,12 @@ updated_at   :datetime</code></pre>
 
 
   
+  
+  
+  
+  
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -170,24 +182,53 @@ updated_at   :datetime</code></pre>
       <div class="method_details first">
   <h3 class="signature first" id="to_s-instance_method">
   
-    #<strong>to_s</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns human-friendly description of this Metum</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>human-friendly description of this Metum</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-16
-17
-18</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/metum.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'app/models/metum.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_title'>title</span>
@@ -202,9 +243,9 @@ updated_at   :datetime</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:56 2017 by
+  Generated on Tue Oct 10 15:12:06 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

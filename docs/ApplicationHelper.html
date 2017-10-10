@@ -78,11 +78,47 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/helpers/application_helper.rb</dd>
+    <dd>app/helpers/application_helper.rb<span class="defines">,<br />
+  app/helpers/application_helper.rb</span>
+</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Contains general, simple view helper code. Designed to keep code out of our
+views  as much as possible</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view" target="_parent" title="http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view">http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view</a></li>
+    
+  </ul>
+
+</div>
+  <h2>Constant Summary</h2>
+  <dl class="constants">
+    
+      <dt id="FLASH_CLASSES-constant" class="">FLASH_CLASSES =
+        
+      </dt>
+      <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-info</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-success</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>error:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-warning</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>alert:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-danger</span><span class='tstring_end'>&#39;</span></span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+    
+  </dl>
 
 
 
@@ -255,6 +291,31 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#devise_form_errors-instance_method" title="#devise_form_errors (instance method)">#<strong>devise_form_errors</strong>(errors)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Unwraps Devise error messages so they look like flash messages, the way
+regular application alerts work.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#devise_mapping-instance_method" title="#devise_mapping (instance method)">#<strong>devise_mapping</strong>  &#x21d2; Object </a>
     
 
@@ -277,7 +338,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#flash_class-instance_method" title="#flash_class (instance method)">#<strong>flash_class</strong>(level)  &#x21d2; Object </a>
+      <a href="#drop_down_menu_link-instance_method" title="#drop_down_menu_link (instance method)">#<strong>drop_down_menu_link</strong>(text, path, icon_name = nil, options = {})  &#x21d2; String </a>
     
 
     
@@ -291,7 +352,33 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>HTML link with the given icon attached.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#flash_class-instance_method" title="#flash_class (instance method)">#<strong>flash_class</strong>(level)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>CSS class to use when styling a flash message.</p>
+</div></span>
   
 </li>
 
@@ -365,6 +452,80 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#minimum_password_length-instance_method" title="#minimum_password_length (instance method)">#<strong>minimum_password_length</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Minimum number of password characters we accept.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#nav_menu_link-instance_method" title="#nav_menu_link (instance method)">#<strong>nav_menu_link</strong>(text, path)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used to render top-level navigation, so the current page gets an “active”
+CSS class applied.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#organizational_user_assignable_roles-instance_method" title="#organizational_user_assignable_roles (instance method)">#<strong>organizational_user_assignable_roles</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A collection of User roles with human friendly labels that the current
+organizational user can assign.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#resource-instance_method" title="#resource (instance method)">#<strong>resource</strong>  &#x21d2; Object </a>
     
 
@@ -380,6 +541,31 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resource_link_target-instance_method" title="#resource_link_target (instance method)">#<strong>resource_link_target</strong>(target_resource, representation_dom_id = nil, options = {})  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>An HTML fragment that best depicts the resource (such as an image
+thumbnail, or an audio icon) based on the type of resource.</p>
+</div></span>
   
 </li>
 
@@ -490,6 +676,30 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#welcome_message-instance_method" title="#welcome_message (instance method)">#<strong>welcome_message</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Welcome message, including the user&#39;s name if someone is logged-in.</p>
+</div></span>
   
 </li>
 
@@ -798,6 +1008,85 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="devise_form_errors-instance_method">
+  
+    #<strong>devise_form_errors</strong>(errors)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>similar approach to <a
+href="https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap">github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap</a></p>
+</div>
+  </div>
+
+
+<p>Unwraps Devise error messages so they look like flash messages, the way
+regular application alerts work</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>errors</span>
+      
+      
+        <span class='type'>(<tt>ActiveModel::Errors</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a list of model errors set by Devise</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_devise_form_errors'>devise_form_errors</span><span class='lparen'>(</span><span class='id identifier rubyid_errors'>errors</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_capture'>capture</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_full_messages'>full_messages</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span><span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
+      <span class='id identifier rubyid_concat'>concat</span> <span class='id identifier rubyid_render'>render</span> <span class='label'>partial:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>locals:</span> <span class='lbrace'>{</span> <span class='symbol'>:flash_type</span> <span class='op'>=&gt;</span> <span class='symbol'>:error</span><span class='comma'>,</span> <span class='symbol'>:flash_message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='label'>flash_id:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>devise_flash_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_idx'>idx</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="devise_mapping-instance_method">
   
     #<strong>devise_mapping</strong>  &#x21d2; <tt>Object</tt> 
@@ -828,31 +1117,233 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="flash_class-instance_method">
+  <h3 class="signature " id="drop_down_menu_link-instance_method">
   
-    #<strong>flash_class</strong>(level)  &#x21d2; <tt>Object</tt> 
-  
-
+    #<strong>drop_down_menu_link</strong>(text, path, icon_name = nil, options = {})  &#x21d2; <tt>String</tt> 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns HTML link with the given icon attached</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the link text to show the user</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the link target</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>icon_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>what Font Awesome icon to associate with the link. Optional, defaults to
+nil.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>passed on to the Rails link_to helper</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>HTML link with the given icon attached</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://fontawesome.io/icons/" target="_parent" title="http://fontawesome.io/icons/">http://fontawesome.io/icons/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
+26
+27
+28
 29
 30
 31
 32
 33
 34
-35
-36</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_drop_down_menu_link'>drop_down_menu_link</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span><span class='id identifier rubyid_icon_name'>icon_name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_classes'>classes</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>fa</span><span class='words_sep'> </span><span class='tstring_content'>fa-fw</span><span class='words_sep'>]</span>
+  <span class='id identifier rubyid_classes'>classes</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fa-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_icon_name'>icon_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_icon_name'>icon_name</span>
+
+  <span class='id identifier rubyid_link_to'>link_to</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_concat'>concat</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_i'>i</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span><span class='label'>class:</span> <span class='id identifier rubyid_classes'>classes</span><span class='comma'>,</span><span class='symbol'>:aria-hidden</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_concat'>concat</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_concat'>concat</span> <span class='id identifier rubyid_text'>text</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="flash_class-instance_method">
+  
+    #<strong>flash_class</strong>(level)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns CSS class to use when styling a flash message</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>level</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>level of flash message to be styled</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>CSS class to use when styling a flash message</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flash_class'>flash_class</span><span class='lparen'>(</span><span class='id identifier rubyid_level'>level</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_level'>level</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -994,6 +1485,244 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="minimum_password_length-instance_method">
+  
+    #<strong>minimum_password_length</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns minimum number of password characters we accept</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>minimum number of password characters we accept</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="User.html" title="User (class)">User</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_minimum_password_length'>minimum_password_length</span>
+  <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_password_length'>password_length</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="nav_menu_link-instance_method">
+  
+    #<strong>nav_menu_link</strong>(text, path)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to render top-level navigation, so the current page gets an “active”
+CSS class applied</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the link text to display</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the target of the link</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_nav_menu_link'>nav_menu_link</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_link_class'>link_class</span> <span class='op'>=</span> <span class='id identifier rubyid_current_page?'>current_page?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>active</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_content_tag'>content_tag</span><span class='lparen'>(</span><span class='symbol'>:li</span><span class='comma'>,</span><span class='label'>class:</span> <span class='id identifier rubyid_link_class'>link_class</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_link_to'>link_to</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="organizational_user_assignable_roles-instance_method">
+  
+    #<strong>organizational_user_assignable_roles</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a collection of User roles with human friendly labels that the
+current organizational user can assign</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a collection of User roles with human friendly labels that the current
+organizational user can assign</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="User.html" title="User (class)">User</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_organizational_user_assignable_roles'>organizational_user_assignable_roles</span>
+  <span class='id identifier rubyid_max_assignable_role_rank'>max_assignable_role_rank</span> <span class='op'>=</span> <span class='id identifier rubyid_organization_user'>organization_user</span><span class='period'>.</span><span class='id identifier rubyid_role_rank'>role_rank</span>
+
+  <span class='id identifier rubyid_roles'>roles</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='const'><span class='object_link'><a href="Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Coyote/Membership.html" title="Coyote::Membership (module)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each_role'><span class='object_link'><a href="Coyote/Membership.html#each_role-class_method" title="Coyote::Membership.each_role (method)">each_role</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span><span class='id identifier rubyid_role_name'>role_name</span><span class='comma'>,</span><span class='id identifier rubyid_role_rank'>role_rank</span><span class='op'>|</span>
+    <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_role_rank'>role_rank</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_max_assignable_role_rank'>max_assignable_role_rank</span>
+    <span class='id identifier rubyid_roles'>roles</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span><span class='id identifier rubyid_role_name'>role_name</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_roles'>roles</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="resource-instance_method">
   
     #<strong>resource</strong>  &#x21d2; <tt>Object</tt> 
@@ -1017,6 +1746,134 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resource'>resource</span>
   <span class='ivar'>@resource</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resource_link_target-instance_method">
+  
+    #<strong>resource_link_target</strong>(target_resource, representation_dom_id = nil, options = {})  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns an HTML fragment that best depicts the resource (such as an image
+thumbnail, or an audio icon) based on the type of resource</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>resource</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="Resource (class)">Resource</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Resource that is being displayed</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>representation_dom_id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>identifies the DOM element which contains a description of the resource</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>passed on to to the helper code that builds a link (such as Rails&#39;
+image_tag method)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an HTML fragment that best depicts the resource (such as an image
+thumbnail, or an audio icon) based on the type of resource</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resource_link_target'>resource_link_target</span><span class='lparen'>(</span><span class='id identifier rubyid_target_resource'>target_resource</span><span class='comma'>,</span><span class='id identifier rubyid_representation_dom_id'>representation_dom_id</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_target_resource'>target_resource</span><span class='period'>.</span><span class='id identifier rubyid_as_viewable'>as_viewable</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_uri'>uri</span><span class='op'>|</span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:aria-describedby</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_representation_dom_id'>representation_dom_id</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_representation_dom_id'>representation_dom_id</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_image_tag'>image_tag</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='kw'>end</span>
+
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target_resource'>target_resource</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target_resource'>target_resource</span><span class='period'>.</span><span class='id identifier rubyid_resource_type'>resource_type</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1191,14 +2048,78 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="welcome_message-instance_method">
+  
+    #<strong>welcome_message</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns welcome message, including the user&#39;s name if someone is
+logged-in</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>welcome message, including the user&#39;s name if someone is logged-in</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_welcome_message'>welcome_message</span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Welcome to Coyote</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_user'>current_user</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_current_user'>current_user</span>
+  <span class='id identifier rubyid_msg'>msg</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:56 2017 by
+  Generated on Tue Oct 10 15:12:05 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

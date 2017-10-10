@@ -113,8 +113,9 @@ alls of a large room, the malleable shape of the balloon conforming to the recta
 
 <pre class="code bash"><code class="bash">git clone https://github.com/coyote-team/coyote.git
 cd coyote
-docker-compose build # downloads images, builds containers
-docker-compose up    # start running containers
+docker-compose build   # downloads images, builds containers
+docker-compose up      # start running containers
+docker-compose up test # run the test suite
 docker-compose exec web bin/rake db:setup db:migrate db:seed                    # prepare database, add seed data
 docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] # create initial user
 </code></pre>
@@ -123,10 +124,11 @@ docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] 
 
 <p>Once the app is running you can interact with it using commands like this:</p>
 
-<pre class="code bash"><code class="bash">docker ps                                 # list running containers
-docker-compose build                      # rebuild web container when new gems are installed
-docker-compose exec web pumactl restart   # restart Puma
-docker-compose exec web bin/rails console # access Rails console
+<pre class="code bash"><code class="bash">docker ps                                   # list running containers
+docker-compose build                        # rebuild web container when new gems are installed
+docker-compose exec web pumactl restart     # restart Puma
+docker-compose exec web bin/rails console   # access Rails console
+docker-compose exec web bin/rake db:migrate # update the Postgres server managed by Docker
 </code></pre>
 
 <p><em>Experienced Developers</em></p>
@@ -167,54 +169,33 @@ heroku run bin/rake coyote:admin:create[user@example.com]
 bin/rake deploy 
 
 # Configure the app to respond to your host name; requires you to create a DNS CNAME entry
-domains:add coyote.example.com
+heroku domains:add coyote.example.com
 
 # Other useful commands
 heroku open              # opens the app in your browser
 heroku ps                # displays list of active processes, corresponding to contents of Procfile
 herou logs --tail        # watch application log stream
 heroku run rails console # access production console
+heroku pg:pull DATABASE coyote_development # pull production DB data into dev environment
 </code></pre>
 
-<h2><a name="api"> API</h2>
+<p><em>Testing Mailers in Development Mode</em></p>
 
-<p>API documentation is generated at <code>/apipie</code> and you can see MCA&#39;s version  <a href="http://coyote.mcachicago.org/apipie">here</a>.</p>
+<p>The settings in [sample.env] work with <a href="https://mailcatcher.me/">mailcatcher</a>:</p>
+
+<pre class="code bash"><code class="bash">gem install mailcatcher     # runs independently of the app, so this gem is not part of our Gemfile
+mailcatcher -f              # much better to run this in foreground vs. the default daemon mode
+open http://127.0.0.1:1080/ # mail delivery console
+</code></pre>
+
+<p>&lt;!-- ## <a name="api"> API</p>
+
+<p>API documentation is generated at <code>/apipie</code> and you can see MCA&#39;s version  <a href="http://coyote.mcachicago.org/apipie">here</a>.
+--?</p>
 
 <h2><a name="strategies"> Strategies</h2>
 
 <p>We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file. For an example, check out <a href="https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb">/lib/coyote/strategies/mca.rb</a>.</p>
-
-<h2><a name="data-mode"> Data Model</h2>
-
-<p><img src="doc_assets/datamodel.png" alt="Data model diagram" title="An entity-relationship diagram demonstrating belongs-to/has-many relationships between database tables with connecting arrows"></p>
-
-<p>For use on <a href="http://www.nomnoml.com/">nomnoml</a></p>
-
-<pre class="code ruby"><code class="ruby">[&lt;frame&gt;Coyote data model|
-  [User | id: int | first_name: string | last_name: string |  email: string | admin: bool ]
-  [Image | id: int |url : string | canonical_id: string | priority: boolean | title: text | page_urls: text]
-  [Tag | id: int | title: string]
-  [Group | id: int | title: string]
-  [Description | id: int | locale:str(en) | text: text | license:str(cc0-1.0)]
-  [Website | id: int | url: string | title: string | strategy: string ]
-  [Status | id: int | title: string | description: text]
-  [Metum| id: int| title: string | instructions: text]
-
-  [Assignment]-&gt;[Image]
-  [Assignment]-&gt;[User]
-
-  [Description]-&gt;[User]
-  [Description]-&gt;[Metum]
-  [Description]-&gt;[Status]
-
-  [Image]-&gt;[Group]
-  [Image]-&gt;[Website]
-  [Image] +-&gt; 0..* [Description]
-  [Image] +-&gt; 0..* [Tag]
-]
-</code></pre>
-
-<p>Descriptions have an audit log that tracks changes across most columns.</p>
 
 <h2><a name="links"> Links</h2>
 
@@ -251,9 +232,9 @@ heroku run rails console # access production console
 </div></div>
 
       <div id="footer">
-  Generated on Sat Jul 22 10:04:37 2017 by
+  Generated on Tue Oct 10 15:15:02 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

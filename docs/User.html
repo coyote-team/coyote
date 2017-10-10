@@ -69,12 +69,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">ActiveRecord::Base</span>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></li>
           
             <li class="next">User</li>
           
@@ -96,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/user.rb</dd>
+    <dd>app/models/user.rb<span class="defines">,<br />
+  app/models/user.rb,<br /> app/models/user.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -121,16 +125,20 @@ current_sign_in_ip     :string
 last_sign_in_ip        :string
 created_at             :datetime         not null
 updated_at             :datetime         not null
-admin                  :boolean          default(FALSE)
 first_name             :string
 last_name              :string
-authentication_token   :string</code></pre>
+authentication_token   :string
+staff                  :boolean          default(FALSE), not null
+failed_attempts        :integer          default(0), not null
+unlock_token           :string
+locked_at              :datetime</code></pre>
 
 <p>Indexes</p>
 
-<pre class="code ruby"><code class="ruby">index_users_on_authentication_token  (authentication_token)
+<pre class="code ruby"><code class="ruby">index_users_on_authentication_token  (authentication_token) UNIQUE
 index_users_on_email                 (email) UNIQUE
-index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
+index_users_on_reset_password_token  (reset_password_token) UNIQUE
+index_users_on_unlock_token          (unlock_token) UNIQUE</code></pre>
 
 
   </div>
@@ -180,7 +188,7 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; Object </a>
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
     
 
     
@@ -194,7 +202,10 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Human-friendly name for this user, depending on which of the name columns
+are filled-in; falls back to email address.</p>
+</div></span>
   
 </li>
 
@@ -216,9 +227,7 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>NOTE for audit log.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -227,6 +236,12 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
   
 
 
+  
+  
+  
+  
+  
+  
   
 
   <div id="instance_method_details" class="method_details_list">
@@ -309,28 +324,59 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="to_s-instance_method">
   
-    #<strong>to_s</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns human-friendly name for this user, depending on which of the name
+columns are filled-in; falls back to email address</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>human-friendly name for this user, depending on which of the name columns
+are filled-in; falls back to email address</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-44
-45
-46
-47
-48
-49
-50</pre>
+56
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_first_name'>first_name</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='kw'>or</span> <span class='op'>!</span><span class='id identifier rubyid_last_name'>last_name</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -356,7 +402,13 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>NOTE for audit log</p>
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>for audit log</p>
+</div>
+  </div>
+
 
 
   </div>
@@ -390,9 +442,9 @@ index_users_on_reset_password_token  (reset_password_token) UNIQUE</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:56 2017 by
+  Generated on Tue Oct 10 15:12:06 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

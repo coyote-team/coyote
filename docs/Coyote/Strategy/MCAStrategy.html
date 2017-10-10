@@ -355,7 +355,7 @@ href="http://mcachicago.org/api/v1/attachment_images.json?updated_at=2016-10-20T
 
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_images'>images</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
-    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../Coyote.html#Exception-constant" title="Coyote::Exception (constant)">Exception</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON parsing exception</span><span class='tstring_end'>&quot;</span></span>
       <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='id identifier rubyid_e'>e</span>
       <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -688,7 +688,7 @@ href="http://mcachicago.org/api/v1/attachment_images.json?updated_at=2016-10-20T
     <span class='kw'>end</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_images'>images</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
-    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../Coyote.html#Exception-constant" title="Coyote::Exception (constant)">Exception</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON parsing exception</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='kw'>end</span>
@@ -734,7 +734,7 @@ href="http://mcachicago.org/api/v1/attachment_images.json?updated_at=2016-10-20T
           <span class='kw'>end</span>
         <span class='kw'>end</span>
 
-      <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../Coyote.html#Exception-constant" title="Coyote::Exception (constant)">Exception</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
         <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>image creation error</span><span class='tstring_end'>&quot;</span></span>
         <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='id identifier rubyid_i'>i</span>
         <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='id identifier rubyid_e'>e</span>
@@ -764,9 +764,9 @@ href="http://mcachicago.org/api/v1/attachment_images.json?updated_at=2016-10-20T
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:57 2017 by
+  Generated on Tue Oct 10 15:12:06 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

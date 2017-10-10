@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Coyote::ResourceLink
+  
+    &mdash; Coyote
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Coyote::ResourceLink";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Coyote.html" title="Coyote (module)">Coyote</a></span></span>
+     &raquo; 
+    <span class="title">ResourceLink</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Coyote::ResourceLink
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/coyote/resource_link.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Utilities for managing ResourceLinks</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  <dl class="constants">
+    
+      <dt id="VERB_PAIRS-constant" class="">VERB_PAIRS =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>Various kinds of verbs we support form forming subject-verb-object
+predicate among Resources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></li>
+    
+      <li><span class='object_link'><a href="#VERBS-constant" title="Coyote::ResourceLink::VERBS (constant)">VERBS</a></span></li>
+    
+      <li><a href="http://dublincore.org/documents/dcmi-terms/" target="_parent" title="http://dublincore.org/documents/dcmi-terms/">http://dublincore.org/documents/dcmi-terms/</a></li>
+    
+  </ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:hasPart</span><span class='comma'>,</span>      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that is included either physically or logically in the described resource.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+   <span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:isPartOf</span><span class='comma'>,</span>     <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource in which the described resource is physically or logically included.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span>
+
+  <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:hasVersion</span><span class='comma'>,</span>   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that is a version, edition, or adaptation of the described resource.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+   <span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:isVersionOf</span><span class='comma'>,</span>  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource of which the described resource is a version, edition, or adaptation.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span>
+
+  <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:hasFormat</span><span class='comma'>,</span>     <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that is substantially the same as the pre-existing described resource, but in another format.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+   <span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:isFormatOf</span><span class='comma'>,</span>    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that is substantially the same as the described resource, but in another format.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='comma'>,</span>
+
+  <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:references</span><span class='comma'>,</span>    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that is referenced, cited, or otherwise pointed to by the described resource.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+   <span class='const'><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:isReferenceBy</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a related resource that references, cites, or otherwise points to the described resource.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
+<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+    
+      <dt id="VERBS-constant" class="">VERBS =
+        <div class="docstring">
+  <div class="discussion">
+    
+<p>Lookup table for verbs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ResourceLink/Verb.html" title="Coyote::ResourceLink::Verb (class)">Verb</a></span></li>
+    
+      <li><span class='object_link'><a href="#VERB_PAIRS-constant" title="Coyote::ResourceLink::VERB_PAIRS (constant)">VERB_PAIRS</a></span></li>
+    
+  </ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="#VERB_PAIRS-constant" title="Coyote::ResourceLink::VERB_PAIRS (constant)">VERB_PAIRS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_result'>result</span><span class='comma'>,</span><span class='lparen'>(</span><span class='id identifier rubyid_forward_relation'>forward_relation</span><span class='comma'>,</span><span class='id identifier rubyid_backward_relation'>backward_relation</span><span class='rparen'>)</span><span class='op'>|</span>
+  <span class='id identifier rubyid_forward_relation'>forward_relation</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>  <span class='op'>=</span> <span class='id identifier rubyid_backward_relation'>backward_relation</span>
+  <span class='id identifier rubyid_backward_relation'>backward_relation</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>=</span> <span class='id identifier rubyid_forward_relation'>forward_relation</span>
+
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+    <span class='id identifier rubyid_forward_relation'>forward_relation</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>  <span class='op'>=&gt;</span> <span class='id identifier rubyid_forward_relation'>forward_relation</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_backward_relation'>backward_relation</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_backward_relation'>backward_relation</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+    
+      <dt id="VERB_CHOICES-constant" class="">VERB_CHOICES =
+        
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="#VERB_PAIRS-constant" title="Coyote::ResourceLink::VERB_PAIRS (constant)">VERB_PAIRS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_total'>total</span><span class='comma'>,</span><span class='lparen'>(</span><span class='id identifier rubyid_forward'>forward</span><span class='comma'>,</span><span class='id identifier rubyid_reverse'>reverse</span><span class='rparen'>)</span><span class='op'>|</span>
+  <span class='id identifier rubyid_total'>total</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_forward'>forward</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_forward'>forward</span><span class='period'>.</span><span class='id identifier rubyid_description'>description</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='id identifier rubyid_forward'>forward</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_total'>total</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_description'>description</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+    
+      <dt id="VERB_NAMES-constant" class="">VERB_NAMES =
+        
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="#VERB_PAIRS-constant" title="Coyote::ResourceLink::VERB_PAIRS (constant)">VERB_PAIRS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+    
+  </dl>
+
+
+
+
+
+
+
+
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Oct 10 15:12:05 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.9 (ruby-2.4.1).
+</div>
+
+    </div>
+  </body>
+</html>
