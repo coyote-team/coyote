@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root to: "high_voltage/pages#show", id: "home"
 
-  resources :statuses
-
   resources :organizations do
     resources :resources
     resources :representations
@@ -14,8 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources :resource_links
-
-  get '/autocompletetags', to: 'images#autocomplete_tags', as: 'autocomplete_tags'
 
   devise_for :users, 
     only: %i[passwords registrations sessions unlocks], 
@@ -35,6 +31,7 @@ Rails.application.routes.draw do
         resources :representations, only: %i[index show]
       end
     end
+
   end
 
   namespace :staff do
@@ -44,8 +41,6 @@ Rails.application.routes.draw do
 
   get '/login',  to: redirect('/users/sign_in')
   get '/logout', to: redirect('/users/sign_out')
-
-  apipie
 
   if ENV["BOOKMARKLET"] == "true"
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]
