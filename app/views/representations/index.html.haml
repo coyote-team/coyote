@@ -3,7 +3,7 @@
     .index-inner
       %header
         %h1#page-title{tabindex: -1}
-          = title "#{title}: #{number_with_delimiter(representations.count)}"
+          = title "Representations for #{current_organization.title}"
 
       = render partial: 'pagination', locals: { representations: representations }
 
