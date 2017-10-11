@@ -130,7 +130,7 @@ mailcatcher -f              # much better to run this in foreground vs. the defa
 open http://127.0.0.1:1080/ # mail delivery console
 ```
 
- ## <a name="api"> API
+## <a name="api"> API
 
 API documentation is hosted at the [Coyote doc site](https://coyote-team.github.io/coyote/api/).
 
