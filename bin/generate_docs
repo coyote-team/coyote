@@ -1,0 +1,2 @@
+#!/bin/sh
+OUT=docs/api/index rake apipie:static && yard
