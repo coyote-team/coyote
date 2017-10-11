@@ -12,53 +12,52 @@ RSpec.describe 'Resources' do
         get api_resources_path, headers: auth_headers
         expect(response).to be_success
 
-        data = json_data.fetch(:data)
-        expect(data.size).to eq(1)
+        json_data.fetch(:data).tap do |data|
+          expect(data.size).to eq(1)
+          record = data.first
 
-        api_resource = data.first
-        expect(api_resource.fetch(:id)).to eq(resource.identifier)
-        expect(api_resource.fetch(:type)).to eq('resource')
+          expect(record).to have_id(resource.identifier)
+          expect(record).to have_type('resource')
 
-        api_resource.fetch(:attributes).tap do |attrib|
-          expect(attrib.fetch(:resource_type)).to eq(resource.resource_type)
-          expect(attrib.fetch(:canonical_id)).to eq(resource.canonical_id)
+          expect(record).to have_attribute(:resource_type).with_value(resource.resource_type)
+          expect(record).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+          expect(record).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+
+          expect(record).to have_relationships(:organization,:representations)
         end
 
-        api_resource.fetch(:relationships).tap do |relations|
-          expect(relations.fetch(:organization)).to be_present
-          expect(relations.fetch(:organization)).to be_an_instance_of(Hash)
-
-          expect(relations.fetch(:representations)).to be_present
-          expect(relations.fetch(:representations)).to be_an_instance_of(Hash)
+        json_data.fetch(:included).tap do |included|
+          expect(included.size).to eq(1)
+          record = included.first
+          expect(record).to have_id(user_organization.id.to_s)
+          expect(record).to have_type('organization')
         end
-
-        included = json_data.fetch(:included)
-        expect(included.size).to eq(1)
-
-        included.first.tap do |o|
-          expect(o.fetch(:id)).to eq(user_organization.id.to_s)
-          expect(o.fetch(:type)).to eq('organization')
-          expect(o.fetch(:attributes).fetch(:title)).to eq(user_organization.title)
-        end
-
-        links = json_data.fetch(:links)
-        expect(links.size).to eq(2)
-
-        self_path = URI.parse(links.fetch(:self)).request_uri
-        expect(self_path).to eq(api_resources_path)
-
-        first_path = URI.parse(links.fetch(:first)).request_uri
-        expect(first_path).to eq(api_resources_path(page: { number: 1 }))
-
-        jsonapi = json_data.fetch(:jsonapi)
-        expect(jsonapi).to be_an_instance_of(Hash)
 
         expected_link_paths = {
           self: api_resources_path,
           first: api_resources_path(page: { number: 1 })
         }
-        
+
+        link_paths = jsonapi_link_paths(json_data)
+
+        expect(link_paths).to eq(expected_link_paths)
         expect(link_header_paths(response)).to eq(expected_link_paths)
+      end
+
+      scenario 'GET /resources/:id' do
+        get api_resource_path(resource.identifier), headers: auth_headers
+        expect(response).to be_success
+
+        json_data.fetch(:data).tap do |data|
+          expect(data).to have_id(resource.identifier)
+          expect(data).to have_type('resource')
+
+          expect(data).to have_attribute(:resource_type).with_value(resource.resource_type)
+          expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+          expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+
+          expect(data).to have_relationships(:organization,:representations)
+        end
       end
     end
   end

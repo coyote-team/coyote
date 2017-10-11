@@ -96,6 +96,7 @@ group :test do
   gem 'rails-controller-testing' # so we can use render_template matcher in controller functional specs
   gem 'shoulda-matchers'
   gem 'vcr'
+  gem 'jsonapi-rspec'
 end
 
 group :production do

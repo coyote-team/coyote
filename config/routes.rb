@@ -28,10 +28,11 @@ Rails.application.routes.draw do
       root to: 'root#show'
 
       resources :resources, only: %i[index show] do
-        resources :representations, only: %i[index show]
+        resources :representations, only: %i[index]
       end
-    end
 
+      resources :representations, only: %i[show]
+    end
   end
 
   namespace :staff do

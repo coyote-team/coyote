@@ -37,10 +37,11 @@ class Representation < ApplicationRecord
   validates :language, presence: true
   validate :must_have_text_or_content_uri
 
-  delegate :title, :to => :resource, :prefix => true
-  delegate :title, :to => :metum,    :prefix => true
-  delegate :title, :to => :license,  :prefix => true
-  delegate :name,  :to => :author,   :prefix => true
+  delegate :title,      :to => :resource, :prefix => true
+  delegate :title,      :to => :metum,    :prefix => true
+  delegate :title,      :to => :license,  :prefix => true
+  delegate :name,       :to => :author,   :prefix => true
+  delegate :identifier, :to => :resource, :prefix => true
 
   audited
 

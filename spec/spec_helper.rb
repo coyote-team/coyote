@@ -27,6 +27,7 @@ RSpec.configure do |config|
   config.include Coyote::Testing::FeatureHelpers, :type => :feature
   config.include Coyote::Testing::EmailHelpers, :type => :feature
   config.include Coyote::Testing::RequestHelpers, :type => :request
+  config.include JSONAPI::RSpec, :type => :request
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
 

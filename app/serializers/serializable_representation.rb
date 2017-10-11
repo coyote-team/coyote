@@ -16,13 +16,9 @@ class SerializableRepresentation < JSONAPI::Serializable::Resource
     @object.license_title
   end
 
-  belongs_to :resource do
-    link :related do
-      @url_helpers.api_resource_url(@object.resource_id)
-    end
-  end
+  belongs_to :resource
 
   link :self do
-    @url_helpers.api_resource_url(@object.id)
+    @url_helpers.api_representation_url(@object.id)
   end
 end

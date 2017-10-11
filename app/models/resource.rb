@@ -43,7 +43,6 @@ class Resource < ApplicationRecord
   scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
-  scope :by_id,                    -> { order(:id) }
   
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true

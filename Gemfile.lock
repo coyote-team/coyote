@@ -243,6 +243,7 @@ GEM
       jsonapi-deserializable (~> 0.2.0)
       jsonapi-serializable (~> 0.3.0)
     jsonapi-renderer (0.2.0)
+    jsonapi-rspec (0.0.2)
     jsonapi-serializable (0.3.0)
       jsonapi-renderer (~> 0.2.0)
     kaminari (1.0.1)
@@ -522,6 +523,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (>= 4.0.4)
   jsonapi-rails
+  jsonapi-rspec
   kaminari
   language_list
   launchy
