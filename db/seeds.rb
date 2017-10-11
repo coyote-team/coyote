@@ -9,7 +9,7 @@ end
 
 organization = FactoryGirl.create(:organization,title: "Acme Museum")
 
-organization.contexts.create!([
+contexts = organization.contexts.create!([
   { title: "collection" },
   { title: "website" },
   { title: "exhibitions" },
@@ -20,7 +20,7 @@ short_metum = FactoryGirl.create(:metum,:short)
 long_metum  = FactoryGirl.create(:metum,:long)
 
 FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
-  FactoryGirl.create(:license,trait)
+  FactoryGirl.create(:license,trait.name)
 end
 
 Status.create!([
@@ -29,10 +29,11 @@ Status.create!([
   { title: "Not approved" }
 ])
 
-image = FactoryGirl.create(:image,{
+resource = FactoryGirl.create(:resource,{
+  title: "T.Y.F.F.S.H., 2011",
   organization: organization,
-  path: "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
-  title: "T.Y.F.F.S.H., 2011"
+  context: contexts.first,
+  source_uri: 'https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png'
 })
 
 alt_text = "A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway."
@@ -51,20 +52,20 @@ hot air balloon, which is lying on its side. Blown by the fans, the fabric billo
 the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 TEXT
 
-FactoryGirl.create(:description,image: image,metum: short_metum,text: alt_text)
-FactoryGirl.create(:description,image: image,metum: long_metum,text: long_text)
+FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: alt_text)
+FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text)
 
-undescribed_image = FactoryGirl.create(:image,{
+undescribed_resource = FactoryGirl.create(:resource,{
+  title: 'Mona Lisa',
   organization: organization,
-  path: 'http://example.com/image123.png',
-  title: 'Mona Lisa'
+  source_uri: 'http://example.com/image123.png'
 })
 
 Coyote::Membership.each_role do |_,role_id|
   email = "#{role_id}@example.com"
 
   user = FactoryGirl.create(:user,organization: organization,role: role_id,email: email,password: "password")
-  Assignment.create(image: undescribed_image,user: user)
+  Assignment.create(resource: undescribed_resource,user: user)
 
   puts "Created #{role_id} user '#{email}' with password 'password'"
 end
