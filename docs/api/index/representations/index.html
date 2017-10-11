@@ -23,8 +23,8 @@
     <span class='divider'>/</span>
   </li>
   <li>
-    <a href='../../index/resources.html'>
-      Resources
+    <a href='../../index/representations.html'>
+      Representations
       
     </a>
     <span class='divider'>/</span>
@@ -36,9 +36,9 @@
 
   <div class='page-header'>
     <h1>
-      GET //resources
+      GET //resources/:resource_id/representations
       <br>
-      <small>Return a list of resources available to the authenticated user</small>
+      <small>Return list of representations for a particular resource ID</small>
     </h1>
   </div>
 
@@ -60,6 +60,30 @@
     </thead>
     <tbody>
         <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>resource_id </strong><br>
+      <small>
+        optional
+        
+      </small>
+    </td>
+    <td>
+      
+<p>Identifies the resource being represented</p>
+
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a String</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+  <tr style='background-color:rgb(255,255,255);'>
     <td>
       <strong>page[number] </strong><br>
       <small>

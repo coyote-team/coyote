@@ -1,6 +1,12 @@
+  <h4><a href='#representations'>Representations</a></h4>
+  <ul>
+      <li><a href='#representations-index'>index</a></li>
+      <li><a href='#representations-show'>show</a></li>
+  </ul>
   <h4><a href='#resources'>Resources</a></h4>
   <ul>
       <li><a href='#resources-index'>index</a></li>
+      <li><a href='#resources-show'>show</a></li>
   </ul>
   <h4><a href='#root'>Root</a></h4>
   <ul>
@@ -8,6 +14,107 @@
   </ul>
 
 
+
+  <hr/>
+
+  <div>
+    <h2 id="representations">
+      <a href='#representations'>Representations</a><br>
+      <small>Complementary and alternative sensory impressions of a Resource</small>
+    </h2>
+  </div>
+
+    <div>
+<p>For a visual resource such as a painting, Coyote can store Representations
+such as textual descriptions or audio recordings of a speaker describing
+the painting.</p>
+</div>
+
+  <div>
+
+      <hr/>
+
+      <h3 id="representations-index">
+      <a href='#representations'>Representations</a> / <a href='#representations-index'>index</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET //resources/:resource_id/representations
+            <br>
+            <small>Return list of representations for a particular resource ID</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>resource_id </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Identifies the resource being represented</p>
+
+    </li>
+    
+    <li>
+      <strong>page[number] </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Integer</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>page[size] </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Integer</p>
+ ]
+      </small>
+      
+<p>How many records to return per page</p>
+
+    </li>
+    
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="representations-show">
+      <a href='#representations'>Representations</a> / <a href='#representations-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET //representations/:id
+            <br>
+            <small>Return attributes of a particular representation</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+      </div>
+  </div>
 
   <hr/>
 
@@ -37,9 +144,9 @@ a library can also be considered resources.”</p>
 
       <div>
           <h4>
-              GET /
+              GET //resources
             <br>
-            <small>Show list of resources available to the authenticated user</small>
+            <small>Return a list of resources available to the authenticated user</small>
           </h4>
       </div>
 
@@ -71,11 +178,30 @@ a library can also be considered resources.”</p>
  ]
       </small>
       
-<p>How many records to return per page, (defaults to 25 records)</p>
+<p>How many records to return per page</p>
 
     </li>
     
 </ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="resources-show">
+      <a href='#resources'>Resources</a> / <a href='#resources-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET //resources/:id
+            <br>
+            <small>Return attributes of a particular resource</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
 
       </div>
   </div>

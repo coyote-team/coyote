@@ -127,7 +127,7 @@ created_at             :datetime         not null
 updated_at             :datetime         not null
 first_name             :string
 last_name              :string
-authentication_token   :string
+authentication_token   :string           not null
 staff                  :boolean          default(FALSE), not null
 failed_attempts        :integer          default(0), not null
 unlock_token           :string
@@ -191,6 +191,8 @@ index_users_on_unlock_token          (unlock_token) UNIQUE</code></pre>
       <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
     
 
+    
+      (also: #name)
     
   </span>
   
@@ -328,6 +330,10 @@ are filled-in; falls back to email address.</p>
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='name-instance_method'>name</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -442,7 +448,7 @@ are filled-in; falls back to email address</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:06 2017 by
+  Generated on Wed Oct 11 15:20:57 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

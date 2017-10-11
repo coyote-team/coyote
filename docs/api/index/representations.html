@@ -23,7 +23,7 @@
     <span class='divider'>/</span>
   </li>
   <li class='active'>
-    Resources
+    Representations
     
   </li>
   
@@ -31,19 +31,16 @@
 
 <div class='page-header'>
   <h1>
-    Resources
+    Representations
     <br>
-    <small>Anything that can be represented by Coyote</small>
+    <small>Complementary and alternative sensory impressions of a Resource</small>
   </h1>
 </div>
 
   <div>
-<p>We use the Dublin Core meaning for what a Resource represents: “…a resource
-is anything that has identity. Familiar examples include an electronic
-document, an image,  a service (e.g., ”today&#39;s weather report for Los
-Angeles“), and a collection of other resources. Not all resources are
-network ”retrievable“; e.g., human beings, corporations, and bound books in
-a library can also be considered resources.”</p>
+<p>For a visual resource such as a painting, Coyote can store Representations
+such as textual descriptions or audio recordings of a speaker describing
+the painting.</p>
 </div>
 
 
@@ -54,7 +51,7 @@ a library can also be considered resources.”</p>
 
     <hr>
     <div class='pull-right small'>
-      <a href='../index/resources/index.html'> >>> </a>
+      <a href='../index/representations/index.html'> >>> </a>
     </div>
     <div>
         <h2>
@@ -62,10 +59,10 @@ a library can also be considered resources.”</p>
            class='accordion-toggle'
            data-toggle='collapse'
            data-parent='#accordion'>
-            GET //resources
+            GET //resources/:resource_id/representations
           </a>
           <br>
-          <small>Return a list of resources available to the authenticated user</small>
+          <small>Return list of representations for a particular resource ID</small>
         </h2>
     </div>
 
@@ -87,6 +84,30 @@ a library can also be considered resources.”</p>
     </thead>
     <tbody>
         <tr style='background-color:rgb(255,255,255);'>
+    <td>
+      <strong>resource_id </strong><br>
+      <small>
+        optional
+        
+      </small>
+    </td>
+    <td>
+      
+<p>Identifies the resource being represented</p>
+
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a String</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+  <tr style='background-color:rgb(255,255,255);'>
     <td>
       <strong>page[number] </strong><br>
       <small>
@@ -141,7 +162,7 @@ a library can also be considered resources.”</p>
     </div>
     <hr>
     <div class='pull-right small'>
-      <a href='../index/resources/show.html'> >>> </a>
+      <a href='../index/representations/show.html'> >>> </a>
     </div>
     <div>
         <h2>
@@ -149,10 +170,10 @@ a library can also be considered resources.”</p>
            class='accordion-toggle'
            data-toggle='collapse'
            data-parent='#accordion'>
-            GET //resources/:id
+            GET //representations/:id
           </a>
           <br>
-          <small>Return attributes of a particular resource</small>
+          <small>Return attributes of a particular representation</small>
         </h2>
     </div>
 
