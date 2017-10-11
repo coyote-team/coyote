@@ -669,7 +669,7 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     first_name character varying,
     last_name character varying,
-    authentication_token character varying,
+    authentication_token character varying NOT NULL,
     staff boolean DEFAULT false NOT NULL,
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
@@ -1500,6 +1500,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171003125652'),
 ('20171003131534'),
 ('20171003131931'),
-('20171006172008');
+('20171006172008'),
+('20171011152909');
 
 

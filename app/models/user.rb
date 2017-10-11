@@ -17,7 +17,7 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
-#  authentication_token   :string
+#  authentication_token   :string           not null
 #  staff                  :boolean          default(FALSE), not null
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
@@ -32,6 +32,8 @@
 #
 
 class User < ApplicationRecord
+  has_secure_token :authentication_token
+
   has_many :memberships
   has_many :organizations, :through => :memberships
 
