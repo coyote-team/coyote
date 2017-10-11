@@ -15,28 +15,28 @@
         = render partial: "progress",   locals: { title: "Represented resources of #{resource_count(dashboard.organization_resource_count)}", value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }
 
         - if organization_user.admin?
-          = render partial: "progress", locals: { title: "Resources assigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",     value: dashboard.organization_open_assignment_count,        max: dashboard.organization_resource_count }
-          = render partial: "progress", locals: { title: "Resources unassigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",   value: dashboard.organization_unassigned_unrepresented_count, max: dashboard.organization_resource_count }
-          = render partial: "progress", locals: { title: "representations ready for review of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_ready_to_review_count,        max: dashboard.organization_representation_count }
+          = render partial: "progress", locals: { title: "Resources assigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",         value: dashboard.organization_open_assignment_count,          max: dashboard.organization_resource_count }
+          = render partial: "progress", locals: { title: "Resources unassigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",       value: dashboard.organization_unassigned_unrepresented_count, max: dashboard.organization_resource_count }
+          = render partial: "progress", locals: { title: "Representations ready for review of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_ready_to_review_count,          max: dashboard.organization_representation_count }
 
-        = render partial: "progress", locals: { title: "Approved representations of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_approved_representation_count, max: dashboard.organization_representation_count }
+        = render partial: "progress", locals: { title: "Approved Representations of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_approved_representation_count, max: dashboard.organization_representation_count }
 
         = render partial: "latest_resource_timestamp", object: dashboard.organization_latest_resource_timestamp if dashboard.organization_latest_resource_timestamp  
 
     .col-sm-6
       %h2 Your Status
       %table.table.table-no-grid
-        = render partial: "progress", locals: { title: "Represented resources of #{resource_count(dashboard.current_user_represented_resources_count)}",         value: dashboard.current_user_represented_resources_count,       max: dashboard.current_user_represented_resources_count }
-        = render partial: "progress", locals: { title: "Approved representations of #{representation_count(dashboard.current_user_representation_count)}",   value: dashboard.current_user_approved_representation_count,   max: dashboard.current_user_representation_count }
-        = render partial: "progress", locals: { title: "Unapproved representations of #{representation_count(dashboard.current_user_representation_count)}", value: dashboard.current_user_unapproved_representation_count, max: dashboard.current_user_representation_count }
+        = render partial: "progress", locals: { title: "Represented Resources of #{resource_count(dashboard.current_user_represented_resources_count)}",     value: dashboard.current_user_represented_resources_count,     max: dashboard.current_user_represented_resources_count }
+        = render partial: "progress", locals: { title: "Approved Representations of #{representation_count(dashboard.current_user_representation_count)}",   value: dashboard.current_user_approved_representation_count,   max: dashboard.current_user_representation_count }
+        = render partial: "progress", locals: { title: "Unapproved Representations of #{representation_count(dashboard.current_user_representation_count)}", value: dashboard.current_user_unapproved_representation_count, max: dashboard.current_user_representation_count }
 
   .row
     .col-md-12
       - if organization_user.admin?
         %h2 Admin Queues
 
-        = render partial: "queue", locals: { queue: dashboard.organization_top_unrepresented_items_queue,     type: "Unrepresented resources",           count: dashboard.organization_unrepresented_count,     users: dashboard.organization_users }
-        = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned resources",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
+        = render partial: "queue", locals: { queue: dashboard.organization_top_unrepresented_items_queue,   type: "Unrepresented Resources",         count: dashboard.organization_unrepresented_count,   users: dashboard.organization_users }
+        = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned Resources",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
         = render partial: "queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review representations", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
 
   .row
@@ -46,6 +46,6 @@
       - if dashboard.current_user_queue_empty?
         = render partial: "your_queue_empty"
       - else
-        = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned resources", count: dashboard.current_user_assigned_items_count }
+        = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Resources", count: dashboard.current_user_assigned_items_count }
 
   = render partial: "issue_invitation" if policy(Invitation).new?

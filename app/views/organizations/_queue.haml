@@ -1,16 +1,5 @@
-- if queue
-  .queue
-    %a{id: type.downcase.gsub(" ", "_")}
-    %h3<
-      - if count
-        #{type}: #{number_with_delimiter count}
-      - else
-        #{type}
-  -if queue.size > 0
-    .row
-      %ul
-        .isotope
-          = render :partial => "quickview", :collection => queue, :as => :item, locals: { type: type, users: users }
-
-  -if queue.size == 0
-    %p This queue is empty.
+.queue
+  - if queue.empty?
+    %p This queue is empty
+  - else
+    %h3 #{type}: #{number_with_delimiter(count)}
