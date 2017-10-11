@@ -33,6 +33,7 @@ RSpec.configure do |config|
 
   config.order = "random"
   config.filter_run focus: true
+  config.filter_run show_in_doc: true if ENV['APIPIE_RECORD'] # see https://github.com/Apipie/apipie-rails#examples-recording
   config.run_all_when_everything_filtered = true
   config.disable_monkey_patching! 
   config.infer_spec_type_from_file_location!

@@ -10,8 +10,7 @@ module Api
       DESC
     end
 
-    api :GET, '/resources/:resource_id/representations', 'Return list of representations for a particular resource ID'
-    param :resource_id, String, 'Identifies the resource being represented'
+    api :GET, 'resources/:resource_id/representations', 'Return list of representations for a particular resource ID'
     param_group :pagination, Api::ApplicationController
     def index
       resource = current_user.resources.find_by!(identifier: params[:resource_id])
@@ -39,7 +38,7 @@ module Api
       })
     end
 
-    api :GET, '/representations/:id', 'Return attributes of a particular representation'
+    api :GET, 'representations/:id', 'Return attributes of a particular representation'
     def show
       representation = current_user.organization_representations.find(params[:id])
 

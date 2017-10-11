@@ -10,7 +10,7 @@ module Api
       DESC
     end
 
-    api :GET, '/resources', 'Return a list of resources available to the authenticated user'
+    api :GET, 'resources', 'Return a list of resources available to the authenticated user'
     param_group :pagination, Api::ApplicationController
     def index
       resources = current_user.
@@ -36,7 +36,7 @@ module Api
       })
     end
 
-    api :GET, '/resources/:id', 'Return attributes of a particular resource'
+    api :GET, 'resources/:id', 'Return attributes of a particular resource'
     def show
       resource = current_user.resources.find_by!(identifier: params[:id])
 
