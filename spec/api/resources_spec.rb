@@ -8,7 +8,7 @@ RSpec.describe 'Resources' do
       end
 
       # TODO: rewrite these using https://github.com/jsonapi-rb/jsonapi-rspec
-      scenario 'GET /resources', :show_in_doc do
+      scenario 'GET /resources' do
         get api_resources_path, headers: auth_headers
         expect(response).to be_success
 
@@ -44,7 +44,7 @@ RSpec.describe 'Resources' do
         expect(link_header_paths(response)).to eq(expected_link_paths)
       end
 
-      scenario 'GET /resources/:id',:show_in_doc do
+      scenario 'GET /resources/:id' do
         get api_resource_path(resource.identifier), headers: auth_headers
         expect(response).to be_success
 
@@ -77,7 +77,7 @@ RSpec.describe 'Resources' do
       create(:resource,title: 'Current user should not be seeing this due to other org privacy restrictions')
     end
 
-    scenario 'GET /resources', :show_in_doc do
+    scenario 'GET /resources' do
       get api_resources_path, headers: auth_headers
       expect(response).to be_success
 

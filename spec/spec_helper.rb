@@ -104,5 +104,3 @@ end
 SimpleCov.start do
   add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end
-
-Rails.application.routes.default_url_options = { host: 'coyote.example' } # so serializable specs work
