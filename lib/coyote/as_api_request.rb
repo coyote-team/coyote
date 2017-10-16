@@ -4,7 +4,7 @@ module Coyote
   class AsApiRequest
     # @param version [String] which version we should match - v1, v2, etc.
     def initialize(version)
-      @mime_type = sprintf(Rails.configuration.x.api_mime_type_template,version: version)
+      @mime_type = format(Rails.configuration.x.api_mime_type_template,version: version)
     end
 
     # @param request [ActionDispatch::Request] passed in by the Rails router

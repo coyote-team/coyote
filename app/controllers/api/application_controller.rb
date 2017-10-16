@@ -3,7 +3,12 @@
 # @abstract Base class for all API controllers
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
+  include Pundit
+
   before_action :require_api_authentication
+
+  # see https://github.com/elabs/pundit#ensuring-policies-and-scopes-are-used
+  after_action :verify_authorized, except: %i[index]
 
   def_param_group :pagination do
     param :'page[number]', Integer
@@ -22,6 +27,16 @@ class Api::ApplicationController < ActionController::API
     self.current_user = User.find_for_authentication(authentication_token: request.authorization)
   end
 
+  def current_organization
+    current_user.organizations.find(params[:organization_id])
+  end
+
+  def organization_user
+    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+  end
+
+  alias pundit_user organization_user
+  
   def render_unauthorized
     render :jsonapi_errors => [{ 
       title: 'Invalid Authorization Token',

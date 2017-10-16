@@ -9,7 +9,7 @@ Coyote::Membership.each_role do |_,role_name|
     end
 
     let(:api_headers) do
-      mime_type = sprintf(Rails.configuration.x.api_mime_type_template,version: 'v1')
+      mime_type = format(Rails.configuration.x.api_mime_type_template,version: 'v1')
       { Accept: mime_type }
     end
 

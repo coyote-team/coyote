@@ -1,3 +1,4 @@
+
 Rails.application.routes.draw do
   root to: "high_voltage/pages#show", id: "home"
 
@@ -23,15 +24,12 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new update]
   resources :users, only: %i[show] # for viewing other user profiles
 
-  namespace :api, defaults: { format: 'json' } do
-    scope :v1 do
-      root to: 'root#show'
-
-      resources :resources, only: %i[index show] do
-        resources :representations, only: %i[index]
+  constraints Coyote::AsApiRequest.new('v1') do
+    scope :module => :api, :as => :api do
+      scope 'organizations/:organization_id' do
+        resources :resources, only: %i[index show create update]
+        resources :representations, only: %i[index show create update]
       end
-
-      resources :representations, only: %i[show]
     end
   end
 

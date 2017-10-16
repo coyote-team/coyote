@@ -2,14 +2,12 @@
 # @see Resource
 # @see ResourcePolicy
 class ResourcesController < ApplicationController
+  include ResourceAccess # defines the index action
+
   before_action :set_resource,             only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
-  
   helper_method :resource, :resources, :contexts
-
-  def index
-  end
 
   def show
   end
@@ -50,29 +48,19 @@ class ResourcesController < ApplicationController
 
   private
 
-  attr_accessor :resource
+  def pagination_number
+    params[:page]
+  end
+
+  def pagination_size
+    Resource.max_per_page
+  end
 
   def set_resource
     self.resource = resources.find(params[:id])
   end
 
-  def resources
-    current_organization.resources
-  end
-
   def contexts
     current_organization.contexts
-  end
-
-  def resource_params
-    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id)
-  end
-
-  def authorize_general_access
-    authorize Resource
-  end
-
-  def authorize_unit_access
-    authorize(resource)
   end
 end

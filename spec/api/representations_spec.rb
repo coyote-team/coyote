@@ -51,6 +51,10 @@ RSpec.describe 'Representations' do
       get api_resource_representations_path(1)
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
+
+      get api_resource_representation_path(1,1)
+      expect(response).to be_unauthorized
+      expect(json_data).to have_key(:errors)
     end
   end
 end
