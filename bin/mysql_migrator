@@ -12,7 +12,9 @@ class User
   end
 end
 
-client = Mysql2::Client.new(:host => "localhost", :username => "root",database: 'coyote')
+uri = URI.parse(ENV.fetch('JAWSDB_URL'))
+db = uri.path[1..-1]
+client = Mysql2::Client.new(host: uri.host,username: uri.user,database: db,password: uri.password)
 
 org = Organization.find(2)
 
