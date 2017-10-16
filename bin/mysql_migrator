@@ -1,0 +1,94 @@
+#!/usr/bin/env ruby
+
+# This is a quick one-off script to migrate stuff from Coyote's original MySQL DB into today's Postgres DB
+
+require 'mysql2'
+
+class User
+  protected
+
+  def password_required?
+    return false
+  end
+end
+
+client = Mysql2::Client.new(:host => "localhost", :username => "root",database: 'coyote')
+
+org = Organization.find(2)
+
+meta = client.query('SELECT * FROM meta').to_a
+org.meta.create!(meta.to_a)
+puts "Metum: #{Metum.count}"
+
+contexts = client.query(<<~SQL
+SELECT DISTINCT i.group_id AS id, g.title
+FROM images i
+INNER JOIN groups g
+ON i.group_id = g.id
+SQL
+).to_a
+
+org.contexts.create!(contexts.to_a)
+puts "context: #{Context.count}"
+
+users = client.query('SELECT * FROM users').to_a
+
+users.each do |u|
+  role = if u.delete('admin') == 1
+           :admin
+         else
+           :editor
+         end
+
+  user = User.create!(u)
+  Membership.create!(user: user,organization: org,role: role)
+end
+
+puts "user: #{User.count}"
+
+images = client.query('SELECT * FROM images')
+
+resources = images.to_a.map do |image|
+  path = image.delete('path')
+  image['source_uri'] = "https://mcachicago.org#{path}"
+
+  image.delete('website_id')
+  image['context_id'] = image.delete('group_id')
+
+  image.delete('assignments_count')
+  image.delete('descriptions_count')
+  image.delete('status_code')
+  image.delete('page_urls')
+
+  image['resource_type'] = 'still_image'
+  image['identifier'] = image['id']
+
+  image.delete('title') if image['title'].blank? # use DB default in this case
+  image
+end
+
+org.resources.create!(resources)
+puts "resource: #{Resource.count}"
+
+statuses = Coyote::Statuses.constants.inject({}) do |result,n| 
+  result.merge Coyote::Statuses.const_get(n).to_s => n.to_s.downcase 
+end
+
+license = License.find_by!(name: 'cc0-1.0')
+
+descriptions = client.query('SELECT * from descriptions')
+
+representations = descriptions.to_a.map do |rep|
+  rep['language'] = rep.delete('locale')
+  status = rep.delete('status_id').to_s
+  status = statuses.fetch(status)
+  rep['status'] = status
+  rep['resource_id'] = rep.delete('image_id')
+  rep['author_id'] = rep.delete('user_id')
+  rep.delete('license')
+  rep['license_id'] = license.id
+  rep
+end
+
+Representation.create!(representations)
+puts "representation: #{Representation.count}"
