@@ -8,6 +8,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# TEMPORARILY INSTALLING THIS TO FACILITATE MIGRATING FROM MYSQL
+# TODO: remove this dependency after migration is complete
+gem 'mysql2', require: false
+
 gem 'apipie-rails'
 gem 'dotenv-rails'
 gem 'jsonapi-rails'
