@@ -12,6 +12,7 @@
 #  organization_id :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  priority        :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -19,6 +20,7 @@
 #  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
+#  index_resources_on_priority                          (priority)
 #
 
 # We use the Dublin Core meaning for what a Resource represents:

@@ -521,7 +521,8 @@ CREATE TABLE resources (
     context_id bigint NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    priority boolean DEFAULT false NOT NULL
 );
 
 
@@ -1184,6 +1185,13 @@ CREATE UNIQUE INDEX index_resources_on_organization_id_and_canonical_id ON resou
 
 
 --
+-- Name: index_resources_on_priority; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_priority ON resources USING btree (priority);
+
+
+--
 -- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1501,6 +1509,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171003131534'),
 ('20171003131931'),
 ('20171006172008'),
-('20171011152909');
+('20171011152909'),
+('20171013160538'),
+('20171016133717');
 
 
