@@ -3,7 +3,7 @@
     = link_to [current_organization,representation.resource] do
       = resource_link_target(representation.resource,dom_id(representation),alt: representation.text)
   %td
-    = link_to([current_organization,representation],representation.status.humanize)
+    = representation.status.humanize
   %td
     %span.label.label-info= representation.metum_title
   %td
@@ -20,5 +20,5 @@
       = link_to [current_organization,representation], title: "Delete this representation" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, "aria-describedby": "representation-text-#{representation.id}" do
         Delete
 %tr
-  %td{id: dom_id(representation)}
-    .text-wrap= to_html(representation.text)
+  %td{id: dom_id(representation),colspan: 5}
+    = to_html(representation.text)

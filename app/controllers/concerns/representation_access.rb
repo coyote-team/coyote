@@ -5,7 +5,7 @@ module RepresentationAccess
   private
 
   def representations
-    current_user.
+    current_organization.
       representations.
       ransack(params[:q]).
       result.

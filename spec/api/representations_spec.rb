@@ -6,7 +6,7 @@ RSpec.describe 'Representations' do
       create(:representation,:approved,organization: user_organization)
     end
 
-    scenario 'GET /resources/:resource_id/representations', :show_in_doc do
+    skip 'GET /resources/:resource_id/representations' do
       get api_resource_representations_path(representation.resource_identifier), headers: auth_headers
       expect(response).to be_success
 
@@ -32,7 +32,7 @@ RSpec.describe 'Representations' do
       expect(link_header_paths(response)).to eq(expected_link_paths)
     end
 
-    scenario 'GET /representations/:id', :show_in_doc do
+    skip 'GET /representations/:id' do
       get api_representation_path(representation.id), headers: auth_headers
       expect(response).to be_success
 
@@ -46,13 +46,13 @@ RSpec.describe 'Representations' do
     end
   end
 
-  context 'without an authentication token' do
+  skip 'without an authentication token' do
     it 'returns an error' do
-      get api_resource_representations_path(1)
+      get api_representation_path(1)
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
 
-      get api_resource_representation_path(1,1)
+      get api_representation_path(1)
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
     end

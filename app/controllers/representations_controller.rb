@@ -56,9 +56,6 @@ class RepresentationsController < ApplicationController
 
   attr_accessor :representation, :current_resource
 
-  def representations
-
-  end
   def set_representation
     self.representation = current_organization.representations.find(params[:id])
   end
