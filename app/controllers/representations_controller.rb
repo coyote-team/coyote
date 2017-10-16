@@ -2,6 +2,8 @@
 # @see Representation
 # @see RepresentationPolicy
 class RepresentationsController < ApplicationController
+  include RepresentationAccess
+
   before_action :set_representation,       only: %i[show edit update destroy]
   before_action :set_current_resource,     only: %i[new create]
   before_action :authorize_general_access, only: %i[new index create]
@@ -54,6 +56,9 @@ class RepresentationsController < ApplicationController
 
   attr_accessor :representation, :current_resource
 
+  def representations
+
+  end
   def set_representation
     self.representation = current_organization.representations.find(params[:id])
   end
@@ -63,23 +68,7 @@ class RepresentationsController < ApplicationController
     self.current_resource = current_organization.resources.find(resource_id)
   end
 
-  def representations
-    @representations ||= current_organization.representations.page(params[:page])
-  end
-
-  def representation_params
-    params.require(:representation).permit(:content_uri,:text,:metum_id,:content_type,:language,:license_id)
-  end
-
   def available_meta
     current_organization.meta
-  end
-
-  def authorize_general_access
-    authorize Representation
-  end
-
-  def authorize_unit_access
-    authorize(representation)
   end
 end

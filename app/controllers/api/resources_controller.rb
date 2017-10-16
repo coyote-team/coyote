@@ -32,13 +32,6 @@ module Api
     api :GET, 'resources', 'Return a list of resources available to the authenticated user'
     param_group :pagination, Api::ApplicationController
     def index
-      resources = current_user.
-                  resources.
-                  by_id.
-                  page(pagination_number).
-                  per(pagination_size).
-                  without_count
-
       links = { self: request.url }
 
       pagination_link_params(resources).each do |rel,link_params|

@@ -1,23 +1,18 @@
 # @abstract Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
   include Pundit
-  
-  helper_method :current_organization, :current_organization?, :organization_user
+  include FilterPagination
 
   protect_from_forgery :with => :exception
 
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, :if => :devise_controller?
-  
-  # see https://github.com/elabs/pundit#ensuring-policies-and-scopes-are-used
-  after_action :verify_authorized, except: %i[index]
-  
-  with_options if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) } do
-    skip_before_action :authenticate_user!
-    skip_after_action :verify_authorized
-  end
+
+  skip_before_action :authenticate_user!, if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) }
 
   analytical
+
+  helper_method :current_organization, :current_organization?, :organization_user, :pagination_link_params, :filter_params
 
   protected
 
@@ -28,10 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   alias pundit_user organization_user
-
-  #def get_contexts
-    #self.contexts = Context.all.sort { |a,b| a.to_s <=> b.to_s } # TODO: needs to be moved into Context scope, sorted via SQL
-  #end
 
   def after_sign_in_path_for(user)
     if user.organizations.one?

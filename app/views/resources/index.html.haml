@@ -4,32 +4,24 @@
       %header
         %h1#page-title{tabindex: -1}= title "Resources for #{current_organization.title}"
 
-      %table.index-table
-        %caption.sr-only Index table for resources
-        %thead
-          %tr
-            %th{scope: "col"}
-              Identifier
-            %th{scope: "col"}
-              Title
-            %th{scope: "col"}
-              Actions
+      = render partial: 'search'
 
-        %tbody
-          - resources.each do |resource|
-            %tr.item[resource]
-              %td= link_to(resource.identifier,[current_organization,resource])
-              %td= resource.title
-              %td.text-right
-                - if policy(resource).index?
-                  = link_to [current_organization,resource], class: "btn btn-show", title: "Show this resource" do
-                    View
-                  %nbsp
-                - if policy(resource).edit?
-                  = link_to edit_organization_resource_path(current_organization,resource), class: "btn btn-edit", title: "Edit this resource" do
-                    Edit
+      .table-responsive
+        %table.index-table
+          %caption.sr-only Index table for resources
+          %thead
+            %tr
+              %th{scope: 'col'}
+                Identifier
+              %th{scope: 'col'}
+                Title
+              %th{scope: 'col'}
+                Actions
 
-      - if policy(Resource).new?
-        %nav.index-nav{role:"navigation"}
-          = link_to new_organization_resource_path(current_organization),class: 'btn btn-primary new-link' do
-            New Resource
+          %tbody
+            = render partial: 'resource', collection: resources
+
+      %nav.index-nav{role:"navigation"}
+        = pagination_links(resources)
+        - if policy(Resource).new?
+          = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'

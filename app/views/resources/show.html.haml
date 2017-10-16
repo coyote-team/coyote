@@ -39,6 +39,7 @@
                 %td
                   = resource.created_at
 
+          = render partial: 'representations', object: resource.representations
           = render partial: 'related_resources', object: resource.related_resources
 
           %nav.show-nav{role:"navigation"}

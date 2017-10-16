@@ -4,11 +4,9 @@
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
   include Pundit
+  include FilterPagination
 
   before_action :require_api_authentication
-
-  # see https://github.com/elabs/pundit#ensuring-policies-and-scopes-are-used
-  after_action :verify_authorized, except: %i[index]
 
   def_param_group :pagination do
     param :'page[number]', Integer
@@ -44,39 +42,6 @@ class Api::ApplicationController < ActionController::API
     }], :status => :unauthorized
   end
 
-  def pagination_params
-    params.fetch(:page,{}).permit(:number,:size)
-  end
-
-  def pagination_number
-    pagination_params[:number]
-  end
-
-  def pagination_size
-    pagination_params[:size]
-  end
-
-  def first_page_params
-    # Kaminari numbers pages from 1 instead of 0
-    pagination_params.merge(number: 1)
-  end
-
-  def pagination_link_params(records)
-    links = { 
-      first: pagination_params.merge(number: 1)
-    }
-
-    unless records.first_page?
-      links[:prev] = pagination_params.merge(number: records.prev_page)
-    end
-
-    unless records.last_page?
-      links[:next] = pagination_params.merge(number: records.next_page)
-    end
-
-    links
-  end
-  
   def apply_link_headers(links)
     link_headers = links.inject([]) do |result,(rel,href)|
       result << %(<#{href}>; rel="#{rel}")

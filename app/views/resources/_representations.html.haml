@@ -1,0 +1,7 @@
+- if representations.any?
+  %table.table
+    - representations.each do |representation|
+      %tr
+        %th #{link_to "Representation ##{representation.id}",[current_organization,representation]} (#{representation.status})
+      %tr
+        %td #{representation.text}
