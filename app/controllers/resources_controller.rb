@@ -65,7 +65,7 @@ class ResourcesController < ApplicationController
   end
 
   def resource_params
-    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id)
+    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id,:priority)
   end
 
   def authorize_general_access
