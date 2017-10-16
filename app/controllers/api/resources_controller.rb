@@ -25,7 +25,7 @@ module Api
         param :source_uri, String, 'The canonical location of the resource', required: false
         param :context, String, 'Identifies the organizationl context to which this resource belongs', required: true
         param :organization_id, Integer, 'Identifies which organization owns the resource', required: true
-        param :priority, Boolean, required: false
+        param :priority, [true,false], required: false
       end
     end
 
