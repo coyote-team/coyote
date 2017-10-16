@@ -23,12 +23,6 @@ FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
   FactoryGirl.create(:license,trait.name)
 end
 
-Status.create!([
-  { title: "Ready to review" },
-  { title: "Approved" },
-  { title: "Not approved" }
-])
-
 resource = FactoryGirl.create(:resource,{
   title: "T.Y.F.F.S.H., 2011",
   organization: organization,
