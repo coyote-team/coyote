@@ -1,6 +1,7 @@
 %tr.item[user]
   %td= user.first_name
   %td= user.last_name
+  %td= user.staff ? 'Yes' : nil
   %td= link_to(user.email,staff_user_path(user))
   %td.text-right<
     = link_to('Edit',edit_staff_user_path(user),class: 'btn btn-primary',title: "Edit #{user}")
@@ -8,4 +9,4 @@
       %br
       %em Can't delete your own account
     - else
-      = button_to('Remove',staff_user_path(user),title: "Remove #{user} from Coyote", class: "btn btn-danger", data: { confirm: "Are you sure you want to remove #{user} from this organization?" }) unless user == current_user
+      = button_to('Remove',staff_user_path(user),title: "Remove #{user} from Coyote", :method => :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove #{user} from Coyote?" }) unless user == current_user

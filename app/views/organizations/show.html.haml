@@ -6,10 +6,6 @@
 
   .row
     .col-sm-6
-      - if organization_user.admin?
-        =link_to "#ready_to_review_representations" do 
-          Skip to Ready to Review representations
-
       %h2 Our Status
       %table.table.table-no-grid
         = render partial: "progress",   locals: { title: "Represented resources of #{resource_count(dashboard.organization_resource_count)}", value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }

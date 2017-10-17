@@ -8,4 +8,13 @@
       = list_of(current_user.organizations) do |org|
         = link_to(org.title,organization_path(org))
 
+      - if current_user.staff?
+        %hr
+        %header
+          %h1#page-title{tabindex: -1}
+            = title 'All Organizations'
+
+        = list_of(Organization.all) do |org|
+          = link_to(org.title,organization_path(org))
+
       = render partial: "new_organization"

@@ -5,7 +5,7 @@
     = f.input :email, required: true, autofocus: true
     = f.input :first_name
     = f.input :last_name
-    = f.input :staff
+    = f.input :staff, :as => :select, collection: [['No',false],['Yes',true]], include_blank: false
 
   .form-actions
     .form-actions-inner

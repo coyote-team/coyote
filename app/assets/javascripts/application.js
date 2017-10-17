@@ -22,4 +22,5 @@
 //= require vendor/pageMe
 //= require vendor/rollbar
 //= require coyote
+//= require utils
 //= require main

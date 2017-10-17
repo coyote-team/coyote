@@ -16,8 +16,8 @@ contexts = organization.contexts.create!([
   { title: "events" },
 ])
 
-short_metum = FactoryGirl.create(:metum,:short)
-long_metum  = FactoryGirl.create(:metum,:long)
+short_metum = FactoryGirl.create(:metum,:short,organization: organization)
+long_metum  = FactoryGirl.create(:metum,:long,organization: organization)
 
 FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
   FactoryGirl.create(:license,trait.name)

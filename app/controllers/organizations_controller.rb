@@ -55,7 +55,7 @@ class OrganizationsController < ApplicationController
   attr_accessor :organizations
 
   def organization
-    @organization ||= current_user.organizations.find_by(id: params[:id])
+    @organization ||= Organization.find_by(id: params[:id])
   end
 
   def pundit_user

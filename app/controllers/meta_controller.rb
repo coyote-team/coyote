@@ -5,7 +5,7 @@ class MetaController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
 
-  helper_method :title, :list_of_meta, :metum
+  helper_method :list_of_meta, :metum
 
   # GET /meta
   def index
@@ -49,7 +49,7 @@ class MetaController < ApplicationController
 
   private
 
-  attr_accessor :title, :metum
+  attr_accessor :metum
 
   def list_of_meta
     current_organization.meta

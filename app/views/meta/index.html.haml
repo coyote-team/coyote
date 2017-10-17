@@ -1,9 +1,8 @@
-- meta title: title
 .index-outer
   .index
     .index-inner
       %header
-        %h1#page-title{tabindex: -1}=title
+        %h1#page-title{tabindex: -1}= title "Meta for #{current_organization.title}"
       %table.index-table
         %caption.sr-only Index table for meta
         %thead
