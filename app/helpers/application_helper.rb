@@ -4,6 +4,12 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @return [Array<Array>] a collection of languages suitable for use in a select box
+  # @see https://github.com/scsmith/language_list
+  def language_list
+    @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
+  end
+
   # @param records [ActiveRecord::Relation] subset of records being displayed, after being partitioned by Kaminari
   # @return [String] HTML for next/previous pages
   # @see https://github.com/kaminari/kaminari#the-link_to_next_page-and-link_to_previous_page-aliased-to-link_to_prev_page-helper-methods

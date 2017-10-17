@@ -7,7 +7,7 @@
     = f.input :content_uri, :as => :url, label: 'Content URI', hint: 'For non-text representations, such as an audio recording, this is where users can retrieve the representation data', required: false
     = f.input :text, :as => :text, hint: 'It can be helpful to include a transcription of a non-text representation, when available'
     = f.association :metum, collection: available_meta
-    = f.input :language, :as => :select, collection: LanguageList::COMMON_LANGUAGES, include_blank: false, selected: 'en'
+    = f.input :language, :as => :select, collection: language_list, include_blank: false
     = f.association :license, collection: License.all, include_blank: false
 
   .form-actions

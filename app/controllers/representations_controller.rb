@@ -18,7 +18,7 @@ class RepresentationsController < ApplicationController
   end
 
   def new
-    self.representation = current_resource.representations.new
+    self.representation = current_resource.representations.new(language: Rails.configuration.x.default_representation_language)
   end
 
   def edit
