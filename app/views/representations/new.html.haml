@@ -2,5 +2,5 @@
   .entity
     .entity-inner
       %header
-        %h1#page-title{tabindex: -1}= title 'New Representation'
+        %h1#page-title{tabindex: -1}= title "Create Representation of #{current_resource.title.truncate(25)}"
       = render partial: 'form'
