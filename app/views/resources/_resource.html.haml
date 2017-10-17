@@ -1,6 +1,6 @@
 %tr.item[resource]
   %td= link_to(resource.identifier,[current_organization,resource])
-  %td= resource.title
+  %td= link_to(resource.title,[current_organization,resource])
   %td= resource.representations_count
   %td.text-right
     - if policy(resource).index?
