@@ -25,6 +25,7 @@
 #  index_representations_on_status       (status)
 #
 
+# An alternate sensory impression of a Resource
 class Representation < ApplicationRecord
   belongs_to :resource,     :inverse_of => :representations, :counter_cache => true
   belongs_to :metum,        :inverse_of => :representations

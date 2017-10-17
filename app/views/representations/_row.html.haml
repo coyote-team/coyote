@@ -7,7 +7,7 @@
   %td
     %span.label.label-info= representation.metum_title
   %td
-    %span.label.label-default= LanguageList::LanguageInfo.find(representation.language)&.name
+    %span.label.label-default= language_name(representation.language)
   %td.text-right
     = link_to [current_organization,representation], class: "btn btn-show", title: "Show this representation", "aria-describedby": "representation-text-#{representation.id}" do
       View

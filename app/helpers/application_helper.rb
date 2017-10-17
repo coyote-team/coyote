@@ -4,6 +4,13 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @param language_code [String] language short code such as 'en'
+  # @return [String] human-friendly language name
+  # @see https://github.com/scsmith/language_list
+  def language_name(language_code)
+    LanguageList::LanguageInfo.find(language_code)&.name
+  end
+
   # @return [Array<Array>] a collection of languages suitable for use in a select box
   # @see https://github.com/scsmith/language_list
   def language_list
