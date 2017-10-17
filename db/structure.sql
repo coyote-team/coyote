@@ -451,7 +451,8 @@ CREATE TABLE representations (
     language character varying NOT NULL,
     license_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    notes text
 );
 
 
@@ -1513,6 +1514,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171013160538'),
 ('20171016133717'),
 ('20171017125333'),
-('20171017201950');
+('20171017201950'),
+('20171017203300');
 
 

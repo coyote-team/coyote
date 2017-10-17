@@ -15,7 +15,7 @@ module RepresentationAccess
   end
 
   def representation_params
-    params.require(:representation).permit(:content_uri,:text,:metum_id,:content_type,:language,:license_id)
+    params.require(:representation).permit(:content_uri,:text,:metum_id,:content_type,:language,:license_id,:notes)
   end
 
   def authorize_general_access

@@ -5,6 +5,9 @@
         %h1#page-title{tabindex: -1}
           = title "Showing #{representation}"
       .row
+        .col-md-12
+          = to_html(representation.text)
+      .row
         .col-md-9
           %table.entity-table
             %caption.sr-only Key value pairs for this representation
@@ -34,8 +37,8 @@
                 %th{scope: "row"} Content URI
                 %td= link_to(nil,representation.content_uri)
               %tr
-                %th{scope: "row"} Text
-                %td= to_html(representation.text)
+                %th{scope: "row"} Notes
+                %td= to_html(representation.notes)
               %tr
                 %th{scope: "row"} Updated
                 %td= representation.updated_at
