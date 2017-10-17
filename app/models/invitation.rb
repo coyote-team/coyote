@@ -33,6 +33,9 @@ class Invitation < ApplicationRecord
 
   enum role: Coyote::Membership::ROLES
 
+  attr_accessor :first_name
+  attr_accessor :last_name
+
   def role_rank
     Coyote::Membership.role_rank(role)
   end

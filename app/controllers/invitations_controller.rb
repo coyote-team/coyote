@@ -36,7 +36,7 @@ class InvitationsController < ApplicationController
   attr_accessor :invitation, :title
 
   def invitation_params
-    params.require(:invitation).permit(:recipient_email,:role)
+    params.require(:invitation).permit(:recipient_email,:role,:first_name,:last_name)
   end
 
   def user_invitation_service

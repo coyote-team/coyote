@@ -11,5 +11,7 @@
       = simple_form_for [current_organization,invitation], validate: true do |f|
         = f.error_notification
         = f.input :recipient_email, label: 'Recipient Email Address'
+        = f.input :first_name, required: true
+        = f.input :last_name, required: true
         = f.input :role, collection: organizational_user_assignable_roles
         = f.button :submit, 'Send invitation'

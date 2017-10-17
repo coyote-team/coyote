@@ -48,6 +48,9 @@ RSpec.feature 'Inviting users' do
       expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
 
       fill_in 'invitation[recipient_email]', with: new_member_email
+      fill_in 'invitation[first_name]', with: 'John'
+      fill_in 'invitation[last_name]', with: 'Doe'
+      
       select('Author',from: 'Role')
 
       expect {

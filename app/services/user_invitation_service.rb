@@ -12,8 +12,16 @@ class UserInvitationService
   # @param invitation [Invitation]
   # @yieldparam err_msg [String] describes errors that prevent inviting the user
   def call(invitation)
+    dummy_password = SecureRandom.hex(20)
+
+    create_params = {
+      password: dummy_password,
+      first_name: invitation.first_name,
+      last_name: invitation.last_name
+    }
+
     recipient_user = User.
-                     create_with(password: SecureRandom.hex(20)).
+      create_with(create_params).
                      find_or_initialize_by(email: invitation.recipient_email)
 
     if organization.users.exists?(recipient_user.id)
