@@ -63,12 +63,10 @@ module ApplicationHelper
   # @return [Hash] a collection of User roles with human friendly labels that the current organizational user can assign
   # @see User
   def organizational_user_assignable_roles
-    max_assignable_role_rank = organization_user.role_rank
-
     roles = []
 
-    Coyote::Membership.each_role do |label,role_name,role_rank|
-      break if role_rank > max_assignable_role_rank
+    Coyote::Membership.each_role do |label,role_name,_|
+      break unless organization_user.send(:"#{role_name}?")
       roles << [label,role_name]
     end
 

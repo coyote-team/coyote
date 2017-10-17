@@ -30,6 +30,7 @@ module Coyote
 
     # @return [Integer] for sorting and comparison purposes; higher numbers are associated with higher-ranking/more-powerful roles
     def self.role_rank(role_name)
+      return role_names.size + 1 if role_name == :staff
       role_names.index(role_name.to_sym) || -1
     end
   end

@@ -59,7 +59,11 @@ module Coyote
 
     # @return (see Coyote::Membership#role_rank)
     def role_rank
-      @role_rank ||= Coyote::Membership.role_rank(role)
+      if staff?
+        Coyote::Membership.role_rank(:staff)
+      else
+        Coyote::Membership.role_rank(role)
+      end
     end
 
     private

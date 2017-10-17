@@ -1,10 +1,9 @@
-- meta title: title
 .index-outer
   .index
     .index-inner
       %header
         %h1#page-title{tabindex: -1}
-          Members of #{current_organization.title}
+          = title "Members of #{current_organization.title}"
 
       %table.index-table
         %caption.sr-only Index table for members of #{current_organization.title}

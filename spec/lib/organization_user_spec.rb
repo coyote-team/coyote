@@ -39,6 +39,8 @@ RSpec.describe Coyote::OrganizationUser do
   specify { expect(subject == user).to eq(true) }
   specify { expect(subject == build_stubbed(:user)).to eq(false) }
 
+  specify { expect(subject.role_rank).to eq(0) }
+
   context "as a viewer user" do
     let(:role) { "viewer" }
 
@@ -115,6 +117,7 @@ RSpec.describe Coyote::OrganizationUser do
     specify { expect(subject).to be_admin  }
     specify { expect(subject).to be_owner  }
     specify { expect(subject).to be_staff  }
+    specify { expect(subject.role_rank).to be > Coyote::Membership.role_rank(:owner) }
   end
 
   context "with no membership in an organization" do

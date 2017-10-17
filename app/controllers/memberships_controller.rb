@@ -5,14 +5,12 @@ class MembershipsController < ApplicationController
   before_action :authorize_general_access, only: %i[index]
   before_action :authorize_unit_access,    only: %i[edit update destroy]
 
-  helper_method :title, :membership, :organization_users
+  helper_method :membership, :organization_users
 
   def index
-    self.title = "Members of #{current_organization.title}"
   end
 
   def edit
-    self.title = "Change membership of #{membership.user}"
   end
 
   # @raise [Coyote::SecurityError] if the user with a certain rank attempts to promote another user above that rank
@@ -29,7 +27,6 @@ class MembershipsController < ApplicationController
       flash[:notice] = "Membership of #{membership.user} was successfully updated."
       redirect_back fallback_location: organization_memberships_url
     else
-      self.title = "Changing membership of #{membership.user}"
       logger.warn "Unable to update #{membership}: '#{membership.errors.full_messages.to_sentence}'"
       render :edit
     end
@@ -51,7 +48,7 @@ class MembershipsController < ApplicationController
 
   private
   
-  attr_accessor :title, :membership
+  attr_accessor :membership
 
   def set_membership
     self.membership = current_organization.memberships.find(params[:id])
