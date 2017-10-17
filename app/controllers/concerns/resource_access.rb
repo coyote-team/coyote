@@ -23,7 +23,7 @@ module ResourceAccess
   end
 
   def resource_params
-    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id,:priority)
+    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id)
   end
 
   def authorize_general_access

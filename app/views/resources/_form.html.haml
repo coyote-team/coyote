@@ -8,7 +8,6 @@
     = f.input :identifier, hint: 'This should be a unique string that does not change - used to identify the resource within Coyote. If blank, we will attempt to set one for you based on the title field.'
     = f.association :context, prompt: "Pick a context", collection: context_list
     = f.input :source_uri, :as => :url, label: 'Source URI', hint: 'Identifies the canonical location of the resource, if available', required: false
-    = f.input :priority, :as => :select, label: 'Priority?', include_blank: false
 
   .form-actions
     .form-actions-inner

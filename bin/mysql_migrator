@@ -51,6 +51,8 @@ puts "user: #{User.count}"
 images = client.query('SELECT * FROM images')
 
 resources = images.to_a.map do |image|
+  image.delete('priority')
+
   path = image.delete('path')
   image['source_uri'] = "https://mcachicago.org#{path}"
 
