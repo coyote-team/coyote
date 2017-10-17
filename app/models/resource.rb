@@ -2,17 +2,18 @@
 #
 # Table name: resources
 #
-#  id              :integer          not null, primary key
-#  identifier      :string           not null
-#  title           :string           default("Unknown"), not null
-#  resource_type   :enum             not null
-#  canonical_id    :string           not null
-#  source_uri      :string
-#  context_id      :integer          not null
-#  organization_id :integer          not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  priority        :boolean          default(FALSE), not null
+#  id                    :integer          not null, primary key
+#  identifier            :string           not null
+#  title                 :string           default("Unknown"), not null
+#  resource_type         :enum             not null
+#  canonical_id          :string           not null
+#  source_uri            :string
+#  context_id            :integer          not null
+#  organization_id       :integer          not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  priority              :boolean          default(FALSE), not null
+#  representations_count :integer          default(0), not null
 #
 # Indexes
 #
@@ -21,6 +22,7 @@
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority                          (priority)
+#  index_resources_on_representations_count             (representations_count)
 #
 
 # We use the Dublin Core meaning for what a Resource represents:

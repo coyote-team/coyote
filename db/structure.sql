@@ -522,7 +522,8 @@ CREATE TABLE resources (
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    priority boolean DEFAULT false NOT NULL
+    priority boolean DEFAULT false NOT NULL,
+    representations_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1192,6 +1193,13 @@ CREATE INDEX index_resources_on_priority ON resources USING btree (priority);
 
 
 --
+-- Name: index_resources_on_representations_count; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_representations_count ON resources USING btree (representations_count);
+
+
+--
 -- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1511,6 +1519,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171006172008'),
 ('20171011152909'),
 ('20171013160538'),
-('20171016133717');
+('20171016133717'),
+('20171017125333');
 
 

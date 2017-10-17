@@ -25,7 +25,7 @@
 #
 
 class Representation < ApplicationRecord
-  belongs_to :resource,     :inverse_of => :representations
+  belongs_to :resource,     :inverse_of => :representations, :counter_cache => true
   belongs_to :metum,        :inverse_of => :representations
   belongs_to :author,       :inverse_of => :representations, :class_name => :User
   belongs_to :license,      :inverse_of => :representations
