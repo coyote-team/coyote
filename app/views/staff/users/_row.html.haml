@@ -1,7 +1,7 @@
 %tr.item[user]
   %td= user.first_name
   %td= user.last_name
-  %td= user.staff ? 'Yes' : nil
+  %td= user.staff ? 'Yes' : %|<span class='sr-only'>No</span>|.html_safe
   %td= link_to(user.email,staff_user_path(user))
   %td.text-right<
     = link_to('Edit',edit_staff_user_path(user),class: 'btn btn-primary',title: "Edit #{user}")
