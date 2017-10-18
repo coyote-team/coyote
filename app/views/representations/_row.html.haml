@@ -1,5 +1,5 @@
 %tr.item
-  %td
+  %td{rowspan: 2}
     = link_to [current_organization,representation.resource] do
       = resource_link_target(representation.resource,dom_id(representation),alt: representation.text)
   %td
@@ -9,16 +9,13 @@
   %td
     %span.label.label-default= language_name(representation.language)
   %td.text-right
-    = link_to [current_organization,representation], class: "btn btn-show", title: "Show this representation", "aria-describedby": "representation-text-#{representation.id}" do
-      View
+    = link_to 'View', [current_organization,representation], class: "btn btn-show", title: "Show this representation", :"aria-describedby" => dom_id(representation)
     %nbsp
     - if policy(representation).edit?
-      = link_to edit_organization_representation_path(current_organization,representation), class: "btn btn-edit", title: "Edit this representation", "aria-describedby": "representation-text-#{representation.id}" do
-        Edit
+      = link_to 'Edit', edit_organization_representation_path(current_organization,representation), class: "btn btn-edit", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
       %nbsp
     - if policy(representation).destroy?
-      = link_to [current_organization,representation], title: "Delete this representation" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, "aria-describedby": "representation-text-#{representation.id}" do
-        Delete
+      = link_to 'Delete', [current_organization,representation], title: "Delete this representation" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
 %tr
-  %td{id: dom_id(representation),colspan: 5}
+  %td{id: dom_id(representation),colspan: 4}
     = to_html(representation.text)
