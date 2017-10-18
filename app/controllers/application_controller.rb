@@ -18,6 +18,15 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :users, :contexts
 
+  def organization_scope
+    # can't do this in Pundit, since Pundit needs the results of this scoping
+    if current_user.staff?
+      Organization.all
+    else
+      Organization.joins(:memberships).where(memberships: { user: current_user })
+    end
+  end
+
   def organization_user
     @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
   end
@@ -33,11 +42,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization?
-    current_user.organizations.exists?(current_organization_id)
+    organization_scope.exists?(current_organization_id)
   end
 
   def current_organization
-    @current_organization ||= current_user.organizations.find(current_organization_id)
+    @current_organization ||= organization_scope.find(current_organization_id)
   end
 
   def current_organization_id
