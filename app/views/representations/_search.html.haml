@@ -1,0 +1,9 @@
+= search_form_for search, url: organization_representations_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
+  = f.search_field :text_cont_all, class: 'input-medium form-control', required: false, placeholder: 'Search representation text'
+  %hr
+  = f.input :status_eq, label: 'Status', class: 'input-medium form-control', required: false, :as => :select, collection: Coyote::Representation.status_collection
+  %hr
+  = f.input :metum_id_eq, label: 'Metum', class: 'input-medium form-control', required: false, :as => :select, collection: available_meta
+  %hr
+  = f.submit 'Search', name: nil, class: 'btn btn-primary btn-sm'
+  = link_to 'Clear', organization_representations_path(current_organization), class: 'btn btn-sm btn-info'

@@ -32,21 +32,14 @@ module Coyote
       video/3gpp
       video/3gpp2
     ].freeze
-    
+
     module_function
 
-    # Iterates through all possible statuses
-    # @yieldparam human_friendly_status [String]
-    # @yieldparam status [Symbol]
-    def self.each_status
-      STATUSES.each_key do |status|
-        yield status.to_s.titleize, status
+    # @return [Array<Symbol>] list of all available statuses for use in forms
+    def self.status_collection
+      STATUSES.each_key.map do |status|
+        [status.to_s.titleize,status]
       end
-    end
-
-    # @return [Array<Symbol>] list of all available statuses
-    def self.status_names
-      STATUSES.keys
     end
   end
 end

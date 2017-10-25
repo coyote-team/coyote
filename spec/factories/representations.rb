@@ -47,7 +47,7 @@ FactoryGirl.define do
       content_uri 'http://cdn.example.com/speech.mp3'
     end
 
-    Coyote::Representation.each_status do |_,status_id|
+    Coyote::Representation.status_collection.each do |_,status_id|
       trait status_id do
         status status_id
       end

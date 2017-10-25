@@ -7,13 +7,15 @@ class RecordPaginator
     @records = records
   end
 
+  # @return [ActiveRecord::Relation] the original records query with which we were initialized, with Kaminari pagination applied
   def query
-    @quer ||= begin
-                records.
-                page(pagination_number).
-                per(pagination_size).
-                without_count
-              end
+    @query ||= begin
+                 records.
+                   by_id.
+                   page(pagination_number).
+                   per(pagination_size).
+                   without_count
+               end
   end
 
   # @param base_link_params [Hash]

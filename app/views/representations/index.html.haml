@@ -1,10 +1,15 @@
 .container-fluid
-  .index
-    .index-inner
+  .row
+    .col-md-12
       %header
         %h1#page-title{tabindex: -1}
           = title "Representations for #{current_organization.title}"
 
+  .row
+    .col-md-2
+      = render partial: 'search', object: record_filter.search
+
+    .col-md-10
       .table-responsive
         %table.index-table.table
           %thead
@@ -18,5 +23,5 @@
           %tbody
             = render :partial => 'row', :collection => record_filter.records, :as => :representation
 
-      %nav.index-nav{role: "navigation"}
-        = render partial: 'pagination', locals: { record_filter: record_filter }
+        %nav.index-nav{role: "navigation"}
+          = render partial: 'pagination', locals: { record_filter: record_filter }

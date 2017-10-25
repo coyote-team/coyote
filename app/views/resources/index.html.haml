@@ -1,11 +1,14 @@
-.index-outer
-  .index
-    .index-inner
+.container-fluid
+  .row
+    .col-md-12
       %header
         %h1#page-title{tabindex: -1}= title "Resources for #{current_organization.title}"
 
+  .row
+    .col-md-2
       = render partial: 'search', object: record_filter.search
 
+    .col-md-10
       .table-responsive
         %table.index-table
           %caption.sr-only Index table for resources
@@ -23,8 +26,8 @@
           %tbody
             = render partial: 'resource', collection: record_filter.records
 
-      %nav.index-nav{role:"navigation"}
-        = render partial: 'pagination', locals: { record_filter: record_filter }
+        %nav.index-nav{role:"navigation"}
+          = render partial: 'pagination', locals: { record_filter: record_filter }
 
-        - if policy(Resource).new?
-          = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'
+          - if policy(Resource).new?
+            = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'

@@ -1,6 +1,5 @@
 = search_form_for search, url: organization_resources_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
-  = f.label :identifier_or_title_or_representations_text_cont_all, 'Search by identifier, title, or representation text'
-  = f.search_field :identifier_or_title_or_representations_text_cont_all, class: 'input-medium form-control', required: false
-  %br
+  = f.search_field :identifier_or_title_or_representations_text_cont_all, class: 'input-medium form-control', required: false, placeholder: 'Search by identifier, title, or representation text'
+  %hr
+  = f.submit 'Search', name: nil, class: 'btn btn-primary btn-sm'
   = link_to 'Clear', organization_resources_path(current_organization), class: 'btn btn-sm btn-info'
-  = button_tag 'Search', name: nil, type: 'submit', class: 'btn btn-info btn-sm'
