@@ -4,7 +4,6 @@
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
   include Pundit
-  include FilterPagination
 
   before_action :require_api_authentication
 
