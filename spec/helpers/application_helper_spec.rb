@@ -19,7 +19,7 @@ RSpec.describe ApplicationHelper do
 
     specify do
       link = helper.resource_link_target(resource,'resource_100',alt: 'some text')
-      expect(link).to eq(%(<img alt="some text" aria-describedby="resource_100" src="#{resource_uri}" />))
+      expect(link).to match(/src="#{resource_uri}"/)
     end
   end
 

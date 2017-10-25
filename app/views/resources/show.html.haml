@@ -1,60 +1,70 @@
-.entity-outer
-  .entity
-    .entity-inner
+.container-fluid
+  .row
+    .col-md-12
       %header
         %h1#page-title{tabindex: -1}
           = title "Resource #{resource.label}"
-      .row
-        .col-md-9
-          %table.entity-table
-            %caption.sr-only Key value pairs for this resource
-            %tbody
-              %tr
-                %th{scope: "row"} Identifier
-                %td= resource.identifier
-              %tr
-                %th{scope: "row"} Title
-                %td= resource.title
-              %tr
-                %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/#section-7',target: :_blank)
-                %td= resource.resource_type
-              %tr
-                %th{scope: "row"} Source URI
-                %td= link_to(nil,resource.source_uri)
-              %tr
-                %th{scope: "row"} Canonical ID
-                %td= resource.canonical_id
-              %tr
-                %th{scope: "row"} Context
-                %td= link_to(resource.context,[current_organization,resource.context])
-              %tr
-                %th{scope: "row"} Updated
-                %td
-                  = resource.updated_at
-              %tr
-                %th{scope: "row"} Created 
-                %td
-                  = resource.created_at
+  .row
+    .col-md-4
+      = link_to [current_organization,resource] do
+        = resource_link_target(resource,dom_id(resource),alt: resource.representations.first) # TODO: need to figure this out, in general: what to use for a 'default' description
 
-          = render partial: 'representations', object: resource.representations
-          = render partial: 'related_resources', object: resource.related_resources
+    .col-md-6
+      %table.entity-table
+        %caption.sr-only Key value pairs for this resource
+        %tbody
+          %tr
+            %th{scope: "row"} Identifier
+            %td= resource.identifier
+          %tr
+            %th{scope: "row"} Title
+            %td= resource.title
+          %tr
+            %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/#section-7',target: :_blank)
+            %td= resource.resource_type
+          %tr
+            %th{scope: "row"} Source URI
+            %td= link_to(nil,resource.source_uri)
+          %tr
+            %th{scope: "row"} Canonical ID
+            %td= resource.canonical_id
+          %tr
+            %th{scope: "row"} Context
+            %td= link_to(resource.context,[current_organization,resource.context])
+          %tr
+            %th{scope: "row"} Updated
+            %td
+              = resource.updated_at
+          %tr
+            %th{scope: "row"} Created 
+            %td
+              = resource.created_at
 
-          %nav.show-nav{role:"navigation"}
-            %ul.list-inline
-              - if policy(resource).edit?
-                %li
-                  = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn' do
-                    Edit
-              - if policy(Representation).new?
-                %li
-                  = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new representation for this resource', class: 'btn btn-primary' do
-                    Create Representation
-              - if policy(ResourceLink).new?
-                %li
-                  = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'btn btn-primary' do
-                    Create Link to Another Resource
-              %br
-              %br
-            %ul.list-inline
-              %li
-                = link_to 'View resources', organization_resources_path(current_organization), class: 'btn btn-info', title: 'View the resources index'
+  .row
+    .col-md-12
+      = render partial: 'representations', object: resource.representations
+  .row
+    .col-md-12
+      = render partial: 'related_resources', object: resource.related_resources
+
+  .row
+    .col-md-12
+      %nav.show-nav{role:"navigation"}
+        %ul.list-inline
+          - if policy(resource).edit?
+            %li
+              = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn' do
+                Edit
+          - if policy(Representation).new?
+            %li
+              = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new representation for this resource', class: 'btn btn-primary' do
+                Create Representation
+          - if policy(ResourceLink).new?
+            %li
+              = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'btn btn-primary' do
+                Create Link to Another Resource
+          %br
+          %br
+        %ul.list-inline
+          %li
+            = link_to 'View resources', organization_resources_path(current_organization), class: 'btn btn-info', title: 'View the resources index'
