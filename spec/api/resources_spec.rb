@@ -13,7 +13,7 @@ RSpec.describe 'Authenticated user accessing resources' do
     expect {
       post api_resources_path(user_organization.id), params: { resource: new_resource_params }, headers: auth_headers
     }.to change(user_organization.resources,:count).
-    from(0).to(1)
+      from(0).to(1)
 
     user_organization.resources.first.tap do |resource|
       expect(resource.title).to eq('Mona Lisa')

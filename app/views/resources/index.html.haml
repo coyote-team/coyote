@@ -4,7 +4,7 @@
       %header
         %h1#page-title{tabindex: -1}= title "Resources for #{current_organization.title}"
 
-      = render partial: 'search'
+      = render partial: 'search', object: record_filter.search
 
       .table-responsive
         %table.index-table
@@ -21,9 +21,10 @@
                 Actions
 
           %tbody
-            = render partial: 'resource', collection: resources
+            = render partial: 'resource', collection: record_filter.records
 
       %nav.index-nav{role:"navigation"}
-        = pagination_links(resources)
+        = render partial: 'pagination', locals: { record_filter: record_filter }
+
         - if policy(Resource).new?
           = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'

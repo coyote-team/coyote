@@ -2,12 +2,13 @@
 # @see Resource
 # @see ResourcePolicy
 class ResourcesController < ApplicationController
-  include ResourceAccess
+  include PermittedParameters
 
   before_action :set_resource,             only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
-  helper_method :resource
+
+  helper_method :resource, :record_filter
 
   def index
   end
@@ -53,11 +54,19 @@ class ResourcesController < ApplicationController
 
   attr_accessor :resource
 
-  def pagination_size
-    Resource.max_per_page
+  def record_filter
+    @record_filter ||= RecordFilter.new(params,current_user.resources)
   end
 
   def set_resource
-    self.resource = resources.find(params[:id])
+    self.resource = current_organization.resources.find(params[:id])
+  end
+
+  def authorize_general_access
+    authorize Resource
+  end
+
+  def authorize_unit_access
+    authorize(resource)
   end
 end

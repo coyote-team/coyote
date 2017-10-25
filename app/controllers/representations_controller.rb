@@ -2,14 +2,14 @@
 # @see Representation
 # @see RepresentationPolicy
 class RepresentationsController < ApplicationController
-  include RepresentationAccess
+  include PermittedParameters
 
   before_action :set_representation,       only: %i[show edit update destroy]
   before_action :set_current_resource,     only: %i[new create]
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
   
-  helper_method :representation, :current_resource, :representations, :available_meta, :authors, :licenses
+  helper_method :representation, :current_resource, :record_filter, :available_meta, :authors, :licenses
 
   def index
   end
@@ -56,6 +56,10 @@ class RepresentationsController < ApplicationController
 
   attr_accessor :representation, :current_resource
 
+  def record_filter
+    @record_filter ||= RecordFilter.new(params,current_organization.representations)
+  end
+
   def set_representation
     self.representation = current_organization.representations.find(params[:id])
   end
@@ -67,5 +71,13 @@ class RepresentationsController < ApplicationController
 
   def available_meta
     current_organization.meta
+  end
+
+  def authorize_general_access
+    authorize Representation
+  end
+
+  def authorize_unit_access
+    authorize(representation)
   end
 end

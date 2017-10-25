@@ -5,19 +5,18 @@
         %h1#page-title{tabindex: -1}
           = title "Representations for #{current_organization.title}"
 
-      = render partial: 'pagination', locals: { representations: representations }
-
       .table-responsive
         %table.index-table.table
           %thead
             %tr
-              %th{scope: "col",rowspan: 2} Resource
+              %th{scope: "col"} Resource
               %th{scope: "col"} Status
               %th{scope: "col"} Metum
               %th{scope: "col"} Language
               %th{scope: "col"} Actions
 
           %tbody
-            = render :partial => 'row', :collection => representations, :as => :representation
+            = render :partial => 'row', :collection => record_filter.records, :as => :representation
 
-      = render partial: 'pagination', locals: { representations: representations }
+      %nav.index-nav{role: "navigation"}
+        = render partial: 'pagination', locals: { record_filter: record_filter }

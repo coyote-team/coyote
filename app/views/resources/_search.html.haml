@@ -1,4 +1,4 @@
-= search_form_for base_resource_query, url: organization_resources_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
+= search_form_for search, url: organization_resources_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
   = f.label :identifier_or_title_or_representations_text_cont_all, 'Search by identifier, title, or representation text'
   = f.search_field :identifier_or_title_or_representations_text_cont_all, class: 'input-medium form-control', required: false
   %br

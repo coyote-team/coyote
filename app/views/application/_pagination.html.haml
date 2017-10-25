@@ -1,0 +1,5 @@
+%h2.sr-only Pagination
+%ul.pagination
+  - record_filter.browser_pagination_link_params.each do |(link_name,link_params)|
+    %li
+      = link_to("#{link_name.to_s.titleize} Page",link_params,class: 'btn').html_safe

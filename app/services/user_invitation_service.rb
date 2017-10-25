@@ -21,7 +21,7 @@ class UserInvitationService
     }
 
     recipient_user = User.
-      create_with(create_params).
+                     create_with(create_params).
                      find_or_initialize_by(email: invitation.recipient_email)
 
     if organization.users.exists?(recipient_user.id)

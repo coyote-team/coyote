@@ -17,20 +17,6 @@ module ApplicationHelper
     @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
   end
 
-  # @param records [ActiveRecord::Relation] subset of records being displayed, after being partitioned by Kaminari
-  # @return [String] HTML for next/previous pages
-  # @see https://github.com/kaminari/kaminari#the-link_to_next_page-and-link_to_previous_page-aliased-to-link_to_prev_page-helper-methods
-  def pagination_links(records)
-    links = []
-
-    pagination_link_params(records).each do |name,link_params|
-      next if current_page?(link_params)
-      links << link_to("#{name.to_s.titleize} Page",link_params)
-    end
-
-   links.join(' &mdash; ').html_safe
-  end
-  
   # @param resource [Resource] the Resource that is being displayed
   # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)

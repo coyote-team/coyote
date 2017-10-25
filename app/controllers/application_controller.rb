@@ -1,7 +1,6 @@
 # @abstract Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
   include Pundit
-  include FilterPagination
 
   protect_from_forgery :with => :exception
 
