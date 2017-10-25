@@ -1,8 +1,6 @@
 module Api
   # Handles calls to /api/v1/resources/
   class ResourcesController < Api::ApplicationController
-    include ResourceAccess # defines the index action
-
     before_action :find_resource,            only: %i[show update destroy]
     before_action :authorize_general_access, only: %i[index create]
     before_action :authorize_unit_access,    only: %i[show update destroy]
