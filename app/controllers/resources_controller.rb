@@ -55,7 +55,7 @@ class ResourcesController < ApplicationController
   attr_accessor :resource
 
   def record_filter
-    @record_filter ||= RecordFilter.new(params,current_user.resources)
+    @record_filter ||= RecordFilter.new(params,current_organization.resources)
   end
 
   def set_resource
