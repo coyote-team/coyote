@@ -8,7 +8,7 @@ RSpec.feature "Resource adding and changing" do
   end
 
   scenario "succeeds" do
-    click_link "Resources"
+    click_first_link "Resources"
 
     click_first_link("New Resource")
 

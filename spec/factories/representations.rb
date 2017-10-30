@@ -47,10 +47,16 @@ FactoryGirl.define do
       content_uri 'http://cdn.example.com/speech.mp3'
     end
 
-    Coyote::Representation.status_collection.each do |_,status_id|
-      trait status_id do
-        status status_id
-      end
+    trait :ready_to_review do
+      status :ready_to_review
+    end
+
+    trait :approved do
+      status :approved
+    end
+
+    trait :not_approved do
+      status :not_approved
     end
 
     transient do

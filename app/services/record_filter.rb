@@ -3,18 +3,23 @@
 class RecordFilter
   attr_writer :record_paginator
 
-  # @param params [ActionController::Params]
+  # @param filter_params [Hash]
+  # @param pagination_params [Hash]
   # @param scope [ActiveRecord::Relation] the basis of all queries; 
   #   typically this is based on who is logged-in, and whether the query is Coyote-wide (as in a UI index page)
   #   or organization-specific (as in an API call)
-  def initialize(params,scope)
-    @params = params
-    @scope = scope
+  def initialize(filter_params,pagination_params,base_scope)
+    @filter_params = filter_params.to_hash.with_indifferent_access
+    @pagination_params = pagination_params
+    @base_scope = base_scope
+
+    filter_scope = @filter_params.delete(:scope)
+    @filter_params[filter_scope] = true if filter_scope.present?
   end
 
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
   def search
-    @search ||= scope.search(filter_params)
+    @search ||= base_scope.search(filter_params)
   end
 
   # @return [ActiveRecord::Relation] the filtered collection of records, ready to be enumerated
@@ -40,13 +45,9 @@ class RecordFilter
 
   private
 
-  attr_reader :params, :scope
+  attr_reader :filter_params, :pagination_params, :base_scope
 
   def record_paginator
-    @record_paginator ||= RecordPaginator.new(params,search.result(distinct: true))
-  end
-
-  def filter_params
-    params.fetch(:q,{}).permit!
+    @record_paginator ||= RecordPaginator.new(filter_params,search.result(distinct: true))
   end
 end

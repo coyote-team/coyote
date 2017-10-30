@@ -47,15 +47,11 @@ class RecordPaginator
 
   attr_reader :params, :records
 
-  def pagination_params
-    params.fetch(:page,{}).permit(:number,:size)
-  end
-
   def pagination_number
-    pagination_params.fetch(:number,1)
+    params.fetch(:number,1)
   end
 
   def pagination_size
-    pagination_params.fetch(:size,records.default_per_page)
+    params.fetch(:size,records.default_per_page)
   end
 end

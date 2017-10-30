@@ -57,7 +57,7 @@ class RepresentationsController < ApplicationController
   attr_accessor :representation, :current_resource
 
   def record_filter
-    @record_filter ||= RecordFilter.new(params,current_organization.representations)
+    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.representations)
   end
 
   def set_representation

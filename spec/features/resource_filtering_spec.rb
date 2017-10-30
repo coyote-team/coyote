@@ -14,7 +14,7 @@ RSpec.feature 'Resource viewing' do
   end
 
   scenario 'succeeds' do
-    click_link 'Resources'
+    click_first_link 'Resources'
 
     expect(page).to have_content("My Organization's Resource")
     expect(page).not_to have_content('Should Not See This')

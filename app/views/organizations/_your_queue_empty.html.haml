@@ -1,6 +1,0 @@
-%p You haven't been assigned any resources.
-
-- unless policy(Assignment).new?
-  %p 
-    Ask an admin to assign you some resources. Meanwhile, you can #{link_to("review some approved representations",organization_representations_path(current_organization,q: { status_id_eq: 2 }))}, 
-    and #{link_to("start describing resources",organization_resources_path(current_organization))}.

@@ -39,10 +39,10 @@ class Resource < ApplicationRecord
   has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
   has_many :assignments, :inverse_of => :resource
 
-  scope :represented,              -> { joins(:representations) }
+  scope :represented,              -> { joins(:representations).distinct }
+  scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
   scope :assigned,                 -> { joins(:assignments) }
   scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
-  scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   
@@ -56,6 +56,11 @@ class Resource < ApplicationRecord
   max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
   delegate :title, :to => :context, :prefix => true
+
+  # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
+  def self.ransackable_scopes(_ = nil)
+    %i[represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented]
+  end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
   # @return [nil] if no resources exist

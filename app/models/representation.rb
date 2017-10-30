@@ -47,6 +47,11 @@ class Representation < ApplicationRecord
 
   audited
 
+  # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
+  def self.ransackable_scopes(_ = nil)
+    %i[approved not_approved ready_to_review]
+  end
+
   private
 
   def must_have_text_or_content_uri

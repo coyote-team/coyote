@@ -4,44 +4,83 @@
       %header
         %h1#page-title{tabindex: -1}= title organization.title
 
-  .row
-    .col-sm-6
-      %h2 Our Status
-      %table.table.table-no-grid
-        = render partial: "progress",   locals: { title: "Represented resources of #{resource_count(dashboard.organization_resource_count)}", value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }
+      .row
+        .col-md-6
+          %h2 Our Status
+          %table.table
+            %tr
+              %td 
+                = number_to_human(dashboard.organization_resource_count)
+                Total #{link_to('Resources',organization_resources_path(current_organization))}
+            %tr
+              %td 
+                = number_to_human(dashboard.organization_representation_count)
+                Total #{link_to('Representations',organization_representations_path(current_organization))}
+            %tr
+              %td 
+                = number_to_human(dashboard.organization_represented_resource_count)
+                Total #{link_to('Represented Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
+            %tr
+              %td 
+                = number_to_human(dashboard.organization_unrepresented_count) 
+                Total #{link_to('Unrepresented Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
 
-        - if organization_user.admin?
-          = render partial: "progress", locals: { title: "Resources assigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",         value: dashboard.organization_open_assignment_count,          max: dashboard.organization_resource_count }
-          = render partial: "progress", locals: { title: "Resources unassigned and unrepresented of #{resource_count(dashboard.organization_resource_count)}",       value: dashboard.organization_unassigned_unrepresented_count, max: dashboard.organization_resource_count }
-          = render partial: "progress", locals: { title: "Representations ready for review of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_ready_to_review_count,          max: dashboard.organization_representation_count }
+          %h2 My Status
+          %table.table
+            %tr
+              %td 
+                = number_to_human(dashboard.current_user_represented_resources_count)
+                = link_to('Represented Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
+            %tr
+              %td 
+                = number_to_human(dashboard.current_user_open_assignments_count)
+                = link_to('Unrepresented Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
+            %tr
+              %td 
+                = number_to_human(dashboard.current_user_approved_representation_count)
+                = link_to('Approved Representations',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
+            %tr
+              %td 
+                = number_to_human(dashboard.current_user_unapproved_representation_count)
+                = link_to('Unapproved Representations',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
 
-        = render partial: "progress", locals: { title: "Approved Representations of #{representation_count(dashboard.organization_representation_count)}", value: dashboard.organization_approved_representation_count, max: dashboard.organization_representation_count }
+        .col-md-6
+          - if organization_user.admin?
+            %h2 Queues
+            %table.table
+              %tr
+                %td= link_to('Representations Pending Approval',organization_representations_path(current_organization,q: { :scope => :ready_to_review }))
+                %td= number_to_human(dashboard.organization_ready_to_review_count)
+              %tr
+                %td= link_to('Representations Approved',organization_representations_path(current_organization,q: { :scope => :approved }))
+                %td= number_to_human(dashboard.organization_approved_representation_count)
+              %tr
+                %td= link_to('Unapproved Representations',organization_representations_path(current_organization,q: { :scope => :not_approved }))
+                %td= number_to_human(dashboard.organization_unapproved_representation_count)
+              %tr
+                %td= link_to('Resources with Open Assignments',organization_resources_path(current_organization,q: { :scope => :unassigned_unrepresented }))
+                %td= number_to_human(dashboard.organization_open_assignment_count)
+              %tr
+                %td= link_to('Resources Unassigned',organization_resources_path(current_organization,q: { :scope => :unassigned }))
+                %td= number_to_human(dashboard.organization_unassigned_unrepresented_count)
 
-        = render partial: "latest_resource_timestamp", object: dashboard.organization_latest_resource_timestamp if dashboard.organization_latest_resource_timestamp  
+      = render partial: "issue_invitation" if policy(Invitation).new?
+    -#%h3 SCROLL TO
+    -#%ul.list-inline
+      -#- if organization_user.admin?
+        -#%li #{link_to('Unrepresented','#unrepresented')}
+        -#%li #{link_to('Ready to Review','#ready_to_review')}
+      -#%li #{link_to('Your Queues','#your_queues')}
 
-    .col-sm-6
-      %h2 Your Status
-      %table.table.table-no-grid
-        = render partial: "progress", locals: { title: "Represented Resources of #{resource_count(dashboard.current_user_represented_resources_count)}",     value: dashboard.current_user_represented_resources_count,     max: dashboard.current_user_represented_resources_count }
-        = render partial: "progress", locals: { title: "Approved Representations of #{representation_count(dashboard.current_user_representation_count)}",   value: dashboard.current_user_approved_representation_count,   max: dashboard.current_user_representation_count }
-        = render partial: "progress", locals: { title: "Unapproved Representations of #{representation_count(dashboard.current_user_representation_count)}", value: dashboard.current_user_unapproved_representation_count, max: dashboard.current_user_representation_count }
+    -#.row
+      -#.col-md-12
+        -#%h2#unrepresented Unrepresented Resources
+        -#= render partial: '
 
-  .row
-    .col-md-12
-      - if organization_user.admin?
-        %h2 Admin Queues
+    -#.row
+      -#.col-md-12
+        -#%h2#ready_to_review Ready to Review
 
-        = render partial: "queue", locals: { queue: dashboard.organization_top_unrepresented_items_queue,   type: "Unrepresented Resources",         count: dashboard.organization_unrepresented_count,   users: dashboard.organization_users }
-        = render partial: "queue", locals: { queue: dashboard.organization_top_unassigned_items_queue,      type: "Unassigned Resources",            count: dashboard.organization_unassigned_count,      users: dashboard.organization_users }
-        = render partial: "queue", locals: { queue: dashboard.organization_top_ready_to_review_items_queue, type: "Ready to Review representations", count: dashboard.organization_ready_to_review_count, users: dashboard.organization_users }
-
-  .row
-    .col-md-12
-      %h2 Your Queues
-
-      - if dashboard.current_user_queue_empty?
-        = render partial: "your_queue_empty"
-      - else
-        = render partial: "queue", locals: { queue: dashboard.current_user_top_assigned_items_queue, type: "Your Assigned Resources", count: dashboard.current_user_assigned_items_count }
-
-  = render partial: "issue_invitation" if policy(Invitation).new?
+    -#.row
+      -#.col-md-12
+        -#%h2#ready_to_review Your Queues

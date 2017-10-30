@@ -31,6 +31,11 @@ class Dashboard
     organization.representations.approved.size
   end
 
+  # @return [Integer] total number of unapproved representations owned by the organization
+  def organization_unapproved_representation_count
+    organization.representations.not_approved.size
+  end
+
   # @return [Integer] total number of resources that have been assigned to a user for representation, which are as-yet-unrepresented
   def organization_open_assignment_count
     organization.resources.assigned_unrepresented.size
@@ -104,6 +109,11 @@ class Dashboard
   # @return [Integer] total number of unapproved representations written by the current user
   def current_user_unapproved_representation_count
     current_user.representations.not_approved.size
+  end
+
+  # @return [Itnger] total number of resources assigned to the user which do not have a representation
+  def current_user_open_assignments_count
+    current_user.assigned_resources.unrepresented.size
   end
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation

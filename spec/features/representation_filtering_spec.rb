@@ -14,7 +14,7 @@ RSpec.feature 'Representation filtering' do
   end
 
   scenario 'succeeds' do
-    click_link 'Representations'
+    click_first_link 'Representations'
 
     expect(page).to have_content("My Organization's Representation")
     expect(page).not_to have_content('Should Not See This')
