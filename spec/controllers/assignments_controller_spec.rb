@@ -33,7 +33,7 @@ RSpec.describe AssignmentsController do
   let(:new_assignment_resource) { create(:resource,organization: organization) }
 
   let(:new_assignment_params) do
-    base_params.merge(assignment: { user_id: new_assignment_user.id, resource_id: new_assignment_resource.id })
+    base_params.merge(assignment: { user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id] })
   end
 
   let(:update_assignment_params) do
@@ -49,12 +49,6 @@ RSpec.describe AssignmentsController do
         expect(response).to redirect_to(new_user_session_url)
 
         get :show, params: base_params.merge(id: 1)
-        expect(response).to redirect_to(new_user_session_url)
-
-        get :edit, params: base_params.merge(id: 1)
-        expect(response).to redirect_to(new_user_session_url)
-
-        get :new, params: base_params
         expect(response).to redirect_to(new_user_session_url)
 
         post :create, params: base_params.merge(assignment: {})
@@ -82,14 +76,6 @@ RSpec.describe AssignmentsController do
       }.to raise_error(Pundit::NotAuthorizedError)
 
       expect {
-        get :edit, params: assignment_params
-      }.to raise_error(Pundit::NotAuthorizedError)
-
-      expect {
-        get :new, params: base_params
-      }.to raise_error(Pundit::NotAuthorizedError)
-
-      expect {
         patch :update, params: update_assignment_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
@@ -111,12 +97,6 @@ RSpec.describe AssignmentsController do
       expect(response).to be_success
 
       get :show, params: assignment_params
-      expect(response).to be_success
-
-      get :edit, params: assignment_params
-      expect(response).to be_success
-
-      get :new, params: base_params
       expect(response).to be_success
     end
 

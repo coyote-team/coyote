@@ -4,6 +4,11 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  def organizational_user_collection
+    # @return [Array<String,Integer>] list of users suitable for use in select boxes
+    current_organization.users.map { |u| [u.username,u.id] }
+  end
+
   # @param language_code [String] language short code such as 'en'
   # @return [String] human-friendly language name
   # @see https://github.com/scsmith/language_list
@@ -24,7 +29,7 @@ module ApplicationHelper
   def resource_link_target(target_resource,representation_dom_id = nil,options = {})
     target_resource.as_viewable do |uri|
       options = options.merge(:"aria-describedby" => representation_dom_id) if representation_dom_id
-      options[:class] = 'img-responsive'
+      options[:class] = 'thumbnail'
       return image_tag uri, options
     end
 

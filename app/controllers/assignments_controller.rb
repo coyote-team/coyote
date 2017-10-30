@@ -26,12 +26,16 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    self.assignment = Assignment.find_or_create_by!(user: assigned_user,resource: assigned_resource)
+    resources = current_organization.resources.where(id: params.fetch(:assignment,{})[:resource_ids])
 
-    logger.info "Created '#{assignment}'"
-    flash[:notice] = "#{assignment} was successfully created."
+    assignments = resources.map do |resource|
+      Assignment.find_or_create_by!(resource: resource,user: assigned_user)
+    end
 
-    redirect_to [current_organization,assignment]
+    logger.info "Created '#{assignments}'"
+    flash[:notice] = "Created #{assignments.count} #{'assignment'.pluralize(assignments.count)}"
+
+    redirect_back fallback_location: [current_organization]
   end
 
   # PATCH/PUT /assignments/1

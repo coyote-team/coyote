@@ -1,5 +1,11 @@
 %tr.item[resource]
-  %td= link_to(resource.identifier,[current_organization,resource])
+  %td
+    <input id="assignment_resource_ids_#{resource.id}" name="assignment[resource_ids][]" type="checkbox" value="#{resource.id}" aria-label="Select resource '#{resource.identifier}' for bulk assignment" />
+
+  %td
+    = link_to [current_organization,resource] do
+      = resource_link_target(resource,'#')
+  
   %td= link_to(resource.title,[current_organization,resource])
   %td= resource.representations_count
   %td.text-right

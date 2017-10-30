@@ -495,7 +495,7 @@ DEPENDENCIES
   autoprefixer-rails
   better_errors
   binding_of_caller
-  bootstrap-sass
+  bootstrap-sass (= 3.3.7)
   brakeman
   capybara
   cocoon

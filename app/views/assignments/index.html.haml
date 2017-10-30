@@ -1,24 +1,14 @@
-- title = 'Assignments'
-- meta title: title
 .index-outer
   .index
     .index-inner
       %header
         %h1#page-title{tabindex: -1}
-          #{title}: #{number_with_delimiter assignments.total_count}
+          = title "#{title}: #{number_with_delimiter assignments.total_count}"
 
       %nav.index-nav{role:"navigation"}
         = paginate assignments
 
-        %h2.sr-only Actions
-        = link_to new_organization_assignment_path(current_organization), class: 'btn btn-primary new-link' do
-          New Assignment
-
-      =render "table", assignments: assignments
+      = render "table", assignments: assignments
 
       %nav.index-nav{role:"navigation"}
         = paginate assignments
-
-        %h2.sr-only Actions
-        = link_to new_organization_assignment_path(current_organization), class: 'btn btn-primary new-link' do
-          New Assignment
