@@ -20,7 +20,9 @@
             %thead
               %tr
                 %th
-                  %span.sr-only Checkboxes for bulk actions
+                  %span.sr-only This column contains checkboxes for bulk actions
+                  = form.input :select_all_resources_for_bulk_assignment, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all resources on the page' }
+                  All
                 %th{scope: 'col'}
                   Identifier
                 %th{scope: 'col'}
@@ -38,3 +40,19 @@
 
           - if policy(Resource).new?
             = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'
+
+- content_for :javascript_footer do
+  :javascript
+    $('#assignment_select_all_resources_for_bulk_assignment').click(function() {
+      var checkboxes = $(':checkbox.assignment_resource_ids')
+
+      if (this.checked) {
+        checkboxes.each(function() {
+          this.checked = true;                        
+        });
+      } else {
+        checkboxes.each(function() {
+          this.checked = false;                        
+        });
+      }
+    });
