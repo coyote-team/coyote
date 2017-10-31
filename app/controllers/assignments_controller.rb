@@ -5,8 +5,6 @@ class AssignmentsController < ApplicationController
 
   helper_method :assignment, :assignments, :next_resource, :users, :resources
 
-  respond_to :html, :js, :json
-
   # GET /assignments
   def index
   end
