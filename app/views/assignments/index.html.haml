@@ -3,7 +3,7 @@
     .index-inner
       %header
         %h1#page-title{tabindex: -1}
-          = title "#{title}: #{number_with_delimiter assignments.total_count}"
+          = title "Assignments for #{current_organization.title}"
 
       %nav.index-nav{role:"navigation"}
         = paginate assignments
