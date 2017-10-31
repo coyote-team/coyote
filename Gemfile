@@ -33,8 +33,6 @@ gem 'ransack'
 gem 'simple_form' # , git: 'https://github.com/plataformatec/simple_form.git'
 gem 'devise' # user auth
 gem 'acts-as-taggable-on' # automplete tags
-gem 'select2-rails', git: 'https://github.com/argerim/select2-rails.git'
-gem 'cocoon' # nested forms
 gem 'analytical' # analytics
 gem 'metamagic' # meta
 gem 'oj' # optimized json

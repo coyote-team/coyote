@@ -12,15 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require cocoon
 //= require turbolinks
-//= require select2
 //= require bootstrap-sprockets
-//= require vendor/bootstrap.file-input
-//= require vendor/imagesloaded.pkgd
-//= require vendor/isotope.pkgd.min
-//= require vendor/pageMe
 //= require vendor/rollbar
-//= require coyote
 //= require utils
-//= require main
