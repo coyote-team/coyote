@@ -58,6 +58,10 @@ class ResourcesController < ApplicationController
     @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources)
   end
 
+  def filter_params
+    params.fetch(:q,{}).permit(:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
+  end
+
   def set_resource
     self.resource = current_organization.resources.find(params[:id])
   end

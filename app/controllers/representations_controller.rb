@@ -60,6 +60,10 @@ class RepresentationsController < ApplicationController
     @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.representations)
   end
 
+  def filter_params
+    params.fetch(:q,{}).permit(:text_cont_all,:status_eq,:metum_id_eq,:author_id_in)
+  end
+
   def set_representation
     self.representation = current_organization.representations.find(params[:id])
   end
