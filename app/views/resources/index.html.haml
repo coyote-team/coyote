@@ -10,8 +10,9 @@
 
     .col-md-10
       = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |form|
-        = form.input :user_id, collection: organizational_user_collection, input_html: { style: 'width: auto' }, label: 'Bulk Assign', required: false
-        = form.submit 'Apply', class: 'btn btn-primary'
+        - if policy(Assignment).new?
+          = form.input :user_id, collection: organizational_user_collection, input_html: { style: 'width: auto' }, label: false, prompt: 'Bulk Assign', required: false
+          = form.submit 'Assign', class: 'btn btn-primary'
 
         .table-responsive
           %table.index-table
