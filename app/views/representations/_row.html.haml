@@ -1,6 +1,6 @@
 %tr.item
   %td{rowspan: 2}
-    - if policy(Representation).update?
+    - if organization_user.admin?
       <input id="representation_status_change_representation_id_#{representation.id}" class='representation_ids' name="representation_status_change[representation_ids][]" type="checkbox" value="#{representation.id}" aria-label="Select representation '#{representation.id}' for bulk update" />
     
   %td{rowspan: 2}

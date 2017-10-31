@@ -11,7 +11,7 @@
 
     .col-md-10
       = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'form-inline' } do |form|
-        - if policy(Representation).update?
+        - if organization_user.admin?
           = form.input :status, collection: Coyote::Representation.status_collection, input_html: { style: 'width: auto' }, label: false, prompt: 'Bulk Status', required: false
           = form.submit 'Apply', class: 'btn btn-primary'
       
