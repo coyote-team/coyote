@@ -100,7 +100,7 @@ RSpec.describe AssignmentsController do
       expect(response).to be_success
     end
 
-    it "can create, update, and destroy assignments" do
+    it 'can create, update, and destroy assignments' do
       expect {
         patch :update, params: update_assignment_params
         expect(response).to be_redirect

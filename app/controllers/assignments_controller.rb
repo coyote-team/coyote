@@ -26,7 +26,8 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    resources = current_organization.resources.where(id: params.fetch(:assignment,{})[:resource_ids])
+    resource_ids = assignment_params.values_at(:resource_ids,:resource_id).tap(&:compact!)
+    resources = current_organization.resources.where(id: resource_ids)
 
     assignments = resources.map do |resource|
       Assignment.find_or_create_by!(resource: resource,user: assigned_user)
@@ -83,7 +84,7 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:user_id,:resource_id)
+    params.require(:assignment).permit(:user_id,:resource_id,:resource_ids => [])
   end
 
   def next_resource

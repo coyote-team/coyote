@@ -40,31 +40,33 @@
             %td
               = resource.created_at
 
-  .row
-    .col-md-12
-      = render partial: 'representations', object: resource.representations
-  .row
-    .col-md-12
-      = render partial: 'related_resources', object: resource.related_resources
-
-  .row
-    .col-md-12
       %nav.show-nav{role:"navigation"}
         %ul.list-inline
-          - if policy(resource).edit?
-            %li
-              = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn' do
-                Edit
           - if policy(Representation).new?
             %li
               = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new representation for this resource', class: 'btn btn-primary' do
                 Create Representation
+          - if policy(resource).edit?
+            %li
+              = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn btn-info' do
+                Edit
           - if policy(ResourceLink).new?
             %li
-              = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'btn btn-primary' do
+              = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'btn btn-info' do
                 Create Link to Another Resource
-          %br
-          %br
-        %ul.list-inline
-          %li
-            = link_to 'View resources', organization_resources_path(current_organization), class: 'btn btn-info', title: 'View the resources index'
+          - if policy(Assignment).new?
+            %li
+              = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |f|
+                = f.input :user_id, collection: organizational_user_collection, input_html: { style: 'width: auto' }, label: false, prompt: 'Assign To', required: false
+                = f.input :resource_id, :as => :hidden, :input_html => { value: resource.id }
+                = f.submit 'Assign', class: 'btn btn-info'
+
+
+  .row
+    .col-md-12
+      %h2 Representations
+      = render partial: 'representations', object: resource.representations
+  .row
+    .col-md-12
+      %h2 Related Resources
+      = render partial: 'related_resources', object: resource.related_resources
