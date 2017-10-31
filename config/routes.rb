@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :resources
     resources :representations
+    resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index edit update destroy]
     resources :assignments
     resources :contexts 

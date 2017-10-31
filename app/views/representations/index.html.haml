@@ -10,18 +10,44 @@
       = render partial: 'search', object: record_filter.search
 
     .col-md-10
-      .table-responsive
-        %table.index-table.table
-          %thead
-            %tr
-              %th{scope: "col"} Resource
-              %th{scope: "col"} Status
-              %th{scope: "col"} Metum
-              %th{scope: "col"} Language
-              %th{scope: "col"} Actions
+      = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'form-inline' } do |form|
+        - if policy(Representation).update?
+          = form.input :status, collection: Coyote::Representation.status_collection, input_html: { style: 'width: auto' }, label: false, prompt: 'Bulk Status', required: false
+          = form.submit 'Apply', class: 'btn btn-primary'
+      
+        .table-responsive
+          %table.index-table.table
+            %thead
+              %tr
+                %th{scope: 'col'} 
+                  %span.sr-only This column contains checkboxes for bulk update
+                  = form.input :select_all_for_bulk_update, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all representations on the page' }
+                  All
+                  
+                %th{scope: 'col'} Resource
+                %th{scope: 'col'} Status
+                %th{scope: 'col'} Metum
+                %th{scope: 'col'} Language
+                %th{scope: 'col'} Actions
 
-          %tbody
-            = render :partial => 'row', :collection => record_filter.records, :as => :representation
+            %tbody
+              = render :partial => 'row', :collection => record_filter.records, :as => :representation
 
         %nav.index-nav{role: "navigation"}
           = render partial: 'pagination', locals: { record_filter: record_filter }
+
+- content_for :javascript_footer do
+  :javascript
+    $('#representation_status_change_select_all_for_bulk_update').click(function() {
+      var checkboxes = $(':checkbox.representation_ids')
+
+      if (this.checked) {
+        checkboxes.each(function() {
+          this.checked = true;                        
+        });
+      } else {
+        checkboxes.each(function() {
+          this.checked = false;                        
+        });
+      }
+    });
