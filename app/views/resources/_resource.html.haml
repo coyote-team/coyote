@@ -3,7 +3,7 @@
     <input id="assignment_resource_ids_#{resource.id}" name="assignment[resource_ids][]" type="checkbox" value="#{resource.id}" aria-label="Select resource '#{resource.identifier}' for bulk assignment" />
 
   %td
-    = link_to [current_organization,resource] do
+    = link_to([current_organization,resource],class: 'thumbnail') do
       = resource_link_target(resource,'#')
   
   %td= link_to(resource.title,[current_organization,resource])

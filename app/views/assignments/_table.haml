@@ -18,7 +18,7 @@
           %td
             = link_to assignment.user, assignment.user
           %td 
-            = link_to [current_organization,assignment.resource] do
+            = link_to([current_organization,assignment.resource],class: 'thumbnail') do
               = resource_link_target(assignment.resource)
           %td.text-right
             = link_to [current_organization,assignment], class: "btn btn-show", title: "Show this assignment" do

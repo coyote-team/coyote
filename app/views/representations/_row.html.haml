@@ -1,6 +1,6 @@
 %tr.item
   %td{rowspan: 2}
-    = link_to [current_organization,representation.resource] do
+    = link_to([current_organization,representation.resource],class: 'thumbnail') do
       = resource_link_target(representation.resource,dom_id(representation),alt: representation.text)
   %td
     = representation.status.humanize

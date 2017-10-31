@@ -6,7 +6,7 @@
           = title "Resource #{resource.label}"
   .row
     .col-md-4
-      = link_to [current_organization,resource] do
+      = link_to([current_organization,resource],class: 'thumbnail') do
         = resource_link_target(resource,dom_id(resource),alt: resource.representations.first) # TODO: need to figure this out, in general: what to use for a 'default' description
 
     .col-md-6

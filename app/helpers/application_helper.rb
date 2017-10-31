@@ -29,7 +29,6 @@ module ApplicationHelper
   def resource_link_target(target_resource,representation_dom_id = nil,options = {})
     target_resource.as_viewable do |uri|
       options = options.merge(:"aria-describedby" => representation_dom_id) if representation_dom_id
-      options[:class] = 'thumbnail'
       return image_tag uri, options
     end
 
