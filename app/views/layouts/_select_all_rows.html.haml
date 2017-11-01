@@ -1,0 +1,14 @@
+:javascript
+  $('#{select_all_input_selector}').click(function() {
+    var checkboxes = $('#{row_selector}')
+
+    if (this.checked) {
+      checkboxes.each(function() {
+        this.checked = true;                        
+      });
+    } else {
+      checkboxes.each(function() {
+        this.checked = false;                        
+      });
+    }
+  });

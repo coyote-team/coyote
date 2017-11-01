@@ -42,17 +42,4 @@
             = link_to 'New Resource', new_organization_resource_path(current_organization),class: 'btn btn-primary new-link'
 
 - content_for :javascript_footer do
-  :javascript
-    $('#assignment_select_all_resources_for_bulk_assignment').click(function() {
-      var checkboxes = $(':checkbox.assignment_resource_ids')
-
-      if (this.checked) {
-        checkboxes.each(function() {
-          this.checked = true;                        
-        });
-      } else {
-        checkboxes.each(function() {
-          this.checked = false;                        
-        });
-      }
-    });
+  = render partial: 'layouts/select_all_rows', locals: { select_all_input_selector: '#assignment_select_all_resources_for_bulk_assignment', row_selector: ':checkbox.assignment_resource_ids' }
