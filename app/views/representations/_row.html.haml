@@ -1,4 +1,4 @@
-%tr.item
+%tr.item{style: 'border-bottom: 0'}
   %td{rowspan: 2}
     - if organization_user.admin?
       <input id="representation_status_change_representation_id_#{representation.id}" class='representation_ids' name="representation_status_change[representation_ids][]" type="checkbox" value="#{representation.id}" aria-label="Select representation '#{representation.id}' for bulk update" />
@@ -21,5 +21,5 @@
     - if policy(representation).destroy?
       = link_to 'Delete', [current_organization,representation], title: "Delete this representation" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
 %tr
-  %td{id: dom_id(representation),colspan: 4}
+  %td{id: dom_id(representation),colspan: 4,style: 'border-top: 0 !important;'}
     = to_html(representation.text)
