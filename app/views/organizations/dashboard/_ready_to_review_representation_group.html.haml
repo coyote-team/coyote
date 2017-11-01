@@ -1,0 +1,8 @@
+.row
+  - representation_group.each do |representation|
+    .col-md-4
+      = link_to([current_organization,representation.resource],class: 'thumbnail') do
+        = resource_link_target(representation.resource)
+
+      = simple_form_for [organization,representation], :method => :put, :html => { class: 'form-inline' } do |form|
+        = form.input :status, collection: Coyote::Representation.status_collection, input_html: { data: { representation_id: representation.id }, class: 'representation_status_select', style: 'width: auto' }, label: false, prompt: 'Status', required: false

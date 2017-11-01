@@ -1,0 +1,23 @@
+.row
+  .col-md-12
+    %h2#ready_to_review Representations Ready to Review
+
+- if organization.ready_to_review_representations.any?
+  = render partial: 'organizations/dashboard/ready_to_review_representation_group', :collection => organization.ready_to_review_representations.first(50).in_groups_of(3,false), :as => :representation_group
+  - content_for :javascript_footer do
+    :javascript
+      $('.representation_status_select').change(function(event) {
+        var representationId = $(event.target).data('representationId');
+
+        var data = {
+          representation: {
+            status: event.target.value
+          }
+        };
+
+        var url = '#{organization_representation_path(current_organization,'ID')}';
+        url = url.replace(/ID$/,representationId);
+        $.ajax({ type: 'PUT', url: url,data: data });
+      })
+- else
+  %p There are currently no representations in the 'Ready to Review' state for this orgnization

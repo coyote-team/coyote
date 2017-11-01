@@ -64,23 +64,16 @@
                 %td= link_to('Resources Unassigned',organization_resources_path(current_organization,q: { :scope => :unassigned }))
                 %td= number_to_human(dashboard.organization_unassigned_unrepresented_count)
 
-      = render partial: "issue_invitation" if policy(Invitation).new?
-    -#%h3 SCROLL TO
-    -#%ul.list-inline
-      -#- if organization_user.admin?
-        -#%li #{link_to('Unrepresented','#unrepresented')}
-        -#%li #{link_to('Ready to Review','#ready_to_review')}
-      -#%li #{link_to('Your Queues','#your_queues')}
+          %span{style: 'font-weight: bold'}
+            SCROLL TO
 
-    -#.row
-      -#.col-md-12
-        -#%h2#unrepresented Unrepresented Resources
-        -#= render partial: '
+          %ul.list-inline
+            - if organization_user.admin?
+              %li #{link_to('Unrepresented','#unrepresented')}
+              %li #{link_to('Ready to Review','#ready_to_review')}
+            %li #{link_to('Your Assignments','#your_queues')}
 
-    -#.row
-      -#.col-md-12
-        -#%h2#ready_to_review Ready to Review
-
-    -#.row
-      -#.col-md-12
-        -#%h2#ready_to_review Your Queues
+      = render partial: 'organizations/dashboard/unrepresented_resources' if organization_user.admin?
+      = render partial: 'organizations/dashboard/ready_to_review' if organization_user.admin?
+      = render partial: 'organizations/dashboard/your_queues'
+      = render partial: 'issue_invitation' if policy(Invitation).new?
