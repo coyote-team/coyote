@@ -48,7 +48,7 @@ class User < ApplicationRecord
 
   has_many :assignments, :inverse_of => :user, :dependent => :destroy
   has_many :assigned_resources, :class_name => :Resource, :through => :assignments, :source => :resource
-  has_many :representations, :dependent => :restrict_with_exception, :inverse_of => :author, :foreign_key => :author_id
+  has_many :authored_representations, :dependent => :restrict_with_exception, :inverse_of => :author, :foreign_key => :author_id, :class_name => :Representation
   has_many :organization_representations, :through => :organizations, :class_name => :Representation, :source => :representations
   has_many :resources, :through => :organizations
   has_many :resource_links, :through => :organizations

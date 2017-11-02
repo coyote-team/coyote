@@ -98,17 +98,17 @@ class Dashboard
 
   # @return [Integer] total number of representations written by the current user
   def current_user_representation_count
-    current_user.representations.size
+    current_user.authored_representations.size
   end
 
   # @return [Integer] total number of approved representations written by the current user
   def current_user_approved_representation_count
-    current_user.representations.approved.size
+    current_user.authored_representations.approved.size
   end
 
   # @return [Integer] total number of unapproved representations written by the current user
   def current_user_unapproved_representation_count
-    current_user.representations.not_approved.size
+    current_user.authored_representations.not_approved.size
   end
 
   # @return [Itnger] total number of resources assigned to the user which do not have a representation
