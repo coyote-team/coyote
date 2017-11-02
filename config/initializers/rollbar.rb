@@ -22,8 +22,8 @@ if ENV['ROLLBAR_ACCESS_TOKEN'].present?
     # via the rollbar interface.
     # Valid levels: 'critical', 'error', 'warning', 'info', 'debug', 'ignore'
     # 'ignore' will cause the exception to not be reported at all.
-    # config.exception_level_filters.merge!('MyCriticalException' => 'critical')
-    #
+    config.exception_level_filters.merge!('ActiveRecord::RecordNotFound' => 'ignore')
+    
     # You can also specify a callable, which will be called with the exception instance.
     # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
 
