@@ -6,7 +6,7 @@
           = title "Resource #{resource.label}"
   .row
     .col-md-4
-      = link_to([current_organization,resource],class: 'thumbnail') do
+      = link_to(resource,class: 'thumbnail') do
         = resource_link_target(resource,dom_id(resource),alt: resource.representations.first) # TODO: need to figure this out, in general: what to use for a 'default' description
 
     .col-md-6
@@ -48,7 +48,7 @@
                 Create Representation
           - if policy(resource).edit?
             %li
-              = link_to edit_organization_resource_path(current_organization,resource), title: "Edit this resource", class: 'btn btn-info' do
+              = link_to edit_resource_path(resource), title: "Edit this resource", class: 'btn btn-info' do
                 Edit
           - if policy(ResourceLink).new?
             %li

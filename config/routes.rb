@@ -2,8 +2,9 @@
 Rails.application.routes.draw do
   root to: "high_voltage/pages#show", id: "home"
 
+  resources :resources, only: %i[show edit update destroy]
   resources :organizations do
-    resources :resources
+    resources :resources, only: %i[index new create]
     resources :representations
     resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index edit update destroy]

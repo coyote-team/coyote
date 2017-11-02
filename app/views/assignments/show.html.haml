@@ -10,7 +10,7 @@
             %th{scope: "row"}
               Resource
             %td
-              = link_to([current_organization,assignment.resource],class: 'thumbnail') do
+              = link_to(assignment.resource,class: 'thumbnail') do
                 = resource_link_target(assignment.resource)
           %tr
             %th{scope: "row"}

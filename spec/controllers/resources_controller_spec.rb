@@ -122,7 +122,7 @@ RSpec.describe ResourcesController do
 
       expect {
         patch :update, params: update_resource_params
-        expect(response).to redirect_to([organization,resource])
+        expect(response).to redirect_to(resource)
         resource.reload
       }.to change(resource,:title).to("NEWTITLE")
 

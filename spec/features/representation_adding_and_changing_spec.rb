@@ -9,7 +9,7 @@ RSpec.feature 'Representation adding and changing' do
   let!(:license) { create(:license) }
 
   scenario 'succeeds' do
-    visit organization_resource_url(user_organization,resource)
+    visit resource_url(resource)
 
     click_first_link('Create Representation')
     expect(page.current_path).to eq(new_organization_representation_path(user_organization))

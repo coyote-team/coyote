@@ -4,7 +4,7 @@
       <input id="representation_status_change_representation_id_#{representation.id}" class='representation_ids' name="representation_status_change[representation_ids][]" type="checkbox" value="#{representation.id}" aria-label="Select representation '#{representation.id}' for bulk update" />
     
   %td{rowspan: 2}
-    = link_to([current_organization,representation.resource],class: 'thumbnail') do
+    = link_to(representation.resource,class: 'thumbnail') do
       = resource_link_target(representation.resource,dom_id(representation),alt: representation.text)
   %td
     = representation.status.humanize

@@ -14,7 +14,7 @@
                 %td= predicate_for(resource_link)
               %tr
                 %th{scope: "row"} Subject
-                %td= link_to(resource_link.subject_resource_label,[resource_link.subject_resource_organization,resource_link.subject_resource])
+                %td= link_to(resource_link.subject_resource_label,resource_link.subject_resource)
               %tr
                 %th{scope: "row"} Verb
                 %td
@@ -23,7 +23,7 @@
                     %dd= Coyote::ResourceLink::VERBS.fetch(resource_link.verb.to_sym).description
               %tr
                 %th{scope: "row"} Object
-                %td= link_to(resource_link.object_resource_label,[resource_link.object_resource_organization,resource_link.object_resource])
+                %td= link_to(resource_link.object_resource_label,resource_link.object_resource)
 
               %tr
                 %th{scope: "row"} Updated

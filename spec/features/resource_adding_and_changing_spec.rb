@@ -27,7 +27,7 @@ RSpec.feature "Resource adding and changing" do
 
     resource = Resource.find_by!(identifier: resource_attributes[:identifier])
 
-    expect(page.current_path).to eq(organization_resource_path(user_organization,resource))
+    expect(page.current_path).to eq(resource_path(resource))
     expect(page).to have_content(resource.title)
   end
 end

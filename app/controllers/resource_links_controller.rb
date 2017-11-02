@@ -56,7 +56,7 @@ class ResourceLinksController < ApplicationController
 
   def destroy
     resource_link.destroy
-    redirect_to [resource_link.subject_resource_organization,resource_link.subject_resource], notice: 'Resource Link was successfully deleted.'
+    redirect_to resource_link.subject_resource, notice: 'Resource Link was successfully deleted.'
   end
 
   private

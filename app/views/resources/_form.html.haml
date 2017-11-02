@@ -1,4 +1,4 @@
-= simple_form_for [current_organization,resource], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+= simple_form_for target, validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
   = f.error_notification
 
   .form-inputs
@@ -16,7 +16,7 @@
       - if resource.persisted?
         %br
         %br
-        = link_to [current_organization,resource], class: 'btn btn-info' do
+        = link_to resource, class: 'btn btn-info' do
           View this resource
       %br
       %br

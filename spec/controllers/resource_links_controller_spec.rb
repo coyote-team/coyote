@@ -132,7 +132,7 @@ RSpec.describe ResourceLinksController do
       
       expect {
         delete :destroy, params: resource_link_params
-        expect(response).to redirect_to([organization,subject_resource])
+        expect(response).to redirect_to(subject_resource)
       }.to change { ResourceLink.exists?(resource_link.id) }.
         from(true).to(false)
     end

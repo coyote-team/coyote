@@ -5,7 +5,7 @@ RSpec.feature 'Linking and unlinking resources' do
   let!(:object_resource)  { create(:resource,title: 'Picture of Chrysler Building',organization: user_organization) }
 
   scenario 'succeeds' do
-    visit organization_resource_path(user_organization,subject_resource)
+    visit resource_path(subject_resource)
 
     click_first_link('Create Link to Another Resource')
 
@@ -44,6 +44,6 @@ RSpec.feature 'Linking and unlinking resources' do
       ResourceLink.exists?(resource_link.id)
     }.from(true).to(false)
 
-    expect(page.current_path).to eq(organization_resource_path(user_organization,subject_resource))
+    expect(page.current_path).to eq(resource_path(subject_resource))
   end
 end

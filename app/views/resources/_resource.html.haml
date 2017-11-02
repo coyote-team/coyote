@@ -4,14 +4,14 @@
       <input id="assignment_resource_ids_#{resource.id}" class='assignment_resource_ids' name="assignment[resource_ids][]" type="checkbox" value="#{resource.id}" aria-label="Select resource '#{resource.identifier}' for bulk assignment" />
 
   %td
-    = link_to([current_organization,resource],class: 'thumbnail') do
+    = link_to(resource,class: 'thumbnail') do
       = resource_link_target(resource,'#')
   
-  %td= link_to(resource.title,[current_organization,resource])
+  %td= link_to(resource.title,resource)
   %td= resource.representations_count
   %td.text-right
     - if policy(resource).index?
-      = link_to 'View', [current_organization,resource], class: 'btn btn-show', title: 'Show this resource'
+      = link_to('View',resource,class: 'btn btn-show',title: 'Show this resource')
       %nbsp
     - if policy(resource).edit?
-      = link_to 'Edit', edit_organization_resource_path(current_organization,resource), class: 'btn btn-edit', title: 'Edit this resource'
+      = link_to('Edit',edit_resource_path(resource),class: 'btn btn-edit',title: 'Edit this resource')

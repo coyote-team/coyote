@@ -3,4 +3,4 @@
     .entity-inner
       %header
         %h1#page-title{tabindex: -1}= title "New Resource"
-      = render partial: 'form'
+      = render partial: 'form', locals: { target: [current_organization,resource] }

@@ -28,7 +28,7 @@ class ResourcesController < ApplicationController
 
     if resource.save
       logger.info "Created #{resource}"
-      redirect_to [current_organization,resource], notice: 'The resource has been created'
+      redirect_to resource, notice: 'The resource has been created'
     else
       logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
       render :new
@@ -38,7 +38,7 @@ class ResourcesController < ApplicationController
   def update
     if resource.update(resource_params)
       logger.info "Updated #{resource}"
-      redirect_to [current_organization,resource], notice: 'The resource has been updated'
+      redirect_to resource, notice: 'The resource has been updated'
     else
       logger.warn "Unable to update resource due to '#{resource.error_sentence}'"
       render :edit
@@ -53,6 +53,7 @@ class ResourcesController < ApplicationController
   private
 
   attr_accessor :resource
+  attr_writer :current_organization
 
   def record_filter
     @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources)
@@ -63,7 +64,12 @@ class ResourcesController < ApplicationController
   end
 
   def set_resource
-    self.resource = current_organization.resources.find(params[:id])
+    self.resource = current_user.resources.find(params[:id])
+    self.current_organization = resource.organization
+  end
+
+  def current_organization?
+    true
   end
 
   def authorize_general_access
