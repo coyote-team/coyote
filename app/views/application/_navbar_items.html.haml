@@ -1,6 +1,5 @@
 = nav_menu_link('Dashboard',       organization_path(current_organization))
 = nav_menu_link('Assignments',     organization_assignments_path(current_organization))     if policy(Assignment).index?
-= nav_menu_link('Assignments',     organization_assignments_path(current_organization))     if policy(Assignment).index?
 = nav_menu_link('Resources',       organization_resources_path(current_organization))       if policy(Resource).index?
 = nav_menu_link('Representations', organization_representations_path(current_organization)) if policy(Representation).index?
 = nav_menu_link('Members',         organization_memberships_path(current_organization))     if policy(Membership).index?
