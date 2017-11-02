@@ -30,7 +30,7 @@ class RepresentationsController < ApplicationController
 
     if representation.save
       logger.info "Created #{representation}"
-      redirect_to [current_organization,representation], notice: 'The representation has been created'
+      redirect_to representation, notice: 'The representation has been created'
     else
       logger.warn "Unable to create representation due to '#{representation.error_sentence}'"
       render :new
@@ -40,7 +40,7 @@ class RepresentationsController < ApplicationController
   def update
     if representation.update(representation_params)
       logger.info "Updated #{representation}"
-      redirect_to [current_organization,representation], notice: 'The representation has been updated'
+      redirect_to representation, notice: 'The representation has been updated'
     else
       logger.warn "Unable to update representation due to '#{representation.error_sentence}'"
       render :edit
@@ -55,6 +55,7 @@ class RepresentationsController < ApplicationController
   private
 
   attr_accessor :representation, :current_resource
+  attr_writer :current_organization
 
   def record_filter
     @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.representations)
@@ -65,12 +66,18 @@ class RepresentationsController < ApplicationController
   end
 
   def set_representation
-    self.representation = current_organization.representations.find(params[:id])
+    self.representation = current_user.representations.find(params[:id])
+    self.current_organization = representation.organization
   end
 
   def set_current_resource
     resource_id = params.require(:resource_id)
     self.current_resource = current_organization.resources.find(resource_id)
+    self.current_organization = current_resource.organization
+  end
+
+  def current_organization?
+    true
   end
 
   def available_meta

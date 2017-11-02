@@ -1,7 +1,7 @@
 .row
   - resource_group.each do |resource|
     .col-md-4
-      = link_to([current_organization,resource],class: 'thumbnail') do
+      = link_to(resource,class: 'thumbnail') do
         = resource_link_target(resource)
 
       = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |form|

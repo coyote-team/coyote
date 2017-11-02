@@ -15,7 +15,7 @@
           }
         };
 
-        var url = '#{organization_representation_path(current_organization,'ID')}';
+        var url = '#{representation_path('ID')}';
         url = url.replace(/ID$/,representationId);
         $.ajax({ type: 'PUT', url: url,data: data });
       })

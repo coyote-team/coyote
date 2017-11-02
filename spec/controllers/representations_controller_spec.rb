@@ -147,7 +147,7 @@ RSpec.describe RepresentationsController do
       }.to change(representation,:text).
         to('NEWTEXT')
 
-      expect(response).to redirect_to(organization_representation_url(organization,representation))
+      expect(response).to redirect_to(representation_url(representation))
 
       patch :update, params: representation_params.merge(representation: { license_id: nil })
       expect(response).not_to be_redirect

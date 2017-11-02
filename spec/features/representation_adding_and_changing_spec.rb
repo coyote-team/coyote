@@ -25,17 +25,17 @@ RSpec.feature 'Representation adding and changing' do
       from(0).to(1)
 
     representation = resource.representations.first
-    expect(page.current_path).to eq(organization_representation_path(user_organization,representation))
+    expect(page.current_path).to eq(representation_path(representation))
     expect(page).to have_content(representation.text)
 
     click_first_link 'Edit'
-    expect(page.current_path).to eq(edit_organization_representation_path(user_organization,representation))
+    expect(page.current_path).to eq(edit_representation_path(representation))
 
     fill_in 'Text', with: 'XYZ123'
 
     expect {
       click_button('Save')
-      expect(page.current_path).to eq(organization_representation_path(user_organization,representation))
+      expect(page.current_path).to eq(representation_path(representation))
       representation.reload
     }.to change(representation,:text).
       to('XYZ123')

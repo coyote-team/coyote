@@ -50,12 +50,8 @@
             %ul.list-inline
               - if policy(representation).edit?
                 %li
-                  = link_to edit_organization_representation_path(current_organization,representation), title: "Edit this representation", class: 'btn' do
+                  = link_to edit_representation_path(representation), title: "Edit this representation", class: 'btn' do
                     Edit
-              - if policy(Representation).new?
-                %li
-                  = link_to new_organization_representation_path(current_organization,representation_id: representation.id), title: 'Create new representation for this representation', class: 'btn btn-primary' do
-                    Create Representation
               %br
               %br
             %ul.list-inline

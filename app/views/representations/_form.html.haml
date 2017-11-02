@@ -1,4 +1,4 @@
-= simple_form_for [current_organization,representation], validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
+= simple_form_for target, validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
   = f.error_notification
 
   .form-inputs
@@ -19,7 +19,7 @@
       - if representation.persisted?
         %br
         %br
-        = link_to [current_organization,representation], class: 'btn btn-info' do
+        = link_to representation, class: 'btn btn-info' do
           View this representation
       %br
       %br
