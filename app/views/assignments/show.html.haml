@@ -23,12 +23,3 @@
           %li
             = link_to organization_assignments_path(current_organization), class: 'btn btn-info', title: "View the assignments index" do
               Assignments
-
-          %li
-            = link_to edit_organization_assignment_path(current_organization,assignment), title: "Edit this assignment", class: 'btn btn-primary' do
-              Edit
-
-          - if next_resource
-            %li
-              = link_to new_organization_assignment_path(current_organization,resource_id: next_resource.id) do
-                Assign next resource to a user

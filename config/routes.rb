@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :representations
     resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index edit update destroy]
-    resources :assignments
+    resources :assignments, only: %i[index show new create destroy]
     resources :contexts 
     resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]

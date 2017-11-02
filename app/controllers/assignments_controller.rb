@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment,           only: %i[show edit update destroy]
+  before_action :set_assignment,           only: %i[show destroy]
   before_action :authorize_general_access, only: %i[new index create]
-  before_action :authorize_unit_access,    only: %i[show edit update destroy]
+  before_action :authorize_unit_access,    only: %i[show destroy]
 
   helper_method :assignment, :assignments, :next_resource, :users, :resources
 
@@ -18,10 +18,6 @@ class AssignmentsController < ApplicationController
     self.assignment = current_organization.assignments.new
   end
 
-  # GET /assignments/1/edit
-  def edit
-  end
-
   # POST /assignments
   def create
     resource_ids = assignment_params.values_at(:resource_ids,:resource_id).tap(&:compact!)
@@ -35,18 +31,6 @@ class AssignmentsController < ApplicationController
     flash[:notice] = "Created #{assignments.count} #{'assignment'.pluralize(assignments.count)}"
 
     redirect_back fallback_location: [current_organization]
-  end
-
-  # PATCH/PUT /assignments/1
-  def update
-    assignment.user = assigned_user
-
-    if assignment.save
-      redirect_to [current_organization,assignment], notice: 'Assignment was successfully updated.'
-    else
-      logger.warn "Unable to update #{assignment}: '#{assignment.error_sentence}'"
-      render :edit
-    end
   end
 
   # DELETE /assignments/1

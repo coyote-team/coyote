@@ -36,10 +36,6 @@ RSpec.describe AssignmentsController do
     base_params.merge(assignment: { user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id] })
   end
 
-  let(:update_assignment_params) do
-    assignment_params.merge(assignment: { resource_id: resource.id, user_id: new_assignment_user.id })
-  end
-
   context "as a signed-out user" do
     include_context "signed-out user"
 
@@ -52,9 +48,6 @@ RSpec.describe AssignmentsController do
         expect(response).to redirect_to(new_user_session_url)
 
         post :create, params: base_params.merge(assignment: {})
-        expect(response).to redirect_to(new_user_session_url)
-
-        patch :update, params: base_params.merge(id: 1)
         expect(response).to redirect_to(new_user_session_url)
 
         delete :destroy, params: base_params.merge(id: 1)
@@ -73,10 +66,6 @@ RSpec.describe AssignmentsController do
 
       expect {
         get :show, params: assignment_params
-      }.to raise_error(Pundit::NotAuthorizedError)
-
-      expect {
-        patch :update, params: update_assignment_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
       expect {
@@ -100,14 +89,7 @@ RSpec.describe AssignmentsController do
       expect(response).to be_success
     end
 
-    it 'can create, update, and destroy assignments' do
-      expect {
-        patch :update, params: update_assignment_params
-        expect(response).to be_redirect
-        assignment.reload
-      }.to change(assignment,:user).
-        to(new_assignment_user)
-        
+    it 'can create and destroy assignments' do
       expect {
         delete :destroy, params: assignment_params
         expect(response).to be_redirect
