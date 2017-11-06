@@ -56,7 +56,7 @@ class ResourcesController < ApplicationController
   attr_writer :current_organization
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources)
+    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources.by_priority)
   end
 
   def filter_params

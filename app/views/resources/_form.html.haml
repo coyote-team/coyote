@@ -2,7 +2,8 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :title
+    = f.input :title, label: 'Caption'
+    = f.input :priority_flag, :as => :select, label: 'Priority', required: true if organization_user.admin?
     = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names
     = f.input :canonical_id, required: true, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
     = f.input :identifier, hint: 'This should be a unique string that does not change - used to identify the resource within Coyote. If blank, we will attempt to set one for you based on the title field.'

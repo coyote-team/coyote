@@ -14,9 +14,9 @@ RSpec.feature "Resource adding and changing" do
 
     select(context.title,from: "Context",:match => :first)
 
-    fill_in "Identifier",    with: resource_attributes[:identifier]
-    fill_in "Title",         with: resource_attributes[:title]
-    fill_in "Canonical ID",  with: resource_attributes[:canonical_id]
+    fill_in "Identifier",   with: resource_attributes[:identifier]
+    fill_in "Caption",      with: resource_attributes[:title]
+    fill_in "Canonical ID", with: resource_attributes[:canonical_id]
 
     select(resource_attributes[:resource_type],from: 'Type')
 

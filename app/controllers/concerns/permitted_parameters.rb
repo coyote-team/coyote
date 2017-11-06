@@ -8,6 +8,6 @@ module PermittedParameters
   end
 
   def resource_params
-    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id)
+    params.require(:resource).permit(:identifier,:title,:resource_type,:canonical_id,:source_uri,:context_id,:priority_flag)
   end
 end

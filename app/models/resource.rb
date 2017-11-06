@@ -13,6 +13,7 @@
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  representations_count :integer          default(0), not null
+#  priority_flag         :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -20,6 +21,7 @@
 #  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
+#  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
 #
 
@@ -45,6 +47,7 @@ class Resource < ApplicationRecord
   scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
+  scope :by_priority,              -> { order('priority_flag DESC') }
   
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true

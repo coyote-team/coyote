@@ -523,7 +523,8 @@ CREATE TABLE resources (
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    representations_count integer DEFAULT 0 NOT NULL
+    representations_count integer DEFAULT 0 NOT NULL,
+    priority_flag boolean DEFAULT false NOT NULL
 );
 
 
@@ -1186,6 +1187,13 @@ CREATE UNIQUE INDEX index_resources_on_organization_id_and_canonical_id ON resou
 
 
 --
+-- Name: index_resources_on_priority_flag; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_priority_flag ON resources USING btree (priority_flag DESC);
+
+
+--
 -- Name: index_resources_on_representations_count; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1515,6 +1523,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171016133717'),
 ('20171017125333'),
 ('20171017201950'),
-('20171017203300');
+('20171017203300'),
+('20171106164149');
 
 
