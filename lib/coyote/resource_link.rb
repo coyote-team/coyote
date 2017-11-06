@@ -13,17 +13,20 @@ module Coyote
     # @see VERBS
     # @see http://dublincore.org/documents/dcmi-terms/
     VERB_PAIRS = [
-      [Verb.new(:hasPart,      'a related resource that is included either physically or logically in the described resource.'),
-       Verb.new(:isPartOf,     'a related resource in which the described resource is physically or logically included.')],
+      [Verb.new(:hasPart,        'a related resource that is included either physically or logically in the described resource.'),
+       Verb.new(:isPartOf,       'a related resource in which the described resource is physically or logically included.')],
 
-      [Verb.new(:hasVersion,   'a related resource that is a version, edition, or adaptation of the described resource.'),
-       Verb.new(:isVersionOf,  'a related resource of which the described resource is a version, edition, or adaptation.')],
+      [Verb.new(:hasVersion,     'a related resource that is a version, edition, or adaptation of the described resource.'),
+       Verb.new(:isVersionOf,    'a related resource of which the described resource is a version, edition, or adaptation.')],
 
-      [Verb.new(:hasFormat,     'a related resource that is substantially the same as the pre-existing described resource, but in another format.'),
-       Verb.new(:isFormatOf,    'a related resource that is substantially the same as the described resource, but in another format.')],
+      [Verb.new(:hasFormat,       'a related resource that is substantially the same as the pre-existing described resource, but in another format.'),
+       Verb.new(:isFormatOf,      'a related resource that is substantially the same as the described resource, but in another format.')],
 
-      [Verb.new(:references,    'a related resource that is referenced, cited, or otherwise pointed to by the described resource.'),
-       Verb.new(:isReferenceBy, 'a related resource that references, cites, or otherwise points to the described resource.')]
+      [Verb.new(:references,      'a related resource that is referenced, cited, or otherwise pointed to by the described resource.'),
+       Verb.new(:isReferenceBy,   'a related resource that references, cites, or otherwise points to the described resource.')],
+
+      [Verb.new(:hasSameIdentity,  'a related resource that is identical to the described resource.'),
+       Verb.new(:isIdenticalTo,    'a related resource that is identical to the described resource.')]
     ].freeze
 
     # Lookup table for verbs
