@@ -14,11 +14,11 @@
         %caption.sr-only Key value pairs for this resource
         %tbody
           %tr
-            %th{scope: "row"} Identifier
-            %td= resource.identifier
-          %tr
-            %th{scope: "row"} Title
+            %th{scope: "row"} Caption
             %td= resource.title
+          %tr
+            %th{scope: "row"} Coyote ID
+            %td= resource.id
           %tr
             %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/#section-7',target: :_blank)
             %td= resource.resource_type
@@ -31,6 +31,9 @@
           %tr
             %th{scope: "row"} Context
             %td= link_to(resource.context,[current_organization,resource.context])
+          %tr
+            %th{scope: "row"} Identifier (Slug)
+            %td= resource.identifier
           %tr
             %th{scope: "row"} Updated
             %td
