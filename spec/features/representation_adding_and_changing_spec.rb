@@ -11,7 +11,7 @@ RSpec.feature 'Representation adding and changing' do
   scenario 'succeeds' do
     visit resource_url(resource)
 
-    click_first_link('Create Representation')
+    click_first_link('Create Description')
     expect(page.current_path).to eq(new_organization_representation_path(user_organization))
 
     new_text = attributes_for(:representation).fetch(:text)
@@ -40,7 +40,7 @@ RSpec.feature 'Representation adding and changing' do
     }.to change(representation,:text).
       to('XYZ123')
 
-    click_first_link 'Representations'
+    click_first_link 'Descriptions'
     expect(page.current_path).to eq(organization_representations_path(user_organization))
 
     expect(page).to have_content(resource.title)

@@ -15,7 +15,7 @@
             %tr
               %td 
                 = number_with_delimiter(dashboard.organization_representation_count)
-                Total #{link_to('Representations',organization_representations_path(current_organization))}
+                Total #{link_to('Descriptions',organization_representations_path(current_organization))}
             %tr
               %td 
                 = number_with_delimiter(dashboard.organization_represented_resource_count)
@@ -38,24 +38,24 @@
             %tr
               %td 
                 = number_with_delimiter(dashboard.current_user_approved_representation_count)
-                = link_to('Approved Representations',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
+                = link_to('Approved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
             %tr
               %td 
                 = number_with_delimiter(dashboard.current_user_unapproved_representation_count)
-                = link_to('Unapproved Representations',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
+                = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
 
         .col-md-6
           - if organization_user.admin?
             %h2 Queues
             %table.table
               %tr
-                %td= link_to('Representations Pending Approval',organization_representations_path(current_organization,q: { :scope => :ready_to_review }))
+                %td= link_to('Descriptions Pending Approval',organization_representations_path(current_organization,q: { :scope => :ready_to_review }))
                 %td= number_with_delimiter(dashboard.organization_ready_to_review_count)
               %tr
-                %td= link_to('Representations Approved',organization_representations_path(current_organization,q: { :scope => :approved }))
+                %td= link_to('Descriptions Approved',organization_representations_path(current_organization,q: { :scope => :approved }))
                 %td= number_with_delimiter(dashboard.organization_approved_representation_count)
               %tr
-                %td= link_to('Unapproved Representations',organization_representations_path(current_organization,q: { :scope => :not_approved }))
+                %td= link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :scope => :not_approved }))
                 %td= number_with_delimiter(dashboard.organization_unapproved_representation_count)
               %tr
                 %td= link_to('Resources with Open Assignments',organization_resources_path(current_organization,q: { :scope => :unassigned_unrepresented }))
