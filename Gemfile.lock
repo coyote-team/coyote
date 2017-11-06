@@ -350,7 +350,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.1.0)
+    rake (12.2.1)
     ransack (1.8.3)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -561,4 +561,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
