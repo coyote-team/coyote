@@ -68,8 +68,16 @@
   .row
     .col-md-12
       %h2 Descriptions
-      = render partial: 'representations', object: resource.representations
+      - if resource.representations.any?
+        = render partial: 'representations', object: resource.representations
+      - else
+        %p No descriptions have been written for this resource.
+
   .row
     .col-md-12
       %h2 Related Resources
-      = render partial: 'related_resources', object: resource.related_resources
+      - if resource.related_resources.any?
+        = render partial: 'related_resources', object: resource.related_resources
+      - else
+        %p No other resources have been linked to this resource.
+

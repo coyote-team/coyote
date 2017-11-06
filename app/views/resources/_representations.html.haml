@@ -1,7 +1,6 @@
-- if representations.any?
-  %table.table
-    - representations.each do |representation|
-      %tr
-        %th #{link_to "Description ##{representation.id}",[current_organization,representation]} (#{representation.status})
-      %tr
-        %td #{representation.text}
+%table.table
+  - representations.each do |representation|
+    %tr
+      %th #{link_to("Description ##{representation.id}",representation)} (#{representation.status})
+    %tr
+      %td #{representation.text}
