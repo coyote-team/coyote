@@ -82,7 +82,7 @@ bin/setup
 bin/rails server && open http://localhost:3000
 ```
 
-The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `user@example.com`.
+The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `admin@example.com`.
 
 We have setup a `Guardfile` to speed up development. Try `bundle exec guard`.
 
@@ -95,6 +95,10 @@ gem install mailcatcher     # runs independently of the app, so this gem is not 
 mailcatcher -f              # much better to run this in foreground vs. the default daemon mode
 open http://127.0.0.1:1080/ # mail delivery console
 ```
+
+_Re-seeding the Database_
+
+You can regenerate development environment data by running `bundle exec rake dev_only:reseed`.
 
 ## <a name="documentation"></a>Documentation
 
