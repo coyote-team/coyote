@@ -1,5 +1,17 @@
 
 Rails.application.routes.draw do
+  constraints Coyote::AsApiRequest.new('v1') do
+    scope :module => :api, :as => :api do
+      scope 'organizations/:organization_id' do
+        resources :resources, only: %i[index create]
+        resources :representations, only: %i[index create]
+      end
+
+      resources :resources, only: %i[show update destroy]
+      resources :representations, only: %i[show update destroy]
+    end
+  end
+
   root to: "high_voltage/pages#show", id: "home"
 
   resources :resources, only: %i[show edit update destroy]
@@ -27,15 +39,6 @@ Rails.application.routes.draw do
 
   resource :registration, only: %i[new update]
   resources :users, only: %i[show] # for viewing other user profiles
-
-  constraints Coyote::AsApiRequest.new('v1') do
-    scope :module => :api, :as => :api do
-      scope 'organizations/:organization_id' do
-        resources :resources, only: %i[index show create update]
-        resources :representations, only: %i[index show create update]
-      end
-    end
-  end
 
   namespace :staff do
     resources :users, except: %i[new create]

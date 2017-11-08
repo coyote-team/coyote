@@ -29,8 +29,6 @@ module Api
         links[rel] = link
       end
 
-      apply_link_headers(links)
-
       render({
         jsonapi: representations.to_a,
         include: %i[resource],
@@ -43,8 +41,6 @@ module Api
       representation = current_user.organization_representations.find(params[:id])
 
       links = { self: request.url }
-
-      apply_link_headers(links)
 
       render({
         jsonapi: representation,

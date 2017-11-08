@@ -48,6 +48,6 @@ class RecordFilter
   attr_reader :filter_params, :pagination_params, :base_scope
 
   def record_paginator
-    @record_paginator ||= RecordPaginator.new(filter_params,search.result(distinct: true))
+    @record_paginator ||= RecordPaginator.new(pagination_params,search.result(distinct: true))
   end
 end

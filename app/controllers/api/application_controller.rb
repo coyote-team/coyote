@@ -25,7 +25,7 @@ class Api::ApplicationController < ActionController::API
   end
 
   def current_organization
-    current_user.organizations.find(params[:organization_id])
+    @current_organization ||= current_user.organizations.find(params[:organization_id])
   end
 
   def organization_user
@@ -41,12 +41,8 @@ class Api::ApplicationController < ActionController::API
     }], :status => :unauthorized
   end
 
-  def apply_link_headers(links)
-    link_headers = links.inject([]) do |result,(rel,href)|
-      result << %(<#{href}>; rel="#{rel}")
-    end
-
-    headers['Link'] = link_headers.join(', ')
+  def pagination_params
+    params.fetch(:page,{}).permit(:number,:size)
   end
 end
 

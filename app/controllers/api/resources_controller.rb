@@ -1,6 +1,8 @@
 module Api
   # Handles calls to /api/v1/resources/
   class ResourcesController < Api::ApplicationController
+    include PermittedParameters
+
     before_action :find_resource,            only: %i[show update destroy]
     before_action :authorize_general_access, only: %i[index create]
     before_action :authorize_unit_access,    only: %i[show update destroy]
@@ -31,12 +33,12 @@ module Api
     def index
       links = { self: request.url }
 
-      pagination_link_params(resources).each do |rel,link_params|
-        link = api_resources_url(page: link_params)
+      resources = record_filter.records
+
+      record_filter.pagination_link_params.each do |rel,link_params|
+        link = api_resources_url(link_params)
         links[rel] = link
       end
-
-      apply_link_headers(links)
 
       render({
         jsonapi: resources.to_a,
@@ -56,13 +58,10 @@ module Api
     api :POST, 'resources', 'Create a new resource'
     param_group :resource
     def create
-      organization_id = resource_params.delete(:organization_id)
       context_id = resource_params.delete(:context_id)
-
-      organization = current_user.organizations.find(organization_id)
       context = current_user.contexts.find(context_id)
 
-      resource = organization.resources.new(resource_params)
+      resource = current_organization.resources.new(resource_params)
       resource.context = context
 
       if resource.save
@@ -77,9 +76,31 @@ module Api
     private
 
     attr_accessor :resource
+    attr_writer :current_organization
 
     def find_resource
       self.resource = current_user.resources.find_by!(identifier: params[:id])
+      self.current_organization = resource.organization
+    end
+
+    def authorize_general_access
+      authorize(Resource)
+    end
+
+    def authorize_unit_access
+      authorize(resource)
+    end
+
+    def record_filter
+      @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_user.resources)
+    end
+
+    def filter_params
+      params.fetch(:filter,{}).permit(:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
+    end
+
+    def pagination_params
+      {}
     end
   end
 end
