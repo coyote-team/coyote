@@ -29,16 +29,12 @@ module Api
       end
     end
 
-    def_param_group :resource_filter do
-      param :filter, Hash do
-        param :identifier_or_title_or_representations_text_cont_all, String, 'Search Resource identifier, title, or associated Representation text for this value'
-        param :scope, Resource.ransackable_scopes, 'Limit search to Resources in these states'
-      end
-    end
-
     api :GET, 'resources', 'Return a list of resources available to the authenticated user'
     param_group :pagination, Api::ApplicationController
-    param_group :resource_filter
+    param :filter, Hash do
+      param :identifier_or_title_or_representations_text_cont_all, String, 'Search Resource identifier, title, or associated Representation text for this value'
+      param :scope, Resource.ransackable_scopes, 'Limit search to Resources in these states'
+    end
     def index
       links = { self: request.url }
 
