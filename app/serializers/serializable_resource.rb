@@ -15,13 +15,5 @@ class SerializableResource < JSONAPI::Serializable::Resource
     data do
       @object.approved_representations
     end
-
-    link :related do
-      #@url_helpers.api_resource_representations_url(@object.id)
-    end
-  end
-
-  link :self do
-    #@url_helpers.api_resource_url(@object.id)
   end
 end

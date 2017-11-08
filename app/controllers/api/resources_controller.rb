@@ -12,7 +12,8 @@ module Api
 
       desc <<~DESC
         We use the Dublin Core meaning for what a Resource represents: "...a resource is anything that has identity. Familiar examples include an electronic document, an image, 
-        a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all resources are network "retrievable"; e.g., human beings, corporations, and bound books in a library can also be considered resources."
+        a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all resources are network "retrievable"; e.g., human beings, 
+        corporations, and bound books in a library can also be considered resources."
       DESC
     end
 
@@ -28,8 +29,16 @@ module Api
       end
     end
 
+    def_param_group :resource_filter do
+      param :filter, Hash do
+        param :identifier_or_title_or_representations_text_cont_all, String, 'Search Resource identifier, title, or associated Representation text for this value'
+        param :scope, Resource.ransackable_scopes, 'Limit search to Resources in these states'
+      end
+    end
+
     api :GET, 'resources', 'Return a list of resources available to the authenticated user'
     param_group :pagination, Api::ApplicationController
+    param_group :resource_filter
     def index
       links = { self: request.url }
 
@@ -96,11 +105,7 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter,{}).permit(:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
-    end
-
-    def pagination_params
-      {}
+      params.fetch(:filter,{}).permit(:identifier_or_title_or_representations_text_cont_all,:scope)
     end
   end
 end

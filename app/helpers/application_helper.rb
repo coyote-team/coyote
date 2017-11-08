@@ -22,7 +22,7 @@ module ApplicationHelper
     @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
   end
 
-  # @param resource [Resource] the Resource that is being displayed
+  # @param target_resource [Resource] the Resource that is being displayed
   # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
   # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource

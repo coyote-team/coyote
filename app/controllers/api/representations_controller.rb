@@ -18,7 +18,6 @@ module Api
     end
 
     api :GET, 'resources/:resource_id/representations', 'Return list of representations for a particular resource ID'
-    param_group :pagination, Api::ApplicationController
     def index
       links = { self: request.url }
 

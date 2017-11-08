@@ -1,3 +1,7 @@
+# see https://github.com/lsegal/yard#generating-documentation
+YARD::Rake::YardocTask.new do |t|
+end
+
 namespace :coyote do
   def import_tsv(headers,line)
     line = line.encode(line.encoding,universal_newline: true) # see https://stackoverflow.com/questions/1836046/normalizing-line-endings-in-ruby
@@ -5,6 +9,9 @@ namespace :coyote do
     columns = line.split(/\t/)
     Hash[headers.zip(columns)]
   end
+
+  desc 'Generate docs from YARD and apipie'
+  task :docs => %i[apipie:static yard]
 
   namespace :db do
     desc "Import TSV files produced by mysqldump"
