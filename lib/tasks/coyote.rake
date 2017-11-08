@@ -1,3 +1,5 @@
+require 'yard'
+
 # see https://github.com/lsegal/yard#generating-documentation
 YARD::Rake::YardocTask.new do |t|
 end
