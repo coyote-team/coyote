@@ -5,7 +5,7 @@ Apipie.configure do |config|
   config.validate = :explicitly
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/api/**/*.rb"
   config.app_info = <<~EOT
-  Resource annotation site and API. Based on the [JSON API standard](http://jsonapi.org/).
+  Resource annotation site and API. Based on the {JSON API standard}[http://jsonapi.org/].
   EOT
 
   # see https://github.com/Apipie/apipie-rails/issues/549
