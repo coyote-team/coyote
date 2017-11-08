@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     scope :module => :api, :as => :api do
       scope 'organizations/:organization_id' do
         resources :resources, only: %i[index create]
+      end
+
+      scope 'resources/:resource_identifier' do
         resources :representations, only: %i[index create]
       end
 

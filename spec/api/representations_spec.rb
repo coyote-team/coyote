@@ -1,13 +1,17 @@
 RSpec.describe 'Representations' do
-  context 'with an authentication token' do
+  context 'with authentication' do
     include_context 'API author user'
 
     let!(:representation) do
       create(:representation,:approved,organization: user_organization)
     end
 
-    skip 'GET /resources/:resource_id/representations' do
-      get api_resource_representations_path(representation.resource_identifier), headers: auth_headers
+    let!(:unapproved_representation) do
+      create(:representation,:not_approved,organization: user_organization)
+    end
+
+    scenario 'GET /resources/:resource_id/representations' do
+      get api_representations_path(representation.resource_identifier), headers: auth_headers
       expect(response).to be_success
 
       json_data.fetch(:data).tap do |data|
@@ -22,17 +26,17 @@ RSpec.describe 'Representations' do
       end
 
       expected_link_paths = {
-        self:  api_resource_representations_path(representation.resource_identifier),
-        first: api_resource_representations_path(representation.resource_identifier,page: { number: 1 })
+        self:  URI.unescape(api_representations_path(representation.resource_identifier))
       }
 
       link_paths = jsonapi_link_paths(json_data)
-      
+
       expect(link_paths).to eq(expected_link_paths)
-      expect(link_header_paths(response)).to eq(expected_link_paths)
+
+      skip 'need to allow filtering by metum, etc.'
     end
 
-    skip 'GET /representations/:id' do
+    scenario 'GET /representations/:id' do
       get api_representation_path(representation.id), headers: auth_headers
       expect(response).to be_success
 
@@ -46,13 +50,25 @@ RSpec.describe 'Representations' do
     end
   end
 
-  skip 'without an authentication token' do
-    it 'returns an error' do
-      get api_representation_path(1)
+  context 'without authentication' do
+    include_context 'API access headers'
+
+    let!(:representation) do
+      create(:representation,:approved)
+    end
+
+    scenario 'returns an error' do
+      get api_representations_path(representation.resource), headers: api_headers
+
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
 
-      get api_representation_path(1)
+      get api_representation_path(1), headers: api_headers
+
+      expect(response).to be_unauthorized
+      expect(json_data).to have_key(:errors)
+
+      get api_representation_path(1), headers: api_headers
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
     end
