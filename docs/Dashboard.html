@@ -215,6 +215,31 @@ and User.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#current_user_open_assignments_count-instance_method" title="#current_user_open_assignments_count (instance method)">#<strong>current_user_open_assignments_count</strong>  &#x21d2; Itnger </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Total number of resources assigned to the user which do not have a
+representation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#current_user_queue_empty%3F-instance_method" title="#current_user_queue_empty? (instance method)">#<strong>current_user_queue_empty?</strong>  &#x21d2; Boolean </a>
     
 
@@ -719,6 +744,30 @@ representation.</p>
     <span class="summary_desc"><div class='inline'>
 <p>A subset of the most important resources assigned to the user for
 representation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#organization_unapproved_representation_count-instance_method" title="#organization_unapproved_representation_count (instance method)">#<strong>organization_unapproved_representation_count</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Total number of unapproved representations owned by the organization.</p>
 </div></span>
   
 </li>
@@ -1365,6 +1414,67 @@ user</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current_user_assigned_items_count'>current_user_assigned_items_count</span>
   <span class='id identifier rubyid_current_user_assigned_items_queue'>current_user_assigned_items_queue</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_user_open_assignments_count-instance_method">
+  
+    #<strong>current_user_open_assignments_count</strong>  &#x21d2; <tt>Itnger</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns total number of resources assigned to the user which do not have a
+representation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Itnger</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>total number of resources assigned to the user which do not have a
+representation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/presenters/dashboard.rb', line 115</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_user_open_assignments_count'>current_user_open_assignments_count</span>
+  <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_assigned_resources'>assigned_resources</span><span class='period'>.</span><span class='id identifier rubyid_unrepresented'>unrepresented</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2594,6 +2704,66 @@ representation</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="organization_unapproved_representation_count-instance_method">
+  
+    #<strong>organization_unapproved_representation_count</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns total number of unapproved representations owned by the
+organization</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>total number of unapproved representations owned by the organization</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/presenters/dashboard.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_organization_unapproved_representation_count'>organization_unapproved_representation_count</span>
+  <span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_representations'>representations</span><span class='period'>.</span><span class='id identifier rubyid_not_approved'>not_approved</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="organization_unassigned_count-instance_method">
   
     #<strong>organization_unassigned_count</strong>  &#x21d2; <tt>Integer</tt> 
@@ -3388,7 +3558,7 @@ user for description</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:06 2017 by
+  Generated on Wed Nov  8 14:38:21 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

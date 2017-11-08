@@ -98,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/representation.rb</dd>
+    <dd>app/models/representation.rb<span class="defines">,<br />
+  app/models/representation.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -106,31 +108,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h2 id="label-Schema+Information">Schema Information</h2>
-
-<p>Table name: representations</p>
-
-<pre class="code ruby"><code class="ruby">id           :integer          not null, primary key
-resource_id  :integer          not null
-text         :text
-content_uri  :string
-status       :enum             default(&quot;ready_to_review&quot;), not null
-metum_id     :integer          not null
-author_id    :integer          not null
-content_type :string           default(&quot;text/plain&quot;), not null
-language     :string           not null
-license_id   :integer          not null
-created_at   :datetime         not null
-updated_at   :datetime         not null</code></pre>
-
-<p>Indexes</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_index_representations_on_author_id'>index_representations_on_author_id</span>    <span class='lparen'>(</span><span class='id identifier rubyid_author_id'>author_id</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_index_representations_on_license_id'>index_representations_on_license_id</span>   <span class='lparen'>(</span><span class='id identifier rubyid_license_id'>license_id</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_index_representations_on_metum_id'>index_representations_on_metum_id</span>     <span class='lparen'>(</span><span class='id identifier rubyid_metum_id'>metum_id</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_index_representations_on_resource_id'>index_representations_on_resource_id</span>  <span class='lparen'>(</span><span class='id identifier rubyid_resource_id'>resource_id</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_index_representations_on_status'>index_representations_on_status</span>       <span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
-</code></pre>
+<p>An alternate sensory impression of a Resource</p>
 
 
   </div>
@@ -145,6 +123,39 @@ updated_at   :datetime         not null</code></pre>
 
 
 
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ransackable_scopes-class_method" title="ransackable_scopes (class method)">.<strong>ransackable_scopes</strong>(_ = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
 
   
   
@@ -153,11 +164,63 @@ updated_at   :datetime         not null</code></pre>
   
   
   
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="ransackable_scopes-class_method">
+  
+    .<strong>ransackable_scopes</strong>(_ = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/activerecord-hackery/ransack#using-scopesclass-methods" target="_parent" title="https://github.com/activerecord-hackery/ransack#using-scopesclass-methods">https://github.com/activerecord-hackery/ransack#using-scopesclass-methods</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/representation.rb', line 51</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ransackable_scopes'>ransackable_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>approved</span><span class='words_sep'> </span><span class='tstring_content'>not_approved</span><span class='words_sep'> </span><span class='tstring_content'>ready_to_review</span><span class='words_sep'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Wed Oct 11 15:20:57 2017 by
+  Generated on Wed Nov  8 14:38:21 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

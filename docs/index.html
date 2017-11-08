@@ -142,7 +142,7 @@ bin/setup
 bin/rails server &amp;&amp; open http://localhost:3000
 </code></pre>
 
-<p>The <a href="https://github.com/coyote-team/coyote/blob/master/db/seeds.rb">seed script</a> builds a simple user, so you can login as <code>user@example.com</code>.</p>
+<p>The <a href="https://github.com/coyote-team/coyote/blob/master/db/seeds.rb">seed script</a> builds a simple user, so you can login as <code>admin@example.com</code>.</p>
 
 <p>We have setup a <code>Guardfile</code> to speed up development. Try <code>bundle exec guard</code>.</p>
 
@@ -155,9 +155,15 @@ mailcatcher -f              # much better to run this in foreground vs. the defa
 open http://127.0.0.1:1080/ # mail delivery console
 </code></pre>
 
+<p><em>Re-seeding the Database</em></p>
+
+<p>You can regenerate development environment data by running <code>bundle exec rake dev_only:reseed</code>.</p>
+
 <h2><a name="documentation"></a>Documentation</h2>
 
 <p>YARD documentation is hosted at <a href="https://coyote-team.github.io/coyote/">coyote-team.github.io</a>.</p>
+
+<p>Fresh documentation can be generated locally by running <code>bundle exec rake coyote:docs</code>.</p>
 
 <h2><a name="api"></a> API</h2>
 
@@ -200,7 +206,7 @@ open http://127.0.0.1:1080/ # mail delivery console
 </div></div>
 
       <div id="footer">
-  Generated on Wed Oct 11 15:32:12 2017 by
+  Generated on Wed Nov  8 14:41:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

@@ -408,6 +408,54 @@ regular application alerts work.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#language_list-instance_method" title="#language_list (instance method)">#<strong>language_list</strong>  &#x21d2; Array&lt;Array&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A collection of languages suitable for use in a select box.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#language_name-instance_method" title="#language_name (instance method)">#<strong>language_name</strong>(language_code)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Human-friendly language name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#license_link-instance_method" title="#license_link (instance method)">#<strong>license_link</strong>(license)  &#x21d2; Object </a>
     
 
@@ -519,6 +567,28 @@ CSS class applied.</p>
 <p>A collection of User roles with human friendly labels that the current
 organizational user can assign.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#organizational_user_collection-instance_method" title="#organizational_user_collection (instance method)">#<strong>organizational_user_collection</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -1411,6 +1481,158 @@ nil.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="language_list-instance_method">
+  
+    #<strong>language_list</strong>  &#x21d2; <tt>Array&lt;Array&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a collection of languages suitable for use in a select box</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Array&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a collection of languages suitable for use in a select box</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/scsmith/language_list" target="_parent" title="https://github.com/scsmith/language_list">https://github.com/scsmith/language_list</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_language_list'>language_list</span>
+  <span class='ivar'>@language_list</span> <span class='op'>||=</span> <span class='const'>LanguageList</span><span class='op'>::</span><span class='const'>COMMON_LANGUAGES</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_common_name'>common_name</span><span class='comma'>,</span><span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_iso_639_1'>iso_639_1</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="language_name-instance_method">
+  
+    #<strong>language_name</strong>(language_code)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns human-friendly language name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>language_code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>language short code such as &#39;en&#39;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>human-friendly language name</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/scsmith/language_list" target="_parent" title="https://github.com/scsmith/language_list">https://github.com/scsmith/language_list</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_language_name'>language_name</span><span class='lparen'>(</span><span class='id identifier rubyid_language_code'>language_code</span><span class='rparen'>)</span>
+  <span class='const'>LanguageList</span><span class='op'>::</span><span class='const'>LanguageInfo</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_language_code'>language_code</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="license_link-instance_method">
   
     #<strong>license_link</strong>(license)  &#x21d2; <tt>Object</tt> 
@@ -1723,6 +1945,38 @@ organizational user can assign</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="organizational_user_collection-instance_method">
+  
+    #<strong>organizational_user_collection</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_organizational_user_collection'>organizational_user_collection</span>
+  <span class='comment'># @return [Array&lt;String,Integer&gt;] list of users suitable for use in select boxes
+</span>  <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_users'>users</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_u'>u</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="resource-instance_method">
   
     #<strong>resource</strong>  &#x21d2; <tt>Object</tt> 
@@ -1776,7 +2030,7 @@ thumbnail, or an audio icon) based on the type of resource</p>
   
     <li>
       
-        <span class='name'>resource</span>
+        <span class='name'>target_resource</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="Resource (class)">Resource</a></span></tt>)</span>
@@ -2117,7 +2371,7 @@ logged-in</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:05 2017 by
+  Generated on Wed Nov  8 14:41:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

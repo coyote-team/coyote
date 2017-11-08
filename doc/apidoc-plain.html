@@ -1,0 +1,338 @@
+  <h4><a href='#representations'>Representations</a></h4>
+  <ul>
+      <li><a href='#representations-index'>index</a></li>
+      <li><a href='#representations-show'>show</a></li>
+  </ul>
+  <h4><a href='#resources'>Resources</a></h4>
+  <ul>
+      <li><a href='#resources-index'>index</a></li>
+      <li><a href='#resources-show'>show</a></li>
+      <li><a href='#resources-create'>create</a></li>
+  </ul>
+
+
+
+  <hr/>
+
+  <div>
+    <h2 id="representations">
+      <a href='#representations'>Representations</a><br>
+      <small>Complementary and alternative sensory impressions of a Resource</small>
+    </h2>
+  </div>
+
+    <div>
+<p>For a visual resource such as a painting, Coyote can store Representations
+such as textual descriptions or audio recordings of a speaker describing
+the painting.</p>
+</div>
+
+  <div>
+
+      <hr/>
+
+      <h3 id="representations-index">
+      <a href='#representations'>Representations</a> / <a href='#representations-index'>index</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /resources/:resource_id/representations
+            <br>
+            <small>Return list of representations for a particular resource ID</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+      </div>
+      <hr/>
+
+      <h3 id="representations-show">
+      <a href='#representations'>Representations</a> / <a href='#representations-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /representations/:id
+            <br>
+            <small>Return attributes of a particular representation</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+      </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2 id="resources">
+      <a href='#resources'>Resources</a><br>
+      <small>Anything that can be represented by Coyote</small>
+    </h2>
+  </div>
+
+    <div>
+<p>We use the Dublin Core meaning for what a Resource represents: “…a resource
+is anything that has identity. Familiar examples include an electronic
+document, an image,  a service (e.g., ”today&#39;s weather report for Los
+Angeles“), and a collection of other resources. Not all resources are
+network ”retrievable“; e.g., human beings,  corporations, and bound books
+in a library can also be considered resources.”</p>
+</div>
+
+  <div>
+
+      <hr/>
+
+      <h3 id="resources-index">
+      <a href='#resources'>Resources</a> / <a href='#resources-index'>index</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /resources
+            <br>
+            <small>Return a list of resources available to the authenticated user</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>page[number] </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Integer</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>page[size] </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Integer</p>
+ ]
+      </small>
+      
+<p>How many records to return per page</p>
+
+    </li>
+    
+    <li>
+      <strong>filter </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a Hash</p>
+ ]
+      </small>
+      
+    </li>
+    <ul>
+    <li>
+      <strong>identifier_or_title_or_representations_text_cont_all </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Search Resource identifier, title, or associated Representation text for
+this value</p>
+
+    </li>
+    
+    <li>
+      <strong>scope </strong>:
+      <small>
+        optional
+        
+          [ 
+<p>Must be one of: <code>represented</code>, <code>assigned</code>,
+<code>unassigned</code>, <code>unrepresented</code>,
+<code>assigned_unrepresented</code>, <code>unassigned_unrepresented</code>.</p>
+ ]
+      </small>
+      
+<p>Limit search to Resources in these states</p>
+
+    </li>
+    
+</ul>
+
+</ul>
+
+      </div>
+      <hr/>
+
+      <h3 id="resources-show">
+      <a href='#resources'>Resources</a> / <a href='#resources-show'>show</a>
+      </h3>
+
+      <div>
+          <h4>
+              GET /resources/:id
+            <br>
+            <small>Return attributes of a particular resource</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+      </div>
+      <hr/>
+
+      <h3 id="resources-create">
+      <a href='#resources'>Resources</a> / <a href='#resources-create'>create</a>
+      </h3>
+
+      <div>
+          <h4>
+              POST /resources
+            <br>
+            <small>Create a new resource</small>
+          </h4>
+      </div>
+
+      <div>
+        
+
+
+          <h4>Params</h4>
+          <ul>
+    <li>
+      <strong>resource </strong>:
+      <small>
+        optional
+        , nil allowed
+          [ 
+<p>Must be a Hash</p>
+ ]
+      </small>
+      
+    </li>
+    <ul>
+    <li>
+      <strong>identifier </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Unique identifier for this resource</p>
+
+    </li>
+    
+    <li>
+      <strong>title </strong>:
+      <small>
+        optional
+        , nil allowed
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+    </li>
+    
+    <li>
+      <strong>resource_type </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Dublin Core Metadata type for this resource</p>
+
+    </li>
+    
+    <li>
+      <strong>canonical_id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Unique identifier assigned by the organization that owns this resource</p>
+
+    </li>
+    
+    <li>
+      <strong>source_uri </strong>:
+      <small>
+        optional
+        , nil allowed
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>The canonical location of the resource</p>
+
+    </li>
+    
+    <li>
+      <strong>context </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a String</p>
+ ]
+      </small>
+      
+<p>Identifies the organizationl context to which this resource belongs</p>
+
+    </li>
+    
+    <li>
+      <strong>organization_id </strong>:
+      <small>
+        required
+        
+          [ 
+<p>Must be a Integer</p>
+ ]
+      </small>
+      
+<p>Identifies which organization owns the resource</p>
+
+    </li>
+    
+</ul>
+
+</ul>
+
+      </div>
+  </div>

@@ -206,6 +206,30 @@ database&#39;s resource_status enum</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#status_collection-class_method" title="status_collection (class method)">.<strong>status_collection</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>List of all available statuses for use in forms.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#status_names-class_method" title="status_names (class method)">.<strong>status_names</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
@@ -308,6 +332,69 @@ database&#39;s resource_status enum</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="status_collection-class_method">
+  
+    .<strong>status_collection</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns list of all available statuses for use in forms</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of all available statuses for use in forms</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/coyote/representation.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_status_collection'>status_collection</span>
+  <span class='const'><span class='object_link'><a href="#STATUSES-constant" title="Coyote::Representation::STATUSES (constant)">STATUSES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_status'>status</span><span class='op'>|</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_titleize'>titleize</span><span class='comma'>,</span><span class='id identifier rubyid_status'>status</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="status_names-class_method">
   
     .<strong>status_names</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
@@ -371,7 +458,7 @@ database&#39;s resource_status enum</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:05 2017 by
+  Generated on Wed Nov  8 14:38:20 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

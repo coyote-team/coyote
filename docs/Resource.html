@@ -98,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/resource.rb</dd>
+    <dd>app/models/resource.rb<span class="defines">,<br />
+  app/models/resource.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -147,6 +149,28 @@ a library can also be considered resources.”</p>
   <span class="summary_signature">
     
       <a href="#latest_timestamp-class_method" title="latest_timestamp (class method)">.<strong>latest_timestamp</strong>  &#x21d2; ActiveSupport::TimeWithZone<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ransackable_scopes-class_method" title="ransackable_scopes (class method)">.<strong>ransackable_scopes</strong>(_ = nil)  &#x21d2; Object </a>
     
 
     
@@ -331,6 +355,52 @@ recently-created resource</p>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_latest_timestamp'>latest_timestamp</span>
   <span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:created_at</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:created_at</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ransackable_scopes-class_method">
+  
+    .<strong>ransackable_scopes</strong>(_ = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/activerecord-hackery/ransack#using-scopesclass-methods" target="_parent" title="https://github.com/activerecord-hackery/ransack#using-scopesclass-methods">https://github.com/activerecord-hackery/ransack#using-scopesclass-methods</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ransackable_scopes'>ransackable_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>represented</span><span class='words_sep'> </span><span class='tstring_content'>assigned</span><span class='words_sep'> </span><span class='tstring_content'>unassigned</span><span class='words_sep'> </span><span class='tstring_content'>unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>assigned_unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>unassigned_unrepresented</span><span class='words_sep'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -569,7 +639,7 @@ verbs given from this resource&#39;s perspective</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Oct 11 15:20:57 2017 by
+  Generated on Wed Nov  8 14:38:21 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
