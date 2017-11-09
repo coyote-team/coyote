@@ -96,3 +96,5 @@ end
 
 Representation.create!(representations)
 puts "representation: #{Representation.count}"
+
+puts "*** don't forget to reset Postgres sequences per https://stackoverflow.com/a/38575949/308448 ***"
