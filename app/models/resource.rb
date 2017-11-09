@@ -41,8 +41,12 @@ class Resource < ApplicationRecord
   has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
   has_many :assignments, :inverse_of => :resource
 
+  scope :unrepresented, lambda {
+    # HACK: for lack of proper alias tracking in ActiveRecord 5.1.3, see https://github.com/rails/rails/issues/30504
+    joins('LEFT OUTER JOIN representations AS reps ON reps.resource_id = resources.id').where(reps: { resource_id: nil })
+  }
+
   scope :represented,              -> { joins(:representations).distinct }
-  scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
   scope :assigned,                 -> { joins(:assignments) }
   scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
