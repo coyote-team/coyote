@@ -1,8 +1,4 @@
-require 'yard'
-
-# see https://github.com/lsegal/yard#generating-documentation
-YARD::Rake::YardocTask.new do |t|
-end
+YARD::Rake::YardocTask.new if defined?(YARD)
 
 namespace :coyote do
   desc 'Generate docs from YARD and apipie'
