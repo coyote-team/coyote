@@ -3,6 +3,7 @@
 class OrganizationsController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
+  before_action :current_organization,     only: %i[show edit] # helps avoid scenario where ActionView::Template::Error can swallow ActiveRecord::RecordNotFound, when a user is not a member of an org
   
   helper_method :organization, :organizations, :dashboard, :users
 
