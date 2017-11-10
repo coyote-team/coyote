@@ -1,6 +1,6 @@
 RSpec.describe 'Accessing resources' do
   context 'with authorization' do
-    include_context 'API author user'
+    include_context 'API editor user'
 
     let(:context) do
       create(:context,:website,organization: user_organization) 
@@ -10,9 +10,14 @@ RSpec.describe 'Accessing resources' do
       attributes_for(:resource).merge(context_id: context.id)
     end
 
+    let(:existing_resource) do
+      create(:resource,organization: user_organization)
+    end
+
     scenario 'POST /organizations/:id/resources' do
       expect {
         post api_resources_path(user_organization.id), params: { resource: new_resource_params }, headers: auth_headers
+        expect(response).to be_created
       }.to change(user_organization.resources,:count).
         from(0).to(1)
 
@@ -23,6 +28,20 @@ RSpec.describe 'Accessing resources' do
 
       invalid_params = { resource: new_resource_params.except(:identifier) }
       post api_resources_path, params: invalid_params, headers: auth_headers
+      expect(response).to be_unprocessable
+      expect(json_data).to have_key(:errors)
+    end
+
+    scenario 'PATCH /resources/:id' do
+      expect {
+        patch api_resource_path(existing_resource.id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
+        expect(response).to be_success
+
+        existing_resource.reload
+      }.to change(existing_resource,:title).
+        to('NEWTITLE')
+
+      patch api_resource_path(existing_resource.id), params: { resource: { identifier: nil } }, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
@@ -103,7 +122,7 @@ RSpec.describe 'Accessing resources' do
     end
     
     scenario 'GET /resources/:id' do
-      get api_resource_path(resource.identifier), headers: auth_headers
+      get api_resource_path(resource), headers: auth_headers
       expect(response).to be_success
 
       json_data.fetch(:data).tap do |data|

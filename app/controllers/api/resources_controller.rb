@@ -19,7 +19,7 @@ module Api
 
     def_param_group :resource do
       param :resource, Hash, action_aware: true do
-        param :identifier, String, 'Unique identifier for this resource', required: true
+        param :identifier, String, 'Unique human-readable identifier (slug) for this resource', required: true
         param :title, String, required: false
         param :resource_type, String, 'Dublin Core Metadata type for this resource', required: true
         param :canonical_id, String, 'Unique identifier assigned by the organization that owns this resource', required: true
@@ -78,13 +78,24 @@ module Api
       end
     end
 
+    api :PATCH, 'resources/:id', 'Update attributes of a particular resource'
+    def update
+      if resource.update_attributes(resource_params)
+        logger.info "Updated #{resource}"
+        render jsonapi: resource
+      else
+        logger.warn "Unable to update resource due to '#{resource.error_sentence}'"
+        render :jsonapi_errors => resource.errors, :status => :unprocessable_entity
+      end
+    end
+
     private
 
     attr_accessor :resource
     attr_writer :current_organization
 
     def find_resource
-      self.resource = current_user.resources.find_by!(identifier: params[:id])
+      self.resource = current_user.resources.find(params[:id])
       self.current_organization = resource.organization
     end
 
