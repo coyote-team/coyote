@@ -8,8 +8,8 @@ class Api::ApplicationController < ActionController::API
   before_action :require_api_authentication
 
   def_param_group :pagination do
-    param :'page[number]', Integer
-    param :'page[size]', Integer, desc: 'How many records to return per page'
+    param :'page[number]', Integer, 'Identifies the page of results to retrieve, numbered starting at 1'
+    param :'page[size]',   Integer, 'How many records to return per page'
   end
 
   private

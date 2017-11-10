@@ -1,7 +1,7 @@
 
 Rails.application.routes.draw do
-  constraints Coyote::AsApiRequest.new('v1') do
-    scope :module => :api, :as => :api do
+  namespace :api do
+    scope :v1 do
       scope 'organizations/:organization_id' do
         resources :resources, only: %i[index create]
       end

@@ -5,7 +5,10 @@ Apipie.configure do |config|
   config.validate = :explicitly
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/api/**/*.rb"
   config.app_info = <<~EOT
-  Resource annotation site and API. Based on the {JSON API standard}[http://jsonapi.org/].
+  {JSON API}[http://jsonapi.org/] for {Coyote}[https://coyote-team.github.io/coyote/].
+
+  Accessing the API requires use of the authorization token that appears at the bottom of Coyote pages for logged-in users. Example:
+  curl  -H 'Authorization: CHANGEME' http://localhost:10000/api/v1/organizations/1/resources | jsonlint
   EOT
 
   # see https://github.com/Apipie/apipie-rails/issues/549

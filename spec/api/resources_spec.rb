@@ -89,8 +89,8 @@ RSpec.describe 'Accessing resources' do
       first_page = json_data.fetch(:data)
       expect(first_page.size).to eq(user_org_resource_count - 1)
 
-      identifiers = first_page.map { |r| r.fetch(:id) }
-      expect(user_org_resources.map(&:identifier)).to include(*identifiers)
+      ids = first_page.map { |r| r.fetch(:id).to_i }
+      expect(user_org_resources.map(&:id)).to include(*ids)
 
       link_paths = json_data.fetch(:links).inject({}) do |result,(rel,href)|
         uri = URI.parse(href)
@@ -126,7 +126,7 @@ RSpec.describe 'Accessing resources' do
       expect(response).to be_success
 
       json_data.fetch(:data).tap do |data|
-        expect(data).to have_id(resource.identifier)
+        expect(data).to have_id(resource.id.to_s)
         expect(data).to have_type('resource')
 
         expect(data).to have_attribute(:resource_type).with_value(resource.resource_type)

@@ -3,7 +3,7 @@ require 'uri'
 module Coyote
   module Testing
     # Methods to facilitate writing API request specs
-    module RequestHelpers
+    module ApiHelpers
       # Simple helper for DRY'ing up JSON parsing in request specs
       # @return [ActiveSupport::HashWithIndifferentAccess] the deserialized JSON contained in the response body, suitable for use with jsonapi-rspec matchers
       def json_data
