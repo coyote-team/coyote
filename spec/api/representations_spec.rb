@@ -32,8 +32,6 @@ RSpec.describe 'Representations' do
       link_paths = jsonapi_link_paths(json_data)
 
       expect(link_paths).to eq(expected_link_paths)
-
-      skip 'need to allow filtering by metum, etc.'
     end
 
     scenario 'GET /representations/:id' do
