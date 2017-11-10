@@ -2,8 +2,8 @@
   .col-md-12
     %h2#ready_to_review Descriptions Ready to Review
 
-- if organization.ready_to_review_representations.any?
-  = render partial: 'organizations/dashboard/ready_to_review_representation_group', :collection => organization.ready_to_review_representations.first(50).in_groups_of(3,false), :as => :representation_group
+- if current_organization.ready_to_review_representations.any?
+  = render partial: 'organizations/dashboard/ready_to_review_representation_group', :collection => current_organization.ready_to_review_representations.first(50).in_groups_of(3,false), :as => :representation_group
 
   - content_for :javascript_footer do
     :javascript

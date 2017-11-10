@@ -1,11 +1,11 @@
 # Manges requests to view and manipulate Organization objects
 # @see Organization
 class OrganizationsController < ApplicationController
+  before_action :set_current_organization, only: %i[show edit] # helps avoid scenario where ActionView::Template::Error can swallow ActiveRecord::RecordNotFound, when a user is not a member of an org
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
-  before_action :current_organization,     only: %i[show edit] # helps avoid scenario where ActionView::Template::Error can swallow ActiveRecord::RecordNotFound, when a user is not a member of an org
   
-  helper_method :organization, :organizations, :dashboard, :users
+  helper_method :current_organization, :organizations, :dashboard, :users
 
   # GET /organizations
   def index
@@ -18,19 +18,19 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/new
   def new
-    self.organization = Organization.new
+    self.current_organization = Organization.new
   end
 
   # POST /organizations
   def create
-    self.organization = Organization.create(organization_params)
+    self.current_organization = Organization.create(organization_params)
 
-    if organization.valid?
-      organization.memberships.owner.create!(user: current_user)
-      logger.info "Created #{organization} and assigned #{current_user}"
-      redirect_to organization, success: "Created #{organization.title}"
+    if current_organization.valid?
+      current_organization.memberships.owner.create!(user: current_user)
+      logger.info "Created #{current_organization} and assigned #{current_user}"
+      redirect_to current_organization, success: "Created #{current_organization.title}"
     else
-      logger.warn "Unable to create Organization: #{organization.error_sentence}"
+      logger.warn "Unable to create Organization: #{current_organization.error_sentence}"
       flash.now[:alert] = "There was an error creating this Organization"
       render action: "new"
     end
@@ -42,8 +42,8 @@ class OrganizationsController < ApplicationController
 
   # PATCH /organizations/1
   def update
-    if organization.update_attributes(organization_params)
-      redirect_to organization, success: "Saved changes to #{organization.title}"
+    if current_organization.update_attributes(organization_params)
+      redirect_to current_organization, success: "Saved changes to #{current_organization.title}"
     else
       flash.now[:alert] = "There was an error updating this Organization"
       render action: "edit"
@@ -52,29 +52,26 @@ class OrganizationsController < ApplicationController
 
   private
 
-  attr_writer :organization
-  attr_accessor :organizations
+  attr_accessor :current_organization, :organizations
 
-  def organization
-    @organization ||= Organization.find_by(id: params[:id])
+  def set_current_organization
+    self.current_organization = organization_scope.find(params[:id])
+  end
+
+  def current_organization?
+    !!current_organization&.persisted?
   end
 
   def pundit_user
-    # necessary to override ApplicationController's method here because in this controller we may not be dealing with a particular organization
-    @pundit_user ||= Coyote::OrganizationUser.new(current_user,organization)
+    @pundit_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
   end
 
   def organization_params
     params.require(:organization).permit(:title)
   end
 
-  # overrides ApplicationController method which works in nested resource contexts
-  def current_organization_id
-    params[:id]
-  end
-
   def dashboard
-    @dashboard ||= Dashboard.new(current_user,organization)
+    @dashboard ||= Dashboard.new(current_user,current_organization)
   end
 
   def authorize_general_access
@@ -82,6 +79,6 @@ class OrganizationsController < ApplicationController
   end
 
   def authorize_unit_access
-    authorize(organization)
+    authorize(current_organization)
   end
 end

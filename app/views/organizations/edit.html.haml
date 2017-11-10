@@ -2,5 +2,5 @@
   .entity
     .entity-inner
       %header
-        %h1#page-title{tabindex: -1} Edit #{organization.title}
+        %h1#page-title{tabindex: -1} Edit #{current_organization.title}
       = render partial: 'form'

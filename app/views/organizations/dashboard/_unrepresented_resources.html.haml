@@ -2,8 +2,8 @@
   .col-md-12
     %h2#unrepresented Unrepresented &amp; Unassigned Resources
 
-- if organization.unassigned_unrepresented_resources.any?
-  = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => organization.unassigned_unrepresented_resources.by_priority.first(10).in_groups_of(3,false), :as => :resource_group
+- if current_organization.unassigned_unrepresented_resources.any?
+  = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => current_organization.unassigned_unrepresented_resources.by_priority.first(10).in_groups_of(3,false), :as => :resource_group
 - else
   %p There are currently no unrepresented resources which lack assignments for this organization
 

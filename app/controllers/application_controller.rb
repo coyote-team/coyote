@@ -39,15 +39,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization?
-    organization_scope.exists?(current_organization_id)
+    organization_scope.exists?(params[:organization_id])
   end
 
   def current_organization
-    @current_organization ||= organization_scope.find(current_organization_id)
-  end
-
-  def current_organization_id
-    params[:organization_id] # intended to be overridden in the OrganizationController
+    @current_organization ||= organization_scope.find(params[:organization_id])
   end
 
   def configure_permitted_parameters
