@@ -69,12 +69,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">ActiveRecord::Base</span>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></li>
           
             <li class="next">Image</li>
           
@@ -96,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/image.rb</dd>
+    <dd>app/models/image.rb<span class="defines">,<br />
+  app/models/image.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -110,21 +114,21 @@
 
 <pre class="code ruby"><code class="ruby">id                 :integer          not null, primary key
 path               :string
-website_id         :integer
-group_id           :integer
+website_id         :integer          not null
+context_id         :integer          not null
 created_at         :datetime
 updated_at         :datetime
 canonical_id       :string
-assignments_count  :integer          default(0)
-descriptions_count :integer          default(0)
+assignments_count  :integer          default(0), not null
+descriptions_count :integer          default(0), not null
 title              :text
-priority           :boolean          default(FALSE)
-status_code        :integer          default(0)
-page_urls          :text</code></pre>
+priority           :boolean          default(FALSE), not null
+status_code        :integer          default(0), not null
+page_urls          :string           not null, is an Array</code></pre>
 
 <p>Indexes</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_index_images_on_group_id'>index_images_on_group_id</span>    <span class='lparen'>(</span><span class='id identifier rubyid_group_id'>group_id</span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_index_images_on_context_id'>index_images_on_context_id</span>  <span class='lparen'>(</span><span class='id identifier rubyid_context_id'>context_id</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_index_images_on_website_id'>index_images_on_website_id</span>  <span class='lparen'>(</span><span class='id identifier rubyid_website_id'>website_id</span><span class='rparen'>)</span>
 </code></pre>
 
@@ -153,6 +157,28 @@ page_urls          :text</code></pre>
   <span class="summary_signature">
     
       <a href="#import-class_method" title="import (class method)">.<strong>import</strong>(file)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#latest_timestamp-class_method" title="latest_timestamp (class method)">.<strong>latest_timestamp</strong>  &#x21d2; ActiveSupport::TimeWithZone<sup>?</sup> </a>
     
 
     
@@ -526,6 +552,12 @@ locales and status&#39;es.</p>
 
 
   
+  
+  
+  
+  
+  
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -575,6 +607,78 @@ locales and status&#39;es.</p>
 </span>    <span class='id identifier rubyid_image'>image</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span>
     <span class='id identifier rubyid_image'>image</span><span class='period'>.</span><span class='id identifier rubyid_save!'>save!</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="latest_timestamp-class_method">
+  
+    .<strong>latest_timestamp</strong>  &#x21d2; <tt>ActiveSupport::TimeWithZone</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveSupport::TimeWithZone</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if one more images exist, this is the created_at time for the most
+recently-created image</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if no images exist</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/image.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_latest_timestamp'>latest_timestamp</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:created_at</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1338,9 +1442,9 @@ locales and status&#39;es</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:56 2017 by
+  Generated on Fri Nov 10 16:32:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

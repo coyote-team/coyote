@@ -109,11 +109,6 @@
 
 
 
-  <h2>Instance Attribute Summary</h2>
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#current_user=-instance_method" title="ApplicationController#current_user= (method)">#current_user</a></span>, <span class='object_link'><a href="ApplicationController.html#current_user+Used+for+unit+testing,+this+is+normally+managed+by+Devise=-instance_method" title="ApplicationController#current_user Used for unit testing, this is normally managed by Devise= (method)">#current_user Used for unit testing, this is normally managed by Devise</a></span></p>
-
 
   
     <h2>
@@ -122,30 +117,6 @@
     </h2>
 
     <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#bulk-instance_method" title="#bulk (instance method)">#<strong>bulk</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>POST /assignments/bulk.</p>
-</div></span>
-  
-</li>
-
       
         <li class="public ">
   <span class="summary_signature">
@@ -190,30 +161,6 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>DELETE /assignments/1.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#edit-instance_method" title="#edit (instance method)">#<strong>edit</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>GET /assignments/1/edit.</p>
 </div></span>
   
 </li>
@@ -291,30 +238,6 @@
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>PATCH/PUT /assignments/1.</p>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -327,115 +250,13 @@
   
   
   
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#clear_search_index-instance_method" title="ApplicationController#clear_search_index (method)">#clear_search_index</a></span>, <span class='object_link'><a href="ApplicationController.html#search_params-instance_method" title="ApplicationController#search_params (method)">#search_params</a></span></p>
-
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="bulk-instance_method">
-  
-    #<strong>bulk</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>POST /assignments/bulk</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 57</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_bulk'>bulk</span>
-  <span class='id identifier rubyid_assignments'>assignments</span> <span class='op'>=</span> <span class='id identifier rubyid_assignments_params'>assignments_params</span><span class='lbracket'>[</span><span class='symbol'>:assignments</span><span class='rbracket'>]</span>
-
-  <span class='id identifier rubyid_success_count'>success_count</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='id identifier rubyid_fail_count'>fail_count</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='id identifier rubyid_assignments'>assignments</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='op'>|</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_a'>a</span>
-    <span class='id identifier rubyid_assignment'>assignment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Assignment.html" title="Assignment (class)">Assignment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>user_id:</span> <span class='id identifier rubyid_a'>a</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>image_id:</span> <span class='id identifier rubyid_a'>a</span><span class='lbracket'>[</span><span class='symbol'>:image_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_assignment'>assignment</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
-      <span class='id identifier rubyid_success_count'>success_count</span> <span class='op'>+=</span> <span class='int'>1</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_fail_count'>fail_count</span> <span class='op'>+=</span> <span class='int'>1</span>
-      <span class='comment'>#errors += assignment.errors.full_messages.collect{|m| m + &quot;.  &quot;}.join()
-</span>    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_fail_count'>fail_count</span> <span class='op'>==</span> <span class='int'>0</span> <span class='kw'>and</span> <span class='id identifier rubyid_success_count'>success_count</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:success</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_success_count'>success_count</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> assignments created.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_fail_count'>fail_count</span> <span class='op'>==</span> <span class='int'>0</span> <span class='kw'>and</span> <span class='id identifier rubyid_success_count'>success_count</span> <span class='op'>==</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:notice</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No assignments created.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_error'>error</span> <span class='op'>=</span> <span class='id identifier rubyid_fail_count'>fail_count</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> assignments failed.  </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_errors'>errors</span>  
-    <span class='kw'>if</span> <span class='id identifier rubyid_success_count'>success_count</span> <span class='op'>&gt;</span> <span class='int'>0</span> 
-      <span class='id identifier rubyid_error'>error</span> <span class='op'>+=</span>  <span class='id identifier rubyid_success_count'>success_count</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> assignments created.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>  <span class='op'>=</span> <span class='id identifier rubyid_error'>error</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_render'>render</span> <span class='label'>nothing:</span> <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="create-instance_method">
+  <h3 class="signature first" id="create-instance_method">
   
     #<strong>create</strong>  &#x21d2; <tt>Object</tt> 
   
@@ -460,6 +281,14 @@
       <pre class="lines">
 
 
+22
+23
+24
+25
+26
+27
+28
+29
 30
 31
 32
@@ -467,12 +296,20 @@
 34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
-  <span class='ivar'>@assigntment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Assignment.html" title="Assignment (class)">Assignment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_assignment_params'>assignment_params</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:notice</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@assigntment</span><span class='embexpr_end'>}</span><span class='tstring_content'> was successfully created.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@assigntment</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
-  <span class='id identifier rubyid_respond_with'>respond_with</span> <span class='ivar'>@assigntment</span>
+  <span class='id identifier rubyid_resource_ids'>resource_ids</span> <span class='op'>=</span> <span class='id identifier rubyid_assignment_params'>assignment_params</span><span class='period'>.</span><span class='id identifier rubyid_values_at'>values_at</span><span class='lparen'>(</span><span class='symbol'>:resource_ids</span><span class='comma'>,</span><span class='symbol'>:resource_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:compact!</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_resources'>resources</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>id:</span> <span class='id identifier rubyid_resource_ids'>resource_ids</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_assignments'>assignments</span> <span class='op'>=</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_resource'>resource</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="Assignment.html" title="Assignment (class)">Assignment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_or_create_by!'>find_or_create_by!</span><span class='lparen'>(</span><span class='label'>resource:</span> <span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span><span class='label'>user:</span> <span class='id identifier rubyid_assigned_user'>assigned_user</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assignments'>assignments</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:notice</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assignments'>assignments</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>assignment</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_assignments'>assignments</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_redirect_back'>redirect_back</span> <span class='label'>fallback_location:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -505,66 +342,29 @@
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53
-54</pre>
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
-  <span class='ivar'>@assignment</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_xhr?'>xhr?</span>
-    <span class='id identifier rubyid_render'>render</span> <span class='label'>nothing:</span> <span class='kw'>true</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_assignment'>assignment</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Deleted </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assignment'>assignment</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_organization_assignments_url'>organization_assignments_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Assignment was successfully destroyed.</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_assignments_url'>assignments_url</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Assignment was successfully destroyed.</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to delete </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assignment'>assignment</span><span class='embexpr_end'>}</span><span class='tstring_content'>: &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assignment'>assignment</span><span class='period'>.</span><span class='id identifier rubyid_error_sentence'>error_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>We were unable to delete the assignment</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='symbol'>:back</span> 
   <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="edit-instance_method">
-  
-    #<strong>edit</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>GET /assignments/1/edit</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-25
-26
-27</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 25</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
-  <span class='ivar'>@image</span> <span class='op'>=</span> <span class='ivar'>@assignment</span><span class='period'>.</span><span class='id identifier rubyid_image'>image</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -598,14 +398,12 @@
 
 
 9
-10
-11</pre>
+10</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-  <span class='ivar'>@assignments</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Assignment.html" title="Assignment (class)">Assignment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -638,19 +436,15 @@
       <pre class="lines">
 
 
+17
 18
-19
-20
-21
-22</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
-  <span class='ivar'>@assignment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Assignment.html" title="Assignment (class)">Assignment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='ivar'>@assignment</span><span class='period'>.</span><span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Image.html" title="Image (class)">Image</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:image_id</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:image_id</span><span class='rbracket'>]</span>
-  <span class='ivar'>@assignment</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Image.html" title="Image (class)">Image</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assignment'>assignment</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_assignments'>assignments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -683,64 +477,13 @@
       <pre class="lines">
 
 
-14
-15</pre>
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="update-instance_method">
-  
-    #<strong>update</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>PATCH/PUT /assignments/1</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-37
-38
-39
-40
-41
-42
-43
-44</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/assignments_controller.rb', line 37</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
-  <span class='kw'>if</span> <span class='ivar'>@assignment</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_assignment_params'>assignment_params</span><span class='rparen'>)</span>
-    <span class='comment'>#redirect_to @assignment, notice: &#39;Assignment was successfully updated.&#39;
-</span>    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_root_path'>root_path</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Assignment was successfully created.</span><span class='tstring_end'>&#39;</span></span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:edit</span>
-  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -752,7 +495,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:21 2017 by
+  Generated on Fri Nov 10 16:35:37 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

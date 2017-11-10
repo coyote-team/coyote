@@ -134,11 +134,6 @@
 
 
 
-  <h2>Instance Attribute Summary</h2>
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#current_user=-instance_method" title="ApplicationController#current_user= (method)">#current_user</a></span>, <span class='object_link'><a href="ApplicationController.html#current_user+Used+for+unit+testing,+this+is+normally+managed+by+Devise=-instance_method" title="ApplicationController#current_user Used for unit testing, this is normally managed by Devise= (method)">#current_user Used for unit testing, this is normally managed by Devise</a></span></p>
-
 
   
     <h2>
@@ -320,11 +315,6 @@
   
   
   
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#clear_search_index-instance_method" title="ApplicationController#clear_search_index (method)">#clear_search_index</a></span>, <span class='object_link'><a href="ApplicationController.html#search_params-instance_method" title="ApplicationController#search_params (method)">#search_params</a></span></p>
-
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -345,8 +335,6 @@
       <pre class="lines">
 
 
-24
-25
 26
 27
 28
@@ -355,17 +343,19 @@
 31
 32
 33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_params'>resource_params</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='comma'>,</span><span class='id identifier rubyid_resource'>resource</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The resource has been created</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The resource has been created</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to create resource due to &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_error_sentence'>error_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:new</span>
@@ -391,13 +381,13 @@
       <pre class="lines">
 
 
-46
-47
 48
-49</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -423,11 +413,11 @@
       <pre class="lines">
 
 
-21
-22</pre>
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
@@ -451,11 +441,11 @@
       <pre class="lines">
 
 
-11
-12</pre>
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
 <span class='kw'>end</span></pre>
@@ -479,12 +469,12 @@
       <pre class="lines">
 
 
-17
-18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -509,11 +499,11 @@
       <pre class="lines">
 
 
-14
-15</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
 <span class='kw'>end</span></pre>
@@ -537,23 +527,23 @@
       <pre class="lines">
 
 
-36
-37
 38
 39
 40
 41
 42
 43
-44</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_params'>resource_params</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Updated </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='comma'>,</span><span class='id identifier rubyid_resource'>resource</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The resource has been updated</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The resource has been updated</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to update resource due to &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_error_sentence'>error_sentence</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:edit</span>
@@ -569,7 +559,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:21 2017 by
+  Generated on Fri Nov 10 16:35:37 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

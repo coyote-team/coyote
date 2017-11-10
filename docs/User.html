@@ -98,9 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/user.rb<span class="defines">,<br />
-  app/models/user.rb,<br /> app/models/user.rb</span>
-</dd>
+    <dd>app/models/user.rb</dd>
   </dl>
   
 </div>
@@ -160,30 +158,6 @@ index_users_on_unlock_token          (unlock_token) UNIQUE</code></pre>
     </h2>
 
     <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#next_image-instance_method" title="#next_image (instance method)">#<strong>next_image</strong>(current_image = nil)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>end.</p>
-</div></span>
-  
-</li>
-
       
         <li class="public ">
   <span class="summary_signature">
@@ -251,80 +225,7 @@ are filled-in; falls back to email address.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="next_image-instance_method">
-  
-    #<strong>next_image</strong>(current_image = nil)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>end</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 56</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_next_image'>next_image</span><span class='lparen'>(</span><span class='id identifier rubyid_current_image'>current_image</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_next_image'>next_image</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_images'>images</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-    <span class='id identifier rubyid_described_by_me'>described_by_me</span> <span class='op'>=</span> <span class='kw'>nil</span>
-    <span class='id identifier rubyid_described_by_me'>described_by_me</span> <span class='op'>=</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_descriptions'>descriptions</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span> <span class='op'>==</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_current_image'>current_image</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_described_by_me'>described_by_me</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>  <span class='kw'>and</span> <span class='id identifier rubyid_current_image'>current_image</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>!=</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
-        <span class='id identifier rubyid_next_image'>next_image</span> <span class='op'>=</span> <span class='id identifier rubyid_i'>i</span>
-        <span class='kw'>break</span>
-      <span class='kw'>end</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_described_by_me'>described_by_me</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='id identifier rubyid_next_image'>next_image</span> <span class='op'>=</span> <span class='id identifier rubyid_i'>i</span>
-      <span class='kw'>break</span>
-    <span class='kw'>end</span>
-
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_next_image'>next_image</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="to_s-instance_method">
+  <h3 class="signature first" id="to_s-instance_method">
   
     #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
   
@@ -373,16 +274,16 @@ are filled-in; falls back to email address</p>
       <pre class="lines">
 
 
-56
-57
-58
-59
-60
 61
-62</pre>
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_first_name'>first_name</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='kw'>or</span> <span class='op'>!</span><span class='id identifier rubyid_last_name'>last_name</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -428,12 +329,12 @@ are filled-in; falls back to email address</p>
       <pre class="lines">
 
 
-77
-78
-79</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_username'>username</span> 
   <span class='id identifier rubyid_to_s'>to_s</span>
@@ -448,7 +349,7 @@ are filled-in; falls back to email address</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:20 2017 by
+  Generated on Fri Nov 10 16:35:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

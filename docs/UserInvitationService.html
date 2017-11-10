@@ -367,14 +367,30 @@
 43
 44
 45
-46</pre>
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/services/user_invitation_service.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_invitation'>invitation</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_dummy_password'>dummy_password</span> <span class='op'>=</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>20</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_create_params'>create_params</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>password:</span> <span class='id identifier rubyid_dummy_password'>dummy_password</span><span class='comma'>,</span>
+    <span class='label'>first_name:</span> <span class='id identifier rubyid_invitation'>invitation</span><span class='period'>.</span><span class='id identifier rubyid_first_name'>first_name</span><span class='comma'>,</span>
+    <span class='label'>last_name:</span> <span class='id identifier rubyid_invitation'>invitation</span><span class='period'>.</span><span class='id identifier rubyid_last_name'>last_name</span>
+  <span class='rbrace'>}</span>
+
   <span class='id identifier rubyid_recipient_user'>recipient_user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span>
-                   <span class='id identifier rubyid_create_with'>create_with</span><span class='lparen'>(</span><span class='label'>password:</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>20</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span>
+                   <span class='id identifier rubyid_create_with'>create_with</span><span class='lparen'>(</span><span class='id identifier rubyid_create_params'>create_params</span><span class='rparen'>)</span><span class='period'>.</span>
                    <span class='id identifier rubyid_find_or_initialize_by'>find_or_initialize_by</span><span class='lparen'>(</span><span class='label'>email:</span> <span class='id identifier rubyid_invitation'>invitation</span><span class='period'>.</span><span class='id identifier rubyid_recipient_email'>recipient_email</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_users'>users</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_recipient_user'>recipient_user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -415,7 +431,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:21 2017 by
+  Generated on Fri Nov 10 16:35:37 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

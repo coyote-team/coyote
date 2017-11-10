@@ -23,8 +23,14 @@
 </ul>
 
 <div>
-<p>Resource annotation site and API. Based on the <a
-href="http://jsonapi.org/">JSON API standard</a>.</p>
+<p><a href="http://jsonapi.org/">JSON API</a> for <a
+href="https://coyote-team.github.io/coyote/">Coyote</a>.</p>
+
+<p>Accessing the API requires use of the authorization token that appears at
+the bottom of Coyote pages for logged-in users. Example: curl  -H
+&#39;Authorization: CHANGEME&#39; <a
+href="http://localhost:10000/api/v1/organizations/1/resources">localhost:10000/api/v1/organizations/1/resources</a>
+| jsonlint</p>
 </div>
 
 <h1 class='page-header'>Resources</h1>
@@ -61,7 +67,7 @@ href="http://jsonapi.org/">JSON API standard</a>.</p>
     <a href='./apipie/resources.html'>
       Resources
     </a><br>
-    <small>Anything that can be represented by Coyote</small>
+    <small>Anything with an identity that can be represented in the Coyote database</small>
   </h2>
   <table class='table'>
     <thead>
@@ -88,6 +94,12 @@ href="http://jsonapi.org/">JSON API standard</a>.</p>
               <a href='./apipie/resources/create.html'>POST /resources</a>
             </td>
             <td width='60%'>Create a new resource</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./apipie/resources/update.html'>PATCH /resources/:id</a>
+            </td>
+            <td width='60%'>Update attributes of a particular resource</td>
           </tr>
     </tbody>
   </table>

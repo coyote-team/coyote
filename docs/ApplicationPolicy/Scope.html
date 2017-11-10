@@ -155,7 +155,7 @@ permissions</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#resolve-instance_method" title="#resolve (instance method)">#<strong>resolve</strong>  &#x21d2; Object </a>
+      <a href="#resolve-instance_method" title="#resolve (instance method)">#<strong>resolve</strong>  &#x21d2; ActiveRecord::Associations::CollectionProxy </a>
     
 
     
@@ -169,7 +169,10 @@ permissions</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>The scope upon which to base ActiveRecord queries, restricted to records
+the organization user can access.</p>
+</div></span>
   
 </li>
 
@@ -265,13 +268,44 @@ scope further</p>
       <div class="method_details first">
   <h3 class="signature first" id="resolve-instance_method">
   
-    #<strong>resolve</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>resolve</strong>  &#x21d2; <tt>ActiveRecord::Associations::CollectionProxy</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the scope upon which to base ActiveRecord queries, restricted to
+records the organization user can access</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Associations::CollectionProxy</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the scope upon which to base ActiveRecord queries, restricted to records
+the organization user can access</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -297,7 +331,7 @@ scope further</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:07 2017 by
+  Generated on Fri Nov 10 16:36:43 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

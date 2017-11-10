@@ -1306,13 +1306,21 @@ return :none if the user is not a member of the organization.</p>
 
 61
 62
-63</pre>
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/coyote/organization_user.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_role_rank'>role_rank</span>
-  <span class='ivar'>@role_rank</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Membership.html" title="Coyote::Membership (module)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_rank'><span class='object_link'><a href="Membership.html#role_rank-class_method" title="Coyote::Membership.role_rank (method)">role_rank</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_role'>role</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_staff?'>staff?</span>
+    <span class='const'><span class='object_link'><a href="../Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Membership.html" title="Coyote::Membership (module)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_rank'><span class='object_link'><a href="Membership.html#role_rank-class_method" title="Coyote::Membership.role_rank (method)">role_rank</a></span></span><span class='lparen'>(</span><span class='symbol'>:staff</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="../Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Membership.html" title="Coyote::Membership (module)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_rank'><span class='object_link'><a href="Membership.html#role_rank-class_method" title="Coyote::Membership.role_rank (method)">role_rank</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_role'>role</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1324,7 +1332,7 @@ return :none if the user is not a member of the organization.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:21 2017 by
+  Generated on Fri Nov 10 16:35:36 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

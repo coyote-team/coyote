@@ -104,7 +104,7 @@ You can regenerate development environment data by running `bundle exec rake dev
 
 YARD documentation is hosted at [coyote-team.github.io](https://coyote-team.github.io/coyote/).
 
-Fresh documentation can be generated locally by running `bundle exec rake coyote:docs`.
+Fresh documentation can be generated locally by running `bundle exec rake coyote:docs OUT=docs/apipie`. The `OUT` parameter is for `apipie`.
 
 ## <a name="api"></a> API
 

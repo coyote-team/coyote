@@ -260,24 +260,24 @@
       <pre class="lines">
 
 
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83</pre>
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 243</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_context_id'>context_id</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_params'>resource_params</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:context_id</span><span class='rparen'>)</span>
@@ -314,90 +314,36 @@
       <pre class="lines">
 
 
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58</pre>
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-  <span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>=</span> <span class='id identifier rubyid_page_params'>page_params</span><span class='lbracket'>[</span><span class='symbol'>:number</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_page_size'>page_size</span> <span class='op'>=</span> <span class='id identifier rubyid_page_params'>page_params</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>self:</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_resources'>resources</span> <span class='op'>=</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span>
-              <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span>
-              <span class='id identifier rubyid_by_id'>by_id</span><span class='period'>.</span>
-              <span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_page_number'>page_number</span><span class='rparen'>)</span><span class='period'>.</span>
-              <span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='id identifier rubyid_page_size'>page_size</span><span class='rparen'>)</span><span class='period'>.</span>
-              <span class='id identifier rubyid_without_count'>without_count</span>
+  <span class='id identifier rubyid_resources'>resources</span> <span class='op'>=</span> <span class='id identifier rubyid_record_filter'>record_filter</span><span class='period'>.</span><span class='id identifier rubyid_records'>records</span>
 
-  <span class='id identifier rubyid_first_page_params'>first_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_page_params'>page_params</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='id identifier rubyid_first_page_params'>first_page_params</span><span class='lbracket'>[</span><span class='symbol'>:number</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>1</span> <span class='comment'># Kaminari numbers pages from 1 instead of 0
-</span>
-  <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='lbrace'>{</span> 
-    <span class='label'>self:</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
-    <span class='label'>first:</span>  <span class='id identifier rubyid_api_resources_url'>api_resources_url</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_first_page_params'>first_page_params</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
-
-  <span class='kw'>unless</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_first_page?'>first_page?</span>
-    <span class='id identifier rubyid_prev_page_params'>prev_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_page_params'>page_params</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='id identifier rubyid_prev_page_params'>prev_page_params</span><span class='lbracket'>[</span><span class='symbol'>:number</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_prev_page'>prev_page</span>
-    <span class='id identifier rubyid_links'>links</span><span class='lbracket'>[</span><span class='symbol'>:prev</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_api_resources_url'>api_resources_url</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_prev_page_params'>prev_page_params</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  
-  <span class='kw'>unless</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_last_page?'>last_page?</span>
-    <span class='id identifier rubyid_next_page_params'>next_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_page_params'>page_params</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='id identifier rubyid_next_page_params'>next_page_params</span><span class='lbracket'>[</span><span class='symbol'>:number</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_next_page'>next_page</span>
-    <span class='id identifier rubyid_links'>links</span><span class='lbracket'>[</span><span class='symbol'>:next</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_api_resources_url'>api_resources_url</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_next_page_params'>next_page_params</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_record_filter'>record_filter</span><span class='period'>.</span><span class='id identifier rubyid_pagination_link_params'>pagination_link_params</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rel'>rel</span><span class='comma'>,</span><span class='id identifier rubyid_link_params'>link_params</span><span class='op'>|</span>
+    <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_api_resources_url'>api_resources_url</span><span class='lparen'>(</span><span class='id identifier rubyid_link_params'>link_params</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_links'>links</span><span class='lbracket'>[</span><span class='id identifier rubyid_rel'>rel</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_link'>link</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_link_headers'>link_headers</span> <span class='op'>=</span> <span class='id identifier rubyid_links'>links</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_result'>result</span><span class='comma'>,</span><span class='lparen'>(</span><span class='id identifier rubyid_rel'>rel</span><span class='comma'>,</span><span class='id identifier rubyid_href'>href</span><span class='rparen'>)</span><span class='op'>|</span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_href'>href</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;; rel=&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rel'>rel</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>)</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Link</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_link_headers'>link_headers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  
   <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='lbrace'>{</span>
     <span class='label'>jsonapi:</span> <span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='comma'>,</span>
     <span class='label'>include:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>representations</span><span class='words_sep'>]</span><span class='comma'>,</span>
@@ -424,34 +370,20 @@
       <pre class="lines">
 
 
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52</pre>
+234
+235
+236
+237
+238
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/api/resources_controller.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-  <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_find_by!'>find_by!</span><span class='lparen'>(</span><span class='label'>identifier:</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>self:</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_apply_link_headers'>apply_link_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_links'>links</span><span class='rparen'>)</span>
-
   <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='lbrace'>{</span>
     <span class='label'>jsonapi:</span> <span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span>
-    <span class='label'>include:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>representations</span><span class='words_sep'>]</span><span class='comma'>,</span>
-    <span class='label'>links:</span> <span class='id identifier rubyid_links'>links</span>
+    <span class='label'>include:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>representations</span><span class='words_sep'>]</span>
   <span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -506,7 +438,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:28:20 2017 by
+  Generated on Fri Nov 10 16:35:38 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

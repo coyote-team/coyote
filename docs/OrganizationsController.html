@@ -125,71 +125,7 @@
 
 
 
-  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
-  <ul class="summary">
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#dashboard+Dependency+injection+affordance+used+for+unit+testing;+normally+an+instance+of+Dashboard=-instance_method" title="#dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard= (instance method)">#<strong>dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard=</strong>  &#x21d2; Object </a>
-    
 
-    
-  </span>
-  
-  
-  
-    
-    
-      <span class="note title writeonly">writeonly</span>
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#dashboard=-instance_method" title="#dashboard= (instance method)">#<strong>dashboard</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-    
-      <span class="note title writeonly">writeonly</span>
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-  </ul>
-
-
-
-  
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#current_user=-instance_method" title="ApplicationController#current_user= (method)">#current_user</a></span>, <span class='object_link'><a href="ApplicationController.html#current_user+Used+for+unit+testing,+this+is+normally+managed+by+Devise=-instance_method" title="ApplicationController#current_user Used for unit testing, this is normally managed by Devise= (method)">#current_user Used for unit testing, this is normally managed by Devise</a></span></p>
 
 
   
@@ -356,108 +292,6 @@
   
   
   
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#clear_search_index-instance_method" title="ApplicationController#clear_search_index (method)">#clear_search_index</a></span>, <span class='object_link'><a href="ApplicationController.html#search_params-instance_method" title="ApplicationController#search_params (method)">#search_params</a></span></p>
-
-  
-  
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id=""></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard=-instance_method">
-  
-    #<strong>dashboard Dependency injection affordance used for unit testing; normally an instance of Dashboard=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="Dashboard.html" title="Dashboard (class)">Dashboard</a></span></li>
-    
-  </ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-6</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 6</span>
-
-<span class='id identifier rubyid_attr_writer'>attr_writer</span> <span class='symbol'>:dashboard</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id="dashboard-instance_method"></span>
-      <div class="method_details ">
-  <h3 class="signature " id="dashboard=-instance_method">
-  
-    #<strong>dashboard=</strong>(value)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="Dashboard.html" title="Dashboard (class)">Dashboard</a></span></li>
-    
-  </ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-6
-7
-8</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 6</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_dashboard='>dashboard=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-  <span class='ivar'>@dashboard</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
-
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -489,6 +323,11 @@
       <pre class="lines">
 
 
+25
+26
+27
+28
+29
 30
 31
 32
@@ -496,21 +335,20 @@
 34
 35
 36
-37
-38
-39
-40</pre>
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create Organization</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_organization'>organization</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Organization.html" title="Organization (class)">Organization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_organization_params'>organization_params</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_organization'>current_organization</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Organization.html" title="Organization (class)">Organization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_organization_params'>organization_params</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_organization'>organization</span><span class='comma'>,</span> <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
+    <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_memberships'>memberships</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='label'>user:</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='embexpr_end'>}</span><span class='tstring_content'> and assigned </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_user'>current_user</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='comma'>,</span> <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Created </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to create Organization: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_error_sentence'>error_sentence</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='lbracket'>[</span><span class='symbol'>:alert</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>There was an error creating this Organization</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>action:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>new</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -546,15 +384,13 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Edit </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -587,18 +423,16 @@
       <pre class="lines">
 
 
-13
-14
-15
-16</pre>
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Organizations</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_organizations'>organizations</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Organization.html" title="Organization (class)">Organization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'># TODO: scope this by User memberships
-</span><span class='kw'>end</span></pre>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_organizations'>organizations</span> <span class='op'>=</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_organizations'>organizations</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -630,17 +464,15 @@
       <pre class="lines">
 
 
-24
-25
-26
-27</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New Organization</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_organization'>organization</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Organization.html" title="Organization (class)">Organization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_organization'>current_organization</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Organization.html" title="Organization (class)">Organization</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -673,15 +505,13 @@
       <pre class="lines">
 
 
-19
-20
-21</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -714,25 +544,21 @@
       <pre class="lines">
 
 
+44
+45
+46
+47
 48
 49
 50
-51
-52
-53
-54
-55
-56
-57</pre>
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/organizations_controller.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Update </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_organization_params'>organization_params</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_organization'>organization</span><span class='comma'>,</span> <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Saved changes to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organization'>organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_organization_params'>organization_params</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='comma'>,</span> <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Saved changes to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='lbracket'>[</span><span class='symbol'>:alert</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>There was an error updating this Organization</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>action:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>edit</span><span class='tstring_end'>&quot;</span></span>
@@ -748,7 +574,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:28:20 2017 by
+  Generated on Fri Nov 10 16:35:38 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

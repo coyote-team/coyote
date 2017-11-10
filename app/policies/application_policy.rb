@@ -77,7 +77,7 @@ class ApplicationPolicy
       @scope = scope
     end
 
-    # @return scope [ActiveRecord::Associations::CollectionProxy] the scope upon which to base ActiveRecord queries, restricted to records the organization user can access
+    # @return [ActiveRecord::Associations::CollectionProxy] the scope upon which to base ActiveRecord queries, restricted to records the organization user can access
     def resolve
       scope
     end

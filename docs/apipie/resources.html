@@ -33,7 +33,7 @@
   <h1>
     Resources
     <br>
-    <small>Anything that can be represented by Coyote</small>
+    <small>Anything with an identity that can be represented in the Coyote database</small>
   </h1>
 </div>
 
@@ -47,6 +47,8 @@ in a library can also be considered resources.”</p>
 </div>
 
 
+  <h2>Supported Formats</h2>
+  json
 
 
 
@@ -73,9 +75,113 @@ in a library can also be considered resources.”</p>
     <div id='description-index' class='collapse accordion-body'>
       
 
+  <h3>Supported Formats</h3>
+  json
 
 
 
+  <h3>Examples</h3>
+    <pre class="prettyprint">curl  -H &#39;Authorization: CHANGEME&#39; http://localhost:10000/api/v1/organizations/1/resources/ | jsonlint
+  {
+&quot;data&quot;: [
+  {
+    &quot;id&quot;: &quot;t.y.f.f.s.h.,_2011_929d&quot;,
+    &quot;type&quot;: &quot;resource&quot;,
+    &quot;attributes&quot;: {
+      &quot;title&quot;: &quot;T.Y.F.F.S.H., 2011&quot;,
+      &quot;resource_type&quot;: &quot;still_image&quot;,
+      &quot;canonical_id&quot;: &quot;c4ca4238a0b923820dcc509a6f75849b&quot;,
+      &quot;source_uri&quot;: &quot;https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png&quot;,
+      &quot;created_at&quot;: &quot;2017-11-06T16:17:49.630Z&quot;,
+      &quot;updated_at&quot;: &quot;2017-11-06T16:55:10.207Z&quot;,
+      &quot;context&quot;: &quot;collection&quot;
+    },
+    &quot;relationships&quot;: {
+      &quot;organization&quot;: {
+        &quot;data&quot;: {
+          &quot;type&quot;: &quot;organization&quot;,
+          &quot;id&quot;: &quot;1&quot;
+        }
+      },
+      &quot;representations&quot;: {
+        &quot;data&quot;: [
+          {
+            &quot;type&quot;: &quot;representation&quot;,
+            &quot;id&quot;: &quot;1&quot;
+          }
+        ]
+      }
+    }
+  },
+  {
+    &quot;id&quot;: &quot;mona_lisa_48f9&quot;,
+    &quot;type&quot;: &quot;resource&quot;,
+    &quot;attributes&quot;: {
+      &quot;title&quot;: &quot;Mona Lisa&quot;,
+      &quot;resource_type&quot;: &quot;still_image&quot;,
+      &quot;canonical_id&quot;: &quot;c81e728d9d4c2f636f067f89cc14862c&quot;,
+      &quot;source_uri&quot;: &quot;http://example.com/image123.png&quot;,
+      &quot;created_at&quot;: &quot;2017-11-06T16:17:49.926Z&quot;,
+      &quot;updated_at&quot;: &quot;2017-11-06T16:17:49.926Z&quot;,
+      &quot;context&quot;: &quot;voluptatibus&quot;
+    },
+    &quot;relationships&quot;: {
+      &quot;organization&quot;: {
+        &quot;data&quot;: {
+          &quot;type&quot;: &quot;organization&quot;,
+          &quot;id&quot;: &quot;1&quot;
+        }
+      },
+      &quot;representations&quot;: {
+        &quot;data&quot;: []
+      }
+    }
+  }
+],
+&quot;included&quot;: [
+  {
+    &quot;id&quot;: &quot;1&quot;,
+    &quot;type&quot;: &quot;organization&quot;,
+    &quot;attributes&quot;: {
+      &quot;title&quot;: &quot;Acme Museum&quot;
+    }
+  },
+  {
+    &quot;id&quot;: &quot;1&quot;,
+    &quot;type&quot;: &quot;representation&quot;,
+    &quot;attributes&quot;: {
+      &quot;status&quot;: &quot;approved&quot;,
+      &quot;content_uri&quot;: null,
+      &quot;content_type&quot;: &quot;text/plain&quot;,
+      &quot;language&quot;: &quot;en&quot;,
+      &quot;text&quot;: &quot;A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.&quot;,
+      &quot;created_at&quot;: &quot;2017-11-06T16:17:49.811Z&quot;,
+      &quot;updated_at&quot;: &quot;2017-11-06T16:19:23.998Z&quot;,
+      &quot;metum&quot;: &quot;Short&quot;,
+      &quot;author&quot;: &quot;effie.boyle@carroll.org&quot;,
+      &quot;license&quot;: &quot;Et quo dignissimos ex. Non optio minima eum qui. Placeat adipisci id omnis amet rem pariatur.&quot;
+    },
+    &quot;relationships&quot;: {
+      &quot;resource&quot;: {
+        &quot;meta&quot;: {
+          &quot;included&quot;: false
+        }
+      }
+    },
+    &quot;links&quot;: {
+      &quot;self&quot;: null
+    }
+  }
+],
+&quot;links&quot;: {
+  &quot;self&quot;: &quot;http://localhost:10000/api/v1/organizations/1/resources&quot;,
+  &quot;first&quot;: &quot;http://localhost:10000/api/v1/organizations/1/resources?page%5Bnumber%5D=1\u0026page%5Bsize%5D=50&quot;
+},
+&quot;jsonapi&quot;: {
+  &quot;version&quot;: &quot;1.0&quot;
+}
+TEST
+</pre>
 
   <h3>Params</h3>
   <table class='table'>
@@ -96,6 +202,8 @@ in a library can also be considered resources.”</p>
     </td>
     <td>
       
+<p>Identifies the page of results to retrieve, numbered starting at 1</p>
+
         <p><strong>Validations:</strong></p>
         <ul>
             <li>
@@ -233,9 +341,84 @@ this value</p>
     <div id='description-show' class='collapse accordion-body'>
       
 
+  <h3>Supported Formats</h3>
+  json
 
 
 
+  <h3>Examples</h3>
+    <pre class="prettyprint">curl  -H &#39;Authorization: CHANGEME&#39; http://localhost:10000/api/v1/resources/1 | jsonlint
+{
+  &quot;data&quot;: {
+    &quot;id&quot;: &quot;1&quot;,
+    &quot;type&quot;: &quot;resource&quot;,
+    &quot;attributes&quot;: {
+      &quot;id&quot;: 1,
+      &quot;title&quot;: &quot;T.Y.F.F.S.H., 2011&quot;,
+      &quot;resource_type&quot;: &quot;still_image&quot;,
+      &quot;canonical_id&quot;: &quot;c4ca4238a0b923820dcc509a6f75849b&quot;,
+      &quot;source_uri&quot;: &quot;https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png&quot;,
+      &quot;created_at&quot;: &quot;2017-11-06T16:17:49.630Z&quot;,
+      &quot;updated_at&quot;: &quot;2017-11-06T16:55:10.207Z&quot;,
+      &quot;context&quot;: &quot;collection&quot;
+    },
+    &quot;relationships&quot;: {
+      &quot;organization&quot;: {
+        &quot;data&quot;: {
+          &quot;type&quot;: &quot;organization&quot;,
+          &quot;id&quot;: &quot;1&quot;
+        }
+      },
+      &quot;representations&quot;: {
+        &quot;data&quot;: [
+          {
+            &quot;type&quot;: &quot;representation&quot;,
+            &quot;id&quot;: &quot;1&quot;
+          }
+        ]
+      }
+    }
+  },
+  &quot;included&quot;: [
+    {
+      &quot;id&quot;: &quot;1&quot;,
+      &quot;type&quot;: &quot;organization&quot;,
+      &quot;attributes&quot;: {
+        &quot;title&quot;: &quot;Acme Museum&quot;
+      }
+    },
+    {
+      &quot;id&quot;: &quot;1&quot;,
+      &quot;type&quot;: &quot;representation&quot;,
+      &quot;attributes&quot;: {
+        &quot;status&quot;: &quot;approved&quot;,
+        &quot;content_uri&quot;: null,
+        &quot;content_type&quot;: &quot;text/plain&quot;,
+        &quot;language&quot;: &quot;en&quot;,
+        &quot;text&quot;: &quot;A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.&quot;,
+        &quot;created_at&quot;: &quot;2017-11-06T16:17:49.811Z&quot;,
+        &quot;updated_at&quot;: &quot;2017-11-06T16:19:23.998Z&quot;,
+        &quot;metum&quot;: &quot;Short&quot;,
+        &quot;author&quot;: &quot;effie.boyle@carroll.org&quot;,
+        &quot;license&quot;: &quot;Et quo dignissimos ex. Non optio minima eum qui. Placeat adipisci id omnis amet rem pariatur.&quot;
+      },
+      &quot;relationships&quot;: {
+        &quot;resource&quot;: {
+          &quot;meta&quot;: {
+            &quot;included&quot;: false
+          }
+        }
+      },
+      &quot;links&quot;: {
+        &quot;self&quot;: null
+      }
+    }
+  ],
+  &quot;jsonapi&quot;: {
+    &quot;version&quot;: &quot;1.0&quot;
+  }
+}
+</pre>
 
 
 
@@ -262,6 +445,8 @@ this value</p>
     <div id='description-create' class='collapse accordion-body'>
       
 
+  <h3>Supported Formats</h3>
+  json
 
 
 
@@ -298,6 +483,30 @@ this value</p>
 
     <tr style='background-color:rgb(250,250,250);'>
     <td>
+      <strong>resource[id] </strong><br>
+      <small>
+        required
+        
+      </small>
+    </td>
+    <td>
+      
+<p>Resource ID</p>
+
+        <p><strong>Validations:</strong></p>
+        <ul>
+            <li>
+<p>Must be a Integer</p>
+</li>
+        </ul>
+
+    </td>
+
+  </tr>
+
+  
+  <tr style='background-color:rgb(250,250,250);'>
+    <td>
       <strong>resource[identifier] </strong><br>
       <small>
         required
@@ -306,7 +515,7 @@ this value</p>
     </td>
     <td>
       
-<p>Unique identifier for this resource</p>
+<p>Unique human-readable identifier (slug) for this resource</p>
 
         <p><strong>Validations:</strong></p>
         <ul>
@@ -330,6 +539,8 @@ this value</p>
     </td>
     <td>
       
+<p>Caption that helps humans identify the resource</p>
+
         <p><strong>Validations:</strong></p>
         <ul>
             <li>
@@ -466,6 +677,37 @@ this value</p>
 
     </tbody>
   </table>
+
+
+
+    </div>
+    <hr>
+    <div class='pull-right small'>
+      <a href='../apipie/resources/update.html'> >>> </a>
+    </div>
+    <div>
+        <h2>
+          <a href='#description-update'
+           class='accordion-toggle'
+           data-toggle='collapse'
+           data-parent='#accordion'>
+            PATCH /resources/:id
+          </a>
+          <br>
+          <small>Update attributes of a particular resource</small>
+        </h2>
+    </div>
+
+
+    <div id='description-update' class='collapse accordion-body'>
+      
+
+  <h3>Supported Formats</h3>
+  json
+
+
+
+
 
 
 

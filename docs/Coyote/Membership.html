@@ -415,12 +415,14 @@ higher-ranking/more-powerful roles</p>
 
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/coyote/membership.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_role_rank'>role_rank</span><span class='lparen'>(</span><span class='id identifier rubyid_role_name'>role_name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_role_names'>role_names</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>+</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='id identifier rubyid_role_name'>role_name</span> <span class='op'>==</span> <span class='symbol'>:staff</span>
   <span class='id identifier rubyid_role_names'>role_names</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_role_name'>role_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>-</span><span class='int'>1</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -433,7 +435,7 @@ higher-ranking/more-powerful roles</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Nov  8 14:38:20 2017 by
+  Generated on Fri Nov 10 16:35:33 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>

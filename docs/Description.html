@@ -69,12 +69,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">ActiveRecord::Base</span>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></li>
           
             <li class="next">Description</li>
           
@@ -116,10 +118,10 @@
 <pre class="code ruby"><code class="ruby">id         :integer          not null, primary key
 locale     :string           default(&quot;en&quot;)
 text       :text
-status_id  :integer
-image_id   :integer
-metum_id   :integer
-user_id    :integer
+status_id  :integer          not null
+image_id   :integer          not null
+metum_id   :integer          not null
+user_id    :integer          not null
 created_at :datetime
 updated_at :datetime
 license    :string           default(&quot;cc0-1.0&quot;)</code></pre>
@@ -377,6 +379,12 @@ license    :string           default(&quot;cc0-1.0&quot;)</code></pre>
   
 
 
+  
+  
+  
+  
+  
+  
   
   
 
@@ -771,9 +779,9 @@ license    :string           default(&quot;cc0-1.0&quot;)</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Fri Jul 21 14:22:57 2017 by
+  Generated on Fri Nov 10 16:32:35 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.1).
+  0.9.9 (ruby-2.4.1).
 </div>
 
     </div>

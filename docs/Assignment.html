@@ -98,9 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/assignment.rb<span class="defines">,<br />
-  app/models/assignment.rb</span>
-</dd>
+    <dd>app/models/assignment.rb</dd>
   </dl>
   
 </div>
@@ -235,7 +233,7 @@ resource_id :integer          not null</code></pre>
       <pre class="code"><span class="info file"># File 'app/models/assignment.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> assigned to </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_image'>image</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'> assigned to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -247,7 +245,7 @@ resource_id :integer          not null</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 15:12:06 2017 by
+  Generated on Fri Nov 10 16:35:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
