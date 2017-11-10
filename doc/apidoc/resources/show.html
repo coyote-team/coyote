@@ -46,9 +46,84 @@
 
   
 
+  <h2>Supported Formats</h2>
+  json
 
 
 
+  <h2>Examples</h2>
+    <pre class="prettyprint">curl  -H &#39;Authorization: CHANGEME&#39; http://localhost:10000/api/v1/resources/1 | jsonlint
+{
+  &quot;data&quot;: {
+    &quot;id&quot;: &quot;1&quot;,
+    &quot;type&quot;: &quot;resource&quot;,
+    &quot;attributes&quot;: {
+      &quot;id&quot;: 1,
+      &quot;title&quot;: &quot;T.Y.F.F.S.H., 2011&quot;,
+      &quot;resource_type&quot;: &quot;still_image&quot;,
+      &quot;canonical_id&quot;: &quot;c4ca4238a0b923820dcc509a6f75849b&quot;,
+      &quot;source_uri&quot;: &quot;https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png&quot;,
+      &quot;created_at&quot;: &quot;2017-11-06T16:17:49.630Z&quot;,
+      &quot;updated_at&quot;: &quot;2017-11-06T16:55:10.207Z&quot;,
+      &quot;context&quot;: &quot;collection&quot;
+    },
+    &quot;relationships&quot;: {
+      &quot;organization&quot;: {
+        &quot;data&quot;: {
+          &quot;type&quot;: &quot;organization&quot;,
+          &quot;id&quot;: &quot;1&quot;
+        }
+      },
+      &quot;representations&quot;: {
+        &quot;data&quot;: [
+          {
+            &quot;type&quot;: &quot;representation&quot;,
+            &quot;id&quot;: &quot;1&quot;
+          }
+        ]
+      }
+    }
+  },
+  &quot;included&quot;: [
+    {
+      &quot;id&quot;: &quot;1&quot;,
+      &quot;type&quot;: &quot;organization&quot;,
+      &quot;attributes&quot;: {
+        &quot;title&quot;: &quot;Acme Museum&quot;
+      }
+    },
+    {
+      &quot;id&quot;: &quot;1&quot;,
+      &quot;type&quot;: &quot;representation&quot;,
+      &quot;attributes&quot;: {
+        &quot;status&quot;: &quot;approved&quot;,
+        &quot;content_uri&quot;: null,
+        &quot;content_type&quot;: &quot;text/plain&quot;,
+        &quot;language&quot;: &quot;en&quot;,
+        &quot;text&quot;: &quot;A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.&quot;,
+        &quot;created_at&quot;: &quot;2017-11-06T16:17:49.811Z&quot;,
+        &quot;updated_at&quot;: &quot;2017-11-06T16:19:23.998Z&quot;,
+        &quot;metum&quot;: &quot;Short&quot;,
+        &quot;author&quot;: &quot;effie.boyle@carroll.org&quot;,
+        &quot;license&quot;: &quot;Et quo dignissimos ex. Non optio minima eum qui. Placeat adipisci id omnis amet rem pariatur.&quot;
+      },
+      &quot;relationships&quot;: {
+        &quot;resource&quot;: {
+          &quot;meta&quot;: {
+            &quot;included&quot;: false
+          }
+        }
+      },
+      &quot;links&quot;: {
+        &quot;self&quot;: null
+      }
+    }
+  ],
+  &quot;jsonapi&quot;: {
+    &quot;version&quot;: &quot;1.0&quot;
+  }
+}
+</pre>
 
 
 
