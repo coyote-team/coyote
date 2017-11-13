@@ -3,10 +3,15 @@ class AssignmentsController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show destroy]
 
-  helper_method :assignment, :assignments, :next_resource, :users, :resources
+  helper_method :assignment, :assigned_users, :next_resource, :users, :resources
 
   # GET /assignments
   def index
+    assignments = current_organization.assignments.order(:user_id).to_a
+
+    self.assigned_users = assignments.inject(Hash.new(0)) do |hash,assignment|
+      hash.merge!(assignment.user => hash[assignment.user] + 1)
+    end
   end
 
   # GET /assignments/1
@@ -15,7 +20,6 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/new
   def new
-    self.assignment = current_organization.assignments.new
   end
 
   # POST /assignments
@@ -47,14 +51,10 @@ class AssignmentsController < ApplicationController
 
   private
   
-  attr_accessor :assignment
+  attr_accessor :assigned_users, :assignment
 
   def set_assignment
     self.assignment = current_organization.assignments.find(params[:id])
-  end
-
-  def assignments
-    current_organization.assignments.by_created_at.page(params[:page])
   end
 
   def users
