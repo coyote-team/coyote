@@ -4,10 +4,10 @@
 class RepresentationsController < ApplicationController
   include PermittedParameters
 
-  before_action :set_representation,       only: %i[show edit update destroy]
-  before_action :set_current_resource,     only: %i[new create]
-  before_action :authorize_general_access, only: %i[new index create]
-  before_action :authorize_unit_access,    only: %i[show edit update destroy]
+  before_action :set_representation,                    only: %i[show edit update destroy]
+  before_action :set_current_resource_and_organization, only: %i[new edit create]
+  before_action :authorize_general_access,              only: %i[new index create]
+  before_action :authorize_unit_access,                 only: %i[show edit update destroy]
   
   helper_method :representation, :current_resource, :record_filter, :available_meta, :authors, :licenses
 
@@ -29,7 +29,7 @@ class RepresentationsController < ApplicationController
     representation.author = current_user
 
     if representation.save
-      logger.info "Created #{representation}"
+      logger.info "Created #{representation} for #{current_resource}"
       redirect_to representation, notice: 'The representation has been created'
     else
       logger.warn "Unable to create representation due to '#{representation.error_sentence}'"
@@ -70,9 +70,14 @@ class RepresentationsController < ApplicationController
     self.current_organization = representation.organization
   end
 
-  def set_current_resource
-    resource_id = params.require(:resource_id)
-    self.current_resource = current_organization.resources.find(resource_id)
+  def set_current_resource_and_organization
+    self.current_resource = if representation&.persisted?
+                              representation.resource
+                            else
+                              resource_id = params.require(:resource_id)
+                              current_organization.resources.find(resource_id)
+                            end
+
     self.current_organization = current_resource.organization
   end
 

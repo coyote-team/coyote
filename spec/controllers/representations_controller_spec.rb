@@ -119,7 +119,7 @@ RSpec.describe RepresentationsController do
     end
   end
   
-  context "as an author working with his or her own content" do
+  context 'as an author working with his or her own content' do
     include_context "signed-in author user"
 
     let(:representation) do 
@@ -135,6 +135,8 @@ RSpec.describe RepresentationsController do
 
       expect {
         post :create, params: new_representation_params
+        expect(response).to be_redirect
+        resource.reload
       }.to change(resource.representations,:count).
         from(0).to(1)
 
