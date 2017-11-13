@@ -4,6 +4,9 @@
       = link_to(representation.resource,class: 'thumbnail') do
         = resource_link_target(representation.resource,dom_id(representation))
 
+      %div[representation,'caption']
+        <em>#{representation.resource_title}</em>
+
       %div[representation]
         = to_html(representation.text)
 
