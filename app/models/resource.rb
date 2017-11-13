@@ -79,7 +79,7 @@ class Resource < ApplicationRecord
 
   # @return [String] "High" if this is a high-priority resource, "low" otherwise
   def priority_flag
-    read_attribute(:priority_flag) ? 'High': 'Low'
+    read_attribute(:priority_flag) ? 'High' : 'Low'
   end
 
   # Yields to the caller if this resource is image-like, and is capable of being displayed as a static image
