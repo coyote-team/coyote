@@ -6,7 +6,8 @@
 module ApplicationHelper
   def organizational_user_collection
     # @return [Array<String,Integer>] list of users suitable for use in select boxes
-    current_organization.users.map { |u| [u.username,u.id] }
+    collection = current_organization.users.sort_by(&:username)
+    collection.map! { |u| [u.username,u.id] }
   end
 
   # @param language_code [String] language short code such as 'en'
