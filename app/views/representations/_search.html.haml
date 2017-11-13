@@ -5,7 +5,7 @@
   %hr
   = f.input :metum_id_eq, label: 'Metum', class: 'input-medium form-control', required: false, :as => :select, collection: available_meta
   %hr
-  = f.input :author_id_in, :label => 'Created by Author', :collection => current_organization.users, :as => :check_boxes
+  = f.input :author_id_eq, :label => 'Created by Author', :collection => organizational_user_collection, :as => :select
   %hr
   = f.submit 'Search', name: nil, class: 'btn btn-primary btn-sm'
   = link_to 'Clear', organization_representations_path(current_organization), class: 'btn btn-sm btn-info'
