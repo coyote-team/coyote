@@ -3,7 +3,9 @@
     .col-md-12
       %header
         %h1#page-title{tabindex: -1}
-          = title "Resource #{resource.label}"
+          %cite
+            = title resource.title
+          
   .row
     .col-md-4
       = link_to(resource,class: 'thumbnail') do
@@ -13,9 +15,6 @@
       %table.entity-table
         %caption.sr-only Key value pairs for this resource
         %tbody
-          %tr
-            %th{scope: "row"} Caption
-            %td= resource.title
           %tr
             %th{scope: "row"} Coyote ID
             %td= resource.id
