@@ -18,7 +18,10 @@ class RepresentationsController < ApplicationController
   end
 
   def new
-    self.representation = current_resource.representations.new(language: Rails.configuration.x.default_representation_language)
+    self.representation = current_resource.representations.new({
+      language: Rails.configuration.x.default_representation_language,
+      author: current_user
+    })
   end
 
   def edit
@@ -26,7 +29,6 @@ class RepresentationsController < ApplicationController
 
   def create
     self.representation = current_resource.representations.new(representation_params)
-    representation.author = current_user
 
     if representation.save
       logger.info "Created #{representation} for #{current_resource}"

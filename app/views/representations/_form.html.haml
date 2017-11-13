@@ -18,6 +18,7 @@
         = f.association :metum, collection: available_meta
         = f.input :language, :as => :select, collection: language_list, include_blank: false
         = f.association :license, collection: License.all, include_blank: false
+        = f.association :author, collection: organizational_user_collection, include_blank: false
 
       .form-actions
         .form-actions-inner

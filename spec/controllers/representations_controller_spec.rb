@@ -43,6 +43,7 @@ RSpec.describe RepresentationsController do
     representation = attributes_for(:representation)
     representation[:metum_id] = metum.id
     representation[:license_id] = license.id
+    representation[:author_id] = user.id
 
     base_params.merge({
       representation: representation,
@@ -60,6 +61,8 @@ RSpec.describe RepresentationsController do
 
   context "as a signed-out user" do
     include_context "signed-out user"
+
+    let(:user) { build_stubbed(:user) }
 
     it "requires login for all actions" do
       aggregate_failures do
