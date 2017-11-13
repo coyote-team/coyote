@@ -4,7 +4,6 @@
     = raw analytical.head_prepend_javascript
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
 
-    = javascript_include_tag "application", "data-turbolinks-track" => true
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -42,5 +41,6 @@
     #loading
     = raw analytical.body_append_javascript
 
+  = javascript_include_tag "application", "data-turbolinks-track" => true
   = yield :javascript_footer
 = body_class

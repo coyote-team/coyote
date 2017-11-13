@@ -254,6 +254,8 @@ GEM
     language_list (1.2.1)
     launchy (2.4.3)
       addressable (~> 2.3)
+    lightbox2-rails (2.8.2.1)
+      railties (>= 3.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -520,6 +522,7 @@ DEPENDENCIES
   kaminari
   language_list
   launchy
+  lightbox2-rails
   markdown-rails
   metamagic
   modular-scale
