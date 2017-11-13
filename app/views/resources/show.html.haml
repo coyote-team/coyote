@@ -33,10 +33,13 @@
             %td= resource.canonical_id
           %tr
             %th{scope: "row"} Context
-            %td= link_to(resource.context,[current_organization,resource.context])
+            %td= link_to(resource.context,[resource.organization,resource.context])
           %tr
             %th{scope: "row"} Identifier (Slug)
             %td= resource.identifier
+          %tr
+            %th{scope: "row"} Organization
+            %td= link_to(resource.organization,resource.organization)
           %tr
             %th{scope: "row"} Updated
             %td
