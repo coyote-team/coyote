@@ -55,7 +55,7 @@ gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '5382
 gem 'rollbar'
 gem 'factory_girl_rails', require: false
 gem 'pundit' # role-based authorization
-gem 'lightbox2-rails' # for resource lightboxes on index pages
+gem 'lightbox2-rails', github: 'johansmitsnl/lightbox2-rails' # for resource lightboxes on index pages
 
 group :development, :test do
   gem 'faker'

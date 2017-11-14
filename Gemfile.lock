@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/johansmitsnl/lightbox2-rails.git
+  revision: 4501338d969a30e853e09eaeffd6feb27a7f8651
+  specs:
+    lightbox2-rails (2.9.0)
+      railties (>= 3.1)
+
+GIT
   remote: https://github.com/seeread/easymarklet.git
   revision: 53829a6fbd80425cc8a56439c6343d94b7d5d50b
   ref: 53829a6
@@ -254,8 +261,6 @@ GEM
     language_list (1.2.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    lightbox2-rails (2.8.2.1)
-      railties (>= 3.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -522,7 +527,7 @@ DEPENDENCIES
   kaminari
   language_list
   launchy
-  lightbox2-rails
+  lightbox2-rails!
   markdown-rails
   metamagic
   modular-scale
