@@ -77,6 +77,11 @@ class Resource < ApplicationRecord
     order(:created_at).last.try(:created_at)
   end
 
+  # @return [String] "High" if this is a high-priority resource, "low" otherwise
+  def priority_flag
+    read_attribute(:priority_flag) ? 'High' : 'Low'
+  end
+
   # Yields to the caller if this resource is image-like, and is capable of being displayed as a static image
   # @yieldparam uri [URI] location of the image file
   # @note Will not yield if the resource is image-like, yet we we are missing a URI
