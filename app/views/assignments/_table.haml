@@ -7,9 +7,9 @@
         %th{scope: "col"} Assignments
 
     %tbody
-      - Array(assigned_users).each do |user,assignment_count|
-        %tr{class: "item"}
+      - assigned_users.each do |membership,assignment_count|
+        %tr.item
           %td
-            = link_to user, user
+            = link_to(membership.user,[current_organization,membership])
           %td 
             = number_with_delimiter(assignment_count)

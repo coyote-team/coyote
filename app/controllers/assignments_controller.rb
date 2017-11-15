@@ -8,9 +8,12 @@ class AssignmentsController < ApplicationController
   # GET /assignments
   def index
     assignments = current_organization.assignments.order(:user_id).to_a
+    memberships = current_organization.memberships.index_by(&:user_id)
 
-    self.assigned_users = assignments.inject(Hash.new(0)) do |hash,assignment|
-      hash.merge!(assignment.user => hash[assignment.user] + 1)
+    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment,hash|
+      membership = memberships[assignment.user_id]
+      hash[membership] = hash[membership] + 1
+      hash
     end
   end
 
