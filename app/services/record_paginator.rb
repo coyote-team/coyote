@@ -11,7 +11,6 @@ class RecordPaginator
   def query
     @query ||= begin
                  records.
-                   by_id.
                    page(pagination_number).
                    per(pagination_size).
                    without_count
