@@ -2,16 +2,15 @@
 class UsersController < ApplicationController
   before_action :authorize_access
 
-  helper_method :user, :title
+  helper_method :user
 
   # GET /users/1
   def show
-    self.title = user.to_s
   end
 
   private
   
-  attr_accessor :user, :title
+  attr_accessor :user
 
   def user
     @user ||= User.find(params[:id])
