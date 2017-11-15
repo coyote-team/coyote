@@ -20,7 +20,7 @@
             %td= resource.id
           %tr
             %th{scope: "row"} Priority
-            %td= resource.priority_flag
+            %td= resource.priority_flag ? 'High' : 'Low'
           %tr
             %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/#section-7',target: :_blank)
             %td= resource.resource_type
