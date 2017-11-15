@@ -23,6 +23,7 @@
       .form-actions
         .form-actions-inner
           = f.button :submit, 'Save'
+          = link_to 'Cancel', :back, class: 'btn btn-warning'
 
           - if representation.persisted?
             %br
