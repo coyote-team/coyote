@@ -7,9 +7,8 @@
             = title resource.title
           
   .row
-    .col-md-4
-      = link_to(resource,class: 'thumbnail') do
-        = resource_link_target(resource,dom_id(resource),alt: resource.representations.first) # TODO: need to figure this out, in general: what to use for a 'default' description
+    .col-md-6
+      = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'thumbnail') # TODO: need to figure this out, in general: what to use for a 'default' description
 
     .col-md-6
       %table.entity-table
