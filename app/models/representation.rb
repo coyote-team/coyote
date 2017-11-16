@@ -52,6 +52,10 @@ class Representation < ApplicationRecord
     %i[approved not_approved ready_to_review]
   end
 
+  def to_s
+    "Description #{self[:id]}"
+  end
+
   private
 
   def must_have_text_or_content_uri
