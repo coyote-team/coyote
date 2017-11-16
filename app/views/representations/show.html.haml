@@ -48,12 +48,4 @@
 
           %nav.show-nav{role:"navigation"}
             %ul.list-inline
-              - if policy(representation).edit?
-                %li
-                  = link_to edit_representation_path(representation), title: "Edit this representation", class: 'btn btn-primary' do
-                    Edit
-              %br
-              %br
-            %ul.list-inline
-              %li
-                = link_to 'View representations', organization_representations_path(current_organization), class: 'btn btn-info', title: "View the representations index"
+              %li= link_to('Edit',edit_representation_path(representation), title: "Edit this representation", class: 'btn btn-primary') if policy(representation).edit?
