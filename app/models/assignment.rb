@@ -22,6 +22,7 @@ class Assignment < ApplicationRecord
   scope :by_created_at, -> { order(:created_at => :desc) }
 
   delegate :title, :to => :resource, :prefix => true
+  delegate :first_name, :last_name, :email, :to => :user, :prefix => true
 
   paginates_per 50
 

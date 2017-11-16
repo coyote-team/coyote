@@ -7,7 +7,12 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments
   def index
-    assignments = current_organization.assignments.order(:user_id).to_a
+    assignments = current_organization.assignments.to_a
+
+    assignments.sort_by! do |a| 
+      [a.user_last_name,a.user_email].tap(&:compact!).first 
+    end
+
     memberships = current_organization.memberships.index_by(&:user_id)
 
     self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment,hash|

@@ -59,7 +59,7 @@ class User < ApplicationRecord
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
-    if !first_name.blank? or !last_name.blank?
+    if !first_name.blank? || !last_name.blank?
       [first_name, last_name].join(' ')
     else
       email
