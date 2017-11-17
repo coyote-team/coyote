@@ -6,8 +6,8 @@ module ResourcesHelper
     end
   end
 
-  def context_list
-    current_user.contexts.map do |c|
+  def resource_group_list
+    current_user.resource_groups.map do |c|
       [c.title,c.id]
     end
   end

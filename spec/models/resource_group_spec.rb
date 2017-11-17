@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: contexts
+# Table name: resource_groups
 #
 #  id              :integer          not null, primary key
 #  title           :string           not null
@@ -10,11 +10,11 @@
 #
 # Indexes
 #
-#  index_contexts_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
 #
 
-RSpec.describe Context do
-  subject { build(:context) }
+RSpec.describe ResourceGroup do
+  subject { build(:resource_group) }
 
   it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) } 
 end

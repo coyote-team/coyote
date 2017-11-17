@@ -2,12 +2,12 @@ RSpec.describe 'Accessing resources' do
   context 'with authorization' do
     include_context 'API editor user'
 
-    let(:context) do
-      create(:context,:website,organization: user_organization) 
+    let(:resource_group) do
+      create(:resource_group,:website,organization: user_organization) 
     end
 
     let(:new_resource_params) do
-      attributes_for(:resource).merge(context_id: context.id)
+      attributes_for(:resource).merge(resource_group_id: resource_group.id)
     end
 
     let(:existing_resource) do
@@ -23,7 +23,7 @@ RSpec.describe 'Accessing resources' do
 
       user_organization.resources.first.tap do |resource|
         expect(resource.title).to eq('Mona Lisa')
-        expect(resource.context_title).to eq('website')
+        expect(resource.resource_group_title).to eq('website')
       end
 
       invalid_params = { resource: new_resource_params.except(:identifier) }

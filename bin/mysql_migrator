@@ -22,7 +22,7 @@ meta = client.query('SELECT * FROM meta').to_a
 org.meta.create!(meta.to_a)
 puts "Metum: #{Metum.count}"
 
-contexts = client.query(<<~SQL
+resource_groups = client.query(<<~SQL
 SELECT DISTINCT i.group_id AS id, g.title
 FROM images i
 INNER JOIN groups g
@@ -30,8 +30,8 @@ ON i.group_id = g.id
 SQL
 ).to_a
 
-org.contexts.create!(contexts.to_a)
-puts "context: #{Context.count}"
+org.resource_groups.create!(resource_groups.to_a)
+puts "resource_group: #{ResourceGroup.count}"
 
 users = client.query('SELECT * FROM users').to_a
 
@@ -57,7 +57,7 @@ resources = images.to_a.map do |image|
   image['source_uri'] = "https://mcachicago.org#{path}"
 
   image.delete('website_id')
-  image['context_id'] = image.delete('group_id')
+  image['resource_group_id'] = image.delete('group_id')
 
   image.delete('assignments_count')
   image.delete('descriptions_count')

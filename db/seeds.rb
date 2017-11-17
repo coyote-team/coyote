@@ -9,7 +9,7 @@ end
 
 organization = FactoryGirl.create(:organization,title: "Acme Museum")
 
-contexts = organization.contexts.create!([
+resource_groups = organization.resource_groups.create!([
   { title: "collection" },
   { title: "website" },
   { title: "exhibitions" },
@@ -26,7 +26,7 @@ end
 resource = FactoryGirl.create(:resource,{
   title: "T.Y.F.F.S.H., 2011",
   organization: organization,
-  context: contexts.first,
+  resource_group: resource_groups.first,
   source_uri: 'https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png'
 })
 

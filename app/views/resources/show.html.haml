@@ -30,8 +30,8 @@
             %th{scope: "row"} Canonical ID
             %td= resource.canonical_id
           %tr
-            %th{scope: "row"} Context
-            %td= link_to(resource.context,[resource.organization,resource.context])
+            %th{scope: "row"} Resource Group
+            %td= link_to(resource.resource_group,[resource.organization,resource.resource_group])
           %tr
             %th{scope: "row"} Identifier (Slug)
             %td= resource.identifier

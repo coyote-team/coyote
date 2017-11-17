@@ -1,0 +1,22 @@
+.entity-outer
+  .entity
+    .entity-inner
+      %header
+        %h1#page-title{tabindex: -1}= "Showing #{resource_group}"
+      %table.entity-table
+        %caption.sr-only Key value pairs for this resource group
+        %tbody
+          %tr
+            %th{scope: "row"}
+              Title:
+            %td
+              = resource_group.title
+      %nav.show-nav{role:"navigation"}
+        %ul.list-inline
+          %li
+            = link_to organization_resource_groups_path(current_organization, class: 'btn btn-info', title: "View the resource_groups index") do
+              
+              resource_groups
+          %li
+            = link_to edit_organization_resource_group_path(current_organization,resource_group), title: "Edit this resource_group", class: 'btn btn-primary' do
+              Edit

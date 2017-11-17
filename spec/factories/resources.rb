@@ -8,7 +8,7 @@
 #  resource_type         :enum             not null
 #  canonical_id          :string           not null
 #  source_uri            :string
-#  context_id            :integer          not null
+#  resource_group_id     :integer          not null
 #  organization_id       :integer          not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -17,12 +17,12 @@
 #
 # Indexes
 #
-#  index_resources_on_context_id                        (context_id)
 #  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_resource_group_id                 (resource_group_id)
 #
 
 require 'digest/md5'
@@ -39,13 +39,13 @@ FactoryGirl.define do
     end
 
     transient do
-      context nil
+      resource_group nil
       organization nil
     end
     
     after(:build) do |resource,evaluator|
       resource.organization ||= evaluator.organization || build(:organization)
-      resource.context      ||= evaluator.context      || build(:context,organization: resource.organization)
+      resource.resource_group ||= evaluator.resource_group || build(:resource_group,organization: resource.organization)
     end
     
     Coyote::Resource.each_type do |_,type_name|

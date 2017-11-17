@@ -38,10 +38,10 @@ RSpec.describe Dashboard, :type => :integration do
   end
 
   context "with resources and representations" do
-    let(:context) { create(:context,organization: organization) }
+    let(:resource_group) { create(:resource_group,organization: organization) }
 
     let!(:resources) do 
-      create_list(:resource,5,organization: organization,context: context)
+      create_list(:resource,5,organization: organization,resource_group: resource_group)
     end
 
     let(:first_resource)      { resources[0] }

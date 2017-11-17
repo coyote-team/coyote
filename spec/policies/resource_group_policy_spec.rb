@@ -1,9 +1,9 @@
-RSpec.describe ContextPolicy do
+RSpec.describe ResourceGroupPolicy do
   let(:org_user) { double(:organization_user,admin?: false) }
-  let(:record) { double(:record,class: Context) }
+  let(:record) { double(:record,class: ResourceGroup) }
   let(:scope) { double(:scope) }
 
-  subject { ContextPolicy.new(org_user,record) }
+  subject { ResourceGroupPolicy.new(org_user,record) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }
@@ -11,7 +11,7 @@ RSpec.describe ContextPolicy do
   it { is_expected.to forbid_edit_and_update_actions }
   it { is_expected.to forbid_action(:destroy)        }
   
-  specify { expect(subject.scope).to eq(Context) }
+  specify { expect(subject.scope).to eq(ResourceGroup) }
 
   context "as an admin" do
     before do

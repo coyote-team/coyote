@@ -53,7 +53,7 @@ class User < ApplicationRecord
   has_many :resources, :through => :organizations
   has_many :representations, :through => :resources
   has_many :resource_links, :through => :organizations
-  has_many :contexts, :through => :organizations
+  has_many :resource_groups, :through => :organizations
 
   scope :sorted, -> { order('LOWER(users.last_name) asc') }
 

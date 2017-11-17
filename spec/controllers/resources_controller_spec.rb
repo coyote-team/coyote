@@ -8,7 +8,7 @@
 #  resource_type         :enum             not null
 #  canonical_id          :string           not null
 #  source_uri            :string
-#  context_id            :integer          not null
+#  resource_group_id     :integer          not null
 #  organization_id       :integer          not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -17,17 +17,17 @@
 #
 # Indexes
 #
-#  index_resources_on_context_id                        (context_id)
 #  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_resource_group_id                 (resource_group_id)
 #
 
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
-  let(:context) { create(:context,organization: organization) }
+  let(:resource_group) { create(:resource_group,organization: organization) }
   let(:resource) { create(:resource,organization: organization) }  
 
   let(:base_params) do
@@ -40,7 +40,7 @@ RSpec.describe ResourcesController do
 
   let(:new_resource_params) do
     resource = attributes_for(:resource,organization: organization)
-    resource[:context_id] = context.id
+    resource[:resource_group_id] = resource_group.id
     base_params.merge(resource: resource)
   end
 
@@ -99,7 +99,7 @@ RSpec.describe ResourcesController do
         expect(response).to be_redirect
       }.to change(organization.resources,:count).by(1)
 
-      post :create, params: base_params.merge(resource: { context_id: nil })
+      post :create, params: base_params.merge(resource: { resource_group_id: nil })
       expect(response).not_to be_redirect
       
       expect {

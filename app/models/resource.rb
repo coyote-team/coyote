@@ -8,7 +8,7 @@
 #  resource_type         :enum             not null
 #  canonical_id          :string           not null
 #  source_uri            :string
-#  context_id            :integer          not null
+#  resource_group_id     :integer          not null
 #  organization_id       :integer          not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -17,12 +17,12 @@
 #
 # Indexes
 #
-#  index_resources_on_context_id                        (context_id)
 #  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_resource_group_id                 (resource_group_id)
 #
 
 # We use the Dublin Core meaning for what a Resource represents:
@@ -32,7 +32,7 @@
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
-  belongs_to :context, :inverse_of => :resources
+  belongs_to :resource_group, :inverse_of => :resources
   belongs_to :organization, :inverse_of => :resources
 
   has_many :representations, :inverse_of => :resource
@@ -64,7 +64,7 @@ class Resource < ApplicationRecord
   paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
   max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
-  delegate :title, :to => :context, :prefix => true
+  delegate :title, :to => :resource_group, :prefix => true
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
