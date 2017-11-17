@@ -48,9 +48,6 @@ Rails.application.routes.draw do
     resource :user_password_resets, only: %i[create]
   end
 
-  get '/login',  to: redirect('/users/sign_in')
-  get '/logout', to: redirect('/users/sign_out')
-
   if ENV["BOOKMARKLET"] == "true"
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]
     match 'coyote_producer' => 'coyote_producer#index', via: [:get]

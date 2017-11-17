@@ -3,7 +3,7 @@ RSpec.feature 'Locking and unlocking an account' do
   let(:user) { create(:user,password: password) }
 
   scenario 'succeeds' do
-    visit login_path
+    visit new_user_session_path
 
     expect {
       Rails.application.config.x.maximum_login_attempts.times do
