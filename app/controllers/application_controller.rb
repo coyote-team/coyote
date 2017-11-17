@@ -32,7 +32,9 @@ class ApplicationController < ActionController::Base
   alias pundit_user organization_user
 
   def after_sign_in_path_for(user)
-    if (original_path = stored_location_for(:user))
+    original_path = stored_location_for(:user)
+
+    if original_path != root_path
       original_path
     elsif user.organizations.one?
       organization_path(user.organizations.first)
