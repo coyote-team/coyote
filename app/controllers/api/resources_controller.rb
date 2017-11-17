@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength 
 module Api
   # Handles calls to /api/v1/resources/
   class ResourcesController < Api::ApplicationController
