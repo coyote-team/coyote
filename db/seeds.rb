@@ -23,6 +23,10 @@ FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
   FactoryGirl.create(:license,trait.name)
 end
 
+endpoints = FactoryGirl.factories[:endpoint].defined_traits.to_a.map do |trait|
+  FactoryGirl.create(:endpoint,trait.name)
+end
+
 resource = FactoryGirl.create(:resource,{
   title: "T.Y.F.F.S.H., 2011",
   organization: organization,
@@ -46,8 +50,8 @@ hot air balloon, which is lying on its side. Blown by the fans, the fabric billo
 the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 TEXT
 
-FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: alt_text)
-FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text)
+FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: alt_text,endpoint: endpoints.first)
+FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text,endpoint: endpoints.first)
 
 undescribed_resource = FactoryGirl.create(:resource,{
   title: 'Mona Lisa',

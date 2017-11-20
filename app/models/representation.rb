@@ -15,10 +15,12 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  notes        :text
+#  endpoint_id  :integer          not null
 #
 # Indexes
 #
 #  index_representations_on_author_id    (author_id)
+#  index_representations_on_endpoint_id  (endpoint_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
@@ -31,6 +33,7 @@ class Representation < ApplicationRecord
   belongs_to :metum,        :inverse_of => :representations
   belongs_to :author,       :inverse_of => :authored_representations, :class_name => :User
   belongs_to :license,      :inverse_of => :representations
+  belongs_to :endpoint,     :inverse_of => :representations
 
   has_one :organization, :through => :resource
   
@@ -42,6 +45,7 @@ class Representation < ApplicationRecord
   delegate :title,      :to => :resource, :prefix => true
   delegate :title,      :to => :metum,    :prefix => true
   delegate :title,      :to => :license,  :prefix => true
+  delegate :name,       :to => :endpoint, :prefix => true
   delegate :name,       :to => :author,   :prefix => true
   delegate :identifier, :to => :resource, :prefix => true
 

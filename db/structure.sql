@@ -196,6 +196,37 @@ ALTER SEQUENCE descriptions_id_seq OWNED BY descriptions.id;
 
 
 --
+-- Name: endpoints; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE endpoints (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: endpoints_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE endpoints_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: endpoints_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE endpoints_id_seq OWNED BY endpoints.id;
+
+
+--
 -- Name: images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -420,7 +451,8 @@ CREATE TABLE representations (
     license_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    notes text
+    notes text,
+    endpoint_id bigint NOT NULL
 );
 
 
@@ -721,6 +753,13 @@ ALTER TABLE ONLY descriptions ALTER COLUMN id SET DEFAULT nextval('descriptions_
 
 
 --
+-- Name: endpoints id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY endpoints ALTER COLUMN id SET DEFAULT nextval('endpoints_id_seq'::regclass);
+
+
+--
 -- Name: images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -848,6 +887,14 @@ ALTER TABLE ONLY audits
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT descriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: endpoints endpoints_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY endpoints
+    ADD CONSTRAINT endpoints_pkey PRIMARY KEY (id);
 
 
 --
@@ -1026,6 +1073,13 @@ CREATE INDEX index_descriptions_on_user_id ON descriptions USING btree (user_id)
 
 
 --
+-- Name: index_endpoints_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_endpoints_on_name ON endpoints USING btree (name);
+
+
+--
 -- Name: index_images_on_context_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1100,6 +1154,13 @@ CREATE UNIQUE INDEX index_organizations_on_title ON organizations USING btree (t
 --
 
 CREATE INDEX index_representations_on_author_id ON representations USING btree (author_id);
+
+
+--
+-- Name: index_representations_on_endpoint_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_endpoint_id ON representations USING btree (endpoint_id);
 
 
 --
@@ -1432,6 +1493,14 @@ ALTER TABLE ONLY descriptions
 
 
 --
+-- Name: representations fk_rails_e007b1bcf9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_e007b1bcf9 FOREIGN KEY (endpoint_id) REFERENCES endpoints(id) ON DELETE CASCADE;
+
+
+--
 -- Name: resource_links fk_rails_e34756464a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1525,6 +1594,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171017201950'),
 ('20171017203300'),
 ('20171106164149'),
-('20171117164747');
+('20171117164747'),
+('20171120143357'),
+('20171120143519'),
+('20171120144727');
 
 

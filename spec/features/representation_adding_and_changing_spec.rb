@@ -7,6 +7,7 @@ RSpec.feature 'Representation adding and changing' do
 
   let!(:metum) { create(:metum,:long,organization: user_organization) }
   let!(:license) { create(:license) }
+  let!(:endpoint) { create(:endpoint) }
 
   scenario 'succeeds' do
     visit resource_url(resource)
