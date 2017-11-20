@@ -7,7 +7,7 @@ module ApplicationHelper
   # @return [Array<String,Integer>] list of Endpoints suitable for use in select boxes in Representation forms
   # @see Endpoint
   def endpoint_collection
-    Endpoint.order(:name)
+    Endpoint.sorted
   end
 
   def organizational_user_collection

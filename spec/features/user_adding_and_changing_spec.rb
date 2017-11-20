@@ -1,4 +1,4 @@
-RSpec.describe 'Staff usage' do
+RSpec.describe 'User adding and changing' do
   include_context 'as a logged-in staff user'
 
   let!(:editable_user) { create(:user) }

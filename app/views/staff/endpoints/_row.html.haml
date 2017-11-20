@@ -1,0 +1,5 @@
+%tr.item[endpoint]
+  %td= link_to(endpoint.name,staff_endpoint_path(endpoint))
+  %td.text-right<
+    = link_to('Edit',edit_staff_endpoint_path(endpoint),class: 'btn btn-primary',title: "Edit #{endpoint}")
+    = button_to('Remove',staff_endpoint_path(endpoint),title: "Remove #{endpoint} from Coyote", :method => :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to remove #{endpoint} from Coyote?" })

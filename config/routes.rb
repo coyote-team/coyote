@@ -45,6 +45,7 @@ Rails.application.routes.draw do
 
   namespace :staff do
     resources :users, except: %i[new create]
+    resources :endpoints
     resource :user_password_resets, only: %i[create]
   end
 
