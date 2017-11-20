@@ -24,8 +24,6 @@ class Assignment < ApplicationRecord
   delegate :title, :to => :resource, :prefix => true
   delegate :first_name, :last_name, :email, :to => :user, :prefix => true
 
-  paginates_per 50
-
   # @return [String] human-friendly representation of this Assignment
   def to_s
     "#{user} assigned to #{resource}"
