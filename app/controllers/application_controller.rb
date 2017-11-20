@@ -55,10 +55,6 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update,keys: %i[first_name last_name])
   end
 
-  def pagination_params
-    params.fetch(:page,{}).permit(:number,:size)
-  end
-
   private
 
   def storable_location?

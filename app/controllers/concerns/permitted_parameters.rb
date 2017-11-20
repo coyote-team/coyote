@@ -3,6 +3,10 @@
 module PermittedParameters
   private
 
+  def pagination_params
+    params.fetch(:page,{}).permit(:number,:size)
+  end
+
   def representation_params
     params.require(:representation).permit(:content_uri,:text,:metum_id,:content_type,:language,:license_id,:notes,:status,:author_id,:endpoint_id)
   end
