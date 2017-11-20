@@ -56,11 +56,11 @@ class ResourcesController < ApplicationController
   attr_writer :current_organization
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources.by_priority)
+    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources)
   end
 
   def filter_params
-    params.fetch(:q,{}).permit(:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
+    params.fetch(:q,{}).permit(:s,:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
   end
 
   def set_resource
