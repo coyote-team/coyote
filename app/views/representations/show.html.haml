@@ -14,7 +14,10 @@
             %tbody
               %tr
                 %th{scope: "row"} Resource
-                %td= link_to(representation.resource_title,representation.resource)
+                %td
+                  = lightbox_link(representation.resource) do
+                    = resource_link_target(representation.resource,dom_id(representation),alt: representation.text,style: 'img-thumbnail')
+                  = link_to(representation.resource_title,representation.resource)
               %tr
                 %th{scope: "row"} Author
                 %td= link_to(representation.author,representation.author)

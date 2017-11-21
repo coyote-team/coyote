@@ -29,6 +29,14 @@ module ApplicationHelper
     @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
   end
 
+  def lightbox_link(resource,&block)
+    if resource.source_uri.present?
+      link_to(resource.source_uri,data: { lightbox: dom_id(resource) },&block)
+    else
+      link_to(resource,&block)
+    end
+  end
+
   # @param target_resource [Resource] the Resource that is being displayed
   # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)

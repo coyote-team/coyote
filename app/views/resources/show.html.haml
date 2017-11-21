@@ -8,7 +8,8 @@
           
   .row
     .col-md-6
-      = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'thumbnail') # TODO: need to figure this out, in general: what to use for a 'default' description
+      = lightbox_link(resource) do
+        = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'img-thumbnail') # TODO: need to figure this out, in general: what to use for a 'default' description
 
     .col-md-6
       %table.entity-table
