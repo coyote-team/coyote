@@ -3,29 +3,13 @@
     %caption.sr-only Index table for assignments
     %thead
       %tr
-        %th{scope: "col"}
-          User
-        %th{scope: "col"}
-          Resource
-        %th{scope: "col"}
-          Actions
+        %th{scope: "col"} User
+        %th{scope: "col"} Assignments
 
     %tbody
-      - assignments.each_with_index do |assignment, idx|
-        %tr{class: "item"}
+      - assigned_users.each do |membership,assignment_count|
+        %tr.item
           %td
-            = link_to assignment.user, assignment.user
+            = link_to(membership.user,[current_organization,membership])
           %td 
-            = link_to(assignment.resource,class: 'thumbnail') do
-              = resource_link_target(assignment.resource)
-          %td.text-right
-            = link_to [current_organization,assignment], class: "btn btn-show", title: "Show this assignment" do
-              View
-            %nbsp
-            - if policy(assignment).destroy?
-              = link_to [current_organization,assignment], title: "Delete this assignment" , class: "btn btn-destroy",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{assignment}?"} do
-                Delete
-
-  - unless !defined? paginated or paginated == false
-    .text-center
-      %ul.pagination.pagination-lg.pager
+            = number_with_delimiter(assignment_count)

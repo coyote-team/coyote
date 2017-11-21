@@ -64,7 +64,7 @@ class RepresentationsController < ApplicationController
   end
 
   def filter_params
-    params.fetch(:q,{}).permit(:text_cont_all,:status_eq,:metum_id_eq,:author_id_eq)
+    params.fetch(:q,{}).permit(:s,:text_or_resource_identifier_or_resource_title_cont_all,:status_eq,:metum_id_eq,:author_id_eq)
   end
 
   def set_representation

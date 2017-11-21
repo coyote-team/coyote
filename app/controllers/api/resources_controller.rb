@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength 
 module Api
   # Handles calls to /api/v1/resources/
   class ResourcesController < Api::ApplicationController
@@ -27,7 +28,7 @@ module Api
         param :resource_type,   String,  'Dublin Core Metadata type for this resource', required: true
         param :canonical_id,    String,  'Unique identifier assigned by the organization that owns this resource', required: true
         param :source_uri,      String,  'The canonical location of the resource', required: false
-        param :context,         String,  'Identifies the organizationl context to which this resource belongs', required: true
+        param :resource_group,  String,  'Identifies the organizationl resource_group to which this resource belongs', required: true
         param :organization_id, Integer, 'Identifies which organization owns the resource', required: true
       end
     end
@@ -52,7 +53,7 @@ module Api
           "source_uri": "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
           "created_at": "2017-11-06T16:17:49.630Z",
           "updated_at": "2017-11-06T16:55:10.207Z",
-          "context": "collection"
+          "resource_group": "collection"
         },
         "relationships": {
           "organization": {
@@ -81,7 +82,7 @@ module Api
           "source_uri": "http://example.com/image123.png",
           "created_at": "2017-11-06T16:17:49.926Z",
           "updated_at": "2017-11-06T16:17:49.926Z",
-          "context": "voluptatibus"
+          "resource_group": "voluptatibus"
         },
         "relationships": {
           "organization": {
@@ -172,7 +173,7 @@ module Api
           "source_uri": "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
           "created_at": "2017-11-06T16:17:49.630Z",
           "updated_at": "2017-11-06T16:55:10.207Z",
-          "context": "collection"
+          "resource_group": "collection"
         },
         "relationships": {
           "organization": {
@@ -241,11 +242,11 @@ module Api
     api :POST, 'resources', 'Create a new resource'
     param_group :resource
     def create
-      context_id = resource_params.delete(:context_id)
-      context = current_user.contexts.find(context_id)
+      resource_group_id = resource_params.delete(:resource_group_id)
+      resource_group = current_user.resource_groups.find(resource_group_id)
 
       resource = current_organization.resources.new(resource_params)
-      resource.context = context
+      resource.resource_group = resource_group
 
       if resource.save
         logger.info "Created #{resource}"

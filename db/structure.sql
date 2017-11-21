@@ -159,38 +159,6 @@ ALTER SEQUENCE audits_id_seq OWNED BY audits.id;
 
 
 --
--- Name: contexts; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE contexts (
-    id integer NOT NULL,
-    title character varying NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    organization_id integer NOT NULL
-);
-
-
---
--- Name: contexts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE contexts_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: contexts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE contexts_id_seq OWNED BY contexts.id;
-
-
---
 -- Name: descriptions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -225,6 +193,37 @@ CREATE SEQUENCE descriptions_id_seq
 --
 
 ALTER SEQUENCE descriptions_id_seq OWNED BY descriptions.id;
+
+
+--
+-- Name: endpoints; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE endpoints (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: endpoints_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE endpoints_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: endpoints_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE endpoints_id_seq OWNED BY endpoints.id;
 
 
 --
@@ -452,7 +451,8 @@ CREATE TABLE representations (
     license_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    notes text
+    notes text,
+    endpoint_id bigint NOT NULL
 );
 
 
@@ -473,6 +473,38 @@ CREATE SEQUENCE representations_id_seq
 --
 
 ALTER SEQUENCE representations_id_seq OWNED BY representations.id;
+
+
+--
+-- Name: resource_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE resource_groups (
+    id integer NOT NULL,
+    title character varying NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    organization_id integer NOT NULL
+);
+
+
+--
+-- Name: resource_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE resource_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE resource_groups_id_seq OWNED BY resource_groups.id;
 
 
 --
@@ -519,7 +551,7 @@ CREATE TABLE resources (
     resource_type resource_type NOT NULL,
     canonical_id character varying NOT NULL,
     source_uri character varying,
-    context_id bigint NOT NULL,
+    resource_group_id bigint NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -714,17 +746,17 @@ ALTER TABLE ONLY audits ALTER COLUMN id SET DEFAULT nextval('audits_id_seq'::reg
 
 
 --
--- Name: contexts id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY contexts ALTER COLUMN id SET DEFAULT nextval('contexts_id_seq'::regclass);
-
-
---
 -- Name: descriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY descriptions ALTER COLUMN id SET DEFAULT nextval('descriptions_id_seq'::regclass);
+
+
+--
+-- Name: endpoints id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY endpoints ALTER COLUMN id SET DEFAULT nextval('endpoints_id_seq'::regclass);
 
 
 --
@@ -774,6 +806,13 @@ ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organization
 --
 
 ALTER TABLE ONLY representations ALTER COLUMN id SET DEFAULT nextval('representations_id_seq'::regclass);
+
+
+--
+-- Name: resource_groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resource_groups ALTER COLUMN id SET DEFAULT nextval('resource_groups_id_seq'::regclass);
 
 
 --
@@ -843,19 +882,19 @@ ALTER TABLE ONLY audits
 
 
 --
--- Name: contexts contexts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY contexts
-    ADD CONSTRAINT contexts_pkey PRIMARY KEY (id);
-
-
---
 -- Name: descriptions descriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT descriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: endpoints endpoints_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY endpoints
+    ADD CONSTRAINT endpoints_pkey PRIMARY KEY (id);
 
 
 --
@@ -912,6 +951,14 @@ ALTER TABLE ONLY organizations
 
 ALTER TABLE ONLY representations
     ADD CONSTRAINT representations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_groups resource_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY resource_groups
+    ADD CONSTRAINT resource_groups_pkey PRIMARY KEY (id);
 
 
 --
@@ -998,13 +1045,6 @@ CREATE INDEX index_audits_on_request_uuid ON audits USING btree (request_uuid);
 
 
 --
--- Name: index_contexts_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_contexts_on_organization_id_and_title ON contexts USING btree (organization_id, title);
-
-
---
 -- Name: index_descriptions_on_image_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1030,6 +1070,13 @@ CREATE INDEX index_descriptions_on_status_id ON descriptions USING btree (status
 --
 
 CREATE INDEX index_descriptions_on_user_id ON descriptions USING btree (user_id);
+
+
+--
+-- Name: index_endpoints_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_endpoints_on_name ON endpoints USING btree (name);
 
 
 --
@@ -1110,6 +1157,13 @@ CREATE INDEX index_representations_on_author_id ON representations USING btree (
 
 
 --
+-- Name: index_representations_on_endpoint_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representations_on_endpoint_id ON representations USING btree (endpoint_id);
+
+
+--
 -- Name: index_representations_on_license_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1138,6 +1192,13 @@ CREATE INDEX index_representations_on_status ON representations USING btree (sta
 
 
 --
+-- Name: index_resource_groups_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_resource_groups_on_organization_id_and_title ON resource_groups USING btree (organization_id, title);
+
+
+--
 -- Name: index_resource_links; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1156,13 +1217,6 @@ CREATE INDEX index_resource_links_on_object_resource_id ON resource_links USING 
 --
 
 CREATE INDEX index_resource_links_on_subject_resource_id ON resource_links USING btree (subject_resource_id);
-
-
---
--- Name: index_resources_on_context_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_resources_on_context_id ON resources USING btree (context_id);
 
 
 --
@@ -1198,6 +1252,13 @@ CREATE INDEX index_resources_on_priority_flag ON resources USING btree (priority
 --
 
 CREATE INDEX index_resources_on_representations_count ON resources USING btree (representations_count);
+
+
+--
+-- Name: index_resources_on_resource_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_resource_group_id ON resources USING btree (resource_group_id);
 
 
 --
@@ -1316,7 +1377,7 @@ ALTER TABLE ONLY resource_links
 --
 
 ALTER TABLE ONLY resources
-    ADD CONSTRAINT fk_rails_445f527f69 FOREIGN KEY (context_id) REFERENCES contexts(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT fk_rails_445f527f69 FOREIGN KEY (resource_group_id) REFERENCES resource_groups(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1352,10 +1413,10 @@ ALTER TABLE ONLY invitations
 
 
 --
--- Name: contexts fk_rails_8e9711c31f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: resource_groups fk_rails_8e9711c31f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY contexts
+ALTER TABLE ONLY resource_groups
     ADD CONSTRAINT fk_rails_8e9711c31f FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -1380,7 +1441,7 @@ ALTER TABLE ONLY descriptions
 --
 
 ALTER TABLE ONLY images
-    ADD CONSTRAINT fk_rails_a71674751c FOREIGN KEY (context_id) REFERENCES contexts(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT fk_rails_a71674751c FOREIGN KEY (context_id) REFERENCES resource_groups(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1429,6 +1490,14 @@ ALTER TABLE ONLY representations
 
 ALTER TABLE ONLY descriptions
     ADD CONSTRAINT fk_rails_d1b03e17ed FOREIGN KEY (image_id) REFERENCES images(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: representations fk_rails_e007b1bcf9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY representations
+    ADD CONSTRAINT fk_rails_e007b1bcf9 FOREIGN KEY (endpoint_id) REFERENCES endpoints(id) ON DELETE CASCADE;
 
 
 --
@@ -1524,6 +1593,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171017125333'),
 ('20171017201950'),
 ('20171017203300'),
-('20171106164149');
+('20171106164149'),
+('20171117164747'),
+('20171120143357'),
+('20171120143519'),
+('20171120144727');
 
 

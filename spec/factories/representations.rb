@@ -15,10 +15,12 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  notes        :text
+#  endpoint_id  :integer          not null
 #
 # Indexes
 #
 #  index_representations_on_author_id    (author_id)
+#  index_representations_on_endpoint_id  (endpoint_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
@@ -64,14 +66,16 @@ FactoryGirl.define do
       metum nil
       author nil
       license nil
+      endpoint nil
       organization { build(:organization) }
     end
     
     before(:create) do |representation,evaluator|
-      representation.resource = evaluator.resource     || build(:resource,organization: evaluator.organization)
-      representation.metum    = evaluator.metum        || build(:metum,organization: evaluator.organization)
-      representation.author   = evaluator.author       || build(:user,organization: evaluator.organization)
-      representation.license  = evaluator.license      || build(:license)
+      representation.resource  = evaluator.resource     || build(:resource,organization: evaluator.organization)
+      representation.metum     = evaluator.metum        || build(:metum,organization: evaluator.organization)
+      representation.author    = evaluator.author       || build(:user,organization: evaluator.organization)
+      representation.license   = evaluator.license      || build(:license)
+      representation.endpoint  = evaluator.endpoint     || build(:endpoint)
     end
   end
 end

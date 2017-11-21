@@ -4,6 +4,12 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
+  # @return [Array<String,Integer>] list of Endpoints suitable for use in select boxes in Representation forms
+  # @see Endpoint
+  def endpoint_collection
+    Endpoint.sorted
+  end
+
   def organizational_user_collection
     # @return [Array<String,Integer>] list of users suitable for use in select boxes
     collection = current_organization.users.sort_by(&:username)

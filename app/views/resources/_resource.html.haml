@@ -7,7 +7,7 @@
     = link_to(resource,class: 'thumbnail') do
       = resource_link_target(resource,'#')
   
-  %td= resource.priority_flag
+  %td= resource.priority_flag ? 'High': 'Low'
   %td= link_to(resource.title,resource)
   %td= resource.representations_count
   %td.text-right

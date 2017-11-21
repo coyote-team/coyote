@@ -7,9 +7,8 @@
             = title resource.title
           
   .row
-    .col-md-4
-      = link_to(resource,class: 'thumbnail') do
-        = resource_link_target(resource,dom_id(resource),alt: resource.representations.first) # TODO: need to figure this out, in general: what to use for a 'default' description
+    .col-md-6
+      = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'thumbnail') # TODO: need to figure this out, in general: what to use for a 'default' description
 
     .col-md-6
       %table.entity-table
@@ -20,7 +19,7 @@
             %td= resource.id
           %tr
             %th{scope: "row"} Priority
-            %td= resource.priority_flag
+            %td= resource.priority_flag ? 'High' : 'Low'
           %tr
             %th{scope: "row"}= link_to('Resource Type','http://dublincore.org/documents/dcmi-terms/#section-7',target: :_blank)
             %td= resource.resource_type
@@ -31,8 +30,8 @@
             %th{scope: "row"} Canonical ID
             %td= resource.canonical_id
           %tr
-            %th{scope: "row"} Context
-            %td= link_to(resource.context,[resource.organization,resource.context])
+            %th{scope: "row"} Resource Group
+            %td= link_to(resource.resource_group,[resource.organization,resource.resource_group])
           %tr
             %th{scope: "row"} Identifier (Slug)
             %td= resource.identifier

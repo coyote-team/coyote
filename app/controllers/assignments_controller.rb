@@ -3,10 +3,23 @@ class AssignmentsController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show destroy]
 
-  helper_method :assignment, :assignments, :next_resource, :users, :resources
+  helper_method :assignment, :assigned_users, :next_resource, :users, :resources
 
   # GET /assignments
   def index
+    assignments = current_organization.assignments.to_a
+
+    assignments.sort_by! do |a| 
+      [a.user_last_name,a.user_email].tap(&:compact!).first 
+    end
+
+    memberships = current_organization.memberships.index_by(&:user_id)
+
+    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment,hash|
+      membership = memberships[assignment.user_id]
+      hash[membership] = hash[membership] + 1
+      hash
+    end
   end
 
   # GET /assignments/1
@@ -15,7 +28,6 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/new
   def new
-    self.assignment = current_organization.assignments.new
   end
 
   # POST /assignments
@@ -47,14 +59,10 @@ class AssignmentsController < ApplicationController
 
   private
   
-  attr_accessor :assignment
+  attr_accessor :assigned_users, :assignment
 
   def set_assignment
     self.assignment = current_organization.assignments.find(params[:id])
-  end
-
-  def assignments
-    current_organization.assignments.by_created_at.page(params[:page])
   end
 
   def users

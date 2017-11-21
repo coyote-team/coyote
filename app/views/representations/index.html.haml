@@ -25,9 +25,9 @@
                   All
                   
                 %th{scope: 'col'} Resource
-                %th{scope: 'col'} Status
-                %th{scope: 'col'} Metum
-                %th{scope: 'col'} Language
+                %th{scope: 'col'}= sort_link(record_filter.search,:status)
+                %th{scope: 'col'}= sort_link(record_filter.search,:metum_id)
+                %th{scope: 'col'}= sort_link(record_filter.search,:language)
                 %th{scope: 'col'} Actions
 
             %tbody

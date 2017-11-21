@@ -1,7 +1,7 @@
 # Manages CRUD operations for adding/removing users from an Organization
 # @see Membership
 class MembershipsController < ApplicationController
-  before_action :set_membership,           only: %i[edit update destroy]
+  before_action :set_membership,           only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[index]
   before_action :authorize_unit_access,    only: %i[edit update destroy]
 

@@ -9,7 +9,7 @@ end
 
 organization = FactoryGirl.create(:organization,title: "Acme Museum")
 
-contexts = organization.contexts.create!([
+resource_groups = organization.resource_groups.create!([
   { title: "collection" },
   { title: "website" },
   { title: "exhibitions" },
@@ -23,10 +23,14 @@ FactoryGirl.factories[:license].defined_traits.to_a.map do |trait|
   FactoryGirl.create(:license,trait.name)
 end
 
+endpoints = FactoryGirl.factories[:endpoint].defined_traits.to_a.map do |trait|
+  FactoryGirl.create(:endpoint,trait.name)
+end
+
 resource = FactoryGirl.create(:resource,{
   title: "T.Y.F.F.S.H., 2011",
   organization: organization,
-  context: contexts.first,
+  resource_group: resource_groups.first,
   source_uri: 'https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png'
 })
 
@@ -46,8 +50,8 @@ hot air balloon, which is lying on its side. Blown by the fans, the fabric billo
 the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 TEXT
 
-FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: alt_text)
-FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text)
+FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: alt_text,endpoint: endpoints.first)
+FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text,endpoint: endpoints.first)
 
 undescribed_resource = FactoryGirl.create(:resource,{
   title: 'Mona Lisa',

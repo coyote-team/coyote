@@ -24,9 +24,9 @@ Rails.application.routes.draw do
     resources :resources, only: %i[index new create]
     resources :representations, only: %i[index new create]
     resources :representation_status_changes, only: %i[create]
-    resources :memberships, only: %i[index edit update destroy]
+    resources :memberships, only: %i[index show edit update destroy]
     resources :assignments, only: %i[index show new create destroy]
-    resources :contexts 
+    resources :resource_groups 
     resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]
   end
@@ -45,11 +45,9 @@ Rails.application.routes.draw do
 
   namespace :staff do
     resources :users, except: %i[new create]
+    resources :endpoints
     resource :user_password_resets, only: %i[create]
   end
-
-  get '/login',  to: redirect('/users/sign_in')
-  get '/logout', to: redirect('/users/sign_out')
 
   if ENV["BOOKMARKLET"] == "true"
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]

@@ -4,8 +4,8 @@ class SerializableResource < JSONAPI::Serializable::Resource
 
   attributes :id, :title, :resource_type, :canonical_id, :source_uri, :created_at, :updated_at
 
-  attribute :context do
-    @object.context_title
+  attribute :resource_group do
+    @object.resource_group_title
   end
 
   belongs_to :organization

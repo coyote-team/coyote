@@ -1,0 +1,32 @@
+.index-outer
+  .index
+    .index-inner
+      %header
+        %h1#page-title{tabindex: -1}= title "Resource Groups for #{current_organization.title}"
+      %table.index-table
+        %caption.sr-only Index table for resource_groups
+        %thead
+          %tr
+            %th{scope: "col"}
+              Title
+            %th{scope: "col"}
+              Actions
+
+        %tbody
+          - resource_groups.each_with_index do |resource_group,idx|
+            %tr.item[resource_group]
+              %td= resource_group.title
+              %td.text-right
+                = link_to organization_resource_group_path(current_organization,resource_group),class: "btn btn-primary", title: "Show this resource group" do
+                  View
+                %nbsp
+                = link_to edit_organization_resource_group_path(current_organization,resource_group),class: "btn btn-edit", title: "Edit this resource group" do
+                  Edit
+                %nbsp
+                = link_to organization_resource_group_path(current_organization,resource_group),:title => "Delete this resource group", :class => "btn btn-danger",:method => :delete,:disabled => resource_group.resources.any?,:data => { confirm: "Are you sure you want to delete #{resource_group}?" } do
+                  Delete
+
+      - if policy(::ResourceGroup).new?
+        %nav.index-nav{role:"navigation"}
+          = link_to new_organization_resource_group_path(current_organization,class: 'btn btn-primary new-link') do
+            New Resource Group

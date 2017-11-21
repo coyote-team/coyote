@@ -26,11 +26,11 @@
                 %th{scope: 'col'}
                   Resource
                 %th{scope: 'col'}
-                  Priority
+                  = sort_link(record_filter.search,:priority_flag,'Priority')
                 %th{scope: 'col'}
-                  Caption
+                  = sort_link(record_filter.search,:title,'Caption')
                 %th{scope: 'col'}
-                  Descriptions
+                  = sort_link(record_filter.search,:representations_count,'Description Count')
                 %th{scope: 'col'}
                   Actions
 

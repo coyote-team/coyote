@@ -1,0 +1,12 @@
+= simple_form_for [:staff,endpoint], validate: true, html: { class: 'form-horizontal' }, :wrapper => :horizontal_form do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name, required: true, autofocus: true
+
+  .form-actions
+    .form-actions-inner
+      = f.button :submit, 'Save'
+      %br
+      %br
+      = link_to "Back", :back, class: 'btn btn-info'

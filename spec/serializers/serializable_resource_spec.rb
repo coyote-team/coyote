@@ -10,7 +10,7 @@ RSpec.describe SerializableResource do
   before do
     allow(object).
       to receive_messages({
-        context_title: 'Website',
+        resource_group_title: 'Website',
         approved_representations: approved_representations
       })
   end

@@ -13,7 +13,7 @@
   %td
     %span.label.label-default= language_name(representation.language)
   %td.text-right
-    = link_to 'View', representation, class: "btn btn-show", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+    = link_to 'View Description', representation, class: "btn btn-show", title: "Show this representation", :"aria-describedby" => dom_id(representation)
     %nbsp
     - if policy(representation).edit?
       = link_to 'Edit', edit_representation_path(representation), class: "btn btn-edit", title: "Edit this representation", :"aria-describedby" => dom_id(representation)

@@ -1,7 +1,7 @@
 RSpec.feature "Resource adding and changing" do
   include_context "as a logged-in editor user"
 
-  let!(:context) { create(:context,organization: user_organization) }
+  let!(:resource_group) { create(:resource_group,organization: user_organization) }
 
   let(:resource_attributes) do
     attributes_for(:resource).tap(&:symbolize_keys!).merge(title: title)
@@ -9,10 +9,9 @@ RSpec.feature "Resource adding and changing" do
 
   scenario "succeeds" do
     click_first_link "Resources"
-
     click_first_link("New Resource")
 
-    select(context.title,from: "Context",:match => :first)
+    select(resource_group.title,from: 'Resource Group',:match => :first)
 
     fill_in "Identifier",   with: resource_attributes[:identifier]
     fill_in "Caption",      with: resource_attributes[:title]
