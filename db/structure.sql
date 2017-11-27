@@ -556,7 +556,8 @@ CREATE TABLE resources (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     representations_count integer DEFAULT 0 NOT NULL,
-    priority_flag boolean DEFAULT false NOT NULL
+    priority_flag boolean DEFAULT false NOT NULL,
+    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -1597,6 +1598,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171117164747'),
 ('20171120143357'),
 ('20171120143519'),
-('20171120144727');
+('20171120144727'),
+('20171121165017');
 
 

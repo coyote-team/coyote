@@ -37,6 +37,9 @@
             %th{scope: "row"} Identifier (Slug)
             %td= resource.identifier
           %tr
+            %th{scope: "row"} Host URIs
+            %td= list_of(resource.host_uris) { |uri| link_to(uri,uri) }
+          %tr
             %th{scope: "row"} Organization
             %td= link_to(resource.organization,resource.organization)
           %tr

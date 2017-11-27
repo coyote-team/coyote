@@ -14,6 +14,7 @@
 #  updated_at            :datetime         not null
 #  representations_count :integer          default(0), not null
 #  priority_flag         :boolean          default(FALSE), not null
+#  host_uris             :string           default([]), not null, is an Array
 #
 # Indexes
 #
@@ -75,6 +76,11 @@ class Resource < ApplicationRecord
   # @return [nil] if no resources exist
   def self.latest_timestamp
     order(:created_at).last.try(:created_at)
+  end
+
+  # @param value [String] a newline-delimited list of host URIs to store for this Resource
+  def host_uris=(value)
+    write_attribute(:host_uris,value.to_s.split(/[\r\n]+/))
   end
 
   # Yields to the caller if this resource is image-like, and is capable of being displayed as a static image
