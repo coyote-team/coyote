@@ -7,7 +7,7 @@
       = resource_link_target(resource,nil,style: 'img-thumbnail')
   
   %td= resource.priority_flag ? 'High': 'Low'
-  %td= link_to(resource.title,resource)
+  %td= resource.title
   %td= resource.representations_count
   %td.text-right
     - if policy(resource).index?
