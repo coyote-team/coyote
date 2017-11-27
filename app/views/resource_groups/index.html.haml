@@ -28,5 +28,4 @@
 
       - if policy(::ResourceGroup).new?
         %nav.index-nav{role:"navigation"}
-          = link_to new_organization_resource_group_path(current_organization,class: 'btn btn-primary new-link') do
-            New Resource Group
+          = link_to('New Resource Group',new_organization_resource_group_path(current_organization),class: 'btn btn-primary new-link')
