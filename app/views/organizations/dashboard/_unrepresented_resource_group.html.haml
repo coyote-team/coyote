@@ -5,4 +5,4 @@
         = resource_link_target(resource)
 
       = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |form|
-        = form.input :user_id, collection: organizational_user_collection, input_html: { data: { resource_id: resource.id }, class: 'assignment_user_select', style: 'width: auto' }, label: false, prompt: 'Assign To', required: false
+        = form.input :user_id, collection: organizational_user_collection, input_html: { data: { resource_id: resource.id }, class: 'assignment_user_select', style: 'width: auto' }, label: false, prompt: 'ASSIGN &#9660;'.html_safe, required: false
