@@ -17,7 +17,7 @@ class RepresentationStatusChangesController < ApplicationController
                      0
                    end
 
-    redirect_back fallback_location: root_url, notice: "Set #{update_count} #{'representation'.pluralize(update_count)} to status '#{status.titleize}'"
+    redirect_back fallback_location: root_url, notice: "Set #{update_count} #{'description'.pluralize(update_count)} to status '#{status.titleize}'"
   end
 
   private

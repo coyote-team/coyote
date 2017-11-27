@@ -32,9 +32,9 @@ class RepresentationsController < ApplicationController
 
     if representation.save
       logger.info "Created #{representation} for #{current_resource}"
-      redirect_to representation, notice: 'The representation has been created'
+      redirect_to representation, notice: 'The description has been created'
     else
-      logger.warn "Unable to create representation due to '#{representation.error_sentence}'"
+      logger.warn "Unable to create description due to '#{representation.error_sentence}'"
       render :new
     end
   end
@@ -42,16 +42,16 @@ class RepresentationsController < ApplicationController
   def update
     if representation.update(representation_params)
       logger.info "Updated #{representation}"
-      redirect_to representation, notice: 'The representation has been updated'
+      redirect_to representation, notice: 'The description has been updated'
     else
-      logger.warn "Unable to update representation due to '#{representation.error_sentence}'"
+      logger.warn "Unable to update description due to '#{representation.error_sentence}'"
       render :edit
     end
   end
 
   def destroy
     representation.destroy
-    redirect_to organization_representations_url(current_organization), notice: 'Representation was successfully destroyed.'
+    redirect_to organization_representations_url(current_organization), notice: 'Description was successfully destroyed.'
   end
 
   private
