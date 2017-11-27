@@ -19,22 +19,22 @@
             %tr
               %td 
                 = number_with_delimiter(dashboard.organization_represented_resource_count)
-                Total #{link_to('Represented Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
+                Total #{link_to('Described Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
             %tr
               %td 
                 = number_with_delimiter(dashboard.organization_unrepresented_count) 
-                Total #{link_to('Unrepresented Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
+                Total #{link_to('Undescribed Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
 
           %h2 My Status
           %table.table
             %tr
               %td 
                 = number_with_delimiter(dashboard.current_user_represented_resources_count)
-                = link_to('Represented Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
+                = link_to('Described Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
             %tr
               %td 
                 = number_with_delimiter(dashboard.current_user_open_assignments_count)
-                = link_to('Unrepresented Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
+                = link_to('Undescribed Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
             %tr
               %td 
                 = number_with_delimiter(dashboard.current_user_approved_representation_count)
@@ -69,7 +69,7 @@
 
           %ul.list-inline
             - if organization_user.admin?
-              %li #{link_to('Unrepresented','#unrepresented')}
+              %li #{link_to('Undescribed','#undescribed')}
               %li #{link_to('Ready to Review','#ready_to_review')}
             %li #{link_to('Your Assignments','#your_queues')}
 
