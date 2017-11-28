@@ -3,8 +3,7 @@
     .col-md-12
       %header
         %h1#page-title{tabindex: -1}
-          %cite
-            = title resource.title
+          = title(to_html_title(resource.title))
           
   .row
     .col-md-3

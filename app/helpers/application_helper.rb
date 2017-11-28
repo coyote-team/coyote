@@ -163,16 +163,11 @@ module ApplicationHelper
     current_user.try(:admin?)
   end
 
-  def set_markdown
-    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-  end
-
   def to_html(content)
-    set_markdown
     if content.blank?
       ""
     else
-      raw @markdown.render(content)
+      raw markdown.render(content)
     end
   end
 
@@ -182,6 +177,15 @@ module ApplicationHelper
     else
       strip_tags to_html(content)
     end
+  end
+
+  # @param content [String] a piece of text annotated with Markdown
+  # @return [String] HTML-formatted string, suitable for use in an H1 tag
+  # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
+  def to_html_title(content)
+    html = to_html(content)
+    html.gsub!(%r[(?:^<p>|</p>\n)]i,'') 
+    html.html_safe
   end
 
   def to_html_attr(content)
@@ -220,6 +224,12 @@ module ApplicationHelper
     when "cc-by-4.0"
       "Creative Commons Attribution 4.0"
     end
+  end
+
+  private
+
+  def markdown
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,filter_html: true,autolink: true,tables: true)
   end
 
   FLASH_CLASSES = {
