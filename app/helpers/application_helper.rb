@@ -184,7 +184,7 @@ module ApplicationHelper
   # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
   def to_html_title(content)
     html = to_html(content)
-    html.gsub!(%r[(?:^<p>|</p>\n)]i,'') 
+    html.gsub!(%r{(?:^<p>|</p>\n)}i,'') 
     html.html_safe
   end
 
