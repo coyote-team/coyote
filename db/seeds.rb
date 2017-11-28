@@ -54,10 +54,18 @@ FactoryGirl.create(:representation,resource: resource,metum: short_metum,text: a
 FactoryGirl.create(:representation,resource: resource,metum: long_metum,text: long_text,endpoint: endpoints.first)
 
 undescribed_resource = FactoryGirl.create(:resource,{
-  title: 'Mona Lisa',
+  title: 'Installation view, _The Making of A Fugitive_, MCA Chicago, Jul 16–Dec 4,2016',
   organization: organization,
-  source_uri: 'http://example.com/image123.png'
+  source_uri: 'https://mcachicago.org/api/v1/attachment_images/thumbs/57c06fc6101f31476d000044.jpg'
 })
+
+# undescribed, unassigned resource
+FactoryGirl.create(:resource,{
+  title: 'Unknown',
+  organization: organization,
+  source_uri: 'https://mcachicago.org/api/v1/attachment_images/thumbs/55bb7af13164660b2f000a36.jpg'
+})
+
 
 Coyote::Membership.each_role do |_,role_id|
   email = "#{role_id}@example.com"
