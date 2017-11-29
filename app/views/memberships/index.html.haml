@@ -25,7 +25,7 @@
             %tr.item[org_user.membership]
               %td= org_user.first_name
               %td= org_user.last_name
-              %td= org_user.email
+              %td= link_to(org_user.email,[current_organization,org_user.membership])
               %td= org_user.role
               %td.text-right<
                 - if policy(org_user.membership).edit?
