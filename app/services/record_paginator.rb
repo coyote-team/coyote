@@ -29,12 +29,12 @@ class RecordPaginator
       first: first_page_params
     }
 
-    unless query.first_page?
+    if query.prev_page
       previous_page_params = base_page_params.merge(number: query.prev_page)
       links[:previous] = base_link_params.merge(page: previous_page_params)
     end
 
-    unless query.last_page?
+    if query.next_page
       next_page_params = base_page_params.merge(number: query.next_page)
       links[:next] = base_link_params.merge(page: next_page_params)
     end
