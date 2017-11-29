@@ -10,9 +10,10 @@ module ApplicationHelper
     Endpoint.sorted
   end
 
+  # @return [Array<String,Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
   def organizational_user_collection
     # @return [Array<String,Integer>] list of users suitable for use in select boxes
-    collection = current_organization.users.sort_by(&:username)
+    collection = current_organization.users.sort_by { |u| u.username.downcase }
     collection.map! { |u| [u.username,u.id] }
   end
 
