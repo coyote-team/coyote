@@ -54,4 +54,8 @@
 
           %nav.show-nav{role:"navigation"}
             %ul.list-inline
-              %li= link_to('Edit',edit_representation_path(representation), title: "Edit this representation", class: 'btn btn-primary') if policy(representation).edit?
+              %li
+                = link_to('Edit',edit_representation_path(representation),title: "Edit this representation",class: 'btn btn-primary') if policy(representation).edit?
+              %li 
+                = link_to('Describe Again',new_organization_representation_path(current_organization,resource_id: representation.resource_id),title: 'Create new description for this resource', class: 'btn btn-primary') if policy(Representation).new?
+              
