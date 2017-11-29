@@ -1,6 +1,12 @@
-.entity-outer
-  .entity
-    .entity-inner
-      %header
-        %h1#page-title{tabindex: -1}= title "Editing resource #{resource.identifier}"
-      = render partial: 'form', locals: { target: resource }
+.row
+  .col-md-12
+    %header
+      %h1#page-title{tabindex: -1}= title "Editing resource #{resource.identifier}"
+
+.row
+  .col-md-3
+    = lightbox_link(resource) do
+      = resource_link_target(resource,nil,class: 'img-thumbnail')
+
+  .col-md-9
+    = render partial: 'form', locals: { target: resource }
