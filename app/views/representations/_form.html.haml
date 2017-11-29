@@ -1,10 +1,9 @@
 .row
-  .col-md-12
-    = link_to(current_resource) do
-      = resource_link_target(current_resource,nil,class: 'img-responsive')
+  .col-md-3
+    = lightbox_link(current_resource) do
+      = resource_link_target(current_resource,nil,class: 'img-thumbnail')
 
-.row
-  .col-md-6
+  .col-md-9
     = simple_form_for target, validate: true, html: { multipart: true, class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
       = f.error_notification
 
