@@ -54,7 +54,7 @@
         %ul.list-inline
           - if policy(Representation).new?
             %li
-              = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new representation for this resource', class: 'btn btn-primary' do
+              = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'btn btn-primary' do
                 Create Description
           - if policy(resource).edit?
             %li
