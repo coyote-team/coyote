@@ -59,3 +59,7 @@
               %li 
                 = link_to('Describe Again',new_organization_representation_path(current_organization,resource_id: representation.resource_id),title: 'Create new description for this resource', class: 'btn btn-primary') if policy(Representation).new?
               
+      .row
+        .col-md-12
+          %h2 Audits
+          = render partial: 'audits', object: representation.audits.map { |a| a.audited_changes.symbolize_keys! }

@@ -1,0 +1,28 @@
+%table.table.index-table<
+  %caption.sr-only Audit table of this description
+  %thead
+    %tr
+      %th{scope: "col"} Text
+      %th{scope: "col"} Author
+      %th{scope: "col"} Content Type
+      %th{scope: "col"} Language
+      %th{scope: "col"} Status
+      %th{scope: "col"} Metum
+      %th{scope: "col"} Endpoint
+      %th{scope: "col"} License
+      %th{scope: "col"} Content URI
+      %th{scope: "col"} Notes
+
+  %tbody
+    - audits.each do |c|
+      %tr
+        %td= to_html(c[:text].to_s)
+        %td= User.find_by(id: c[:author_id])
+        %td= c[:content_type]
+        %td= c[:language]
+        %td= c[:status]
+        %td= Metum.find_by(id: c[:metum_id]).try(&:title)
+        %td= Endpoint.find_by(id: c[:endpoint_id]).try(&:name)
+        %td= License.find_by(id: c[:license_id]).try(&:name)
+        %td= c[:content_uri]
+        %td= c[:notes]
