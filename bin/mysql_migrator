@@ -97,4 +97,13 @@ end
 Representation.create!(representations)
 puts "representation: #{Representation.count}"
 
+audits = client.query("SELECT * from audits").to_a
+
+audits.each do |a|
+  a['username'] = a['username'].presence || 'Unknown'
+  a['auditable_type'] = 'Representation' if a['auditable_type'] == 'Description'
+end
+
+Audits = Class.new(ActiveRecord::Base)
+Audits.create!(audits)
 puts "*** don't forget to reset Postgres sequences per https://stackoverflow.com/a/38575949/308448 ***"
