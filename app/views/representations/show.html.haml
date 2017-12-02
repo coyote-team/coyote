@@ -62,4 +62,4 @@
       .row
         .col-md-12
           %h2 Audits
-          = render partial: 'audits', object: representation.audits.map { |a| a.audited_changes.symbolize_keys! }
+          = render partial: 'audits', object: representation.audits.map { |audit| [audit,audit.audited_changes.tap(&:symbolize_keys)] }
