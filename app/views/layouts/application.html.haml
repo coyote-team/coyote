@@ -2,7 +2,7 @@
 %html(lang="en")
   %head
     = raw analytical.head_prepend_javascript
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => false
 
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"
 
@@ -41,6 +41,6 @@
     #loading
     = raw analytical.body_append_javascript
 
-  = javascript_include_tag "application", "data-turbolinks-track" => true
+  = javascript_include_tag "application", "data-turbolinks-track" => false
   = yield :javascript_footer
 = body_class
