@@ -1,82 +1,77 @@
 - title current_organization.title
 
 .container-fluid
-  .row
-    .col
-      %nav
-        %ul.list-inline
-          %li.list-inline-item= link_to('Your Assignments','#your_queues',class: 'btn btn-info btn-sm')
-          - if organization_user.admin?
-            %li.list-inline-item= link_to('Undescribed','#undescribed',class: 'btn btn-info btn-sm')
-            %li.list-inline-item= link_to('Ready to Review','#ready_to_review',class: 'btn btn-info btn-sm')
-
-  .row
-    .col
-      .card
-        .card-header
-          %h4= "#{current_organization.title} Status"
-
-        %ul.list-group.list-group-flush
-          %li.list-group-item
-            = number_with_delimiter(dashboard.organization_resource_count)
-            Total #{link_to('Resources',organization_resources_path(current_organization))}
-          %li.list-group-item
-            = number_with_delimiter(dashboard.organization_representation_count)
-            Total #{link_to('Descriptions',organization_representations_path(current_organization))}
-          %li.list-group-item
-            = number_with_delimiter(dashboard.organization_represented_resource_count)
-            Total #{link_to('Described Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
-            = render partial: 'progress', locals: { value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }
-          %li.list-group-item
-            = number_with_delimiter(dashboard.organization_unrepresented_count) 
-            Total #{link_to('Undescribed Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
-            = render partial: 'progress', locals: { value: dashboard.organization_unrepresented_count, max: dashboard.organization_resource_count }
-
-      %br <!-- hack -->
-
+  %nav
+    %ul.list-inline
+      %li.list-inline-item= link_to('Your Assignments','#your_queues',class: 'btn btn-info btn-sm')
       - if organization_user.admin?
-        .card
-          .card-header
-            %h4  Queues
+        %li.list-inline-item= link_to('Undescribed','#undescribed',class: 'btn btn-info btn-sm')
+        %li.list-inline-item= link_to('Ready to Review','#ready_to_review',class: 'btn btn-info btn-sm')
 
-          %ul.list-group.list-group-flush
-            %li.list-group-item
-              = number_with_delimiter(dashboard.organization_ready_to_review_count)
-              = link_to('Descriptions Pending Approval',organization_representations_path(current_organization,q: { :scope => :ready_to_review }))
-            %li.list-group-item
-              = number_with_delimiter(dashboard.organization_approved_representation_count)
-              = link_to('Descriptions Approved',organization_representations_path(current_organization,q: { :scope => :approved }))
-            %li.list-group-item
-              = number_with_delimiter(dashboard.organization_unapproved_representation_count)
-              = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :scope => :not_approved }))
-            %li.list-group-item
-              = number_with_delimiter(dashboard.organization_open_assignment_count)
-              = link_to('Resources with Open Assignments',organization_resources_path(current_organization,q: { :scope => :unassigned_unrepresented }))
-            %li.list-group-item
-              = number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
-              = link_to('Resources Unassigned',organization_resources_path(current_organization,q: { :scope => :unassigned }))
+  .card-group
+    .card
+      .card-header
+        %h4= "#{current_organization.title} Status"
 
-    .col
+      %ul.list-group.list-group-flush
+        %li.list-group-item
+          = number_with_delimiter(dashboard.organization_resource_count)
+          Total #{link_to('Resources',organization_resources_path(current_organization))}
+        %li.list-group-item
+          = number_with_delimiter(dashboard.organization_representation_count)
+          Total #{link_to('Descriptions',organization_representations_path(current_organization))}
+        %li.list-group-item
+          = number_with_delimiter(dashboard.organization_represented_resource_count)
+          Total #{link_to('Described Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
+          = render partial: 'progress', locals: { value: dashboard.organization_represented_resource_count, max: dashboard.organization_resource_count }
+        %li.list-group-item
+          = number_with_delimiter(dashboard.organization_unrepresented_count) 
+          Total #{link_to('Undescribed Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
+          = render partial: 'progress', locals: { value: dashboard.organization_unrepresented_count, max: dashboard.organization_resource_count }
+
+    .card
+      .card-header
+        %h4 My Status
+
+      %ul.list-group.list-group-flush
+        %li.list-group-item
+          = number_with_delimiter(dashboard.current_user_represented_resources_count)
+          = link_to('Described Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
+
+        %li.list-group-item
+          = number_with_delimiter(dashboard.current_user_open_assignments_count)
+          = link_to('Undescribed Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
+
+        %li.list-group-item
+          = number_with_delimiter(dashboard.current_user_approved_representation_count)
+          = link_to('Approved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
+
+        %li.list-group-item
+          = number_with_delimiter(dashboard.current_user_unapproved_representation_count)
+          = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
+
+    - if organization_user.admin?
       .card
         .card-header
-          %h4 My Status
+          %h4  Queues
 
         %ul.list-group.list-group-flush
           %li.list-group-item
-            = number_with_delimiter(dashboard.current_user_represented_resources_count)
-            = link_to('Described Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
-
+            = number_with_delimiter(dashboard.organization_ready_to_review_count)
+            = link_to('Descriptions Pending Approval',organization_representations_path(current_organization,q: { :scope => :ready_to_review }))
           %li.list-group-item
-            = number_with_delimiter(dashboard.current_user_open_assignments_count)
-            = link_to('Undescribed Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
-
+            = number_with_delimiter(dashboard.organization_approved_representation_count)
+            = link_to('Descriptions Approved',organization_representations_path(current_organization,q: { :scope => :approved }))
           %li.list-group-item
-            = number_with_delimiter(dashboard.current_user_approved_representation_count)
-            = link_to('Approved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
-
+            = number_with_delimiter(dashboard.organization_unapproved_representation_count)
+            = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :scope => :not_approved }))
           %li.list-group-item
-            = number_with_delimiter(dashboard.current_user_unapproved_representation_count)
-            = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
+            = number_with_delimiter(dashboard.organization_open_assignment_count)
+            = link_to('Resources with Open Assignments',organization_resources_path(current_organization,q: { :scope => :unassigned_unrepresented }))
+          %li.list-group-item
+            = number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
+            = link_to('Resources Unassigned',organization_resources_path(current_organization,q: { :scope => :unassigned }))
+
 
   = render partial: 'organizations/dashboard/unrepresented_resources' if organization_user.admin?
   = render partial: 'organizations/dashboard/ready_to_review' if organization_user.admin?

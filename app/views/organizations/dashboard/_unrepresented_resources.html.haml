@@ -1,11 +1,11 @@
 .row
-  .col-sm
+  .col
     %h2#undescribed Undescribed &amp; Unassigned Resources
-
-- if current_organization.unassigned_unrepresented_resources.any?
-  = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => current_organization.unassigned_unrepresented_resources.by_priority.first(10).in_groups_of(3,false), :as => :resource_group
-- else
-  %p There are currently no undescribed resources which lack assignments for this organization
+    - if current_organization.unassigned_unrepresented_resources.any?
+      .card-columns
+        = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => current_organization.unassigned_unrepresented_resources.by_priority.first(10), :as => :resource
+    - else
+      %p There are currently no undescribed resources which lack assignments for this organization
 
 - content_for :javascript_footer do
   :javascript
