@@ -58,14 +58,16 @@ module ApplicationHelper
   # @return [String] HTML link with the given icon attached
   # @see http://fontawesome.io/icons/
   def drop_down_menu_link(text,path,icon_name = nil,options = {})
-    classes = %w[fa fa-fw]
-    classes << "fa-#{icon_name}" if icon_name
+    options[:class] = 'dropdown-item'
+    link_to(text,path,options)
+    #classes = %w[fa fa-fw]
+    #classes << "fa-#{icon_name}" if icon_name
 
-    link_to(path,options) do
-      concat tag.i('',class: classes,:'aria-hidden' => true)
-      concat "\n"
-      concat text
-    end
+    #link_to(path,options) do
+      #concat tag.i('',class: classes,:'aria-hidden' => true)
+      #concat "\n"
+      #concat text
+    #end
   end
 
   # @return [Integer] minimum number of password characters we accept
@@ -197,10 +199,15 @@ module ApplicationHelper
   # @param text [String] the link text to display
   # @param path [String] the target of the link
   def nav_menu_link(text,path)
-    link_class = current_page?(path) ? "active" : ""
+    link_class = "nav-item"
+
+    if current_page?(path)
+      link_class << " active" if current_page?(path)
+      text << " <span class='sr-only'>(current)</span>"
+    end
 
     content_tag(:li,class: link_class) do
-      link_to(text,path)
+      link_to(text.html_safe,path,class: 'nav-link')
     end
   end
 

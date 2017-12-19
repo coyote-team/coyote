@@ -13,6 +13,7 @@ end
 gem 'mysql2', require: false
 
 gem 'apipie-rails'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'dotenv-rails'
 gem 'jsonapi-rails'
 gem 'rails', '5.1.3'

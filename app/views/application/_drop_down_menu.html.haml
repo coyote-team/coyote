@@ -1,14 +1,15 @@
-.navbar-right.navbar-nav
-  %h2.sr-only Global Actions
-  %span.dropdown
-    %button{type: "button", class: "dropdown-toggle", data: { toggle: "dropdown" }, "aria-haspop" => "true", "aria-expanded" => "false", id: 'user-actions' }
-      = current_user
-      %span.caret
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+    = current_user
 
-    %ul.dropdown-menu<
-      %li<= drop_down_menu_link('Support',page_path('support'),'support')
-      %li<= drop_down_menu_link('Profile',edit_user_registration_path,'user')
-      %li<= drop_down_menu_link('Organizations',organizations_path,'users')
-      %li<= drop_down_menu_link('User Management (Staff)',staff_users_path,'list') if current_user.staff?
-      %li<= drop_down_menu_link('Endpoint Management (Staff)',staff_endpoints_path,'list') if current_user.staff?
-      %li<= drop_down_menu_link('Log out',destroy_user_session_path,'sign-out', :method => :delete)
+  .dropdown-menu(aria-labelledby="navbarDropdown")
+    = drop_down_menu_link('Support',page_path('support'),'support')
+    = drop_down_menu_link('Profile',edit_user_registration_path,'user')
+    = drop_down_menu_link('Organizations',organizations_path,'users')
+    = drop_down_menu_link('User Management (Staff)',staff_users_path,'list') if current_user.staff?
+    = drop_down_menu_link('Endpoint Management (Staff)',staff_endpoints_path,'list') if current_user.staff?
+
+    .dropdown-divider
+
+    = drop_down_menu_link('Log out',destroy_user_session_path,'sign-out', :method => :delete)
+

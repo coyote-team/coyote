@@ -83,9 +83,10 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.3.7)
-      autoprefixer-rails (>= 5.2.1)
-      sass (>= 3.3.4)
+    bootstrap (4.0.0.beta2.1)
+      autoprefixer-rails (>= 6.0.3)
+      popper_js (>= 1.12.3, < 2)
+      sass (>= 3.5.2)
     brakeman (3.7.0)
     builder (3.2.3)
     capybara (2.15.0)
@@ -97,7 +98,6 @@ GEM
       xpath (~> 2.0)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
-    chunky_png (1.3.8)
     codeclimate-test-reporter (1.0.8)
       simplecov (<= 0.13)
     coderay (1.1.2)
@@ -108,24 +108,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    compass (1.0.3)
-      chunky_png (~> 1.2)
-      compass-core (~> 1.0.2)
-      compass-import-once (~> 1.0.5)
-      rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9)
-      sass (>= 3.3.13, < 3.5)
-    compass-core (1.0.3)
-      multi_json (~> 1.0)
-      sass (>= 3.3.0, < 3.5)
-    compass-h5bp (1.0.0)
-      compass (~> 1.0, >= 1.0.3)
-    compass-import-once (1.0.5)
-      sass (>= 3.2, < 3.5)
-    compass-rails (3.0.2)
-      compass (~> 1.0.0)
-      sass-rails (< 5.1)
-      sprockets (< 4.0)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -284,7 +266,6 @@ GEM
     mini_mime (0.1.3)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    modular-scale (3.0.2)
     multi_json (1.12.2)
     mysql2 (0.4.9)
     nenv (0.3.0)
@@ -303,6 +284,7 @@ GEM
     pg (0.20.0)
     polyamorous (1.3.1)
       activerecord (>= 3.0)
+    popper_js (1.12.9)
     powerpack (0.1.1)
     pry (0.11.0)
       coderay (~> 1.1.0)
@@ -416,15 +398,11 @@ GEM
       sexp_processor (~> 4.9)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
-    sass (3.4.25)
-    sass-mediaqueries-rails (1.3)
-      sass (>= 3.2.0)
-    sass-rails (5.0.6)
-      railties (>= 4.0.0, < 6)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
+    sass (3.5.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     selenium-webdriver (3.4.4)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -493,13 +471,11 @@ DEPENDENCIES
   autoprefixer-rails
   better_errors
   binding_of_caller
-  bootstrap-sass (= 3.3.7)
+  bootstrap (~> 4.0.0.beta2.1)
   brakeman
   capybara
   codeclimate-test-reporter
   coffee-rails (>= 4.1.0)
-  compass-h5bp
-  compass-rails
   database_cleaner
   devise
   dotenv-rails
@@ -528,7 +504,6 @@ DEPENDENCIES
   lightbox2-rails!
   markdown-rails
   metamagic
-  modular-scale
   mysql2
   oj
   pg (~> 0.20.0)
@@ -547,15 +522,11 @@ DEPENDENCIES
   rollbar
   roo
   rspec-rails (>= 3.6.1)
-  sass-mediaqueries-rails
-  sass-rails
   selenium-webdriver
   shoulda-matchers
   simple_form
   spring
   spring-commands-rspec
-  sprockets
-  sprockets-rails
   uglifier (>= 2.7.1)
   validate_url
   vcr

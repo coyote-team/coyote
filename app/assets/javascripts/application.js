@@ -10,8 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require rails-ujs
+//= jquery
+//= require vendor/rollbar
 //= require jquery
 //= require jquery_ujs
+//= require popper
+//= require bootstrap
 //= require lightbox
-//= require vendor/rollbar
 //= require utils

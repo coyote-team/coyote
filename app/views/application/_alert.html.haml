@@ -1,10 +1,4 @@
-%div.alert.alert-dismissable{class: flash_class(flash_type),role: "alert", id: flash_id}
-  .container
-    .row
-      .col-md-12
-        %p
-          %span{id: "msg_#{flash_id}"}= flash_message
-          %button.close{"data-dismiss" => "alert", :type => "button", "aria-label" => "Dismiss message", "aria-describedby" => "msg_#{flash_id}"}
-            %span.sr-only
-              Dismiss message
-            %span{"aria-hidden" => "true"} ×
+%div.alert.alert-dismissible.fade.show(role="alert"){class: flash_class(flash_type),id: flash_id}
+  = flash_message
+  %button.close(type="button" data-dismiss="alert" aria-label="Close")
+    <span aria-hidden="true">&times;</span>
