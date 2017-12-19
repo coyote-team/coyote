@@ -108,15 +108,6 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
-  def body_class_default
-    [controller_name, action_name].join('-') + "#{controller_name} #{action_name}"
-  end
-
-  def body_class(class_name="")
-    class_name = "#{body_class_default} #{class_name}"
-    content_for :body_class, class_name
-  end
-
   # Unwraps Devise error messages so they look like flash messages, the way regular application alerts work
   # @param errors [ActiveModel::Errors] a list of model errors set by Devise
   # @note similar approach to https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap

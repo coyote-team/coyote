@@ -1,6 +1,6 @@
 .row
   .col
-    %h2#undescribed Undescribed &amp; Unassigned Resources
+    %h2#undescribed.bg-dark.text-light.p-1 Undescribed &amp; Unassigned Resources
     - if current_organization.unassigned_unrepresented_resources.any?
       .card-columns
         = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => current_organization.unassigned_unrepresented_resources.by_priority.first(10), :as => :resource
