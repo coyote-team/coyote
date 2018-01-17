@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: Staff
+  Class: Endpoint
   
     &mdash; Coyote
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "Staff";
+  pathId = "Endpoint";
   relpath = '';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="_index.html">Index (S)</a> &raquo;
+    <a href="_index.html">Index (E)</a> &raquo;
     
     
-    <span class="title">Staff</span>
+    <span class="title">Endpoint</span>
   
 </div>
 
@@ -59,12 +59,32 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Module: Staff
+      <div id="content"><h1>Class: Endpoint
   
   
   
 </h1>
 <div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next"><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></li>
+          
+            <li class="next">Endpoint</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
   
 
   
@@ -78,36 +98,53 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/controllers/staff/users_controller.rb<span class="defines">,<br />
-  app/controllers/staff/user_password_resets_controller.rb,<br /> app/controllers/staff/endpoints_controller.rb</span>
-</dd>
+    <dd>app/models/endpoint.rb</dd>
   </dl>
   
 </div>
 
-<h2>Defined Under Namespace</h2>
-<p class="children">
-  
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
     
+<h2 id="label-Schema+Information">Schema Information</h2>
+
+<p>Table name: endpoints</p>
+
+<pre class="code ruby"><code class="ruby">id         :integer          not null, primary key
+name       :string           not null
+created_at :datetime         not null
+updated_at :datetime         not null</code></pre>
+
+<p>Indexes</p>
+
+<pre class="code ruby"><code class="ruby">index_endpoints_on_name  (name) UNIQUE</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
   
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Staff/ApplicationController.html" title="Staff::ApplicationController (class)">ApplicationController</a></span>, <span class='object_link'><a href="Staff/EndpointsController.html" title="Staff::EndpointsController (class)">EndpointsController</a></span>, <span class='object_link'><a href="Staff/UserPasswordResetsController.html" title="Staff::UserPasswordResetsController (class)">UserPasswordResetsController</a></span>, <span class='object_link'><a href="Staff/UsersController.html" title="Staff::UsersController (class)">UsersController</a></span>
-    
+
+</div>
+
+
+
+
+
+
+
   
-</p>
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
 
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 17 12:28:24 2018 by
+  Generated on Wed Jan 17 12:28:25 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.4.1).
 </div>
