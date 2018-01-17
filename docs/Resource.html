@@ -98,7 +98,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/models/resource.rb</dd>
+    <dd>app/models/resource.rb<span class="defines">,<br />
+  app/models/resource.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -217,6 +219,28 @@ a library can also be considered resources.”</p>
 <p>Yields to the caller if this resource is image-like, and is capable of
 being displayed as a static image.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#host_uris=-instance_method" title="#host_uris= (instance method)">#<strong>host_uris=</strong>(value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -491,6 +515,65 @@ being displayed as a static image</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="host_uris=-instance_method">
+  
+    #<strong>host_uris=</strong>(value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a newline-delimited list of host URIs to store for this Resource</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 82</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_host_uris='>host_uris=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:host_uris</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[\r\n]+</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="label-instance_method">
   
     #<strong>label</strong>  &#x21d2; <tt>String</tt> 
@@ -637,9 +720,9 @@ verbs given from this resource&#39;s perspective</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:35:34 2017 by
+  Generated on Wed Jan 17 12:28:24 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>

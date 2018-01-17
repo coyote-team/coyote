@@ -103,21 +103,6 @@ views  as much as possible</p>
   </ul>
 
 </div>
-  <h2>Constant Summary</h2>
-  <dl class="constants">
-    
-      <dt id="FLASH_CLASSES-constant" class="">FLASH_CLASSES =
-        
-      </dt>
-      <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-info</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='label'>success:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-success</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='label'>error:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-warning</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='label'>alert:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>alert-danger</span><span class='tstring_end'>&#39;</span></span>
-<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-    
-  </dl>
-
 
 
 
@@ -316,6 +301,30 @@ regular application alerts work.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#endpoint_collection-instance_method" title="#endpoint_collection (instance method)">#<strong>endpoint_collection</strong>  &#x21d2; Array&lt;String,Integer&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>List of Endpoints suitable for use in select boxes in Representation forms.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#flash_class-instance_method" title="#flash_class (instance method)">#<strong>flash_class</strong>(level)  &#x21d2; String </a>
     
 
@@ -454,6 +463,28 @@ regular application alerts work.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#lightbox_link-instance_method" title="#lightbox_link (instance method)">#<strong>lightbox_link</strong>(resource, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#minimum_password_length-instance_method" title="#minimum_password_length (instance method)">#<strong>minimum_password_length</strong>  &#x21d2; Integer </a>
     
 
@@ -528,7 +559,7 @@ organizational user can assign.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#organizational_user_collection-instance_method" title="#organizational_user_collection (instance method)">#<strong>organizational_user_collection</strong>  &#x21d2; Object </a>
+      <a href="#organizational_user_collection-instance_method" title="#organizational_user_collection (instance method)">#<strong>organizational_user_collection</strong>  &#x21d2; Array&lt;String,Integer&gt; </a>
     
 
     
@@ -542,7 +573,10 @@ organizational user can assign.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>List of users in the current organization, sorted by name, suitable for use
+in a select box.</p>
+</div></span>
   
 </li>
 
@@ -678,6 +712,30 @@ thumbnail, or an audio icon) based on the type of resource.</p>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_html_title-instance_method" title="#to_html_title (instance method)">#<strong>to_html_title</strong>(content)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>HTML-formatted string, suitable for use in an H1 tag.</p>
+</div></span>
   
 </li>
 
@@ -1200,6 +1258,73 @@ nil.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="endpoint_collection-instance_method">
+  
+    #<strong>endpoint_collection</strong>  &#x21d2; <tt>Array&lt;String,Integer&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns list of Endpoints suitable for use in select boxes in
+Representation forms</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String,Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of Endpoints suitable for use in select boxes in Representation forms</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Endpoint.html" title="Endpoint (class)">Endpoint</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 9</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_endpoint_collection'>endpoint_collection</span>
+  <span class='const'><span class='object_link'><a href="Endpoint.html" title="Endpoint (class)">Endpoint</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sorted'>sorted</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="flash_class-instance_method">
   
     #<strong>flash_class</strong>(level)  &#x21d2; <tt>String</tt> 
@@ -1271,7 +1396,7 @@ nil.</p>
       <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flash_class'>flash_class</span><span class='lparen'>(</span><span class='id identifier rubyid_level'>level</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="#FLASH_CLASSES-constant" title="ApplicationHelper::FLASH_CLASSES (constant)">FLASH_CLASSES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_level'>level</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+  <span class='const'>FLASH_CLASSES</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_level'>level</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1557,6 +1682,44 @@ nil.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="lightbox_link-instance_method">
+  
+    #<strong>lightbox_link</strong>(resource, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_lightbox_link'>lightbox_link</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_source_uri'>source_uri</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_link_to'>link_to</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_source_uri'>source_uri</span><span class='comma'>,</span><span class='label'>data:</span> <span class='lbrace'>{</span> <span class='label'>lightbox:</span> <span class='id identifier rubyid_dom_id'>dom_id</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_link_to'>link_to</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="minimum_password_length-instance_method">
   
     #<strong>minimum_password_length</strong>  &#x21d2; <tt>Integer</tt> 
@@ -1793,25 +1956,56 @@ organizational user can assign</p>
       <div class="method_details ">
   <h3 class="signature " id="organizational_user_collection-instance_method">
   
-    #<strong>organizational_user_collection</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>organizational_user_collection</strong>  &#x21d2; <tt>Array&lt;String,Integer&gt;</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns List of users in the current organization, sorted by name, suitable
+for use in a select box</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String,Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>List of users in the current organization, sorted by name, suitable for use
+in a select box</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-7
-8
-9
-10</pre>
+14
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_organizational_user_collection'>organizational_user_collection</span>
   <span class='comment'># @return [Array&lt;String,Integer&gt;] list of users suitable for use in select boxes
@@ -2111,6 +2305,99 @@ thumbnail, or an audio icon) based on the type of resource</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="to_html_title-instance_method">
+  
+    #<strong>to_html_title</strong>(content)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This is a hack to avoid &lt;p&gt; tags when rendering resource titles as
+H1, see <a
+href="https://github.com/vmg/redcarpet/issues/596">github.com/vmg/redcarpet/issues/596</a></p>
+</div>
+  </div>
+
+
+<p>Returns HTML-formatted string, suitable for use in an H1 tag</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>content</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a piece of text annotated with Markdown</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>HTML-formatted string, suitable for use in an H1 tag</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188
+189
+190</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/application_helper.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_html_title'>to_html_title</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_html'>html</span> <span class='op'>=</span> <span class='id identifier rubyid_to_html'>to_html</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_html'>html</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>(?:^&lt;p&gt;|&lt;/p&gt;\n)</span><span class='regexp_end'>}i</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> 
+  <span class='id identifier rubyid_html'>html</span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="to_text-instance_method">
   
     #<strong>to_text</strong>(content)  &#x21d2; <tt>Object</tt> 
@@ -2217,9 +2504,9 @@ logged-in</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:35:33 2017 by
+  Generated on Wed Jan 17 12:28:24 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.4.1).
 </div>
 
     </div>
