@@ -7,10 +7,6 @@ Dotenv.load
 
 module Coyote
   class Application < Rails::Application
-    config.before_configuration do
-      config.sass.preferred_syntax = :sass
-    end
-
     config.load_defaults 5.1
 
     config.assets.precompile += %w[coyote_producer.js]

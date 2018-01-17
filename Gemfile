@@ -13,20 +13,13 @@ end
 gem 'mysql2', require: false
 
 gem 'apipie-rails'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'dotenv-rails'
 gem 'jsonapi-rails'
 gem 'rails', '5.1.3'
 gem 'language_list'
 gem 'iso639-validator'
-gem 'sass-rails'
-gem 'compass-rails'
-gem 'bootstrap-sass', '3.3.7'
-gem 'sprockets'
-gem 'sprockets-rails'
 gem 'autoprefixer-rails'
-gem 'compass-h5bp'
-gem 'modular-scale', require: false
-gem 'sass-mediaqueries-rails'
 gem 'pg', '~> 0.20.0' # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p 
 gem 'kaminari'
 gem 'ransack'

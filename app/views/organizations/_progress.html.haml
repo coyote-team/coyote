@@ -1,8 +1,5 @@
-%tr
-  %th.sr-only= title
-  %td
-    .progress
-      .progress-bar{progress_bar_attributes(local_assigns)}
-    %p.no-margin
-      %span.progress-label= progress_label(title,value)
-      %span.progress-percentage= progress_bar_percentage(local_assigns)
+- percentage = max.zero? ? 0 : (value / max.to_f) * 100
+
+.progress
+  .progress-bar.progress-bar-striped(role="progressbar" style="width: #{percentage}%"){aria: { valuenow: value, valuemin: 0, valuemax: max }}
+    = number_to_percentage(percentage)

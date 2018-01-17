@@ -1,8 +1,7 @@
-.row
-  - resource_group.each do |resource|
-    .col-md-4
-      = link_to(resource,class: 'thumbnail') do
-        = resource_link_target(resource)
+.card
+  = link_to(resource) do
+    = resource_link_target(resource,nil,class: 'card-img-top')#,style: 'max-height: 200px')
 
-      = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |form|
-        = form.input :user_id, collection: organizational_user_collection, input_html: { data: { resource_id: resource.id }, class: 'assignment_user_select', style: 'width: auto' }, label: false, prompt: 'ASSIGN &#9660;'.html_safe, required: false
+  .card-body
+    = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'form-inline' } do |form|
+      = form.input :user_id, collection: organizational_user_collection, input_html: { data: { resource_id: resource.id }, class: 'custom-select assignment_user_select' }, label: false, prompt: 'ASSIGN', required: false
