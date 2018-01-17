@@ -106,7 +106,7 @@ YARD documentation is hosted at [coyote-team.github.io](https://coyote-team.gith
 
 Fresh documentation can be generated locally by running `bundle exec rake coyote:docs OUT=docs/apipie`. The `OUT` parameter is for `apipie`.
 
-Coyote design refinements are documented in [design_refinements.pdf](doc_assets/design_refinements.pdf).
+Coyote design refinements are documented in [design_refinements.pdf](https://github.com/coyote-team/coyote/blob/master/doc_assets/design_refinements.pdf).
 
 ## <a name="api"></a> API
 
