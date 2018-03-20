@@ -11,7 +11,7 @@ RSpec.describe "Changing one's own user profile" do
     expect {
       click_button 'Update'
       user.reload
-    }.to change(user,:first_name).
+    }.to change(user, :first_name).
       to('Samantha')
   end
 end

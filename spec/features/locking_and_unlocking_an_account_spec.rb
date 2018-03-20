@@ -1,6 +1,6 @@
 RSpec.feature 'Locking and unlocking an account' do
   let(:password) { 'ABC12345' }
-  let(:user) { create(:user,password: password) }
+  let(:user) { create(:user, password: password) }
 
   scenario 'succeeds' do
     visit new_user_session_path
@@ -17,7 +17,7 @@ RSpec.feature 'Locking and unlocking an account' do
       end
 
       user.reload
-    }.to change(user,:access_locked?).
+    }.to change(user, :access_locked?).
       from(false).to(true)
 
     expect(ActionMailer::Base.deliveries.size).to eq(1)
@@ -32,12 +32,12 @@ RSpec.feature 'Locking and unlocking an account' do
       expect {
         visit unlock_link
         user.reload
-      }.to change(user,:access_locked?).
+      }.to change(user, :access_locked?).
         from(true).to(false)
 
       expect(current_path).to eq(new_user_session_path)
 
-      login(user,password,true)
+      login(user, password, true)
     end
   end
 end

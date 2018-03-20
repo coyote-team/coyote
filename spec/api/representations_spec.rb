@@ -3,16 +3,16 @@ RSpec.describe 'Representations' do
     include_context 'API author user'
 
     let!(:representation) do
-      create(:representation,:approved,organization: user_organization)
+      create(:representation, :approved, organization: user_organization)
     end
 
     let!(:unapproved_representation) do
-      create(:representation,:not_approved,organization: user_organization)
+      create(:representation, :not_approved, organization: user_organization)
     end
 
     scenario 'GET /resources/:resource_id/representations' do
       get api_representations_path(representation.resource_identifier), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
         expect(data.size).to eq(1)
@@ -36,7 +36,7 @@ RSpec.describe 'Representations' do
 
     scenario 'GET /representations/:id' do
       get api_representation_path(representation.id), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |record|
         expect(record).to have_id(representation.id.to_s)
@@ -52,7 +52,7 @@ RSpec.describe 'Representations' do
     include_context 'API access headers'
 
     let!(:representation) do
-      create(:representation,:approved)
+      create(:representation, :approved)
     end
 
     scenario 'returns an error' do

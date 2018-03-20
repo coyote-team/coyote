@@ -1,0 +1,79 @@
+// COMPONENT: Nav: The primary navigation of the site. Should only have on
+// instance of a nav element per page. Namespaced via tag name rather than
+// class name.
+nav#nav-main
+  align-items: stretch
+  border-bottom: 1px solid $border
+  display: flex
+  height: $nav-height
+  justify-content: space-between
+
+  // Logo
+  .nav-brand
+    font-weight: bold
+    height: $nav-height
+    line-height: $nav-height - 1px
+    letter-spacing: -0.01em
+    padding: 0 $gutter
+    text-decoration: none
+    text-transform: uppercase
+
+    .nav-brand-fade
+      $delay: 2s
+      animation: nav-brand-fade 500ms $swift-out $delay forwards
+
+      // COYOTE
+      // ^
+      &:nth-of-type(1)
+        animation-delay: 1.2 * $delay
+
+      // COYOTE
+      //   ^
+      &:nth-of-type(3)
+        animation-delay: 1.1 * $delay
+
+      // COYOTE
+      //     ^
+      &:nth-of-type(5)
+        animation-delay: 1.3 * $delay
+
+    &:hover, &:focus
+      .nav-brand-fade
+        animation: none
+
+  // Primary nav
+  .nav-primary
+    align-items: stretch
+    display: flex
+
+    @include mobile
+      display: none
+
+    li
+      a
+        display: block
+        height: 100%
+        line-height: $nav-height - 3px
+        padding: 0 $gutter / 2
+        text-decoration: none
+
+        &:hover
+          background-color: $input
+
+  // Secondary nav
+  .nav-secondary
+    align-items: center
+    display: flex
+    padding-right: $gutter
+
+    > *
+      margin-right: $gutter
+
+      &:last-child
+        margin-right: 0
+
+@keyframes nav-brand-fade
+  0%
+    opacity: 1
+  100%
+    opacity: 0

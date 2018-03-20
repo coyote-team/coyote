@@ -1,0 +1,14 @@
+// COMPONENT: Code: used to render pretty code. Namespaced via tag name rather
+// than class name.
+code
+  background-color: $input
+  color: $text
+  font-family: $font-family-mono
+  margin-bottom: $gutter
+  padding: 0 $input-padding
+
+  &.code--block
+    display: block
+    overflow: auto
+    padding: $gutter
+    white-space: nowrap

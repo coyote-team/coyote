@@ -15,7 +15,7 @@ class Api::ApplicationController < ActionController::API
   private
 
   attr_accessor :current_user
-  
+
   def require_api_authentication
     authenticate_token || render_unauthorized
   end
@@ -29,20 +29,20 @@ class Api::ApplicationController < ActionController::API
   end
 
   def organization_user
-    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+    @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   alias pundit_user organization_user
-  
+
   def render_unauthorized
-    render :jsonapi_errors => [{ 
+    render jsonapi_errors: [{
       title: 'Invalid Authorization Token',
       detail: 'You must provide a valid API authorization token in the HTTP_AUTHORIZATION header'
-    }], :status => :unauthorized
+    }], status: :unauthorized
   end
 
   def pagination_params
-    params.fetch(:page,{}).permit(:number,:size)
+    params.fetch(:page, {}).permit(:number, :size)
   end
 end
 

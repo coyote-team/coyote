@@ -36,10 +36,10 @@ class InvitationsController < ApplicationController
   attr_accessor :invitation, :title
 
   def invitation_params
-    params.require(:invitation).permit(:recipient_email,:role,:first_name,:last_name)
+    params.require(:invitation).permit(:recipient_email, :role, :first_name, :last_name)
   end
 
   def user_invitation_service
-    @user_invitation_service ||= UserInvitationService.new(current_user,current_organization)
+    @user_invitation_service ||= UserInvitationService.new(current_user, current_organization)
   end
 end

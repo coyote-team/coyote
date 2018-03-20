@@ -1,0 +1,42 @@
+- resource, representations = resource_and_representations
+- id = id_for(resource.identifier)
+li.list-item
+  = resource_link(resource)
+
+  .list-item-body.timeline
+    span.sr-only Caption:
+    = to_html resource.title
+    - representations.each do |representation|
+      .timeline-item
+        - if defined? form
+          = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation #{representation.id} for bulk update"}
+        = to_html representation.text
+        p by #{representation.author}
+        h5.sr-only id="properties-#{id}" Properties of representation #{representation.id}
+        ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
+          = metum_tag(representation.metum, tag: :li)
+          li.tag.tag--outline
+            span.sr-only Language:
+            = representation.language
+          = representation_status_tag(representation, tag: :li) do
+            span.sr-only Status:
+            = representation.status.to_s.titleize
+
+        h5.sr-only id="actions-representation-#{representation.id}" Actions for representation ##{representation.id}
+        ul.list-item-actions aria-labelledby="actions-representation-#{representation.id}"
+          li.list-item-actions-item
+            = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+          - if defined? form
+            - if policy(representation).edit?
+              li.list-item-actions-item
+                = link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+            - if policy(representation).destroy?
+              li.list-item-actions-item
+                = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  method: :delete, data: { confirm: "Are you sure you want to delete #{representation}?"}, aria: { describedby: dom_id(representation) }
+          - else
+            = simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+              = f.input_field :status, as: :hidden, value: "approved"
+              = f.submit "Approve", class: "button button--outline", aria: { label: "Approve representation ##{representation.id}" }
+            = simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+              = f.input_field :status, as: :hidden, value: "not_approved"
+              = f.submit "Reject", class: "button button--outline", aria: { label: "Approve representation ##{representation.id}" }

@@ -1,11 +1,11 @@
 RSpec.describe ResourcePolicy do
   include_context "viewer organization user"
 
-  let(:resource) do 
-    double(:resource,class: Resource,user_id: org_user.id)
+  let(:resource) do
+    double(:resource, class: Resource, user_id: org_user.id)
   end
 
-  subject { ResourcePolicy.new(org_user,resource) }
+  subject { ResourcePolicy.new(org_user, resource) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }

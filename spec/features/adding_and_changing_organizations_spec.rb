@@ -1,5 +1,5 @@
 RSpec.describe "Adding and changing an organization" do
-  include_context "as a logged-in user"
+  include_context "as a logged-in staff user"
 
   it "succeeds" do
     click_link "Organizations"
@@ -11,7 +11,7 @@ RSpec.describe "Adding and changing an organization" do
 
     expect {
       click_button "Create Organization"
-    }.to change(user.organizations,:count).from(1).to(2)
+    }.to change(user.organizations, :count).from(1).to(2)
 
     organization = user.organizations.find_by!(title: "Acme Museum")
 

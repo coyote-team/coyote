@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/ClassLength 
+# rubocop:disable Metrics/ClassLength
 module Api
   # Handles calls to /api/v1/resources/
   class ResourcesController < Api::ApplicationController
@@ -8,12 +8,12 @@ module Api
     before_action :authorize_general_access, only: %i[index create]
     before_action :authorize_unit_access,    only: %i[show update destroy]
 
-    resource_description do 
+    resource_description do
       short 'Anything with an identity that can be represented in the Coyote database'
 
       desc <<~DESC
-        We use the Dublin Core meaning for what a Resource represents: "...a resource is anything that has identity. Familiar examples include an electronic document, an image, 
-        a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all resources are network "retrievable"; e.g., human beings, 
+        We use the Dublin Core meaning for what a Resource represents: "...a resource is anything that has identity. Familiar examples include an electronic document, an image,
+        a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all resources are network "retrievable"; e.g., human beings,
         corporations, and bound books in a library can also be considered resources."
       DESC
 
@@ -146,7 +146,7 @@ module Api
 
       resources = record_filter.records
 
-      record_filter.pagination_link_params.each do |rel,link_params|
+      record_filter.pagination_link_params.each do |rel, link_params|
         link = api_resources_url(link_params)
         links[rel] = link
       end
@@ -250,10 +250,10 @@ module Api
 
       if resource.save
         logger.info "Created #{resource}"
-        render :jsonapi => resource, :status => :created
+        render jsonapi: resource, status: :created
       else
         logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
-        render :jsonapi_errors => resource.errors, :status => :unprocessable_entity
+        render jsonapi_errors: resource.errors, status: :unprocessable_entity
       end
     end
 
@@ -264,7 +264,7 @@ module Api
         render jsonapi: resource
       else
         logger.warn "Unable to update resource due to '#{resource.error_sentence}'"
-        render :jsonapi_errors => resource.errors, :status => :unprocessable_entity
+        render jsonapi_errors: resource.errors, status: :unprocessable_entity
       end
     end
 
@@ -287,11 +287,11 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_user.resources)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_user.resources)
     end
 
     def filter_params
-      params.fetch(:filter,{}).permit(:identifier_or_title_or_representations_text_cont_all,:scope)
+      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :scope)
     end
   end
 end

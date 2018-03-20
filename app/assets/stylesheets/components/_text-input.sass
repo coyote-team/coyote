@@ -1,0 +1,18 @@
+// COMPONENT: Text input: basic form elements. Namespaced via tag name rather
+// than class name.
+#{$text-inputs}, textarea
+  @extend %input-text
+  background: $input
+  border-color: $input
+  width: 100%
+
+  &:focus
+    border-color: $tint
+
+  &::placeholder
+    color: $placeholder
+
+textarea
+  height: auto
+  line-height: normal
+  padding: $input-padding

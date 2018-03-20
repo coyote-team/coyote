@@ -3,7 +3,7 @@ RSpec.describe 'Accessing resources' do
     include_context 'API editor user'
 
     let(:resource_group) do
-      create(:resource_group,:website,organization: user_organization) 
+      create(:resource_group, :website, organization: user_organization)
     end
 
     let(:new_resource_params) do
@@ -11,14 +11,14 @@ RSpec.describe 'Accessing resources' do
     end
 
     let(:existing_resource) do
-      create(:resource,organization: user_organization)
+      create(:resource, organization: user_organization)
     end
 
     scenario 'POST /organizations/:id/resources' do
       expect {
         post api_resources_path(user_organization.id), params: { resource: new_resource_params }, headers: auth_headers
         expect(response).to be_created
-      }.to change(user_organization.resources,:count).
+      }.to change(user_organization.resources, :count).
         from(0).to(1)
 
       user_organization.resources.first.tap do |resource|
@@ -35,10 +35,10 @@ RSpec.describe 'Accessing resources' do
     scenario 'PATCH /resources/:id' do
       expect {
         patch api_resource_path(existing_resource.id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
-        expect(response).to be_success
+        expect(response).to be_successful
 
         existing_resource.reload
-      }.to change(existing_resource,:title).
+      }.to change(existing_resource, :title).
         to('NEWTITLE')
 
       patch api_resource_path(existing_resource.id), params: { resource: { identifier: nil } }, headers: auth_headers
@@ -58,8 +58,8 @@ RSpec.describe 'Accessing resources' do
       Rails.configuration.x.resource_api_page_size + 1 # to force pagination to occur
     end
 
-    let!(:user_org_resources) do 
-      create_list(:resource,user_org_resource_count,organization: user_organization)
+    let!(:user_org_resources) do
+      create_list(:resource, user_org_resource_count, organization: user_organization)
     end
 
     let(:represented_resource) do
@@ -67,18 +67,18 @@ RSpec.describe 'Accessing resources' do
     end
 
     let!(:representation) do
-      create(:representation,resource: represented_resource,text: 'can search for the term "polyphonic"')
+      create(:representation, resource: represented_resource, text: 'can search for the term "polyphonic"')
     end
 
     let!(:other_org_resource) do
-      create(:resource,title: 'Current user should not be seeing this due to other org privacy restrictions')
+      create(:resource, title: 'Current user should not be seeing this due to other org privacy restrictions')
     end
 
     scenario 'GET /organizations/:id/resources' do
       request_path = api_resources_path(user_organization)
       get request_path, headers: auth_headers
 
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expected_link_paths = {
         self:  URI.unescape(request_path),
@@ -92,21 +92,21 @@ RSpec.describe 'Accessing resources' do
       ids = first_page.map { |r| r.fetch(:id).to_i }
       expect(user_org_resources.map(&:id)).to include(*ids)
 
-      link_paths = json_data.fetch(:links).inject({}) do |result,(rel,href)|
+      link_paths = json_data.fetch(:links).inject({}) do |result, (rel, href)|
         uri = URI.parse(href)
         result.merge(rel.to_sym => uri.request_uri)
       end
 
       expect(link_paths.size).to eq(expected_link_paths.size)
 
-      expected_link_paths.each do |name,path|
+      expected_link_paths.each do |name, path|
         actual_path = URI.unescape(link_paths.fetch(name))
         expect(actual_path).to eq(path), "Expected '#{name}' link to match '#{path}' but got '#{actual_path}'"
       end
 
       filter = { identifier_or_title_or_representations_text_cont_all: 'polyphonic' }
 
-      request_path = api_resources_path(user_organization,filter: filter)
+      request_path = api_resources_path(user_organization, filter: filter)
       get request_path, headers: auth_headers
 
       data = json_data.fetch(:data)
@@ -117,13 +117,13 @@ RSpec.describe 'Accessing resources' do
   context 'with a resource' do
     include_context 'API author user'
 
-    let(:resource) do 
-      create(:resource,organization: user_organization)
+    let(:resource) do
+      create(:resource, organization: user_organization)
     end
-    
+
     scenario 'GET /resources/:id' do
       get api_resource_path(resource), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
         expect(data).to have_id(resource.id.to_s)
@@ -133,7 +133,7 @@ RSpec.describe 'Accessing resources' do
         expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
         expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
 
-        expect(data).to have_relationships(:organization,:representations)
+        expect(data).to have_relationships(:organization, :representations)
       end
     end
   end
@@ -148,7 +148,7 @@ RSpec.describe 'Accessing resources' do
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
 
-      get api_resource_path(resource.organization_id,resource.id), headers: api_headers
+      get api_resource_path(resource.organization_id, resource.id), headers: api_headers
       expect(response).to be_unauthorized
       expect(json_data).to have_key(:errors)
 

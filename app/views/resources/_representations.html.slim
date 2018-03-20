@@ -1,0 +1,21 @@
+table
+  thead
+    th Status
+    th Metum
+    th Locale
+    th Text
+    th Author
+    th.table-cell-actions Actions
+  tbody
+    - representations.each do |representation|
+      tr
+        td= representation_status_tag(representation)
+        td= metum_tag(representation.metum, hint: false)
+        td: span.tag.tag--outline= representation.language
+        td= to_html representation.text
+        td= representation.author
+        td.table-cell-actions
+          - if policy(Representation).edit?
+            = link_to 'Edit', edit_representation_path(representation), class: 'button button--outline'
+          - if policy(Representation).index?
+            = link_to 'View', representation_path(representation), class: 'button button--outline'

@@ -18,11 +18,11 @@
 # @see https://github.com/coyote-team/coyote/issues/112
 class ResourceGroup < ApplicationRecord
   validates_presence_of :title
-  validates_uniqueness_of :title, :scope => :organization_id
+  validates_uniqueness_of :title, scope: :organization_id
 
-  has_many :resources, :inverse_of => :resource_group
+  has_many :resources, inverse_of: :resource_group
 
-  belongs_to :organization, :inverse_of => :resource_groups
+  belongs_to :organization, inverse_of: :resource_groups
 
   # @return [String] title of this group
   def to_s

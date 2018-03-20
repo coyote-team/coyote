@@ -1,0 +1,4 @@
+- content_for :devise_form_errors, devise_form_errors(resource.errors)
+h1= title 'Log in'
+= render "form"
+= link_to "Forgot your password?", new_user_password_path

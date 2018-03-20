@@ -1,20 +1,20 @@
 # rubocop:disable ModuleLength
- 
-# Contains general, simple view helper code. Designed to keep code out of our views 
+
+# Contains general, simple view helper code. Designed to keep code out of our views
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
-  # @return [Array<String,Integer>] list of Endpoints suitable for use in select boxes in Representation forms
+  # @return [Array<String, Integer>] list of Endpoints suitable for use in select boxes in Representation forms
   # @see Endpoint
   def endpoint_collection
     Endpoint.sorted
   end
 
-  # @return [Array<String,Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
+  # @return [Array<String, Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
   def organizational_user_collection
-    # @return [Array<String,Integer>] list of users suitable for use in select boxes
-    collection = current_organization.users.sort_by { |u| u.username.downcase }
-    collection.map! { |u| [u.username,u.id] }
+    # @return [Array<String, Integer>] list of users suitable for use in select boxes
+    collection = current_organization.users.active.sort_by { |u| u.username.downcase }
+    collection.map! { |u| [u.username, u.id] }
   end
 
   # @param language_code [String] language short code such as 'en'
@@ -27,42 +27,21 @@ module ApplicationHelper
   # @return [Array<Array>] a collection of languages suitable for use in a select box
   # @see https://github.com/scsmith/language_list
   def language_list
-    @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
+    @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name, l.iso_639_1] }
   end
 
-  def lightbox_link(resource,&block)
-    if resource.source_uri.present?
-      link_to(resource.source_uri,data: { lightbox: dom_id(resource) },&block)
-    else
-      link_to(resource,&block)
-    end
-  end
-
-  # @param target_resource [Resource] the Resource that is being displayed
-  # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
-  # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
-  # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
-  def resource_link_target(target_resource,representation_dom_id = nil,options = {})
-    target_resource.as_viewable do |uri|
-      options = options.merge(:"aria-describedby" => representation_dom_id) if representation_dom_id
-      return image_tag uri, options
-    end
-
-    "#{target_resource.title} (#{target_resource.resource_type})"
-  end
-  
   # @param text [String] the link text to show the user
   # @param path [String] the link target
   # @param icon_name [String] what Font Awesome icon to associate with the link. Optional, defaults to nil.
   # @param options [Hash] passed on to the Rails link_to helper
   # @return [String] HTML link with the given icon attached
   # @see http://fontawesome.io/icons/
-  def drop_down_menu_link(text,path,icon_name = nil,options = {})
+  def drop_down_menu_link(text, path, icon_name = nil, options = {})
     classes = %w[fa fa-fw]
     classes << "fa-#{icon_name}" if icon_name
 
-    link_to(path,options) do
-      concat tag.i('',class: classes,:'aria-hidden' => true)
+    link_to(path, options) do
+      concat tag.i('', class: classes, :'aria-hidden' => true)
       concat "\n"
       concat text
     end
@@ -79,9 +58,9 @@ module ApplicationHelper
   def organizational_user_assignable_roles
     roles = []
 
-    Coyote::Membership.each_role do |label,role_name,_|
+    Coyote::Membership.each_role do |label, role_name, _|
       break unless organization_user.send(:"#{role_name}?")
-      roles << [label,role_name]
+      roles << [label, role_name]
     end
 
     roles
@@ -93,15 +72,15 @@ module ApplicationHelper
     msg << ", #{current_user}!" if current_user
     msg
   end
-  
+
   def resource_name
     :user
   end
- 
+
   def resource
     @resource ||= User.new
   end
- 
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
@@ -120,12 +99,12 @@ module ApplicationHelper
   # @note similar approach to https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap
   def devise_form_errors(errors)
     capture do
-      errors.full_messages.each_with_index.map do |msg,idx|
-        concat render partial: 'alert', locals: { :flash_type => :error, :flash_message => msg, flash_id: "devise_flash_#{idx}" }
+      errors.full_messages.each_with_index.map do |msg, idx|
+        concat render partial: 'alert', locals: { flash_type: :error, flash_message: msg, flash_id: "devise_flash_#{idx}" }
       end
     end
   end
-  
+
   # @param level [String] level of flash message to be styled
   # @return [String] CSS class to use when styling a flash message
   def flash_class(level)
@@ -136,13 +115,13 @@ module ApplicationHelper
     klass = ""
     case status_code
     when 0
-      klass += "undescribed" 
+      klass += "undescribed"
     when 1
-      klass += "partial" 
+      klass += "partial"
     when 2
-      klass += "warning" 
+      klass += "warning"
     when 3
-      klass += "success" 
+      klass += "success"
     end
     return klass
   end
@@ -151,11 +130,11 @@ module ApplicationHelper
     klass = "item "
     case description.status_id
     when 2
-      klass += "success" 
+      klass += "success"
     when 1
-      klass += "warning" 
+      klass += "warning"
     when 3
-      klass += "danger" 
+      klass += "danger"
     end
     klass
   end
@@ -185,7 +164,7 @@ module ApplicationHelper
   # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
   def to_html_title(content)
     html = to_html(content)
-    html.gsub!(%r{(?:^<p>|</p>\n)}i,'') 
+    html.gsub!(%r{(?:^<p>|</p>\n)}i, '')
     html.html_safe
   end
 
@@ -196,11 +175,11 @@ module ApplicationHelper
   # Used to render top-level navigation, so the current page gets an "active" CSS class applied
   # @param text [String] the link text to display
   # @param path [String] the target of the link
-  def nav_menu_link(text,path)
+  def nav_menu_link(text, path)
     link_class = current_page?(path) ? "active" : ""
 
-    content_tag(:li,class: link_class) do
-      link_to(text,path)
+    content_tag(:li, class: link_class) do
+      link_to(text, path)
     end
   end
 
@@ -230,14 +209,15 @@ module ApplicationHelper
   private
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,filter_html: true,autolink: true,tables: true)
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: true, tables: true)
   end
 
   FLASH_CLASSES = {
-    notice: 'alert-info',
-    success: 'alert-success',
-    error: 'alert-warning',
-    alert: 'alert-danger'
+    alert: 'notification--okay',
+    notice: 'notification--okay',
+    success: 'notification--success',
+    error: 'notification--error',
+    notification: 'alert--okay'
   }.freeze
 end
 

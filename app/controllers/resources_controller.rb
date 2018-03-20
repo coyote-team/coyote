@@ -8,7 +8,7 @@ class ResourcesController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
 
-  helper_method :resource, :record_filter
+  helper_method :resource, :record_filter, :filter_params
 
   def index
   end
@@ -56,15 +56,19 @@ class ResourcesController < ApplicationController
   attr_writer :current_organization
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_organization.resources)
+    @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources)
   end
 
   def filter_params
-    params.fetch(:q,{}).permit(:s,:identifier_or_title_or_representations_text_cont_all,:representations_author_id_eq,:scope,:assignments_user_id_eq)
+    params.fetch(:q, {}).permit(:s, :identifier_or_title_or_representations_text_cont_all, :representations_author_id_eq, :assignments_user_id_eq, :priority_flag_eq, scope: [])
+  end
+
+  def resources_scope
+    current_user.staff? ? Resource : current_user.resources
   end
 
   def set_resource
-    self.resource = current_user.resources.find(params[:id])
+    self.resource = resources_scope.find(params[:id])
     self.current_organization = resource.organization
   end
 

@@ -1,0 +1,139 @@
+// COMPONENT: List: the main list element used for all kinds of things -
+// listing statistics, listing complex search results, etc
+= list-item-vertical
+  align-items: stretch
+  flex-direction: column
+
+  @include ie-only
+    display: block
+
+  @supports (display: grid)
+    display: block
+
+  .list-item-header, .list-item-body
+    padding-bottom: 0
+    padding-right: 0
+
+  .list-item-header
+    margin-bottom: -1px
+
+  .list-item-actions
+    text-align: left
+
+.list
+  display: block
+
+  .list-item
+    align-items: center
+    border-top: 1px solid $border
+    display: flex
+    justify-content: space-between
+    padding: $gutter 0
+    transition: all 150ms $swift
+
+    .list-item-label, .list-item-header, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
+      display: block
+
+    .list-item-label, .list-item-header, .list-item-body
+      padding-right: $gutter
+
+    .list-item-header
+      display: flex
+      flex: 0 0 33%
+      white-space: nowrap
+
+      img
+        border: 1px solid $border
+
+      @include ie-only
+        order: -1 // Remove from the IE flex flow manually
+
+      > *
+        display: block
+
+      input
+        flex: 1 0 $checkbox-size
+
+    .list-item-body
+      flex: 1
+
+    .list-item-actions
+      text-align: right
+      // white-space: nowrap
+
+      .list-item-actions-item
+        display: inline-block
+        margin-bottom: $input-padding
+        margin-right: $input-padding
+
+        &:last-child, *
+          margin-bottom: 0
+          margin-right: 0
+
+    .list-item-label
+      &:after
+        content: ': '
+
+    .list-item-value
+      font-weight: bold
+      padding-left: $gutter
+      text-align: right
+      text-decoration: none
+
+    @include mobile-portrait
+      @include list-item-vertical
+
+  // COMPONENT SUBTYPE: Render the list as a grid of cards
+  &.list--grid
+    margin-bottom: $gutter
+
+    @include non-mobile-portrait
+      // Default grid is just a list of cards
+      display: flex
+      flex-wrap: wrap
+
+      .list-item
+        @include list-item-vertical
+        border-width: 0
+        flex: 1 1 0%
+        -ms-flex: 1 1 20% // Patches IE 11 insantiy
+        margin: $gutter
+        max-width: calc(#{percentage(1/3)} - #{$gutter})
+
+        &:nth-child(3n)
+          margin-right: 0
+
+        &:nth-child(3n + 1)
+          margin-left: 0
+
+        &.list-item--card
+          border: 1px solid $border
+          padding: $gutter
+
+      // For browsers with support for the grid layout, we use that to create a masonry effect
+      @supports (display: grid)
+        display: grid
+        grid-auto-rows: $gutter + 2px
+        grid-gap: $gutter
+        grid-template-columns: repeat(3, 1fr)
+
+        .list-item
+          margin: 0
+          max-width: none
+
+  // COMPONENT SUBTYPE: Provide progress indicators above list items
+  &.list--progress
+    .list-item
+      position: relative
+
+      .list-item-progress
+        border-top: 2px solid $tint
+        bottom: 100%
+        left: 0
+        margin-bottom: 1px
+        position: absolute
+        speak: none
+
+        @each $name, $color in $status
+          &.list-item-progress--#{$name}
+            border-color: $color

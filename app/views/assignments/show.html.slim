@@ -1,0 +1,23 @@
+h1= title "Showing #{assignment}"
+.split-view
+  .split-view-item
+    = resource_link assignment.resource
+
+  .split-view-item
+    table
+      caption.sr-only Key value pairs for this assignment
+      tbody
+        tr
+          th Resource
+          td= link_to(assignment.resource) do
+            = assignment.resource.title
+        tr
+          th User
+          td= link_to assignment.user, assignment.user
+
+    nav.toolbar.toolbar--footer
+      .toolbar-item
+        = link_to organization_assignments_path(current_organization), class: 'button button--outline', title: "View the assignments index" do
+          | Assignments
+      - if policy(assignment).destroy?
+        .toolbar-item= button_to('Delete', [current_organization, assignment], title: "Delete this assignment", class: "button", method: :delete, data: { confirm: "Are you sure you want to delete #{assignment}?" } )

@@ -1,0 +1,22 @@
+table
+  caption
+    h1= title 'User Management (Staff)'
+  thead
+    tr
+      th First name
+      th Last name
+      th Staff
+      th Email
+      th.table-cell-actions Actions
+
+  tbody
+    - users.each do |user|
+      tr
+        td.table-cell-primary= link_to_if user.first_name.present?, user.first_name, staff_user_path(user)
+        td.table-cell-primary= link_to_if user.last_name.present?, user.last_name, staff_user_path(user)
+        td= user.staff ? 'Yes' : %|<span class='sr-only'>No</span>|.html_safe
+        td= link_to(user.email, staff_user_path(user))
+        td.table-cell-actions
+          = link_to('Edit', edit_staff_user_path(user), class: 'button button--outline', title: "Edit #{user}")
+          - if user != current_user
+            = button_to('Archive', staff_user_path(user), title: "Archive #{user}", method: :delete, class: "button button--outline", data: { confirm: "Are you sure you want to archive #{user}?" }) unless user == current_user

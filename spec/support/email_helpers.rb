@@ -17,7 +17,7 @@ module Coyote
       # @return [Nokogiri::HTML::Document] the email body as an HTML document that can be queried
       # @param path [String] an XPath query; defaults to //a/@href, which will return the first anchor tag with an href attribute
       # @return [String] the URL extracted from the email body
-      def extract_email_link(email,path = '//a/@href')
+      def extract_email_link(email, path = '//a/@href')
         email_to_dom(email).at_xpath(path).value
       end
     end

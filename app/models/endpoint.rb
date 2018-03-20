@@ -13,7 +13,7 @@
 #
 
 class Endpoint < ApplicationRecord
-  has_many :representations, :inverse_of => :endpoint
+  has_many :representations, inverse_of: :endpoint
 
   validates :name, presence: true, uniqueness: true
 

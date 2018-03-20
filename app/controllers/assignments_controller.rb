@@ -9,15 +9,15 @@ class AssignmentsController < ApplicationController
   def index
     assignments = current_organization.assignments.to_a
 
-    assignments.sort_by! do |a| 
-      [a.user_last_name,a.user_email].tap(&:compact!).first 
+    assignments.sort_by! do |a|
+      [a.user_last_name, a.user_email].tap(&:compact!).first
     end
 
     memberships = current_organization.memberships.index_by(&:user_id)
 
-    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment,hash|
+    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
       membership = memberships[assignment.user_id]
-      hash[membership] = hash[membership] + 1
+      hash[membership] = hash[membership] + 1 if membership.present?
       hash
     end
   end
@@ -32,11 +32,11 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    resource_ids = assignment_params.values_at(:resource_ids,:resource_id).tap(&:compact!)
+    resource_ids = assignment_params.values_at(:resource_ids, :resource_id).tap(&:compact!)
     resources = current_organization.resources.where(id: resource_ids)
 
     assignments = resources.map do |resource|
-      Assignment.find_or_create_by!(resource: resource,user: assigned_user)
+      Assignment.find_or_create_by!(resource: resource, user: assigned_user)
     end
 
     logger.info "Created '#{assignments}'"
@@ -53,12 +53,12 @@ class AssignmentsController < ApplicationController
     else
       logger.warn "Unable to delete #{assignment}: '#{assignment.error_sentence}'"
       flash[:error] = "We were unable to delete the assignment"
-      redirect_to :back 
+      redirect_to :back
     end
   end
 
   private
-  
+
   attr_accessor :assigned_users, :assignment
 
   def set_assignment
@@ -74,7 +74,7 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:user_id,:resource_id,:resource_ids => [])
+    params.require(:assignment).permit(:user_id, :resource_id, resource_ids: [])
   end
 
   def next_resource
@@ -93,7 +93,7 @@ class AssignmentsController < ApplicationController
     current_organization.users.find(assignment_params[:user_id])
   end
 
-  def assigned_resource 
+  def assigned_resource
     current_organization.resources.find(assignment_params[:resource_id])
   end
 end

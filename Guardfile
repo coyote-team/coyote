@@ -2,7 +2,7 @@ ignore(/doc_assets/)
 
 # This group allows to skip running RuboCop when RSpec failed.
 group :red_green_refactor, halt_on_fail: true do
-  guard :rspec, all_on_start: true, cmd: "spring rspec" do
+  guard :rspec, all_after_pass: true, all_on_start: true, failed_mode: :keep, cmd: "spring rspec" do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')  { "spec" }

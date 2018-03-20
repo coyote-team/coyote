@@ -6,4 +6,4 @@ SitemapGenerator::Sitemap.create do
   add '/home', :changefreq => 'daily', :priority => 0.9
   add '/contact_us', :changefreq => 'weekly'
 end
-SitemapGenerator::Sitemap.ping_search_engines 
+SitemapGenerator::Sitemap.ping_search_engines

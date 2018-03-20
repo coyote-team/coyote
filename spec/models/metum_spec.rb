@@ -20,5 +20,5 @@ RSpec.describe Metum do
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:instructions) }
-  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) } 
+  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) }
 end

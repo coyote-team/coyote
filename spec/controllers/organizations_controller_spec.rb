@@ -58,17 +58,17 @@ RSpec.describe OrganizationsController do
 
     it "succeeds for basic actions" do
       get :index
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: existing_organization_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: existing_organization_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
       get :new
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_organization_params
@@ -79,7 +79,7 @@ RSpec.describe OrganizationsController do
 
       post :create, params: { organization: { title: '' } }
       expect(response).not_to be_redirect
-      
+
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -91,12 +91,12 @@ RSpec.describe OrganizationsController do
 
     it "succeeds for critical actions" do
       get :edit, params: existing_organization_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
         organization.reload
-      }.to change(organization,:title).to("NEWTITLE")
+      }.to change(organization, :title).to("NEWTITLE")
 
       patch :update, params: existing_organization_params.merge(organization: { title: '' })
       expect(response).not_to be_redirect

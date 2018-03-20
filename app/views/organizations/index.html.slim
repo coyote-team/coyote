@@ -1,0 +1,15 @@
+h1= title 'Your Organizations'
+
+= list do |org|
+  - current_user.organizations.each do |org|
+    = link_to_list_item(org.title, organization_path(org))
+
+- if current_user.staff?
+  h2= title 'All Organizations'
+
+  = list_of(Organization.all) do |org|
+    = link_to(org.title, organization_path(org))
+
+  nav.toolbar.toolbar--footer
+    h2.sr-only Actions
+    = link_to 'New Organization', new_organization_path, class: 'button'

@@ -1,16 +1,16 @@
 RSpec.feature 'Representation filtering' do
   include_context 'as a logged-in author user'
 
-  let!(:representation) do 
-    create(:representation,:not_approved,organization: user_organization,text: "My Organization's Description")
+  let!(:representation) do
+    create(:representation, :not_approved, organization: user_organization, text: "My Organization's Description")
   end
 
-  let!(:representation_search_target) do 
-    create(:representation,:approved,organization: user_organization,text: 'A woman smiling')
+  let!(:representation_search_target) do
+    create(:representation, :approved, organization: user_organization, text: 'A woman smiling')
   end
 
-  let!(:other_representation) do 
-    create(:representation,text: 'Should Not See This')
+  let!(:other_representation) do
+    create(:representation, text: 'Should Not See This')
   end
 
   scenario 'succeeds' do
@@ -26,7 +26,7 @@ RSpec.feature 'Representation filtering' do
     expect(page).not_to have_content("My Organization's Description")
 
     fill_in 'q[text_or_resource_identifier_or_resource_title_cont_all]', with: ''
-    select 'Not Approved', from: 'q[status_eq]'
+    check 'Not Approved'
     click_button 'Search'
 
     expect(page).not_to have_content('A woman smiling')

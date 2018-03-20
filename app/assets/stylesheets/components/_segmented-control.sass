@@ -1,0 +1,31 @@
+// COMPONENT: Segmented Control: allows for toggling between two or more states
+.segmented-control
+  @extend %input-fixed-height
+  align-items: stretch
+  border-color: $border
+  display: inline-flex
+
+  .segmented-control-item
+    > *
+      border-right: 1px solid $border
+      cursor: pointer
+      display: inline-block
+      height: 100%
+      padding: 0 $input-padding
+      text-decoration: none
+      white-space: nowrap
+
+      &:focus
+        position: relative
+
+      &[aria-pressed=true], &.segmented-control-item--active
+        border-color: $tint
+        color: $tint
+        position: relative
+
+    &:last-child > *
+      border-right-width: 0
+
+    + .segmented-control-item
+      margin-left: -1px
+

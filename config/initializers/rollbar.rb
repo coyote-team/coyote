@@ -26,7 +26,7 @@ if ENV['ROLLBAR_ACCESS_TOKEN'].present?
       'ActiveRecord::RecordNotFound'   => 'ignore',
       'ActionController::RoutingError' => 'ignore'
     })
-    
+
     # You can also specify a callable, which will be called with the exception instance.
     # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
 

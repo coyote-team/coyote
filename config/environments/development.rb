@@ -23,7 +23,7 @@ Coyote::Application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  
+
   config.assets.prefix = "/dev-assets"
   config.assets.raise_production_errors = true
   config.assets.precompile << %w( coyote_consumer.js)
@@ -31,11 +31,11 @@ Coyote::Application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.active_support.deprecation = :stderr # :raise
-  
+
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  
+
   # Sprockets debugging
   # config.assets.debug = false
   # config.assets.digest = true

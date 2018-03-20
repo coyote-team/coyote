@@ -1,0 +1,28 @@
+// COMPONENT: Heading: used to define document structure and provide visual
+// cues as to content flow. Namespaced via tag name rather than class name.
+h1, h2, h3, h4, h5, h6
+  color: $text-dark
+  font-family: $font-family-text
+  font-size: $font-size
+  letter-spacing: -0.03em
+  margin: $gutter 0
+
+h1
+  font-size: $h1-size
+  font-weight: normal
+  line-height: $heading-line-height
+
+h2
+  $spacing: ($h1-size - $h2-size) + 2px
+  font-size: $h2-size
+  font-weight: bold
+  line-height: $heading-line-height - $spacing
+  padding-top: $spacing
+  text-transform: uppercase
+
+h3
+  $spacing: ($h1-size - $h2-size) + 2px
+  font-size: $h2-size
+  font-weight: bold
+  line-height: $heading-line-height - $spacing
+  padding-top: $spacing

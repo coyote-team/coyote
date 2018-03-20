@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 RSpec.feature 'Resetting a password' do
-  let(:user) { create(:user,:with_membership) }
+  let(:user) { create(:user, :with_membership) }
 
   scenario 'succeeds' do
     visit new_user_password_path
@@ -10,7 +10,7 @@ RSpec.feature 'Resetting a password' do
 
     expect {
       click_button 'Send me reset password instructions'
-    }.to change(ActionMailer::Base.deliveries,:count).
+    }.to change(ActionMailer::Base.deliveries, :count).
       from(0).to(1)
 
     ActionMailer::Base.deliveries.pop.tap do |email|
@@ -31,7 +31,7 @@ RSpec.feature 'Resetting a password' do
       click_button 'Change my password'
       expect(page).to have_content('Your password has been changed')
 
-      login(user,new_password)
+      login(user, new_password)
     end
   end
 end

@@ -1,0 +1,12 @@
+table
+  caption.sr-only Table of Related Resources
+  thead
+    tr
+      th Resource
+      th Link
+
+  tbody
+    - related_resources.each do |verb, link, related_resource|
+      tr
+        td= link_to(related_resource.label, related_resource)
+        td= link_to(verb, link)

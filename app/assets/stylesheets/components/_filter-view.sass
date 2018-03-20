@@ -1,0 +1,27 @@
+// COMPONENT: Filter view: provides a filter column / bar and a result set
+.filter-view
+  @include non-mobile
+    display: flex
+
+    .filter-view-filters
+      flex: 1
+      padding-right: $gutter
+
+    .filter-view-list
+      flex: 3
+      padding-left: $gutter
+
+// COMPONENT: Filter set: provides a set of controls that can filter results
+.filter-set
+  border-top: 1px solid $border
+
+  .filter-set-item, .filter-set-submit
+    margin: 0
+    padding: $gutter 0
+
+  .filter-set-item
+    .filter-set-item-title
+      display: block
+      font-weight: bold
+      margin: 0 0 $gutter 0
+      text-transform: uppercase

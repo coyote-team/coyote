@@ -18,10 +18,10 @@
 
 RSpec.describe ResourceLinksController do
   let(:organization) { create(:organization) }
-  let(:subject_resource) { create(:resource,organization: organization) }
-  let(:object_resource) { create(:resource,organization: organization) }
-  let(:resource_link) do 
-    create(:resource_link,verb: 'hasPart',subject_resource: subject_resource,object_resource: object_resource)
+  let(:subject_resource) { create(:resource, organization: organization) }
+  let(:object_resource) { create(:resource, organization: organization) }
+  let(:resource_link) do
+    create(:resource_link, verb: 'hasPart', subject_resource: subject_resource, object_resource: object_resource)
   end
 
   let(:resource_link_params) do
@@ -29,11 +29,11 @@ RSpec.describe ResourceLinksController do
   end
 
   let(:new_resource_link_params) do
-    { 
-      resource_link: { 
+    {
+      resource_link: {
         subject_resource_id: subject_resource.id,
         verb: 'isVersionOf',
-        object_resource_id: object_resource.id 
+        object_resource_id: object_resource.id
       }
     }
   end
@@ -73,25 +73,25 @@ RSpec.describe ResourceLinksController do
 
     it "succeeds for basic actions" do
       get :show, params: resource_link_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: resource_link_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
       get :new, params: { subject_resource_id: subject_resource.id }
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_resource_link_params
         expect(response).to be_redirect
-      }.to change(subject_resource.subject_resource_links,:count).by(1)
+      }.to change(subject_resource.subject_resource_links, :count).by(1)
 
-      bad_params = { 
-        resource_link: { 
+      bad_params = {
+        resource_link: {
           subject_resource_id: subject_resource.id,
           verb: '',
-          object_resource_id: object_resource.id 
+          object_resource_id: object_resource.id
         }
       }
 
@@ -113,23 +113,23 @@ RSpec.describe ResourceLinksController do
 
     it "succeeds for critical actions" do
       get :new, params: { subject_resource_id: subject_resource.id }
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: resource_link_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_resource_link_params
         expect(response).to redirect_to(resource_link)
         resource_link.reload
-      }.to change(resource_link,:verb).to('hasFormat')
+      }.to change(resource_link, :verb).to('hasFormat')
 
       bad_params = update_resource_link_params.dup
       bad_params[:resource_link][:verb] = ''
 
       patch :update, params: bad_params
       expect(response).not_to be_redirect
-      
+
       expect {
         delete :destroy, params: resource_link_params
         expect(response).to redirect_to(subject_resource)

@@ -16,5 +16,5 @@
 RSpec.describe ResourceGroup do
   subject { build(:resource_group) }
 
-  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) } 
+  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) }
 end

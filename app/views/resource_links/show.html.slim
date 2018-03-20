@@ -1,0 +1,38 @@
+table
+  caption
+    h1= title "Showing Resource Link #{resource_link.id}"
+  tbody
+    tr
+      th Predicate
+      td= predicate_for(resource_link)
+    tr
+      th Subject
+      td= link_to(resource_link.subject_resource_label, resource_link.subject_resource)
+    tr
+      th Verb
+      td
+        dl
+          dt= resource_link.verb
+          dd= Coyote::ResourceLink::VERBS.fetch(resource_link.verb.to_sym).description
+    tr
+      th Object
+      td= link_to(resource_link.object_resource_label, resource_link.object_resource)
+
+    tr
+      th Updated
+      td
+        = resource_link.updated_at
+    tr
+      th Created
+      td
+        = resource_link.created_at
+
+= toolbar class: 'toolbar--footer', title: "Actions"
+  - if policy(resource_link).edit?
+    = toolbar_item
+      = link_to edit_resource_link_path(resource_link), title: "Edit this resource link", class: 'button button--outline' do
+        | Edit
+  - if policy(resource_link).destroy?
+    = toolbar_item
+      = button_to resource_link, title: 'Delete this Resource Link' , class: "button", method: :delete, data: { confirm: 'Are you sure you want to delete this Resource Link?' } do
+        | Delete

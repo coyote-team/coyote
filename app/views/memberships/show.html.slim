@@ -1,0 +1,15 @@
+table
+  caption
+    h1= title "Membership for #{membership.user}"
+  tbody
+    tr
+      th User
+      td= link_to(membership.user, membership.user)
+    tr
+      th Role
+      td= Coyote::OrganizationUser.new(membership.user, current_organization).role
+
+h2 Assignments
+= render partial: 'assignments', object: membership.user_assignments
+
+= show_toolbar(membership)

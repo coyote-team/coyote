@@ -2,7 +2,7 @@ RSpec.describe Coyote::OrganizationUser do
   let(:is_staff) { false }
 
   let(:user) do
-    build_stubbed(:user,id: 10,staff: is_staff)
+    build_stubbed(:user, id: 10, staff: is_staff)
   end
 
   let(:organization) do
@@ -12,15 +12,15 @@ RSpec.describe Coyote::OrganizationUser do
   let(:role) { "guest" }
 
   let(:membership) do
-    build_stubbed(:membership,role: role)
+    build_stubbed(:membership, role: role)
   end
 
   subject do
-    Coyote::OrganizationUser.new(user,organization)
+    Coyote::OrganizationUser.new(user, organization)
   end
 
   before do
-    allow(user).to receive_message_chain(:memberships,:find_by).
+    allow(user).to receive_message_chain(:memberships, :find_by).
       with(organization: organization).
       and_return(membership)
   end
@@ -122,7 +122,7 @@ RSpec.describe Coyote::OrganizationUser do
 
   context "with no membership in an organization" do
     before do
-      allow(user).to receive_message_chain(:memberships,:find_by).
+      allow(user).to receive_message_chain(:memberships, :find_by).
         and_return(nil)
     end
 

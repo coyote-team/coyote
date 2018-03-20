@@ -14,12 +14,12 @@
 #  index_memberships_on_user_id_and_organization_id  (user_id,organization_id) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :membership do
     user
     organization
 
-    Coyote::Membership.each_role do |_,role_name|
+    Coyote::Membership.each_role do |_, role_name|
       trait role_name do
         role role_name
       end

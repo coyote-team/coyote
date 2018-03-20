@@ -8,7 +8,7 @@ class RepresentationsController < ApplicationController
   before_action :set_current_resource_and_organization, only: %i[new edit create]
   before_action :authorize_general_access,              only: %i[new index create]
   before_action :authorize_unit_access,                 only: %i[show edit update destroy]
-  
+
   helper_method :representation, :current_resource, :record_filter, :available_meta, :authors, :licenses
 
   def index
@@ -42,7 +42,7 @@ class RepresentationsController < ApplicationController
   def update
     if representation.update(representation_params)
       logger.info "Updated #{representation}"
-      redirect_to representation, notice: 'The description has been updated'
+      redirect_back fallback_location: representation, notice: 'The description has been updated'
     else
       logger.warn "Unable to update description due to '#{representation.error_sentence}'"
       render :edit
@@ -60,15 +60,19 @@ class RepresentationsController < ApplicationController
   attr_writer :current_organization
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params.reverse_merge(DEFAULT_SEARCH_PARAM),pagination_params,current_organization.representations)
+    @record_filter ||= RecordFilter.new(filter_params.reverse_merge(DEFAULT_SEARCH_PARAM), pagination_params, current_organization.representations)
   end
 
   def filter_params
-    params.fetch(:q,{}).permit(:s,:text_or_resource_identifier_or_resource_title_cont_all,:status_eq,:metum_id_eq,:author_id_eq)
+    params.fetch(:q, {}).permit(:s, :text_or_resource_identifier_or_resource_title_cont_all, :author_id_eq, status_in: [], metum_id_in: [])
+  end
+
+  def representations_scope
+    current_user.staff? ? Representation : current_user.representations
   end
 
   def set_representation
-    self.representation = current_user.representations.find(params[:id])
+    self.representation = representations_scope.find(params[:id])
     self.current_organization = representation.organization
   end
 

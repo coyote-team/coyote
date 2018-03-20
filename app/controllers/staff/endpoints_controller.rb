@@ -24,7 +24,7 @@ module Staff
 
       if endpoint
         logger.info "Created #{endpoint}"
-        redirect_to [:staff,endpoint]
+        redirect_to [:staff, endpoint]
       else
         logger.warn "Unable to create '#{endpoint}' due to '#{endpoint.error_sentence}'"
         render :new

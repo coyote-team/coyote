@@ -1,0 +1,19 @@
+- title = 'Sign up for Coyote'
+- meta title: title
+.entity-outer
+  .entity
+    .entity-inner
+      header
+        h1#page-title{}=title
+
+      = simple_form_for(user, url: registration_path) do |f|
+        = f.error_notification
+
+        .form-inputs
+          = f.input :email, required: true, autofocus: true, input_html: { value: user.email }
+          = f.input :password, required: true, hint: "#{minimum_password_length} characters minimum"
+          = f.input :password_confirmation, required: true
+          = f.input :token, as: :hidden, input_html: { value: invitation.token }
+
+        .form-actions
+          = f.button :submit, "Sign up"

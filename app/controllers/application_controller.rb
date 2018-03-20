@@ -2,17 +2,15 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  protect_from_forgery :with => :exception
+  protect_from_forgery with: :exception
 
-  before_action :store_user_location!, :if => :storable_location? # see https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
+  before_action :store_user_location!, if: :storable_location? # see https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :authenticate_user!
-  before_action :configure_permitted_parameters, :if => :devise_controller?
-
-  skip_before_action :authenticate_user!, if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) }
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   analytical
 
-  helper_method :current_organization, :current_organization?, :organization_user, :pagination_link_params, :filter_params
+  helper_method :current_organization, :current_organization?, :organization_scope, :organization_user, :pagination_link_params, :filter_params
 
   protected
 
@@ -26,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def organization_user
-    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+    @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   alias pundit_user organization_user
@@ -44,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization?
-    organization_scope.exists?(params[:organization_id])
+    current_user.present? && organization_scope.exists?(params[:organization_id])
   end
 
   def current_organization
@@ -52,16 +50,16 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update,keys: %i[first_name last_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
   end
 
   private
 
   def storable_location?
-    request.get? && is_navigational_format? && !devise_controller? && !request.xhr? 
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
   end
 
   def store_user_location!
-    store_location_for(:user,request.fullpath)
+    store_location_for(:user, request.fullpath)
   end
 end
