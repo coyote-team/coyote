@@ -108,7 +108,7 @@ RSpec.describe Staff::EndpointsController do
 
       patch :update, params: endpoint_params.merge(endpoint: { name: '' })
       expect(response).not_to be_redirect
-        
+
       expect {
         delete :destroy, params: endpoint_params
       }.to change { Endpoint.exists?(editable_endpoint.id) }.

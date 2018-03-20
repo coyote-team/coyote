@@ -18,7 +18,7 @@ class Organization < ApplicationRecord
 
   has_many :memberships, :inverse_of => :organization
   has_many :users, :through => :memberships
-  has_many :resources, :dependent => :restrict_with_exception, :inverse_of => :organization 
+  has_many :resources, :dependent => :restrict_with_exception, :inverse_of => :organization
   has_many :resource_groups, :inverse_of => :organization
   has_many :meta, :inverse_of => :organization
   has_many :assignments, :through => :resources

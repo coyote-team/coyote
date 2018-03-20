@@ -1,7 +1,7 @@
 RSpec.describe ResourcePolicy do
   include_context "viewer organization user"
 
-  let(:resource) do 
+  let(:resource) do
     double(:resource,class: Resource,user_id: org_user.id)
   end
 

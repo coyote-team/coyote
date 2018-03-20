@@ -58,8 +58,8 @@ RSpec.describe UserInvitationService do
     end
 
     it 'yields a message' do
-      expect { |b| 
-        subject.call(invitation,&b) 
+      expect { |b|
+        subject.call(invitation,&b)
       }.to yield_with_args(an_instance_of(String))
     end
 
@@ -88,8 +88,8 @@ RSpec.describe UserInvitationService do
     end
 
     it 'yields a message' do
-      expect { |b| 
-        subject.call(invitation,&b) 
+      expect { |b|
+        subject.call(invitation,&b)
       }.to yield_with_args(an_instance_of(String))
     end
 

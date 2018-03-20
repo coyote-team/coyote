@@ -37,12 +37,12 @@ class User < ApplicationRecord
   has_many :memberships
   has_many :organizations, :through => :memberships
 
-  devise :database_authenticatable, 
-         :registerable, 
-         :recoverable, 
-         :rememberable, 
-         :trackable, 
-         :validatable, 
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
          :lockable,
          :password_length => 8..128
 
@@ -69,7 +69,7 @@ class User < ApplicationRecord
   alias name to_s
 
   # @note for audit log
-  def username 
+  def username
     to_s
   end
 end

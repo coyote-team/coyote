@@ -4,7 +4,7 @@
 class ResourceLinksController < ApplicationController
   before_action :set_resource_link, only: %i[show edit update destroy]
   before_action :authorize_access,  only: %i[show edit update destroy]
-  
+
   helper_method :resource_link
 
   def show

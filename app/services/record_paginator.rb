@@ -25,7 +25,7 @@ class RecordPaginator
 
     first_page_params = base_link_params.merge(page: first_page)
 
-    links = { 
+    links = {
       first: first_page_params
     }
 

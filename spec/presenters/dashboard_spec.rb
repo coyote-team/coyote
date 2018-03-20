@@ -40,7 +40,7 @@ RSpec.describe Dashboard, :type => :integration do
   context "with resources and representations" do
     let(:resource_group) { create(:resource_group,organization: organization) }
 
-    let!(:resources) do 
+    let!(:resources) do
       create_list(:resource,5,organization: organization,resource_group: resource_group)
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Dashboard, :type => :integration do
     end
 
     let(:latest_timestamp) { 1.hour.from_now }
-    
+
     before do
       third_resource.update_attributes!(created_at: latest_timestamp)
     end
@@ -90,7 +90,7 @@ RSpec.describe Dashboard, :type => :integration do
         expect(subject.organization_top_unrepresented_items_queue).to match_array([second_resource,unassigned_resource,other_user_resource])
         expect(subject.organization_unassigned_unrepresented_count).to eq(1)
         expect(subject.organization_unrepresented_count).to eq(3)
-        
+
         expect(subject.current_user_approved_representation_count).to eq(1)
         expect(subject.current_user_assigned_items_count).to eq(1)
         expect(subject.current_user_represented_resources_count).to eq(2)

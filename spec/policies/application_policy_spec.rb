@@ -10,6 +10,6 @@ RSpec.describe ApplicationPolicy do
   it { is_expected.to forbid_new_and_create_actions  }
   it { is_expected.to forbid_edit_and_update_actions }
   it { is_expected.to forbid_action(:destroy)        }
-  
+
   specify { expect(subject.scope).to eq(User) }
 end

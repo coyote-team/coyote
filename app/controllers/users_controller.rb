@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   private
-  
+
   attr_accessor :user
 
   def user

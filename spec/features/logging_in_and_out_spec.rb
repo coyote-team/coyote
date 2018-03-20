@@ -3,8 +3,8 @@ RSpec.feature 'Logging in and out' do
 
   let!(:organization) { create(:organization) }
 
-  let!(:user) do 
-    create(:user,organization: organization,password: password) 
+  let!(:user) do
+    create(:user,organization: organization,password: password)
   end
 
   let(:resource) do

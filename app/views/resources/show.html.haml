@@ -4,7 +4,7 @@
       %header
         %h1#page-title{tabindex: -1}
           = title(to_html_title(resource.title))
-          
+
   .row
     .col-md-3
       = lightbox_link(resource) do
@@ -46,7 +46,7 @@
             %td
               = resource.updated_at
           %tr
-            %th{scope: "row"} Created 
+            %th{scope: "row"} Created
             %td
               = resource.created_at
 

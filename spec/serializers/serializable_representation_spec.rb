@@ -1,6 +1,6 @@
 RSpec.describe SerializableRepresentation do
   include_context 'serializable object'
-  
+
   let(:object) do
     build_stubbed(:representation,resource_id: 100)
   end
@@ -17,6 +17,6 @@ RSpec.describe SerializableRepresentation do
   subject do
     serialized.fetch(:attributes)
   end
-  
+
   it { is_expected.to include(author: 'John Doe',text: object.text) }
 end

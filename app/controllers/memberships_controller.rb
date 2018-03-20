@@ -22,7 +22,7 @@ class MembershipsController < ApplicationController
       logger.error err_msg
       raise Coyote::SecurityError, err_msg
     end
-    
+
     if membership.update(membership_params)
       flash[:notice] = "Membership of #{membership.user} was successfully updated."
       redirect_back fallback_location: organization_memberships_url
@@ -47,7 +47,7 @@ class MembershipsController < ApplicationController
   end
 
   private
-  
+
   attr_accessor :membership
 
   def set_membership
@@ -56,7 +56,7 @@ class MembershipsController < ApplicationController
 
   def organization_users
     @organization_users ||= begin
-                              current_organization.users.sorted.map do |u| 
+                              current_organization.users.sorted.map do |u|
                                 Coyote::OrganizationUser.new(u,current_organization)
                               end
                             end

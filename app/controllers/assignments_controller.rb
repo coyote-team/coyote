@@ -9,8 +9,8 @@ class AssignmentsController < ApplicationController
   def index
     assignments = current_organization.assignments.to_a
 
-    assignments.sort_by! do |a| 
-      [a.user_last_name,a.user_email].tap(&:compact!).first 
+    assignments.sort_by! do |a|
+      [a.user_last_name,a.user_email].tap(&:compact!).first
     end
 
     memberships = current_organization.memberships.index_by(&:user_id)
@@ -53,12 +53,12 @@ class AssignmentsController < ApplicationController
     else
       logger.warn "Unable to delete #{assignment}: '#{assignment.error_sentence}'"
       flash[:error] = "We were unable to delete the assignment"
-      redirect_to :back 
+      redirect_to :back
     end
   end
 
   private
-  
+
   attr_accessor :assigned_users, :assignment
 
   def set_assignment
@@ -93,7 +93,7 @@ class AssignmentsController < ApplicationController
     current_organization.users.find(assignment_params[:user_id])
   end
 
-  def assigned_resource 
+  def assigned_resource
     current_organization.resources.find(assignment_params[:resource_id])
   end
 end

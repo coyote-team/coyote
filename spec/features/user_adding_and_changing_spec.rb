@@ -38,8 +38,8 @@ RSpec.describe 'User adding and changing' do
 
     expect {
       click_button 'Delete'
-    }.not_to(change { 
-      User.exists?(editable_user.id) 
+    }.not_to(change {
+      User.exists?(editable_user.id)
     })
 
     expect(page.current_path).to eq(staff_user_path(editable_user))

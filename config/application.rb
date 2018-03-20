@@ -17,18 +17,18 @@ module Coyote
     config.eager_load_paths << Rails.root.join("lib") # http://blog.arkency.com/2014/11/dont-forget-about-eager-load-when-extending-autoload/
     config.autoload_paths << "#{Rails.root}/app/presenters"
     config.autoload_paths << "#{Rails.root}/app/services/"
-    
+
     config.active_record.schema_format = :sql
 
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 
     config.active_record.belongs_to_required_by_default = true
-    
+
     # see https://github.com/elabs/pundit#rescuing-a-denied-authorization-in-rails
     config.action_dispatch.rescue_responses['Pundit::NotAuthorizedError'] = :forbidden
     config.action_dispatch.rescue_responses['Coyote::SecurityError']      = :forbidden
-    
+
     config.generators do |g|
       g.stylesheets false
       g.javascripts false

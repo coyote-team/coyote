@@ -8,7 +8,7 @@ module Api
     before_action :authorize_general_access,             only: %i[index]
     before_action :authorize_unit_access,                only: %i[show update destroy]
 
-    resource_description do 
+    resource_description do
       short 'Complementary and alternative sensory impressions of a Resource'
 
       desc <<~DESC

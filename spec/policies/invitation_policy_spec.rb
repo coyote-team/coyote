@@ -10,7 +10,7 @@ RSpec.describe InvitationPolicy do
   it { is_expected.to forbid_action(:destroy)        }
 
   context "as an admin" do
-    subject do 
+    subject do
       InvitationPolicy.new(org_user,build_stubbed(:invitation,:editor))
     end
 
@@ -24,7 +24,7 @@ RSpec.describe InvitationPolicy do
   end
 
   context "as an admin attempting to mint another admin" do
-    subject do 
+    subject do
       InvitationPolicy.new(org_user,build_stubbed(:invitation,:admin))
     end
 
@@ -39,7 +39,7 @@ RSpec.describe InvitationPolicy do
   end
 
   context "as an owner" do
-    subject do 
+    subject do
       InvitationPolicy.new(org_user,build_stubbed(:invitation,:owner))
     end
 

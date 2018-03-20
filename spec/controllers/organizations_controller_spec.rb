@@ -79,7 +79,7 @@ RSpec.describe OrganizationsController do
 
       post :create, params: { organization: { title: '' } }
       expect(response).not_to be_redirect
-      
+
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
       }.to raise_error(Pundit::NotAuthorizedError)

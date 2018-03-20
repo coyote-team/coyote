@@ -9,7 +9,7 @@ RSpec.describe ApplicationHelper do
   end
 
   context '#resource_link_target with an image resource' do
-    let(:resource) do 
+    let(:resource) do
       build_stubbed(:resource,:image)
     end
 
@@ -24,8 +24,8 @@ RSpec.describe ApplicationHelper do
   end
 
   context '#resource_link_target without image resource' do
-    let(:resource) do 
-      build_stubbed(:resource,:sound) 
+    let(:resource) do
+      build_stubbed(:resource,:sound)
     end
 
     before do

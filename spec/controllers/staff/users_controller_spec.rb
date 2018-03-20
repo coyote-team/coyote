@@ -84,7 +84,7 @@ RSpec.describe Staff::UsersController do
 
       patch :update, params: user_params.merge(user: { email: '' })
       expect(response).not_to be_redirect
-        
+
       expect {
         delete :destroy, params: user_params
       }.not_to change { User.exists?(editable_user.id) }.

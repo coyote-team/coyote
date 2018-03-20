@@ -15,7 +15,7 @@
 
 FactoryGirl.define do
   factory :assignment do
-    user 
+    user
     resource
   end
 end

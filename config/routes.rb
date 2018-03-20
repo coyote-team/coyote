@@ -26,17 +26,17 @@ Rails.application.routes.draw do
     resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index show edit update destroy]
     resources :assignments, only: %i[index show new create destroy]
-    resources :resource_groups 
+    resources :resource_groups
     resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]
   end
 
   resources :resource_links
 
-  devise_for :users, 
-    only: %i[passwords registrations sessions unlocks], 
-    path: '/', 
-    path_names: { 
+  devise_for :users,
+    only: %i[passwords registrations sessions unlocks],
+    path: '/',
+    path_names: {
       registration: 'profile'
     }
 

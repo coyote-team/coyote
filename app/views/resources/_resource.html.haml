@@ -1,11 +1,11 @@
 %tr.item[resource]
   %td
     - if policy(Assignment).new?
-      <input id="assignment_resource_ids_#{resource.id}" class='assignment_resource_ids' name="assignment[resource_ids][]" type="checkbox" value="#{resource.id}" aria-label="Select resource '#{resource.identifier}' for bulk assignment" /> 
+      <input id="assignment_resource_ids_#{resource.id}" class='assignment_resource_ids' name="assignment[resource_ids][]" type="checkbox" value="#{resource.id}" aria-label="Select resource '#{resource.identifier}' for bulk assignment" />
   %td
     = lightbox_link(resource) do
       = resource_link_target(resource,nil,style: 'img-thumbnail')
-  
+
   %td= resource.priority_flag ? 'High': 'Low'
   %td= to_html(resource.title)
   %td= resource.representations_count

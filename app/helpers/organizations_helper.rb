@@ -15,15 +15,15 @@ module OrganizationsHelper
   # @return [Hash] aria and style attributes for drawing a progress bar
   # @see http://guides.rubyonrails.org/layouts_and_rendering.html#passing-local-variables
   def progress_bar_attributes(local_vars)
-    { :"aria-valuemax" => progress_max(local_vars), 
-      :"aria-valuemin" => progress_min(local_vars), 
-      :"aria-valuenow" => progress_val(local_vars), 
-      :role => "progressbar", 
+    { :"aria-valuemax" => progress_max(local_vars),
+      :"aria-valuemin" => progress_min(local_vars),
+      :"aria-valuenow" => progress_val(local_vars),
+      :role => "progressbar",
       :style => "width: #{progress_bar_percentage(local_vars)}%" }
   end
 
   # @param (see progress_bar_attributes)
-  # @return [String] formatted progress percentage of value vs max 
+  # @return [String] formatted progress percentage of value vs max
   def progress_bar_percentage(local_vars)
     max = progress_max(local_vars)
     return "" if max.zero?

@@ -60,7 +60,7 @@ RSpec.describe AssignmentsController do
     include_context "signed-in editor user"
 
     it "fails for basic actions" do
-      expect { 
+      expect {
         get :index, params: base_params
       }.to raise_error(Pundit::NotAuthorizedError)
 

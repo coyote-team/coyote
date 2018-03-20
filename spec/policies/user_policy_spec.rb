@@ -3,7 +3,7 @@ RSpec.describe UserPolicy do
     double(:organization_user,id: 1,staff?: false)
   end
 
-  let(:user_record) do 
+  let(:user_record) do
     double(:user,id: 2)
   end
 
@@ -16,7 +16,7 @@ RSpec.describe UserPolicy do
   it { is_expected.to forbid_edit_and_update_actions }
 
   context 'as a user, with own record' do
-    let(:user_record) do 
+    let(:user_record) do
       double(:user,id: org_user.id)
     end
 

@@ -20,7 +20,7 @@ RSpec.describe ResourceLinksController do
   let(:organization) { create(:organization) }
   let(:subject_resource) { create(:resource,organization: organization) }
   let(:object_resource) { create(:resource,organization: organization) }
-  let(:resource_link) do 
+  let(:resource_link) do
     create(:resource_link,verb: 'hasPart',subject_resource: subject_resource,object_resource: object_resource)
   end
 
@@ -29,11 +29,11 @@ RSpec.describe ResourceLinksController do
   end
 
   let(:new_resource_link_params) do
-    { 
-      resource_link: { 
+    {
+      resource_link: {
         subject_resource_id: subject_resource.id,
         verb: 'isVersionOf',
-        object_resource_id: object_resource.id 
+        object_resource_id: object_resource.id
       }
     }
   end
@@ -87,11 +87,11 @@ RSpec.describe ResourceLinksController do
         expect(response).to be_redirect
       }.to change(subject_resource.subject_resource_links,:count).by(1)
 
-      bad_params = { 
-        resource_link: { 
+      bad_params = {
+        resource_link: {
           subject_resource_id: subject_resource.id,
           verb: '',
-          object_resource_id: object_resource.id 
+          object_resource_id: object_resource.id
         }
       }
 
@@ -129,7 +129,7 @@ RSpec.describe ResourceLinksController do
 
       patch :update, params: bad_params
       expect(response).not_to be_redirect
-      
+
       expect {
         delete :destroy, params: resource_link_params
         expect(response).to redirect_to(subject_resource)

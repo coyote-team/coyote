@@ -35,7 +35,7 @@ class UserInvitationService
 
     Invitation.transaction do
       delivery_method = if recipient_user.new_record?
-                          recipient_user.save! 
+                          recipient_user.save!
                           :new_user
                         else
                           :existing_user

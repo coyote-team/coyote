@@ -35,7 +35,7 @@ RSpec.configure do |config|
   config.filter_run focus: true
   config.filter_run show_in_doc: true if ENV['APIPIE_RECORD'] # see https://github.com/Apipie/apipie-rails#examples-recording
   config.run_all_when_everything_filtered = true
-  config.disable_monkey_patching! 
+  config.disable_monkey_patching!
   config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.use_transactional_fixtures = false
@@ -75,9 +75,9 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each,:type => :controller,&db_cleaning) 
-  config.around(:each,:type => :feature,&db_cleaning) 
-  config.around(:each,:type => :request,&db_cleaning) 
+  config.around(:each,:type => :controller,&db_cleaning)
+  config.around(:each,:type => :feature,&db_cleaning)
+  config.around(:each,:type => :request,&db_cleaning)
 
   config.after(:all) do
     DatabaseCleaner.clean_with(:truncation)

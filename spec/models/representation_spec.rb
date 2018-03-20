@@ -33,7 +33,7 @@ RSpec.describe Representation do
   it { is_expected.to validate_presence_of(:language) }
 
   context 'with text and content URI blank' do
-    subject do 
+    subject do
       build(:representation,text: '',content_uri: '').tap(&:valid?)
     end
 

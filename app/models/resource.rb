@@ -27,8 +27,8 @@
 #
 
 # We use the Dublin Core meaning for what a Resource represents:
-# "...a resource is anything that has identity. Familiar examples include an electronic document, an image, 
-# a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all 
+# "...a resource is anything that has identity. Familiar examples include an electronic document, an image,
+# a service (e.g., "today's weather report for Los Angeles"), and a collection of other resources. Not all
 # resources are network "retrievable"; e.g., human beings, corporations, and bound books in a library can also be considered resources."
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
@@ -53,10 +53,10 @@ class Resource < ApplicationRecord
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :by_priority,              -> { order('priority_flag DESC') }
-  
+
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
-  validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id } 
+  validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id }
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -97,7 +97,7 @@ class Resource < ApplicationRecord
     "#{title} (#{identifier})"
   end
 
-  # @return [Array<Symbol,ResourceLink,Resource>] 
+  # @return [Array<Symbol,ResourceLink,Resource>]
   #   each triplet represents a resource that is linked to this resource, with verbs given
   #   from this resource's perspective
   def related_resources

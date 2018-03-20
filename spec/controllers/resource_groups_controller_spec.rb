@@ -25,7 +25,7 @@ RSpec.describe ResourceGroupsController do
     base_params.merge(id: resource_group.id)
   end
 
-  let(:new_resource_group_params) do 
+  let(:new_resource_group_params) do
     base_params.merge(resource_group: attributes_for(:resource_group))
   end
 
@@ -36,8 +36,8 @@ RSpec.describe ResourceGroupsController do
   let(:foreign_resource_group) { create(:resource_group) }
 
   let(:foreign_resource_group_params) do
-    { id: foreign_resource_group.id, 
-      organization_id: foreign_resource_group.organization_id, 
+    { id: foreign_resource_group.id,
+      organization_id: foreign_resource_group.organization_id,
       resource_group: { title: 'SHOULDNOTBEALLOWED' } }
   end
 

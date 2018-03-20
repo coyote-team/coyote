@@ -29,7 +29,7 @@
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
   let(:resource_group) { create(:resource_group,organization: organization) }
-  let(:resource) { create(:resource,organization: organization) }  
+  let(:resource) { create(:resource,organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -102,7 +102,7 @@ RSpec.describe ResourcesController do
 
       post :create, params: base_params.merge(resource: { resource_group_id: nil })
       expect(response).not_to be_redirect
-      
+
       expect {
         patch :update, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)

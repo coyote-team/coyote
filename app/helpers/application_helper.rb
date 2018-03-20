@@ -1,6 +1,6 @@
 # rubocop:disable ModuleLength
- 
-# Contains general, simple view helper code. Designed to keep code out of our views 
+
+# Contains general, simple view helper code. Designed to keep code out of our views
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
@@ -50,7 +50,7 @@ module ApplicationHelper
 
     "#{target_resource.title} (#{target_resource.resource_type})"
   end
-  
+
   # @param text [String] the link text to show the user
   # @param path [String] the link target
   # @param icon_name [String] what Font Awesome icon to associate with the link. Optional, defaults to nil.
@@ -93,15 +93,15 @@ module ApplicationHelper
     msg << ", #{current_user}!" if current_user
     msg
   end
-  
+
   def resource_name
     :user
   end
- 
+
   def resource
     @resource ||= User.new
   end
- 
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
@@ -125,7 +125,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   # @param level [String] level of flash message to be styled
   # @return [String] CSS class to use when styling a flash message
   def flash_class(level)
@@ -136,13 +136,13 @@ module ApplicationHelper
     klass = ""
     case status_code
     when 0
-      klass += "undescribed" 
+      klass += "undescribed"
     when 1
-      klass += "partial" 
+      klass += "partial"
     when 2
-      klass += "warning" 
+      klass += "warning"
     when 3
-      klass += "success" 
+      klass += "success"
     end
     return klass
   end
@@ -151,11 +151,11 @@ module ApplicationHelper
     klass = "item "
     case description.status_id
     when 2
-      klass += "success" 
+      klass += "success"
     when 1
-      klass += "warning" 
+      klass += "warning"
     when 3
-      klass += "danger" 
+      klass += "danger"
     end
     klass
   end
@@ -185,7 +185,7 @@ module ApplicationHelper
   # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
   def to_html_title(content)
     html = to_html(content)
-    html.gsub!(%r{(?:^<p>|</p>\n)}i,'') 
+    html.gsub!(%r{(?:^<p>|</p>\n)}i,'')
     html.html_safe
   end
 

@@ -18,6 +18,6 @@ RSpec.describe SerializableResource do
   subject do
     serialized.fetch(:attributes)
   end
-  
+
   it { is_expected.to include(canonical_id: object.canonical_id) }
 end

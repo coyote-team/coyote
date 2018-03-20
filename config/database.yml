@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   pool: <%= (ENV["COYOTE_DB_POOL_SIZE"] || ENV["COYOTE_NUM_THREADS"] || 5).to_i %>
-development: 
+development:
   <<: *default
   url: <%= ENV["COYOTE_DEV_DATABASE_URL"] %>
 test: &test

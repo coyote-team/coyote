@@ -22,7 +22,7 @@ Coyote::Membership.each_role do |_,role_name|
 end
 
 RSpec.shared_context "signed-in staff user" do
-  let(:user) do 
+  let(:user) do
     create(:user,:staff,organization: organization)
   end
 

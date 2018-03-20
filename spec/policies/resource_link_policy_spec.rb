@@ -1,7 +1,7 @@
 RSpec.describe ResourceLinkPolicy do
   include_context "viewer organization user"
 
-  let(:resource_link) do 
+  let(:resource_link) do
     double(:resource_link,class: ResourceLink)
   end
 

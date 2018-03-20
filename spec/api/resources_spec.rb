@@ -3,7 +3,7 @@ RSpec.describe 'Accessing resources' do
     include_context 'API editor user'
 
     let(:resource_group) do
-      create(:resource_group,:website,organization: user_organization) 
+      create(:resource_group,:website,organization: user_organization)
     end
 
     let(:new_resource_params) do
@@ -58,7 +58,7 @@ RSpec.describe 'Accessing resources' do
       Rails.configuration.x.resource_api_page_size + 1 # to force pagination to occur
     end
 
-    let!(:user_org_resources) do 
+    let!(:user_org_resources) do
       create_list(:resource,user_org_resource_count,organization: user_organization)
     end
 
@@ -117,10 +117,10 @@ RSpec.describe 'Accessing resources' do
   context 'with a resource' do
     include_context 'API author user'
 
-    let(:resource) do 
+    let(:resource) do
       create(:resource,organization: user_organization)
     end
-    
+
     scenario 'GET /resources/:id' do
       get api_resource_path(resource), headers: auth_headers
       expect(response).to be_success

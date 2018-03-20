@@ -27,7 +27,7 @@ RSpec.describe MetaController do
     base_params.merge(id: metum.id)
   end
 
-  let(:new_metum_params) do 
+  let(:new_metum_params) do
     base_params.merge(metum: attributes_for(:metum))
   end
 
@@ -38,8 +38,8 @@ RSpec.describe MetaController do
   let(:foreign_metum) { create(:metum) }
 
   let(:foreign_metum_params) do
-    { id: foreign_metum.id, 
-      organization_id: foreign_metum.organization_id, 
+    { id: foreign_metum.id,
+      organization_id: foreign_metum.organization_id,
       metum: { title: 'SHOULDNOTBEALLOWED' } }
   end
 

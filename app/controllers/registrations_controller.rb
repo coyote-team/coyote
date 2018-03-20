@@ -1,5 +1,5 @@
 # Handles new user signup; since new users get created during the invitaitons process, this controller
-# merely serves up a 'new user' form, which updates the invited user's account with new password and potentially 
+# merely serves up a 'new user' form, which updates the invited user's account with new password and potentially
 # a different email address
 class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!
@@ -29,7 +29,7 @@ class RegistrationsController < ApplicationController
       invitation.redeem!
       sign_in(user) # Devise helper so user doesn't have to sign-in again; now the invited user is current_user
       redirect_to invitation.organization, notice: "Welcome to Coyote! You are now a member of the #{invitation.organization_title} organization."
-    else 
+    else
       logger.warn "Unable to complete registration for #{user} due to '#{user.error_sentence}'"
       render :new
     end

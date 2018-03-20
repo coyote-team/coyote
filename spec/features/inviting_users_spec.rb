@@ -50,7 +50,7 @@ RSpec.feature 'Inviting users' do
       fill_in 'invitation[recipient_email]', with: new_member_email
       fill_in 'invitation[first_name]', with: 'John'
       fill_in 'invitation[last_name]', with: 'Doe'
-      
+
       select('Author',from: 'Role')
 
       expect {
@@ -118,7 +118,7 @@ RSpec.feature 'Inviting users' do
       }.not_to raise_error
 
       expect(page.current_path).to eq(organization_invitations_path(user_organization))
-      
+
       Membership.find_by!(user: existing_member,organization: user_organization).tap do |m|
         expect(m).to be_editor
       end

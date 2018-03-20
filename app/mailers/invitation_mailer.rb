@@ -13,7 +13,7 @@ class InvitationMailer < ApplicationMailer
   end
 
   private
-  
+
   attr_accessor :invitation, :signup_link
 
   def recipient_email
@@ -36,7 +36,7 @@ class InvitationMailer < ApplicationMailer
     invitation.organization
   end
 
-  def subject 
+  def subject
     "#{Rails.configuration.x.site_name}: Invitation to join '#{organization_title}'"
   end
 end

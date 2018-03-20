@@ -66,14 +66,14 @@ RSpec.describe InvitationsController do
         from(0).to(1)
 
       new_user = Invitation.first.recipient_user
-      
+
       expect(Membership.exists?(user: new_user,organization: organization,role: 'author')).to be true
 
       expect {
         post :create, params: creation_params
       }.not_to change(Invitation,:count)
 
-      expect(response).to be_success 
+      expect(response).to be_success
     end
   end
 end

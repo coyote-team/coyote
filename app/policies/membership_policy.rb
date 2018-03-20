@@ -30,7 +30,7 @@ class MembershipPolicy < ApplicationPolicy
   # @return [Boolean] if attempting to destroy one's own membership, or if the user is an admin and is not attempting to destroy another admin's membership
   def destroy?
     return true if organization_user.staff?
-    return true if self? 
+    return true if self?
     return false if same_rank_or_lower?
     organization_user.admin?
   end

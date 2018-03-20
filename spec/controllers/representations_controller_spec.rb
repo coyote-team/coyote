@@ -59,7 +59,7 @@ RSpec.describe RepresentationsController do
     representation_params.merge(representation: { text: 'NEWTEXT' })
   end
 
-  let(:representation) do 
+  let(:representation) do
     create(:representation,organization: organization)
   end
 
@@ -96,14 +96,14 @@ RSpec.describe RepresentationsController do
 
   context 'as a viewer user' do
     include_context "signed-in viewer user"
-    
+
     it 'succeeds for view-only actions, fails for edit actions' do
       get :index, params: base_params
       expect(response).to be_success
 
       get :show, params: representation_params
       expect(response).to be_success
-      
+
       expect {
         get :edit, params: representation_params
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -125,14 +125,14 @@ RSpec.describe RepresentationsController do
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
-  
+
   context 'as an author working with his or her own content' do
     include_context "signed-in author user"
 
-    let(:representation) do 
+    let(:representation) do
       create(:representation,author: user,organization: organization)
     end
-    
+
     it "succeeds for basic actions" do
       get :edit, params: representation_params
       expect(response).to be_success
@@ -149,7 +149,7 @@ RSpec.describe RepresentationsController do
 
       post :create, params: base_params.merge(representation: { metum_id: metum.id },resource_id: resource.id)
       expect(response).not_to be_redirect
-        
+
       expect {
         patch :update, params: update_representation_params
         representation.reload
@@ -160,7 +160,7 @@ RSpec.describe RepresentationsController do
 
       patch :update, params: representation_params.merge(representation: { license_id: nil })
       expect(response).not_to be_redirect
-      
+
       expect {
         delete :destroy, params: update_representation_params
       }.to change { Representation.exists?(representation.id) }.
@@ -177,7 +177,7 @@ RSpec.describe RepresentationsController do
       create(:user,organization: organization)
     end
 
-    let(:representation) do 
+    let(:representation) do
       create(:representation,author: other_author,organization: organization)
     end
 

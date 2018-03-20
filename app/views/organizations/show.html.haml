@@ -9,38 +9,38 @@
           %h2 Our Status
           %table.table
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.organization_resource_count)
                 Total #{link_to('Resources',organization_resources_path(current_organization))}
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.organization_representation_count)
                 Total #{link_to('Descriptions',organization_representations_path(current_organization))}
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.organization_represented_resource_count)
                 Total #{link_to('Described Resources',organization_resources_path(current_organization,q: { :scope => :represented }))}
             %tr
-              %td 
-                = number_with_delimiter(dashboard.organization_unrepresented_count) 
+              %td
+                = number_with_delimiter(dashboard.organization_unrepresented_count)
                 Total #{link_to('Undescribed Resources',organization_resources_path(current_organization,q: { :scope => :unrepresented }))}
 
           %h2 My Status
           %table.table
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.current_user_represented_resources_count)
                 = link_to('Described Resources',organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }))
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.current_user_open_assignments_count)
                 = link_to('Undescribed Resources Assigned to You',organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }))
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.current_user_approved_representation_count)
                 = link_to('Approved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }))
             %tr
-              %td 
+              %td
                 = number_with_delimiter(dashboard.current_user_unapproved_representation_count)
                 = link_to('Unapproved Descriptions',organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }))
 

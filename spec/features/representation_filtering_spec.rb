@@ -1,15 +1,15 @@
 RSpec.feature 'Representation filtering' do
   include_context 'as a logged-in author user'
 
-  let!(:representation) do 
+  let!(:representation) do
     create(:representation,:not_approved,organization: user_organization,text: "My Organization's Description")
   end
 
-  let!(:representation_search_target) do 
+  let!(:representation_search_target) do
     create(:representation,:approved,organization: user_organization,text: 'A woman smiling')
   end
 
-  let!(:other_representation) do 
+  let!(:other_representation) do
     create(:representation,text: 'Should Not See This')
   end
 

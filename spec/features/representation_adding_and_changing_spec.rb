@@ -1,7 +1,7 @@
 RSpec.feature 'Representation adding and changing' do
   include_context 'as a logged-in editor user'
 
-  let(:resource) do 
+  let(:resource) do
     create(:resource,organization: user_organization)
   end
 

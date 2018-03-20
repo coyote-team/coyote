@@ -14,16 +14,16 @@
         - if organization_user.admin?
           = form.input :status, collection: Coyote::Representation.status_collection, input_html: { style: 'width: auto' }, label: false, prompt: 'Bulk Status', required: false
           = form.submit 'Apply', class: 'btn btn-primary'
-      
+
         .table-responsive
           %table.index-table.table
             %thead
               %tr
-                %th{scope: 'col'} 
+                %th{scope: 'col'}
                   %span.sr-only This column contains checkboxes for bulk update
                   = form.input :select_all_for_bulk_update, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all representations on the page' }
                   All
-                  
+
                 %th{scope: 'col'} Resource
                 %th{scope: 'col'}= sort_link(record_filter.search,:status)
                 %th{scope: 'col'}= sort_link(record_filter.search,:metum_id)

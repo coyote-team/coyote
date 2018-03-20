@@ -7,7 +7,7 @@ class ApplicationPolicy
   # @param record [ActiveRecord::Base]
   def initialize(organization_user,record)
     raise Pundit::NotAuthorizedError, 'must be logged in' unless organization_user
-    
+
     @organization_user = organization_user
     @record = record
   end
@@ -86,7 +86,7 @@ class ApplicationPolicy
 
     attr_reader :organization_user, :scope
   end
-  
+
   private
 
   attr_reader :organization_user, :record

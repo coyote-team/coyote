@@ -15,7 +15,7 @@ class Api::ApplicationController < ActionController::API
   private
 
   attr_accessor :current_user
-  
+
   def require_api_authentication
     authenticate_token || render_unauthorized
   end
@@ -33,9 +33,9 @@ class Api::ApplicationController < ActionController::API
   end
 
   alias pundit_user organization_user
-  
+
   def render_unauthorized
-    render :jsonapi_errors => [{ 
+    render :jsonapi_errors => [{
       title: 'Invalid Authorization Token',
       detail: 'You must provide a valid API authorization token in the HTTP_AUTHORIZATION header'
     }], :status => :unauthorized

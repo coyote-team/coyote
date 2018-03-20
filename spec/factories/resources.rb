@@ -34,7 +34,7 @@ FactoryGirl.define do
     resource_type 'still_image'
     sequence(:canonical_id) { |n| Digest::MD5.hexdigest(n.to_s) }
     identifier { "#{title.underscore.gsub(/\s+/,'_')}_#{SecureRandom.hex(2)}" }
-    
+
     trait :priority do
       priority_flag true
     end
@@ -43,12 +43,12 @@ FactoryGirl.define do
       resource_group nil
       organization nil
     end
-    
+
     after(:build) do |resource,evaluator|
       resource.organization ||= evaluator.organization || build(:organization)
       resource.resource_group ||= evaluator.resource_group || build(:resource_group,organization: resource.organization)
     end
-    
+
     Coyote::Resource.each_type do |_,type_name|
       trait type_name do
         resource_type type_name

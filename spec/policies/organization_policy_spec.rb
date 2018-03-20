@@ -1,7 +1,7 @@
 RSpec.describe OrganizationPolicy do
   include_context "admin organization user"
 
-  let(:org) do 
+  let(:org) do
     double(:org,class: Organization,user_id: org_user.id)
   end
 

@@ -29,7 +29,7 @@
 RSpec.describe Resource do
   let(:source_uri) { 'http://example.com/100.jpg' }
 
-  subject do 
+  subject do
     build(:resource,:image,title: 'Mona Lisa',identifier: 'abc123',source_uri: source_uri)
   end
 
@@ -38,7 +38,7 @@ RSpec.describe Resource do
   it { is_expected.to validate_presence_of(:canonical_id) }
 
   it { is_expected.to validate_uniqueness_of(:identifier) }
-  it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) } 
+  it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) }
 
   specify { expect(subject.label).to eq("Mona Lisa (abc123)") }
 
@@ -55,7 +55,7 @@ RSpec.describe Resource do
   end
 
   context 'without the presence of a source URI' do
-    subject do 
+    subject do
       build(:resource,:image,source_uri: '')
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Resource do
 
   context '#related_resources' do
     # this test requires the database as rspec stubs don't completely replicate has_many behaviors
-    let!(:resource_link) do 
+    let!(:resource_link) do
       create(:resource_link,verb: 'hasPart')
     end
 

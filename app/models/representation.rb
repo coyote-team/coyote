@@ -36,7 +36,7 @@ class Representation < ApplicationRecord
   belongs_to :endpoint,     :inverse_of => :representations
 
   has_one :organization, :through => :resource
-  
+
   enum status: Coyote::Representation::STATUSES
 
   validates :language, presence: true

@@ -25,10 +25,10 @@ FactoryGirl.define do
   factory :description do
     locale "en"
     text Faker::Lorem.paragraph
-    status 
-    image 
-    metum 
-    user 
+    status
+    image
+    metum
+    user
 
     trait :ready_to_review do
       association :status, :factory => :ready_to_review_status

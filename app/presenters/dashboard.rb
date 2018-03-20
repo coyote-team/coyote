@@ -144,7 +144,7 @@ class Dashboard
   def top_items_queue_size
     Rails.configuration.x.dashboard_top_items_queue_size
   end
-  
+
   def organization_unrepresented_queue
     organization.resources.unrepresented
   end
