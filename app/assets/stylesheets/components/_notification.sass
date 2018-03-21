@@ -1,8 +1,7 @@
 // NOTIFICATION COMPONENT: Used to notify the user when state has changed in a
 // significant way
 .notification
-  $default-color: map-get($status, "neutral")
-  background-color: rgba($default-color, 0.9)
+  background-color: rgba($text, 0.9)
   border-radius: $radius
   color: $background
   display: flex
@@ -15,7 +14,7 @@
     flex: 1
 
   .notification-dismiss
-    border-left: 1px solid $default-color
+    border-left: 1px solid $text
     cursor: pointer
     display: block
     text-decoration: none
