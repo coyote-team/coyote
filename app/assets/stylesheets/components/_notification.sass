@@ -1,3 +1,5 @@
+// NOTIFICATION COMPONENT: Used to notify the user when state has changed in a
+// significant way
 .notification
   $default-color: map-get($status, "neutral")
   background-color: rgba($default-color, 0.9)
@@ -30,3 +32,15 @@
 
       .notification-dismiss
         border-left-color: $color
+
+// NOTIFICATIONS COMPONENT: Contains notifications in an Android "toast" style way
+#notifications
+  bottom: $gutter
+  left: $gutter
+  position: fixed
+
+  @include mobile
+    right: $gutter
+
+  .notification
+    box-shadow: rgba(black, 0.3) 0 0 $gutter / 2
