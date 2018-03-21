@@ -45,6 +45,7 @@ gem 'rollbar'
 gem 'sass-mediaqueries-rails' # TODO: Remove
 gem 'sass-rails'
 gem 'simple_form' # , git: 'https://github.com/plataformatec/simple_form.git'
+gem 'slim-rails'
 gem 'sprockets'
 gem 'sprockets-rails'
 gem 'uglifier', '>= 2.7.1' # js compression
@@ -57,9 +58,10 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'better_errors'
-  gem 'binding_of_caller'         # optional dependency of better_errors
+  #gem 'better_errors'
+  #gem 'binding_of_caller'         # optional dependency of better_errors
   gem 'brakeman', require: false  # basic security checks
+  gem 'great_pretender'
   gem 'pry-rails'                 # gives us binding.pry calls
   gem 'rails_real_favicon'        # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem 'spring'

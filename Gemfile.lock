@@ -146,7 +146,7 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
-    erubi (1.7.0)
+    erubi (1.7.1)
     erubis (2.7.0)
     eventmachine (1.2.5)
     execjs (2.7.0)
@@ -161,6 +161,7 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    great_pretender (0.1.5)
     guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -216,7 +217,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
-    i18n (0.9.1)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     iconv (1.0.4)
     jquery-rails (4.3.1)
@@ -255,7 +256,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.1.1)
+    loofah (2.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
@@ -272,14 +273,14 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (0.1.3)
     mini_portile2 (2.3.0)
-    minitest (5.10.3)
+    minitest (5.11.3)
     modular-scale (3.0.2)
     multi_json (1.12.2)
     mysql2 (0.4.9)
     nenv (0.3.0)
     netrc (0.11.0)
     nio4r (2.1.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -304,7 +305,7 @@ GEM
     pundit-matchers (1.3.1)
       pundit (~> 1.1, >= 1.1.0)
       rspec-rails (>= 3.0.0)
-    rack (2.0.3)
+    rack (2.0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.3)
@@ -346,7 +347,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.2.1)
+    rake (12.3.0)
     ransack (1.8.4)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -425,6 +426,13 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.1)
+    slim (3.0.9)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 1.3.3, < 2.1)
+    slim-rails (3.1.3)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (~> 3.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-commands-rspec (1.0.4)
@@ -440,7 +448,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tzinfo (1.2.4)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
@@ -486,6 +494,7 @@ DEPENDENCIES
   easymarklet!
   factory_girl_rails
   faker
+  great_pretender
   guard
   guard-brakeman
   guard-bundler
@@ -527,6 +536,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
+  slim-rails
   spring
   spring-commands-rspec
   sprockets

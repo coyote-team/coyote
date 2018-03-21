@@ -14,6 +14,24 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_organization, :current_organization?, :organization_user, :pagination_link_params, :filter_params
 
+  # TODO: Remove after redesign is finished
+  layout -> {
+    if params.key?(:redesign)
+      'redesign'
+    else
+      'application'
+    end
+  }
+
+  def default_url_options(*_args)
+    if params.key?(:redesign)
+      { redesign: true }
+    else
+      {}
+    end
+  end
+  # TODO: End remove
+
   protected
 
   def organization_scope

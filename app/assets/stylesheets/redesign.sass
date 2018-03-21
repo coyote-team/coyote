@@ -1,0 +1,139 @@
+//
+// THE COYOTE DESIGN SYSTEM
+// This is a simple Sass-based implementation of the specs in doc_assets/
+// It uses the concepts from https://maintainablecss.com/ extensively.
+//
+
+// VARIABLES
+// Color scheme
+$background: white
+$input: #ebebeb
+$text: black
+$tint: #0000ff
+
+// Typography
+// ...base
+$font-mono: "foo"
+$font-text: "TeX Gyre Heros", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+$font-heading: $font-text
+$font-size: 18px
+$line-height-ratio: 1.35
+$line-height: round($font-size * $line-height-ratio)
+$gutter: round($line-height / 2)
+
+// ...variable sizes
+$font-size-h1: round($font-size * pow($line-height-ratio, 4))
+$line-height-h1: $font-size-h1 + $gutter
+$font-size-h2: round($font-size * pow($line-height-ratio, 3))
+$line-height-h2: $font-size-h2 + $gutter
+$font-size-h3: round($font-size * pow($line-height-ratio, 2))
+$line-height-h3: $font-size-h3 + $gutter
+$font-size-h4: round($font-size * $line-height-ratio)
+$line-height-h4: $font-size-h4 + $gutter
+$font-size-h5: $font-size
+$line-height-h5: $font-size-h5 + $gutter
+$font-size-small: $font-size - 4px
+$line-height-small: $font-size-small + $gutter
+
+// ...mobile sizes
+$font-size-h1-mobile: round($font-size-h1 / $line-height-ratio)
+$line-height-h1-mobile: $font-size-h1-mobile + $gutter
+$font-size-h2-mobile: round($font-size-h2 / $line-height-ratio)
+$line-height-h2-mobile: $font-size-h2-mobile + $gutter
+$font-size-h3-mobile: round($font-size-h3 / $line-height-ratio)
+$line-height-h3-mobile: $font-size-h3-mobile + $gutter
+$font-size-h4-mobile: round($font-size-h4 / $line-height-ratio)
+$line-height-h4-mobile: $font-size-h4-mobile + $gutter
+$font-size-h5-mobile: $font-size
+$line-height-h5-mobile: $font-size-h5-mobile + $gutter
+
+// Components
+$input-height: round(3.3 * $gutter)
+$nav-height: 5 * $gutter
+$radius: 3px
+
+// Animations
+$swift: cubic-bezier(0.4, 0, 0.2, 1)
+$swifter: cubic-bezier(0.4, 0, 0, 1)
+$heavy: cubic-bezier(0.7, 0, 0.6, 1)
+$swift-in: cubic-bezier(0, 0, 0.2, 1)
+$swift-out: cubic-bezier(0.4, 0, 1, 1)
+
+// GLOBAL STYLES
+// Reset (adapted from meyerweb.com/eric/tools/css/reset)
+*
+  &, &::before, &::after
+    box-sizing: border-box
+
+  &:focus
+    border-color: $tint
+    box-shadow: $tint 0 0 5px
+    outline: none
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img,
+ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video
+  border: 0
+  font-size: 100%
+  font: inherit
+  margin: 0
+  padding: 0
+  vertical-align: baseline
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav,
+section
+  display: block
+
+ol, ul
+  list-style: none
+
+blockquote, q
+  quotes: none
+
+  &::before, &::after,
+    content: ''
+    content: none
+
+table
+  border-collapse: collapse
+  border-spacing: 0
+
+// App styles
+a
+  color: inherit
+  text-decoration: underline
+
+  &:hover
+    color: $tint
+
+body
+  background-color: $background
+  color: $text
+  font-family: $font-text
+  font-size: $font-size
+  line-height: 1
+
+// Screen reader support
+[tabindex="-1"]:focus
+  box-shadow: none
+  outline: none
+
+.sr
+  border: 0
+  clip: rect(0, 0, 0, 0)
+  height: 1px
+  margin: -1px
+  overflow: hidden
+  padding: 0
+  position: absolute
+  right: 100%
+  width: 1px
+
+// COMPONENTS
+// Each component lives in its own Sass file in the components/ subdirectory.
+// Let's import them all!
+@import "components/*"
