@@ -1,0 +1,21 @@
+// INPUT BASE COMPONENT: draws the basics of an input
+%input-base
+  appearance: none
+  border-style: solid
+  border-width: 1px
+  border-radius: $radius
+  font-family: $font-family-text
+  font-size: $font-size
+  height: $input-height
+  line-height: $input-height - 2px
+  margin-right: $gutter
+  padding: 0 $gutter / 1.5
+
+  &:focus
+    position: relative
+
+// INPUT (SECONDARY) COMPONENT: Secondary inputs have a specific styling
+%input-secondary
+  background: $background
+  border-color: $text
+  color: $text

@@ -1,0 +1,24 @@
+.tag
+  background-color: $text
+  border: 1px solid $text
+  border-radius: $radius
+  color: $background
+  font-size: $font-size-small
+  font-weight: bold
+  display: inline-block
+  margin-right: $gutter / 1.5
+  padding: 0 $gutter / 1.5
+  text-transform: uppercase
+
+  &.tag--secondary
+    background-color: $background
+    color: $text
+
+  @each $name, $color in $status
+    &.tag--#{$name}
+      background-color: $color
+      border-color: $color
+
+      &.tag--secondary
+        background-color: $background
+        color: $color

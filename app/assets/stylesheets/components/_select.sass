@@ -1,0 +1,30 @@
+// SELECT COMPONENT: the standard SELECT element
+@function select-chevron($fill)
+  $fill: unquote(str-slice(ie-hex-str($fill), 4))
+  @return url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2210%22%3E%0A%20%20%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23#{$fill}%22%20d%3D%22M.895%201.153h10.518L6.154%209.699z%22%2F%3E%0A%3C%2Fsvg%3E%0A")
+
+select
+  @extend %input-base
+  @extend %input-secondary
+  background-image: select-chevron($text)
+  background-position: right $gutter center
+  background-repeat: no-repeat
+  cursor: pointer
+  padding-right: $gutter * 3
+
+  &:invalid
+    color: $placeholder
+
+  option
+    color: $text
+
+    &[disabled]
+      color: $placeholder
+
+  &:focus
+    background-image: select-chevron($tint)
+    color: $tint
+
+  &:-moz-focusring
+    color: transparent
+    text-shadow: 0 0 0 #000

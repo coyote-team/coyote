@@ -1,1 +1,48 @@
-| forms
+h1 Small Components
+h2 Controls
+form
+  button Primary Button
+  a.button.button--secondary href="/" Secondary Button
+  input type="text" placeholder="Text input"
+  select
+    option Select Box
+
+h2 Tags
+p
+  span.tag Default
+  span.tag.tag--error Error
+  span.tag.tag--neutral Neutral
+  span.tag.tag--okay Okay
+  span.tag.tag--partial Partial
+  span.tag.tag--success Success
+  span.tag.tag--warning Warning
+
+p
+  span.tag.tag--secondary Default
+  span.tag.tag--secondary.tag--error Error
+  span.tag.tag--secondary.tag--neutral Neutral
+  span.tag.tag--secondary.tag--okay Okay
+  span.tag.tag--secondary.tag--partial Partial
+  span.tag.tag--secondary.tag--success Success
+  span.tag.tag--secondary.tag--warning Warning
+
+h2 Form Field
+form
+  .field
+    input type="text" placeholder="Placeholder copy goes here"
+    select
+      option disabled=true selected=true Option A
+      option Option B
+    input type="submit" value="Go"
+
+h2 Notifications
+.notification data-notification-id=1
+  .notification-title Default
+  a.notification-dismiss data-dismiss="[data-notification-id=1]" tabindex=0
+
+.notification.notification--error: .notification-title Error
+.notification.notification--neutral: .notification-title Neutral
+.notification.notification--okay: .notification-title Okay
+.notification.notification--partial: .notification-title Partial
+.notification.notification--success: .notification-title Success
+.notification.notification--warning: .notification-title Warning

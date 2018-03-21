@@ -1,0 +1,12 @@
+// TEXT INPUT COMPONENT: Basic form elements
+// Rather than targeting a class namespace, we style these elements universally
+#{$text-inputs}, textarea
+  @extend %input-base
+  background-color: $input
+  border-color: $input
+
+  &::placeholder
+    color: $placeholder
+
+textarea
+  height: 100%

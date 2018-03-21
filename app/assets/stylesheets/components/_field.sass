@@ -1,0 +1,22 @@
+// FIELD COMPONENT: Contains one or more form controls
+.field
+  @include non-mobile
+    display: flex
+  align-items: stretch
+  background-color: $input
+  border-radius: $radius
+  margin-bottom: $gutter
+
+  $controls: "#{$text-inputs}, select, textarea"
+  #{$controls}
+    background-color: transparent
+    border-color: transparent
+    flex: 1
+
+  #{$controls}, #{$buttons}
+    margin: 0
+
+  @include mobile
+    #{$buttons}
+      display: block
+      width: 100%

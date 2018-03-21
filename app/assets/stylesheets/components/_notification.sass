@@ -1,0 +1,32 @@
+.notification
+  $default-color: map-get($status, "neutral")
+  background-color: rgba($default-color, 0.9)
+  border-radius: $radius
+  color: $background
+  display: flex
+  margin-bottom: $gutter
+
+  .notification-title, .notification-dismiss
+    padding: $gutter
+
+  .notification-title
+    flex: 1
+
+  .notification-dismiss
+    border-left: 1px solid $default-color
+    cursor: pointer
+    display: block
+    text-decoration: none
+
+    &::after
+      content: '\2715'
+
+    &:hover
+      color: $background
+
+  @each $name, $color in $status
+    &.notification--#{$name}
+      background-color: rgba($color, 0.9)
+
+      .notification-dismiss
+        border-left-color: $color

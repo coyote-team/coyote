@@ -1,0 +1,19 @@
+#{$buttons}
+  @extend %input-base
+  background: $text
+  border-color: $text
+  color: $background
+  cursor: pointer
+  display: inline-block
+  font-weight: bold
+  margin-right: $gutter
+  text-decoration: none
+  text-transform: uppercase
+
+  &.button--secondary
+    @extend %input-secondary
+
+  &:focus, &:hover, &.button--secondary:focus, &.button--secondary:hover
+    background-color: $tint !important
+    border-color: $tint
+    color: $background !important
