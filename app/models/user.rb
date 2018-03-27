@@ -36,7 +36,7 @@ class User < ApplicationRecord
   has_secure_token :authentication_token
 
   has_many :memberships
-  has_many :organizations, through: :memberships, counter_cache: true
+  has_many :organizations, through: :memberships, counter_cache: :organizations_count
 
   devise :database_authenticatable,
          :registerable,

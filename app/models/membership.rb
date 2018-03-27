@@ -16,6 +16,9 @@
 
 # Represents a user belonging to one or more organizations
 class Membership < ApplicationRecord
+  after_create :update_user_counter_cache
+  after_destroy :update_user_counter_cache
+
   belongs_to :user
   belongs_to :organization
 
@@ -33,5 +36,11 @@ class Membership < ApplicationRecord
   # @return (see Coyote::Membership#role_rank)
   def role_rank
     Coyote::Membership.role_rank(role)
+  end
+
+  private
+
+  def update_user_counter_cache
+    user.update_attribute(:organizations_count, user.organizations.count(true))
   end
 end
