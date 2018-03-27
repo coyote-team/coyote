@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, :if => :devise_controller?
 
-  skip_before_action :authenticate_user!, if: ->(controller) { controller.instance_of?(HighVoltage::PagesController) }
-
   analytical
 
   helper_method :current_organization, :current_organization?, :organization_user, :pagination_link_params, :filter_params

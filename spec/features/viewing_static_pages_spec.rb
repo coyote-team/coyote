@@ -1,8 +1,11 @@
 RSpec.describe "Viewing static pages" do
-  scenario "succeeds" do
-    HighVoltage.page_ids.each do |page|
-      visit page_path(page)
-      expect(current_path).to eq("/#{page}")
-    end
+  scenario "works for the root path" do
+    visit root_path
+    expect(current_path).to eq("/")
+  end
+
+  scenario "works for the support page" do
+    visit support_path
+    expect(current_path).to eq("/support")
   end
 end

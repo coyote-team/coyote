@@ -75,12 +75,6 @@ GEM
     autoprefixer-rails (7.1.2.4)
       execjs
     bcrypt (3.1.11)
-    better_errors (2.3.0)
-      coderay (>= 1.0.0)
-      erubi (>= 1.0.0)
-      rack (>= 0.9.0)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -126,7 +120,6 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
     database_cleaner (1.6.1)
-    debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -208,7 +201,6 @@ GEM
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
     hashdiff (0.3.4)
-    high_voltage (3.0.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -480,8 +472,6 @@ DEPENDENCIES
   apipie-rails
   audited
   autoprefixer-rails
-  better_errors
-  binding_of_caller
   bootstrap-sass (= 3.3.7)
   brakeman
   capybara
@@ -504,7 +494,6 @@ DEPENDENCIES
   guard-rubocop
   guard-sass
   haml-rails (>= 1.0.0)
-  high_voltage
   iconv
   jquery-rails (>= 4.0.4)
   jsonapi-rails
@@ -550,4 +539,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

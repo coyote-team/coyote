@@ -26,7 +26,6 @@ gem 'dotenv-rails'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
 gem 'factory_girl_rails', require: false
 gem 'haml-rails', '>= 1.0.0'
-gem 'high_voltage' # static pages
 gem 'iconv'
 gem 'jquery-rails', '>= 4.0.4'
 gem 'jsonapi-rails'

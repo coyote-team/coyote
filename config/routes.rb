@@ -15,8 +15,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "high_voltage/pages#show", id: "home"
-
   resources :resources, only: %i[show edit update destroy]
   resources :representations, only: %i[show edit update destroy]
 
@@ -61,4 +59,7 @@ Rails.application.routes.draw do
     mount GreatPretender::Engine, at: 'mockups'
   end
 
+  # Last but not least, static pages
+  get 'support', to: 'pages#support'
+  root to: 'pages#home'
 end

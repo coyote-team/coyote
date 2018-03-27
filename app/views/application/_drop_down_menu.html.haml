@@ -6,7 +6,7 @@
       %span.caret
 
     %ul.dropdown-menu<
-      %li<= drop_down_menu_link('Support',page_path('support'),'support')
+      %li<= drop_down_menu_link('Support',support_path,'support')
       %li<= drop_down_menu_link('Profile',edit_user_registration_path,'user')
       %li<= drop_down_menu_link('Organizations',organizations_path,'users')
       %li<= drop_down_menu_link('User Management (Staff)',staff_users_path,'list') if current_user.staff?
