@@ -22,6 +22,7 @@
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
+#  organizations_count    :integer          default(0)
 #
 # Indexes
 #
@@ -35,7 +36,7 @@ class User < ApplicationRecord
   has_secure_token :authentication_token
 
   has_many :memberships
-  has_many :organizations, :through => :memberships
+  has_many :organizations, through: :memberships, counter_cache: true
 
   devise :database_authenticatable,
          :registerable,

@@ -709,7 +709,8 @@ CREATE TABLE users (
     staff boolean DEFAULT false NOT NULL,
     failed_attempts integer DEFAULT 0 NOT NULL,
     unlock_token character varying,
-    locked_at timestamp without time zone
+    locked_at timestamp without time zone,
+    organizations_count integer DEFAULT 0
 );
 
 
@@ -1599,6 +1600,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171120143357'),
 ('20171120143519'),
 ('20171120144727'),
-('20171121165017');
+('20171121165017'),
+('20180327144408');
 
 

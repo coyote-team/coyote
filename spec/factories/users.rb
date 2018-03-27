@@ -22,6 +22,7 @@
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
+#  organizations_count    :integer          default(0)
 #
 # Indexes
 #
