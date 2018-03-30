@@ -1,12 +1,8 @@
 h2.sr Global Actions
-.dropdown
-  button.dropdown-toggle type="button" data-toggle="dropdown" aria-haspop=true aria-expanded=false
-    = current_user
-
-  ul.dropdown-menu
-    li.dropdown-menu-item<= drop_down_menu_link('Support',support_path,'support')
-    li<= drop_down_menu_link('Profile',edit_user_registration_path,'user')
-    li<= drop_down_menu_link('Organizations',organizations_path,'users')
-    li<= drop_down_menu_link('User Management (Staff)',staff_users_path,'list') if current_user.staff?
-    li<= drop_down_menu_link('Endpoint Management (Staff)',staff_endpoints_path,'list') if current_user.staff?
-    li<= drop_down_menu_link('Log out',destroy_user_session_path,'sign-out', :method => :delete)
+= dropdown label: current_user.to_s, id: 'user-nav' do
+  = dropdown_option link_to('Support', support_path)
+  = dropdown_option link_to('Profile', edit_user_registration_path)
+  = dropdown_option link_to('Organizations', organizations_path)
+  = dropdown_option link_to('User Management (Staff)', staff_users_path) if current_user.staff?
+  = dropdown_option link_to('Endpoint Management (Staff)', staff_endpoints_path) if current_user.staff?
+  = dropdown_option link_to('Log out', destroy_user_session_path, method: :delete)

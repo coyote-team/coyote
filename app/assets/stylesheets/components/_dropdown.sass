@@ -10,6 +10,9 @@
   .dropdown-toggle
     @extend select
 
+    &[aria-expanded=true] + .dropdown-menu
+      display: block
+
   .dropdown-menu
     background: $background
     border: 1px solid $border
@@ -27,5 +30,5 @@
 
       a
         display: block
-        padding: 0 $gutter
+        padding: $input-padding
         text-decoration: none

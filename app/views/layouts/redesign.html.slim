@@ -40,11 +40,11 @@ html(lang="en")
         span.nav-brand-fade t
         span.nav-brand-fade e
 
-      .nav-secondary
-        h2.sr Navigation
-        - if current_organization?
-          = render "primary_nav"
-        - if current_user
+      - if current_organization?
+        = render "primary_nav"
+
+      - if current_user
+        .nav-secondary
           = render "organization_selector" if current_user.organizations.many?
           = render "user_nav"
 

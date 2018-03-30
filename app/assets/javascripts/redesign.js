@@ -1,3 +1,5 @@
-//= require jquery
+//= require_tree ./components
 
-console.log("up")
+document.querySelectorAll(".dropdown").forEach(function(container) {
+  new Dropdown(container);
+});
