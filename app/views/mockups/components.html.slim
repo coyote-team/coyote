@@ -25,11 +25,9 @@ form
     textarea placeholder="Text box"
     textarea disabled=true placeholder="Disabled text box"
   p
-    .dropdown
-      button.dropdown-toggle Dropdown menu
-      ul.dropdown-menu
-        li.dropdown-menu-item Option #1
-        li.dropdown-menu-item Option #2
+    = dropdown label: "Dropdown menu" do
+      = dropdown_option link_to("Option #1", "#")
+      = dropdown_option link_to("Option #2", "#")
   p
     label.checkbox
       input type="checkbox"
