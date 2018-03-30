@@ -25,6 +25,7 @@ gem 'devise' # user auth
 gem 'dotenv-rails'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
 gem 'factory_girl_rails', require: false
+gem 'great_pretender' # TODO: Move back to dev after redesign
 gem 'haml-rails', '>= 1.0.0'
 gem 'iconv'
 gem 'jquery-rails', '>= 4.0.4'
@@ -60,7 +61,6 @@ group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'         # optional dependency of better_errors
   gem 'brakeman', require: false  # basic security checks
-  gem 'great_pretender'
   gem 'pry-rails'                 # gives us binding.pry calls
   gem 'rails_real_favicon'        # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem 'spring'
