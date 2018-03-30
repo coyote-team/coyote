@@ -3,21 +3,29 @@
   appearance: none
   border-style: solid
   border-width: 1px
-  border-radius: $radius
   display: inline-block
-  font-family: $font-family-text
-  font-size: $font-size
-  height: $input-height
-  line-height: $input-height - 2px
-  margin: 0 $gutter 0 0
-  padding: 0 $gutter / 1.5
-  vertical-align: middle
+  margin: 0 $input-padding 0 0
 
   &:focus
     position: relative
 
+  &[disabled]
+    background-color: $input
+    color: $placeholder
+    cursor: no-drop
+
+%input-text
+  @extend %input-base
+  border-radius: $radius
+  font-family: $font-family-text
+  font-size: $font-size
+  height: $input-height
+  line-height: $input-height - 2px
+  padding: 0 $input-padding
+  vertical-align: top
+
 // INPUT (SECONDARY) COMPONENT: Secondary inputs have a specific styling
 %input-secondary
   background: $background
-  border-color: $text
+  border-color: $placeholder
   color: $text

@@ -1,0 +1,48 @@
+// COMPONENT: Chip: badge-style text accompanied by an action
+.chip
+  display: inline-flex
+  font-size: $font-size-small
+
+  .chip-text, .chip-action
+    border: 1px solid $border
+    font-weight: bold
+    padding: $input-padding
+
+  .chip-text
+    border-bottom-left-radius: 50vh
+    border-right-width: 0
+    border-top-left-radius: 50vh
+
+  .chip-action
+    border-bottom-right-radius: 50vh
+    border-top-right-radius: 50vh
+    cursor: pointer
+    font-size: $font-size
+    text-align: center
+    width: $gutter * 3
+
+    &:hover
+      background-color: $border
+
+    &:after
+      display: block
+      margin-top: -5px
+      speak: none
+
+    &.chip-action--add:after
+      content: '\2B'
+
+    &.chip-action--delete:after
+      content: '\00D7'
+
+  @each $name, $color in $status
+    &.chip--#{$name}
+      border-color: $color
+      color: $color
+
+      .chip-action
+        border-color: $color
+
+        &:hover
+          background-color: $color
+          color: $background

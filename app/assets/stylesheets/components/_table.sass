@@ -1,0 +1,61 @@
+table
+  border-collapse: collapse
+  display: table
+  width: 100%
+
+  th, td
+    padding: $gutter
+    vertical-align: middle
+
+    &.table-action
+      width: 10px
+      vertical-align: top
+
+      .button:not(:only-child)
+        margin-bottom: $input-padding
+
+      .button:last-child
+        margin-bottom: 0
+        margin-right: 0
+
+    &.table-checkbox
+      height: 1px
+      padding: 0
+
+      label
+        display: inline-block
+        height: 100%
+        padding: $gutter
+
+    &.table-image
+      width: 10px
+
+    &.table-primary
+      font-weight: bold
+
+  th
+    color: $text-dark
+    font-weight: bold
+    text-align: left
+    text-transform: uppercase
+    white-space: nowrap
+
+  tbody
+    tr
+      border-top: 1px solid $border
+
+      &.disabled
+        td
+          color: $placeholder
+
+    &.table-body-group
+      tr + tr
+        border-top-width: 0
+
+        td
+          padding-bottom: 0
+          padding-top: 0
+          vertical-align: top
+
+        &:last-child td
+          padding-bottom: $gutter

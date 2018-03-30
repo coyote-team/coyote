@@ -1,22 +1,51 @@
 // FIELD COMPONENT: Contains one or more form controls
 .field
+  $controls: "#{$text-inputs}, select, textarea"
+  $field-children: "#{$controls}, .button"
+
   @include non-mobile
     display: flex
   align-items: stretch
-  background-color: $input
+  background-color: $background
   border-radius: $radius
   margin-bottom: $gutter
 
-  $controls: "#{$text-inputs}, select, textarea"
+  &.field--accessory
+    position: relative
+
+    .field-accessory
+      $accessory-width: $gutter * 2
+      left: $gutter
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      width: $accessory-width
+
+      +
+        #{$field-children}
+          padding-left: $gutter * 2 + $accessory-width
+
   #{$controls}
     background-color: transparent
-    border-color: transparent
     flex: 1
 
-  #{$controls}, #{$buttons}
+  #{$field-children}
+    border-radius: 0
     margin: 0
 
+    +
+      #{$field-children}
+        margin-left: -1px
+
+    &:first-child
+      border-bottom-left-radius: $radius
+      border-top-left-radius: $radius
+
+    &:last-child
+      border-bottom-right-radius: $radius
+      border-top-right-radius: $radius
+
   @include mobile
-    #{$controls}, #{$buttons}
+    #{$controls}, .button
       display: block
       width: 100%

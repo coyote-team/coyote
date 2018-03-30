@@ -40,13 +40,13 @@ html(lang="en")
         span.nav-brand-fade t
         span.nav-brand-fade e
 
-      h2.sr Navigation
-      - if current_organization?
-        ul.nav-primary
-          = render "redesign/nav"
-      - if current_user
-        ul.nav-dropdown
-
+      .nav-secondary
+        h2.sr Navigation
+        - if current_organization?
+          = render "primary_nav"
+        - if current_user
+          = render "organization_selector" if current_user.organizations.many?
+          = render "user_nav"
 
       /%nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
         /%h2.sr-only Navigation
@@ -84,6 +84,6 @@ html(lang="en")
     #loading
     = raw analytical.body_append_javascript
 
-  = javascript_include_tag "application", "data-turbolinks-track" => false
+  = javascript_include_tag "redesign", "data-turbolinks-track" => false
   = yield :javascript_footer
 = body_class

@@ -7,13 +7,14 @@
 // VARIABLES
 // Color scheme
 $background: #fff
-$border: #000
+$border: #ddd
 $input: #ebebeb
 $placeholder: #999
-$text: #000
+$text: #444
+$text-dark: #000
 $tint: #00a3da
 
-$status: (error: #ff0000, neutral: #666, okay: $tint, partial: #fb9900, success: #009f2f, warning: #ffc107)
+$status: (danger: #ff0000, error: #ff0000, neutral: #666, okay: $tint, partial: #fb9900, success: #009f2f, warning: #ffc107)
 
 // Typography
 $font-family-mono: "Space Mono", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace
@@ -25,11 +26,11 @@ $line-height: round($font-size * $line-height-ratio)
 $gutter: round($line-height / 2)
 
 // Components
-$buttons: "button, input[type=reset], input[type=submit], .button"
 $input-height: 40px
+$input-padding: $gutter / 1.5
 $text-inputs: "input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=file], input[type=month], input[type=number], input[type=password], input[type=research], input[type=search], input[type=tel], input[type=text], input[type=url], input[type=week]"
 $nav-height: 5 * $gutter
-$radius: 2px
+$radius: 3px
 
 // Animations
 $swift: cubic-bezier(0.4, 0, 0.2, 1)

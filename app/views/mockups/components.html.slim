@@ -1,0 +1,110 @@
+h1 Typography: this is an H1 element
+h2 And this is an H2 element
+p
+  | And this is a paragraph element. Its line height is such that the text
+    should flow pleasantly when viewed on any screen. But that's only the case
+    if you write enough text for it to wrap, which is what I am now attempting
+    to do.
+
+h2 Buttons
+form
+  button.button.button--primary Primary Button
+  a.button.button--secondary href="/" Secondary Button
+
+h2 Inputs
+form
+  p
+    input type="text" placeholder="Text input"
+    input disabled=true type="text" placeholder="Disabled text input"
+  p
+    select
+      option Select Box
+    select disabled=true
+      option Disabled select Box
+  p
+    textarea placeholder="Text box"
+    textarea disabled=true placeholder="Disabled text box"
+  p
+    .dropdown
+      button.dropdown-toggle Dropdown menu
+      ul.dropdown-menu
+        li.dropdown-menu-item Option #1
+        li.dropdown-menu-item Option #2
+  p
+    label.checkbox
+      input type="checkbox"
+      | Checkbox
+    label.radio
+      input name="radio" type="radio" value="a"
+      | Radio option A
+    label.radio
+      input name="radio" type="radio" value="b"
+      | Radio option B
+  p
+    label.checkbox
+      input disabled=true type="checkbox"
+      | Checkbox
+    label.radio
+      input disabled=true name="radio2" type="radio" value="a"
+      | Radio option A
+    label.radio
+      input checked=true disabled=true name="radio2" type="radio" value="b"
+      | Radio option B
+
+
+
+h2 Form Field
+form
+  .field
+    input type="text" placeholder="Placeholder copy goes here"
+    select
+      option disabled=true selected=true Option A
+      option Option B
+    input.button type="submit" value="Go"
+
+  .field.field--accessory
+    i.field-accessory.icon.icon--search
+    input type="text" placeholder="Accessory input"
+    input.button type="submit" value="Go"
+
+h2 Tags
+p
+  span.tag Default
+  span.tag.tag--error Error
+  span.tag.tag--neutral Neutral
+  span.tag.tag--okay Okay
+  span.tag.tag--partial Partial
+  span.tag.tag--success Success
+  span.tag.tag--warning Warning
+
+p
+  span.tag.tag--secondary Default
+  span.tag.tag--secondary.tag--error Error
+  span.tag.tag--secondary.tag--neutral Neutral
+  span.tag.tag--secondary.tag--okay Okay
+  span.tag.tag--secondary.tag--partial Partial
+  span.tag.tag--secondary.tag--success Success
+  span.tag.tag--secondary.tag--warning Warning
+
+h2 Notifications
+.notification.notification--error role="alert": .notification-title Error
+.notification.notification--neutral role="alert": .notification-title Neutral
+#notification-1.notification.notification--okay role="alert"
+  .notification-title Okay (with dismiss button)
+  button.notification-dismiss aria-describedby="notification-1" data-dismiss="[data-notification-id=1]" type="button"
+    .sr Dismiss alert
+.notification.notification--partial role="alert": .notification-title Partial
+.notification.notification--success role="alert": .notification-title Success
+.notification.notification--warning role="alert": .notification-title Warning
+
+h2 Code
+p
+  ' Inline code looks like
+  code this
+  ' and works just fine.
+
+code.code--block
+  | Code blocks look like this and allow contents to overflow. That's pretty
+    neat, don't you think? I think so. I really do. So much so that I'm willing
+    to blather on a bunch about how great I think it is.
+

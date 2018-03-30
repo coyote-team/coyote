@@ -1,7 +1,8 @@
 // H* COMPONENTS: Text headings
 h1, h2, h3, h4, h5, h6
-  color: $text
+  color: $text-dark
   font-family: $font-family-text
+  font-size: $font-size
   letter-spacing: -0.03em
   margin: 1.414em 0 0.5em
 
@@ -15,7 +16,8 @@ h1
   line-height: $h1-size + $gutter
 
 h2
-  font-size: $font-size
+  $h2-size: round($font-size * $line-height-ratio)
+  font-size: $h2-size
   font-weight: bold
-  line-height: $font-size + $gutter
+  line-height: $h2-size + $gutter
   text-transform: uppercase

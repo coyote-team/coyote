@@ -1,0 +1,6 @@
+.dropdown
+  button.dropdown-toggle type="button" data-toggle="dropdown" aria-haspop=true aria-expanded=false
+    = current_organization? ? current_organization.title : "Select an organization"
+  ul.dropdown-menu
+    - current_user.organizations.each do |organization|
+      li.dropdown-menu-item= link_to organization.title, organization_path(organization)

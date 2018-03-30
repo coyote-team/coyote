@@ -1,0 +1,31 @@
+.dropdown
+  display: inline-block
+  position: relative
+  vertical-align: top
+
+  &.dropdown--active, &.open
+    .dropdown-options
+      display: block
+
+  .dropdown-toggle
+    @extend select
+
+  .dropdown-menu
+    background: $background
+    border: 1px solid $border
+    border-radius: $radius
+    display: none
+    left: 0
+    position: absolute
+    right: 0
+
+    .dropdown-menu-item
+      border-bottom: 1px solid $border
+
+      &:last-child
+        border-bottom-width: 0
+
+      a
+        display: block
+        padding: 0 $gutter
+        text-decoration: none

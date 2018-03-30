@@ -1,0 +1,31 @@
+@function radio-check-mark($fill)
+  $fill: unquote(str-slice(ie-hex-str($fill), 4))
+  @return url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2213%22%20height%3D%2210%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23#{$fill}%22%20stroke-linecap%3D%22square%22%20stroke-width%3D%222%22%20d%3D%22M2%205.083l3%203L11.083%202%22%2F%3E%3C%2Fsvg%3E")
+
+input[type=checkbox], input[type=radio]
+  @extend %input-base
+  background-position: center center
+  background-repeat: no-repeat
+  border-radius: $radius
+  height: $gutter * 2
+  position: relative
+  top: -2px
+  vertical-align: middle
+  width: $gutter * 2
+
+  &:checked
+    background-image: radio-check-mark($text)
+
+    &:focus
+      background-image: radio-check-mark($tint)
+
+    &[disabled]
+      background-image: radio-check-mark($placeholder)
+
+input[type=radio]
+  border-radius: 50%
+
+// CHECKBOX CONTAINER COMPONENT
+.checkbox, .radio
+  @extend %input-text
+  border-color: transparent

@@ -1,5 +1,5 @@
-#{$buttons}
-  @extend %input-base
+.button
+  @extend %input-text
   background: $text
   border-color: $text
   color: $background
@@ -12,6 +12,19 @@
     @extend %input-secondary
 
   &:focus, &:hover, &.button--secondary:focus, &.button--secondary:hover
-    background-color: $tint !important
+    background-color: $tint
     border-color: $tint
-    color: $background !important
+    color: $background
+
+  @each $name, $color in $status
+    &.button--#{$name}
+      background-color: $color
+
+      &.button--secondary
+        background-color: unset
+        border-color: $color
+        color: $color
+
+        &:hover
+          background-color: $color
+          color: $background

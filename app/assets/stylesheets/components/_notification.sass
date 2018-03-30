@@ -1,7 +1,7 @@
 // NOTIFICATION COMPONENT: Used to notify the user when state has changed in a
 // significant way
 .notification
-  background-color: rgba($text, 0.9)
+  background-color: rgba($text, 0.7)
   border-radius: $radius
   color: $background
   display: flex
@@ -14,7 +14,10 @@
     flex: 1
 
   .notification-dismiss
+    appearance: none
     background-color: $text
+    border: 1px solid $text
+    color: inherit
     cursor: pointer
     display: block
     text-decoration: none
@@ -31,15 +34,18 @@
 
       .notification-dismiss
         background-color: $color
+        border-color: $color
 
 // NOTIFICATIONS COMPONENT: Contains notifications in an Android "toast" style way
 #notifications
-  bottom: $gutter
   left: $gutter
   position: fixed
+  top: $gutter
 
   @include mobile
+    bottom: $gutter
     right: $gutter
+    top: auto
 
   .notification
     box-shadow: rgba(black, 0.3) 0 0 $gutter / 2
