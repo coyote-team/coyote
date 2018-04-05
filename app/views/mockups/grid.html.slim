@@ -130,10 +130,10 @@ h2 Filter View
         input.button aria-label="Apply Filter" type="submit" value="Apply"
 
       .segmented-control.toolbar-item
-        button.segmented-control-item aria-pressed="true" type="button"
+        button.segmented-control-item aria-pressed="false" data-toggle="button" type="button"
           .icon-list aria-hidden="true"
           span.sr-only List View
-        button.segmented-control-item aria-pressed="false" type="button"
+        button.segmented-control-item aria-pressed="true" data-toggle="button" type="button"
           .icon-grid aria-hidden="true"
           span.sr-only Grid View
 
@@ -156,8 +156,9 @@ h2 Filter View
               span.chip-text
                 span.sr-only Assigned to
                 span id=id Sheila Majumdar
-              button.chip-action.chip-action--delete
+              button.chip-action
                 span.sr-only aria-labelledby="#{unassign_id} #{id}" id=unassign_id Unassign
+                span.chip-action-label aria-hidden="true" &#x00D7;
           .list-item-actions
             // Wrap actions in a UL grouping with aria-label="Actions"
             // Add aria-labelledby for these pointing to the ALT on the image

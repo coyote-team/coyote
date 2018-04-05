@@ -24,16 +24,10 @@
     &:hover
       background-color: $border
 
-    &:after
+    .chip-action-label
       display: block
-      margin-top: -5px
+      margin-top: -4px
       speak: none
-
-    &.chip-action--add:after
-      content: '\2B'
-
-    &.chip-action--delete:after
-      content: '\00D7'
 
   @each $name, $color in $status
     &.chip--#{$name}

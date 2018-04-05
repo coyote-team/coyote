@@ -11,6 +11,14 @@
     &:focus
       position: relative
 
+    &:hover
+      background-color: $border
+
+    &[aria-pressed=true]
+      border-color: $tint
+      color: $tint
+      position: relative
+
     &:first-of-type
       border-bottom-left-radius: $radius
       border-top-left-radius: $radius
