@@ -9,36 +9,32 @@
         be avoided.
 
   .split-view-item
-    h2#stat-list Stat List
+    h2#stat-list Statistics
     ul.stat-list aria-labelledby="stat-list"
-      li.stat-list-item
-        .stat-list-item-label
-          a href="#" Descriptions pending approval
-        .stat-list-item-value 1,128
-      li.stat-list-item
-        .stat-list-item-label
-          a href="#" Descriptions Approved
-        .stat-list-item-value 956
-      li.stat-list-item
-        .stat-list-item-label
-          a href="#" Unapproved Descriptions
-        .stat-list-item-value 1,009
+      li: a.stat-list-item href="#"
+        span.stat-list-item-label Descriptions pending approval
+        span.stat-list-item-value 1,128
+      li: a.stat-list-item href="#"
+        span.stat-list-item-label Descriptions Approved
+        span.stat-list-item-value 956
+      li: a.stat-list-item href="#"
+        span.stat-list-item-label Unapproved Descriptions
+        span.stat-list-item-value 1,009
 
-    h2#progress-list Progress List
+    h2#progress-list Progress
     ul.stat-list.stat-list--progress aria-labelledby="progress-list"
-      li.stat-list-item
-        .stat-list-item-progress style="width: 58%"
-        .stat-list-item-label: a href="#" 1,202 Total Descriptions
-        .stat-list-item-value 58%
-      li.stat-list-item
-        .stat-list-item-progress.stat-list-item-progress--error style="width:18%"
-        .stat-list-item-label: a href="#" 1,126 Total Described Images
-        .stat-list-item-value 18%
-      li.stat-list-item
-        .stat-list-item-progress.stat-list-item-progress--success style="width: 94%"
-        .stat-list-item-label: a href="#" 5,126 Total Undescribed Images
-        .stat-list-item-value 94%
-
+      li: a.stat-list-item href="#"
+        span.stat-list-item-progress style="width: 58%"
+        span.stat-list-item-label 1,202 Total Descriptions
+        span.stat-list-item-value 58%
+      li: a.stat-list-item href="#"
+        span.stat-list-item-progress.stat-list-item-progress--error style="width:18%"
+        span.stat-list-item-label 1,126 Total Described Images
+        span.stat-list-item-value 18%
+      li: a.stat-list-item href="#"
+        span.stat-list-item-progress.stat-list-item-progress--success style="width: 94%"
+        span.stat-list-item-label 5,126 Total Undescribed Images
+        span.stat-list-item-value 94%
 
 table
   caption: h2 Table: Grid
@@ -92,11 +88,12 @@ table
 
 h2 Filter View
 .filter-view
-  .filter-view-filters
+  form.filter-view-filters action="#" method="get"
     h1 Images
-    form.filter-set
-      .filter-set-item.field.field--accessory
-        .field-accessory.icon-magnifier aria-hidden="true"
+    .filter-set
+      label.filter-set-item.field.field--accessory
+        i.field-accessory.icon-magnifier aria-hidden="true"
+        span.sr-only Search by caption or description
         input placeholder="Search by caption or description" type="search"
       .filter-set-item
         h2#status.filter-set-item-title Status
@@ -127,13 +124,13 @@ h2 Filter View
           select
             option selected=true value="" Bulk Assign
             option value="" Bulk Assign
-        input.button aria-label="Apply Filter" type="submit" value="Apply"
+        input.button aria-label="Apply Bulk Changes" type="submit" value="Apply"
 
       .segmented-control.toolbar-item
-        button.segmented-control-item aria-pressed="false" data-toggle="button" type="button"
+        button.segmented-control-item aria-pressed="false" type="button"
           .icon-list aria-hidden="true"
           span.sr-only List View
-        button.segmented-control-item aria-pressed="true" data-toggle="button" type="button"
+        button.segmented-control-item aria-pressed="true" type="button"
           .icon-grid aria-hidden="true"
           span.sr-only Grid View
 
