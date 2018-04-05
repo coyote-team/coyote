@@ -1,5 +1,4 @@
-//= require_tree ./components
+//= require vendor/bootstrap-native-v4
 
 document.querySelectorAll(".dropdown").forEach(function(container) {
-  new Dropdown(container);
 });

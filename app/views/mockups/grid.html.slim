@@ -1,79 +1,69 @@
-h1 Grids
-
-h2 Split View
-
 .split-view
   .split-view-item
     h1 Welcome, #{current_user || "user"}!
     p
       | Explanation: Task instruction should be concise and easy to follow so
-        as to not overwhelm the user, but su iciently detailed to enable users
-        to complete the task e iciently and e ectively. Terms, abbreviations
+        as to not overwhelm the user, but sufficiently detailed to enable users
+        to complete the task efficiently and effectively. Terms, abbreviations
         and interactive elements should be clearly explained, and jargon should
         be avoided.
 
   .split-view-item
-    h2 Stat List
-    .stat-list
-      .stat-list-item
+    h2#stat-list Stat List
+    ul.stat-list aria-labelledby="stat-list"
+      li.stat-list-item
         .stat-list-item-label
           a href="#" Descriptions pending approval
         .stat-list-item-value 1,128
-      .stat-list-item
+      li.stat-list-item
         .stat-list-item-label
           a href="#" Descriptions Approved
         .stat-list-item-value 956
-      .stat-list-item
+      li.stat-list-item
         .stat-list-item-label
           a href="#" Unapproved Descriptions
         .stat-list-item-value 1,009
 
-    h2 Progress List
-    ul.stat-list.stat-list--progress
+    h2#progress-list Progress List
+    ul.stat-list.stat-list--progress aria-labelledby="progress-list"
       li.stat-list-item
         .stat-list-item-progress style="width: 58%"
-        .stat-list-item-label
-          ' 1202 Total
-          a href="#" Descriptions
+        .stat-list-item-label: a href="#" 1,202 Total Descriptions
         .stat-list-item-value 58%
       li.stat-list-item
         .stat-list-item-progress.stat-list-item-progress--error style="width:18%"
-        .stat-list-item-label
-          ' 1,126 Total
-          a href="#" Described Images
+        .stat-list-item-label: a href="#" 1,126 Total Described Images
         .stat-list-item-value 18%
       li.stat-list-item
         .stat-list-item-progress.stat-list-item-progress--success style="width: 94%"
-        .stat-list-item-label
-          ' 5,126 Total
-          a href="#" Undescribed Images
+        .stat-list-item-label: a href="#" 5,126 Total Undescribed Images
         .stat-list-item-value 94%
 
 
-h2 Table: Grid
 table
+  caption: h2 Table: Grid
   thead: tr
-    th colspan=2 User
+    th User
     th Last Active
     th.table-action Actions
   tbody
     tr
-      td.table-image
-        img.avatar src="https://api.adorable.io/avatars/285/sina.bahram@gmail.com.png"
-      td.table-primary Flip Sasser
+      td.table-primary
+        img.avatar alt="Hello" src="https://api.adorable.io/avatars/285/sina.bahram@gmail.com.png"
+        span#flip Flip Sasser
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
       td.table-action
-        button.button.button--secondary Archive
+        button#archive-flip.button.button--secondary aria-labelledby="archive-flip flip" Archive
     tr.disabled
-      td.table-collapse
-        img.avatar src="https://api.adorable.io/avatars/285/flip.sasser@gmail.com.png"
-      td.table-primary Sina Bahram
+      td.table-primary
+        img.avatar alt="Hello" src="https://api.adorable.io/avatars/285/flip.sasser@gmail.com.png"
+        span#sina Sina Bahram
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
-      td.table-image
-        button.button.button--secondary Archive
+      td.table-action
+        button#archive-sina.button.button--secondary aria-labelledby="archive-sina sina" type="button" Archive
 
-h2 Table: Info
 table
+  caption: h2 Table: Info
   tbody
     tr
       th Website
@@ -101,67 +91,75 @@ table
           Molner, 1980.2
 
 h2 Filter View
-
 .filter-view
   .filter-view-filters
     h1 Images
-    .filter-set
+    form.filter-set
       .filter-set-item.field.field--accessory
-        .field-accessory.entypo-search
+        .field-accessory.icon-magnifier aria-hidden="true"
         input placeholder="Search by caption or description" type="search"
       .filter-set-item
-        h3.filter-set-item-title Status
-        .checkbox-list
-          label.checkbox-list-item
+        h2#status.filter-set-item-title Status
+        ul.checkbox-list aria-labelledby="status"
+          li.checkbox-list-item: label
             input type="checkbox" name="status"
             | Approved
-          label.checkbox-list-item
+          li.checkbox-list-item: label
             input type="checkbox" name="status"
             | Partially Completed
-          label.checkbox-list-item
+          li.checkbox-list-item: label
             input type="checkbox" name="status"
             | Not Described
+      .filter-set-submit
+        input.button type="submit" value="Search Images"
 
   .filter-view-list
-    h1 Total: 9,266
-    .toolbar
-      form.toolbar-item
-        select
-          option disabled=true selected=true value="" Bulk Assign
-        input.button type="submit" value="Apply"
+    h2#results Results: 9,266 images
 
-      .dropdown
-        button.dropdown-toggle List View
-        ul.dropdown-menu
-          li.dropdown-menu-item List View
-          li.dropdown-menu-item Grid View
-    table
-      thead
-        tr
-          th.table-checkbox
-            label: input#select-all type="checkbox"
-          th.table-checkbox colspan=3
-            label for="select-all" All
+    .toolbar
+      label.label--checkbox.toolbar-item
+        input#select-all type="checkbox"
+        | Select all images
+
+      form.field.toolbar-item
+        label
+          span.sr-only With selected:
+          select
+            option selected=true value="" Bulk Assign
+            option value="" Bulk Assign
+        input.button aria-label="Apply Filter" type="submit" value="Apply"
+
+      .segmented-control.toolbar-item
+        button.segmented-control-item aria-pressed="true" type="button"
+          .icon-list aria-hidden="true"
+          span.sr-only List View
+        button.segmented-control-item aria-pressed="false" type="button"
+          .icon-grid aria-hidden="true"
+          span.sr-only Grid View
+
+    ul.list aria-labelledby="results"
       - 10.times do |i|
-        tbody.table-body-group
-          tr
-            td.table-checkbox rowspan=3
-              label: input id="table-input#{i}" type="checkbox"
-            td.table-checkbox rowspan=3
-              label for="table-input#{i}"
-                = image_tag "http://via.placeholder.com/100x#{%w(100 125 150 200).sample}"
-            td
-              span.tag.tag--success Approved
-              span.tag None
-              span.tag.tag--okay.tag--secondary Alt
-            td.table-action rowspan=3
-              a.button.button--secondary href="#" Edit
-              a.button.button--danger.button--secondary href="#" Remove
-          tr
-            td
-              p Lorem ipsum dolor sit amet and some other stuff, too
-          tr
-            td
-              span.chip
-                span.chip-text Sheila Majumdar
-                button.chip-action.chip-action--delete
+        li.list-item
+          label.list-item-select
+            input type="checkbox"
+            = image_tag "http://via.placeholder.com/100x#{%w(100 125 150 200).sample}", alt: "Undescribed Image ##{i.succ}", id: "image-#{i}"
+          .list-item-body
+            h3.sr-only id="tag-list-#{i}" Status
+            ul.tag-list aria-labelledby="image-#{i} tag-list-#{i}"
+              li.tag.tag--success Approved
+              li.tag None
+              li.tag.tag--okay.tag--secondary Alt
+            p Lorem ipsum dolor sit amet and some other stuff, too
+            - id = "sheila-#{i}"
+            - unassign_id = "unassign-#{id}"
+            span.chip
+              span.chip-text
+                span.sr-only Assigned to
+                span id=id Sheila Majumdar
+              button.chip-action.chip-action--delete
+                span.sr-only aria-labelledby="#{unassign_id} #{id}" id=unassign_id Unassign
+          .list-item-actions
+            // Wrap actions in a UL grouping with aria-label="Actions"
+            // Add aria-labelledby for these pointing to the ALT on the image
+            a.button.button--secondary href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit
+            button.button.button--danger.button--secondary aria-labelledby="remove-#{i} image-#{i}" id="remove-#{i}" type="button" Remove

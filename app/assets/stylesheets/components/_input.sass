@@ -14,15 +14,18 @@
     color: $placeholder
     cursor: no-drop
 
-%input-text
+%input-fixed-height
   @extend %input-base
+  height: $input-height
+  line-height: $input-height - 2px
+  vertical-align: top
+
+%input-text
+  @extend %input-fixed-height
   border-radius: $radius
   font-family: $font-family-text
   font-size: $font-size
-  height: $input-height
-  line-height: $input-height - 2px
   padding: 0 $input-padding
-  vertical-align: top
 
 // INPUT (SECONDARY) COMPONENT: Secondary inputs have a specific styling
 %input-secondary

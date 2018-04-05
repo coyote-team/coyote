@@ -1,3 +1,6 @@
+.tag-list
+  margin-bottom: $gutter
+
 .tag
   background-color: $text
   border: 1px solid $text
@@ -9,6 +12,14 @@
   margin-right: $input-padding
   padding: 0 $input-padding 1px $input-padding
   text-transform: uppercase
+
+  &:after
+    @extend .sr
+    content: ', '
+
+  &:last-of-type:after
+    content: ''
+    display: none
 
   &.tag--secondary
     background-color: $background

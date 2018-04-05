@@ -3,18 +3,22 @@ module DropdownHelper
     id ||= label.parameterize
     toggle_options = {
       aria: {
-        controls: id,
-        haspopup: 'listbox'
+        expanded: false
       },
       class: 'dropdown-toggle',
+      data: {
+        toggle: "dropdown"
+      },
+      id: id,
       type: 'button'
     }
     toggle = content_tag(:button, toggle_options) { label }
 
     menu_options = {
+      aria: {
+        labelledby: id
+      },
       class: 'dropdown-menu',
-      id: id,
-      role: 'listbox',
       tabindex: -1
     }
     menu = content_tag(:ul, menu_options) { block_given? ? yield : options }
@@ -24,8 +28,7 @@ module DropdownHelper
 
   def dropdown_option(option)
     menu_item_options = {
-      class: 'dropdown-menu-item',
-      role: 'option'
+      class: 'dropdown-menu-item'
     }
     content_tag(:li, menu_item_options) { block_given? ? yield(option) : option }
   end

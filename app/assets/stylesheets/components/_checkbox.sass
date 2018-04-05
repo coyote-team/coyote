@@ -8,9 +8,7 @@ input[type=checkbox], input[type=radio]
   background-repeat: no-repeat
   border-radius: $radius
   height: $gutter * 2
-  position: relative
-  top: -2px
-  vertical-align: middle
+  vertical-align: text-bottom
   width: $gutter * 2
 
   &:checked
@@ -24,8 +22,3 @@ input[type=checkbox], input[type=radio]
 
 input[type=radio]
   border-radius: 50%
-
-// CHECKBOX CONTAINER COMPONENT
-.checkbox, .radio
-  @extend %input-text
-  border-color: transparent

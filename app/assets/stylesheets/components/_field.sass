@@ -1,7 +1,6 @@
 // FIELD COMPONENT: Contains one or more form controls
 .field
-  $controls: "#{$text-inputs}, select, textarea"
-  $field-children: "#{$controls}, .button"
+  $field-children: "#{$controls}, .button, label"
 
   @include non-mobile
     display: flex
@@ -16,6 +15,7 @@
     .field-accessory
       $accessory-width: $gutter
       left: $gutter
+      pointer-events: none
       position: absolute
       top: 50%
       transform: translateY(-50%)
@@ -23,11 +23,23 @@
 
       +
         #{$field-children}
+          border-bottom-left-radius: $radius
+          border-top-left-radius: $radius
           padding-left: $gutter * 2 + $accessory-width
 
   #{$controls}
     background-color: transparent
     flex: 1
+
+  label:first-child
+    #{$controls}
+      border-bottom-left-radius: $radius
+      border-top-left-radius: $radius
+
+  label:last-child
+    #{$controls}
+      border-bottom-right-radius: $radius
+      border-top-right-radius: $radius
 
   #{$field-children}
     border-radius: 0
@@ -37,13 +49,15 @@
       #{$field-children}
         margin-left: -1px
 
-    &:first-child
-      border-bottom-left-radius: $radius
-      border-top-left-radius: $radius
+  >
+    #{$field-children}
+      &:first-child
+        border-bottom-left-radius: $radius
+        border-top-left-radius: $radius
 
-    &:last-child
-      border-bottom-right-radius: $radius
-      border-top-right-radius: $radius
+      &:last-child
+        border-bottom-right-radius: $radius
+        border-top-right-radius: $radius
 
   @include mobile
     #{$controls}, .button
