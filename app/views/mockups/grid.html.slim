@@ -24,15 +24,15 @@
     h2#progress-list Progress
     ul.stat-list.stat-list--progress aria-labelledby="progress-list"
       li: a.stat-list-item href="#"
-        span.stat-list-item-progress style="width: 58%"
+        span.stat-list-item-progress aria-hidden="true" style="width: 58%"
         span.stat-list-item-label 1,202 Total Descriptions
         span.stat-list-item-value 58%
       li: a.stat-list-item href="#"
-        span.stat-list-item-progress.stat-list-item-progress--error style="width:18%"
+        span.stat-list-item-progress.stat-list-item-progress--error aria-hidden="true" style="width:18%"
         span.stat-list-item-label 1,126 Total Described Images
         span.stat-list-item-value 18%
       li: a.stat-list-item href="#"
-        span.stat-list-item-progress.stat-list-item-progress--success style="width: 94%"
+        span.stat-list-item-progress.stat-list-item-progress--success aria-hidden="true" style="width: 94%"
         span.stat-list-item-label 5,126 Total Undescribed Images
         span.stat-list-item-value 94%
 
@@ -128,10 +128,10 @@ h2 Filter View
 
       .segmented-control.toolbar-item
         button.segmented-control-item aria-pressed="false" type="button"
-          .icon-list aria-hidden="true"
+          i.icon-list aria-hidden="true"
           span.sr-only List View
         button.segmented-control-item aria-pressed="true" type="button"
-          .icon-grid aria-hidden="true"
+          i.icon-grid aria-hidden="true"
           span.sr-only Grid View
 
     ul.list aria-labelledby="results"
@@ -153,11 +153,9 @@ h2 Filter View
               span.chip-text
                 span.sr-only Assigned to
                 span id=id Sheila Majumdar
-              button.chip-action
-                span.sr-only aria-labelledby="#{unassign_id} #{id}" id=unassign_id Unassign
+              button.chip-action aria-labelledby="#{unassign_id} #{id}" id=unassign_id
+                span.sr-only Unassign
                 span.chip-action-label aria-hidden="true" &#x00D7;
-          .list-item-actions
-            // Wrap actions in a UL grouping with aria-label="Actions"
-            // Add aria-labelledby for these pointing to the ALT on the image
-            a.button.button--secondary href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit
-            button.button.button--danger.button--secondary aria-labelledby="remove-#{i} image-#{i}" id="remove-#{i}" type="button" Remove
+          ul.list-item-actions aria-label="Actions"
+            li: a.button.button--secondary href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit
+            li: button.button.button--danger.button--secondary aria-labelledby="remove-#{i} image-#{i}" id="remove-#{i}" type="button" Remove
