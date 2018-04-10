@@ -1,10 +1,17 @@
 // COMPONENT: Toolbar: lays out a stack of controls that influence other items
 .toolbar
-  align-items: center
+  @include non-mobile
+    align-items: center
+    display: flex
+    justify-content: space-between
   border-top: 1px solid $border
-  display: flex
-  justify-content: space-between
   padding: $gutter
 
   .toolbar-item
     margin-bottom: 0
+
+    @include mobile
+      margin-bottom: $input-padding
+
+    &:last-child
+      margin-bottom: 0

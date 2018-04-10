@@ -6,8 +6,9 @@ h1, h2, h3, h4, h5, h6
   letter-spacing: -0.03em
   margin: 1.414em 0 0.5em
 
-  &:first-child
-    margin-top: 0
+  @include non-mobile
+    &:first-child
+      margin-top: 0
 
 h1
   $h1-size: round($font-size * pow($line-height-ratio, 2))

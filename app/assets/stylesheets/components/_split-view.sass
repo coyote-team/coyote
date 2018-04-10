@@ -1,15 +1,13 @@
 // COMPONENT: Split view (50/50 on desktop; stacks on mobile)
 .split-view
-  display: flex
+  @include non-mobile
+    display: flex
 
-  @include mobile
-    display: block
+    .split-view-item
+      flex: 1
 
-  .split-view-item
-    flex: 1
+      &:first-child
+        padding-right: $gutter
 
-    &:first-child
-      padding-right: $gutter
-
-    &:last-child
-      padding-left: $gutter
+      &:last-child
+        padding-left: $gutter

@@ -4,7 +4,6 @@ table
   width: 100%
 
   caption
-    margin-top: $gutter * 3
     text-align: left
 
   th, td
@@ -51,6 +50,15 @@ table
       &.disabled
         td
           color: $placeholder
+
+      @include mobile
+        th
+          display: block
+
+          + td
+            display: block
+            padding-top: 0
+            word-break: break-all
 
     &.table-body-group
       tr + tr

@@ -2,11 +2,10 @@
 .field
   $field-children: "#{$controls}, .button, label"
 
-  @include non-mobile
-    display: flex
   align-items: stretch
   background-color: $background
   border-radius: $radius
+  display: flex
   margin-bottom: $gutter
 
   &.field--accessory
@@ -58,8 +57,3 @@
       &:last-child
         border-bottom-right-radius: $radius
         border-top-right-radius: $radius
-
-  @include mobile
-    #{$controls}, .button
-      display: block
-      width: 100%

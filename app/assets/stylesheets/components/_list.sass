@@ -1,3 +1,15 @@
+= list-item-vertical
+  align-items: stretch
+  flex: 1
+  flex-direction: column
+
+  .list-item-select, .list-item-body
+    margin-bottom: $gutter
+    margin-right: 0
+
+  .list-item-actions
+    text-align: left
+
 .list
   .list-item
     align-items: center
@@ -5,6 +17,7 @@
     display: flex
     justify-content: space-between
     padding: $gutter
+    transition: all 150ms $swift
 
     .list-item-select, .list-item-body
       margin-right: $gutter
@@ -16,12 +29,30 @@
       *
         vertical-align: top
 
-    .list-item-body
-
-
     .list-item-actions
+      text-align: right
       white-space: nowrap
 
-      .button:last-child
-        margin-bottom: 0
-        margin-right: 0
+      .list-item-actions-item
+        display: inline-block
+        margin-bottom: $input-padding
+        margin-right: $input-padding
+
+        &:last-child, *
+          margin-bottom: 0
+          margin-right: 0
+
+    @include mobile
+      @include list-item-vertical
+
+  @include non-mobile
+    display: flex
+    flex-wrap: wrap
+
+    &.list--grid
+      .list-item
+        @include list-item-vertical
+        border: 1px solid $border
+        border-radius: $radius
+        margin: $gutter
+        max-width: calc(#{percentage(1/3)} - #{$gutter * 2})
