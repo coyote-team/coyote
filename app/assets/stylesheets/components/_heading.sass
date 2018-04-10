@@ -4,21 +4,23 @@ h1, h2, h3, h4, h5, h6
   font-family: $font-family-text
   font-size: $font-size
   letter-spacing: -0.03em
-  margin: 1.414em 0 0.5em
+  margin: $gutter 0
 
-  @include non-mobile
-    &:first-child
-      margin-top: 0
+  //@include non-mobile
+    //&:first-child
+      //margin-top: 0
+
+$h1-size: round($font-size * pow($line-height-ratio, 2))
+$h2-size: round($font-size * $line-height-ratio)
+$heading-line-height: $h1-size + $gutter
 
 h1
-  $h1-size: round($font-size * pow($line-height-ratio, 2))
   font-size: $h1-size
   font-weight: normal
-  line-height: $h1-size + $gutter
+  line-height: $heading-line-height
 
 h2
-  $h2-size: round($font-size * $line-height-ratio)
   font-size: $h2-size
   font-weight: bold
-  line-height: $h2-size + $gutter
+  line-height: $heading-line-height
   text-transform: uppercase

@@ -116,8 +116,7 @@ h2 Filter View
     .toolbar
       label.label--checkbox.toolbar-item
         input#select-all data-select-all="#results-list" type="checkbox"
-        | Select all
-        span.non-mobile-only images
+        | Select all images
 
       form.field.toolbar-item
         label
@@ -129,7 +128,7 @@ h2 Filter View
             option label="Flip Sasser" value="Flip" Flip Sasser
         input.button aria-label="Apply Bulk Changes" type="submit" value="Go"
 
-      .segmented-control.toolbar-item.non-mobile-only data-toggle-target="#results-list"
+      .segmented-control.toolbar-item.non-portrait-only data-toggle-target="#results-list"
         button.segmented-control-item aria-pressed="false" data-toggle-target-off="list--grid" type="button"
           i.icon-list aria-hidden="true"
           span.sr-only List View

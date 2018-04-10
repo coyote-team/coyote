@@ -10,14 +10,18 @@
   @media screen and (max-width: $breakpoint-tablet)
     @content
 
-=non-mobile
-  @media screen and (min-width: $breakpoint-mobile + 1px)
-    @content
-
 =mobile
   @media screen and (max-width: $breakpoint-mobile)
     @content
 
-=portrait
+=non-mobile
+  @media screen and (min-width: $breakpoint-mobile + 1px)
+    @content
+
+=mobile-portrait
   @media screen and (max-width: $breakpoint-mobile-portrait)
+    @content
+
+=non-mobile-portrait
+  @media screen and (min-width: $breakpoint-mobile-portrait + 1px)
     @content
