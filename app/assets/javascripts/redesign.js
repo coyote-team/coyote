@@ -1,6 +1,5 @@
-//= require components/SegmentedControl
-//= require components/SelectAll
-//= require components/ToggleControl
+//= require_tree ./polyfills
+//= require_tree ./components
 //= require vendor/bootstrap-native-v4
 
 document.querySelectorAll(".segmented-control").forEach(function(control) {

@@ -1,7 +1,7 @@
 function SegmentedControl(control) {
   // Stash the control and its items
   this.control = control;
-  this.items = this.control.querySelectorAll(".segmented-control-item");
+  this.items = this.control.querySelectorAll(".segmented-control-item > *:first-child");
 
   // Watch the items for changes
   this.items.forEach(function(item) {

@@ -111,8 +111,9 @@ h2 Filter View
         input.button type="submit" value="Search Images"
 
   .filter-view-list
-    h2#results Results: 9,266 images
+    h2#results Results
 
+    h3#bulk-actions.sr-only Bulk Actions
     .toolbar
       label.label--checkbox.toolbar-item
         input#select-all data-select-all="#results-list" type="checkbox"
@@ -120,43 +121,53 @@ h2 Filter View
 
       form.field.toolbar-item
         label
-          span.sr-only With selected:
+          span.sr-only Bulk assign to:
           select
-            option selected=true value="" Bulk Assign
+            option disabled=true selected=true value="" Bulk Assign
             option label="Sheila Majumdar" value="Sheila" Sheila Majumdar
             option label="Sina Bahram" value="Sina" Sina Bahram
             option label="Flip Sasser" value="Flip" Flip Sasser
         input.button aria-label="Apply Bulk Changes" type="submit" value="Go"
 
-      .segmented-control.toolbar-item.non-portrait-only data-toggle-target="#results-list"
-        button.segmented-control-item aria-pressed="false" data-toggle-target-off="list--grid" type="button"
-          i.icon-list aria-hidden="true"
-          span.sr-only List View
-        button.segmented-control-item aria-pressed="true" data-toggle-target-on="list--grid" type="button"
-          i.icon-grid aria-hidden="true"
-          span.sr-only Grid View
+      h3#view-options.sr-only View options
+      ul.segmented-control.toolbar-item.non-portrait-only aria-labelledby="view-options" data-toggle-target="#results-list"
+        li.segmented-control-item
+          button aria-pressed="false" data-toggle-target-off="list--grid" type="button"
+            i.icon-list aria-hidden="true"
+            span.sr-only List View
+        li.segmented-control-item
+          button aria-pressed="true" data-toggle-target-on="list--grid" type="button"
+            i.icon-grid aria-hidden="true"
+            span.sr-only Grid View
 
-    ul#results-list.list.list--grid.list--stacking aria-labelledby="results"
+    h3#results-count.sr-only 9,266 images
+    ul#results-list.list.list--grid.list--stacking aria-labelledby="results results-count"
       - 10.times do |i|
         li.list-item
+          h4.sr-only id="image-#{i}" Image ##{i.succ}
           label.list-item-select
             input type="checkbox"
-            = image_tag "//via.placeholder.com/100x#{%w(100 125 150 200).sample}", alt: "Undescribed Image ##{i.succ}", id: "image-#{i}"
+            = image_tag "//via.placeholder.com/100x#{%w(100 125 150 200).sample}", alt: "Lorem ipsum"
           .list-item-body
-            h3.sr-only id="tag-list-#{i}" Status
+            h5.sr-only id="tag-list-#{i}" Properties
             ul.tag-list aria-labelledby="image-#{i} tag-list-#{i}"
-              li.tag.tag--success Approved
-              li.tag None
-              li.tag.tag--okay.tag--secondary Alt
-            p Lorem ipsum dolor sit amet and some other stuff, too
+              li.tag.tag--success
+                span.sr-only Status:
+                ' Approved
+              li.tag.tag--error
+                span.sr-only Priority:
+                ' Urgent
+              li.tag.tag--okay.tag--secondary
+                span.sr-only Metum:
+                ' Alt
+            /p Lorem ipsum dolor sit amet and some other stuff, too
             - id = "sheila-#{i}"
-            - unassign_id = "unassign-#{id}"
+            // TODO: Move to actions
             span.chip
               span.chip-text
                 span.sr-only Assigned to
                 span id=id Sheila Majumdar
-              button.chip-action aria-labelledby="#{unassign_id} #{id}" id=unassign_id
-                span.sr-only Unassign
+              button.chip-action aria-label="Unassign Sheila Majumdar"
                 span.chip-action-label aria-hidden="true" &#x00D7;
           ul.list-item-actions aria-label="Actions"
             li.list-item-actions-item: a.button.button--secondary href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit

@@ -25,3 +25,7 @@
 =non-mobile-portrait
   @media screen and (min-width: $breakpoint-mobile-portrait + 1px)
     @content
+
+=ie-only
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
+    @content

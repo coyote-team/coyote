@@ -4,27 +4,28 @@
   margin-bottom: $gutter
 
   .segmented-control-item
-    border: 1px solid $border
-    cursor: pointer
-    padding: $input-padding
-    text-decoration: none
+    > *
+      border: 1px solid $border
+      cursor: pointer
+      padding: $input-padding
+      text-decoration: none
 
-    &:focus
-      position: relative
+      &:focus
+        position: relative
 
-    &:hover
-      background-color: $border
+      &:hover
+        background-color: $border
 
-    &[aria-pressed=true]
-      border-color: $tint
-      color: $tint
-      position: relative
+      &[aria-pressed=true]
+        border-color: $tint
+        color: $tint
+        position: relative
 
-    &:first-of-type
+    &:first-of-type *
       border-bottom-left-radius: $radius
       border-top-left-radius: $radius
 
-    &:last-of-type
+    &:last-of-type *
       border-bottom-right-radius: $radius
       border-top-right-radius: $radius
 

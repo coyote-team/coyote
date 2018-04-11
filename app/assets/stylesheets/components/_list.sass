@@ -5,6 +5,9 @@
   flex: 1
   flex-direction: column
 
+  @include ie-only
+    display: block
+
   .list-item-select, .list-item-body
     padding-bottom: $gutter
     padding-right: 0
@@ -23,8 +26,15 @@
     padding: $gutter 0
     transition: all 150ms $swift
 
+    .list-item-label, .list-item-select, .list-item-body, .list-item-value, .list-item-actions
+      display: block
+
     .list-item-label, .list-item-select, .list-item-body
       padding-right: $gutter
+
+    @include ie-only
+      .list-item-select
+        order: -1
 
     .list-item-select
       flex: 0
@@ -62,6 +72,8 @@
         @include list-item-vertical
         border: 1px solid $border
         border-radius: $radius
+        flex: 1 1 0%
+        -ms-flex: 1 1 20% // Patches IE 11 insantiy
         margin: $gutter
         max-width: calc(#{percentage(1/3)} - #{$gutter})
         padding: $gutter
