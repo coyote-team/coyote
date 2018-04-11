@@ -1,26 +1,30 @@
+// COMPONENT: List: the main list element used for all kinds of things -
+// listing statistics, listing complex search results, etc
 = list-item-vertical
   align-items: stretch
   flex: 1
   flex-direction: column
 
   .list-item-select, .list-item-body
-    margin-bottom: $gutter
-    margin-right: 0
+    padding-bottom: $gutter
+    padding-right: 0
 
   .list-item-actions
     text-align: left
 
 .list
+  display: block
+
   .list-item
     align-items: center
     border-top: 1px solid $border
     display: flex
     justify-content: space-between
-    padding: $gutter
+    padding: $gutter 0
     transition: all 150ms $swift
 
-    .list-item-select, .list-item-body
-      margin-right: $gutter
+    .list-item-label, .list-item-select, .list-item-body
+      padding-right: $gutter
 
     .list-item-select
       flex: 0
@@ -42,23 +46,51 @@
           margin-bottom: 0
           margin-right: 0
 
-    @include mobile-portrait
-      @include list-item-vertical
+    .list-item-value
+      font-weight: bold
+      padding-left: $gutter
+      text-align: right
+      text-decoration: none
 
-  @include non-mobile-portrait
-    display: flex
-    flex-wrap: wrap
+  // COMPONENT SUBTYPE: Render the list as a grid of cards
+  &.list--grid
+    @include non-mobile-portrait
+      display: flex
+      flex-wrap: wrap
 
-    &.list--grid
       .list-item
         @include list-item-vertical
         border: 1px solid $border
         border-radius: $radius
         margin: $gutter
         max-width: calc(#{percentage(1/3)} - #{$gutter})
+        padding: $gutter
 
         &:nth-child(3n)
           margin-right: 0
 
         &:nth-child(3n + 1)
           margin-left: 0
+
+  // COMPONENT SUBTYPE: Provide progress indicators above list items
+  &.list--progress
+    .list-item
+      position: relative
+
+      .list-item-progress
+        border-top: 2px solid $tint
+        bottom: 100%
+        left: 0
+        margin-bottom: 1px
+        position: absolute
+        speak: none
+
+        @each $name, $color in $status
+          &.list-item-progress--#{$name}
+            border-color: $color
+
+  // COMPONENT SUBTYPE: Stack the list items vertically in mobile
+  &.list--stacking
+    .list-item
+      @include mobile-portrait
+        @include list-item-vertical

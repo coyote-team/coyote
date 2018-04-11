@@ -10,31 +10,31 @@
 
   .split-view-item
     h2#stat-list Statistics
-    ul.stat-list aria-labelledby="stat-list"
-      li: a.stat-list-item href="#"
-        span.stat-list-item-label Descriptions pending approval
-        span.stat-list-item-value 1,128
-      li: a.stat-list-item href="#"
-        span.stat-list-item-label Descriptions Approved
-        span.stat-list-item-value 956
-      li: a.stat-list-item href="#"
-        span.stat-list-item-label Unapproved Descriptions
-        span.stat-list-item-value 1,009
+    ul.list aria-labelledby="stat-list"
+      li: a.list-item href="#"
+        span.list-item-label Descriptions pending approval
+        span.list-item-value 1,128
+      li: a.list-item href="#"
+        span.list-item-label Descriptions Approved
+        span.list-item-value 956
+      li: a.list-item href="#"
+        span.list-item-label Unapproved Descriptions
+        span.list-item-value 1,009
 
     h2#progress-list Progress
-    ul.stat-list.stat-list--progress aria-labelledby="progress-list"
-      li: a.stat-list-item href="#"
-        span.stat-list-item-progress aria-hidden="true" style="width: 58%"
-        span.stat-list-item-label 1,202 Total Descriptions
-        span.stat-list-item-value 58%
-      li: a.stat-list-item href="#"
-        span.stat-list-item-progress.stat-list-item-progress--error aria-hidden="true" style="width:18%"
-        span.stat-list-item-label 1,126 Total Described Images
-        span.stat-list-item-value 18%
-      li: a.stat-list-item href="#"
-        span.stat-list-item-progress.stat-list-item-progress--success aria-hidden="true" style="width: 94%"
-        span.stat-list-item-label 5,126 Total Undescribed Images
-        span.stat-list-item-value 94%
+    ul.list.list--progress aria-labelledby="progress-list"
+      li: a.list-item href="#"
+        span.list-item-progress aria-hidden="true" style="width: 58%"
+        span.list-item-label 1,202 Total Descriptions
+        span.list-item-value 58%
+      li: a.list-item href="#"
+        span.list-item-progress.list-item-progress--error aria-hidden="true" style="width:18%"
+        span.list-item-label 1,126 Total Described Images
+        span.list-item-value 18%
+      li: a.list-item href="#"
+        span.list-item-progress.list-item-progress--success aria-hidden="true" style="width: 94%"
+        span.list-item-label 5,126 Total Undescribed Images
+        span.list-item-value 94%
 
 table
   caption: h2 Table: Grid
@@ -136,7 +136,7 @@ h2 Filter View
           i.icon-grid aria-hidden="true"
           span.sr-only Grid View
 
-    ul#results-list.list.list--grid aria-labelledby="results"
+    ul#results-list.list.list--grid.list--stacking aria-labelledby="results"
       - 10.times do |i|
         li.list-item
           label.list-item-select

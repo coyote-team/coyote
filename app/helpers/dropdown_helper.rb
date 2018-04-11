@@ -18,8 +18,7 @@ module DropdownHelper
       aria: {
         labelledby: id
       },
-      class: 'dropdown-menu',
-      tabindex: -1
+      class: 'dropdown-menu'
     }
     menu = content_tag(:ul, menu_options) { block_given? ? yield : options }
 
