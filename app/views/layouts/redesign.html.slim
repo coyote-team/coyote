@@ -27,7 +27,8 @@ html(lang="en")
 
   body class=(content_for?(:body_class) ? yield(:body_class) : body_class_default)
     = raw analytical.body_prepend_javascript
-    = link_to "Skip to content", "#main", class: "sr"
+    / TODO: Fix skip to content
+    /= link_to "Skip to content", "#main", class: "sr"
     nav role="navigation"
       /button.navbar-toggle.collapsed aria-controls="bs-navbar" aria-expanded=false data-target="#bs-navbar" data-toggle="collapse" type="button"
         /span.sr-only Toggle navigation
@@ -58,7 +59,7 @@ html(lang="en")
     /= render partial: "nav" if current_user
     = render partial: "alerts"
 
-    main#main role="main" tabindex="-1"
+    main#main role="main"
       = yield
 
     footer#footer role="contentinfo"
@@ -66,7 +67,7 @@ html(lang="en")
       p
         small
           ' Coyote is a project of the
-          a> target="_blank" href="//mcachicago.org/" Museum of Contemporary Art Chicago
+          a> href="//mcachicago.org/" Museum of Contemporary Art Chicago
           ' in collaboration with
           a href="https://pac.bz/" Prime Access Consulting
           | . It has been generously supported by Lois and Steve Eisen.
