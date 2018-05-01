@@ -2,7 +2,6 @@ doctype html
 html(lang="en")
   head
     = raw analytical.head_prepend_javascript
-    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"
 
     link rel="stylesheet" type="text/css" href="//brick.a.ssl.fastly.net/TeX+Gyre+Heros:400,400i,700,700i:f"
     link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet"
@@ -89,5 +88,6 @@ html(lang="en")
     #loading
     = raw analytical.body_append_javascript
 
+    = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"
     = javascript_include_tag "redesign", "data-turbolinks-track" => false
     = yield :javascript_footer

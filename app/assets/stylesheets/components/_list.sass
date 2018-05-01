@@ -2,7 +2,6 @@
 // listing statistics, listing complex search results, etc
 = list-item-vertical
   align-items: stretch
-  flex: 1
   flex-direction: column
 
   @include ie-only
@@ -65,13 +64,13 @@
   // COMPONENT SUBTYPE: Render the list as a grid of cards
   &.list--grid
     @include non-mobile-portrait
+      // Default grid is just a list of cards
       display: flex
       flex-wrap: wrap
 
       .list-item
         @include list-item-vertical
         border: 1px solid $border
-        border-radius: $radius
         flex: 1 1 0%
         -ms-flex: 1 1 20% // Patches IE 11 insantiy
         margin: $gutter
@@ -83,6 +82,17 @@
 
         &:nth-child(3n + 1)
           margin-left: 0
+
+      // For browsers with support for the grid layout, we use that to create a masonry effect
+      @supports (display: grid)
+        display: grid
+        grid-auto-rows: $gutter + 2px
+        grid-gap: $gutter
+        grid-template-columns: repeat(3, 1fr)
+
+        .list-item
+          margin: 0
+          max-width: none
 
   // COMPONENT SUBTYPE: Provide progress indicators above list items
   &.list--progress
