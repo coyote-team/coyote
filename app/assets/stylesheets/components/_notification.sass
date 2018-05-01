@@ -2,7 +2,6 @@
 // significant way
 .notification
   background-color: rgba($text, 0.7)
-  border-radius: $radius
   color: $background
   display: flex
   margin-bottom: $gutter
@@ -17,7 +16,6 @@
     appearance: none
     background-color: $text
     border: 1px solid $text
-    border-radius: 0 $radius $radius 0
     color: inherit
     cursor: pointer
     display: block
@@ -47,4 +45,4 @@
     top: auto
 
   .notification
-    box-shadow: rgba(black, 0.3) 0 0 $gutter / 2
+    box-shadow: $shadow

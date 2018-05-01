@@ -6,7 +6,6 @@
 
   align-items: stretch
   background-color: $background
-  border-radius: $radius
   display: flex
   margin-bottom: $gutter
 
@@ -22,40 +21,17 @@
       transform: translateY(-50%)
       width: $accessory-width
 
-      ~
+      +
         #{$field-children}
-          border-bottom-left-radius: $radius
-          border-top-left-radius: $radius
           padding-left: $gutter * 2 + $accessory-width
 
   #{$controls}
     background-color: transparent
     flex: 1
 
-  label:first-child
-    #{$controls}
-      border-bottom-left-radius: $radius
-      border-top-left-radius: $radius
-
-  label:last-child
-    #{$controls}
-      border-bottom-right-radius: $radius
-      border-top-right-radius: $radius
-
   #{$field-children}
-    border-radius: 0
     margin: 0
 
     +
       #{$field-children}
         margin-left: -1px
-
-  >
-    #{$field-children}
-      &:first-child
-        border-bottom-left-radius: $radius
-        border-top-left-radius: $radius
-
-      &:last-child
-        border-bottom-right-radius: $radius
-        border-top-right-radius: $radius

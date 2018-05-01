@@ -2,12 +2,17 @@
 .split-view
   @include non-mobile
     display: flex
+    flex-wrap: wrap
 
     .split-view-item
-      flex: 1
+      flex: 0 1 50%
+      width: 50%
 
-      &:first-child
+      &:nth-child(2n+1)
         padding-right: $gutter
 
-      &:last-child
+      &:nth-child(2n)
         padding-left: $gutter
+
+      &:last-child
+        padding-right: 0
