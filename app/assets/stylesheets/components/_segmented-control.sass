@@ -1,13 +1,18 @@
 // COMPONENT: Segmented Control: allows for toggling between two or more states
 .segmented-control
+  @extend %input-fixed-height
+  align-items: stretch
+  border-color: $border
   display: inline-flex
   margin-bottom: $gutter
 
   .segmented-control-item
     > *
-      border: 1px solid $border
+      border-right: 1px solid $border
       cursor: pointer
-      padding: $input-padding
+      display: inline-block
+      height: 100%
+      padding: 0 $input-padding
       text-decoration: none
 
       &:focus
@@ -17,6 +22,9 @@
         border-color: $tint
         color: $tint
         position: relative
+
+    &:last-child > *
+      border-right-width: 0
 
     + .segmented-control-item
       margin-left: -1px

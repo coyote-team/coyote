@@ -2,7 +2,7 @@
 // instance of a nav element per page. Namespaced via tag name rather than
 // class name.
 nav
-  align-items: center
+  align-items: stretch
   border-bottom: 1px solid $border
   display: flex
   height: $nav-height
@@ -49,6 +49,8 @@ nav
     li
       a
         display: block
+        height: 100%
+        line-height: $nav-height - 3px
         padding: 0 $gutter / 2
         text-decoration: none
 
@@ -57,6 +59,7 @@ nav
 
   // Secondary nav
   .nav-secondary
+    align-items: center
     display: flex
 
 @keyframes nav-brand-fade

@@ -2,25 +2,30 @@
 // BUTTON tags, A tags, and INPUT tags.
 .button
   @extend %input-text
-  background: $text
-  border-color: $text
+  background: $tint
+  border-color: $tint
   color: $background
   cursor: pointer
   font-weight: bold
   text-decoration: none
   text-transform: uppercase
 
-  &.button--secondary
-    @extend %input-secondary
+  &:focus, &:hover
+    background-color: $background
+    color: $tint
 
-  &:focus, &:hover, &.button--secondary:focus, &.button--secondary:hover
-    background-color: $tint
-    border-color: $tint
-    color: $background
+  &.button--secondary
+    background: $background
+    color: $tint
+
+    &:focus, &:hover
+      background-color: $tint
+      color: $background
 
   @each $name, $color in $status
     &.button--#{$name}
       background-color: $color
+      border-color: $color
 
       &.button--secondary
         background-color: $background
