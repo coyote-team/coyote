@@ -9,33 +9,43 @@ table
     text-align: left
 
   th, td
-    padding: $gutter 0
+    padding: $gutter
     vertical-align: middle
 
-    &.table-action
-      width: 10px
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0
+
+    &.table-cell-actions
+      text-align: right
       vertical-align: top
+      white-space: nowrap
+      width: 10px
 
-      .button:not(:only-child)
-        margin-bottom: $input-padding
+      > *
+        display: inline-block
 
-      .button:last-child
+      .button:last-child, > *:last-child .button
         margin-bottom: 0
         margin-right: 0
 
-    &.table-checkbox
-      height: 1px
+    &.table-cell-link
+      height: 100%
       padding: 0
 
-      label
-        display: inline-block
-        height: 100%
+      a
+        display: block
         padding: $gutter
 
-    &.table-image
-      width: 10px
+        &:first-child
+          padding-left: 0
 
-    &.table-primary
+        &:last-child
+          padding-right: 0
+
+    &.table-cell-primary
       font-weight: bold
 
   th
@@ -49,9 +59,18 @@ table
     tr
       border-top: 1px solid $border
 
-      &.disabled
+      &.table-row-disabled
         td
           color: $placeholder
+
+      @include non-mobile
+        th
+          padding-right: $gutter
+          width: 10px
+          white-space: nowrap
+
+          ~ td
+            padding-left: $gutter
 
       @include mobile
         th
@@ -61,15 +80,3 @@ table
             display: block
             padding-top: 0
             word-break: break-all
-
-    &.table-body-group
-      tr + tr
-        border-top-width: 0
-
-        td
-          padding-bottom: 0
-          padding-top: 0
-          vertical-align: top
-
-        &:last-child td
-          padding-bottom: $gutter

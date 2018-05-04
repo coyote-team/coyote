@@ -1,0 +1,15 @@
+.paginated-wrap
+  table.table
+    caption.sr-only Index table for assignments
+    thead
+      tr
+        th scope: "col"  User
+        th scope: "col"  Assignments
+
+    tbody
+      - assigned_users.each do |membership,assignment_count|
+        tr.item
+          td
+            = link_to(membership.user,[current_organization,membership])
+          td
+            = number_with_delimiter(assignment_count)

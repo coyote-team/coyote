@@ -1,0 +1,86 @@
+.filter-view
+  .filter-view-filters
+    / h1= title "Descriptions for #{current_organization.title}"
+    h1= title "Descriptions"
+
+    = search_form_for record_filter.search, url: organization_representations_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+      label.filter-set-item.field.field--accessory
+        span.sr-only Search by caption or description
+        = icon :magnifier, class: 'field-accessory'
+        = f.search_field :text_or_resource_identifier_or_resource_title_cont_all, required: false, placeholder: 'Search representation text'
+
+      .filter-set-item
+        .filter-set-item-title Status
+        .checkbox-list
+          - Coyote::Representation.status_collection.each do |name, status|
+            label.checkbox-list-item
+              = check_box_tag "q[status_eq][]", status, filter_params.fetch(:status_eq, []).include?(status.to_s)
+              = name
+
+      .filter-set-item
+        .filter-set-item-title Metum
+        .checkbox-list
+          - available_meta.each do |meta|
+            label.checkbox-list-item
+              = check_box_tag "q[metum_id_eq][]", meta.id, filter_params.fetch(:metum_id_eq, []).include?(meta.id.to_s)
+              = meta.title
+
+      = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
+
+      .filter-set-submit
+        = f.submit 'Search', name: nil, class: 'button button--primary'
+        = f.submit 'Clear', type: 'reset', class: 'button button--secondary'
+
+  = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
+    / Results toolbar: let users add assignments
+    h2#results-title
+      | Total
+      span.sr-only Results
+      ' :
+      = record_filter.records.count
+
+    = toolbar do
+      label.label--checkbox.toolbar-item
+        input#select-all data-select-all="#results" type="checkbox"
+        | Select all
+
+      - if organization_user.admin?
+        = toolbar_item class: 'field'
+          = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: 'Bulk Status', required: false, wrapper: :inline
+          = form.submit 'Apply', class: 'button button--primary'
+
+      = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: 'View options' do
+        li.segmented-control-item= link_to request.GET.except(:grid) do
+          i.icon-list aria-hidden=true
+          span.sr-only List View
+        li.segmented-control-item= link_to request.GET.merge(grid: true) do
+          i.icon-grid aria-hidden=true
+          span.sr-only Grid View
+
+      - if record_filter.browser_pagination_link_params.any?
+        = toolbar_item class: 'non-mobile-only' do
+          = render 'pagination', record_filter: record_filter
+
+    - if params[:grid].present?
+      = list class: 'list--grid', id: 'results-list' do
+        = render partial: 'resource', collection: record_filter.records.group_by(&:resource), as: :resource_and_representations, locals: { form: form }
+    - else
+      table
+        thead
+          tr
+            th Representation
+            th= sort_link(record_filter.search, :status)
+            th= sort_link(record_filter.search, :metum_id)
+            th= sort_link(record_filter.search, :language, label: "Locale")
+            th.table-cell-actions Actions
+        tbody
+          = render partial: 'row', collection: record_filter.records, as: :representation
+
+    = toolbar do
+      label.label--checkbox.toolbar-item
+        input#select-all data-select-all="#results-list" type="checkbox"
+        | Select all
+
+      - if record_filter.browser_pagination_link_params.any?
+        = toolbar_item do
+          = render 'pagination', record_filter: record_filter

@@ -1,0 +1,82 @@
+h1= title(to_html_title(resource.title))
+
+.split-view
+  .split-view-item
+    = lightbox_link(resource) do
+      = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'img-thumbnail')
+      // TODO: need to figure this out, in general: what to use for a 'default' description
+
+  .split-view-item
+    table.entity-table
+      caption.sr-only Key value pairs for this resource
+      tbody
+        tr
+          th Coyote ID
+          td= resource.id
+        tr
+          th Priority
+          td= resource.priority_flag ? 'High' : 'Low'
+        tr
+          th= link_to('Resource Type', 'http://dublincore.org/documents/dcmi-terms/#section-7', target: :_blank)
+          td= resource.resource_type
+        tr
+          th Source URI
+          td= link_to(nil,resource.source_uri)
+        tr
+          th Canonical ID
+          td= resource.canonical_id
+        tr
+          th Resource Group
+          td= link_to(resource.resource_group,[resource.organization,resource.resource_group])
+        tr
+          th Identifier (Slug)
+          td= resource.identifier
+        tr
+          th Host URIs
+          td= list_of(resource.host_uris) { |uri| link_to(uri,uri) }
+        tr
+          th Organization
+          td= link_to(resource.organization,resource.organization)
+        tr
+          th Updated
+          td= resource.updated_at
+        tr
+          th Created
+          td= resource.created_at
+
+= toolbar title: "Actions" do
+  = toolbar_item
+    - if policy(Representation).new?
+      = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'button button--primary' do
+        | Describe
+    - if policy(resource).edit?
+      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--info' do
+        | Edit
+    - if policy(ResourceLink).new?
+      = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--info' do
+        | Create Link to Another Resource
+  - if policy(Assignment).new?
+    = toolbar_item
+      = simple_form_for :assignment, url: organization_assignments_path(current_organization), wrapper: :inline do |f|
+        .field
+          = f.input_field :user_id, collection: organizational_user_collection, prompt: 'Assign To', required: false
+          = f.input_field :resource_id, as: :hidden
+          = f.submit 'Assign', class: 'button'
+
+h2 Descriptions
+- if resource.representations.any?
+  = render partial: 'representations', object: resource.representations
+- else
+  p No descriptions have been written for this resource.
+
+h2 Related Resources
+- if resource.related_resources.any?
+  = render partial: 'related_resources', object: resource.related_resources
+- else
+  p No other resources have been linked to this resource.
+
+h2 Assignments
+- if resource.assignments.any?
+  = render partial: 'assignments', object: resource.assignments
+- else
+  p No assignments currently exist for this resource.

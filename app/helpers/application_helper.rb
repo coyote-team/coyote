@@ -234,10 +234,11 @@ module ApplicationHelper
   end
 
   FLASH_CLASSES = {
-    notice: 'alert-info',
-    success: 'alert-success',
-    error: 'alert-warning',
-    alert: 'alert-danger'
+    alert: 'notification--okay',
+    notice: 'notification--okay',
+    success: 'notification--success',
+    error: 'notification--error',
+    notification: 'alert--okay'
   }.freeze
 end
 

@@ -14,7 +14,11 @@ class RecordFilter
     @base_scope = base_scope
 
     filter_scope = @filter_params.delete(:scope)
-    @filter_params[filter_scope] = true if filter_scope.present?
+    if filter_scope.present?
+      Array(filter_scope).each do |scope|
+        @filter_params[scope] = true
+      end
+    end
   end
 
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
@@ -48,6 +52,6 @@ class RecordFilter
   attr_reader :filter_params, :pagination_params, :base_scope
 
   def record_paginator
-    @record_paginator ||= RecordPaginator.new(pagination_params,search.result(distinct: true))
+    @record_paginator ||= RecordPaginator.new(pagination_params,search.result)
   end
 end

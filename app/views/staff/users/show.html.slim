@@ -1,0 +1,55 @@
+.entity-outer
+  .entity
+    .entity-inner
+      header
+        h1#page-title{}
+          = title user
+      table.entity-table
+        caption.sr-only Key value pairs for this user
+        tbody
+          tr
+            th scope: "row"  First name:
+            td= user.first_name
+          tr
+            th scope: "row"  Last name:
+            td= user.last_name
+          tr
+            th scope: "row"  Email:
+            td= user.email
+          tr
+            th scope: "row"  Staff?:
+            td= user.staff? ? 'Yes' : 'No'
+          tr
+            th scope: "row"  Created At:
+            td= user.created_at
+          tr
+            th scope: "row"  Current Sign In At:
+            td= user.current_sign_in_at
+          tr
+            th scope: "row"  Last Sign In At:
+            td= user.last_sign_in_at
+          tr
+            th scope: "row"  Number of Failed Sign In Attempts:
+            td= user.failed_attempts
+          tr
+            th scope: "row"  Account Locked At:
+            td= user.locked_at
+          tr
+            th scope: "row"  Reset Password
+            td
+              = "Sent at: #{user.reset_password_sent_at}<br/>".html_safe if user.reset_password_sent_at.present?
+              = button_to('Send password reset email',staff_user_password_resets_path,params: { user_id: user.id },class: 'button button--secondary')
+      nav.show-nav role:"navigation"
+        ul.list-inline
+          li
+            = link_to edit_staff_user_path(user), title: "Edit #{user}", class: 'button button--primary' do
+              | Edit
+          li
+            - if user == current_user
+              em Can't delete your own account
+            - else
+              = button_to staff_user_path(user), :title => "Delete #{user} from Coyote", :class => 'button button--danger', :method => :delete do
+                | Delete
+          li
+            = link_to staff_users_path, class: 'button button--info', title: "View the Users index" do
+              | Users

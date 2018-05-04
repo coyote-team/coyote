@@ -1,0 +1,13 @@
+= simple_form_for metum, validate: true, url: [current_organization,metum], html: { multipart: true } do |f|
+  = f.error_notification
+  = f.input :title
+  = f.input :instructions, input_html: { rows: 5 }
+
+  .toolbar.toolbar--footer
+    = f.button :submit, 'Save', class: 'toolbar-item'
+    .field.toolbar-item
+      - if metum.persisted?
+        = link_to [current_organization,metum], class: 'button button--secondary' do
+          | View this metum
+      = link_to organization_meta_path, class: 'button button--secondary' do
+        | View all Meta

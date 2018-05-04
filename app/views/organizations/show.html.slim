@@ -1,0 +1,70 @@
+header
+  h1#page-title{}= title current_organization.title
+
+.split-view
+  .split-view-item
+    = list title: "Our Status" do
+      = link_to_list_item organization_resources_path(current_organization) do
+        = list_item_label "Total Resources"
+        = list_item_value number_with_delimiter(dashboard.organization_resource_count)
+
+      = link_to_list_item organization_representations_path(current_organization) do
+        = list_item_label "Total Descriptions"
+        = list_item_value number_with_delimiter(dashboard.organization_representation_count)
+
+      = link_to_list_item organization_resources_path(current_organization, q: { scope: :represented }) do
+        = list_item_label "Total Described Resources"
+        = list_item_value number_with_delimiter(dashboard.organization_represented_resource_count)
+
+      = link_to_list_item organization_resources_path(current_organization, q: { scope: :unrepresented }) do
+        = list_item_label "Total Resources"
+        = list_item_value number_with_delimiter(dashboard.organization_unrepresented_count)
+
+    = list title: "My Status" do
+      = link_to_list_item organization_resources_path(current_organization,q: { representations_author_id_eq: current_user.id }) do
+        = list_item_label "Described Resources"
+        = list_item_value number_with_delimiter(dashboard.current_user_represented_resources_count)
+
+      = link_to_list_item organization_resources_path(current_organization,q: { :scope => :unrepresented, :assignments_user_id_eq => current_user.id }) do
+        = list_item_label "Undescribed Resources Assigned to You"
+        = list_item_value number_with_delimiter(dashboard.current_user_open_assignments_count)
+
+      = link_to_list_item organization_representations_path(current_organization,q: { :status_eq => :approved, :author_id_in => current_user.id }) do
+        = list_item_label "Approved Descriptions"
+        = list_item_value number_with_delimiter(dashboard.current_user_approved_representation_count)
+
+      = link_to_list_item organization_representations_path(current_organization,q: { :status_eq => :not_approved, :author_id_in => current_user.id }) do
+        = list_item_label "Unapproved Descriptions"
+        = list_item_value number_with_delimiter(dashboard.current_user_unapproved_representation_count)
+
+  .split-view-item
+     - if organization_user.admin?
+      = list title: "Queues" do
+        = link_to_list_item organization_representations_path(current_organization, q: { scope: :ready_to_review }) do
+          = list_item_label 'Descriptions Pending Approval'
+          = list_item_value number_with_delimiter(dashboard.organization_ready_to_review_count)
+        = link_to_list_item organization_representations_path(current_organization, q: { scope: :approved }) do
+          = list_item_label 'Descriptions Approved'
+          = list_item_value number_with_delimiter(dashboard.organization_approved_representation_count)
+        = link_to_list_item organization_representations_path(current_organization, q: { scope: :not_approved }) do
+          = list_item_label 'Unapproved Descriptions'
+          = list_item_value number_with_delimiter(dashboard.organization_unapproved_representation_count)
+        = link_to_list_item organization_resources_path(current_organization, q: { scope: :unassigned_unrepresented }) do
+          = list_item_label 'Resources with Open Assignments'
+          = list_item_value number_with_delimiter(dashboard.organization_open_assignment_count)
+        = link_to_list_item organization_resources_path(current_organization, q: { scope: :unassigned }) do
+          = list_item_label 'Resources Unassigned'
+          = list_item_value number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
+
+      p: strong SCROLL TO
+
+      ul
+        - if organization_user.admin?
+          li= link_to('Undescribed','#undescribed')
+          li= link_to('Ready to Review','#ready_to_review')
+        li= link_to('Your Assignments','#your_queues')
+
+= render partial: 'organizations/dashboard/unrepresented_resources' if organization_user.admin?
+= render partial: 'organizations/dashboard/ready_to_review' if organization_user.admin?
+= render partial: 'organizations/dashboard/your_queues'
+= render partial: 'issue_invitation' if policy(Invitation).new?

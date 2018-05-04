@@ -1,0 +1,24 @@
+.index-outer
+  .index
+    .index-inner
+      header
+        h1#page-title{}
+          = title 'User Management (Staff)'
+
+      table.index-table
+        caption.sr-only Index table for Users
+        thead
+          tr
+            th scope: "col"
+              | First name
+            th scope: "col"
+              | Last name
+            th scope: "col"
+              | Staff
+            th scope: "col"
+              | Email
+            th scope: "col"
+              | Actions
+
+        tbody
+          = render :partial => 'row', :collection => users, :as => :user

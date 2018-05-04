@@ -41,21 +41,21 @@ table
   thead: tr
     th User
     th Last Active
-    th.table-action Actions
+    th.table-cell-actions Actions
   tbody
     tr
-      td.table-primary
+      td.table-cell-primary
         img.avatar alt="Hello" src="https://api.adorable.io/avatars/285/sina.bahram@gmail.com.png"
         span#flip Flip Sasser
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
-      td.table-action
+      td.table-cell-actions
         button#archive-flip.button.button--secondary aria-labelledby="archive-flip flip" Archive
-    tr.disabled
-      td.table-primary
+    tr.table-row-disabled
+      td.table-cell-primary
         img.avatar alt="Hello" src="https://api.adorable.io/avatars/285/flip.sasser@gmail.com.png"
         span#sina Sina Bahram
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
-      td.table-action
+      td.table-cell-actions
         button#archive-sina.button.button--secondary aria-labelledby="archive-sina sina" type="button" Archive
 
 table

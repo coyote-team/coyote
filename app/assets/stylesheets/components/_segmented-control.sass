@@ -4,7 +4,6 @@
   align-items: stretch
   border-color: $border
   display: inline-flex
-  margin-bottom: $gutter
 
   .segmented-control-item
     > *
@@ -18,7 +17,7 @@
       &:focus
         position: relative
 
-      &[aria-pressed=true]
+      &[aria-pressed=true], &.segmented-control-item--active
         border-color: $tint
         color: $tint
         position: relative

@@ -2,8 +2,8 @@
 // BUTTON tags, A tags, and INPUT tags.
 .button
   @extend %input-text
-  background: $tint
-  border-color: $tint
+  background: $text
+  border-color: $text
   color: $background
   cursor: pointer
   font-weight: bold
@@ -12,14 +12,14 @@
 
   &:focus, &:hover
     background-color: $background
-    color: $tint
+    color: $text
 
   &.button--secondary
     background: $background
-    color: $tint
+    color: $text
 
     &:focus, &:hover
-      background-color: $tint
+      background-color: $text
       color: $background
 
   @each $name, $color in $status
@@ -27,11 +27,28 @@
       background-color: $color
       border-color: $color
 
+      &:not([disabled])
+        &:hover, &:focus
+          background-color: $background
+          color: $color
+
+      &[disabled]
+        $disabled-color: desaturate($color, 30%)
+        background-color: $disabled-color
+        border-color: $disabled-color
+        color: $background
+
       &.button--secondary
         background-color: $background
         border-color: $color
         color: $color
 
-        &:hover
-          background-color: $color
-          color: $background
+        &:not([disabled])
+          &:hover, &:focus
+            background-color: $color
+            color: $background
+
+        &[disabled]
+          $disabled-color: desaturate($color, 30%)
+          border-color: $disabled-color
+          color: $disabled-color

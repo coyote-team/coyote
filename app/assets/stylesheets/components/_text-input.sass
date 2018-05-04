@@ -2,10 +2,17 @@
 // than class name.
 #{$text-inputs}, textarea
   @extend %input-text
-  border-color: $border
+  background: $input
+  border-color: $input
+  width: 100%
+
+  &:focus
+    background-color: $background
 
   &::placeholder
     color: $placeholder
 
 textarea
   height: auto
+  line-height: normal
+  padding: $input-padding

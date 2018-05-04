@@ -1,0 +1,22 @@
+table
+  caption
+    h1= title "Meta for #{current_organization.title}"
+  thead
+    tr
+      th Title
+      th Instructions
+      th.table-cell-actions Actions
+
+  tbody
+    - list_of_meta.each do |metum|
+      tr
+        td.table-cell-primary.table-cell-link= link_to metum.title, [current_organization, metum]
+        td.table-cell-link= link_to metum.instructions, [current_organization, metum]
+        td.table-cell-actions
+          = link_to 'Edit', edit_organization_metum_path(current_organization,metum), class: "button button--secondary"
+
+- if policy(Metum).new?
+  nav.toolbar.toolbar--footer
+    = link_to new_organization_metum_path(current_organization), class: 'button button--primary new-link' do
+      i.fa.fa-fw.fa-plus aria-hidden=true
+      | New Metum

@@ -1,0 +1,59 @@
+- id = representation.id
+li.list-item
+  h4.sr-only id="representation-#{id}" Representation #{representation.id}
+  - if organization_user.admin?
+    label.list-item-select
+      = check_box_tag "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation '#{representation.id}' for bulk update" }
+      = lightbox_link(representation.resource) do
+        = resource_link_target(representation.resource, dom_id(representation), alt: representation.text, style: 'img-thumbnail')
+  - else
+    .list-item-select
+      = lightbox_link(representation.resource) do
+        = resource_link_target(representation.resource, dom_id(representation), alt: representation.text, style: 'img-thumbnail')
+
+  .list-item-body
+    / - if representation.statuses.any?
+    /   h5.sr-only id="tag-list-#{id}" Properties
+    /   ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
+    /     - if resource.unrepresented?
+    /       li.tag.tag--neutral
+    /         span.sr-only Status:
+    /         | Undescribed
+    /     - elsif resource.partially_complete?
+    /       li.tag.tag--warning
+    /         span.sr-only Status:
+    /         | Partially Compeleted
+    /     - elsif resource.approved?
+    /       li.tag.tag--success
+    /         span.sr-only Status:
+    /         | Approved
+    /     - resource.meta.each do |metum|
+    /       li.tag.tag--info.tag--secondary
+    /         span.sr-only Metum:
+    /         = metum
+    /     - if resource.priority_flag?
+    /       li.tag.tag--error.tag--secondary
+    /         | Urgent
+
+  /   - if resource.best_representation.present?
+  /     p= truncate(resource.best_representation.text, length: 100)
+  /     p
+  /       span.sr-only Author:
+  /       = resource.best_representation.author
+
+  ul.list-item-actions aria-label="Actions"
+    = link_to 'View', representation, class: "button button--secondary", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+    - if policy(representation).edit?
+      li.list-item-actions-item= link_to 'Edit', edit_representation_path(representation), class: "button button--secondary", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+    - if policy(representation).destroy?
+      li.list-item-actions-item= link_to 'Delete', representation, title: "Delete this representation", class: "button button--secondary",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
+
+/   td
+/     = representation.status.humanize
+/   td
+/     span.label.label-info= representation.metum_title
+/   td
+/     span.label.label-default= language_name(representation.language)
+/ tr
+/   td id: dom_id(representation),colspan: 4,style: 'border-top: 0'
+/     = to_html(representation.text)

@@ -1,0 +1,5 @@
+#notifications
+  = yield :devise_form_errors
+  - flash.each_with_index do |(type, message), idx|
+    .notification class=flash_class(type)
+      .notification-title= message

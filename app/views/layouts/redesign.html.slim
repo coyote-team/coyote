@@ -28,7 +28,7 @@ html(lang="en")
     = raw analytical.body_prepend_javascript
     / TODO: Fix skip to content
     /= link_to "Skip to content", "#main", class: "sr"
-    nav role="navigation"
+    nav#nav-main role="navigation"
       /button.navbar-toggle.collapsed aria-controls="bs-navbar" aria-expanded=false data-target="#bs-navbar" data-toggle="collapse" type="button"
         /span.sr-only Toggle navigation
         /span.icon-bar
@@ -56,7 +56,7 @@ html(lang="en")
           /= render partial: "navbar_items" if current_organization?
           /= render partial: "drop_down_menu" if current_user
     /= render partial: "nav" if current_user
-    = render partial: "alerts"
+    = render "notifications"
 
     main#main role="main"
       = yield

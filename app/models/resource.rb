@@ -41,6 +41,7 @@ class Resource < ApplicationRecord
   has_many :subject_resource_links, :foreign_key => :subject_resource_id, :class_name => :ResourceLink, :inverse_of => :subject_resource
   has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
   has_many :assignments, :inverse_of => :resource
+  has_many :meta, through: :representations
 
   scope :unrepresented, lambda {
     # HACK: for lack of proper alias tracking in ActiveRecord 5.1.3, see https://github.com/rails/rails/issues/30504
@@ -112,5 +113,56 @@ class Resource < ApplicationRecord
     end
 
     result
+  end
+
+  # TODO: Should maybe move this stuff to a presenter / decorator
+  # Status identifiers
+  def statuses
+    @statuses ||= [].tap do |statuses|
+      statuses.push(:urgent) if priority_flag?
+      statuses.push(:unrepresented) if unrepresented?
+      statuses.push(:represented) if represented?
+      statuses.push(:unassigned) if unassigned?
+      statuses.push(:assigned) if assigned?
+      statuses.push(:partially_complete) if partially_complete?
+    end
+  end
+
+  def best_representation
+    return @best_representation if defined? @best_representation
+    @best_representation = representations.by_status.by_title_length.first
+  end
+
+  def approved?
+    return @approved if defined? @approved
+    @approved = complete? && representations.all?(&:approved?)
+  end
+
+  def complete?
+    return @complete if defined? @complete
+    @complete = representations.count >= organization.meta.count
+  end
+
+  def partially_complete?
+    return @partially_complete if defined? @partially_complete
+    @partially_complete = represented? && !complete?
+  end
+
+  def unrepresented?
+    return @unrepresented if defined? @unrepresented
+    @unrepresented = representations.none?
+  end
+
+  def represented?
+    !unrepresented?
+  end
+
+  def unassigned?
+    return @unassigned if defined? @unassigned
+    @unassigned = assignments.none?
+  end
+
+  def assigned?
+    !unassigned?
   end
 end

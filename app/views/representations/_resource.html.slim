@@ -1,0 +1,33 @@
+- resource, representations = resource_and_representations
+- id = id_for(resource.identifier)
+li.list-item
+  h4.sr-only id="representation-#{id}" Representations of Resource #{resource.identifier}
+
+  .list-item-select
+    = lightbox_link(resource) do
+      = resource_link_target(resource, nil, style: 'img-thumbnail')
+
+  .list-item-body.timeline
+    = to_html resource.title
+    - representations.each do |representation|
+      .timeline-item
+        = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation '#{representation.id}' for bulk update"}
+        = to_html representation.text
+        p by #{representation.author}
+        ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
+          li.tag.tag--info.tag--secondary
+            span.sr-only Metum:
+            = representation.metum_title
+          li.tag.tag--secondary
+            span.sr-only Language:
+            = representation.language
+          = representation_status_tag(representation, tag: :li) do
+            span.sr-only Language:
+            = representation.status.to_s.titleize
+
+
+        = link_to 'View', representation, class: "button button--secondary", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+        - if policy(representation).edit?
+          = link_to 'Edit', edit_representation_path(representation), class: "button button--secondary", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+        - if policy(representation).destroy?
+          = link_to 'Delete', representation, title: "Delete this representation", class: "button button--secondary",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)

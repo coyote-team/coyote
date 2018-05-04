@@ -1,0 +1,11 @@
+= search_form_for search, url: organization_resources_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
+  = f.search_field :identifier_or_title_or_representations_text_cont_all, class: 'input-medium form-control', required: false, placeholder: 'Search by identifier, title, or representation text'
+
+  - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
+    label With representations authored by user # User.find_by(id: author_id).username
+  - else
+    = f.input :scope, label: 'Status', collection: scope_search_collection, selected: filter_params[:scope], required: false, include_blank: true
+    = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
+
+  = f.submit 'Search', name: nil, class: 'button button--primary'
+  = link_to 'Clear', organization_resources_path(current_organization), class: 'button button--info'

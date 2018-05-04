@@ -1,0 +1,21 @@
+.row
+  .col-md-12
+    h2#undescribed Undescribed &amp; Unassigned Resources
+
+- if current_organization.unassigned_unrepresented_resources.any?
+  = render partial: 'organizations/dashboard/unrepresented_resource_group', :collection => current_organization.unassigned_unrepresented_resources.by_priority.first(10).in_groups_of(3,false), :as => :resource_group
+- else
+  p There are currently no undescribed resources which lack assignments for this organization
+
+- content_for :javascript_footer do
+  javascript:
+    | $('.assignment_user_select').change(function(event) {
+      | var data = {
+        | assignment: {
+          | user_id: event.target.value,
+          | resource_id: $(event.target).data('resourceId')
+          | }
+        | };
+
+      | $.post('#{organization_assignments_path(current_organization)}',data);
+    | })

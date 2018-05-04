@@ -13,12 +13,15 @@
 
 // COMPONENT: Filter set: provides a set of controls that can filter results
 .filter-set
-  .filter-set-item
-    border-top: 1px solid $border
+  border-top: 1px solid $border
+
+  .filter-set-item, .filter-set-submit
     margin: 0
     padding: $gutter 0
 
+  .filter-set-item
     .filter-set-item-title
+      display: block
       font-weight: bold
-      margin: 0
+      margin: 0 0 $gutter 0
       text-transform: uppercase

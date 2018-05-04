@@ -1,0 +1,65 @@
+.entity-outer
+  .entity
+    .entity-inner
+      header
+        h1#page-title{}
+          = title "Showing #{representation}"
+      .row
+        .col-md-12
+          = to_html(representation.text)
+      .row
+        .col-md-9
+          table.entity-table
+            caption.sr-only Key value pairs for this representation
+            tbody
+              tr
+                th scope: "row"  Resource
+                td
+                  = lightbox_link(representation.resource) do
+                    = resource_link_target(representation.resource,dom_id(representation),alt: representation.text,style: 'img-thumbnail')
+                  = to_html(representation.resource_title)
+              tr
+                th scope: "row"  Author
+                td= link_to(representation.author,representation.author)
+              tr
+                th scope: "row"  Content Type
+                td= representation.content_type
+              tr
+                th scope: "row"  Language
+                td= language_name(representation.language)
+              tr
+                th scope: "row"  Status
+                td= representation.status.to_s.titleize
+              tr
+                th scope: "row"  Metum
+                td= link_to(representation.metum_title,[current_organization,representation.metum])
+              tr
+                th scope: "row"  Endpoint
+                td= representation.endpoint_name
+              tr
+                th scope: "row"  License
+                td= representation.license_title
+              tr
+                th scope: "row"  Content URI
+                td= link_to(nil,representation.content_uri)
+              tr
+                th scope: "row"  Notes
+                td= to_html(representation.notes)
+              tr
+                th scope: "row"  Updated
+                td= representation.updated_at
+              tr
+                th scope: "row"  Created
+                td= representation.created_at
+
+          nav.show-nav role:"navigation"
+            ul.list-inline
+              li
+                = link_to('Edit',edit_representation_path(representation),title: "Edit this representation",class: 'button button--primary') if policy(representation).edit?
+              li
+                = link_to('Describe Again',new_organization_representation_path(current_organization,resource_id: representation.resource_id),title: 'Create new description for this resource', class: 'button button--primary') if policy(Representation).new?
+
+      .row
+        .col-md-12
+          h2 Audits
+          = render partial: 'audits', object: representation.audits.map { |audit| [audit,audit.audited_changes.tap(&:symbolize_keys!)] }

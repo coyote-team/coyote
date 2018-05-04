@@ -1,0 +1,9 @@
+h1= title "Editing resource #{resource.identifier}"
+
+.split-view
+  .split-view-item
+    = lightbox_link(resource) do
+      = resource_link_target(resource,nil,class: 'img-thumbnail')
+
+  .split-view-item
+    = render partial: 'form', locals: { target: resource }

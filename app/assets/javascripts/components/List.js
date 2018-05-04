@@ -34,11 +34,9 @@ List.prototype.calculateRowForItem = function(item) {
   var rowHeight = parseInt(window.getComputedStyle(this.container).getPropertyValue("grid-auto-rows"));
   var rowGap = parseInt(window.getComputedStyle(this.container).getPropertyValue("grid-row-gap"));
   var rowSpan = Math.ceil((item.scrollHeight + rowGap) / (rowHeight + rowGap));
-  console.log(item.getBoundingClientRect(), rowHeight, rowGap, rowSpan);
   item.style.gridRowEnd = "span "+ rowSpan;
 };
 
 List.prototype.calculateRowForItemOnImageLoad = function(loaded) {
-  console.log("loading again jeez");
   this.calculateRowForItem(loaded.elements[0]);
 };

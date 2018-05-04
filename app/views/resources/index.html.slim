@@ -1,0 +1,86 @@
+.filter-view
+  .filter-view-filters
+    / h1= title "Resources for #{current_organization.title}"
+    h1= title "Resources"
+
+    = search_form_for record_filter.search, url: organization_resources_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+      label.filter-set-item.field.field--accessory
+        span.sr-only Search by caption or description
+        = icon :magnifier, class: 'field-accessory'
+        = f.search_field :identifier_or_title_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
+
+      .filter-set-item
+        .filter-set-item-title Priority
+        .checkbox-list
+          label.checkbox-list-item
+            = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:resource_priority_flag, false).to_s == "true"
+            | Urgent
+
+      - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
+        .filter-set-item: label With representations authored by user #{User.find_by(id: author_id).username}
+      - else
+        .filter-set-item
+          .filter-set-item-title Status
+          .checkbox-list
+            - scope_search_collection.each do |name, scope|
+              label.checkbox-list-item
+                = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
+                = name
+        / = f.input :scope, label: 'Status', collection: scope_search_collection, selected: filter_params[:scope], required: false, include_blank: true
+        = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
+
+      .filter-set-submit
+        = f.submit 'Search', name: nil, class: 'button button--primary'
+        = f.submit 'Clear', type: 'reset', class: 'button button--secondary'
+
+  = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
+    / Results toolbar: let users add assignments
+    h2#results-title
+      | Total
+      span.sr-only Results
+      ' :
+      = record_filter.records.count
+
+    - if policy(Resource).new?
+      = link_to 'New Resource', new_organization_resource_path(current_organization), class: 'button'
+
+
+    = toolbar do
+      label.label--checkbox.toolbar-item
+        input#select-all data-select-all="#results" type="checkbox"
+        | Select all
+
+      - if record_filter.browser_pagination_link_params.any?
+        = toolbar_item do
+          = render 'pagination', record_filter: record_filter
+
+      = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: 'View options' do
+        = segmented_control_item pressed: true, data: { toggle_target_off: "list--grid" }, icon: "list", title: "List View"
+        = segmented_control_item pressed: false, data: { toggle_target_on: "list--grid" }, icon: "grid", title: "Grid View"
+
+    = list id: 'results-list' do
+      = render partial: 'resource', collection: record_filter.records, locals: { form: form }
+
+    / table#results-list
+    /   caption.sr-only Index table for resources
+    /   thead
+    /     tr
+    /       th
+    /         span.sr-only This column contains checkboxes for bulk assignment
+    /         = form.input :select_all_resources_for_bulk_assignment, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all resources on the page' }
+    /       th Resource
+    /       th= sort_link(record_filter.search,:priority_flag,'Priority')
+    /       th= sort_link(record_filter.search,:title,'Caption')
+    /       th= sort_link(record_filter.search,:representations_count,'Descriptions')
+    /       th Actions
+
+    /   tbody
+
+    = toolbar do
+      label.label--checkbox.toolbar-item
+        input#select-all data-select-all="#results-list" type="checkbox"
+        | Select all
+
+      - if record_filter.browser_pagination_link_params.any?
+        = toolbar_item do
+          = render 'pagination', record_filter: record_filter

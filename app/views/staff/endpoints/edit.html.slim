@@ -1,0 +1,7 @@
+.entity-outer
+  .entity
+    .entity-inner
+      header
+        h1#page-title{}
+          | Edit #{endpoint}
+      = render partial: 'form', locals: { endpoint: endpoint }

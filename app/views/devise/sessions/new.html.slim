@@ -1,0 +1,10 @@
+- content_for :devise_form_errors, devise_form_errors(resource.errors)
+
+.row
+  .col-md-6.col-md-offset-3
+    .devise-header
+      .devise-header-inner
+        h1#page-title= title 'Log in'
+
+    = render "form"
+    = link_to "Forgot your password?", new_user_password_path

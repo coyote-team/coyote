@@ -49,6 +49,9 @@ class Representation < ApplicationRecord
   delegate :name,               :to => :author,   :prefix => true
   delegate :identifier,         :to => :resource, :prefix => true
 
+  scope :by_status, ->(descending: false) { order("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? 'DESC' : 'ASC'}") }
+  scope :by_title_length, -> { order('length(text) DESC') }
+
   audited
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
@@ -65,6 +68,6 @@ class Representation < ApplicationRecord
   def must_have_text_or_content_uri
     return if text.present?
     return if content_uri.present?
-    errors.add(:base,:text_and_content_uri_blank,message: 'either text or content URI must be present')
+    errors.add(:text, 'Either text or content URI must be present')
   end
 end

@@ -1,0 +1,12 @@
+= simple_form_for [current_organization,resource_group], validate: true  do |f|
+  = f.error_notification
+  = f.input :title
+
+  nav.toolbar.toolbar--footer
+    = f.button :submit, 'Save'
+    .field
+      - if action_name == 'edit'
+        = link_to [current_organization,resource_group], class: 'button button--secondary' do
+          | View this Resource Group
+      = link_to organization_resource_groups_path(current_organization), class: 'button button--secondary' do
+        | View all Resource Groups

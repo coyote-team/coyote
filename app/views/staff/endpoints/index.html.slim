@@ -1,0 +1,20 @@
+.index-outer
+  .index
+    .index-inner
+      header
+        h1#page-title{}
+          = title 'Endpoint Management (Staff)'
+
+      table.index-table
+        caption.sr-only Index table for Endpoints
+        thead
+          tr
+            th scope: "col"
+              | Name
+            th scope: "col"
+              | Actions
+
+        tbody
+          = render :partial => 'row', :collection => endpoints, :as => :endpoint
+
+      = link_to 'Add New Endpoint', new_staff_endpoint_path, class: 'button button--primary new-link'

@@ -1,0 +1,6 @@
+table
+  - representations.each do |representation|
+    tr
+      th #{link_to("Description ##{representation.id}", representation)} (#{representation.status.to_s.titleize})
+    tr
+      td= representation.text

@@ -6,7 +6,7 @@
   display: flex
   margin-bottom: $gutter
 
-  .notification-title, .notification-dismiss
+  &.notification-title, .notification-title, .notification-dismiss
     padding: $gutter
 
   .notification-title
@@ -37,7 +37,7 @@
 #notifications
   left: $gutter
   position: fixed
-  top: $gutter
+  top: $nav-height + $gutter
 
   @include mobile
     bottom: $gutter
@@ -46,3 +46,6 @@
 
   .notification
     box-shadow: $shadow
+
+.error_notification
+  @extend .notification.notification--error
