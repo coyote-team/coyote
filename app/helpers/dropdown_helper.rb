@@ -1,6 +1,7 @@
 module DropdownHelper
-  def dropdown(options: nil, label:, id: nil, &block)
-    id ||= label.parameterize
+  def dropdown(options = {})
+    toggle_label = options.delete(:label) || ""
+    toggle_id = options.delete(:id) || id_for(toggle_label)
     toggle_options = {
       aria: {
         expanded: false
@@ -9,20 +10,20 @@ module DropdownHelper
       data: {
         toggle: "dropdown"
       },
-      id: id,
+      id: toggle_id,
       type: 'button'
     }
-    toggle = content_tag(:button, toggle_options) { label }
+    toggle = content_tag(:button, toggle_options) { toggle_label }
 
     menu_options = {
       aria: {
-        labelledby: id
+        labelledby: toggle_id
       },
       class: 'dropdown-menu'
     }
     menu = content_tag(:ul, menu_options) { block_given? ? yield : options }
 
-    content_tag(:div, class: 'dropdown') { "#{toggle}#{menu}".html_safe }
+    component(defaults: { class: 'dropdown' }, options: options, tag: :div) { "#{toggle}#{menu}".html_safe }
   end
 
   def dropdown_option(option)
@@ -32,11 +33,11 @@ module DropdownHelper
     content_tag(:li, menu_item_options) { block_given? ? yield(option) : option }
   end
 
-  def dropdown_with_options(options = [], label:, id: nil, &block)
-    option_tags = options.map { |option|
-      dropdown_option(option, &block)
+  def dropdown_for(items = [], options = {}, &block)
+    item_tags = items.map { |item|
+      dropdown_option(item, &block)
     }.join.html_safe
 
-    dropdown(options: option_tags, label: label, id: id)
+    dropdown(options) { item_tags }
   end
 end

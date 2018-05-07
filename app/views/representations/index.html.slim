@@ -28,7 +28,7 @@
       = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
 
       .filter-set-submit
-        = f.submit 'Search', name: nil, class: 'button button--primary'
+        = f.submit 'Search', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--secondary'
 
   = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
@@ -47,13 +47,13 @@
       - if organization_user.admin?
         = toolbar_item class: 'field'
           = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: 'Bulk Status', required: false, wrapper: :inline
-          = form.submit 'Apply', class: 'button button--primary'
+          = form.submit 'Apply', class: 'button'
 
       = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: 'View options' do
-        li.segmented-control-item= link_to request.GET.except(:grid) do
+        li.segmented-control-item= link_to request.GET.except(:grid), class: params[:grid] ? nil : 'segmented-control-item--active' do
           i.icon-list aria-hidden=true
           span.sr-only List View
-        li.segmented-control-item= link_to request.GET.merge(grid: true) do
+        li.segmented-control-item= link_to request.GET.merge(grid: true), class: params[:grid] ? 'segmented-control-item--active' : nil do
           i.icon-grid aria-hidden=true
           span.sr-only Grid View
 

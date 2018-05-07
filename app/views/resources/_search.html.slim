@@ -7,5 +7,5 @@
     = f.input :scope, label: 'Status', collection: scope_search_collection, selected: filter_params[:scope], required: false, include_blank: true
     = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
 
-  = f.submit 'Search', name: nil, class: 'button button--primary'
+  = f.submit 'Search', name: nil, class: 'button'
   = link_to 'Clear', organization_resources_path(current_organization), class: 'button button--info'

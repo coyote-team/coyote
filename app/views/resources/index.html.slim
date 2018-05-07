@@ -30,20 +30,19 @@
         = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
 
       .filter-set-submit
-        = f.submit 'Search', name: nil, class: 'button button--primary'
+        = f.submit 'Search', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--secondary'
 
   = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
-    h2#results-title
+    h2#results-title.action
       | Total
       span.sr-only Results
       ' :
       = record_filter.records.count
 
-    - if policy(Resource).new?
-      = link_to 'New Resource', new_organization_resource_path(current_organization), class: 'button'
-
+      - if policy(Resource).new?
+        = link_to 'New Resource', new_organization_resource_path(current_organization), class: 'button'
 
     = toolbar do
       label.label--checkbox.toolbar-item

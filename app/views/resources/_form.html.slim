@@ -10,15 +10,9 @@
   = f.input :source_uri, :as => :url, label: 'Source URI', hint: 'Identifies the canonical location of the resource, if available', required: false
   = f.input :host_uris, label: 'Host URIs', hint: 'Identifies the locations where the resource is normally hosted or viewed. Separate lines are considered separate URIs.', :as => :text, :input_html => { value: resource.host_uris.join("\n") }
 
-  .toolbar.toolbar--footer
-    .toolbar-item.field
-      = f.button :submit, 'Save'
-      = link_to 'Cancel', :back, class: 'button button--warning button--secondary'
-
-    .toolbar-item.field
-      - if resource.persisted?
-
-        = link_to resource, class: 'button button--info' do
-          | View this resource
-      = link_to organization_resources_path(current_organization), class: 'button button--info' do
-        | View all resources
+  = toolbar class: 'toolbar--footer' do
+    = submit_toolbar_item(f)
+    - if resource.persisted?
+      = toolbar_item do
+        = link_to resource, class: 'button button--secondary' do
+          | View this Resource

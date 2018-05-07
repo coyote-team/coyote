@@ -6,6 +6,8 @@
 
   .dropdown-toggle
     @extend select
+    text-overflow: ellipsis
+    white-space: nowrap
 
     &[aria-expanded=true] + .dropdown-menu
       display: block

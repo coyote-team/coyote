@@ -1,5 +1,4 @@
-
-table.entity-table
+table
   caption
     h1= "Showing #{resource_group}"
   tbody
@@ -7,8 +6,4 @@ table.entity-table
       th Title:
       td= resource_group.title
 
-nav.toolbar.toolbar--footer
-  = link_to edit_organization_resource_group_path(current_organization,resource_group), title: "Edit this resource_group", class: 'button button--secondary' do
-    | Edit
-  = link_to organization_resource_groups_path(current_organization), class: 'button button--info', title: "View the resource_groups index" do
-    | View All Resource Groups
+= show_toolbar(resource_group)

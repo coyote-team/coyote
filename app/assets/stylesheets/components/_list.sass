@@ -18,7 +18,6 @@
 
 .list
   display: block
-  margin-bottom: $gutter
 
   .list-item
     align-items: center
@@ -34,14 +33,13 @@
     .list-item-label, .list-item-select, .list-item-body
       padding-right: $gutter
 
-    @include ie-only
-      .list-item-select
-        order: -1
-
     .list-item-select
       display: flex
       flex: 0 0 33%
       white-space: nowrap
+
+      @include ie-only
+        order: -1 // Remove from the IE flex flow manually
 
       > *
         display: block
@@ -71,8 +69,13 @@
       text-align: right
       text-decoration: none
 
+    @include mobile-portrait
+      @include list-item-vertical
+
   // COMPONENT SUBTYPE: Render the list as a grid of cards
   &.list--grid
+    margin-bottom: $gutter
+
     @include non-mobile-portrait
       // Default grid is just a list of cards
       display: flex
@@ -123,9 +126,3 @@
         @each $name, $color in $status
           &.list-item-progress--#{$name}
             border-color: $color
-
-  // COMPONENT SUBTYPE: Stack the list items vertically in mobile
-  &.list--stacking
-    .list-item
-      @include mobile-portrait
-        @include list-item-vertical

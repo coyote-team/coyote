@@ -9,8 +9,4 @@ table
       th Instructions:
       td= metum.instructions
 
-nav.toolbar.toolbar--footer
-  = link_to edit_organization_metum_path(current_organization,metum), title: "Edit this metum", class: 'button button--secondary' do
-    | Edit this Metum
-  = link_to organization_meta_path(current_organization), class: 'button button--info', title: "View the meta index" do
-    | View all Meta
+= show_toolbar metum

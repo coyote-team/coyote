@@ -1,7 +1,2 @@
-.entity-outer
-  .entity
-    .entity-inner
-      header
-        h1#page-title{}
-          | New Endpoint
-      = render partial: 'form', locals: { endpoint: endpoint }
+h1= title "New Endpoint"
+= render partial: 'form', locals: { endpoint: endpoint }

@@ -7,7 +7,7 @@ h1= title(to_html_title(resource.title))
       // TODO: need to figure this out, in general: what to use for a 'default' description
 
   .split-view-item
-    table.entity-table
+    table
       caption.sr-only Key value pairs for this resource
       tbody
         tr
@@ -44,16 +44,16 @@ h1= title(to_html_title(resource.title))
           th Created
           td= resource.created_at
 
-= toolbar title: "Actions" do
+= toolbar class: 'toolbar--footer', title: "Actions" do
   = toolbar_item
     - if policy(Representation).new?
-      = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'button button--primary' do
+      = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'button' do
         | Describe
     - if policy(resource).edit?
-      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--info' do
+      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--secondary' do
         | Edit
     - if policy(ResourceLink).new?
-      = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--info' do
+      = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--secondary' do
         | Create Link to Another Resource
   - if policy(Assignment).new?
     = toolbar_item

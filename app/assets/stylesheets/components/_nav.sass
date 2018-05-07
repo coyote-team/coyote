@@ -46,6 +46,9 @@ nav#nav-main
     align-items: stretch
     display: flex
 
+    @include mobile
+      display: none
+
     li
       a
         display: block
@@ -61,6 +64,13 @@ nav#nav-main
   .nav-secondary
     align-items: center
     display: flex
+    padding-right: $gutter
+
+    > *
+      margin-right: $gutter
+
+      &:last-child
+        margin-right: 0
 
 @keyframes nav-brand-fade
   0%

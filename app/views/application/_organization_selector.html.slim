@@ -1,2 +1,3 @@
-= dropdown_with_options current_user.organizations, label: current_organization? && current_organization.title || "Select an organization", id: 'select-organization' do |organization|
-  = link_to organization.title, organization_path(organization)
+- if current_user.organizations.reload.many?
+  = dropdown_for current_user.organizations, label: current_organization? && current_organization.title || "Select an organization", id: 'select-organization' do |organization|
+    = link_to organization.title, organization_path(organization)

@@ -47,7 +47,7 @@ html(lang="en")
 
       - if current_user
         .nav-secondary
-          = render "organization_selector" if current_user.organizations.many?
+          = render "organization_selector"
           = render "user_nav"
 
       /%nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}

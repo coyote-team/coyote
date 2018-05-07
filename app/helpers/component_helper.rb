@@ -2,6 +2,7 @@ module ComponentHelper
   # Builds an HTML tag (`tag` parameter) that includes an optional screen
   # reader title and deep-merges options.
   def component(defaults: {}, options: {}, tag: :ul)
+    tag = options.delete(:tag) || tag
     options = combine_options(options, defaults) unless defaults.empty?
     title_for(options) + content_tag(tag, options) { yield }
   end

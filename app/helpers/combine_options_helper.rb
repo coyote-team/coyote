@@ -6,7 +6,7 @@ module CombineOptionsHelper
         when Hash
           combine_options(options[key] || {}, defaults[key])
         else
-          [options[key], defaults[key]].flatten.join(" ").strip
+          [defaults[key], options[key]].flatten.join(" ").strip
         end
     end
     options

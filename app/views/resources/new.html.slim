@@ -1,6 +1,2 @@
-.entity-outer
-  .entity
-    .entity-inner
-      header
-        h1#page-title{}= title "New Resource"
-      = render partial: 'form', locals: { target: [current_organization,resource] }
+h1= title "New Resource"
+= render partial: 'form', locals: { target: [current_organization,resource] }

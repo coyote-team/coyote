@@ -12,9 +12,4 @@ table
 h2 Assignments
 = render partial: 'assignments', object: membership.user_assignments
 
-nav.toolbar.toolbar--footer
-  - if policy(membership).edit?
-    = link_to('Edit', edit_organization_membership_path(current_organization, membership), class: 'button button--secondary', title: "Change this user's membership")
-
-  = link_to organization_memberships_path(current_organization), class: 'button button--info' do
-    | View all Members
+= show_toolbar(membership)

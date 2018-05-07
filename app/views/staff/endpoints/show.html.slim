@@ -1,23 +1,9 @@
-.entity-outer
-  .entity
-    .entity-inner
-      header
-        h1#page-title{}
-          = title endpoint
-      table.entity-table
-        caption.sr-only Key value pairs for this endpoint
-        tbody
-          tr
-            th scope: "row"  Name
-            td= endpoint.name
-      nav.show-nav role:"navigation"
-        ul.list-inline
-          li
-            = link_to edit_staff_endpoint_path(endpoint), title: "Edit #{endpoint}", class: 'button button--primary' do
-              | Edit
-          li
-            = button_to staff_endpoint_path(endpoint), :title => "Delete #{endpoint} from Coyote", :class => 'button button--danger', :method => :delete do
-              | Delete
-          li
-            = link_to staff_endpoints_path, class: 'button button--info', title: "View the Endpoints index" do
-              | Endpoints
+table
+  caption
+    h1= title endpoint
+  tbody
+    tr
+      th Name
+      td= endpoint.name
+
+= show_toolbar endpoint, delete: true, edit: true

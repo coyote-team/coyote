@@ -1,5 +1,4 @@
-h2.sr Global Actions
-= dropdown label: current_user.to_s, id: 'user-nav' do
+= dropdown label: current_user.to_s, id: 'user-nav', title: 'Global Actions' do
   = dropdown_option link_to('Support', support_path)
   = dropdown_option link_to('Profile', edit_user_registration_path)
   = dropdown_option link_to('Organizations', organizations_path)

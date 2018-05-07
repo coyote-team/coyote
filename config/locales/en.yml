@@ -30,3 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    models:
+      membership: Member
+      representation: Description
+      resource_link: Link
