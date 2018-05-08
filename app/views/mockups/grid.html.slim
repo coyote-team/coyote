@@ -49,14 +49,14 @@ table
         span#flip Flip Sasser
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
       td.table-cell-actions
-        button#archive-flip.button.button--secondary aria-labelledby="archive-flip flip" Archive
+        button#archive-flip.button.button--outline aria-labelledby="archive-flip flip" Archive
     tr.table-row-disabled
       td.table-cell-primary
         img.avatar alt="Hello" src="https://api.adorable.io/avatars/285/flip.sasser@gmail.com.png"
         span#sina Sina Bahram
       td= distance_of_time_in_words_to_now((1..34).to_a.sample.hours.ago)
       td.table-cell-actions
-        button#archive-sina.button.button--secondary aria-labelledby="archive-sina sina" type="button" Archive
+        button#archive-sina.button.button--outline aria-labelledby="archive-sina sina" type="button" Archive
 
 table
   caption: h2 Table: Info
@@ -157,7 +157,7 @@ h2 Filter View
               li.tag.tag--error
                 span.sr-only Priority:
                 ' Urgent
-              li.tag.tag--okay.tag--secondary
+              li.tag.tag--okay.tag--outline
                 span.sr-only Metum:
                 ' Alt
             /p Lorem ipsum dolor sit amet and some other stuff, too
@@ -170,5 +170,5 @@ h2 Filter View
               button.chip-action aria-label="Unassign Sheila Majumdar"
                 span.chip-action-label aria-hidden="true" &#x00D7;
           ul.list-item-actions aria-label="Actions"
-            li.list-item-actions-item: a.button.button--secondary href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit
-            li.list-item-actions-item: button.button.button--danger.button--secondary aria-labelledby="remove-#{i} image-#{i}" id="remove-#{i}" type="button" Remove
+            li.list-item-actions-item: a.button.button--outline href="#" aria-labelledby="edit-#{i} image-#{i}" id="edit-#{i}" Edit
+            li.list-item-actions-item: button.button.button--danger.button--outline aria-labelledby="remove-#{i} image-#{i}" id="remove-#{i}" type="button" Remove

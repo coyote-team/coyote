@@ -4,36 +4,13 @@ li.list-item.list-item--card
   - if policy(Assignment).new?
     label.list-item-select
       = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.identifier}' for bulk assignment'" }
-      = lightbox_link(resource) do
-        = resource_link_target(resource, nil, style: 'img-thumbnail')
+      = lightbox_link(resource)
   - else
     .list-item-select
-      = lightbox_link(resource) do
-        = resource_link_target(resource, nil, style: 'img-thumbnail')
+      = lightbox_link(resource)
 
   .list-item-body
-    - if resource.statuses.any?
-      h5.sr-only id="tag-list-#{id}" Properties
-      ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
-        - if resource.unrepresented?
-          li.tag.tag--neutral
-            span.sr-only Status:
-            | Undescribed
-        - elsif resource.partially_complete?
-          li.tag.tag--warning
-            span.sr-only Status:
-            | Partially Compeleted
-        - elsif resource.approved?
-          li.tag.tag--success
-            span.sr-only Status:
-            | Approved
-        - resource.meta.each do |metum|
-          li.tag.tag--info.tag--secondary
-            span.sr-only Metum:
-            = metum
-        - if resource.priority_flag?
-          li.tag.tag--error.tag--secondary
-            | Urgent
+    = resource_status_list(resource, id: id, title_tag: :h5)
 
     - if resource.best_representation.present?
       p= truncate(resource.best_representation.text, length: 100)
@@ -43,6 +20,6 @@ li.list-item.list-item--card
 
   ul.list-item-actions aria-label="Actions"
     - if policy(resource).index?
-      li.list-item-actions-item= link_to 'View', resource_path(resource), class: 'button button--secondary', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
+      li.list-item-actions-item= link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
     - if policy(resource).edit?
-      li.list-item-actions-item= link_to 'Edit', edit_resource_path(resource), class: 'button button--secondary', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+      li.list-item-actions-item= link_to 'Edit', edit_resource_path(resource), class: 'button button--outline', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"

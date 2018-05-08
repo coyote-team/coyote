@@ -1,7 +1,6 @@
 .split-view
   .split-view-item
-    = lightbox_link(current_resource) do
-      = resource_link_target(current_resource,nil,class: 'img-thumbnail')
+    = lightbox_link(current_resource)
 
   .split-view-item
     = simple_form_for target, validate: true, html: { multipart: true } do |f|
@@ -23,5 +22,5 @@
         = submit_toolbar_item(f)
         - if representation.persisted?
           = toolbar_item do
-            = link_to representation, class: 'button button--secondary' do
+            = link_to representation, class: 'button button--outline' do
               | View this description

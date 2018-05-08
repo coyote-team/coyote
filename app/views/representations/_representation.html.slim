@@ -4,12 +4,10 @@ li.list-item
   - if organization_user.admin?
     label.list-item-select
       = check_box_tag "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation '#{representation.id}' for bulk update" }
-      = lightbox_link(representation.resource) do
-        = resource_link_target(representation.resource, dom_id(representation), alt: representation.text, style: 'img-thumbnail')
+      = lightbox_link(representation.resource, alt: representation)
   - else
     .list-item-select
-      = lightbox_link(representation.resource) do
-        = resource_link_target(representation.resource, dom_id(representation), alt: representation.text, style: 'img-thumbnail')
+      = lightbox_link(representation.resource, alt: representation)
 
   .list-item-body
     / - if representation.statuses.any?
@@ -28,11 +26,11 @@ li.list-item
     /         span.sr-only Status:
     /         | Approved
     /     - resource.meta.each do |metum|
-    /       li.tag.tag--info.tag--secondary
+    /       li.tag.tag--info.tag--outline
     /         span.sr-only Metum:
     /         = metum
     /     - if resource.priority_flag?
-    /       li.tag.tag--error.tag--secondary
+    /       li.tag.tag--error.tag--outline
     /         | Urgent
 
   /   - if resource.best_representation.present?
@@ -42,11 +40,11 @@ li.list-item
   /       = resource.best_representation.author
 
   ul.list-item-actions aria-label="Actions"
-    = link_to 'View', representation, class: "button button--secondary", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+    = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).edit?
-      li.list-item-actions-item= link_to 'Edit', edit_representation_path(representation), class: "button button--secondary", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+      li.list-item-actions-item= link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).destroy?
-      li.list-item-actions-item= link_to 'Delete', representation, title: "Delete this representation", class: "button button--secondary",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
+      li.list-item-actions-item= link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
 
 /   td
 /     = representation.status.humanize

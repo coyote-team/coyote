@@ -30,7 +30,7 @@ table
 = toolbar class: 'toolbar--footer', title: "Actions"
   - if policy(resource_link).edit?
     = toolbar_item
-      = link_to edit_resource_link_path(resource_link), title: "Edit this resource link", class: 'button button--secondary' do
+      = link_to edit_resource_link_path(resource_link), title: "Edit this resource link", class: 'button button--outline' do
         | Edit
   - if policy(resource_link).destroy?
     = toolbar_item

@@ -6,8 +6,7 @@ table
     tr
       th Resource
       td
-        = lightbox_link(representation.resource) do
-          = resource_link_target(representation.resource,dom_id(representation),alt: representation.text,style: 'img-thumbnail')
+        = lightbox_link(representation.resource)
         = to_html(representation.resource_title)
     tr
       th Author
@@ -47,7 +46,7 @@ table
   = toolbar_item do
     - if policy(Representation).new?
       = link_to('Describe Again', new_organization_representation_path(current_organization,resource_id: representation.resource_id),title: 'Create new description for this resource', class: 'button')
-    = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--secondary') if policy(representation).edit?
+    = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--outline') if policy(representation).edit?
 
 h2 Audits
 = render partial: 'audits', object: representation.audits.map { |audit| [audit, audit.audited_changes.tap(&:symbolize_keys!)] }

@@ -6,7 +6,7 @@ table
     tr
       th Resource
       td= link_to(assignment.resource) do
-        = resource_link_target(assignment.resource,nil,style: 'max-width: 50% !important')
+        = resource_link_target(assignment.resource)
     tr
       th User
       td= link_to assignment.user, assignment.user

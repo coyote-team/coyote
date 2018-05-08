@@ -1,10 +1,9 @@
 h1= title(to_html_title(resource.title))
+= resource_status_list(resource)
 
 .split-view
   .split-view-item
-    = lightbox_link(resource) do
-      = resource_link_target(resource,dom_id(resource),alt: resource.representations.first,class: 'img-thumbnail')
-      // TODO: need to figure this out, in general: what to use for a 'default' description
+    = lightbox_link(resource, alt: resource.best_representation)
 
   .split-view-item
     table
@@ -50,10 +49,10 @@ h1= title(to_html_title(resource.title))
       = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'button' do
         | Describe
     - if policy(resource).edit?
-      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--secondary' do
+      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--outline' do
         | Edit
     - if policy(ResourceLink).new?
-      = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--secondary' do
+      = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--outline' do
         | Create Link to Another Resource
   - if policy(Assignment).new?
     = toolbar_item

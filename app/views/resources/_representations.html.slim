@@ -1,6 +1,18 @@
 table
-  - representations.each do |representation|
-    tr
-      th #{link_to("Description ##{representation.id}", representation)} (#{representation.status.to_s.titleize})
-    tr
-      td= representation.text
+  thead
+    th Status
+    th Metum
+    th Locale
+    th Text
+    th Author
+    th.table-cell-actions Actions
+  tbody
+    - representations.each do |representation|
+      tr
+        td= representation_status_tag(representation)
+        td= metum_tag(representation.metum, hint: false)
+        td: span.tag.tag--outline= representation.language
+        td= to_html representation.text
+        td= representation.author
+        td.table-cell-actions
+           |Farts

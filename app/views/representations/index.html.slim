@@ -29,7 +29,7 @@
 
       .filter-set-submit
         = f.submit 'Search', name: nil, class: 'button'
-        = f.submit 'Clear', type: 'reset', class: 'button button--secondary'
+        = f.submit 'Clear', type: 'reset', class: 'button button--outline'
 
   = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments

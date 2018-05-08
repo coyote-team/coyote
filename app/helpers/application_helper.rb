@@ -30,27 +30,6 @@ module ApplicationHelper
     @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
   end
 
-  def lightbox_link(resource,&block)
-    if resource.source_uri.present?
-      link_to(resource.source_uri,data: { lightbox: dom_id(resource) },&block)
-    else
-      link_to(resource,&block)
-    end
-  end
-
-  # @param target_resource [Resource] the Resource that is being displayed
-  # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
-  # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
-  # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
-  def resource_link_target(target_resource,representation_dom_id = nil,options = {})
-    target_resource.as_viewable do |uri|
-      options = options.merge(:"aria-describedby" => representation_dom_id) if representation_dom_id
-      return image_tag uri, options
-    end
-
-    "#{target_resource.title} (#{target_resource.resource_type})"
-  end
-
   # @param text [String] the link text to show the user
   # @param path [String] the link target
   # @param icon_name [String] what Font Awesome icon to associate with the link. Optional, defaults to nil.

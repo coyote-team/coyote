@@ -1,6 +1,4 @@
-.row
-  .col-md-12
-    h2#your_queues Resources Assigned to You for Description
+h2#your_queues Resources Assigned to You for Description
 
 - if current_user.assigned_resources.any?
   = render partial: 'organizations/dashboard/assigned_resources_group', :collection => current_user.assigned_resources.first(10).in_groups_of(3,false), :as => :resource_group

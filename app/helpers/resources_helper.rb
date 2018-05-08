@@ -11,4 +11,30 @@ module ResourcesHelper
       [c.title,c.id]
     end
   end
+
+  def resource_status_list(resource, id: nil, title_tag: :h2)
+    return unless resource.statuses.any?
+
+    id ||= "resource-#{resource.id}"
+    tags = []
+
+    if resource.unrepresented?
+      tags.push(tag_for('Undescribed', type: :neutral, hint: 'Status'))
+    elsif resource.partially_complete?
+      tags.push(tag_for('Partially Completed', type: :partial, hint: 'Status'))
+    elsif resource.approved?
+      tags.push(tag_for('Approved', type: :success, hint: 'Status'))
+    end
+
+    resource.meta.each do |metum|
+      tags.push(metum_tag(metum, tag: :li))
+    end
+
+    tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
+
+    (
+      content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties" } +
+        content_tag(:ul, aria: { labelledby: "resource-#{id} tag-list-#{id}" }, class: 'tag-list') { tags.join.html_safe }
+    ).html_safe
+  end
 end

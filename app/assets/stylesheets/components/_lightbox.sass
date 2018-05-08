@@ -1,0 +1,34 @@
+.lightbox-link
+  display: block
+
+.lightbox
+  backdrop-filter: blur($gutter * 4)
+  background-color: rgba($text, 0.92)
+  bottom: 0
+  left: 0
+  position: fixed
+  right: 0
+  top: 0
+  visibility: hidden
+  z-index: -1
+
+  .lightbox-item
+    height: auto
+    left: 50%
+    max-height: 80%
+    max-width: 80%
+    opacity: 0
+    position: absolute
+    top: 50%
+    transform: translate(-50%, -50%) scale(0.5)
+    transition: all 150ms $swift-out
+    width: auto
+
+  &:target
+    visibility: visible
+    z-index: 3
+
+    .lightbox-item
+      box-shadow: $shadow
+      opacity: 1
+      transform: translate(-50%, -50%) scale(1)
