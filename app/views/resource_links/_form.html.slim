@@ -2,8 +2,8 @@
   = f.error_notification
 
   = f.input :subject_resource_id, :as => :hidden
-  = f.input :verb, :as => :select, :collection => Coyote::ResourceLink::VERB_CHOICES, hint: "Defines the relationship between the subject resource and the object resource you choose below, using #{link_to('Dublin Core Metadata relations','http://dublincore.org/documents/dcmi-terms/')}".html_safe, include_blank: false
-  = f.association :object_resource, collection: object_resource_choices_for(current_user.resources,resource_link.subject_resource)
+  = f.input :verb, :as => :select, :collection => Coyote::ResourceLink::VERB_CHOICES, hint: "Defines the relationship between the subject resource and the object resource you choose below, using #{link_to('Dublin Core Metadata relations', 'http://dublincore.org/documents/dcmi-terms/')}".html_safe, include_blank: false
+  = f.association :object_resource, collection: object_resource_choices_for(current_user.resources, resource_link.subject_resource)
 
   = toolbar class: 'toolbar--footer'
     = submit_toolbar_item f

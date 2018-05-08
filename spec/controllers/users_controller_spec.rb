@@ -34,7 +34,7 @@
 
 RSpec.describe UsersController do
   let(:organization) { create(:organization) }
-  let(:user_of_interest) { create(:user,organization: organization) }
+  let(:user_of_interest) { create(:user, organization: organization) }
 
   let(:base_params) do
     { id: user_of_interest.id }

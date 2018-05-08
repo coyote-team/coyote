@@ -1,13 +1,13 @@
 RSpec.describe UserPolicy do
   let(:org_user) do
-    double(:organization_user,id: 1,staff?: false)
+    double(:organization_user, id: 1, staff?: false)
   end
 
   let(:user_record) do
-    double(:user,id: 2)
+    double(:user, id: 2)
   end
 
-  subject { UserPolicy.new(org_user,user_record) }
+  subject { UserPolicy.new(org_user, user_record) }
 
   it { is_expected.to forbid_action(:index)   }
   it { is_expected.to permit_action(:show)    }
@@ -17,7 +17,7 @@ RSpec.describe UserPolicy do
 
   context 'as a user, with own record' do
     let(:user_record) do
-      double(:user,id: org_user.id)
+      double(:user, id: org_user.id)
     end
 
     it { is_expected.to permit_edit_and_update_actions }

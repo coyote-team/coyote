@@ -65,7 +65,7 @@ RSpec.describe Staff::UsersController do
     include_context "signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
-      dependent_representation = create(:representation,author: editable_user)
+      dependent_representation = create(:representation, author: editable_user)
 
       get :show, params: user_params
       expect(response).to be_success
@@ -79,7 +79,7 @@ RSpec.describe Staff::UsersController do
       expect {
         patch :update, params: update_user_params
         editable_user.reload
-      }.to change(editable_user,:first_name).
+      }.to change(editable_user, :first_name).
         to('XYZ')
 
       patch :update, params: user_params.merge(user: { email: '' })

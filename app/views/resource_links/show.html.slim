@@ -7,7 +7,7 @@ table
       td= predicate_for(resource_link)
     tr
       th Subject
-      td= link_to(resource_link.subject_resource_label,resource_link.subject_resource)
+      td= link_to(resource_link.subject_resource_label, resource_link.subject_resource)
     tr
       th Verb
       td
@@ -16,7 +16,7 @@ table
           dd= Coyote::ResourceLink::VERBS.fetch(resource_link.verb.to_sym).description
     tr
       th Object
-      td= link_to(resource_link.object_resource_label,resource_link.object_resource)
+      td= link_to(resource_link.object_resource_label, resource_link.object_resource)
 
     tr
       th Updated

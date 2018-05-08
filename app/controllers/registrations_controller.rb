@@ -40,7 +40,7 @@ class RegistrationsController < ApplicationController
   attr_accessor :invitation, :user
 
   def user_attributes
-    params.require(:user).permit(:email,:password,:password_confirmation,:token)
+    params.require(:user).permit(:email, :password, :password_confirmation, :token)
   end
 
   def setup_invitation(token)

@@ -28,8 +28,8 @@
 
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
-  let(:resource_group) { create(:resource_group,organization: organization) }
-  let(:resource) { create(:resource,organization: organization) }
+  let(:resource_group) { create(:resource_group, organization: organization) }
+  let(:resource) { create(:resource, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -40,7 +40,7 @@ RSpec.describe ResourcesController do
   end
 
   let(:new_resource_params) do
-    resource = attributes_for(:resource,organization: organization)
+    resource = attributes_for(:resource, organization: organization)
     resource[:resource_group_id] = resource_group.id
     base_params.merge(resource: resource)
   end
@@ -98,7 +98,7 @@ RSpec.describe ResourcesController do
       expect {
         post :create, params: new_resource_params
         expect(response).to be_redirect
-      }.to change(organization.resources,:count).by(1)
+      }.to change(organization.resources, :count).by(1)
 
       post :create, params: base_params.merge(resource: { resource_group_id: nil })
       expect(response).not_to be_redirect
@@ -127,7 +127,7 @@ RSpec.describe ResourcesController do
         patch :update, params: update_resource_params
         expect(response).to redirect_to(resource)
         resource.reload
-      }.to change(resource,:title).to("NEWTITLE")
+      }.to change(resource, :title).to("NEWTITLE")
 
       post :update, params: update_resource_params.merge(resource: { resource_type: '' })
       expect(response).not_to be_redirect

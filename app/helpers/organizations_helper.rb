@@ -30,26 +30,26 @@ module OrganizationsHelper
 
     value = progress_val(local_vars)
     percentage = 100 * (value / max.to_f)
-    number_to_percentage(percentage,precision: 0)
+    number_to_percentage(percentage, precision: 0)
   end
 
   # @param title [String] string to use for the label
   # @param value [Integer] numerical value for the label
-  def progress_label(title,value)
+  def progress_label(title, value)
     "#{number_with_delimiter(value)} #{title}"
   end
 
   private
 
   def progress_max(vars)
-    vars.fetch(:max,1)
+    vars.fetch(:max, 1)
   end
 
   def progress_min(vars)
-    vars.fetch(:min,0)
+    vars.fetch(:min, 0)
   end
 
   def progress_val(vars)
-    vars.fetch(:value,0)
+    vars.fetch(:value, 0)
   end
 end

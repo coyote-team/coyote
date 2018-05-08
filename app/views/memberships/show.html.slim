@@ -4,7 +4,7 @@ table
   tbody
     tr
       th User
-      td= link_to(membership.user,membership.user)
+      td= link_to(membership.user, membership.user)
     tr
       th Role
       td= Coyote::OrganizationUser.new(membership.user, current_organization).role

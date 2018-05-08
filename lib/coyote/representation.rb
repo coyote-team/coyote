@@ -37,7 +37,7 @@ module Coyote
     # @return [Array<Symbol>] list of all available statuses for use in forms
     def self.status_collection
       STATUSES.each_key.map do |status|
-        [status.to_s.titleize,status]
+        [status.to_s.titleize, status]
       end
     end
   end

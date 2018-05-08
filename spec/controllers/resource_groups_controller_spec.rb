@@ -15,7 +15,7 @@
 
 RSpec.describe ResourceGroupsController do
   let(:organization) { create(:organization) }
-  let(:resource_group) { create(:resource_group,organization: organization) }
+  let(:resource_group) { create(:resource_group, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -73,7 +73,7 @@ RSpec.describe ResourceGroupsController do
   context "as an editor" do
     include_context "signed-in editor user"
 
-    let!(:resource_group) { create(:resource_group,organization: organization) }
+    let!(:resource_group) { create(:resource_group, organization: organization) }
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params
@@ -122,18 +122,18 @@ RSpec.describe ResourceGroupsController do
 
       expect {
         post :create, params: new_resource_group_params
-      }.to change(organization.resource_groups,:count).
+      }.to change(organization.resource_groups, :count).
         by(1)
 
       expect {
         patch :update, params: update_resource_group_params
         resource_group.reload
-      }.to change(resource_group,:title).
+      }.to change(resource_group, :title).
         to("NEWTITLE")
 
       expect {
         delete :destroy, params: resource_group_params
-      }.to change(organization.resource_groups,:size).
+      }.to change(organization.resource_groups, :size).
         by(-1)
 
       expect {

@@ -1,9 +1,9 @@
 RSpec.describe MetumPolicy do
-  let(:org_user) { double(:organization_user,admin?: false) }
-  let(:record) { double(:record,class: Metum) }
+  let(:org_user) { double(:organization_user, admin?: false) }
+  let(:record) { double(:record, class: Metum) }
   let(:scope) { double(:scope) }
 
-  subject { MetumPolicy.new(org_user,record) }
+  subject { MetumPolicy.new(org_user, record) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }

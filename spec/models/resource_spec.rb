@@ -30,7 +30,7 @@ RSpec.describe Resource do
   let(:source_uri) { 'http://example.com/100.jpg' }
 
   subject do
-    build(:resource,:image,title: 'Mona Lisa',identifier: 'abc123',source_uri: source_uri)
+    build(:resource, :image, title: 'Mona Lisa', identifier: 'abc123', source_uri: source_uri)
   end
 
   it { is_expected.to validate_presence_of(:identifier) }
@@ -56,7 +56,7 @@ RSpec.describe Resource do
 
   context 'without the presence of a source URI' do
     subject do
-      build(:resource,:image,source_uri: '')
+      build(:resource, :image, source_uri: '')
     end
 
     specify do
@@ -66,7 +66,7 @@ RSpec.describe Resource do
 
   context 'with a non-image resource type' do
     subject do
-      build(:resource,:physical_object)
+      build(:resource, :physical_object)
     end
 
     specify do
@@ -77,15 +77,15 @@ RSpec.describe Resource do
   context '#related_resources' do
     # this test requires the database as rspec stubs don't completely replicate has_many behaviors
     let!(:resource_link) do
-      create(:resource_link,verb: 'hasPart')
+      create(:resource_link, verb: 'hasPart')
     end
 
     let(:subject_resource) { resource_link.subject_resource }
     let(:object_resource) { resource_link.object_resource }
 
     it 'returns correctly labeled predicates' do
-      expect(subject_resource.related_resources).to eq([['hasPart',resource_link,object_resource]])
-      expect(object_resource.related_resources).to eq([['isPartOf',resource_link,subject_resource]])
+      expect(subject_resource.related_resources).to eq([['hasPart', resource_link, object_resource]])
+      expect(object_resource.related_resources).to eq([['isPartOf', resource_link, subject_resource]])
     end
   end
 end

@@ -18,7 +18,7 @@ module Coyote
 
     # @param user [User] the user who is acting
     # @param organization [Organization] the organization being acted upon/within
-    def initialize(user,organization)
+    def initialize(user, organization)
       @user = user
       @organization = organization
     end
@@ -40,7 +40,7 @@ module Coyote
     # @!attribute [r] owner?
     #   @return [Boolean] is the user at least an owner of this organization?
     #   @note (see #viewer?)
-    Coyote::Membership.each_role do |_,test_role_name,test_role_rank|
+    Coyote::Membership.each_role do |_, test_role_name, test_role_rank|
       define_method :"#{test_role_name}?" do
         return true if staff? # staff members automatically have all admin owner powers regardless of whatever role they nominally hold in an organization
         role_rank >= test_role_rank

@@ -20,17 +20,17 @@ RSpec.describe AssignmentsController do
     { organization_id: organization.id }
   end
 
-  let(:resource) { create(:resource,organization: organization) }
+  let(:resource) { create(:resource, organization: organization) }
 
-  let(:assignment) { create(:assignment,user: user,resource: resource) }
+  let(:assignment) { create(:assignment, user: user, resource: resource) }
 
   let(:assignment_params) do
     base_params.merge(id: assignment.id)
   end
 
-  let(:new_assignment_user) { create(:user,organization: organization) }
+  let(:new_assignment_user) { create(:user, organization: organization) }
 
-  let(:new_assignment_resource) { create(:resource,organization: organization) }
+  let(:new_assignment_resource) { create(:resource, organization: organization) }
 
   let(:new_assignment_params) do
     base_params.merge(assignment: { user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id] })
@@ -99,7 +99,7 @@ RSpec.describe AssignmentsController do
       expect {
         post :create, params: new_assignment_params
         expect(response).to be_redirect
-      }.to change(new_assignment_user.assignments,:count).
+      }.to change(new_assignment_user.assignments, :count).
         from(0).to(1)
     end
   end

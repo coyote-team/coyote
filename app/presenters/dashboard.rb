@@ -6,7 +6,7 @@
 class Dashboard
   # @param current_user [User] identifies the user for whom we are creating a dashboard
   # @param organization [Organization] Identifies the organization for which we are creating a dashboard
-  def initialize(current_user,organization)
+  def initialize(current_user, organization)
     @current_user = current_user
     @organization = organization
   end

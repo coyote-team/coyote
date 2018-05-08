@@ -68,9 +68,9 @@
     /         span.sr-only This column contains checkboxes for bulk assignment
     /         = form.input :select_all_resources_for_bulk_assignment, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all resources on the page' }
     /       th Resource
-    /       th= sort_link(record_filter.search,:priority_flag,'Priority')
-    /       th= sort_link(record_filter.search,:title,'Caption')
-    /       th= sort_link(record_filter.search,:representations_count,'Descriptions')
+    /       th= sort_link(record_filter.search, :priority_flag, 'Priority')
+    /       th= sort_link(record_filter.search, :title, 'Caption')
+    /       th= sort_link(record_filter.search, :representations_count, 'Descriptions')
     /       th Actions
 
     /   tbody

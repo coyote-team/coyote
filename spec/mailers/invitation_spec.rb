@@ -1,6 +1,6 @@
 RSpec.describe InvitationMailer do
   let(:organization) { build_stubbed(:organization) }
-  let(:invitation) { build_stubbed(:invitation,organization: organization) }
+  let(:invitation) { build_stubbed(:invitation, organization: organization) }
 
   describe "new_user" do
     let(:mail) do

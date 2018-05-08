@@ -17,7 +17,7 @@
 
 RSpec.describe MetaController do
   let(:organization) { create(:organization) }
-  let(:metum) { create(:metum,organization: organization) }
+  let(:metum) { create(:metum, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -72,7 +72,7 @@ RSpec.describe MetaController do
   context "as an editor" do
     include_context "signed-in editor user"
 
-    let!(:metum) { create(:metum,organization: organization) }
+    let!(:metum) { create(:metum, organization: organization) }
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params
@@ -117,7 +117,7 @@ RSpec.describe MetaController do
 
       expect {
         post :create, params: new_metum_params
-      }.to change(organization.meta,:count).
+      }.to change(organization.meta, :count).
         by(1)
 
       post :create, params: base_params.merge(metum: { title: '' })
@@ -126,7 +126,7 @@ RSpec.describe MetaController do
       expect {
         patch :update, params: update_metum_params
         metum.reload
-      }.to change(metum,:title).
+      }.to change(metum, :title).
         to("NEWTITLE")
 
       patch :update, params: metum_params.merge(metum: { title: '' })

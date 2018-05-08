@@ -48,8 +48,8 @@ FactoryGirl.define do
     end
 
     trait :with_membership do
-      after(:create) do |user,evaluator|
-        create(:membership,user: user,role: evaluator.role)
+      after(:create) do |user, evaluator|
+        create(:membership, user: user, role: evaluator.role)
       end
     end
 
@@ -57,8 +57,8 @@ FactoryGirl.define do
       staff true
     end
 
-    after(:create) do |user,evaluator|
-      create(:membership,user: user,organization: evaluator.organization,role: evaluator.role) if evaluator.organization
+    after(:create) do |user, evaluator|
+      create(:membership, user: user, organization: evaluator.organization, role: evaluator.role) if evaluator.organization
     end
   end
 end

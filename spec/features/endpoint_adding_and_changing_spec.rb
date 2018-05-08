@@ -1,7 +1,7 @@
 RSpec.describe 'Endpoint adding and changing' do
   include_context 'as a logged-in staff user'
 
-  let!(:endpoint_to_change) { create(:endpoint,:website) }
+  let!(:endpoint_to_change) { create(:endpoint, :website) }
 
   scenario 'succeeds' do
     click_first_link 'Endpoint Management (Staff)'
@@ -12,7 +12,7 @@ RSpec.describe 'Endpoint adding and changing' do
 
     expect {
       click_button 'Save'
-    }.to change(Endpoint,:count).
+    }.to change(Endpoint, :count).
       from(1).to(2)
 
     new_endpoint = Endpoint.find_by!(name: 'Mobile App')
@@ -30,7 +30,7 @@ RSpec.describe 'Endpoint adding and changing' do
     expect {
       click_button 'Save'
       endpoint_to_change.reload
-    }.to change(endpoint_to_change,:name).
+    }.to change(endpoint_to_change, :name).
       to('Special Device')
 
     expect(page.current_path).to eq(staff_endpoint_path(endpoint_to_change))

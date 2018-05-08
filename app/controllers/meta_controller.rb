@@ -30,7 +30,7 @@ class MetaController < ApplicationController
 
     if metum.save
       logger.info "Created #{metum}"
-      redirect_to [current_organization,metum], notice: 'Metum was successfully created.'
+      redirect_to [current_organization, metum], notice: 'Metum was successfully created.'
     else
       logger.warn "Unable to create Metum: '#{metum.error_sentence}'"
       render :new
@@ -40,7 +40,7 @@ class MetaController < ApplicationController
   # PATCH /meta/1
   def update
     if metum.update(metum_params)
-      redirect_to [current_organization,metum], notice: 'Metum was successfully updated.'
+      redirect_to [current_organization, metum], notice: 'Metum was successfully updated.'
     else
       logger.warn "Unable to update #{metum}: '#{metum.error_sentence}'"
       render :edit
@@ -60,7 +60,7 @@ class MetaController < ApplicationController
   end
 
   def metum_params
-    params.require(:metum).permit(:title,:instructions)
+    params.require(:metum).permit(:title, :instructions)
   end
 
   def authorize_general_access

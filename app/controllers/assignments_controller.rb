@@ -10,12 +10,12 @@ class AssignmentsController < ApplicationController
     assignments = current_organization.assignments.to_a
 
     assignments.sort_by! do |a|
-      [a.user_last_name,a.user_email].tap(&:compact!).first
+      [a.user_last_name, a.user_email].tap(&:compact!).first
     end
 
     memberships = current_organization.memberships.index_by(&:user_id)
 
-    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment,hash|
+    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
       membership = memberships[assignment.user_id]
       if membership
         hash[membership] = hash[membership] + 1
@@ -34,11 +34,11 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   def create
-    resource_ids = assignment_params.values_at(:resource_ids,:resource_id).tap(&:compact!)
+    resource_ids = assignment_params.values_at(:resource_ids, :resource_id).tap(&:compact!)
     resources = current_organization.resources.where(id: resource_ids)
 
     assignments = resources.map do |resource|
-      Assignment.find_or_create_by!(resource: resource,user: assigned_user)
+      Assignment.find_or_create_by!(resource: resource, user: assigned_user)
     end
 
     logger.info "Created '#{assignments}'"
@@ -76,7 +76,7 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:user_id,:resource_id,:resource_ids => [])
+    params.require(:assignment).permit(:user_id, :resource_id, :resource_ids => [])
   end
 
   def next_resource

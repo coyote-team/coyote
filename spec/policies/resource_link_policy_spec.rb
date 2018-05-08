@@ -2,10 +2,10 @@ RSpec.describe ResourceLinkPolicy do
   include_context "viewer organization user"
 
   let(:resource_link) do
-    double(:resource_link,class: ResourceLink)
+    double(:resource_link, class: ResourceLink)
   end
 
-  subject { ResourceLinkPolicy.new(org_user,resource_link) }
+  subject { ResourceLinkPolicy.new(org_user, resource_link) }
 
   it { is_expected.to forbid_action(:index)          }
   it { is_expected.to permit_action(:show)           }

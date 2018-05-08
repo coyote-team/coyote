@@ -1,5 +1,5 @@
 RSpec.describe ApplicationHelper do
-  let(:current_user) { build_stubbed(:user,first_name: "Hal") }
+  let(:current_user) { build_stubbed(:user, first_name: "Hal") }
   let(:resource_uri) { 'http://example.com/1.png' }
 
   subject do
@@ -10,7 +10,7 @@ RSpec.describe ApplicationHelper do
 
   context '#resource_link_target with an image resource' do
     let(:resource) do
-      build_stubbed(:resource,:image)
+      build_stubbed(:resource, :image)
     end
 
     before do
@@ -18,14 +18,14 @@ RSpec.describe ApplicationHelper do
     end
 
     specify do
-      link = helper.resource_link_target(resource,'resource_100',alt: 'some text')
+      link = helper.resource_link_target(resource, 'resource_100', alt: 'some text')
       expect(link).to match(/src="#{resource_uri}"/)
     end
   end
 
   context '#resource_link_target without image resource' do
     let(:resource) do
-      build_stubbed(:resource,:sound)
+      build_stubbed(:resource, :sound)
     end
 
     before do
@@ -33,7 +33,7 @@ RSpec.describe ApplicationHelper do
     end
 
     specify do
-      expect(helper.resource_link_target(resource,'resource_100')).to eq('Mona Lisa (sound)')
+      expect(helper.resource_link_target(resource, 'resource_100')).to eq('Mona Lisa (sound)')
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe ApplicationHelper do
     end
 
     it "greets non-logged-in users" do
-      assign(:current_user,nil)
+      assign(:current_user, nil)
       expect(subject.welcome_message).to match(/Welcome/)
     end
   end

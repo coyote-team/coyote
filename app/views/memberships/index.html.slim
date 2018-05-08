@@ -20,10 +20,10 @@ table
         td= org_user.role.to_s.titleize
         td.table-cell-actions
           - if policy(org_user.membership).edit?
-            = link_to('Edit', edit_organization_membership_path(current_organization,org_user.membership), class: 'button button--outline', title: "Change this user's membership")
+            = link_to('Edit', edit_organization_membership_path(current_organization, org_user.membership), class: 'button button--outline', title: "Change this user's membership")
 
           - if policy(org_user.membership).destroy?
-            = button_to('Delete', [current_organization,org_user.membership], title: 'Delete this user from the organization', class: "button button--danger button--outline", data: { confirm: "Are you sure you want to delete #{org_user.user} from this organization?" }, :method => :delete)
+            = button_to('Delete', [current_organization, org_user.membership], title: 'Delete this user from the organization', class: "button button--danger button--outline", data: { confirm: "Are you sure you want to delete #{org_user.user} from this organization?" }, :method => :delete)
 
 - if policy(:invitation).new?
   nav.toolbar.toolbar--footer

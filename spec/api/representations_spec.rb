@@ -3,11 +3,11 @@ RSpec.describe 'Representations' do
     include_context 'API author user'
 
     let!(:representation) do
-      create(:representation,:approved,organization: user_organization)
+      create(:representation, :approved, organization: user_organization)
     end
 
     let!(:unapproved_representation) do
-      create(:representation,:not_approved,organization: user_organization)
+      create(:representation, :not_approved, organization: user_organization)
     end
 
     scenario 'GET /resources/:resource_id/representations' do
@@ -52,7 +52,7 @@ RSpec.describe 'Representations' do
     include_context 'API access headers'
 
     let!(:representation) do
-      create(:representation,:approved)
+      create(:representation, :approved)
     end
 
     scenario 'returns an error' do

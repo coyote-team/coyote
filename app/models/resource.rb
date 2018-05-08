@@ -81,7 +81,7 @@ class Resource < ApplicationRecord
 
   # @param value [String] a newline-delimited list of host URIs to store for this Resource
   def host_uris=(value)
-    write_attribute(:host_uris,value.to_s.split(/[\r\n]+/))
+    write_attribute(:host_uris, value.to_s.split(/[\r\n]+/))
   end
 
   def viewable?
@@ -93,18 +93,18 @@ class Resource < ApplicationRecord
     "#{title} (#{identifier})"
   end
 
-  # @return [Array<Symbol,ResourceLink,Resource>]
+  # @return [Array<Symbol, ResourceLink, Resource>]
   #   each triplet represents a resource that is linked to this resource, with verbs given
   #   from this resource's perspective
   def related_resources
     result = []
 
     subject_resource_links.each do |link|
-      result << [link.verb,link,link.object_resource]
+      result << [link.verb, link, link.object_resource]
     end
 
     object_resource_links.each do |link|
-      result << [link.reverse_verb,link,link.subject_resource]
+      result << [link.reverse_verb, link, link.subject_resource]
     end
 
     result

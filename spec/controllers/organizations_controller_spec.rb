@@ -96,7 +96,7 @@ RSpec.describe OrganizationsController do
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
         organization.reload
-      }.to change(organization,:title).to("NEWTITLE")
+      }.to change(organization, :title).to("NEWTITLE")
 
       patch :update, params: existing_organization_params.merge(organization: { title: '' })
       expect(response).not_to be_redirect

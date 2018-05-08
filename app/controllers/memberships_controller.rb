@@ -57,7 +57,7 @@ class MembershipsController < ApplicationController
   def organization_users
     @organization_users ||= begin
                               current_organization.users.sorted.map do |u|
-                                Coyote::OrganizationUser.new(u,current_organization)
+                                Coyote::OrganizationUser.new(u, current_organization)
                               end
                             end
   end

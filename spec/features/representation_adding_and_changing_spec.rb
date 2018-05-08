@@ -2,10 +2,10 @@ RSpec.feature 'Representation adding and changing' do
   include_context 'as a logged-in editor user'
 
   let(:resource) do
-    create(:resource,organization: user_organization)
+    create(:resource, organization: user_organization)
   end
 
-  let!(:metum) { create(:metum,:long,organization: user_organization) }
+  let!(:metum) { create(:metum, :long, organization: user_organization) }
   let!(:license) { create(:license) }
   let!(:endpoint) { create(:endpoint) }
 
@@ -22,7 +22,7 @@ RSpec.feature 'Representation adding and changing' do
 
     expect {
       click_button('Save')
-    }.to change(resource.representations,:count).
+    }.to change(resource.representations, :count).
       from(0).to(1)
 
     representation = resource.representations.first
@@ -38,7 +38,7 @@ RSpec.feature 'Representation adding and changing' do
       click_button('Save')
       expect(page.current_path).to eq(representation_path(representation))
       representation.reload
-    }.to change(representation,:text).
+    }.to change(representation, :text).
       to('XYZ123')
 
     click_first_link 'Descriptions'

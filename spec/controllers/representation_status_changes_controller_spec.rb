@@ -1,7 +1,7 @@
 RSpec.describe RepresentationStatusChangesController do
   let(:organization) { create(:organization) }
   let(:representations) do
-    create_list(:representation,2,:ready_to_review,organization: organization)
+    create_list(:representation, 2, :ready_to_review, organization: organization)
   end
 
   let(:base_params) do

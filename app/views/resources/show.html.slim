@@ -20,22 +20,22 @@ h1= title(to_html_title(resource.title))
           td= resource.resource_type
         tr
           th Source URI
-          td= link_to(nil,resource.source_uri)
+          td= link_to(nil, resource.source_uri)
         tr
           th Canonical ID
           td= resource.canonical_id
         tr
           th Resource Group
-          td= link_to(resource.resource_group,[resource.organization,resource.resource_group])
+          td= link_to(resource.resource_group, [resource.organization, resource.resource_group])
         tr
           th Identifier (Slug)
           td= resource.identifier
         tr
           th Host URIs
-          td= list_of(resource.host_uris) { |uri| link_to(uri,uri) }
+          td= list_of(resource.host_uris) { |uri| link_to(uri, uri) }
         tr
           th Organization
-          td= link_to(resource.organization,resource.organization)
+          td= link_to(resource.organization, resource.organization)
         tr
           th Updated
           td= resource.updated_at
@@ -46,7 +46,7 @@ h1= title(to_html_title(resource.title))
 = toolbar class: 'toolbar--footer', title: "Actions" do
   = toolbar_item
     - if policy(Representation).new?
-      = link_to new_organization_representation_path(current_organization,resource_id: resource.id), title: 'Create new description for this resource', class: 'button' do
+      = link_to new_organization_representation_path(current_organization, resource_id: resource.id), title: 'Create new description for this resource', class: 'button' do
         | Describe
     - if policy(resource).edit?
       = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--outline' do

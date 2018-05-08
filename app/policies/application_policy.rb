@@ -5,7 +5,7 @@ class ApplicationPolicy
   # @raise [Pundit::NotAuthorizedError] if organization_user is nil
   # @param organization_user [organization_user]
   # @param record [ActiveRecord::Base]
-  def initialize(organization_user,record)
+  def initialize(organization_user, record)
     raise Pundit::NotAuthorizedError, 'must be logged in' unless organization_user
 
     @organization_user = organization_user
@@ -51,7 +51,7 @@ class ApplicationPolicy
   # @see https://github.com/elabs/pundit#scopes
   # @see ApplicationPolicy::Scope
   def scope
-    Pundit.policy_scope!(organization_user,record.class)
+    Pundit.policy_scope!(organization_user, record.class)
   end
 
   # @private only used for pundit-matchers spec error reporting
@@ -72,7 +72,7 @@ class ApplicationPolicy
 
     # @param organization_user [Coyote::OrganizationUser]
     # @param scope [ActiveRecord::Associations::CollectionProxy] the scope upon which to base ActiveRecord queries, which this class may scope further
-    def initialize(organization_user,scope)
+    def initialize(organization_user, scope)
       @organization_user = organization_user
       @scope = scope
     end

@@ -2,7 +2,7 @@
 # having already been mixed-into ActiveRecord.
 # @see https://github.com/kaminari/kaminari
 class RecordPaginator
-  def initialize(params,records)
+  def initialize(params, records)
     @params = params
     @records = records
   end
@@ -18,7 +18,7 @@ class RecordPaginator
   end
 
   # @param base_link_params [Hash]
-  # @return [Hash<Symbol,String>] named link parameters suitable for rendering in the UI or API
+  # @return [Hash<Symbol, String>] named link parameters suitable for rendering in the UI or API
   def pagination_links_for(base_link_params)
     base_page_params = { size: pagination_size }
     first_page = base_page_params.merge(number: 1)

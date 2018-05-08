@@ -18,10 +18,10 @@
 
 RSpec.describe ResourceLinksController do
   let(:organization) { create(:organization) }
-  let(:subject_resource) { create(:resource,organization: organization) }
-  let(:object_resource) { create(:resource,organization: organization) }
+  let(:subject_resource) { create(:resource, organization: organization) }
+  let(:object_resource) { create(:resource, organization: organization) }
   let(:resource_link) do
-    create(:resource_link,verb: 'hasPart',subject_resource: subject_resource,object_resource: object_resource)
+    create(:resource_link, verb: 'hasPart', subject_resource: subject_resource, object_resource: object_resource)
   end
 
   let(:resource_link_params) do
@@ -85,7 +85,7 @@ RSpec.describe ResourceLinksController do
       expect {
         post :create, params: new_resource_link_params
         expect(response).to be_redirect
-      }.to change(subject_resource.subject_resource_links,:count).by(1)
+      }.to change(subject_resource.subject_resource_links, :count).by(1)
 
       bad_params = {
         resource_link: {
@@ -122,7 +122,7 @@ RSpec.describe ResourceLinksController do
         patch :update, params: update_resource_link_params
         expect(response).to redirect_to(resource_link)
         resource_link.reload
-      }.to change(resource_link,:verb).to('hasFormat')
+      }.to change(resource_link, :verb).to('hasFormat')
 
       bad_params = update_resource_link_params.dup
       bad_params[:resource_link][:verb] = ''

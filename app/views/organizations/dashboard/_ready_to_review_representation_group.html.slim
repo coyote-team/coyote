@@ -1,8 +1,8 @@
 .row
   - representation_group.each do |representation|
     .col-md-4
-      = link_to(representation.resource,class: 'thumbnail') do
-        = resource_link_target(representation.resource,dom_id(representation))
+      = link_to(representation.resource, class: 'thumbnail') do
+        = resource_link_target(representation.resource, dom_id(representation))
 
       div
         = to_html(representation.resource_title)

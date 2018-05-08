@@ -34,7 +34,7 @@ RSpec.describe Representation do
 
   context 'with text and content URI blank' do
     subject do
-      build(:representation,text: '',content_uri: '').tap(&:valid?)
+      build(:representation, text: '', content_uri: '').tap(&:valid?)
     end
 
     specify do

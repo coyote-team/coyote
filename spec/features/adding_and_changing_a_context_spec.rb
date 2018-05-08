@@ -11,10 +11,10 @@ RSpec.feature "Adding and editing a resource group" do
 
       expect {
         click_button 'Save'
-      }.to change(ResourceGroup,:count).from(0).to(1)
+      }.to change(ResourceGroup, :count).from(0).to(1)
 
       resource_group = ResourceGroup.first
-      expect(page.current_path).to eq(organization_resource_group_path(user_organization,resource_group))
+      expect(page.current_path).to eq(organization_resource_group_path(user_organization, resource_group))
 
       click_link "Edit"
       fill_in "Title", with: "Treasure Hunt"
@@ -22,9 +22,9 @@ RSpec.feature "Adding and editing a resource group" do
       expect {
         click_button 'Save'
         resource_group.reload
-      }.to change(resource_group,:title).to("Treasure Hunt")
+      }.to change(resource_group, :title).to("Treasure Hunt")
 
-      expect(page.current_path).to eq(organization_resource_group_path(user_organization,resource_group))
+      expect(page.current_path).to eq(organization_resource_group_path(user_organization, resource_group))
     end
   end
 end

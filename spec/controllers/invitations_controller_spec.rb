@@ -62,16 +62,16 @@ RSpec.describe InvitationsController do
       expect {
         post :create, params: creation_params
         expect(response).to be_redirect
-      }.to change(Invitation,:count).
+      }.to change(Invitation, :count).
         from(0).to(1)
 
       new_user = Invitation.first.recipient_user
 
-      expect(Membership.exists?(user: new_user,organization: organization,role: 'author')).to be true
+      expect(Membership.exists?(user: new_user, organization: organization, role: 'author')).to be true
 
       expect {
         post :create, params: creation_params
-      }.not_to change(Invitation,:count)
+      }.not_to change(Invitation, :count)
 
       expect(response).to be_success
     end

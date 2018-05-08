@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def pundit_user
     # necessary to override ApplicationController's method here because in this controller we may not be dealing with a particular organization
-    @pundit_user ||= Coyote::OrganizationUser.new(current_user,nil)
+    @pundit_user ||= Coyote::OrganizationUser.new(current_user, nil)
   end
 
   def authorize_access

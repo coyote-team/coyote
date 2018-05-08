@@ -101,7 +101,7 @@ RSpec.describe Staff::EndpointsController do
       expect {
         patch :update, params: update_endpoint_params
         editable_endpoint.reload
-      }.to change(editable_endpoint,:name).
+      }.to change(editable_endpoint, :name).
         to('XYZ')
 
       expect(response).to be_redirect

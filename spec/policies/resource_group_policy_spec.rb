@@ -1,9 +1,9 @@
 RSpec.describe ResourceGroupPolicy do
-  let(:org_user) { double(:organization_user,admin?: false) }
-  let(:record) { double(:record,class: ResourceGroup) }
+  let(:org_user) { double(:organization_user, admin?: false) }
+  let(:record) { double(:record, class: ResourceGroup) }
   let(:scope) { double(:scope) }
 
-  subject { ResourceGroupPolicy.new(org_user,record) }
+  subject { ResourceGroupPolicy.new(org_user, record) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }

@@ -70,10 +70,10 @@ FactoryGirl.define do
       organization { build(:organization) }
     end
 
-    before(:create) do |representation,evaluator|
-      representation.resource  = evaluator.resource     || build(:resource,organization: evaluator.organization)
-      representation.metum     = evaluator.metum        || build(:metum,organization: evaluator.organization)
-      representation.author    = evaluator.author       || build(:user,organization: evaluator.organization)
+    before(:create) do |representation, evaluator|
+      representation.resource  = evaluator.resource     || build(:resource, organization: evaluator.organization)
+      representation.metum     = evaluator.metum        || build(:metum, organization: evaluator.organization)
+      representation.author    = evaluator.author       || build(:user, organization: evaluator.organization)
       representation.license   = evaluator.license      || build(:license)
       representation.endpoint  = evaluator.endpoint     || build(:endpoint)
     end

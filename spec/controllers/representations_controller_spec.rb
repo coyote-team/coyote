@@ -31,7 +31,7 @@ RSpec.describe RepresentationsController do
   let(:organization) { create(:organization) }
   let(:metum) { create(:metum) }
   let(:license) { create(:license) }
-  let(:resource) { create(:resource,organization: organization) }
+  let(:resource) { create(:resource, organization: organization) }
   let(:endpoint) { create(:endpoint) }
 
   let(:base_params) do
@@ -60,7 +60,7 @@ RSpec.describe RepresentationsController do
   end
 
   let(:representation) do
-    create(:representation,organization: organization)
+    create(:representation, organization: organization)
   end
 
   context "as a signed-out user" do
@@ -130,7 +130,7 @@ RSpec.describe RepresentationsController do
     include_context "signed-in author user"
 
     let(:representation) do
-      create(:representation,author: user,organization: organization)
+      create(:representation, author: user, organization: organization)
     end
 
     it "succeeds for basic actions" do
@@ -144,16 +144,16 @@ RSpec.describe RepresentationsController do
         post :create, params: new_representation_params
         expect(response).to be_redirect
         resource.reload
-      }.to change(resource.representations,:count).
+      }.to change(resource.representations, :count).
         from(0).to(1)
 
-      post :create, params: base_params.merge(representation: { metum_id: metum.id },resource_id: resource.id)
+      post :create, params: base_params.merge(representation: { metum_id: metum.id }, resource_id: resource.id)
       expect(response).not_to be_redirect
 
       expect {
         patch :update, params: update_representation_params
         representation.reload
-      }.to change(representation,:text).
+      }.to change(representation, :text).
         to('NEWTEXT')
 
       expect(response).to redirect_to(representation_url(representation))
@@ -174,11 +174,11 @@ RSpec.describe RepresentationsController do
     include_context "signed-in author user"
 
     let(:other_author) do
-      create(:user,organization: organization)
+      create(:user, organization: organization)
     end
 
     let(:representation) do
-      create(:representation,author: other_author,organization: organization)
+      create(:representation, author: other_author, organization: organization)
     end
 
     it 'fails for all actions' do

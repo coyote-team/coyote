@@ -64,7 +64,7 @@ class ResourceLinksController < ApplicationController
   attr_accessor :resource_link
 
   def resource_link_params
-    params.require(:resource_link).permit(:subject_resource_id,:verb,:object_resource_id)
+    params.require(:resource_link).permit(:subject_resource_id, :verb, :object_resource_id)
   end
 
   def set_resource_link
@@ -78,6 +78,6 @@ class ResourceLinksController < ApplicationController
   end
 
   def pundit_user
-    Coyote::OrganizationUser.new(current_user,resource_link.subject_resource_organization)
+    Coyote::OrganizationUser.new(current_user, resource_link.subject_resource_organization)
   end
 end

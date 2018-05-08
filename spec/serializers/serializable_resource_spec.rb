@@ -4,7 +4,7 @@ RSpec.describe SerializableResource do
   let(:object) { build_stubbed(:resource) }
 
   let(:approved_representations) do
-    build_stubbed_list(:representation,2)
+    build_stubbed_list(:representation, 2)
   end
 
   before do

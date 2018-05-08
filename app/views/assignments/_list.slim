@@ -9,5 +9,5 @@
       li.deletable
         = assignment.user
         - if policy(assignment).destroy?
-          = link_to [current_organization,assignment], title: "Delete this assignment", class: "quick-delete", :method => :delete, :remote => true do
+          = link_to [current_organization, assignment], title: "Delete this assignment", class: "quick-delete", :method => :delete, :remote => true do
             i.fa.fa-times aria-hidden="true"

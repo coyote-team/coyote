@@ -4,11 +4,11 @@ RSpec.feature 'Logging in and out' do
   let!(:organization) { create(:organization) }
 
   let!(:user) do
-    create(:user,organization: organization,password: password)
+    create(:user, organization: organization, password: password)
   end
 
   let(:resource) do
-    create(:resource,organization: organization)
+    create(:resource, organization: organization)
   end
 
   scenario 'Logging in with correct credentials and logging out' do
@@ -16,7 +16,7 @@ RSpec.feature 'Logging in and out' do
     expect(page.status_code).to eq(200)
     expect(page.current_path).to eq(new_user_session_path)
 
-    login(user,password)
+    login(user, password)
 
     expect(page.status_code).to eq(200)
     expect(page).to have_content 'Signed in successfully'
@@ -30,7 +30,7 @@ RSpec.feature 'Logging in and out' do
   end
 
   scenario 'Logging in with the wrong password' do
-    login(user,'BAD_PASSWORD',false)
+    login(user, 'BAD_PASSWORD', false)
     expect(page.status_code).to eq(200)
     expect(page).to have_content 'Invalid Email or password'
   end

@@ -18,7 +18,7 @@
 
 RSpec.describe MembershipsController do
   let(:organization) { create(:organization) }
-  let(:membership) { create(:membership,organization: organization) }
+  let(:membership) { create(:membership, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -105,7 +105,7 @@ RSpec.describe MembershipsController do
         patch :update, params: update_membership_params
         membership.reload
         expect(response).to be_redirect
-      }.to change(membership,:role).
+      }.to change(membership, :role).
         from('guest').to('editor')
 
       patch :update, params: membership_params.merge(membership: { role: '' })
@@ -114,7 +114,7 @@ RSpec.describe MembershipsController do
       expect {
         delete :destroy, params: membership_params
         expect(response).to be_redirect
-      }.to change(organization.memberships,:size).
+      }.to change(organization.memberships, :size).
         by(-1)
 
       expect {

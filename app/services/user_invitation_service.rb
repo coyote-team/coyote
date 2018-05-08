@@ -3,7 +3,7 @@
 class UserInvitationService
   # @param user [User] the user being invited
   # @param organization [Organization] the organization the user is joining
-  def initialize(user,organization)
+  def initialize(user, organization)
     @user = user
     @organization = organization
   end
@@ -42,9 +42,9 @@ class UserInvitationService
                         end
 
       if invitation.save
-        membership = organization.memberships.find_or_create_by!(user: recipient_user,role: invitation.role)
+        membership = organization.memberships.find_or_create_by!(user: recipient_user, role: invitation.role)
         Rails.logger.info "Created #{membership}"
-        InvitationMailer.public_send(delivery_method,invitation).deliver_now
+        InvitationMailer.public_send(delivery_method, invitation).deliver_now
       else
         yield invitation.error_sentence
       end

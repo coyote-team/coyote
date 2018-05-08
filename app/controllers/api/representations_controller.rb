@@ -65,7 +65,7 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params,{},current_user.representations.approved)
+      @record_filter ||= RecordFilter.new(filter_params, {}, current_user.representations.approved)
     end
 
     def filter_params

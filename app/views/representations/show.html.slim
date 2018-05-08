@@ -10,7 +10,7 @@ table
         = to_html(representation.resource_title)
     tr
       th Author
-      td= link_to(representation.author,representation.author)
+      td= link_to(representation.author, representation.author)
     tr
       th Content Type
       td= representation.content_type
@@ -22,7 +22,7 @@ table
       td= representation.status.to_s.titleize
     tr
       th Metum
-      td= link_to(representation.metum_title,[current_organization,representation.metum])
+      td= link_to(representation.metum_title, [current_organization, representation.metum])
     tr
       th Endpoint
       td= representation.endpoint_name
@@ -31,7 +31,7 @@ table
       td= representation.license_title
     tr
       th Content URI
-      td= link_to(nil,representation.content_uri)
+      td= link_to(nil, representation.content_uri)
     tr
       th Notes
       td= to_html(representation.notes)
@@ -45,7 +45,7 @@ table
 = toolbar class: 'toolbar--footer', title: 'Actions' do
   = toolbar_item do
     - if policy(Representation).new?
-      = link_to('Describe Again', new_organization_representation_path(current_organization,resource_id: representation.resource_id),title: 'Create new description for this resource', class: 'button')
+      = link_to('Describe Again', new_organization_representation_path(current_organization, resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button')
     = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--outline') if policy(representation).edit?
 
 h2 Audits

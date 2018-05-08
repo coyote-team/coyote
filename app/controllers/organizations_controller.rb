@@ -63,7 +63,7 @@ class OrganizationsController < ApplicationController
   end
 
   def pundit_user
-    @pundit_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+    @pundit_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   def organization_params
@@ -71,7 +71,7 @@ class OrganizationsController < ApplicationController
   end
 
   def dashboard
-    @dashboard ||= Dashboard.new(current_user,current_organization)
+    @dashboard ||= Dashboard.new(current_user, current_organization)
   end
 
   def authorize_general_access

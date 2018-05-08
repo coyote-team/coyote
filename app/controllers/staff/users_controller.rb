@@ -43,7 +43,7 @@ module Staff
     end
 
     def user_params
-      params.require(:user).permit(:email,:first_name,:last_name,:staff)
+      params.require(:user).permit(:email, :first_name, :last_name, :staff)
     end
   end
 end

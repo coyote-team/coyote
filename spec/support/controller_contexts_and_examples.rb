@@ -6,13 +6,13 @@ RSpec.shared_context "signed-out user" do
   end
 end
 
-Coyote::Membership.each_role do |_,role_name|
+Coyote::Membership.each_role do |_, role_name|
   RSpec.shared_context "signed-in #{role_name} user" do
     # Assumes that in your spec you will define the organization
     let(:user) { create(:user) }
 
     let!(:user_membership) do
-      create(:membership,role_name,user: user,organization: organization)
+      create(:membership, role_name, user: user, organization: organization)
     end
 
     before do
@@ -23,7 +23,7 @@ end
 
 RSpec.shared_context "signed-in staff user" do
   let(:user) do
-    create(:user,:staff,organization: organization)
+    create(:user, :staff, organization: organization)
   end
 
   before do

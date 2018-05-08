@@ -51,14 +51,14 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation,except: %w[ar_internal_metadata])
+    DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each,:type => :feature) do
+  config.before(:each, :type => :feature) do
     ActionMailer::Base.deliveries.clear
 
     unless Capybara.current_driver == :rack_test
@@ -75,9 +75,9 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each,:type => :controller,&db_cleaning)
-  config.around(:each,:type => :feature,&db_cleaning)
-  config.around(:each,:type => :request,&db_cleaning)
+  config.around(:each, :type => :controller, &db_cleaning)
+  config.around(:each, :type => :feature, &db_cleaning)
+  config.around(:each, :type => :request, &db_cleaning)
 
   config.after(:all) do
     DatabaseCleaner.clean_with(:truncation)
@@ -92,7 +92,7 @@ VCR.configure do |config|
   config.ignore_hosts "codeclimate.com"
 end
 
-WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])
+WebMock.disable_net_connect!(allow: [/validator/, /codeclimate/])
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

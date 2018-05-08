@@ -146,7 +146,7 @@ module Api
 
       resources = record_filter.records
 
-      record_filter.pagination_link_params.each do |rel,link_params|
+      record_filter.pagination_link_params.each do |rel, link_params|
         link = api_resources_url(link_params)
         links[rel] = link
       end
@@ -287,11 +287,11 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params,pagination_params,current_user.resources)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_user.resources)
     end
 
     def filter_params
-      params.fetch(:filter,{}).permit(:identifier_or_title_or_representations_text_cont_all,:scope)
+      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :scope)
     end
   end
 end

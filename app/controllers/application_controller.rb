@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def organization_user
-    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+    @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   alias pundit_user organization_user
@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update,keys: %i[first_name last_name])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
   end
 
   private
@@ -72,6 +72,6 @@ class ApplicationController < ActionController::Base
   end
 
   def store_user_location!
-    store_location_for(:user,request.fullpath)
+    store_location_for(:user, request.fullpath)
   end
 end

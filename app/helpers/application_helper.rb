@@ -4,17 +4,17 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
-  # @return [Array<String,Integer>] list of Endpoints suitable for use in select boxes in Representation forms
+  # @return [Array<String, Integer>] list of Endpoints suitable for use in select boxes in Representation forms
   # @see Endpoint
   def endpoint_collection
     Endpoint.sorted
   end
 
-  # @return [Array<String,Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
+  # @return [Array<String, Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
   def organizational_user_collection
-    # @return [Array<String,Integer>] list of users suitable for use in select boxes
+    # @return [Array<String, Integer>] list of users suitable for use in select boxes
     collection = current_organization.users.sort_by { |u| u.username.downcase }
-    collection.map! { |u| [u.username,u.id] }
+    collection.map! { |u| [u.username, u.id] }
   end
 
   # @param language_code [String] language short code such as 'en'
@@ -27,7 +27,7 @@ module ApplicationHelper
   # @return [Array<Array>] a collection of languages suitable for use in a select box
   # @see https://github.com/scsmith/language_list
   def language_list
-    @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name,l.iso_639_1] }
+    @language_list ||= LanguageList::COMMON_LANGUAGES.map { |l| [l.common_name, l.iso_639_1] }
   end
 
   # @param text [String] the link text to show the user
@@ -36,12 +36,12 @@ module ApplicationHelper
   # @param options [Hash] passed on to the Rails link_to helper
   # @return [String] HTML link with the given icon attached
   # @see http://fontawesome.io/icons/
-  def drop_down_menu_link(text,path,icon_name = nil,options = {})
+  def drop_down_menu_link(text, path, icon_name = nil, options = {})
     classes = %w[fa fa-fw]
     classes << "fa-#{icon_name}" if icon_name
 
-    link_to(path,options) do
-      concat tag.i('',class: classes,:'aria-hidden' => true)
+    link_to(path, options) do
+      concat tag.i('', class: classes, :'aria-hidden' => true)
       concat "\n"
       concat text
     end
@@ -58,9 +58,9 @@ module ApplicationHelper
   def organizational_user_assignable_roles
     roles = []
 
-    Coyote::Membership.each_role do |label,role_name,_|
+    Coyote::Membership.each_role do |label, role_name, _|
       break unless organization_user.send(:"#{role_name}?")
-      roles << [label,role_name]
+      roles << [label, role_name]
     end
 
     roles
@@ -99,7 +99,7 @@ module ApplicationHelper
   # @note similar approach to https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap
   def devise_form_errors(errors)
     capture do
-      errors.full_messages.each_with_index.map do |msg,idx|
+      errors.full_messages.each_with_index.map do |msg, idx|
         concat render partial: 'alert', locals: { :flash_type => :error, :flash_message => msg, flash_id: "devise_flash_#{idx}" }
       end
     end
@@ -164,7 +164,7 @@ module ApplicationHelper
   # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
   def to_html_title(content)
     html = to_html(content)
-    html.gsub!(%r{(?:^<p>|</p>\n)}i,'')
+    html.gsub!(%r{(?:^<p>|</p>\n)}i, '')
     html.html_safe
   end
 
@@ -175,11 +175,11 @@ module ApplicationHelper
   # Used to render top-level navigation, so the current page gets an "active" CSS class applied
   # @param text [String] the link text to display
   # @param path [String] the target of the link
-  def nav_menu_link(text,path)
+  def nav_menu_link(text, path)
     link_class = current_page?(path) ? "active" : ""
 
-    content_tag(:li,class: link_class) do
-      link_to(text,path)
+    content_tag(:li, class: link_class) do
+      link_to(text, path)
     end
   end
 
@@ -209,7 +209,7 @@ module ApplicationHelper
   private
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,filter_html: true,autolink: true,tables: true)
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: true, tables: true)
   end
 
   FLASH_CLASSES = {

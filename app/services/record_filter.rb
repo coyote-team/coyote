@@ -8,7 +8,7 @@ class RecordFilter
   # @param base_scope [ActiveRecord::Relation] the basis of all queries;
   #   typically this is based on who is logged-in, and whether the query is Coyote-wide (as in a UI index page)
   #   or organization-specific (as in an API call)
-  def initialize(filter_params,pagination_params,base_scope)
+  def initialize(filter_params, pagination_params, base_scope)
     @filter_params = filter_params.to_hash.with_indifferent_access
     @pagination_params = pagination_params
     @base_scope = base_scope
@@ -52,6 +52,6 @@ class RecordFilter
   attr_reader :filter_params, :pagination_params, :base_scope
 
   def record_paginator
-    @record_paginator ||= RecordPaginator.new(pagination_params,search.result)
+    @record_paginator ||= RecordPaginator.new(pagination_params, search.result)
   end
 end

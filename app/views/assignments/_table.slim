@@ -7,9 +7,9 @@
         th scope: "col"  Assignments
 
     tbody
-      - assigned_users.each do |membership,assignment_count|
+      - assigned_users.each do |membership, assignment_count|
         tr.item
           td
-            = link_to(membership.user,[current_organization,membership])
+            = link_to(membership.user, [current_organization, membership])
           td
             = number_with_delimiter(assignment_count)

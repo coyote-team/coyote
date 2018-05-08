@@ -1,4 +1,4 @@
-= simple_form_for [current_organization,membership], validate: true, html: { multipart: true } do |f|
+= simple_form_for [current_organization, membership], validate: true, html: { multipart: true } do |f|
   = f.error_notification
   = f.input :role, label: 'Organization Role', collection: organizational_user_assignable_roles, include_blank: false  if organizational_user_assignable_roles.any?
 

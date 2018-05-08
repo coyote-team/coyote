@@ -29,7 +29,7 @@ class Api::ApplicationController < ActionController::API
   end
 
   def organization_user
-    @organization_user ||= Coyote::OrganizationUser.new(current_user,current_organization)
+    @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   alias pundit_user organization_user
@@ -42,7 +42,7 @@ class Api::ApplicationController < ActionController::API
   end
 
   def pagination_params
-    params.fetch(:page,{}).permit(:number,:size)
+    params.fetch(:page, {}).permit(:number, :size)
   end
 end
 

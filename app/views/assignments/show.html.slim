@@ -16,4 +16,4 @@ nav.toolbar.toolbar--footer
     = link_to organization_assignments_path(current_organization), class: 'button button--info', title: "View the assignments index" do
       | Assignments
   - if policy(assignment).destroy?
-    .toolbar-item= button_to('Delete', [current_organization,assignment], title: "Delete this assignment", class: "button button--danger", method: :delete, data: { confirm: "Are you sure you want to delete #{assignment}?" } )
+    .toolbar-item= button_to('Delete', [current_organization, assignment], title: "Delete this assignment", class: "button button--danger", method: :delete, data: { confirm: "Are you sure you want to delete #{assignment}?" } )
