@@ -23,7 +23,7 @@ MSG
   end
 
   desc "deploy code to production"
-  task :production => :check do
+  task production: :check do
     `git push heroku master`
   end
 end

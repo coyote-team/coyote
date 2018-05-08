@@ -2,7 +2,7 @@
 
 RSpec.shared_context "signed-out user" do
   before do
-    sign_in nil, :scope => :user
+    sign_in nil, scope: :user
   end
 end
 

@@ -250,10 +250,10 @@ module Api
 
       if resource.save
         logger.info "Created #{resource}"
-        render :jsonapi => resource, :status => :created
+        render jsonapi: resource, status: :created
       else
         logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
-        render :jsonapi_errors => resource.errors, :status => :unprocessable_entity
+        render jsonapi_errors: resource.errors, status: :unprocessable_entity
       end
     end
 
@@ -264,7 +264,7 @@ module Api
         render jsonapi: resource
       else
         logger.warn "Unable to update resource due to '#{resource.error_sentence}'"
-        render :jsonapi_errors => resource.errors, :status => :unprocessable_entity
+        render jsonapi_errors: resource.errors, status: :unprocessable_entity
       end
     end
 

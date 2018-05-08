@@ -100,7 +100,7 @@ module ApplicationHelper
   def devise_form_errors(errors)
     capture do
       errors.full_messages.each_with_index.map do |msg, idx|
-        concat render partial: 'alert', locals: { :flash_type => :error, :flash_message => msg, flash_id: "devise_flash_#{idx}" }
+        concat render partial: 'alert', locals: { flash_type: :error, flash_message: msg, flash_id: "devise_flash_#{idx}" }
       end
     end
   end

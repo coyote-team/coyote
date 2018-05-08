@@ -35,10 +35,10 @@ class Api::ApplicationController < ActionController::API
   alias pundit_user organization_user
 
   def render_unauthorized
-    render :jsonapi_errors => [{
+    render jsonapi_errors: [{
       title: 'Invalid Authorization Token',
       detail: 'You must provide a valid API authorization token in the HTTP_AUTHORIZATION header'
-    }], :status => :unauthorized
+    }], status: :unauthorized
   end
 
   def pagination_params

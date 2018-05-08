@@ -1,6 +1,6 @@
 namespace :factory_girl do
   desc "Verify that all FactoryGirl factories are valid"
-  task :lint => :environment do
+  task lint: :environment do
     require "factory_girl_rails"
 
     if Rails.env.test?

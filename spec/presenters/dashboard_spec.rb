@@ -1,4 +1,4 @@
-RSpec.describe Dashboard, :type => :integration do
+RSpec.describe Dashboard, type: :integration do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, organization: organization) }
   let(:other_user) { create(:user, organization: organization) }

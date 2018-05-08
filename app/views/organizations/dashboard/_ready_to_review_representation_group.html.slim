@@ -10,7 +10,7 @@
       div
         = to_html(representation.text)
 
-      = simple_form_for representation, :method => :put, :html => { class: 'form-inline' } do |form|
+      = simple_form_for representation, method: :put, html: { class: 'form-inline' } do |form|
         = form.input :status, collection: Coyote::Representation.status_collection, label_html: { style: 'padding-right: 0.25em' }, input_html: { data: { representation_id: representation.id }, class: 'representation_status_select', style: 'width: auto' }, prompt: true, required: false
 
         - if policy(representation).edit?

@@ -76,7 +76,7 @@ class AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:user_id, :resource_id, :resource_ids => [])
+    params.require(:assignment).permit(:user_id, :resource_id, resource_ids: [])
   end
 
   def next_resource

@@ -13,7 +13,7 @@
           = f.input :email, required: true, autofocus: true, input_html: { value: user.email }
           = f.input :password, required: true, hint: "#{minimum_password_length} characters minimum"
           = f.input :password_confirmation, required: true
-          = f.input :token, :as => :hidden, :input_html => { value: invitation.token }
+          = f.input :token, as: :hidden, input_html: { value: invitation.token }
 
         .form-actions
           = f.button :submit, "Sign up"

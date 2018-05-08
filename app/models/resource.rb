@@ -33,14 +33,14 @@
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
-  belongs_to :resource_group, :inverse_of => :resources
-  belongs_to :organization, :inverse_of => :resources
+  belongs_to :resource_group, inverse_of: :resources
+  belongs_to :organization, inverse_of: :resources
 
-  has_many :representations, :inverse_of => :resource
-  has_many :approved_representations, ->() { approved }, :class_name => :Representation
-  has_many :subject_resource_links, :foreign_key => :subject_resource_id, :class_name => :ResourceLink, :inverse_of => :subject_resource
-  has_many :object_resource_links,  :foreign_key => :object_resource_id,  :class_name => :ResourceLink, :inverse_of => :object_resource
-  has_many :assignments, :inverse_of => :resource
+  has_many :representations, inverse_of: :resource
+  has_many :approved_representations, ->() { approved }, class_name: :Representation
+  has_many :subject_resource_links, foreign_key: :subject_resource_id, class_name: :ResourceLink, inverse_of: :subject_resource
+  has_many :object_resource_links,  foreign_key: :object_resource_id,  class_name: :ResourceLink, inverse_of: :object_resource
+  has_many :assignments, inverse_of: :resource
   has_many :meta, through: :representations
 
   scope :unrepresented, lambda {
@@ -57,7 +57,7 @@ class Resource < ApplicationRecord
 
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
-  validates :canonical_id, presence: true, uniqueness: { :scope => :organization_id }
+  validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -66,7 +66,7 @@ class Resource < ApplicationRecord
   paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
   max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
-  delegate :title, :to => :resource_group, :prefix => true
+  delegate :title, to: :resource_group, prefix: true
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)

@@ -11,7 +11,7 @@ RSpec.feature 'Resource adding and changing' do
     click_first_link "Resources"
     click_first_link("New Resource")
 
-    select(resource_group.title, from: 'Resource Group', :match => :first)
+    select(resource_group.title, from: 'Resource Group', match: :first)
 
     fill_in "Identifier",   with: resource_attributes[:identifier]
     fill_in "Caption",      with: resource_attributes[:title]

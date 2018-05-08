@@ -22,12 +22,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.include Devise::Test::ControllerHelpers, :type => :helper
-  config.include Coyote::Testing::FeatureHelpers, :type => :feature
-  config.include Coyote::Testing::EmailHelpers, :type => :feature
-  config.include Coyote::Testing::ApiHelpers, :type => :request
-  config.include JSONAPI::RSpec, :type => :request
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :helper
+  config.include Coyote::Testing::FeatureHelpers, type: :feature
+  config.include Coyote::Testing::EmailHelpers, type: :feature
+  config.include Coyote::Testing::ApiHelpers, type: :request
+  config.include JSONAPI::RSpec, type: :request
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
 
@@ -58,7 +58,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, :type => :feature) do
+  config.before(:each, type: :feature) do
     ActionMailer::Base.deliveries.clear
 
     unless Capybara.current_driver == :rack_test
@@ -75,9 +75,9 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each, :type => :controller, &db_cleaning)
-  config.around(:each, :type => :feature, &db_cleaning)
-  config.around(:each, :type => :request, &db_cleaning)
+  config.around(:each, type: :controller, &db_cleaning)
+  config.around(:each, type: :feature, &db_cleaning)
+  config.around(:each, type: :request, &db_cleaning)
 
   config.after(:all) do
     DatabaseCleaner.clean_with(:truncation)

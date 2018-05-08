@@ -26,7 +26,7 @@ class Membership < ApplicationRecord
 
   enum role: Coyote::Membership::ROLES
 
-  delegate :assignments, :to => :user, :prefix => true
+  delegate :assignments, to: :user, prefix: true
 
   # @return [Boolean] whether this membership represents the last owner of an organization
   def last_owner?

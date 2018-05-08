@@ -2,11 +2,11 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  protect_from_forgery :with => :exception
+  protect_from_forgery with: :exception
 
-  before_action :store_user_location!, :if => :storable_location? # see https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
+  before_action :store_user_location!, if: :storable_location? # see https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :authenticate_user!
-  before_action :configure_permitted_parameters, :if => :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   analytical
 

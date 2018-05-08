@@ -23,6 +23,6 @@ class RepresentationStatusChangesController < ApplicationController
   private
 
   def representation_status_change_params
-    params.require(:representation_status_change).permit(:status, :representation_ids => [])
+    params.require(:representation_status_change).permit(:status, representation_ids: [])
   end
 end
