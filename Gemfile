@@ -12,17 +12,17 @@ end
 # TODO: remove this dependency after migration is complete
 gem 'mysql2', require: false
 
-gem 'rails', '5.1.3'
+gem 'rails', '5.2.0'
 
 gem 'analytical' # analytics
 gem 'apipie-rails'
 gem 'audited'
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass', '3.3.7'
+gem 'bootsnap'
 gem 'devise' # user auth
 gem 'dotenv-rails'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
-gem 'factory_girl_rails', require: false
+gem 'factory_bot_rails', require: false
 gem 'great_pretender' # TODO: Move back to dev after redesign
 gem 'haml-rails', '>= 1.0.0'
 gem 'iconv'

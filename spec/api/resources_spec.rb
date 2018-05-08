@@ -35,7 +35,7 @@ RSpec.describe 'Accessing resources' do
     scenario 'PATCH /resources/:id' do
       expect {
         patch api_resource_path(existing_resource.id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
-        expect(response).to be_success
+        expect(response).to be_successful
 
         existing_resource.reload
       }.to change(existing_resource, :title).
@@ -78,7 +78,7 @@ RSpec.describe 'Accessing resources' do
       request_path = api_resources_path(user_organization)
       get request_path, headers: auth_headers
 
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expected_link_paths = {
         self:  URI.unescape(request_path),
@@ -123,7 +123,7 @@ RSpec.describe 'Accessing resources' do
 
     scenario 'GET /resources/:id' do
       get api_resource_path(resource), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
         expect(data).to have_id(resource.id.to_s)

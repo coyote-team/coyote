@@ -1,9 +1,9 @@
 tr
-  td rowspan=2
+  td.table-cell-select rowspan=2
     - if organization_user.admin?
-      / TODO: Restore checkbox motherfuton
-      / | <input id="representation_status_change_representation_id_#{representation.id}" class='representation_ids' name="representation_status_change[representation_ids][]" type="checkbox" value="#{representation.id}" aria-label="Select representation '#{representation.id}' for bulk update" /
-      = lightbox_link(representation.resource, alt: representation)
+      label
+        = check_box_tag "representation_status_change[representation_ids][]", aria: { label: "Select representation #{representation.id} for bulk update" }
+        = lightbox_link(representation.resource, alt: representation)
     - else
       = lightbox_link(representation.resource, alt: representation)
   td
@@ -18,5 +18,5 @@ tr
     - if policy(representation).destroy?
       = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
 tr style='border-top: 0'
-  td id=dom_id(representation) colspan=3
+  td id=dom_id(representation) colspan=4
     = to_html(representation.text)

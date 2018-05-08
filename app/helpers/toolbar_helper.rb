@@ -19,10 +19,10 @@ module ToolbarHelper
     edit_or_delete = toolbar_item(tag: :div) do
       item = "".html_safe
 
-      can_edit = options.delete(:edit) || policy(instance).edit?
+      can_edit = options.fetch(:edit) { policy(instance).edit? }
       item << link_to('Edit', { action: :edit }, class: 'button button--outline') if can_edit
 
-      can_delete = options.delete(:delete) || policy(instance).destroy?
+      can_delete = options.fetch(:delete) { policy(instance).destroy? }
       item << button_to('Delete', { action: :show }, title: "Delete #{instance}", class: 'button button--outline', data: { confirm: "Are you sure you want to delete #{instance}?" }, method: :delete) if can_delete
 
       item
@@ -39,7 +39,7 @@ module ToolbarHelper
 
   def submit_toolbar_item(form)
     toolbar_item do
-      form.button(:submit, class: 'toolbar-item') + link_to('Cancel', :back, class: 'button button--outline button--partial')
+      form.button(:submit, class: 'toolbar-item') + link_to('Cancel', :back, class: 'button button--outline')
     end
   end
 

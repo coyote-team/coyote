@@ -28,7 +28,7 @@
 
 require 'digest/md5'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :resource, aliases: %i[subject_resource object_resource] do
     title 'Mona Lisa'
     resource_type 'still_image'

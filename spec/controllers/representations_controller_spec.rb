@@ -99,10 +99,10 @@ RSpec.describe RepresentationsController do
 
     it 'succeeds for view-only actions, fails for edit actions' do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: representation_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: representation_params
@@ -135,10 +135,10 @@ RSpec.describe RepresentationsController do
 
     it "succeeds for basic actions" do
       get :edit, params: representation_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :new, params: new_representation_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_representation_params

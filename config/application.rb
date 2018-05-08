@@ -33,9 +33,9 @@ module Coyote
       g.stylesheets false
       g.javascripts false
       g.test_framework :rspec
-      g.fixture_replacement :factory_girl
+      g.fixture_replacement :factory_bot
       g.template_engine :haml
-      g.factory_girl dir: Rails.root.join("spec/factories").to_s
+      g.factory_bot dir: Rails.root.join("spec/factories").to_s
     end
 
     config.x.site_name                       = ENV.fetch('COYOTE_SITE_NAME','Coyote')

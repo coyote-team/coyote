@@ -68,13 +68,13 @@ RSpec.describe Staff::UsersController do
       dependent_representation = create(:representation, author: editable_user)
 
       get :show, params: user_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :index
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: user_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_user_params

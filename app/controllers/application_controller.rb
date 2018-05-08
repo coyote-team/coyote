@@ -10,19 +10,7 @@ class ApplicationController < ActionController::Base
 
   analytical
 
-  helper_method :current_organization, :current_organization?, :organization_user, :pagination_link_params, :filter_params
-
-  # TODO: Remove after redesign is finished
-  layout 'redesign'
-
-  def default_url_options(*_args)
-    if params.key?(:redesign)
-      { redesign: true }
-    else
-      {}
-    end
-  end
-  # TODO: End remove
+  helper_method :current_organization, :current_organization?, :organization_scope, :organization_user, :pagination_link_params, :filter_params
 
   protected
 

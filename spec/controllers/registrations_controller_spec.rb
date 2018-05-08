@@ -15,7 +15,7 @@ RSpec.describe RegistrationsController do
     }.to raise_error(ActionController::ParameterMissing)
 
     get :new, params: base_params
-    expect(response).to be_success
+    expect(response).to be_successful
 
     bad_params = user_params.merge(password_confirmation: '1')
 

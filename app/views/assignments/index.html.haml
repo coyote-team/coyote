@@ -1,8 +1,0 @@
-.index-outer
-  .index
-    .index-inner
-      %header
-        %h2#page-title{tabindex: -1}
-          = title "Assignments for #{current_organization.title}"
-
-      = render "table", assigned_users: assigned_users

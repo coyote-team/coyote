@@ -12,11 +12,11 @@ table
   tbody
     - users.each do |user|
       tr
-        td= user.first_name
-        td= user.last_name
+        td.table-cell-primary= link_to_if user.first_name.present?, user.first_name, staff_user_path(user)
+        td.table-cell-primary= link_to_if user.last_name.present?, user.last_name, staff_user_path(user)
         td= user.staff ? 'Yes' : %|<span class='sr-only'>No</span>|.html_safe
         td= link_to(user.email, staff_user_path(user))
         td.table-cell-actions
           = link_to('Edit', edit_staff_user_path(user), class: 'button button--outline', title: "Edit #{user}")
           - if user != current_user
-            = button_to('Remove', staff_user_path(user), title: "Remove #{user} from Coyote", method: :delete, class: "button button--danger button--outline", data: { confirm: "Are you sure you want to remove #{user} from Coyote?" }) unless user == current_user
+            = button_to('Remove', staff_user_path(user), title: "Remove #{user} from Coyote", method: :delete, class: "button button--outline", data: { confirm: "Are you sure you want to remove #{user} from Coyote?" }) unless user == current_user

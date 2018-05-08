@@ -10,9 +10,12 @@
   @supports (display: grid)
     display: block
 
-  .list-item-select, .list-item-body
-    padding-bottom: $gutter
+  .list-item-header, .list-item-body
+    padding-bottom: 0
     padding-right: 0
+
+  .list-item-header
+    margin-bottom: -1px
 
   .list-item-actions
     text-align: left
@@ -28,16 +31,19 @@
     padding: $gutter 0
     transition: all 150ms $swift
 
-    .list-item-label, .list-item-select, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
+    .list-item-label, .list-item-header, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
       display: block
 
-    .list-item-label, .list-item-select, .list-item-body
+    .list-item-label, .list-item-header, .list-item-body
       padding-right: $gutter
 
-    .list-item-select
+    .list-item-header
       display: flex
       flex: 0 0 33%
       white-space: nowrap
+
+      img
+        border: 1px solid $border
 
       @include ie-only
         order: -1 // Remove from the IE flex flow manually
@@ -53,7 +59,7 @@
 
     .list-item-actions
       text-align: right
-      white-space: nowrap
+      // white-space: nowrap
 
       .list-item-actions-item
         display: inline-block

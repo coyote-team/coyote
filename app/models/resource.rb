@@ -43,17 +43,14 @@ class Resource < ApplicationRecord
   has_many :assignments, inverse_of: :resource
   has_many :meta, through: :representations
 
-  scope :unrepresented, lambda {
-    # HACK: for lack of proper alias tracking in ActiveRecord 5.1.3, see https://github.com/rails/rails/issues/30504
-    joins('LEFT OUTER JOIN representations AS reps ON reps.resource_id = resources.id').where(reps: { resource_id: nil })
-  }
-
   scope :represented,              -> { joins(:representations).distinct }
+  scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
   scope :assigned,                 -> { joins(:assignments) }
   scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :by_priority,              -> { order('priority_flag DESC') }
+  scope :represented_by, -> (user) { joins(:representations).where(representations: { author_id: user.id }) }
 
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true

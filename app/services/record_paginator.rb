@@ -12,8 +12,8 @@ class RecordPaginator
     @query ||= begin
                  records.
                    page(pagination_number).
-                   per(pagination_size).
-                   without_count
+                   per(pagination_size)
+                  #  without_count
                end
   end
 

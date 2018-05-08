@@ -13,7 +13,7 @@
 #  index_assignments_on_resource_id_and_user_id  (resource_id,user_id) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :assignment do
     user
     resource

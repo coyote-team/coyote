@@ -57,7 +57,7 @@ RSpec.describe InvitationsController do
 
     it "succeeds for basic actions" do
       get :new, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: creation_params
@@ -73,7 +73,7 @@ RSpec.describe InvitationsController do
         post :create, params: creation_params
       }.not_to change(Invitation, :count)
 
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

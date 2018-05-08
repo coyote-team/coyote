@@ -69,7 +69,7 @@ RSpec.describe MembershipsController do
 
     it "permits read-only actions, forbids updating and deleting other memberships, does allow deleting one's own membership" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: membership_params
@@ -96,10 +96,10 @@ RSpec.describe MembershipsController do
 
     it "succeeds for all actions involving organization-owned memberships" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: membership_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_membership_params

@@ -12,7 +12,7 @@ RSpec.describe 'Representations' do
 
     scenario 'GET /resources/:resource_id/representations' do
       get api_representations_path(representation.resource_identifier), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
         expect(data.size).to eq(1)
@@ -36,7 +36,7 @@ RSpec.describe 'Representations' do
 
     scenario 'GET /representations/:id' do
       get api_representation_path(representation.id), headers: auth_headers
-      expect(response).to be_success
+      expect(response).to be_successful
 
       json_data.fetch(:data).tap do |record|
         expect(record).to have_id(representation.id.to_s)

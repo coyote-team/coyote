@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production? # Extra check to prevent database changes if the environment is production
 
 require 'rspec/rails'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
@@ -21,7 +21,7 @@ SPEC_DATA_PATH = Pathname(__dir__).join("data")
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :helper
   config.include Coyote::Testing::FeatureHelpers, type: :feature

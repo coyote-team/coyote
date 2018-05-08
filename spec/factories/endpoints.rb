@@ -12,7 +12,7 @@
 #  index_endpoints_on_name  (name) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :endpoint do
     name do
       "Website #{SecureRandom.hex(3)}"

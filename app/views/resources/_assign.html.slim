@@ -1,0 +1,4 @@
+= simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'field form--inline' }, wrapper: :inline do |f|
+  = f.input_field :user_id, collection: organizational_user_collection, prompt: 'Assign To', required: false
+  = f.input_field :resource_id, as: :hidden, value: resource.id
+  = f.submit 'Assign', class: 'button'

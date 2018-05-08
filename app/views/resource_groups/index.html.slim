@@ -11,7 +11,7 @@ table
         td.table-cell-primary.table-cell-link= link_to resource_group.title, organization_resource_group_path(current_organization, resource_group)
         td.table-cell-actions
           = link_to 'Edit', edit_organization_resource_group_path(current_organization, resource_group), class: "button button--outline", title: "Edit this resource group"
-          = button_to 'Delete', organization_resource_group_path(current_organization, resource_group), title: "Delete this resource group", class: 'button button--danger', method: :delete, disabled: resource_group.resources.any?, data: { confirm: "Are you sure you want to delete #{resource_group}?" }
+          = button_to 'Delete', organization_resource_group_path(current_organization, resource_group), title: "Delete this resource group", class: 'button button--outline', method: :delete, disabled: resource_group.resources.any?, data: { confirm: "Are you sure you want to delete #{resource_group}?" }
 
 - if policy(::ResourceGroup).new?
   nav.toolbar.toolbar--footer= link_to('New Resource Group', new_organization_resource_group_path(current_organization), class: 'button toolbar-item')

@@ -7,6 +7,7 @@
   color: $background
   cursor: pointer
   font-weight: bold
+  text-align: center
   text-decoration: none
   text-transform: uppercase
 
@@ -21,6 +22,9 @@
     &:focus, &:hover
       background-color: $text
       color: $background
+
+  &.button--block
+    display: block
 
   @each $name, $color in $status
     &.button--#{$name}

@@ -1,12 +1,13 @@
+- form ||=nil
 - id = id_for(resource.identifier)
 li.list-item.list-item--card
   h4.sr-only id="resource-#{id}" Resource #{resource.identifier}
-  - if policy(Assignment).new?
-    label.list-item-select
+  - if form.present? && policy(Assignment).new?
+    label.list-item-header
       = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.identifier}' for bulk assignment'" }
       = lightbox_link(resource)
   - else
-    .list-item-select
+    .list-item-header
       = lightbox_link(resource)
 
   .list-item-body
@@ -20,6 +21,14 @@ li.list-item.list-item--card
 
   ul.list-item-actions aria-label="Actions"
     - if policy(resource).index?
-      li.list-item-actions-item= link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
+      li.list-item-actions-item
+        = link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
     - if policy(resource).edit?
-      li.list-item-actions-item= link_to 'Edit', edit_resource_path(resource), class: 'button button--outline', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+      li.list-item-actions-item
+        = link_to 'Edit', edit_resource_path(resource), class: 'button button--outline', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+    - if resource.assigned?
+      li.list-item-actions-item
+        = link_to 'Describe', new_organization_representation_path(organization_id: current_organization.id, resource_id: resource.id), class: 'button button--outline', aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+    - elsif form.nil? && policy(Assignment).new?
+      li.list-item-actions-item
+        = render 'resources/assign', resource: resource

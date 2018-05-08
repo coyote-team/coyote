@@ -84,19 +84,19 @@ RSpec.describe Staff::EndpointsController do
 
     it "succeeds for all actions involving organization-owned contexts" do
       get :new
-      expect(response).to be_success
+      expect(response).to be_successful
 
       post :create, params: create_endpoint_params
       expect(response).to be_redirect
 
       get :show, params: endpoint_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :index
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: endpoint_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_endpoint_params

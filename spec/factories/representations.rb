@@ -27,7 +27,7 @@
 #  index_representations_on_status       (status)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :representation do
     text <<~TEXT
       This painted portrait depicts a young woman with jet-black skin holding a long, thin paintbrush up to a colorful, messy painter’s

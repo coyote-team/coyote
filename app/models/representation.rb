@@ -49,8 +49,8 @@ class Representation < ApplicationRecord
   delegate :name,               to: :author,   prefix: true
   delegate :identifier,         to: :resource, prefix: true
 
-  scope :by_status, ->(descending: false) { order("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? 'DESC' : 'ASC'}") }
-  scope :by_title_length, -> { order('length(text) DESC') }
+  scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? 'DESC' : 'ASC'}")) }
+  scope :by_title_length, -> { order(Arel.sql('length(text) DESC')) }
 
   audited
 

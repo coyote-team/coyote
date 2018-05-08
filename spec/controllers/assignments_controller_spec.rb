@@ -83,10 +83,10 @@ RSpec.describe AssignmentsController do
 
     it "can view and edit assignments" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: assignment_params
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'can create and destroy assignments' do

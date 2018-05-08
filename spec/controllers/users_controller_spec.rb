@@ -56,7 +56,7 @@ RSpec.describe UsersController do
 
     it "succeeds for critical actions" do
       get :show, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

@@ -83,17 +83,17 @@ RSpec.describe ResourcesController do
 
     it "succeeds for basic actions" do
       get :show, params: resource_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
       get :new, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_resource_params
@@ -118,10 +118,10 @@ RSpec.describe ResourcesController do
 
     it "succeeds for critical actions" do
       get :new, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: resource_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_resource_params

@@ -76,10 +76,10 @@ RSpec.describe MetaController do
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: metum_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: metum_params
@@ -104,16 +104,16 @@ RSpec.describe MetaController do
 
     it "succeeds for all actions involving organization-owned metums" do
       get :show, params: metum_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: metum_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :new, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_metum_params

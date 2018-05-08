@@ -1,7 +1,0 @@
-= search_form_for search, url: organization_representations_path(current_organization), html: { class: 'form-vertical' }, enforce_utf8: false do |f|
-  = f.search_field :text_or_resource_identifier_or_resource_title_cont_all, class: 'input-medium form-control', required: false, placeholder: 'Search representation text'
-  = f.input :status_eq, label: 'Status', class: 'input-medium form-control', required: false, as: :select, collection: Coyote::Representation.status_collection
-  = f.input :metum_id_eq, label: 'Metum', class: 'input-medium form-control', required: false, as: :select, collection: available_meta
-  = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
-  = f.submit 'Search', name: nil, class: 'button'
-  = link_to 'Clear', organization_representations_path(current_organization), class: 'button button--info'

@@ -1,8 +1,0 @@
-= toolbar do
-  label.label--checkbox.toolbar-item
-    input#select-all data-select-all="#results-list" type="checkbox"
-    | Select all
-
-  - if record_filter.browser_pagination_link_params.any?
-    = toolbar_item do
-      = render 'pagination', record_filter: record_filter

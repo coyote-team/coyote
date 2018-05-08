@@ -14,7 +14,7 @@
 #  index_memberships_on_user_id_and_organization_id  (user_id,organization_id) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :membership do
     user
     organization

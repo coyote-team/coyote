@@ -4,6 +4,6 @@ RSpec.feature "Home page viewing" do
 
     expect(page.status_code).to eq(200)
     expect(page).to have_content "Welcome to Coyote!"
-    expect(page).to have_content "Log in"
+    expect(page).to have_content "Log In"
   end
 end

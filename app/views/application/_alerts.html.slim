@@ -1,4 +1,0 @@
-#flash-messages
-  = yield :devise_form_errors
-  - flash.each_with_index do |(flash_type, flash_message), idx|
-    = render partial: 'alert', locals: { flash_type: flash_type, flash_message: flash_message, flash_id: "application_flash_#{idx}" }

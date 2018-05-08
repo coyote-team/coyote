@@ -5,50 +5,50 @@ SimpleForm.setup do |config|
   # wrapper, change the order or even add your own to the
   # stack. The options given below are used to wrap the
   # whole input.
-  config.wrappers :default, class: :input, hint_class: :field_with_hint, error_class: :field_with_errors do |b|
-    ## Extensions enabled by default
-    # Any of these extensions can be disabled for a
-    # given input by passing: `f.input EXTENSION_NAME => false`.
-    # You can make any of these extensions optional by
-    # renaming `b.use` to `b.optional`.
-
-    # Determines whether to use HTML5 (:email, :url, ...)
-    # and required attributes
+  config.wrappers :default, class: 'form-field', error_class: 'form-field--error' do |b|
     b.use :html5
-
-    # Calculates placeholders automatically from I18n
-    # You can also pass a string as f.input placeholder: "Placeholder"
     b.use :placeholder
-
-    ## Optional extensions
-    # They are disabled unless you pass `f.input EXTENSION_NAME => true`
-    # to the input. If so, they will retrieve the values from the model
-    # if any exists. If you want to enable any of those
-    # extensions by default, you can change `b.optional` to `b.use`.
-
-    # Calculates maxlength from length validations for string inputs
     b.optional :maxlength
-
-    # Calculates pattern from format validations for string inputs
     b.optional :pattern
-
-    # Calculates min and max from length validations for numeric inputs
     b.optional :min_max
-
-    # Calculates readonly automatically from readonly attributes
     b.optional :readonly
+    b.use :label, class: 'form-field-label label--stack'
 
-    ## Inputs
-    b.use :label_input
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
-    b.use :error, wrap_with: { tag: :span, class: :error }
-
-    ## full_messages_for
-    # If you want to display the full error message for the attribute, you can
-    # use the component :full_error, like:
-    #
-    # b.use :full_error, wrap_with: { tag: :span, class: :error }
+    b.use :input
+    b.use :error, wrap_with: { class: 'form-field-error-message' }
+    b.use :hint,  wrap_with: { class: 'form-field-hint' }
   end
+
+  config.wrappers :filter_set, class: 'filter-set-item', error_class: 'form-field--error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :label, class: 'filter-set-item-title'
+
+    b.use :input
+    b.use :error, wrap_with: { tag: 'span', class: 'form-field-error-message' }
+    b.use :hint,  wrap_with: { class: 'form-field-hint' }
+  end
+
+  config.wrappers :inline, error_class: 'form-field--error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.optional :label
+
+    b.use :input
+
+    b.optional :error, wrap_with: { class: 'form-field-error-message' }
+    b.optional :hint,  wrap_with: { class: 'form-field-hint' }
+  end
+
+  config.default_wrapper = :default
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
@@ -60,7 +60,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'button button--default'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.
@@ -71,7 +71,7 @@ SimpleForm.setup do |config|
   config.error_notification_tag = :div
 
   # CSS class to add for error notification helper.
-  config.error_notification_class = 'error_notification'
+  config.error_notification_class = 'notification notification--error notification-title'
 
   # ID to add for error notification helper.
   # config.error_notification_id = nil
@@ -103,7 +103,7 @@ SimpleForm.setup do |config|
 
   # You can define the default class to be used on forms. Can be overriden
   # with `html: { :class }`. Defaulting to none.
-  # config.default_form_class = nil
+  config.default_form_class = 'form'
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]

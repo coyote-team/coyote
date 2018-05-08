@@ -56,7 +56,7 @@ class User < ApplicationRecord
   has_many :resource_links, through: :organizations
   has_many :resource_groups, through: :organizations
 
-  scope :sorted, -> { order('LOWER(users.last_name) asc') }
+  scope :sorted, -> { order(Arel.sql('LOWER(users.last_name) asc')) }
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s

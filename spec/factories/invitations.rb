@@ -21,7 +21,7 @@
 #  index_invitations_on_sender_user_id             (sender_user_id)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :invitation do
     recipient_email { Faker::Internet.unique.email }
 

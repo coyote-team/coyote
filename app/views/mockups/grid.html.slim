@@ -145,7 +145,7 @@ h2 Filter View
       - 10.times do |i|
         li.list-item
           h4.sr-only id="image-#{i}" Image ##{i.succ}
-          label.list-item-select
+          label.list-item-header
             input type="checkbox"
             = image_tag "//via.placeholder.com/100x#{%w(100 125 150 200).sample}", alt: "Lorem ipsum"
           .list-item-body

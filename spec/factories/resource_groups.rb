@@ -13,7 +13,7 @@
 #  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :resource_group do
     title { Faker::Lorem.unique.word }
     organization

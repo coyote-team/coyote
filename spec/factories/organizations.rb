@@ -12,7 +12,7 @@
 #  index_organizations_on_title  (title) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :organization do
     title { Faker::Company.unique.name }
   end
