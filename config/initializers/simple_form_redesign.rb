@@ -13,7 +13,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'form-field-label label--stack'
 
-    b.use :input
+    b.use :label_input
     b.use :error, wrap_with: { class: 'form-field-error-message' }
     b.use :hint,  wrap_with: { class: 'form-field-hint' }
   end

@@ -2,10 +2,10 @@ module ToolbarHelper
   def form_toolbar(form, options = {})
     options = combine_options(options, class: 'toolbar--footer')
 
-    model_name = form.object.class.model_name.human
+    model_name = form.object.class.model_name.human.titleize
     navigate_back = toolbar_item do
-      (form.object.persisted? ? link_to("View this #{model_name.titleize}", { action: :show }, class: 'button button--outline') : "".html_safe) +
-        link_to("View all #{model_name.pluralize.titleize}", { action: :index }, class: 'button button--outline')
+      (form.object.persisted? ? link_to("View this #{model_name}", { action: :show }, class: 'button button--outline') : "".html_safe) +
+        link_to("View all #{model_name.pluralize}", { action: :index }, class: 'button button--outline')
     end
 
     toolbar(options) do
@@ -17,13 +17,15 @@ module ToolbarHelper
 
   def show_toolbar(instance, options = {})
     edit_or_delete = toolbar_item(tag: :div) do
+      item = "".html_safe
+
       can_edit = options.delete(:edit) || policy(instance).edit?
-      edit = can_edit ? link_to('Edit', { action: :edit }, class: 'button button--outline') : ''
+      item << link_to('Edit', { action: :edit }, class: 'button button--outline') if can_edit
 
       can_delete = options.delete(:delete) || policy(instance).destroy?
-      delete = can_delete ? button_to('Delete', { action: :destroy }, title: "Delete #{instance}", class: 'button button--danger button--outline', data: { confirm: "Are you sure you want to delete #{instance}?" }, method: :delete) : ''
+      item << button_to('Delete', { action: :show }, title: "Delete #{instance}", class: 'button button--outline', data: { confirm: "Are you sure you want to delete #{instance}?" }, method: :delete) if can_delete
 
-      (edit + delete).html_safe
+      item
     end
 
     object_name = instance.class.model_name.human.titleize

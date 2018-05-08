@@ -15,7 +15,7 @@ RSpec.feature 'Linking and unlinking resources' do
     select(object_resource.label, from: 'Object resource')
 
     expect {
-      click_button('Save')
+      click_button('Create Link')
     }.to change(ResourceLink, :count).
       from(0).to(1)
 
@@ -31,7 +31,7 @@ RSpec.feature 'Linking and unlinking resources' do
     select('hasFormat', from: 'Verb')
 
     expect {
-      click_button('Save')
+      click_button('Update Link')
       resource_link.reload
     }.to change(resource_link, :verb).
       from('hasVersion').to('hasFormat')
@@ -39,7 +39,7 @@ RSpec.feature 'Linking and unlinking resources' do
     expect(page.current_path).to eq(resource_link_path(resource_link))
 
     expect {
-      click_link('Delete')
+      click_button('Delete')
     }.to change {
       ResourceLink.exists?(resource_link.id)
     }.from(true).to(false)

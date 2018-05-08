@@ -14,11 +14,12 @@ RSpec.describe ApplicationHelper do
     end
 
     before do
-      allow(resource).to receive(:as_viewable).and_yield(resource_uri)
+      # allow(resource).to receive(:viewable?).and_return(true)
+      allow(resource).to receive(:source_uri).and_return(resource_uri)
     end
 
     specify do
-      link = helper.resource_link_target(resource, 'resource_100', alt: 'some text')
+      link = helper.resource_link_target(resource, id: 'resource_100', alt: 'some text')
       expect(link).to match(/src="#{resource_uri}"/)
     end
   end
@@ -28,12 +29,8 @@ RSpec.describe ApplicationHelper do
       build_stubbed(:resource, :sound)
     end
 
-    before do
-      allow(resource).to receive_messages(as_viewable: nil)
-    end
-
     specify do
-      expect(helper.resource_link_target(resource, 'resource_100')).to eq('Mona Lisa (sound)')
+      expect(helper.resource_link_target(resource, id: 'resource_100')).to eq('Mona Lisa (sound)')
     end
   end
 

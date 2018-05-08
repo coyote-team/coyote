@@ -1,5 +1,5 @@
 module LightboxHelper
-  def lightbox_link(resource, options = {}, &block)
+  def lightbox_link(resource, options = {})
     link_options = options.delete(:link) || {}
 
     if resource.viewable?
@@ -9,7 +9,7 @@ module LightboxHelper
       # Configure the link
       id = options.delete(:id) || id_for(dom_id(resource))
       options = combine_options(options, { aria: { describedby: id } })
-      link_options = combine_options(link_options, { class: 'lightbox-link'} )
+      link_options = combine_options(link_options, { class: 'lightbox-link' })
 
       link_to("##{id}", link_options) { image_tag(resource.source_uri, options) } +
         link_to('#_', class: 'lightbox', id: id) { image_tag(resource.source_uri, alt: options[:alt], class: 'lightbox-item') }

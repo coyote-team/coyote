@@ -13,7 +13,7 @@ table
 
   tbody
     - organization_users.each do |org_user|
-      tr
+      tr id="membership_#{org_user.id}"
         td.table-cell-primaryl.table-cell-link= link_to_if(org_user.first_name.present?, org_user.first_name, [current_organization, org_user.membership])
         td.table-cell-primaryl.table-cell-link= link_to_if(org_user.last_name.present?, org_user.last_name, [current_organization, org_user.membership])
         td.table-cell-primaryl.table-cell-link= link_to(org_user.email, [current_organization, org_user.membership])

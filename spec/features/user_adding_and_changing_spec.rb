@@ -17,7 +17,7 @@ RSpec.describe 'User adding and changing' do
     fill_in 'First name', with: 'Wintermute'
 
     expect {
-      click_button 'Save'
+      click_button 'Update User'
       editable_user.reload
     }.to change(editable_user, :first_name).
       to('Wintermute')

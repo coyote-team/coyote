@@ -19,8 +19,6 @@ gem 'apipie-rails'
 gem 'audited'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '3.3.7'
-gem 'compass-rails' # TODO: Remove
-gem 'compass-h5bp' # TODO: Remove
 gem 'devise' # user auth
 gem 'dotenv-rails'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
@@ -42,13 +40,13 @@ gem 'pundit' # role-based authorization
 gem 'ransack'
 gem 'redcarpet'
 gem 'rollbar'
-gem 'sass-mediaqueries-rails' # TODO: Remove
 gem 'sass-rails'
 gem 'simple_form' # , git: 'https://github.com/plataformatec/simple_form.git'
 gem 'slim-rails'
 gem 'sprockets'
 gem 'sprockets-rails'
 gem 'uglifier', '>= 2.7.1' # js compression
+gem 'vanilla-ujs'
 
 group :development, :test do
   gem 'faker'

@@ -12,7 +12,7 @@ RSpec.feature 'Representation adding and changing' do
   scenario 'succeeds' do
     visit resource_url(resource)
 
-    click_first_link('Create Description')
+    click_first_link('Describe')
     expect(page.current_path).to eq(new_organization_representation_path(user_organization))
 
     new_text = attributes_for(:representation).fetch(:text)
@@ -21,7 +21,7 @@ RSpec.feature 'Representation adding and changing' do
     select metum.title, from: 'Metum'
 
     expect {
-      click_button('Save')
+      click_button('Create Description')
     }.to change(resource.representations, :count).
       from(0).to(1)
 
@@ -35,7 +35,7 @@ RSpec.feature 'Representation adding and changing' do
     fill_in 'Text', with: 'XYZ123'
 
     expect {
-      click_button('Save')
+      click_button('Update Description')
       expect(page.current_path).to eq(representation_path(representation))
       representation.reload
     }.to change(representation, :text).

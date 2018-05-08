@@ -35,4 +35,4 @@ table
         = "Sent at: #{user.reset_password_sent_at}<br/>".html_safe if user.reset_password_sent_at.present?
         = button_to('Send password reset email', staff_user_password_resets_path, params: { user_id: user.id }, class: 'button')
 
-= show_toolbar endpoint, edit: true, delete: user != current_user
+= show_toolbar user, edit: true, delete: user != current_user

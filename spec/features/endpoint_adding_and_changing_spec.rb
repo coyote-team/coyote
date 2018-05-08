@@ -7,11 +7,11 @@ RSpec.describe 'Endpoint adding and changing' do
     click_first_link 'Endpoint Management (Staff)'
     expect(page.current_path).to eq(staff_endpoints_path)
 
-    click_first_link 'Add New Endpoint'
+    click_first_link 'New Endpoint'
     fill_in 'Name', with: 'Mobile App'
 
     expect {
-      click_button 'Save'
+      click_button 'Create Endpoint'
     }.to change(Endpoint, :count).
       from(1).to(2)
 
@@ -28,7 +28,7 @@ RSpec.describe 'Endpoint adding and changing' do
     fill_in 'Name', with: 'Special Device'
 
     expect {
-      click_button 'Save'
+      click_button 'Update Endpoint'
       endpoint_to_change.reload
     }.to change(endpoint_to_change, :name).
       to('Special Device')

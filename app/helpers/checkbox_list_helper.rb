@@ -6,5 +6,4 @@ module CheckboxListHelper
   def checkbox_list_of(items, options = {})
     checkbox_list(options) { component_items(items, class: 'checkbox-list-item') }
   end
-
 end

@@ -1,21 +1,62 @@
-//= depend_on_asset "bootstrap/glyphicons-halflings-regular.eot"
-//= depend_on_asset "bootstrap/glyphicons-halflings-regular.svg"
-//= depend_on_asset "bootstrap/glyphicons-halflings-regular.ttf"
-//= depend_on_asset "bootstrap/glyphicons-halflings-regular.woff"
-//= depend_on_asset "bootstrap/glyphicons-halflings-regular.woff2"
-//= depend_on_asset "AjaxLoader.gif"
-@import "media-queries"
-@import "compass/reset"
-@import "vendor/reset"
-@import "compass/css3/shared"
-@import "colors"
-@import "bootstrap-overrides"
-@import "bootstrap-sprockets"
-@import "bootstrap"
-@import "vendor/animate.sass"
-@import "modularscale"
-@import "lightbox"
-@import "media"
-@import "type"
-@import "coyote"
-@import "main"
+//
+// THE COYOTE DESIGN SYSTEM
+// This is a simple Sass-based implementation of the specs in doc_assets/
+// It uses the concepts from https://maintainablecss.com/ extensively.
+//
+
+// VARIABLES
+// Color scheme
+$background: #fff
+$border: #000
+$input: #ebebeb
+$placeholder: #999
+$text: #222
+$text-dark: #000
+$tint: #00f
+
+$status: (danger: #ff0000, error: #ff0000, info: $tint, neutral: #666, okay: $tint, partial: #fb9900, success: #009f2f, warning: #ffc107)
+
+// Typography
+$font-family-mono: "Space Mono", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace
+$font-family-text: "TeX Gyre Heros", Arial, sans-serif
+$font-size: 18px
+$font-size-small: round($font-size / 1.5)
+$line-height-ratio: 1.35
+$line-height: round($font-size * $line-height-ratio)
+$gutter: round($line-height / 2)
+$h1-size: round($font-size * $line-height-ratio * $line-height-ratio)
+$h2-size: round($font-size * $line-height-ratio)
+$heading-line-height: $h1-size + $gutter
+
+// Components
+$checkbox-size: $gutter * 2
+$input-height: 40px
+$input-padding: $gutter / 1.5
+$text-inputs: "input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=file], input[type=month], input[type=number], input[type=password], input[type=research], input[type=search], input[type=tel], input[type=text], input[type=url], input[type=week]"
+$nav-height: 5 * $gutter
+$controls: "#{$text-inputs}, select, textarea"
+$shadow: rgba($text, 0.3) 0 2px 3px
+
+// Animations
+$swift: cubic-bezier(0.4, 0, 0.2, 1)
+$swifter: cubic-bezier(0.4, 0, 0, 1)
+$heavy: cubic-bezier(0.7, 0, 0.6, 1)
+$swift-in: cubic-bezier(0, 0, 0.2, 1)
+$swift-out: cubic-bezier(0.4, 0, 1, 1)
+
+// Media queries
+$breakpoint-desktop: 1025px
+$breakpoint-tablet: 1024px
+$breakpoint-mobile: 768px
+$breakpoint-mobile-portrait: 480px
+$breakpoint-non-mobile: $breakpoint-mobile + 1px
+
+// Import all of the mixins we need to build our site
+@import "lib/*"
+
+// Import universal app styles
+@import "app/*"
+
+// Each component lives in its own Sass file in the components/ subdirectory.
+// Let's import them all!
+@import "components/*"

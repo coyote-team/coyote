@@ -34,4 +34,5 @@ en:
     models:
       membership: Member
       representation: Description
+      resource_group: Resource Group
       resource_link: Link

@@ -28,9 +28,9 @@ module SegmentedControlHelper
     title = options.delete(:title)
     options = combine_options({ aria: { pressed: pressed.to_s }, type: :button }, options)
     content_tag(:li, class: 'segmented-control-item') do
-      content_tag(:button, options) {
+      content_tag(:button, options) do
         icon(icon) + sr_only(title) + (block_given? ? yield : '')
-      }
+      end
     end
   end
 end

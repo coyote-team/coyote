@@ -51,7 +51,7 @@ RSpec.describe Resource do
   end
 
   specify do
-    expect { |b| subject.as_viewable(&b) }.to yield_with_args(source_uri)
+    expect(subject).to be_viewable
   end
 
   context 'without the presence of a source URI' do
@@ -60,7 +60,7 @@ RSpec.describe Resource do
     end
 
     specify do
-      expect { |b| subject.as_viewable(&b) }.not_to yield_control
+      expect(subject).not_to be_viewable
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe Resource do
     end
 
     specify do
-      expect { |b| subject.as_viewable(&b) }.not_to yield_control
+      expect(subject).not_to be_viewable
     end
   end
 

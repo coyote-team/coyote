@@ -17,9 +17,7 @@ class AssignmentsController < ApplicationController
 
     self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
       membership = memberships[assignment.user_id]
-      if membership
-        hash[membership] = hash[membership] + 1
-      end
+      hash[membership] = hash[membership] + 1 if membership.present?
       hash
     end
   end

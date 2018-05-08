@@ -18,10 +18,10 @@ RSpec.feature 'Resource adding and changing' do
     fill_in "Canonical ID", with: resource_attributes[:canonical_id]
     fill_in "Host URIs",    with: "http://example.com/abc\nhttp://example.com/xyz"
 
-    select(resource_attributes[:resource_type], from: 'Type')
+    select(resource_attributes[:resource_type].titleize, from: 'Type')
 
     expect {
-      click_button('Save')
+      click_button('Create Resource')
     }.to change(Resource, :count).
       from(0).to(1)
 

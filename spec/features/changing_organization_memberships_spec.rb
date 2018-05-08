@@ -19,7 +19,7 @@ RSpec.describe "Changing organizational memberships" do
     select 'Editor', from: 'Role'
 
     expect {
-      click_button 'Save'
+      click_button 'Update Member'
     }.to change {
       Coyote::OrganizationUser.new(member_user, user_organization).role
     }.from(:viewer).to(:editor)
@@ -28,7 +28,7 @@ RSpec.describe "Changing organizational memberships" do
 
     within "#membership_#{membership.id}" do
       expect {
-        click_link 'Delete'
+        click_button 'Delete'
       }.to change {
         user_organization.users.exists?(member_user.id)
       }.from(true).to(false)

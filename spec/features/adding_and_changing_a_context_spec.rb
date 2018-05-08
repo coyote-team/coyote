@@ -10,7 +10,7 @@ RSpec.feature "Adding and editing a resource group" do
       fill_in "Title", with: "Scavenger Hunt"
 
       expect {
-        click_button 'Save'
+        click_button 'Create Resource Group'
       }.to change(ResourceGroup, :count).from(0).to(1)
 
       resource_group = ResourceGroup.first
@@ -20,7 +20,7 @@ RSpec.feature "Adding and editing a resource group" do
       fill_in "Title", with: "Treasure Hunt"
 
       expect {
-        click_button 'Save'
+        click_button 'Update Resource Group'
         resource_group.reload
       }.to change(resource_group, :title).to("Treasure Hunt")
 

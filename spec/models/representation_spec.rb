@@ -38,7 +38,7 @@ RSpec.describe Representation do
     end
 
     specify do
-      expect(subject.errors[:base]).to be_present
+      expect(subject.errors[:text]).to be_present
     end
   end
 end

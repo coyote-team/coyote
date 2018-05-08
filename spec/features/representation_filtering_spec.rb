@@ -26,7 +26,7 @@ RSpec.feature 'Representation filtering' do
     expect(page).not_to have_content("My Organization's Description")
 
     fill_in 'q[text_or_resource_identifier_or_resource_title_cont_all]', with: ''
-    select 'Not Approved', from: 'q[status_eq]'
+    check 'Not Approved'
     click_button 'Search'
 
     expect(page).not_to have_content('A woman smiling')

@@ -14,11 +14,8 @@ class RecordFilter
     @base_scope = base_scope
 
     filter_scope = @filter_params.delete(:scope)
-    if filter_scope.present?
-      Array(filter_scope).each do |scope|
-        @filter_params[scope] = true
-      end
-    end
+
+    Array(filter_scope).each { |scope| @filter_params[scope] = true } if filter_scope.present?
   end
 
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper

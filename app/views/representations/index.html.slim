@@ -14,7 +14,7 @@
         .checkbox-list
           - Coyote::Representation.status_collection.each do |name, status|
             label.checkbox-list-item
-              = check_box_tag "q[status_eq][]", status, filter_params.fetch(:status_eq, []).include?(status.to_s)
+              = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
               = name
 
       .filter-set-item
