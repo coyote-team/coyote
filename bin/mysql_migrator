@@ -2,6 +2,7 @@
 
 # This is a quick one-off script to migrate stuff from Coyote's original MySQL DB into today's Postgres DB
 
+require ::File.expand_path('../../config/environment', __FILE__)
 require 'mysql2'
 
 class User
@@ -16,7 +17,7 @@ uri = URI.parse(ENV.fetch('JAWSDB_URL'))
 db = uri.path[1..-1]
 client = Mysql2::Client.new(host: uri.host, username: uri.user, database: db, password: uri.password)
 
-org = Organization.find(2)
+org = Organization.find(1)
 
 meta = client.query('SELECT * FROM meta').to_a
 org.meta.create!(meta.to_a)
@@ -74,22 +75,26 @@ end
 org.resources.create!(resources)
 puts "resource: #{Resource.count}"
 
-statuses = Coyote::Statuses.constants.inject({}) do |result, n|
-  result.merge Coyote::Statuses.const_get(n).to_s => n.to_s.downcase
+statuses = {}
+client.query('SELECT * from statuses').each do |status|
+  statuses[status["id"]] = status["title"].downcase.gsub(" ", "_")
 end
 
 license = License.find_by!(name: 'cc0-1.0')
 
 descriptions = client.query('SELECT * from descriptions')
 
+endpoint = Endpoint.first
+
 representations = descriptions.to_a.map do |rep|
   rep['language'] = rep.delete('locale')
-  status = rep.delete('status_id').to_s
+  status = rep.delete('status_id')
   status = statuses.fetch(status)
   rep['status'] = status
   rep['resource_id'] = rep.delete('image_id')
   rep['author_id'] = rep.delete('user_id')
   rep.delete('license')
+  rep['endpoint_id'] = endpoint.id
   rep['license_id'] = license.id
   rep
 end
@@ -105,5 +110,26 @@ audits.each do |a|
 end
 
 Audits = Class.new(ActiveRecord::Base)
+Audits.connection.execute %{TRUNCATE TABLE audits}
 Audits.create!(audits)
-puts "*** don't forget to reset Postgres sequences per https://stackoverflow.com/a/38575949/308448 ***"
+
+# Reset Postgres sequences per https://stackoverflow.com/a/38575949/308448
+ActiveRecord::Base.connection.execute %{SELECT 'SELECT SETVAL(' ||
+       quote_literal(quote_ident(PGT.schemaname) || '.' || quote_ident(S.relname)) ||
+       ', COALESCE(MAX(' ||quote_ident(C.attname)|| '), 1) ) FROM ' ||
+       quote_ident(PGT.schemaname)|| '.'||quote_ident(T.relname)|| ';'
+FROM pg_class AS S,
+     pg_depend AS D,
+     pg_class AS T,
+     pg_attribute AS C,
+     pg_tables AS PGT
+WHERE S.relkind = 'S'
+    AND S.oid = D.objid
+    AND D.refobjid = T.oid
+    AND D.refobjid = C.attrelid
+    AND D.refobjsubid = C.attnum
+    AND T.relname = PGT.tablename
+ORDER BY S.relname;
+}
+
+puts "ALL DONE"
