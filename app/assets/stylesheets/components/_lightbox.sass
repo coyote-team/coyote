@@ -9,10 +9,11 @@
   position: fixed
   right: 0
   top: 0
-  visibility: hidden
-  z-index: -1
+  z-index: 3
 
   .lightbox-item
+    animation: lightbox 200ms $swift forwards
+    box-shadow: $shadow
     height: auto
     left: 50%
     max-height: 80%
@@ -20,15 +21,16 @@
     opacity: 0
     position: absolute
     top: 50%
+    opacity: 0
     transform: translate(-50%, -50%) scale(0.5)
     transition: all 150ms $swift-out
     width: auto
 
-  &:target
-    visibility: visible
-    z-index: 3
+@keyframes lightbox
+  0%
+    opacity: 0
+    transform: translate(-50%, -50%) scale(0.5)
 
-    .lightbox-item
-      box-shadow: $shadow
-      opacity: 1
-      transform: translate(-50%, -50%) scale(1)
+  100%
+    opacity: 1
+    transform: translate(-50%, -50%) scale(1)

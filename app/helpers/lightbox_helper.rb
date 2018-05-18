@@ -9,10 +9,13 @@ module LightboxHelper
       # Configure the link
       id = options.delete(:id) || id_for(dom_id(resource))
       options = combine_options(options, { aria: { describedby: id } })
-      link_options = combine_options(link_options, { class: 'lightbox-link' })
+      link_options = combine_options(link_options, { class: 'lightbox-link', data: { lightbox: resource.source_uri }})
+      alt = options.delete(:alt) || "Lightbox for resource ##{resource.id}"
+      binding.pry
 
-      link_to("##{id}", link_options) { image_tag(resource.source_uri, options) } +
-        link_to('#_', class: 'lightbox', id: id) { image_tag(resource.source_uri, alt: options[:alt], class: 'lightbox-item') }
+      link_to(resource.source_uri, link_options) do
+        image_tag(resource.source_uri, options.merge(alt: alt))
+      end
     else
       # Otherwise, link to the source URI (if present), falling back to the resource itself
       target = resource.source_uri.present? ? resource.source_uri : resource

@@ -3,26 +3,26 @@ header
 
 .split-view
   .split-view-item
-    h2#our-status Our Status
-    = list aria: { labelledby: "our-status" } do
+    h2#our-stats Our Stats
+    = list aria: { labelledby: "our-stats" } do
       = link_to_list_item organization_resources_path(current_organization) do
-        = list_item_label "Total Resources"
+        = list_item_label "Resources"
         = list_item_value number_with_delimiter(dashboard.organization_resource_count)
 
       = link_to_list_item organization_representations_path(current_organization) do
-        = list_item_label "Total Descriptions"
+        = list_item_label "Descriptions"
         = list_item_value number_with_delimiter(dashboard.organization_representation_count)
 
       = link_to_list_item organization_resources_path(current_organization, q: { scope: [:represented] }) do
-        = list_item_label "Total Described Resources"
+        = list_item_label "Described Resources"
         = list_item_value number_with_delimiter(dashboard.organization_represented_resource_count)
 
       = link_to_list_item organization_resources_path(current_organization, q: { scope: [:unrepresented] }) do
-        = list_item_label "Total Undescribed Resources"
+        = list_item_label "Undescribed Resources"
         = list_item_value number_with_delimiter(dashboard.organization_unrepresented_count)
 
-    h2#my-status My Status
-    = list aria: { labelledby: "my-status" } do
+    h2#my-stats My Stats
+    = list aria: { labelledby: "my-stats" } do
       = link_to_list_item organization_resources_path(current_organization, q: { representations_author_id_eq: current_user.id }) do
         = list_item_label "Described Resources"
         = list_item_value number_with_delimiter(dashboard.current_user_represented_resources_count)
@@ -58,9 +58,8 @@ header
           = list_item_label 'Resources Unassigned'
           = list_item_value number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
 
-      p: strong SCROLL TO
-
-      ul
+      h2#scroll-to Scroll to
+      ul aria-labelledby="scroll-to"
         - if organization_user.admin?
           li= link_to('Undescribed', '#undescribed')
           li= link_to('Ready to Review', '#ready_to_review')

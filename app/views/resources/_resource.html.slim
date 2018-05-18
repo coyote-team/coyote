@@ -19,7 +19,8 @@ li.list-item.list-item--card
         span.sr-only Author:
         = resource.best_representation.author
 
-  ul.list-item-actions aria-label="Actions"
+  h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
+  ul.list-item-actions aria-labelledby="actions-#{id}"
     - if policy(resource).index?
       li.list-item-actions-item
         = link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"

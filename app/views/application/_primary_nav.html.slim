@@ -1,4 +1,5 @@
-ul.nav-primary role="navigation"
+h2.sr-only#navigation-title Navigation
+ul.nav-primary aria-labelledby="navigation-title"
   = nav_menu_link('Dashboard', organization_path(current_organization))
   - if can?(:list, :assignment)
     = nav_menu_link('Assignments', organization_assignments_path(current_organization))

@@ -1,30 +1,33 @@
 - resource, representations = resource_and_representations
 - id = id_for(resource.identifier)
 li.list-item
-  h4.sr-only id="representation-#{id}" Representations of Resource #{resource.identifier}
-
-  .list-item-header
-    = lightbox_link(resource)
+  = lightbox_link(resource)
 
   .list-item-body.timeline
+    span.sr-only Caption:
     = to_html resource.title
     - representations.each do |representation|
       .timeline-item
-        = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation '#{representation.id}' for bulk update"}
+        = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation #{representation.id} for bulk update"}
         = to_html representation.text
         p by #{representation.author}
+        h5.sr-only id="properties-#{id}" Properties of representation #{representation.id}
         ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
           = metum_tag(representation.metum, tag: :li)
           li.tag.tag--outline
             span.sr-only Language:
             = representation.language
           = representation_status_tag(representation, tag: :li) do
-            span.sr-only Language:
+            span.sr-only Status:
             = representation.status.to_s.titleize
 
-
-        = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
-        - if policy(representation).edit?
-          = link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
-        - if policy(representation).destroy?
-          = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
+        h5.sr-only id="actions-representation-#{representation.id}" Actions for representation ##{representation.id}
+        ul.list-item-actions aria-labelledby="actions-representation-#{representation.id}"
+          li.list-item-actions-item
+            = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+          - if policy(representation).edit?
+            li.list-item-actions-item
+              = link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+          - if policy(representation).destroy?
+            li.list-item-actions-item
+              = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  method: :delete, data: { confirm: "Are you sure you want to delete #{representation}?"}, aria: { describedby: dom_id(representation) }

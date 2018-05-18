@@ -33,8 +33,8 @@ module ResourcesHelper
     tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
 
     (
-      content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties" } +
-        content_tag(:ul, aria: { labelledby: "resource-#{id} tag-list-#{id}" }, class: 'tag-list') { tags.join.html_safe }
+      content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
+        content_tag(:ul, aria: { labelledby: "tag-list-#{id}" }, class: 'tag-list') { tags.join.html_safe }
     ).html_safe
   end
 end
