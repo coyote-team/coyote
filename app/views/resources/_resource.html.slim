@@ -12,12 +12,7 @@ li.list-item.list-item--card
 
   .list-item-body
     = resource_status_list(resource, id: id, title_tag: :h5)
-
-    - if resource.best_representation.present?
-      p= truncate(resource.best_representation.text, length: 100)
-      p
-        span.sr-only Author:
-        = resource.best_representation.author
+    = to_html resource.title
 
   h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
   ul.list-item-actions aria-labelledby="actions-#{id}"

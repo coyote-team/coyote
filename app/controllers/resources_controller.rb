@@ -63,8 +63,12 @@ class ResourcesController < ApplicationController
     params.fetch(:q, {}).permit(:s, :identifier_or_title_or_representations_text_cont_all, :representations_author_id_eq, :assignments_user_id_eq, :priority_flag_eq, scope: [])
   end
 
+  def resources_scope
+    current_user.staff? ? Resource : current_user.resources
+  end
+
   def set_resource
-    self.resource = current_user.resources.find(params[:id])
+    self.resource = resources_scope.find(params[:id])
     self.current_organization = resource.organization
   end
 

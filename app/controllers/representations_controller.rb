@@ -42,7 +42,7 @@ class RepresentationsController < ApplicationController
   def update
     if representation.update(representation_params)
       logger.info "Updated #{representation}"
-      redirect_to representation, notice: 'The description has been updated'
+      redirect_back fallback_location: representation, notice: 'The description has been updated'
     else
       logger.warn "Unable to update description due to '#{representation.error_sentence}'"
       render :edit
@@ -67,8 +67,12 @@ class RepresentationsController < ApplicationController
     params.fetch(:q, {}).permit(:s, :text_or_resource_identifier_or_resource_title_cont_all, :metum_id_eq, :author_id_eq, status_in: [])
   end
 
+  def representations_scope
+    current_user.staff? ? Representation : current_user.representations
+  end
+
   def set_representation
-    self.representation = current_user.representations.find(params[:id])
+    self.representation = representations_scope.find(params[:id])
     self.current_organization = representation.organization
   end
 
