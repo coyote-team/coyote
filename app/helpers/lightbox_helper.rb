@@ -11,7 +11,6 @@ module LightboxHelper
       options = combine_options(options, { aria: { describedby: id } })
       link_options = combine_options(link_options, { class: 'lightbox-link', data: { lightbox: resource.source_uri }})
       alt = options.delete(:alt) || "Lightbox for resource ##{resource.id}"
-      binding.pry
 
       link_to(resource.source_uri, link_options) do
         image_tag(resource.source_uri, options.merge(alt: alt))
