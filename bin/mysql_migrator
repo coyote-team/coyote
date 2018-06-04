@@ -107,6 +107,7 @@ audits = client.query("SELECT * from audits").to_a
 audits.each do |a|
   a['username'] = a['username'].presence || 'Unknown'
   a['auditable_type'] = 'Representation' if a['auditable_type'] == 'Description'
+  a['audited_changes'] = YAML.parse(a['audited_changes']).to_ruby if a['audited_changes'] =~ /^---/
 end
 
 Audits = Class.new(ActiveRecord::Base)
