@@ -5,10 +5,10 @@ li.list-item.list-item--card
   - if form.present? && policy(Assignment).new?
     label.list-item-header
       = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.identifier}' for bulk assignment'" }
-      = lightbox_link(resource)
+      = resource_link(resource)
   - else
     .list-item-header
-      = lightbox_link(resource)
+      = resource_link(resource)
 
   .list-item-body
     = resource_status_list(resource, id: id, title_tag: :h5)

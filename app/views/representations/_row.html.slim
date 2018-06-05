@@ -3,9 +3,9 @@ tr
     - if organization_user.admin?
       label
         = check_box_tag "representation_status_change[representation_ids][]", aria: { label: "Select representation #{representation.id} for bulk update" }
-        = lightbox_link(representation.resource, alt: representation)
+        = resource_link(representation.resource, alt: representation)
     - else
-      = lightbox_link(representation.resource, alt: representation)
+      = resource_link(representation.resource, alt: representation)
   td
     = representation_status_tag(representation)
   td= metum_tag(representation.metum, hint: false)
