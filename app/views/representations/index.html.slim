@@ -22,7 +22,7 @@
         .checkbox-list
           - available_meta.each do |meta|
             label.checkbox-list-item
-              = check_box_tag "q[metum_id_eq][]", meta.id, filter_params.fetch(:metum_id_eq, []).include?(meta.id.to_s)
+              = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
               = meta.title
 
       = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
