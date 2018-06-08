@@ -63,8 +63,7 @@ resources = images.to_a.map do |image|
   image.delete('assignments_count')
   image.delete('descriptions_count')
   image.delete('status_code')
-  image.delete('page_urls')
-
+  image['host_uris'] = JSON.parse(image.delete('page_urls')).join("\n")
   image['resource_type'] = 'still_image'
   image['identifier'] = image['id']
 
