@@ -15,11 +15,7 @@ module SegmentedControlHelper
 
   # Returns a component
   def segmented_control(options = {})
-    component(defaults: { class: 'segmented-control' }, options: options) { yield }
-  end
-
-  def segmented_control_for(controls, options = {}, item_options = {}, &block)
-    segmented_control(options) { component_items(controls, defaults: { class: 'segmented-control-item' }, options: item_options, &block) }
+    component(defaults: { class: 'segmented-control' }, options: options) { yield if block_given? }
   end
 
   def segmented_control_item(options = {})

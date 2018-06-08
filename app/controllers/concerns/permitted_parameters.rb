@@ -4,7 +4,7 @@ module PermittedParameters
   private
 
   def pagination_params
-    params.fetch(:page, {}).permit(:number, :size)
+    params.permit(:number, :per_page, :size)
   end
 
   def representation_params

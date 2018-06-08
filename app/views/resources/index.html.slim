@@ -61,7 +61,7 @@
 
         - if record_filter.browser_pagination_link_params.any?
           = toolbar_item do
-            = render 'pagination', record_filter: record_filter
+            = paginate record_filter.records
 
       = list id: 'results-list' do
         = render partial: 'resource', collection: record_filter.records, locals: { form: form }
@@ -88,6 +88,6 @@
 
         - if record_filter.browser_pagination_link_params.any?
           = toolbar_item do
-            = render 'pagination', record_filter: record_filter
+            = paginate record_filter.records
     - else
       p.empty-message There are no resources

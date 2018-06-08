@@ -7,14 +7,22 @@ module TitleHelper
 
     case title
     when Hash
-      tag = title.fetch(:tag, :h2)
+      title_options = title
       title = title[:text]
     when String
-      tag = :h2
+      title_options = {}
     end
 
+    tag = title_options.fetch(:tag, :h2)
+    sr_only = title_options.key?(:sr_only) ? title_options.delete(:sr_only) : true
+
     id = id_for(title)
-    options[:aria] = combine_options(options[:aria] || {}, labelled_by: id)
-    content_tag(tag, class: 'sr-only', id: id) { title }
+
+    # Update the options hash so that subsequent uses include the label
+    combine_options(options, aria: { labelledby: id })
+
+    # Configure the title tag
+    title_options = combine_options(title_options, { class: sr_only ? 'sr-only' : nil, id: id })
+    content_tag(tag, title_options) { title }
   end
 end

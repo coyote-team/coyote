@@ -3,8 +3,7 @@ header
 
 .split-view
   .split-view-item
-    h2#our-stats Our Stats
-    = list aria: { labelledby: "our-stats" } do
+    = list title: {text: 'Our Stats', sr_only: false} do
       = link_to_list_item organization_resources_path(current_organization) do
         = list_item_label "Resources"
         = list_item_value number_with_delimiter(dashboard.organization_resource_count)
@@ -21,8 +20,7 @@ header
         = list_item_label "Undescribed Resources"
         = list_item_value number_with_delimiter(dashboard.organization_unrepresented_count)
 
-    h2#my-stats My Stats
-    = list aria: { labelledby: "my-stats" } do
+    = list title: { text: 'My Stats', sr_only: false } do
       = link_to_list_item organization_resources_path(current_organization, q: { representations_author_id_eq: current_user.id }) do
         = list_item_label "Described Resources"
         = list_item_value number_with_delimiter(dashboard.current_user_represented_resources_count)
@@ -40,8 +38,8 @@ header
         = list_item_value number_with_delimiter(dashboard.current_user_unapproved_representation_count)
 
   .split-view-item
-     - if organization_user.admin?
-      = list title: "Queues" do
+    - if organization_user.admin?
+      = list title: { text: "Queues", sr_only: false } do
         = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:ready_to_review] }) do
           = list_item_label 'Descriptions Pending Approval'
           = list_item_value number_with_delimiter(dashboard.organization_ready_to_review_count)
@@ -58,12 +56,11 @@ header
           = list_item_label 'Resources Unassigned'
           = list_item_value number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
 
-      h2#scroll-to Scroll to
-      ul aria-labelledby="scroll-to"
-        - if organization_user.admin?
-          li= link_to('Undescribed', '#undescribed')
-          li= link_to('Ready to Review', '#ready_to_review')
-        li= link_to('Your Assignments', '#your_queues')
+    = segmented_control title: { text: 'Scroll to', sr_only: false } do
+      - if organization_user.admin?
+        li.segmented-control-item= link_to('Undescribed', '#undescribed')
+        li.segmented-control-item= link_to('Ready to Review', '#ready_to_review')
+      li.segmented-control-item= link_to('Your Assignments', '#your_queues')
 
 - if organization_user.admin?
   h2 Admin Queues

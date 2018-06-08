@@ -51,6 +51,6 @@ class RecordPaginator
   end
 
   def pagination_size
-    params.fetch(:size, records.default_per_page)
+    params.fetch(:size, params.fetch(:per_page, records.default_per_page))
   end
 end
