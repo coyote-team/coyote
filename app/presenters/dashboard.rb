@@ -74,21 +74,21 @@ class Dashboard
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
   # @note
-  #   You can control how many items are shown from the queue via the Rails.configuration.x.dashboard_top_items_queue_count setting in config/application.rb
+  #   You can control how many items are shown from the queue via the Rails.configuration.x.dashboard_top_items_queue_size setting in config/application.rb
   def organization_top_unrepresented_items_queue
-    organization_unrepresented_queue.first(top_items_queue_count)
+    organization_unrepresented_queue.first(top_items_queue_size)
   end
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
   # @note (see #organization_top_unrepresented_items_queue)
   def organization_top_unassigned_items_queue
-    organization_unassigned_queue.first(top_items_queue_count)
+    organization_unassigned_queue.first(top_items_queue_size)
   end
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
   # @note (see #organization_top_unrepresented_items_queue)
   def organization_top_ready_to_review_items_queue
-    organization_ready_to_review_queue.first(top_items_queue_count)
+    organization_ready_to_review_queue.first(top_items_queue_size)
   end
 
   # @return [Integer] total number of resources represented by the current user
@@ -119,7 +119,7 @@ class Dashboard
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
   # @note (see #organization_ready_to_review)
   def current_user_top_assigned_items_queue
-    current_user_assigned_items_queue.first(top_items_queue_count)
+    current_user_assigned_items_queue.first(top_items_queue_size)
   end
 
   # @return [Integer] total number of items assigned to the user
@@ -141,8 +141,8 @@ class Dashboard
 
   attr_reader :current_user, :organization
 
-  def top_items_queue_count
-    Rails.configuration.x.dashboard_top_items_queue_count
+  def top_items_queue_size
+    Rails.configuration.x.dashboard_top_items_queue_size
   end
 
   def organization_unrepresented_queue
