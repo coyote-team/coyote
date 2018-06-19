@@ -2,7 +2,7 @@
 # @see RepresentationsController
 class RepresentationStatusChangesController < ApplicationController
   def create
-    status, representation_ids = representation_status_change_params.values_at(:status,:representation_ids)
+    status, representation_ids = representation_status_change_params.values_at(:status, :representation_ids)
 
     update_count = if status.present?
                      representation_ids = Array(representation_ids)
@@ -23,6 +23,6 @@ class RepresentationStatusChangesController < ApplicationController
   private
 
   def representation_status_change_params
-    params.require(:representation_status_change).permit(:status,:representation_ids => [])
+    params.require(:representation_status_change).permit(:status, representation_ids: [])
   end
 end

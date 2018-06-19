@@ -1,11 +1,11 @@
 RSpec.describe OrganizationPolicy do
   include_context "admin organization user"
 
-  let(:org) do 
-    double(:org,class: Organization,user_id: org_user.id)
+  let(:org) do
+    double(:org, class: Organization, user_id: org_user.id)
   end
 
-  subject { OrganizationPolicy.new(org_user,org) }
+  subject { OrganizationPolicy.new(org_user, org) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }

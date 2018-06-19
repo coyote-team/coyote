@@ -15,7 +15,7 @@
 
 RSpec.describe ResourceGroupsController do
   let(:organization) { create(:organization) }
-  let(:resource_group) { create(:resource_group,organization: organization) }
+  let(:resource_group) { create(:resource_group, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -25,7 +25,7 @@ RSpec.describe ResourceGroupsController do
     base_params.merge(id: resource_group.id)
   end
 
-  let(:new_resource_group_params) do 
+  let(:new_resource_group_params) do
     base_params.merge(resource_group: attributes_for(:resource_group))
   end
 
@@ -36,8 +36,8 @@ RSpec.describe ResourceGroupsController do
   let(:foreign_resource_group) { create(:resource_group) }
 
   let(:foreign_resource_group_params) do
-    { id: foreign_resource_group.id, 
-      organization_id: foreign_resource_group.organization_id, 
+    { id: foreign_resource_group.id,
+      organization_id: foreign_resource_group.organization_id,
       resource_group: { title: 'SHOULDNOTBEALLOWED' } }
   end
 
@@ -73,14 +73,14 @@ RSpec.describe ResourceGroupsController do
   context "as an editor" do
     include_context "signed-in editor user"
 
-    let!(:resource_group) { create(:resource_group,organization: organization) }
+    let!(:resource_group) { create(:resource_group, organization: organization) }
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: resource_group_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: resource_group_params
@@ -109,31 +109,31 @@ RSpec.describe ResourceGroupsController do
 
     it "succeeds for all actions involving organization-owned resource_groups" do
       get :show, params: resource_group_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: resource_group_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :new, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_resource_group_params
-      }.to change(organization.resource_groups,:count).
+      }.to change(organization.resource_groups, :count).
         by(1)
 
       expect {
         patch :update, params: update_resource_group_params
         resource_group.reload
-      }.to change(resource_group,:title).
+      }.to change(resource_group, :title).
         to("NEWTITLE")
 
       expect {
         delete :destroy, params: resource_group_params
-      }.to change(organization.resource_groups,:size).
+      }.to change(organization.resource_groups, :size).
         by(-1)
 
       expect {

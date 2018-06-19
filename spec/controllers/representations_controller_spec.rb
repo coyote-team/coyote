@@ -31,7 +31,7 @@ RSpec.describe RepresentationsController do
   let(:organization) { create(:organization) }
   let(:metum) { create(:metum) }
   let(:license) { create(:license) }
-  let(:resource) { create(:resource,organization: organization) }
+  let(:resource) { create(:resource, organization: organization) }
   let(:endpoint) { create(:endpoint) }
 
   let(:base_params) do
@@ -59,8 +59,8 @@ RSpec.describe RepresentationsController do
     representation_params.merge(representation: { text: 'NEWTEXT' })
   end
 
-  let(:representation) do 
-    create(:representation,organization: organization)
+  let(:representation) do
+    create(:representation, organization: organization)
   end
 
   context "as a signed-out user" do
@@ -96,14 +96,14 @@ RSpec.describe RepresentationsController do
 
   context 'as a viewer user' do
     include_context "signed-in viewer user"
-    
+
     it 'succeeds for view-only actions, fails for edit actions' do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: representation_params
-      expect(response).to be_success
-      
+      expect(response).to be_successful
+
       expect {
         get :edit, params: representation_params
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -125,42 +125,42 @@ RSpec.describe RepresentationsController do
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
-  
+
   context 'as an author working with his or her own content' do
     include_context "signed-in author user"
 
-    let(:representation) do 
-      create(:representation,author: user,organization: organization)
+    let(:representation) do
+      create(:representation, author: user, organization: organization)
     end
-    
+
     it "succeeds for basic actions" do
       get :edit, params: representation_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :new, params: new_representation_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         post :create, params: new_representation_params
         expect(response).to be_redirect
         resource.reload
-      }.to change(resource.representations,:count).
+      }.to change(resource.representations, :count).
         from(0).to(1)
 
-      post :create, params: base_params.merge(representation: { metum_id: metum.id },resource_id: resource.id)
+      post :create, params: base_params.merge(representation: { metum_id: metum.id }, resource_id: resource.id)
       expect(response).not_to be_redirect
-        
+
       expect {
         patch :update, params: update_representation_params
         representation.reload
-      }.to change(representation,:text).
+      }.to change(representation, :text).
         to('NEWTEXT')
 
       expect(response).to redirect_to(representation_url(representation))
 
       patch :update, params: representation_params.merge(representation: { license_id: nil })
       expect(response).not_to be_redirect
-      
+
       expect {
         delete :destroy, params: update_representation_params
       }.to change { Representation.exists?(representation.id) }.
@@ -174,11 +174,11 @@ RSpec.describe RepresentationsController do
     include_context "signed-in author user"
 
     let(:other_author) do
-      create(:user,organization: organization)
+      create(:user, organization: organization)
     end
 
-    let(:representation) do 
-      create(:representation,author: other_author,organization: organization)
+    let(:representation) do
+      create(:representation, author: other_author, organization: organization)
     end
 
     it 'fails for all actions' do

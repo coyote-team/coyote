@@ -7,7 +7,7 @@ RSpec.describe RepresentationPolicy do
     allow(representation).to receive_messages(author: org_user)
   end
 
-  subject { RepresentationPolicy.new(org_user,representation) }
+  subject { RepresentationPolicy.new(org_user, representation) }
 
   it { is_expected.to permit_action(:index)          }
   it { is_expected.to permit_action(:show)           }
@@ -27,7 +27,7 @@ RSpec.describe RepresentationPolicy do
     include_context "author organization user"
 
     before do
-      allow(representation).to receive_messages(:author => :another_user)
+      allow(representation).to receive_messages(author: :another_user)
     end
 
     it { is_expected.to permit_new_and_create_actions  }

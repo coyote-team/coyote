@@ -22,6 +22,8 @@
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
+#  organizations_count    :integer          default(0)
+#  active                 :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -35,27 +37,32 @@ class User < ApplicationRecord
   has_secure_token :authentication_token
 
   has_many :memberships
-  has_many :organizations, :through => :memberships
+  has_many :organizations, through: :memberships, counter_cache: :organizations_count
 
-  devise :database_authenticatable, 
-         :registerable, 
-         :recoverable, 
-         :rememberable, 
-         :trackable, 
-         :validatable, 
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
          :lockable,
-         :password_length => 8..128
+         password_length: 8..128
 
-  has_many :assignments, :inverse_of => :user, :dependent => :destroy
-  has_many :assigned_resources, :class_name => :Resource, :through => :assignments, :source => :resource
-  has_many :authored_representations, :dependent => :restrict_with_exception, :inverse_of => :author, :foreign_key => :author_id, :class_name => :Representation
-  has_many :organization_representations, :through => :organizations, :class_name => :Representation, :source => :representations
-  has_many :resources, :through => :organizations
-  has_many :representations, :through => :resources
-  has_many :resource_links, :through => :organizations
-  has_many :resource_groups, :through => :organizations
+  has_many :assignments, inverse_of: :user, dependent: :destroy
+  has_many :assigned_resources, class_name: :Resource, through: :assignments, source: :resource
+  has_many :authored_representations, dependent: :restrict_with_exception, inverse_of: :author, foreign_key: :author_id, class_name: :Representation
+  has_many :organization_representations, through: :organizations, class_name: :Representation, source: :representations
+  has_many :resources, through: :organizations
+  has_many :representations, through: :resources
+  has_many :resource_links, through: :organizations
+  has_many :resource_groups, through: :organizations
 
-  scope :sorted, -> { order('LOWER(users.last_name) asc') }
+  scope :active, -> { where(active: true) }
+  scope :sorted, -> { order(Arel.sql('LOWER(users.last_name) asc')) }
+
+  def self.find_for_authentication(warden_conditions)
+    where(warden_conditions.merge(active: true)).first
+  end
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
@@ -69,7 +76,7 @@ class User < ApplicationRecord
   alias name to_s
 
   # @note for audit log
-  def username 
+  def username
     to_s
   end
 end

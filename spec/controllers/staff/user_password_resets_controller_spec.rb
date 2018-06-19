@@ -37,7 +37,7 @@ RSpec.describe Staff::UserPasswordResetsController do
 
       expect {
         post :create, params: user_params
-      }.to change(ActionMailer::Base.deliveries,:count).
+      }.to change(ActionMailer::Base.deliveries, :count).
         from(0).to(1)
 
       resetable_user.reload

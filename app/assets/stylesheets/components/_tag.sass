@@ -1,0 +1,38 @@
+// COMPONENT: Tag list: a list of tags
+.tag-list
+  margin-bottom: $gutter
+
+// COMPONENT: Tag: a piece of status text rendered to make visually distinguish
+// itself
+.tag
+  background-color: $text
+  border: 1px solid $text
+  color: $background
+  font-size: $font-size-small
+  font-weight: bold
+  display: inline-block
+  margin: 0 $input-padding $input-padding 0
+  padding: 0 $input-padding 1px $input-padding
+  text-align: center
+  text-transform: uppercase
+
+  &:after
+    @extend .sr
+    content: ', '
+
+  &:last-of-type:after
+    content: ''
+    display: none
+
+  &.tag--outline
+    background-color: $background
+    color: $text
+
+  @each $name, $color in $status
+    &.tag--#{$name}
+      background-color: $color
+      border-color: $color
+
+      &.tag--outline
+        background-color: transparent
+        color: $color

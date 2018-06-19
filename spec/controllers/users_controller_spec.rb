@@ -22,6 +22,8 @@
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
+#  organizations_count    :integer          default(0)
+#  active                 :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -33,7 +35,7 @@
 
 RSpec.describe UsersController do
   let(:organization) { create(:organization) }
-  let(:user_of_interest) { create(:user,organization: organization) }
+  let(:user_of_interest) { create(:user, organization: organization) }
 
   let(:base_params) do
     { id: user_of_interest.id }
@@ -55,7 +57,7 @@ RSpec.describe UsersController do
 
     it "succeeds for critical actions" do
       get :show, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

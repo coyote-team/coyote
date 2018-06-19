@@ -1,0 +1,30 @@
+table
+  caption
+    h1
+      = title "Members of #{current_organization.title}"
+
+  thead
+    tr
+      th First name
+      th Last name
+      th Email
+      th Role
+      th.table-cell-actions Actions
+
+  tbody
+    - organization_users.each do |org_user|
+      tr id="membership_#{org_user.id}"
+        td.table-cell-primaryl.table-cell-link= link_to_if(org_user.first_name.present?, org_user.first_name, [current_organization, org_user.membership])
+        td.table-cell-primaryl.table-cell-link= link_to_if(org_user.last_name.present?, org_user.last_name, [current_organization, org_user.membership])
+        td.table-cell-primaryl.table-cell-link= link_to(org_user.email, [current_organization, org_user.membership])
+        td= org_user.role.to_s.titleize
+        td.table-cell-actions
+          - if policy(org_user.membership).edit?
+            = link_to('Edit', edit_organization_membership_path(current_organization, org_user.membership), class: 'button button--outline', title: "Change this user's membership")
+
+          - if policy(org_user.membership).destroy?
+            = button_to('Delete', [current_organization, org_user.membership], title: 'Delete this user from the organization', class: "button button--outline", data: { confirm: "Are you sure you want to delete #{org_user.user} from this organization?" }, method: :delete)
+
+- if policy(:invitation).new?
+  nav.toolbar.toolbar--footer
+    = link_to 'Invite User', new_organization_invitation_path(current_organization), class: 'button'

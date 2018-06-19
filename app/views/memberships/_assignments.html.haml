@@ -1,8 +1,0 @@
-.row
-  .col-md-6
-    %ul.list-group
-    = list_of(assignments,class: 'list-group-item') do |assignment|
-      = link_to([current_organization,assignment],class: 'thumbnail') do
-        = resource_link_target(assignment.resource,nil,alt: assignment.resource_title)
-      %p= assignment.resource_title
-

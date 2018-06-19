@@ -48,7 +48,7 @@ Coyote::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  #config.cache_store = :redis_store, {  
+  #config.cache_store = :redis_store, {
     #host: "",
     #port: 6379,
     #expires_in: 90.minutes ,

@@ -14,15 +14,15 @@
 #
 
 class Assignment < ApplicationRecord
-  belongs_to :user, :inverse_of => :assignments
-  belongs_to :resource, :inverse_of => :assignments
+  belongs_to :user, inverse_of: :assignments
+  belongs_to :resource, inverse_of: :assignments
 
-  validates :user, uniqueness: { :scope => :resource }
-  
-  scope :by_created_at, -> { order(:created_at => :desc) }
+  validates :user, uniqueness: { scope: :resource }
 
-  delegate :title, :to => :resource, :prefix => true
-  delegate :first_name, :last_name, :email, :to => :user, :prefix => true
+  scope :by_created_at, -> { order(created_at: :desc) }
+
+  delegate :title, to: :resource, prefix: true
+  delegate :first_name, :last_name, :email, to: :user, prefix: true
 
   # @return [String] human-friendly representation of this Assignment
   def to_s

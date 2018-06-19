@@ -1,4 +1,4 @@
-# Protects Assignment objects with policies. 
+# Protects Assignment objects with policies.
 class AssignmentPolicy < ApplicationPolicy
   # @return [Boolean] if the user is a admin, they can work with assignments
   def index?

@@ -4,7 +4,7 @@ RSpec.describe SerializableResource do
   let(:object) { build_stubbed(:resource) }
 
   let(:approved_representations) do
-    build_stubbed_list(:representation,2)
+    build_stubbed_list(:representation, 2)
   end
 
   before do
@@ -18,6 +18,6 @@ RSpec.describe SerializableResource do
   subject do
     serialized.fetch(:attributes)
   end
-  
+
   it { is_expected.to include(canonical_id: object.canonical_id) }
 end

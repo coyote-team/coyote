@@ -1,0 +1,22 @@
+// COMPONENT: Label: provides focus on form elements and guidance for screen
+// readers. Namespaced via tag name rather than class name.
+label
+  cursor: pointer
+
+  // Nested controls push off of text
+  #{$controls}
+    margin-left: $input-padding
+
+  // Labels *containing* checkbox or radio inputs
+  &.label--checkbox, &.label--radio
+    @extend %input-fixed-height
+    border-color: transparent
+
+  // Stacked labels to the line
+  &.label--stack
+    display: block
+    margin-bottom: $input-padding
+
+    +
+      #{$controls}
+        margin-bottom: $gutter

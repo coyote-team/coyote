@@ -1,0 +1,9 @@
+= simple_form_for user, validate: true, url: staff_user_path(user) do |f|
+  = f.error_notification
+
+  = f.input :email, required: true, autofocus: true
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :staff, as: :select, collection: [['No', false], ['Yes', true]], include_blank: false
+
+  = form_toolbar f

@@ -6,59 +6,59 @@
 class Dashboard
   # @param current_user [User] identifies the user for whom we are creating a dashboard
   # @param organization [Organization] Identifies the organization for which we are creating a dashboard
-  def initialize(current_user,organization)
+  def initialize(current_user, organization)
     @current_user = current_user
     @organization = organization
   end
 
   # @return [Integer] total number of resources owned by the organization
   def organization_resource_count
-    organization.resources.size
+    organization.resources.count
   end
 
   # @return [Integer] total number of representations owned by the organization
   def organization_representation_count
-    organization.representations.size
+    organization.representations.count
   end
 
   # @return [Integer] total number of represented resources owned by the organization
   def organization_represented_resource_count
-    organization.resources.represented.size
+    organization.resources.represented.count
   end
 
   # @return [Integer] total number of approved representations owned by the organization
   def organization_approved_representation_count
-    organization.representations.approved.size
+    organization.representations.approved.count
   end
 
   # @return [Integer] total number of unapproved representations owned by the organization
   def organization_unapproved_representation_count
-    organization.representations.not_approved.size
+    organization.representations.not_approved.count
   end
 
   # @return [Integer] total number of resources that have been assigned to a user for representation, which are as-yet-unrepresented
   def organization_open_assignment_count
-    organization.resources.assigned_unrepresented.size
+    organization.resources.assigned_unrepresented.count
   end
 
   # @return [Integer] total number of resources that are unrepresented and have not been assigned to a user for representation
   def organization_unassigned_unrepresented_count
-    organization.resources.unassigned_unrepresented.size
+    organization.resources.unassigned_unrepresented.count
   end
 
   # @return [Integer] total number of ready-to-review representations owned by the organization
   def organization_ready_to_review_count
-    organization_ready_to_review_queue.size
+    organization_ready_to_review_queue.count
   end
 
   # @return [Integer] total number of unrepresented resources owned by the organization
   def organization_unrepresented_count
-    organization_unrepresented_queue.size
+    organization_unrepresented_queue.count
   end
 
   # @return [Integer] total number of resources owned by the organization which have been assigned to a user for representation
   def organization_assigned_count
-    organization.resources.assigned.size
+    organization.resources.assigned.count
   end
 
   # Identifies the time when the most recently-created resource was added to the database, if any have been created
@@ -69,7 +69,7 @@ class Dashboard
 
   # @return [Integer] total number of resources owned by the organization which have not been assigned to a user for representation
   def organization_unassigned_count
-    organization_unassigned_queue.size
+    organization_unassigned_queue.count
   end
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
@@ -93,27 +93,27 @@ class Dashboard
 
   # @return [Integer] total number of resources represented by the current user
   def current_user_represented_resources_count
-    current_user.resources.represented.size
+    current_user.resources.represented_by(current_user).count
   end
 
   # @return [Integer] total number of representations written by the current user
   def current_user_representation_count
-    current_user.authored_representations.size
+    current_user.authored_representations.count
   end
 
   # @return [Integer] total number of approved representations written by the current user
   def current_user_approved_representation_count
-    current_user.authored_representations.approved.size
+    current_user.authored_representations.approved.count
   end
 
   # @return [Integer] total number of unapproved representations written by the current user
   def current_user_unapproved_representation_count
-    current_user.authored_representations.not_approved.size
+    current_user.authored_representations.not_approved.count
   end
 
   # @return [Itnger] total number of resources assigned to the user which do not have a representation
   def current_user_open_assignments_count
-    current_user.assigned_resources.unrepresented.size
+    current_user.assigned_resources.unrepresented.count
   end
 
   # @return [ActiveRecord::Associations::CollectionProxy] a subset of the most important resources assigned to the user for representation
@@ -124,7 +124,7 @@ class Dashboard
 
   # @return [Integer] total number of items assigned to the user
   def current_user_assigned_items_count
-    current_user_assigned_items_queue.size
+    current_user_assigned_items_queue.count
   end
 
   # @return [Boolean] whether or not the user has any assigned items
@@ -144,7 +144,7 @@ class Dashboard
   def top_items_queue_size
     Rails.configuration.x.dashboard_top_items_queue_size
   end
-  
+
   def organization_unrepresented_queue
     organization.resources.unrepresented
   end

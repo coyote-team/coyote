@@ -1,0 +1,8 @@
+- if flash.any?
+  h2.sr-only#notification-title Notifications
+  #notifications
+    = yield :devise_form_errors
+    ul aria-labelledby="notification-title"
+      - flash.each_with_index do |(type, message), idx|
+        li.notification class=flash_class(type)
+          .notification-title= message

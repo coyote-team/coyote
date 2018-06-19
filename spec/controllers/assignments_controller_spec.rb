@@ -20,17 +20,17 @@ RSpec.describe AssignmentsController do
     { organization_id: organization.id }
   end
 
-  let(:resource) { create(:resource,organization: organization) }
+  let(:resource) { create(:resource, organization: organization) }
 
-  let(:assignment) { create(:assignment,user: user,resource: resource) }
+  let(:assignment) { create(:assignment, user: user, resource: resource) }
 
   let(:assignment_params) do
     base_params.merge(id: assignment.id)
   end
 
-  let(:new_assignment_user) { create(:user,organization: organization) }
+  let(:new_assignment_user) { create(:user, organization: organization) }
 
-  let(:new_assignment_resource) { create(:resource,organization: organization) }
+  let(:new_assignment_resource) { create(:resource, organization: organization) }
 
   let(:new_assignment_params) do
     base_params.merge(assignment: { user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id] })
@@ -60,7 +60,7 @@ RSpec.describe AssignmentsController do
     include_context "signed-in editor user"
 
     it "fails for basic actions" do
-      expect { 
+      expect {
         get :index, params: base_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
@@ -83,10 +83,10 @@ RSpec.describe AssignmentsController do
 
     it "can view and edit assignments" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :show, params: assignment_params
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'can create and destroy assignments' do
@@ -99,7 +99,7 @@ RSpec.describe AssignmentsController do
       expect {
         post :create, params: new_assignment_params
         expect(response).to be_redirect
-      }.to change(new_assignment_user.assignments,:count).
+      }.to change(new_assignment_user.assignments, :count).
         from(0).to(1)
     end
   end

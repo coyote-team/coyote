@@ -22,6 +22,8 @@
 #  failed_attempts        :integer          default(0), not null
 #  unlock_token           :string
 #  locked_at              :datetime
+#  organizations_count    :integer          default(0)
+#  active                 :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -31,7 +33,7 @@
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence :token do
     SecureRandom.hex(3)
   end
@@ -47,8 +49,8 @@ FactoryGirl.define do
     end
 
     trait :with_membership do
-      after(:create) do |user,evaluator|
-        create(:membership,user: user,role: evaluator.role)
+      after(:create) do |user, evaluator|
+        create(:membership, user: user, role: evaluator.role)
       end
     end
 
@@ -56,8 +58,8 @@ FactoryGirl.define do
       staff true
     end
 
-    after(:create) do |user,evaluator|
-      create(:membership,user: user,organization: evaluator.organization,role: evaluator.role) if evaluator.organization
+    after(:create) do |user, evaluator|
+      create(:membership, user: user, organization: evaluator.organization, role: evaluator.role) if evaluator.organization
     end
   end
 end

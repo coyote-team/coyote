@@ -1,0 +1,6 @@
+= simple_form_for resource, as: resource_name, url: session_path(resource_name), validate: true, html: { multipart: true } do |f|
+  = f.input :email, required: false, autofocus: true, label: false, placeholder: "Email"
+  = f.input :password, required: false, label: false, placeholder: "Password"
+  = f.input :remember_me, as: :boolean, label: false, inline_label: "Remember me" if devise_mapping.rememberable?
+  .toolbar.toolbar--footer
+    = f.button :submit, "Log in", class: 'toolbar-item'

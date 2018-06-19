@@ -10,7 +10,7 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :license do
     name { Faker::Lorem.unique.word }
     title { Faker::Lorem.paragraph }

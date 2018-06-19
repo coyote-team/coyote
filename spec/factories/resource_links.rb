@@ -16,7 +16,7 @@
 #  index_resource_links_on_subject_resource_id  (subject_resource_id)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :resource_link do
     subject_resource
     verb Coyote::ResourceLink::VERB_NAMES.first

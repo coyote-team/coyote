@@ -1,0 +1,38 @@
+table
+  caption
+    h1= title user
+  tbody
+    tr
+      th First name:
+      td= user.first_name
+    tr
+      th Last name:
+      td= user.last_name
+    tr
+      th Email:
+      td= user.email
+    tr
+      th Staff?:
+      td= user.staff? ? 'Yes' : 'No'
+    tr
+      th Created At:
+      td= user.created_at
+    tr
+      th Current Sign In At:
+      td= user.current_sign_in_at
+    tr
+      th Last Sign In At:
+      td= user.last_sign_in_at
+    tr
+      th Number of Failed Sign In Attempts:
+      td= user.failed_attempts
+    tr
+      th Account Locked At:
+      td= user.locked_at
+    tr
+      th Reset Password
+      td
+        = "Sent at: #{user.reset_password_sent_at}<br/>".html_safe if user.reset_password_sent_at.present?
+        = button_to('Send password reset email', staff_user_password_resets_path, params: { user_id: user.id }, class: 'button')
+
+= show_toolbar user, edit: true, delete: user != current_user, delete_title: "Archive"

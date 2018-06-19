@@ -15,14 +15,14 @@
 #  index_meta_on_organization_id_and_title  (organization_id,title) UNIQUE
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :metum do
     title { Faker::Lorem.unique.word }
     organization
     instructions "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision"
 
     trait :short do
-      title "Short" 
+      title "Short"
     end
 
     trait :long do

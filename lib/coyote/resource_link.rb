@@ -2,7 +2,7 @@ module Coyote
   # Utilities for managing ResourceLinks
   module ResourceLink
     # Basic container for Coyote Verb definitions
-    Verb = Struct.new(:name,:description,:reverse) do
+    Verb = Struct.new(:name, :description, :reverse) do
       def reverse_verb_name
         reverse.name
       end
@@ -32,7 +32,7 @@ module Coyote
     # Lookup table for verbs
     # @see Verb
     # @see VERB_PAIRS
-    VERBS = VERB_PAIRS.inject({}) { |result,(forward_relation,backward_relation)|
+    VERBS = VERB_PAIRS.inject({}) { |result, (forward_relation, backward_relation)|
       forward_relation.reverse  = backward_relation
       backward_relation.reverse = forward_relation
 
@@ -42,9 +42,9 @@ module Coyote
       })
     }.freeze
 
-    VERB_CHOICES = VERB_PAIRS.inject([]) { |total,(forward,reverse)|
-      total << ["#{forward.name} (#{forward.description})",forward.name]
-      total << ["#{reverse.name} (#{reverse.description})",reverse.name]
+    VERB_CHOICES = VERB_PAIRS.inject([]) { |total, (forward, reverse)|
+      total << ["#{forward.name} (#{forward.description})", forward.name]
+      total << ["#{reverse.name} (#{reverse.description})", reverse.name]
     }.freeze
 
     VERB_NAMES = VERB_PAIRS.flatten.map { |v| v.name.to_s }.freeze

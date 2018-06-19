@@ -1,0 +1,22 @@
+tr
+  td.table-cell-select rowspan=2
+    - if organization_user.admin?
+      label
+        = check_box_tag "representation_status_change[representation_ids][]", aria: { label: "Select representation #{representation.id} for bulk update" }
+        = resource_link(representation.resource, alt: representation)
+    - else
+      = resource_link(representation.resource, alt: representation)
+  td
+    = representation_status_tag(representation)
+  td= metum_tag(representation.metum, hint: false)
+  td
+    span.tag.tag--outline= language_name(representation.language)
+  td.table-cell-actions
+    = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+    - if policy(representation).edit?
+      = link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+    - if policy(representation).destroy?
+      = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
+tr style='border-top: 0'
+  td id=dom_id(representation) colspan=4
+    = to_html(representation.text)

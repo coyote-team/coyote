@@ -1,0 +1,94 @@
+// COMPONENT: Table: used for presenting tabular data (duh; you know what this
+// is). Namespaced via tag name rather than class name.
+table
+  border-collapse: collapse
+  display: table
+  width: 100%
+
+  caption
+    text-align: left
+
+  th, td
+    padding: $gutter
+    vertical-align: middle
+
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0
+
+    &.table-cell-actions
+      text-align: right
+      vertical-align: top
+      white-space: nowrap
+      width: 10px
+
+      > *
+        display: inline-block
+
+      .button:last-child, > *:last-child .button
+        margin-bottom: 0
+        margin-right: 0
+
+    &.table-cell-link
+      height: 100%
+      padding: 0
+
+      a
+        display: block
+        padding: $gutter
+
+        &:first-child
+          padding-left: 0
+
+        &:last-child
+          padding-right: 0
+
+      &.table-cell-link--text a
+        text-decoration: none
+
+    &.table-cell-primary
+      font-weight: bold
+
+    &.table-cell-select
+      // white-space: nowrap
+
+      label
+        display: flex
+
+      input
+        vertical-align: top
+
+  th
+    color: $text-dark
+    font-weight: bold
+    text-align: left
+    text-transform: uppercase
+    white-space: nowrap
+
+  tbody
+    tr
+      border-top: 1px solid $border
+
+      &.table-row-disabled
+        td
+          color: $placeholder
+
+      @include non-mobile
+        th
+          padding-right: $gutter
+          width: 10px
+          white-space: nowrap
+
+          ~ td
+            padding-left: $gutter
+
+      @include mobile
+        th
+          display: block
+
+          + td
+            display: block
+            padding-top: 0
+            word-break: break-all

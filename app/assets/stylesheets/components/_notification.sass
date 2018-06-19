@@ -1,0 +1,51 @@
+// COMPONENT: Notification: Used to notify the user when state has changed in a
+// significant way
+.notification
+  background-color: rgba($text, 0.7)
+  color: $background
+  display: flex
+  margin-bottom: $gutter
+
+  &.notification-title, .notification-title, .notification-dismiss
+    padding: $gutter
+
+  .notification-title
+    flex: 1
+
+  .notification-dismiss
+    appearance: none
+    background-color: $text
+    border: 1px solid $text
+    color: inherit
+    cursor: pointer
+    display: block
+    text-decoration: none
+
+    &:hover
+      color: $background
+
+  @each $name, $color in $status
+    &.notification--#{$name}
+      background-color: rgba($color, 0.9)
+
+      .notification-dismiss
+        background-color: $color
+        border-color: $color
+
+// COMPONENT: Notifications container: Contains notifications in an Android
+// "toast" style way
+#notifications
+  left: $gutter
+  position: fixed
+  top: $nav-height + $gutter
+
+  @include mobile
+    bottom: $gutter
+    right: $gutter
+    top: auto
+
+  .notification
+    box-shadow: $shadow
+
+.error_notification
+  @extend .notification.notification--error

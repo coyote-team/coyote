@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production? # Extra check to prevent database changes if the environment is production
 
 require 'rspec/rails'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'devise'
 require 'webmock/rspec'
 require 'capybara/rspec'
@@ -21,13 +21,13 @@ SPEC_DATA_PATH = Pathname(__dir__).join("data")
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.include Devise::Test::ControllerHelpers, :type => :helper
-  config.include Coyote::Testing::FeatureHelpers, :type => :feature
-  config.include Coyote::Testing::EmailHelpers, :type => :feature
-  config.include Coyote::Testing::ApiHelpers, :type => :request
-  config.include JSONAPI::RSpec, :type => :request
+  config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :helper
+  config.include Coyote::Testing::FeatureHelpers, type: :feature
+  config.include Coyote::Testing::EmailHelpers, type: :feature
+  config.include Coyote::Testing::ApiHelpers, type: :request
+  config.include JSONAPI::RSpec, type: :request
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
 
@@ -35,7 +35,7 @@ RSpec.configure do |config|
   config.filter_run focus: true
   config.filter_run show_in_doc: true if ENV['APIPIE_RECORD'] # see https://github.com/Apipie/apipie-rails#examples-recording
   config.run_all_when_everything_filtered = true
-  config.disable_monkey_patching! 
+  config.disable_monkey_patching!
   config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.use_transactional_fixtures = false
@@ -51,14 +51,14 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation,except: %w[ar_internal_metadata])
+    DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each,:type => :feature) do
+  config.before(:each, type: :feature) do
     ActionMailer::Base.deliveries.clear
 
     unless Capybara.current_driver == :rack_test
@@ -75,9 +75,9 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each,:type => :controller,&db_cleaning) 
-  config.around(:each,:type => :feature,&db_cleaning) 
-  config.around(:each,:type => :request,&db_cleaning) 
+  config.around(:each, type: :controller, &db_cleaning)
+  config.around(:each, type: :feature, &db_cleaning)
+  config.around(:each, type: :request, &db_cleaning)
 
   config.after(:all) do
     DatabaseCleaner.clean_with(:truncation)
@@ -92,7 +92,7 @@ VCR.configure do |config|
   config.ignore_hosts "codeclimate.com"
 end
 
-WebMock.disable_net_connect!(allow: [/validator/,/codeclimate/])
+WebMock.disable_net_connect!(allow: [/validator/, /codeclimate/])
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

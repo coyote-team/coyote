@@ -1,0 +1,41 @@
+// COMPONENT: Form: a collection of controls with some standard styling
+.form
+
+  &.form--inline
+    display: inline-block
+
+  // COMPONENT: Form field: a collection of one or more <label> and <input /> tags
+  .form-field
+    display: block
+    margin: $gutter 0
+    max-width: $breakpoint-mobile
+
+    + .form-field
+      margin-top: $gutter * 4
+
+    .form-field-label
+      display: block
+      font-weight: bold
+      margin-bottom: $gutter
+      position: relative
+      text-transform: uppercase
+
+      abbr
+        display: none
+
+    &.form-field--error
+      #{$controls}
+        border-color: map-get($status, "error")
+
+    .form-field-error-message, .form-field-hint
+      margin: 0 0 $gutter 0
+
+    .form-field-error-message
+      color: map-get($status, "error")
+
+h1 + .form
+  border-top: 1px solid $border
+  padding-top: $gutter
+
+form.button_to, .form--line
+  display: inline-block

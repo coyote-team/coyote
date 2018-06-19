@@ -22,7 +22,7 @@ namespace :dev_only do
   task truncate: %i[environment check_env] do
     require 'database_cleaner'
     puts "Truncating #{Rails.env} database..."
-    DatabaseCleaner.clean_with(:truncation,except: %w[ar_internal_metadata])
+    DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
   desc 'Truncate the development database and replace with new seed data'

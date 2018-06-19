@@ -1,16 +1,16 @@
 RSpec.feature 'Resource viewing' do
   include_context 'as a logged-in author user'
 
-  let!(:resource) do 
-    create(:resource,organization: user_organization,title: "My Organization's Resource")
+  let!(:resource) do
+    create(:resource, organization: user_organization, title: "My Organization's Resource")
   end
 
   let!(:cezannne_resource) do
-    create(:resource,organization: user_organization,title: 'Painting by Cezanne')
+    create(:resource, organization: user_organization, title: 'Painting by Cezanne')
   end
 
-  let!(:other_resource) do 
-    create(:resource,title: 'Should Not See This')
+  let!(:other_resource) do
+    create(:resource, title: 'Should Not See This')
   end
 
   scenario 'succeeds' do

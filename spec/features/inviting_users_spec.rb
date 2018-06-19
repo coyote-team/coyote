@@ -7,7 +7,7 @@ RSpec.feature 'Inviting users' do
 
   context 'who do already have a Coyote account' do
     let!(:preexisting_user) do
-      create(:user,email: new_member_email)
+      create(:user, email: new_member_email)
     end
 
     scenario 'succeeds' do
@@ -18,15 +18,15 @@ RSpec.feature 'Inviting users' do
       expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
 
       fill_in 'invitation[recipient_email]', with: new_member_email
-      select('Editor',from: 'Role')
+      select('Editor', from: 'Role')
 
       expect {
         click_button 'Send invitation'
         expect(page.current_path).to eq(organization_path(user_organization))
-      }.to change(user_organization.users,:count).
+      }.to change(user_organization.users, :count).
         from(1).to(2)
 
-      Membership.find_by!(user: preexisting_user,organization: user_organization).tap do |m|
+      Membership.find_by!(user: preexisting_user, organization: user_organization).tap do |m|
         expect(m).to be_editor
       end
 
@@ -50,18 +50,18 @@ RSpec.feature 'Inviting users' do
       fill_in 'invitation[recipient_email]', with: new_member_email
       fill_in 'invitation[first_name]', with: 'John'
       fill_in 'invitation[last_name]', with: 'Doe'
-      
-      select('Author',from: 'Role')
+
+      select('Author', from: 'Role')
 
       expect {
         click_button 'Send invitation'
         expect(page.current_path).to eq(organization_path(user_organization))
-      }.to change(User,:count).
+      }.to change(User, :count).
         from(1).to(2)
 
       new_user = User.find_by!(email: new_member_email)
 
-      Membership.find_by!(user: new_user,organization: user_organization).tap do |m|
+      Membership.find_by!(user: new_user, organization: user_organization).tap do |m|
         expect(m).to be_author
       end
 
@@ -75,7 +75,7 @@ RSpec.feature 'Inviting users' do
       html_body = Nokogiri::HTML(html_part.body.to_s)
 
       invite_link = html_body.at_xpath("//a[@id='signup_link']/@href").value
-      token = URI(invite_link).query[/=(.+)/,1]
+      token = URI(invite_link).query[/=(.+)/, 1]
       expect(token).to be_present
 
       invitation = Invitation.find_by!(token: token)
@@ -92,7 +92,7 @@ RSpec.feature 'Inviting users' do
         click_button 'Sign up'
         expect(page.current_path).to eq(organization_path(user_organization))
         invitation.reload
-      }.to change(invitation,:redeemed?).from(false).to(true)
+      }.to change(invitation, :redeemed?).from(false).to(true)
 
       expect(invitation).to be_redeemed
     end
@@ -100,7 +100,7 @@ RSpec.feature 'Inviting users' do
 
   context "who are already members of the organization" do
     let!(:existing_member) do
-      create(:user,organization: user_organization,role: 'editor',email: new_member_email)
+      create(:user, organization: user_organization, role: 'editor', email: new_member_email)
     end
 
     scenario 'fails with error message' do
@@ -111,15 +111,15 @@ RSpec.feature 'Inviting users' do
       expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
 
       fill_in 'invitation[recipient_email]', with: new_member_email
-      select('Viewer',from: 'Role')
+      select('Viewer', from: 'Role')
 
       expect {
         click_button 'Send invitation'
       }.not_to raise_error
 
       expect(page.current_path).to eq(organization_invitations_path(user_organization))
-      
-      Membership.find_by!(user: existing_member,organization: user_organization).tap do |m|
+
+      Membership.find_by!(user: existing_member, organization: user_organization).tap do |m|
         expect(m).to be_editor
       end
 
@@ -130,7 +130,7 @@ end
 
 RSpec.feature "Attempting to redeem a previously-redeemed invitation" do
   let!(:redeemed_invitation) do
-    create(:invitation,:redeemed)
+    create(:invitation, :redeemed)
   end
 
   scenario 'fails with error message' do

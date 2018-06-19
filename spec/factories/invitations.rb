@@ -21,16 +21,16 @@
 #  index_invitations_on_sender_user_id             (sender_user_id)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :invitation do
     recipient_email { Faker::Internet.unique.email }
 
     sender_user do
-      build(:user,organization: organization)
+      build(:user, organization: organization)
     end
 
     recipient_user do
-      build(:user,organization: organization)
+      build(:user, organization: organization)
     end
 
     organization do
@@ -38,10 +38,10 @@ FactoryGirl.define do
     end
 
     trait :redeemed do
-      redeemed_at Time.new(2017,9,10,13,52)
+      redeemed_at Time.new(2017, 9, 10, 13, 52)
     end
 
-    Coyote::Membership.each_role do |_,role_name|
+    Coyote::Membership.each_role do |_, role_name|
       trait role_name do
         role role_name
       end

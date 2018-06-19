@@ -1,0 +1,37 @@
+// COMPONENT: Field: wraps one or more form elements into a horizontal row.
+// Useful for adding accessory glyphs to form elements or grouping inputs and
+// submit buttons.
+.field
+  $field-children: "#{$controls}, .button, label"
+
+  align-items: stretch
+  background-color: $background
+  display: flex
+  margin-bottom: $gutter
+
+  &.field--accessory
+    position: relative
+
+    .field-accessory
+      $accessory-width: $gutter
+      left: $gutter
+      pointer-events: none
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      width: $accessory-width
+
+      +
+        #{$field-children}
+          padding-left: $gutter * 2 + $accessory-width
+
+  #{$controls}
+    background-color: transparent
+    flex: 1
+
+  #{$field-children}
+    margin: 0
+
+    +
+      #{$field-children}
+        margin-left: -1px

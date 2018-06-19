@@ -1,0 +1,57 @@
+.split-view
+  .split-view-item
+    = lightbox_link(representation.resource)
+
+  .split-view-item
+    table
+      caption
+        h1= title "Showing #{representation}"
+        = to_html(representation.text)
+      tbody
+        tr
+          th Resource
+          td
+            = link_to representation.resource do
+              = to_html(representation.resource_title)
+        tr
+          th Author
+          td= link_to(representation.author, representation.author)
+        tr
+          th Content Type
+          td= representation.content_type
+        tr
+          th Language
+          td= language_name(representation.language)
+        tr
+          th Status
+          td= representation.status.to_s.titleize
+        tr
+          th Metum
+          td= link_to(representation.metum_title, [current_organization, representation.metum])
+        tr
+          th Endpoint
+          td= representation.endpoint_name
+        tr
+          th License
+          td= representation.license_title
+        tr
+          th Content URI
+          td= link_to(nil, representation.content_uri)
+        tr
+          th Notes
+          td= to_html(representation.notes)
+        tr
+          th Updated
+          td= representation.updated_at
+        tr
+          th Created
+          td= representation.created_at
+
+= toolbar class: 'toolbar--footer', title: 'Actions' do
+  = toolbar_item do
+    - if policy(Representation).new?
+      = link_to('Describe Again', new_organization_representation_path(current_organization, resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button')
+    = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--outline') if policy(representation).edit?
+
+h2 Audits
+= render partial: 'audits', object: representation.audits.map { |audit| [audit, audit.audited_changes.tap(&:symbolize_keys!)] }

@@ -1,0 +1,30 @@
+- form ||=nil
+- id = id_for(resource.identifier)
+li.list-item.list-item--card
+  h4.sr-only id="resource-#{id}" Resource #{resource.identifier}
+  - if form.present? && policy(Assignment).new?
+    label.list-item-header
+      = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.identifier}' for bulk assignment'" }
+      = resource_link(resource)
+  - else
+    .list-item-header
+      = resource_link(resource)
+
+  .list-item-body
+    = resource_status_list(resource, id: id, title_tag: :h5)
+    = to_html resource.title
+
+  h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
+  ul.list-item-actions aria-labelledby="actions-#{id}"
+    - if policy(resource).index?
+      li.list-item-actions-item
+        = link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
+    - if policy(resource).edit?
+      li.list-item-actions-item
+        = link_to 'Edit', edit_resource_path(resource), class: 'button button--outline', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+    - if resource.assigned?
+      li.list-item-actions-item
+        = link_to 'Describe', new_organization_representation_path(organization_id: current_organization.id, resource_id: resource.id), class: 'button button--outline', aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+    - elsif form.nil? && policy(Assignment).new?
+      li.list-item-actions-item
+        = render 'resources/assign', resource: resource

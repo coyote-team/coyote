@@ -18,7 +18,7 @@
 
 RSpec.describe MembershipsController do
   let(:organization) { create(:organization) }
-  let(:membership) { create(:membership,organization: organization) }
+  let(:membership) { create(:membership, organization: organization) }
 
   let(:base_params) do
     { organization_id: organization.id }
@@ -35,8 +35,8 @@ RSpec.describe MembershipsController do
   let(:foreign_membership) { create(:membership) }
 
   let(:foreign_membership_params) do
-    { id: foreign_membership.id, 
-      organization_id: foreign_membership.organization_id, 
+    { id: foreign_membership.id,
+      organization_id: foreign_membership.organization_id,
       membership: { role: 'editor' } }
   end
 
@@ -69,7 +69,7 @@ RSpec.describe MembershipsController do
 
     it "permits read-only actions, forbids updating and deleting other memberships, does allow deleting one's own membership" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         get :edit, params: membership_params
@@ -96,25 +96,25 @@ RSpec.describe MembershipsController do
 
     it "succeeds for all actions involving organization-owned memberships" do
       get :index, params: base_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       get :edit, params: membership_params
-      expect(response).to be_success
+      expect(response).to be_successful
 
       expect {
         patch :update, params: update_membership_params
         membership.reload
         expect(response).to be_redirect
-      }.to change(membership,:role).
+      }.to change(membership, :role).
         from('guest').to('editor')
 
       patch :update, params: membership_params.merge(membership: { role: '' })
       expect(response).not_to be_redirect
-        
+
       expect {
         delete :destroy, params: membership_params
         expect(response).to be_redirect
-      }.to change(organization.memberships,:size).
+      }.to change(organization.memberships, :size).
         by(-1)
 
       expect {
@@ -135,7 +135,7 @@ RSpec.describe MembershipsController do
     include_context "signed-in admin user"
 
     let(:own_membership_update_params) do
-      own_membership_params.merge({ 
+      own_membership_params.merge({
         membership: { role: 'owner' }
       })
     end
@@ -148,7 +148,7 @@ RSpec.describe MembershipsController do
       expect {
         patch :update, params: own_membership_update_params
       }.to raise_error(Pundit::NotAuthorizedError)
-      
+
       expect {
         delete :destroy, params: own_membership_params
         expect(response).to be_redirect
@@ -173,7 +173,7 @@ RSpec.describe MembershipsController do
       expect(membership.role).to eq('guest')
     end
   end
-  
+
   context 'as the last owner of an organization' do
     include_context "signed-in owner user"
 

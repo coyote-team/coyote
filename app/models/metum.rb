@@ -19,11 +19,11 @@
 # @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
   validates_presence_of :title, :instructions
-  validates_uniqueness_of :title, :scope => :organization_id
+  validates_uniqueness_of :title, scope: :organization_id
 
-  belongs_to :organization, :inverse_of => :meta
+  belongs_to :organization, inverse_of: :meta
 
-  has_many :representations, :inverse_of => :metum
+  has_many :representations, inverse_of: :metum
 
   # @return [String] human-friendly description of this Metum
   def to_s

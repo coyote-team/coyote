@@ -15,8 +15,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "high_voltage/pages#show", id: "home"
-
   resources :resources, only: %i[show edit update destroy]
   resources :representations, only: %i[show edit update destroy]
 
@@ -26,17 +24,17 @@ Rails.application.routes.draw do
     resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index show edit update destroy]
     resources :assignments, only: %i[index show new create destroy]
-    resources :resource_groups 
+    resources :resource_groups
     resources :meta, except: %i[destroy]
     resources :invitations, only: %i[new create]
   end
 
   resources :resource_links
 
-  devise_for :users, 
-    only: %i[passwords registrations sessions unlocks], 
-    path: '/', 
-    path_names: { 
+  devise_for :users,
+    only: %i[passwords registrations sessions unlocks],
+    path: '/',
+    path_names: {
       registration: 'profile'
     }
 
@@ -53,4 +51,15 @@ Rails.application.routes.draw do
     match 'coyote' => 'coyote_consumer#iframe', via: [:get]
     match 'coyote_producer' => 'coyote_producer#index', via: [:get]
   end
+
+  if defined? GreatPretender
+    GreatPretender.config do |c|
+      c.default_layout = "redesign"
+    end
+    mount GreatPretender::Engine, at: 'mockups'
+  end
+
+  # Last but not least, static pages
+  get 'support', to: 'pages#support'
+  root to: 'pages#home'
 end

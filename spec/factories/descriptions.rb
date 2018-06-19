@@ -21,25 +21,25 @@
 #  index_descriptions_on_user_id    (user_id)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :description do
     locale "en"
     text Faker::Lorem.paragraph
-    status 
-    image 
-    metum 
-    user 
+    status
+    image
+    metum
+    user
 
     trait :ready_to_review do
-      association :status, :factory => :ready_to_review_status
+      association :status, factory: :ready_to_review_status
     end
 
     trait :approved do
-      association :status, :factory => :approved_status
+      association :status, factory: :approved_status
     end
 
     trait :not_approved do
-      association :status, :factory => :not_approved_status
+      association :status, factory: :not_approved_status
     end
   end
 end
