@@ -4,6 +4,17 @@
 
 require ::File.expand_path('../../config/environment', __FILE__)
 require 'mysql2'
+require "factory_bot_rails"
+
+FactoryBot.factories[:license].defined_traits.to_a.map do |trait|
+  FactoryBot.create(:license,trait.name)
+end
+
+endpoints = FactoryBot.factories[:endpoint].defined_traits.to_a.map do |trait|
+  FactoryBot.create(:endpoint,trait.name)
+end
+
+Organization.create!(title: "MCA Chicago")
 
 class User
   protected
@@ -62,8 +73,9 @@ resources = images.to_a.map do |image|
 
   image.delete('assignments_count')
   image.delete('descriptions_count')
+  page_urls = image.delete('page_urls')
   image.delete('status_code')
-  image['host_uris'] = JSON.parse(image.delete('page_urls')).join("\n")
+  image['host_uris'] = JSON.parse(page_urls).join("\n") if page_urls.present?
   image['resource_type'] = 'still_image'
   image['identifier'] = image['id']
 
@@ -71,7 +83,18 @@ resources = images.to_a.map do |image|
   image
 end
 
-org.resources.create!(resources)
+failures = []
+resources.each do |resource|
+  begin
+    org.resources.create!(resource)
+  rescue
+    begin
+      org.resources.create!(resource.merge(canonical_id: "#{resource["canonical_id"]} 2"))
+    rescue
+      failures.push resource
+    end
+  end
+end
 puts "resource: #{Resource.count}"
 
 statuses = {}
@@ -133,3 +156,4 @@ ORDER BY S.relname;
 }
 
 puts "ALL DONE"
+pp failures
