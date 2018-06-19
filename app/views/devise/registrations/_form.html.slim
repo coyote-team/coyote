@@ -10,5 +10,5 @@
 
   .toolbar.toolbar--footer
     .toolbar-item.field
-      = f.button :submit, "Sign Up"
+      = f.button :submit, user.new_record? ? "Sign Up" : "Update"
       = link_to "Back", :back, class: 'button button--outline'
