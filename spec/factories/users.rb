@@ -23,6 +23,7 @@
 #  unlock_token           :string
 #  locked_at              :datetime
 #  organizations_count    :integer          default(0)
+#  active                 :boolean          default(TRUE)
 #
 # Indexes
 #

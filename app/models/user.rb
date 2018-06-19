@@ -23,6 +23,7 @@
 #  unlock_token           :string
 #  locked_at              :datetime
 #  organizations_count    :integer          default(0)
+#  active                 :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -56,7 +57,12 @@ class User < ApplicationRecord
   has_many :resource_links, through: :organizations
   has_many :resource_groups, through: :organizations
 
+  scope :active, -> { where(active: true) }
   scope :sorted, -> { order(Arel.sql('LOWER(users.last_name) asc')) }
+
+  def self.find_for_authentication(warden_conditions)
+    where(warden_conditions.merge(active: true)).first
+  end
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s

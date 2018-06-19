@@ -16,6 +16,7 @@ module ToolbarHelper
   end
 
   def show_toolbar(instance, options = {})
+    delete_title = options.delete(:delete_title) || "Delete"
     edit_or_delete = toolbar_item(tag: :div) do
       item = "".html_safe
 
@@ -23,7 +24,7 @@ module ToolbarHelper
       item << link_to('Edit', { action: :edit }, class: 'button button--outline') if can_edit
 
       can_delete = options.fetch(:delete) { policy(instance).destroy? }
-      item << button_to('Delete', { action: :show }, title: "Delete #{instance}", class: 'button button--outline', data: { confirm: "Are you sure you want to delete #{instance}?" }, method: :delete) if can_delete
+      item << button_to(delete_title, { action: :show }, title: "#{delete_title} #{instance}", class: 'button button--outline', data: { confirm: "Are you sure you want to #{delete_title.downcase} #{instance}?" }, method: :delete) if can_delete
 
       item
     end

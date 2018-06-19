@@ -25,11 +25,11 @@ module Staff
     end
 
     def destroy
-      user.destroy
-      msg = "Deleted #{user}"
+      user.update_attribute(:active, false)
+      msg = "Archived #{user}"
       redirect_to staff_users_path, notice: msg
     rescue ActiveRecord::DeleteRestrictionError => e
-      msg = "Unable to delete '#{user}' due to '#{e}'"
+      msg = "Unable to archive '#{user}' due to '#{e}'"
       logger.error msg
       redirect_to staff_user_path(user), alert: msg
     end

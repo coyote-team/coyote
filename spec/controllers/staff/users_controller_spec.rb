@@ -1,5 +1,5 @@
 RSpec.describe Staff::UsersController do
-  let(:editable_user) { create(:user) }
+  let(:editable_user) { create(:user, active: true) }
   let(:organization) { create(:organization) }
 
   let(:user_params) do
@@ -65,8 +65,6 @@ RSpec.describe Staff::UsersController do
     include_context "signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
-      dependent_representation = create(:representation, author: editable_user)
-
       get :show, params: user_params
       expect(response).to be_successful
 
@@ -87,17 +85,10 @@ RSpec.describe Staff::UsersController do
 
       expect {
         delete :destroy, params: user_params
-      }.not_to change { User.exists?(editable_user.id) }.
-        from(true)
+      }.to change { User.find(editable_user.id).active }.
+        from(true).to(false)
 
       expect(response).to be_redirect
-
-      dependent_representation.delete
-
-      expect {
-        delete :destroy, params: user_params
-      }.to change { User.exists?(editable_user.id) }.
-        from(true).to(false)
     end
   end
 end
