@@ -1,0 +1,13 @@
+.toolbar.toolbar--bottom
+
+  = toolbar title: "Game controls" do
+    = toolbar_item do
+      = link_to "End Game", finish_game_path(@game), class: "small"
+    = toolbar_item do
+      = link_to "See all clues", game_clues_path(@game), class: "small"
+  h2#game-progress.sr-only Game Progress
+  ul.toolbar-item.small aria-labelledby="game-progress"
+    li Total time: #{@game.total_time}
+    li
+      span.sr-only Clues
+      | completed: #{@game.clues.answered.count} of #{@game.clues.count}

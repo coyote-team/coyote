@@ -1,0 +1,29 @@
+- body_class :inverted
+= render 'scavenger_hunt/clues/toolbar'
+
+h1 You are correct!
+
+= image_tag @clue.resource.source_uri, alt: @clue.resource.title
+
+= link_to "All clues", game_clues_path
+- if next_clue = @clue.next
+  = link_to "Next clue", game_clue_path(@game, next_clue)
+
+= toolbar do
+  = toolbar_item
+    p.default
+      | Elapsed time
+      br
+      #{@game.elapsed_time}
+    p.default
+      | Penalty
+      br
+      #{@game.penalty_time}
+  = toolbar_item do
+    - if next_clue = @clue.next
+      = link_to "Next clue", game_clue_path(@game, next_clue), class: "title"
+    - else
+      = link_to "All clues", game_clues_path(@game), class: "title"
+
+  = render 'scavenger_hunt/games/footer'
+= render 'scavenger_hunt/games/footer'

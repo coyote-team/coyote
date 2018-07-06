@@ -1,0 +1,32 @@
+- color = @game.location.tint
+css:
+  main a {
+    border-color: #{color} !important;
+    color: #{color};
+  }
+
+  body {
+    color: #{color};
+  }
+
+  body.inverted {
+    background-color: #{color};
+    color: white;
+  }
+
+  body.inverted main a {
+    border-color: white !important;
+    color: white;
+  }
+
+  body.inverted .toolbar--bottom {
+    background-color: #{color};
+  }
+
+  input {
+    border-color: #{color};
+  }
+
+  body.inverted input {
+    border-color: white;
+  }

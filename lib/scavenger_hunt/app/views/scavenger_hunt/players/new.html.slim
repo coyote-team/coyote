@@ -1,0 +1,15 @@
+h1 Thanks for playing!
+h3 Enter your username to submit your score
+p.large
+  | Email required for rewards. Only your username will be displayed on the
+    leaderboard.
+
+= form_for @player do |form|
+  .form-field
+    = form.text_field :name, placeholder: "Username", required: true
+
+  .form-field
+    = form.text_field :email, placeholder: "Email (optional)"
+
+  .form-field
+    = form.button "Submit", class: "large"

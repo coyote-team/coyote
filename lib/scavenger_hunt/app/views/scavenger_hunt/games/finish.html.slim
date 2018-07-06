@@ -1,0 +1,4 @@
+h1 Are you sure you want to end the game?
+
+.title= link_to "Yes!", finish_game_path(@game, confirm: true)
+.title= link_to "No! I want to keep playing!", game_clues_path(@game)

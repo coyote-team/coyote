@@ -1,0 +1,24 @@
+ul, ol
+  margin: $sibling 0
+  padding: 0
+
+  li
+    margin: 0 0 $superview 0
+    padding: 0
+
+ol
+  counter-reset: ol
+
+  li
+    list-style-type: none
+    padding-left: $superview * 2
+    position: relative
+
+    &::before
+      content: counter(ol)
+      counter-increment: ol
+      left: 0
+      position: absolute
+
+ul
+  list-style-type: none

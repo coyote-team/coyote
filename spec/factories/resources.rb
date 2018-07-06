@@ -2,14 +2,14 @@
 #
 # Table name: resources
 #
-#  id                    :integer          not null, primary key
+#  id                    :bigint(8)        not null, primary key
 #  identifier            :string           not null
 #  title                 :string           default("Unknown"), not null
 #  resource_type         :enum             not null
 #  canonical_id          :string           not null
 #  source_uri            :string
-#  resource_group_id     :integer          not null
-#  organization_id       :integer          not null
+#  resource_group_id     :bigint(8)        not null
+#  organization_id       :bigint(8)        not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  representations_count :integer          default(0), not null

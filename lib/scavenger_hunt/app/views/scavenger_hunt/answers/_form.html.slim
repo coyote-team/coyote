@@ -1,0 +1,12 @@
+= form_for @answer, url: game_clue_answer_path(@game, @clue) do |form|
+  = form.hidden_field :resource_id
+  label.sr-only for="q" Enter object title
+  .autocomplete data-endpoint=typeahead_game_clue_answer_url data-placeholder="Enter object title" data-input="#answer_resource_id"
+
+  = toolbar title: "Actions" do
+    = toolbar_item do
+      = link_to "Return to clue", game_clue_path(@game, @clue), class: "large"
+    = toolbar_item do
+      button.large type="submit" Submit
+
+= render 'scavenger_hunt/games/footer'

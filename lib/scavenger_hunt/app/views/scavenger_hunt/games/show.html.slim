@@ -1,0 +1,19 @@
+- content_for :nav do
+  = link_to "Change Location", locations_path, class: 'small'
+  .subtitle= @game.location.title
+
+h1
+  ' There
+  = @game.clues.size == 1 ? 'is' : 'are'
+  '
+  = link_to(pluralize(@game.clues.size, 'clue'), game_clues_path(@game))
+  '
+  ' at this location
+
+= toolbar class: "toolbar--bottom", title: "Game Controls" do
+  - if @game.clues.any?
+    = toolbar_item do
+      = link_to 'Begin game', game_clue_path(@game, @game.clues.unanswered.first), class: "title"
+  = toolbar_item do
+    = link_to 'End game', locations_path, class: "default"
+

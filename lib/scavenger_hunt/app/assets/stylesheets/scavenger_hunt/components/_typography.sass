@@ -1,0 +1,43 @@
+h1, .title
+  font-size: $font-size-h1
+  font-weight: 600
+  line-height: $line-height-h1
+  margin: 0 0 $superview 0
+  text-transform: uppercase
+
+h2, .subtitle
+  font-size: $font-size-h2
+  font-weight: 600
+  line-height: $line-height-h2
+  margin: 0 0 $superview 0
+  text-transform: uppercase
+
+h3, .large
+  font-size: $font-size-h3
+  font-weight: 600
+  line-height: $line-height-h3
+  text-transform: uppercase
+
+p
+  line-height: $line-height
+
+= typogryphy($name, $border-width)
+  .#{$name} p, p.#{$name}
+    text-transform: none
+
+  .#{$name} a, a.#{$name}, .#{$name} button, button.#{$name} .#{$name} input, input.#{$name}
+    border-bottom: $border-width solid $border
+
+@include typogryphy("title", 5px)
+@include typogryphy("subtitle", 4px)
+@include typogryphy("large", 3px)
+
+.default
+  font-size: $font-size
+  font-weight: 600
+  text-transform: uppercase
+
+.small
+  font-size: $font-size-small
+  font-weight: 600
+  text-transform: uppercase

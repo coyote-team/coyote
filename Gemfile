@@ -96,3 +96,5 @@ end
 group :production do
   gem 'rails_12factor'
 end
+
+gem 'scavenger_hunt', path: 'lib/scavenger_hunt'

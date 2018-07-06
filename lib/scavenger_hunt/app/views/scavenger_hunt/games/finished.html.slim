@@ -1,0 +1,10 @@
+- body_class :inverted
+h1
+  |Congrats!
+  br/
+  br/
+  | You've completed all clues at this location!
+
+= link_to "Start new location", locations_path, class: "large"
+
+= render "scavenger_hunt/games/footer"

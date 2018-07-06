@@ -1,0 +1,13 @@
+h1 Survey
+.default Survey thanks/explanation
+
+ol.title
+  - @survey_questions.each do |survey_question|
+    li
+      = survey_question.text
+      - if survey_question.options.present?
+        .large.survey
+          - survey_question.options.each do |option|
+            = link_to option, answer_survey_question_path(survey_question, answer: option), class: "survey-option"
+      - else
+        = text_field_tag "answer", "", placeholder: "Enter answer here"

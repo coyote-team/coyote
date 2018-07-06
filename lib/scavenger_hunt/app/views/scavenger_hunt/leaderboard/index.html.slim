@@ -1,0 +1,21 @@
+h1 Leaderboard
+.default Click to expand scores
+
+table
+  thead
+    tr
+      th: span.sr-only Rank
+      th Name
+      th Locations
+      th Stats
+  tbody
+    - @players.each_with_index do |player, index|
+      tr
+        td= index.succ
+        td= player.name
+        td= player.location_count
+        td
+          = player.aggregate_time
+          br
+          = player.clue_count
+

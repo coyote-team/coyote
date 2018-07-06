@@ -2,12 +2,12 @@
 #
 # Table name: invitations
 #
-#  id                :integer          not null, primary key
+#  id                :bigint(8)        not null, primary key
 #  recipient_email   :string           not null
 #  token             :string           not null
-#  sender_user_id    :integer          not null
-#  recipient_user_id :integer          not null
-#  organization_id   :integer          not null
+#  sender_user_id    :bigint(8)        not null
+#  recipient_user_id :bigint(8)        not null
+#  organization_id   :bigint(8)        not null
 #  redeemed_at       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

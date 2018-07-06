@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+  head
+    link rel="stylesheet" type="text/css" href="//brick.a.ssl.fastly.net/TeX+Gyre+Heros:400,400i,700,700i:f"
+    link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet"
+    = stylesheet_link_tag "scavenger_hunt/application", media: "all", "data-turbolinks-track" => false
+    = csrf_meta_tags
+    = render "layouts/scavenger_hunt/location_styles" if @game.present?
+    meta name="viewport" content="initial-scale=1,maximum-scale=1"/
+    title Scavenger Hunt
+
+  body class=(body_class.join(" "))
+    nav#nav-main role="navigation"
+      h2.sr-only#navigation Navigation
+      ul aria-labelledby="navigation"
+        li
+          = link_to 'Coyote', root_path, class: "nav-brand"
+      = yield :nav
+    main#main
+      = yield
+    footer#footer role="contentinfo"
+    /[if IE]
+      = javascript_include_tag "https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"
+      = javascript_include_tag "https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.4/fetch.min.js"
+    = javascript_include_tag "scavenger_hunt/application", "data-turbolinks-track" => false

@@ -52,12 +52,7 @@ Rails.application.routes.draw do
     match 'coyote_producer' => 'coyote_producer#index', via: [:get]
   end
 
-  if defined? GreatPretender
-    GreatPretender.config do |c|
-      c.default_layout = "redesign"
-    end
-    mount GreatPretender::Engine, at: 'mockups'
-  end
+  mount ScavengerHunt::Engine, at: 'scavenger'
 
   # Last but not least, static pages
   get 'support', to: 'pages#support'

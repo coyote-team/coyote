@@ -7,7 +7,7 @@
 #  instructions    :text             default(""), not null
 #  created_at      :datetime
 #  updated_at      :datetime
-#  organization_id :integer          not null
+#  organization_id :bigint(8)        not null
 #
 # Indexes
 #

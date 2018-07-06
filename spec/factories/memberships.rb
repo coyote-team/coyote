@@ -2,9 +2,9 @@
 #
 # Table name: memberships
 #
-#  id              :integer          not null, primary key
-#  user_id         :integer          not null
-#  organization_id :integer          not null
+#  id              :bigint(8)        not null, primary key
+#  user_id         :bigint(8)        not null
+#  organization_id :bigint(8)        not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  role            :enum             default("guest"), not null
