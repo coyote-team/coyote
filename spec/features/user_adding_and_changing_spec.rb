@@ -43,16 +43,6 @@ RSpec.describe 'User adding and changing' do
       editable_user.active?
     })
 
-    expect(page.current_path).to eq(staff_user_path(editable_user))
-    expect(page).to have_content 'Unable to delete'
-
-    representation.destroy
-
-    expect {
-      click_button 'Delete'
-    }.to change { User.exists?(editable_user.id) }.
-      from(true).to(false)
-
     expect(page.current_path).to eq(staff_users_path)
   end
 end

@@ -42,7 +42,7 @@ class RepresentationsController < ApplicationController
   def update
     if representation.update(representation_params)
       logger.info "Updated #{representation}"
-      redirect_back fallback_location: representation, notice: 'The description has been updated'
+      redirect_to representation_path(representation), notice: 'The description has been updated'
     else
       logger.warn "Unable to update description due to '#{representation.error_sentence}'"
       render :edit
