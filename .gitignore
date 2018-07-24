@@ -2,6 +2,7 @@
 *.sassc
 .sass-cache
 .capybara.html
+.DS_Store
 /log
 /tmp
 /db/*.sqlite3
