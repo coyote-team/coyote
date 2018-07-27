@@ -27,6 +27,7 @@ end
 uri = URI.parse(ENV.fetch('JAWSDB_URL'))
 db = uri.path[1..-1]
 client = Mysql2::Client.new(host: uri.host, username: uri.user, database: db, password: uri.password)
+binding.pry
 
 org = Organization.find(1)
 
@@ -84,14 +85,16 @@ resources = images.to_a.map do |image|
 end
 
 failures = []
-resources.each do |resource|
-  begin
-    org.resources.create!(resource)
-  rescue
+Resource.without_auditing do
+  resources.each do |resource|
     begin
-      org.resources.create!(resource.merge(canonical_id: "#{resource["canonical_id"]} 2"))
+      org.resources.create!(resource)
     rescue
-      failures.push resource
+      begin
+        org.resources.create!(resource.merge(canonical_id: "#{resource["canonical_id"]} 2"))
+      rescue Exception => e
+        failures.push({resource: resource, error: e})
+      end
     end
   end
 end
@@ -121,8 +124,14 @@ representations = descriptions.to_a.map do |rep|
   rep
 end
 
-Representation.create!(representations)
+Representation.without_auditing { Representation.create!(representations) }
 puts "representation: #{Representation.count}"
+
+assignments = client.query('SELECT * from assignments').to_a.map do |assignment|
+  assignment["resource_id"] = assignment.delete("image_id")
+  assignment
+end
+Assignment.create!(assignments)
 
 audits = client.query("SELECT * from audits").to_a
 
@@ -137,23 +146,19 @@ Audits.connection.execute %{TRUNCATE TABLE audits}
 Audits.create!(audits)
 
 # Reset Postgres sequences per https://stackoverflow.com/a/38575949/308448
-ActiveRecord::Base.connection.execute %{SELECT 'SELECT SETVAL(' ||
-       quote_literal(quote_ident(PGT.schemaname) || '.' || quote_ident(S.relname)) ||
-       ', COALESCE(MAX(' ||quote_ident(C.attname)|| '), 1) ) FROM ' ||
-       quote_ident(PGT.schemaname)|| '.'||quote_ident(T.relname)|| ';'
-FROM pg_class AS S,
-     pg_depend AS D,
-     pg_class AS T,
-     pg_attribute AS C,
-     pg_tables AS PGT
-WHERE S.relkind = 'S'
-    AND S.oid = D.objid
-    AND D.refobjid = T.oid
-    AND D.refobjid = C.attrelid
-    AND D.refobjsubid = C.attnum
-    AND T.relname = PGT.tablename
-ORDER BY S.relname;
+ActiveRecord::Base.connection.execute %{
+CREATE OR REPLACE FUNCTION "reset_sequence" (tablename text, columnname text, sequence_name text) RETURNS "pg_catalog"."void" AS
+    $body$
+      DECLARE
+      BEGIN
+      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
+      END;
+
+    $body$  LANGUAGE 'plpgsql';
+
+    select table_name || '_' || column_name || '_seq', reset_sequence(table_name, column_name, table_name || '_' || column_name || '_seq') from information_schema.columns where column_default like 'nextval%';
 }
 
 puts "ALL DONE"
-pp failures
+pp failures.count
+pp failures.inspect
