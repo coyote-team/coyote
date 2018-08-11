@@ -6,7 +6,7 @@ h1
   ' There
   = @game.clues.size == 1 ? 'is' : 'are'
   '
-  = link_to(pluralize(@game.clues.size, 'clue'), game_clues_path(@game))
+  = link_to(pluralize(@game.clues.size, 'clue'), game_clues_path(@game), class: "no-border")
   '
   ' at this location
 
@@ -16,4 +16,3 @@ h1
       = link_to 'Begin game', game_clue_path(@game, @game.clues.unanswered.first), class: "title"
   = toolbar_item do
     = link_to 'End game', locations_path, class: "default"
-

@@ -5,6 +5,6 @@
       = link_to "Change location", locations_path, class: "default", aria: { describedby: "location-name" }
       #location-name.default= @game.location.title
     .toolbar-item.large aria-hidden="true"
-      ' Clue #{@clue.position.succ} of #{@game.clues.count}
+      ' Clue #{@clue.position.succ}/#{@game.clues.count}
 
-h1.sr-only Clue #{@clue.position.succ} of #{@game.clues.count}
+h1.sr-only Clue #{@clue.position.succ}/#{@game.clues.count}

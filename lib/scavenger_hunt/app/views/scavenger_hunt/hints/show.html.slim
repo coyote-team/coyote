@@ -1,7 +1,7 @@
 - body_class :inverted
 = render 'toolbar'
 
-p.title
+p.hint-text
   | Viewing this hint will add 30 seconds to your score.
 
 = link_to "I still want it", game_clue_hint_path(@game, @clue, @hint, confirm: true), class: "title"
