@@ -1,18 +1,4 @@
-# Make resources type-ahead-able
-require "pg_search"
-
-Resource.send :include, PgSearch
-Resource.send :pg_search_scope, :typeahead, against: :title, using: {
-  tsearch: {
-    normalization: 4,
-    prefix: true
-  }
-}
-
 class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
-
-  TYPEAHEAD_LIMIT = 10
-
   before_action :find_game
   before_action :find_clue
 
@@ -20,10 +6,26 @@ class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
   end
 
   def create
-    @answer = @clue.answers.create!(answer_params)
+    # use the similar_text gem's .similar method to score how closely the player's input and the resource's title match (integer)
+    @match_score = "#{@clue.resource.title}".similar("#{params[:q]}")
+    puts "this is the match score #{@match_score}"
+
+    # setting a minimum match score of 40 allows the player some wiggle room for spelling errors
+    if @match_score >= 40
+      @resource = @clue.resource
+    else
+      @resource = nil
+    end
+
+    if @resource.present?
+      @answer = @clue.answers.create!(resource_id: @resource.id)
+    else
+      @answer = ScavengerHunt::Answer.new
+    end
+
     if @answer.valid? && @answer.is_correct?
       if @game.finished?
-        redirect_to finished_game_path
+        redirect_to finished_game_path(@game)
       else
         redirect_to correct_game_clue_answer_path
       end
@@ -36,10 +38,6 @@ class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
     @answer = @clue.answers.new
   end
   alias incorrect new
-
-  def typeahead
-    render json: Resource.limit(TYPEAHEAD_LIMIT).typeahead(params[:q]).as_json(only: %w(id title))
-  end
 
   private
 

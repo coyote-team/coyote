@@ -9,31 +9,3 @@ input
   font-weight: 600
   padding: 11px 0 11px 11px
   width: 100%
-
-.autocomplete__menu
-  display: none
-
-.autocomplete__wrapper[aria-expanded=true] input, .autocomplete__wrapper input:focus
-  height: 73px
-  left: 0
-  position: fixed
-  right: 0
-  transition: all 150ms $swift
-  top: 0
-
-  ~ .autocomplete__menu
-    background: rgba($background, 0.93)
-    bottom: 0
-    display: block
-    left: 0
-    overflow: auto
-    position: fixed
-    right: 0
-    top: 73px
-
-    .autocomplete__option
-      font-size: $font-size-h3
-      overflow: hidden
-      padding: $gutter
-      text-overflow: ellipsis
-      white-space: nowrap

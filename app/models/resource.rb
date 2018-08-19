@@ -32,7 +32,7 @@
 # resources are network "retrievable"; e.g., human beings, corporations, and bound books in a library can also be considered resources."
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
-class Resource < ApplicationRecord
+class Resource < ApplicationRecord  
   belongs_to :resource_group, inverse_of: :resources
   belongs_to :organization, inverse_of: :resources
 
