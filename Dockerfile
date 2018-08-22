@@ -7,10 +7,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 RUN apt-get update
 RUN apt-get install -y postgresql-client-9.6
 
-RUN mkdir /coyote
-WORKDIR /coyote
-ADD Gemfile /coyote/Gemfile
-ADD Gemfile.lock /coyote/Gemfile.lock
-RUN gem install bundler 
-RUN bundle install
 ADD . /coyote
+WORKDIR /coyote
+RUN gem install bundler
+RUN bundle install
