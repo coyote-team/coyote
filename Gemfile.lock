@@ -237,6 +237,7 @@ GEM
     language_list (1.2.1)
     launchy (2.4.3)
       addressable (~> 2.3)
+    libv8 (6.7.288.46.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -261,6 +262,8 @@ GEM
     mimemagic (0.3.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
+    mini_racer (0.2.0)
+      libv8 (>= 6.3)
     minitest (5.11.3)
     modular-scale (3.0.5)
     msgpack (1.2.4)
@@ -504,6 +507,7 @@ DEPENDENCIES
   lightbox2-rails!
   markdown-rails
   metamagic
+  mini_racer
   modular-scale
   mysql2
   pg (~> 0.20.0)
