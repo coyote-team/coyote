@@ -30,18 +30,18 @@ require 'digest/md5'
 
 FactoryBot.define do
   factory :resource, aliases: %i[subject_resource object_resource] do
-    title 'Mona Lisa'
-    resource_type 'still_image'
+    title { 'Mona Lisa' }
+    resource_type { 'still_image' }
     sequence(:canonical_id) { |n| Digest::MD5.hexdigest(n.to_s) }
     identifier { "#{title.underscore.gsub(/\s+/, '_')}_#{SecureRandom.hex(2)}" }
 
     trait :priority do
-      priority_flag true
+      priority_flag { true }
     end
 
     transient do
-      resource_group nil
-      organization nil
+      resource_group { nil }
+      organization { nil }
     end
 
     after(:build) do |resource, evaluator|
@@ -51,7 +51,7 @@ FactoryBot.define do
 
     Coyote::Resource.each_type do |_, type_name|
       trait type_name do
-        resource_type type_name
+        resource_type { type_name }
       end
     end
   end
