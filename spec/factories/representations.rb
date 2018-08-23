@@ -29,7 +29,7 @@
 
 FactoryBot.define do
   factory :representation do
-    text <<~TEXT
+    text { <<~TEXT }
       This painted portrait depicts a young woman with jet-black skin holding a long, thin paintbrush up to a colorful, messy painter’s
       palette. She is shown in a three-quarter pose, gazing directly at the viewer. Her face, which is central to the square composition,
       stands out against a large, white, canvas, almost blending into the pitch-black background to her right. Closer inspection reveals,
@@ -42,31 +42,31 @@ FactoryBot.define do
       blue and maroon and light yellow stripes.
     TEXT
 
-    language 'en'
+    language { 'en' }
 
     trait :audio do
-      content_type 'audio/mp3'
-      content_uri 'http://cdn.example.com/speech.mp3'
+      content_type { 'audio/mp3' }
+      content_uri { 'http://cdn.example.com/speech.mp3' }
     end
 
     trait :ready_to_review do
-      status :ready_to_review
+      status { :ready_to_review }
     end
 
     trait :approved do
-      status :approved
+      status { :approved }
     end
 
     trait :not_approved do
-      status :not_approved
+      status { :not_approved }
     end
 
     transient do
-      resource nil
-      metum nil
-      author nil
-      license nil
-      endpoint nil
+      resource { nil }
+      metum { nil }
+      author { nil }
+      license { nil }
+      endpoint { nil }
       organization { build(:organization) }
     end
 

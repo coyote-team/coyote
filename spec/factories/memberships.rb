@@ -21,7 +21,7 @@ FactoryBot.define do
 
     Coyote::Membership.each_role do |_, role_name|
       trait role_name do
-        role role_name
+        role { role_name }
       end
     end
   end

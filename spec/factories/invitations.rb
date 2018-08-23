@@ -38,12 +38,12 @@ FactoryBot.define do
     end
 
     trait :redeemed do
-      redeemed_at Time.new(2017, 9, 10, 13, 52)
+      redeemed_at { Time.new(2017, 9, 10, 13, 52) }
     end
 
     Coyote::Membership.each_role do |_, role_name|
       trait role_name do
-        role role_name
+        role { role_name }
       end
     end
 

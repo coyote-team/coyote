@@ -23,8 +23,8 @@
 
 FactoryBot.define do
   factory :description do
-    locale "en"
-    text Faker::Lorem.paragraph
+    locale { "en" }
+    text { Faker::Lorem.paragraph }
     status
     image
     metum
