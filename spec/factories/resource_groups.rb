@@ -20,7 +20,7 @@ FactoryBot.define do
 
     %i[collection website exhibitions events].each do |trait_name|
       trait trait_name do
-        title trait_name
+        title { trait_name }
       end
     end
   end

@@ -44,8 +44,8 @@ FactoryBot.define do
     password { Faker::Internet.password }
 
     transient do
-      organization nil
-      role :guest
+      organization { nil }
+      role { :guest }
     end
 
     trait :with_membership do
@@ -55,7 +55,7 @@ FactoryBot.define do
     end
 
     trait :staff do
-      staff true
+      staff { true }
     end
 
     after(:create) do |user, evaluator|

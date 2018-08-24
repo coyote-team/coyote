@@ -33,6 +33,7 @@ gem 'language_list'
 gem 'lightbox2-rails', github: 'johansmitsnl/lightbox2-rails' # for resource lightboxes on index pages
 gem 'markdown-rails'
 gem 'metamagic' # meta
+gem 'mini_racer', require: false
 gem 'modular-scale', require: false
 gem 'pg', '~> 0.20.0' # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p
 gem 'puma'
