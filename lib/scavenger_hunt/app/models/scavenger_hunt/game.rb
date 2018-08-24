@@ -35,7 +35,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
     representations.each do |representation|
       if representation.status == "approved"
         clues.create!(game: self, representation: representation)
-      end 
+      end
     end
   end
 end

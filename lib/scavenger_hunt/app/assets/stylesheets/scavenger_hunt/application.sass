@@ -11,8 +11,16 @@ $tint: #00f
 
 // TYPOGRAPHY
 // Base
-$font-family-mono: "Space Mono", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace
-$font-family: "TeX Gyre Heros", Arial, sans-serif
+// @include font-face(Samplino, fonts/Samplino)
+@font-face
+  font-family: 'apercu-bold-pro'
+  src: url('fonts/apercu-bold-pro.eot')
+  src: url('fonts/apercu-bold-pro.eot?#iefix') format('embedded-opentype'), url('fonts/apercu-bold-pro.woff') format('woff'), url('fonts/apercu-bold-pro.woff2') format('woff2'), url('fonts/apercu-bold-pro.ttf') format('truetype')
+  font-weight: normal
+  font-style: normal
+
+$font-family-mono: 'apercu-bold-pro', monospace
+$font-family: 'apercu-bold-pro', Arial, sans-serif
 $font-size: 16.5px
 
 // Line heights
