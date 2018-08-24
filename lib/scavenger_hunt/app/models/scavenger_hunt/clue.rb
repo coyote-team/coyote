@@ -36,7 +36,9 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   def create_hints
     representations = location.representations_by_metum("Scavenger Hunt: Hint")
     representations.each do |representation|
-      hints.create!(clue: self, representation: representation)
+      if representation.approved?
+        hints.create!(clue: self, representation: representation)
+      end
     end
   end
 end

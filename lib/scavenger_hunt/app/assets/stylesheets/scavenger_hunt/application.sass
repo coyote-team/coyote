@@ -11,9 +11,17 @@ $tint: #00f
 
 // TYPOGRAPHY
 // Base
-$font-family-mono: "Space Mono", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace
-$font-family: "TeX Gyre Heros", Arial, sans-serif
-$font-size: 18px
+// @include font-face(Samplino, fonts/Samplino)
+@font-face
+  font-family: 'apercu-bold-pro'
+  src: font-url('apercu-bold-pro.eot')
+  src: font-url('apercu-bold-pro.eot?#iefix') format('embedded-opentype'), font-url('apercu-bold-pro.woff') format('woff'), font-url('apercu-bold-pro.woff2') format('woff2'), font-url('apercu-bold-pro.ttf') format('truetype')
+  font-weight: normal
+  font-style: normal
+
+$font-family-mono: 'apercu-bold-pro', monospace
+$font-family: 'apercu-bold-pro', Arial, sans-serif
+$font-size: 16.5px
 
 // Line heights
 $line-height-ratio: 1.35
@@ -31,6 +39,7 @@ $font-size-small: round($font-size / $line-height-ratio)
 $line-height-h1: $font-size-h1 + $gutter / 2
 $line-height-h2: $font-size-h2 + $gutter / 2
 $line-height-h3: $font-size-h3 + $gutter / 2
+
 
 // Components
 $checkbox-size: $gutter * 2

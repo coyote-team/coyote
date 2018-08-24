@@ -413,6 +413,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
+    similar_text (0.0.4)
     simple_form (4.0.1)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -528,6 +529,7 @@ DEPENDENCIES
   scavenger_hunt!
   selenium-webdriver
   shoulda-matchers
+  similar_text
   simple_form
   slim-rails
   spring

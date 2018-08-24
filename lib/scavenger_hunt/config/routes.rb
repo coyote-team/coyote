@@ -16,7 +16,6 @@ ScavengerHunt::Engine.routes.draw do
         collection do
           get :correct
           get :incorrect
-          get :typeahead
         end
       end
     end
