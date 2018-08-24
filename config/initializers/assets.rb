@@ -13,4 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w(whatever.css)
 
-Rails.application.config.assets.paths << Rails.root.join('/fonts')
+Rails.application.config.assets.paths << Rails.root.join('app/assets/fonts')

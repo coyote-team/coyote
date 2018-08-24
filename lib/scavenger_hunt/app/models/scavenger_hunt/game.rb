@@ -33,7 +33,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   def create_clues
     representations = location.representations_by_metum("Scavenger Hunt: Clue")
     representations.each do |representation|
-      if representation.status == "approved"
+      if representation.approved?
         clues.create!(game: self, representation: representation)
       end
     end
