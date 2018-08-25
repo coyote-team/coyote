@@ -16,6 +16,7 @@
 #  updated_at   :datetime         not null
 #  notes        :text
 #  endpoint_id  :bigint(8)        not null
+#  ordinality   :integer
 #
 # Indexes
 #
