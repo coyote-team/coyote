@@ -1,6 +1,7 @@
 table
   thead
     th Status
+    th Order
     th Metum
     th Locale
     th Text
@@ -10,6 +11,7 @@ table
     - representations.each do |representation|
       tr
         td= representation_status_tag(representation)
+        td= representation.ordinality 
         td= metum_tag(representation.metum, hint: false)
         td: span.tag.tag--outline= representation.language
         td= to_html representation.text
