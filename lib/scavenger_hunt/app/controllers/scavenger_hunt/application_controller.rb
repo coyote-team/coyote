@@ -5,7 +5,7 @@ module ScavengerHunt
     helper_method def current_player
       return @current_player if defined? @current_player
       cookie = cookies[current_player_key]
-      @current_player = cookie.present? && Player.find_by(id: cookie)
+      @current_player = Player.find_by!(id: cookie)
     end
 
     helper_method def current_player?
