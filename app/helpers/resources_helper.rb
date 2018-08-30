@@ -27,7 +27,9 @@ module ResourcesHelper
   # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
   def resource_link_target(resource, options = {})
     if resource.viewable?
-      image_tag(resource.source_uri, options)
+      image_tag(url_for(resource.uploaded_resource) || resource.source_uri, options)
+      # image_tag(resource.source_uri, options)
+      # image_tag(url_for(resource.uploaded_resource), options)
     else
       "#{resource.title} (#{resource.resource_type})"
     end

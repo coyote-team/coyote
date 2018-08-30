@@ -87,4 +87,6 @@ Rails.application.configure do
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
+  config.active_storage.service = :amazon
 end

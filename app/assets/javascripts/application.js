@@ -3,6 +3,7 @@
 //= require vendor/bootstrap-native-v4
 //= require vendor/rollbar
 //= require vanilla-ujs
+//= require activestorage
 
 (function() {
   document.querySelectorAll("[data-lightbox]").forEach(function(link) {

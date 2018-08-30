@@ -1,6 +1,7 @@
 = simple_form_for target, validate: true, html: { multipart: true } do |f|
   = f.error_notification
 
+  = f.input :uploaded_resource
   = f.input :title, label: 'Caption'
   = f.input :priority_flag, as: :select, collection: [['High', true], ['Low', false]], include_blank: false, label: 'Priority' if organization_user.admin?
   = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names, label_method: -> (t) { t.to_s.titleize }
