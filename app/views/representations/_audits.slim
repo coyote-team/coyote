@@ -10,6 +10,7 @@ table
       th Content Type
       th Language
       th Status
+      th Order
       th Metum
       th Endpoint
       th License
@@ -27,6 +28,7 @@ table
         td= content_type
         td: span.tag.tag--outline= representation.language
         td= representation_status_tag(representation)
+        td= ordinality
         td= metum_tag(representation.metum, hint: false)
         td= Endpoint.find_by(id: endpoint_id)&.name
         td= License.find_by(id: license_id)&.name
