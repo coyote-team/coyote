@@ -10,6 +10,7 @@ table
       th Content Type
       th Language
       th Status
+      th Order
       th Metum
       th Endpoint
       th License
@@ -17,7 +18,7 @@ table
       th Notes
 
   tbody
-    - audits.each do |a, text: '', author_id: nil, content_type: nil, language: nil, status: nil, metum_id: nil, endpoint_id: nil, license_id: nil, content_uri: nil, notes: nil, **other|
+    - audits.each do |a, text: '', author_id: nil, content_type: nil, language: nil, status: nil, ordinality: nil, metum_id: nil, endpoint_id: nil, license_id: nil, content_uri: nil, notes: nil, **other|
       tr
         td= a.user
         td= a.action
@@ -27,6 +28,7 @@ table
         td= content_type
         td= language
         td= status
+        td= ordinality
         td= Metum.find_by(id: metum_id)&.title
         td= Endpoint.find_by(id: endpoint_id)&.name
         td= License.find_by(id: license_id)&.name
