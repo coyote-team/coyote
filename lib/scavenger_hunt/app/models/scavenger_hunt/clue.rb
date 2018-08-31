@@ -9,7 +9,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   has_many :hints
 
   delegate :location, to: :game
-  delegate :resource, :text, to: :representation
+  delegate :resource, to: :representation
 
   default_scope -> { order(:position) }
   scope :answered, -> { where.not(ended_at: nil) }

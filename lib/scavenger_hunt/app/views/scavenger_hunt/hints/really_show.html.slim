@@ -1,8 +1,8 @@
 - body_class :inverted
 = render 'toolbar'
 
-p
-  = simple_format @hint.text, class: "hint-text"
+.hint-text
+  = representation_content @hint.representation
 
 = toolbar title: "Options" do
   = toolbar_item do
