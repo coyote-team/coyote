@@ -11,6 +11,10 @@ namespace :scavenger_hunt do
         instructions: "A scavenger hunt clue informing players what they're searching for",
       },
       {
+        title: ScavengerHunt::Game::CLUE_POSITION_METUM_NAME,
+        instructions: "The order of a clue within the game. Set text to a lower number to move the clue up front.",
+      },
+      {
         title: ScavengerHunt::Game::CLUE_PROMPT_METUM_NAME,
         instructions: "The prompt instructing a player on how to enter an answer to a clue. Defaults to 'I think it is...' if nothing is provided on this resource.",
       },
