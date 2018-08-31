@@ -40,7 +40,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   def create_clues
     representations = location.representations_by_metum(CLUE_METUM_NAME).approved.group_by(&:resource_id)
     representations = representations.map {|id, all_representations| all_representations.first }
-    representations = representations.sort_by { |representation| metum_attr(representation.resource, CLUE_POSITION_METUM_NAME).to_s }
+    representations = representations.sort_by { |representation| (metum_attr(representation.resource, CLUE_POSITION_METUM_NAME) || 1_000_000).to_s.strip.to_i }
     representations.each do |representation|
       answer = metum_attr(representation.resource, ANSWER_METUM_NAME)
       clues.create!(answer: answer, game: self, representation: representation) if answer.present?
