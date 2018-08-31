@@ -32,18 +32,18 @@ RSpec.describe ScavengerHunt::Game do
   let(:player) { ScavengerHunt::Player.create!(ip: "127.0.0.1", user_agent: "test") }
   subject { ScavengerHunt::Game.create!(location: location, player: player) }
 
-  fit "generates clues for the first approved clue representation with a valid answer by resource" do
+  it "generates clues for the first approved clue representation with a valid answer by resource" do
     expect(subject.clues.count).to eq(2)
     expect(subject.clues.first.representation).to eq(clue_1_1)
     expect(subject.clues.last.representation).to eq(clue_2_2)
   end
 
-  fit "uses the answer metum to generate answers" do
+  it "uses the answer metum to generate answers" do
     expect(subject.clues.first.answer).to eq(answer_1.text)
     expect(subject.clues.last.answer).to eq(answer_2.text)
   end
 
-  fit "uses the prompt metum to set clue prompts" do
+  it "uses the prompt metum to set clue prompts" do
     expect(subject.clues.first.prompt).to eq(prompt_1.text)
     expect(subject.clues.last.prompt).to eq(prompt_2.text)
   end
