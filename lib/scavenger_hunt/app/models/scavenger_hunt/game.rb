@@ -1,6 +1,11 @@
+require_relative "concerns/metum_attr"
+
 class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
+  include MetumAttr
+
   ANSWER_METUM_NAME = "Scavenger Hunt: Answer".freeze
   CLUE_METUM_NAME = "Scavenger Hunt: Clue".freeze
+  CLUE_POSITION_METUM_NAME = "Scavenger Hunt: Clue Position".freeze
   CLUE_PROMPT_METUM_NAME = "Scavenger Hunt: Clue Prompt".freeze
   HINT_METUM_NAME = "Scavenger Hunt: Hint".freeze
 
@@ -33,11 +38,12 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   private
 
   def create_clues
-    representations = location.representations_by_metum(CLUE_METUM_NAME).approved.by_ordinality
-    representations.group_by(&:resource_id).each do |resource_id, representations|
-      representation = representations.first
-      answer = representation.resource.representations.with_metum_named(ANSWER_METUM_NAME).approved.first
-      clues.create!(answer: answer.text, game: self, representation: representation) if answer.present?
+    representations = location.representations_by_metum(CLUE_METUM_NAME).approved.group_by(&:resource_id)
+    representations = representations.map {|id, all_representations| all_representations.first }
+    representations = representations.sort_by { |representation| metum_attr(representation.resource, CLUE_POSITION_METUM_NAME).to_s }
+    representations.each do |representation|
+      answer = metum_attr(representation.resource, ANSWER_METUM_NAME)
+      clues.create!(answer: answer, game: self, representation: representation) if answer.present?
     end
   end
 end
