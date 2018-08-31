@@ -588,10 +588,10 @@ ALTER SEQUENCE public.resources_id_seq OWNED BY public.resources.id;
 CREATE TABLE public.scavenger_hunt_answers (
     id bigint NOT NULL,
     clue_id bigint NOT NULL,
-    resource_id bigint NOT NULL,
     is_correct boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    answer text
 );
 
 
@@ -626,7 +626,8 @@ CREATE TABLE public.scavenger_hunt_clues (
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    answer text
 );
 
 
@@ -1655,13 +1656,6 @@ CREATE INDEX index_scavenger_hunt_answers_on_clue_id ON public.scavenger_hunt_an
 
 
 --
--- Name: index_scavenger_hunt_answers_on_resource_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_answers_on_resource_id ON public.scavenger_hunt_answers USING btree (resource_id);
-
-
---
 -- Name: index_scavenger_hunt_clues_on_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2067,6 +2061,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180710164016'),
 ('20180821193559'),
 ('20180825140356'),
-('20180825140408');
+('20180825140408'),
+('20180825193305');
 
 

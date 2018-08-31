@@ -3,6 +3,10 @@ namespace :scavenger_hunt do
   task seed: :environment do
     meta = [
       {
+        title: ScavengerHunt::Game::ANSWER_METUM_NAME,
+        instructions: "A scavenger hunt answer that users must enter when they have found the clue",
+      },
+      {
         title: ScavengerHunt::Game::CLUE_METUM_NAME,
         instructions: "A scavenger hunt clue informing players what they're searching for",
       },
