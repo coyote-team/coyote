@@ -33,8 +33,9 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   private
 
   def create_clues
-    representations = location.representations_by_metum(CLUE_METUM_NAME).approved
-    representations.each do |representation|
+    representations = location.representations_by_metum(CLUE_METUM_NAME).approved.by_ordinality
+    representations.group_by(&:resource_id).each do |resource_id, representations|
+      representation = representations.first
       answer = representation.resource.representations.with_metum_named(ANSWER_METUM_NAME).approved.first
       clues.create!(answer: answer.text, game: self, representation: representation) if answer.present?
     end
