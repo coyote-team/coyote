@@ -11,6 +11,10 @@ namespace :scavenger_hunt do
         instructions: "A scavenger hunt clue informing players what they're searching for",
       },
       {
+        title: ScavengerHunt::Game::CLUE_PROMPT_METUM_NAME,
+        instructions: "The prompt instructing a player on how to enter an answer to a clue. Defaults to 'I think it is...' if nothing is provided on this resource.",
+      },
+      {
         title: ScavengerHunt::Game::HINT_METUM_NAME,
         instructions: "A scavenger hunt hint helping players to identify a difficult clue",
       },
