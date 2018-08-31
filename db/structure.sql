@@ -627,7 +627,8 @@ CREATE TABLE public.scavenger_hunt_clues (
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    answer text
+    answer text,
+    prompt character varying DEFAULT 'I think it is...'::character varying
 );
 
 
@@ -2062,6 +2063,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821193559'),
 ('20180825140356'),
 ('20180825140408'),
-('20180825193305');
+('20180825193305'),
+('20180830121901');
 
 
