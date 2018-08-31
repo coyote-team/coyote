@@ -15,6 +15,7 @@
 #  representations_count :integer          default(0), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  host_uris             :string           default([]), not null, is an Array
+#  ordinality            :integer
 #
 # Indexes
 #

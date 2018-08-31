@@ -5,7 +5,7 @@ class ScavengerHunt::Location < ScavengerHunt::ApplicationRecord
   delegate :representations, :title, to: :organization
 
   def representations_by_metum(metum_name)
-    representations.joins(:metum).where(meta: { title: metum_name })
+    representations.with_metum_named(metum_name)
   end
 
 end

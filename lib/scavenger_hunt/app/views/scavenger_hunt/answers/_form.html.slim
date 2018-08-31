@@ -1,6 +1,6 @@
 = form_for @answer, url: game_clue_answer_path(@game, @clue) do |form|
-  label.sr-only for="q" Enter object title
-  = text_field_tag :q, "", placeholder: "Enter object title"
+  label.sr-only for="answer" Enter object title
+  = text_field_tag :answer, "", placeholder: "Enter object title"
 
     = toolbar_item do
       = link_to "Return to clue", game_clue_path(@game, @clue), class: "large"

@@ -12,6 +12,7 @@
       = f.input :text, as: :text, hint: 'It can be helpful to include a transcription of a non-text representation, when available'
       = f.input :status, collection: Coyote::Representation.status_collection if representation.persisted? && organization_user.admin?
       = f.input :notes, as: :text, hint: 'Useful for communicating internally with other Coyote members about this representation'
+      = f.input :ordinality, label: 'Ordinality', input_html: { min: 0, max: 100 }
       = f.association :metum, collection: available_meta
       = f.association :endpoint, collection: endpoint_collection, include_blank: false
       = f.input :language, as: :select, collection: language_list, include_blank: false
