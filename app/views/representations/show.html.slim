@@ -21,16 +21,16 @@
           td= representation.content_type
         tr
           th Language
-          td= language_name(representation.language)
+          td: span.tag.tag--outline= representation.language
         tr
           th Status
-          td= representation.status.to_s.titleize
+          td= representation_status_tag(representation)
         tr
           th Order
           td= representation.ordinality
         tr
           th Metum
-          td= link_to(representation.metum_title, [current_organization, representation.metum])
+          td= metum_tag(representation.metum, hint: false)
         tr
           th Endpoint
           td= representation.endpoint_name

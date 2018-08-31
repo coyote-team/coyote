@@ -26,10 +26,10 @@ table
         td= to_html(text.to_s)
         td= User.find_by(id: author_id)&.username
         td= content_type
-        td= language
-        td= status
+        td: span.tag.tag--outline= representation.language
+        td= representation_status_tag(representation)
         td= ordinality
-        td= Metum.find_by(id: metum_id)&.title
+        td= metum_tag(representation.metum, hint: false)
         td= Endpoint.find_by(id: endpoint_id)&.name
         td= License.find_by(id: license_id)&.name
         td= content_uri
