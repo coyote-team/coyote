@@ -43,7 +43,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
 
   def set_prompt
     prompt_representation = resource.representations.with_metum_named(ScavengerHunt::Game::CLUE_PROMPT_METUM_NAME).approved.first
-    self.prompt = prompt_representation.text if prompt_representation.defined?
+    self.prompt = prompt_representation.text if prompt_representation.present?
     true
   end
 end
