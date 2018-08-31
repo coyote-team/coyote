@@ -1,6 +1,7 @@
 = render 'toolbar'
 
-.large= simple_format @clue.text
+.large
+  = representation_content @clue.representation
 
 = toolbar title: "Clue options" do
   - hint = @clue.first_hint
