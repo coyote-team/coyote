@@ -1,5 +1,7 @@
 class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
+  ANSWER_METUM_NAME = "Scavenger Hunt: Answer".freeze
   CLUE_METUM_NAME = "Scavenger Hunt: Clue".freeze
+  CLUE_PROMPT_METUM_NAME = "Scavenger Hunt: Clue Prompt".freeze
   HINT_METUM_NAME = "Scavenger Hunt: Hint".freeze
 
   after_create :create_clues
@@ -31,11 +33,10 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   private
 
   def create_clues
-    representations = location.representations_by_metum("Scavenger Hunt: Clue")
+    representations = location.representations_by_metum(CLUE_METUM_NAME).approved
     representations.each do |representation|
-      if representation.approved?
-        clues.create!(game: self, representation: representation)
-      end
+      answer = representation.resource.representations.with_metum_named(ANSWER_METUM_NAME).approved.first
+      clues.create!(answer: answer.text, game: self, representation: representation) if answer.present?
     end
   end
 end

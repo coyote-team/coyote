@@ -1,6 +1,7 @@
 class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   after_save :create_hints
   before_save :set_position
+  before_save :set_prompt
 
   belongs_to :game
   belongs_to :representation
@@ -8,11 +9,11 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   has_many :hints
 
   delegate :location, to: :game
-  delegate :resource, :text, to: :representation
+  delegate :resource, to: :representation
 
   default_scope -> { order(:position) }
   scope :answered, -> { where.not(ended_at: nil) }
-  scope :position_scope, -> (clue) { where(game_id: clue.game_id) }
+  scope :position_scope, ->(clue) { where(game_id: clue.game_id) }
   scope :unanswered, -> { where(ended_at: nil) }
 
   def answered?
@@ -34,11 +35,15 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   private
 
   def create_hints
-    representations = location.representations_by_metum("Scavenger Hunt: Hint")
+    representations = location.representations_by_metum(ScavengerHunt::Game::HINT_METUM_NAME).approved
     representations.each do |representation|
-      if representation.approved?
-        hints.create!(clue: self, representation: representation)
-      end
+      hints.create!(clue: self, representation: representation)
     end
+  end
+
+  def set_prompt
+    prompt_representation = resource.representations.with_metum_named(ScavengerHunt::Game::CLUE_PROMPT_METUM_NAME).approved.first
+    self.prompt = prompt_representation.text if prompt_representation.defined?
+    true
   end
 end

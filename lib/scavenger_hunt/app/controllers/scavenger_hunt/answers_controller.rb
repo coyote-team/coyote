@@ -6,22 +6,7 @@ class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
   end
 
   def create
-    # use the similar_text gem's .similar method to score how closely the player's input and the resource's title match (integer)
-    @match_score = "#{@clue.resource.title}".similar("#{params[:q]}")
-    puts "this is the match score #{@match_score}"
-
-    # setting a minimum match score of 40 allows the player some wiggle room for spelling errors
-    if @match_score >= 40
-      @resource = @clue.resource
-    else
-      @resource = nil
-    end
-
-    if @resource.present?
-      @answer = @clue.answers.create!(resource_id: @resource.id)
-    else
-      @answer = ScavengerHunt::Answer.new
-    end
+    @answer = @clue.answers.create!(answer: answer_param)
 
     if @answer.valid? && @answer.is_correct?
       if @game.finished?
@@ -41,7 +26,7 @@ class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
 
   private
 
-  def answer_params
-    params.require(:answer).permit(:resource_id)
+  def answer_param
+    params.require(:answer)
   end
 end

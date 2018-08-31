@@ -6,8 +6,6 @@ class ScavengerHunt::Hint < ScavengerHunt::ApplicationRecord
   belongs_to :clue
   belongs_to :representation
 
-  delegate :text, to: :representation
-
   default_scope -> { order(:position) }
   scope :position_scope, -> (hint) { where(clue_id: hint.clue_id) }
   scope :unused, -> { where(used_at: nil) }

@@ -52,6 +52,7 @@ module ResourcesHelper
     end
 
     tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
+    tags.push(resource.ordinality)
 
     (
       content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
