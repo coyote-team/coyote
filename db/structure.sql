@@ -67,21 +67,6 @@ CREATE TYPE public.resource_type AS ENUM (
 );
 
 
---
--- Name: reset_sequence(text, text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-      DECLARE
-      BEGIN
-      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
-      END;
-
-    $$;
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -466,7 +451,8 @@ CREATE TABLE public.representations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     notes text,
-    endpoint_id bigint NOT NULL
+    endpoint_id bigint NOT NULL,
+    ordinality integer
 );
 
 
@@ -571,7 +557,8 @@ CREATE TABLE public.resources (
     updated_at timestamp without time zone NOT NULL,
     representations_count integer DEFAULT 0 NOT NULL,
     priority_flag boolean DEFAULT false NOT NULL,
-    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
+    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    ordinality integer
 );
 
 
@@ -2073,6 +2060,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180327144408'),
 ('20180614200303'),
 ('20180710164016'),
+('20180821193559'),
+('20180825140356'),
+('20180825140408'),
 ('20180825193305'),
 ('20180830121901');
 
