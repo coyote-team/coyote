@@ -1,5 +1,5 @@
 class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
-  after_save :create_hints
+  after_create :create_hints
   before_save :set_position
   before_save :set_prompt
 
@@ -35,7 +35,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   private
 
   def create_hints
-    representations = location.representations_by_metum(ScavengerHunt::Game::HINT_METUM_NAME).approved
+    representations = resource.representations.with_metum_named(ScavengerHunt::Game::HINT_METUM_NAME).approved.by_ordinality
     representations.each do |representation|
       hints.create!(clue: self, representation: representation)
     end
