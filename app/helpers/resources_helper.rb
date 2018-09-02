@@ -53,7 +53,7 @@ module ResourcesHelper
 
     tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
 
-    if resource.meta.present?
+    if resource.ordinality.present?
       tags.push(tag_for(resource.ordinality.to_s))
     end
 
