@@ -3,7 +3,7 @@
 
 h1 You are correct!
 
-= image_tag @clue.resource.source_uri, alt: @clue.resource.title
+= image_tag resource_content_uri(@clue.resource), alt: @clue.resource.title
 
 = toolbar do
   = toolbar_item
