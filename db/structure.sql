@@ -858,7 +858,7 @@ ALTER SEQUENCE public.scavenger_hunt_players_id_seq OWNED BY public.scavenger_hu
 CREATE TABLE public.scavenger_hunt_survey_answers (
     id bigint NOT NULL,
     player_id bigint NOT NULL,
-    survey_questions_id bigint NOT NULL,
+    survey_question_id bigint NOT NULL,
     answer character varying
 );
 
@@ -1832,10 +1832,10 @@ CREATE INDEX index_scavenger_hunt_survey_answers_on_player_id ON public.scavenge
 
 
 --
--- Name: index_scavenger_hunt_survey_answers_on_survey_questions_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_scavenger_hunt_survey_answers_on_survey_question_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_scavenger_hunt_survey_answers_on_survey_questions_id ON public.scavenger_hunt_survey_answers USING btree (survey_questions_id);
+CREATE INDEX index_scavenger_hunt_survey_answers_on_survey_question_id ON public.scavenger_hunt_survey_answers USING btree (survey_question_id);
 
 
 --
@@ -2184,6 +2184,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180825140408'),
 ('20180825193305'),
 ('20180829010109'),
-('20180830121901');
+('20180830121901'),
+('20180904221446');
 
 
