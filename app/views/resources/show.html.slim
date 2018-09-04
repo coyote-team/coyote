@@ -16,8 +16,11 @@ h1= title(to_html_title(resource.title))
           th Priority
           td= resource.priority_flag ? 'High' : 'Low'
         tr
+          th Order
+          td= resource.ordinality
+        tr
           th= link_to('Resource Type', 'http://dublincore.org/documents/dcmi-terms/#section-7', target: :_blank)
-          td= resource.resource_type
+          td= resource.resource_type.to_s.titleize
         tr
           th Source URI
           td= link_to(nil, resource.source_uri)

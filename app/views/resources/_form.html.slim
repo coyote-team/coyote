@@ -4,6 +4,7 @@
   = f.input :uploaded_resource
   = f.input :title, label: 'Caption'
   = f.input :priority_flag, as: :select, collection: [['High', true], ['Low', false]], include_blank: false, label: 'Priority' if organization_user.admin?
+  = f.input :ordinality, label: 'Order', input_html: { min: 0, max: 100 }
   = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names, label_method: -> (t) { t.to_s.titleize }
   = f.input :canonical_id, required: true, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
   = f.input :identifier, hint: 'This should be a unique string that does not change - used to identify the resource within Coyote. If blank, we will attempt to set one for you based on the title field.'

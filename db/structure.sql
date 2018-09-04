@@ -67,21 +67,6 @@ CREATE TYPE public.resource_type AS ENUM (
 );
 
 
---
--- Name: reset_sequence(text, text, text); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-      DECLARE
-      BEGIN
-      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
-      END;
-
-    $$;
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -534,7 +519,8 @@ CREATE TABLE public.representations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     notes text,
-    endpoint_id bigint NOT NULL
+    endpoint_id bigint NOT NULL,
+    ordinality integer
 );
 
 
@@ -639,7 +625,8 @@ CREATE TABLE public.resources (
     updated_at timestamp without time zone NOT NULL,
     representations_count integer DEFAULT 0 NOT NULL,
     priority_flag boolean DEFAULT false NOT NULL,
-    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
+    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    ordinality integer
 );
 
 
@@ -669,10 +656,10 @@ ALTER SEQUENCE public.resources_id_seq OWNED BY public.resources.id;
 CREATE TABLE public.scavenger_hunt_answers (
     id bigint NOT NULL,
     clue_id bigint NOT NULL,
-    resource_id bigint NOT NULL,
     is_correct boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    answer text
 );
 
 
@@ -707,7 +694,9 @@ CREATE TABLE public.scavenger_hunt_clues (
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    answer text,
+    prompt character varying DEFAULT 'I think it is...'::character varying
 );
 
 
@@ -1787,13 +1776,6 @@ CREATE INDEX index_scavenger_hunt_answers_on_clue_id ON public.scavenger_hunt_an
 
 
 --
--- Name: index_scavenger_hunt_answers_on_resource_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_answers_on_resource_id ON public.scavenger_hunt_answers USING btree (resource_id);
-
-
---
 -- Name: index_scavenger_hunt_clues_on_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2197,6 +2179,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180327144408'),
 ('20180614200303'),
 ('20180710164016'),
-('20180829010109');
+('20180821193559'),
+('20180825140356'),
+('20180825140408'),
+('20180825193305'),
+('20180829010109'),
+('20180830121901');
 
 

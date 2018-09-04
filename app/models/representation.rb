@@ -16,6 +16,7 @@
 #  updated_at   :datetime         not null
 #  notes        :text
 #  endpoint_id  :bigint(8)        not null
+#  ordinality   :integer
 #
 # Indexes
 #
@@ -49,8 +50,10 @@ class Representation < ApplicationRecord
   delegate :name,               to: :author,   prefix: true
   delegate :identifier,         to: :resource, prefix: true
 
+  scope :by_ordinality, -> { order(ordinality: :asc) }
   scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? 'DESC' : 'ASC'}")) }
   scope :by_title_length, -> { order(Arel.sql('length(text) DESC')) }
+  scope :with_metum_named, ->(title) { joins(:metum).where(meta: { title: title }) }
 
   audited
 

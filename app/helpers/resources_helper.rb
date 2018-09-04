@@ -67,6 +67,10 @@ module ResourcesHelper
 
     tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
 
+    if resource.ordinality.present?
+      tags.push(tag_for(resource.ordinality.to_s))
+    end
+
     (
       content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
         content_tag(:ul, aria: { labelledby: "tag-list-#{id}" }, class: 'tag-list') { tags.join.html_safe }

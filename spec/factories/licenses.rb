@@ -12,7 +12,7 @@
 
 FactoryBot.define do
   factory :license do
-    name { Faker::Lorem.unique.word }
+    name { Faker::Lorem.unique.words(3) }
     title { Faker::Lorem.paragraph }
     url { 'https://example.org/license' }
 
