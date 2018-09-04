@@ -7,7 +7,11 @@ module ResourcesHelper
   end
 
   def resource_group_list
-    current_user.resource_groups.map do |c|
+    if current_user.staff?
+      current_organization.resource_groups
+    else
+      current_user.resource_groups
+    end.map do |c|
       [c.title, c.id]
     end
   end
@@ -21,7 +25,7 @@ module ResourcesHelper
     end
   end
 
-  def resource_content_uri
+  def resource_content_uri(resource)
     if resource.source_uri.present?
       resource.source_uri
     elsif resource.uploaded_resource.attached?
@@ -37,7 +41,7 @@ module ResourcesHelper
   # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
   def resource_link_target(resource, options = {})
     if resource.viewable?
-      image_tag(resource_content_uri, options)
+      image_tag(resource_content_uri(resource), options)
     else
       "#{resource.title} (#{resource.resource_type})"
     end
