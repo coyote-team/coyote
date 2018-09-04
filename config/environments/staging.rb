@@ -81,4 +81,6 @@ Coyote::Application.configure do
 
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
+
+  config.active_storage.service = :amazon
 end
