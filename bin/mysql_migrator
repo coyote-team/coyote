@@ -3,6 +3,7 @@
 # This is a quick one-off script to migrate stuff from Coyote's original MySQL DB into today's Postgres DB
 
 require ::File.expand_path('../../config/environment', __FILE__)
+require "csv"
 require 'mysql2'
 require "factory_bot_rails"
 
@@ -28,6 +29,7 @@ uri = URI.parse(ENV.fetch('JAWSDB_URL'))
 db = uri.path[1..-1]
 client = Mysql2::Client.new(host: uri.host, username: uri.user, database: db, password: uri.password)
 binding.pry
+      csv << ["Old Resource ID", "New Resource ID", "Representation ID", "Resource Path", "Resource URL", "Representation Path", "Representation URL"]
 
 org = Organization.find(1)
 
@@ -62,73 +64,83 @@ end
 puts "user: #{User.count}"
 
 images = client.query('SELECT * FROM images')
+resource_ids = {}
 
-resources = images.to_a.map do |image|
-  image.delete('priority')
+CSV.open("duplicates.csv", "w+") do |csv|
+  csv << ["Old Resource ID", "New Resource ID", "Representation ID", "Resource Path", "Resource URL", "Representation Path", "Representation URL"]
 
-  path = image.delete('path')
-  image['source_uri'] = "https://mcachicago.org#{path}"
+  Resource.without_auditing do
+    images.to_a.each do |image|
+      # Prepare the resource by massaging old columns to new
+      image.delete('priority')
 
-  image.delete('website_id')
-  image['resource_group_id'] = image.delete('group_id')
+      path = image.delete('path')
+      image['source_uri'] = "https://mcachicago.org#{path}"
 
-  image.delete('assignments_count')
-  image.delete('descriptions_count')
-  page_urls = image.delete('page_urls')
-  image.delete('status_code')
-  image['host_uris'] = JSON.parse(page_urls).join("\n") if page_urls.present?
-  image['resource_type'] = 'still_image'
-  image['identifier'] = image['id']
+      image.delete('website_id')
+      image['resource_group_id'] = image.delete('group_id')
 
-  image.delete('title') if image['title'].blank? # use DB default in this case
-  image
-end
+      image.delete('assignments_count')
+      image.delete('descriptions_count')
+      page_urls = image.delete('page_urls')
+      image.delete('status_code')
+      image['host_uris'] = JSON.parse(page_urls).join("\n") if page_urls.present?
+      image['resource_type'] = 'still_image'
+      image['identifier'] = image['id']
 
-failures = []
-Resource.without_auditing do
-  resources.each do |resource|
-    begin
-      org.resources.create!(resource)
-    rescue
-      begin
-        org.resources.create!(resource.merge(canonical_id: "#{resource["canonical_id"]} 2"))
-      rescue Exception => e
-        failures.push({resource: resource, error: e})
+      image.delete('title') if image['title'].blank? # use DB default in this case
+
+      # Look for a duplicate
+      duplicate_resource = Resource.find_by(canonical_id: image['canonical_id'])
+      if duplicate_resource.present?
+        resource_ids[image['id']] = duplicate_resource.id
+      else
+        resource_ids[image['id']] = image['id']
+        org.resources.create!(image)
       end
     end
   end
+
+  puts "resource: #{Resource.count}"
+
+  statuses = {}
+  client.query('SELECT * from statuses').each do |status|
+    statuses[status["id"]] = status["title"].downcase.gsub(" ", "_")
+  end
+
+  license = License.find_by!(name: 'cc0-1.0')
+
+  descriptions = client.query('SELECT * from descriptions')
+
+  endpoint = Endpoint.first
+
+  representations = descriptions.to_a.map do |rep|
+    rep['language'] = rep.delete('locale')
+    status = rep.delete('status_id')
+    status = statuses.fetch(status)
+    rep['status'] = status
+    old_resource_id = rep.delete('image_id')
+    resource_id = resource_ids[old_resource_id]
+    rep['resource_id'] = resource_id
+    if resource_id != old_resource_id
+      # We're moving a representation to its duplicate
+      resource_path = "/resources/#{resource_id}"
+      representation_path = "/representations/#{rep['id']}"
+      csv << [old_resource_id, resource_id, rep['id'], resource_path, "https://staging.coyote.pacs#{resource_path}", representation_path, "https://staging.coyote.pacs#{resource_path}"]
+    end
+    rep['author_id'] = rep.delete('user_id')
+    rep.delete('license')
+    rep['endpoint_id'] = endpoint.id
+    rep['license_id'] = license.id
+    rep
+  end
+
+  Representation.without_auditing { Representation.create!(representations) }
+  puts "representation: #{Representation.count}"
 end
-puts "resource: #{Resource.count}"
-
-statuses = {}
-client.query('SELECT * from statuses').each do |status|
-  statuses[status["id"]] = status["title"].downcase.gsub(" ", "_")
-end
-
-license = License.find_by!(name: 'cc0-1.0')
-
-descriptions = client.query('SELECT * from descriptions')
-
-endpoint = Endpoint.first
-
-representations = descriptions.to_a.map do |rep|
-  rep['language'] = rep.delete('locale')
-  status = rep.delete('status_id')
-  status = statuses.fetch(status)
-  rep['status'] = status
-  rep['resource_id'] = rep.delete('image_id')
-  rep['author_id'] = rep.delete('user_id')
-  rep.delete('license')
-  rep['endpoint_id'] = endpoint.id
-  rep['license_id'] = license.id
-  rep
-end
-
-Representation.without_auditing { Representation.create!(representations) }
-puts "representation: #{Representation.count}"
 
 assignments = client.query('SELECT * from assignments').to_a.map do |assignment|
-  assignment["resource_id"] = assignment.delete("image_id")
+  assignment["resource_id"] = resource_ids[assignment.delete("image_id")]
   assignment
 end
 Assignment.create!(assignments)
@@ -160,5 +172,3 @@ CREATE OR REPLACE FUNCTION "reset_sequence" (tablename text, columnname text, se
 }
 
 puts "ALL DONE"
-pp failures.count
-pp failures.inspect
