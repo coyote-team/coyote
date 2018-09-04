@@ -14,7 +14,7 @@ RSpec.describe ScavengerHunt::Game do
     create(:metum, organization: organization, title: ScavengerHunt::Game::CLUE_METUM_NAME)
   end
   let(:clue_prompt_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::CLUE_PROMPT_METUM_NAME)
+    create(:metum, organization: organization, title: ScavengerHunt::Game::QUESTION_METUM_NAME)
   end
   let(:hint_metum) do
     create(:metum, organization: organization, title: ScavengerHunt::Game::HINT_METUM_NAME)
