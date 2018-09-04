@@ -10,4 +10,4 @@ ol.title
           - survey_question.options.each do |option|
             = link_to option, answer_survey_question_path(survey_question, answer: option), class: "survey-option"
       - else
-        = text_field_tag "answer", "", placeholder: "Enter answer here"
+        = text_field_tag "answer", "", data: { uri: answer_survey_question_path(survey_question) }, placeholder: "Enter answer here"
