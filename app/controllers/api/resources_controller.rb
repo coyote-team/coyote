@@ -274,7 +274,9 @@ module Api
     attr_writer :current_organization
 
     def find_resource
-      self.resource = current_user.resources.find(params[:id])
+      self.resource = current_user.resources.where(canonical_id: params[:id]).or(
+        current_user.resources.where(id: params[:id])
+      ).first!
       self.current_organization = resource.organization
     end
 
