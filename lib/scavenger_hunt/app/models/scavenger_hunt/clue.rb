@@ -15,6 +15,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   scope :answered, -> { where.not(ended_at: nil) }
   scope :position_scope, ->(clue) { where(game_id: clue.game_id) }
   scope :unanswered, -> { where(ended_at: nil) }
+  scope :by_unanswered, -> { select("id, ended_at IS NOT NULL AS is_ended").order("is_ended ASC") }
 
   def answered?
     ended_at.present?
