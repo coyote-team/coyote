@@ -34,6 +34,8 @@
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
+  before_save :set_canonical_id
+
   belongs_to :resource_group, inverse_of: :resources
   belongs_to :organization, inverse_of: :resources
 
@@ -57,7 +59,7 @@ class Resource < ApplicationRecord
 
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
-  validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
+  #validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -159,5 +161,18 @@ class Resource < ApplicationRecord
 
   def assigned?
     !unassigned?
+  end
+
+  def generate_canonical_id
+    self.canonical_id = SecureRandom.uuid
+  end
+
+  def set_canonical_id
+    if canonical_id.blank?
+      generate_canonical_id
+      while Resource.where(canonical_id: canonical_id).where.not(id: id).any?
+        next
+      end
+    end
   end
 end
