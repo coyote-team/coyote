@@ -29,7 +29,11 @@ module ResourcesHelper
     if resource.source_uri.present?
       resource.source_uri
     elsif resource.uploaded_resource.attached?
-      url_for(resource.uploaded_resource)
+      # FIXME: Metamagic's, ahem, "magic" is hijacking `url_for` and causing
+      # this to explode, so we call the helper method directly rather than
+      # using the included one that has been overridden by, ahem, poorly
+      # behaving libraries
+      Rails.application.routes.url_helpers.url_for(resource.uploaded_resource)
     else
       nil
     end
