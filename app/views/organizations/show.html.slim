@@ -4,55 +4,55 @@ header
 .split-view
   .split-view-item
     = list title: {text: 'Our Stats', sr_only: false} do
-      = link_to_list_item organization_resources_path(current_organization) do
+      = link_to_list_item_no_border organization_resources_path(current_organization) do
         = list_item_label "Resources"
         = list_item_value number_with_delimiter(dashboard.organization_resource_count)
 
-      = link_to_list_item organization_representations_path(current_organization) do
+      = link_to_list_item_no_border organization_representations_path(current_organization) do
         = list_item_label "Descriptions"
         = list_item_value number_with_delimiter(dashboard.organization_representation_count)
 
-      = link_to_list_item organization_resources_path(current_organization, q: { scope: [:represented] }) do
+      = link_to_list_item_no_border organization_resources_path(current_organization, q: { scope: [:represented] }) do
         = list_item_label "Described Resources"
         = list_item_value number_with_delimiter(dashboard.organization_represented_resource_count)
 
-      = link_to_list_item organization_resources_path(current_organization, q: { scope: [:unrepresented] }) do
+      = link_to_list_item_no_border organization_resources_path(current_organization, q: { scope: [:unrepresented] }) do
         = list_item_label "Undescribed Resources"
         = list_item_value number_with_delimiter(dashboard.organization_unrepresented_count)
 
     = list title: { text: 'My Stats', sr_only: false } do
-      = link_to_list_item organization_resources_path(current_organization, q: { representations_author_id_eq: current_user.id }) do
+      = link_to_list_item_no_border organization_resources_path(current_organization, q: { representations_author_id_eq: current_user.id }) do
         = list_item_label "Described Resources"
         = list_item_value number_with_delimiter(dashboard.current_user_represented_resources_count)
 
-      = link_to_list_item organization_resources_path(current_organization, q: { scope: [:unrepresented], assignments_user_id_eq: current_user.id }) do
+      = link_to_list_item_no_border organization_resources_path(current_organization, q: { scope: [:unrepresented], assignments_user_id_eq: current_user.id }) do
         = list_item_label "Undescribed Resources Assigned to You"
         = list_item_value number_with_delimiter(dashboard.current_user_open_assignments_count)
 
-      = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:approved], author_id_eq: current_user.id }) do
+      = link_to_list_item_no_border organization_representations_path(current_organization, q: { status_in: [:approved], author_id_eq: current_user.id }) do
         = list_item_label "Approved Descriptions"
         = list_item_value number_with_delimiter(dashboard.current_user_approved_representation_count)
 
-      = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:not_approved], author_id_eq: current_user.id }) do
+      = link_to_list_item_no_border organization_representations_path(current_organization, q: { status_in: [:not_approved], author_id_eq: current_user.id }) do
         = list_item_label "Unapproved Descriptions"
         = list_item_value number_with_delimiter(dashboard.current_user_unapproved_representation_count)
 
   .split-view-item
     - if organization_user.admin?
       = list title: { text: "Queues", sr_only: false } do
-        = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:ready_to_review] }) do
+        = link_to_list_item_no_border organization_representations_path(current_organization, q: { status_in: [:ready_to_review] }) do
           = list_item_label 'Descriptions Pending Approval'
           = list_item_value number_with_delimiter(dashboard.organization_ready_to_review_count)
-        = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:approved] }) do
+        = link_to_list_item_no_border organization_representations_path(current_organization, q: { status_in: [:approved] }) do
           = list_item_label 'Descriptions Approved'
           = list_item_value number_with_delimiter(dashboard.organization_approved_representation_count)
-        = link_to_list_item organization_representations_path(current_organization, q: { status_in: [:not_approved] }) do
+        = link_to_list_item_no_border organization_representations_path(current_organization, q: { status_in: [:not_approved] }) do
           = list_item_label 'Unapproved Descriptions'
           = list_item_value number_with_delimiter(dashboard.organization_unapproved_representation_count)
-        = link_to_list_item organization_resources_path(current_organization, q: { scope: [:assigned_unrepresented] }) do
+        = link_to_list_item_no_border organization_resources_path(current_organization, q: { scope: [:assigned_unrepresented] }) do
           = list_item_label 'Resources with Open Assignments'
           = list_item_value number_with_delimiter(dashboard.organization_open_assignment_count)
-        = link_to_list_item organization_resources_path(current_organization, q: { scope: [:unassigned_unrepresented] }) do
+        = link_to_list_item_no_border organization_resources_path(current_organization, q: { scope: [:unassigned_unrepresented] }) do
           = list_item_label 'Resources Unassigned'
           = list_item_value number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
 
