@@ -23,13 +23,6 @@ module ListHelper
     end
   end
 
-  def link_to_list_item_no_border(*args, &block)
-    options = combine_options(args.extract_options!, class: 'list-item-no-border')
-    content_tag(:li) do
-      link_to(*args, options, &block)
-    end
-  end
-
   def list_item_label(label = nil)
     return '' unless label.present? || block_given?
     content_tag(:span, class: 'list-item-label') { block_given? ? yield : label }
