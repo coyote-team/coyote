@@ -1,2 +1,2 @@
-release: if [[ $COYOTE_REVIEW_APP != "true" ]]; then bundle exec rake db:migrate; fi
+release: bin/release
 web: bundle exec puma -C config/puma.rb
