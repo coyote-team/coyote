@@ -1,7 +1,7 @@
 class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   after_create :create_hints
   before_save :set_position
-  before_save :set_prompt
+  before_save :set_question
 
   belongs_to :game
   belongs_to :representation
@@ -42,9 +42,9 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
     end
   end
 
-  def set_prompt
-    prompt_representation = resource.representations.with_metum_named(ScavengerHunt::Game::QUESTION_METUM_NAME).approved.first
-    self.prompt = prompt_representation.text if prompt_representation.present?
+  def set_question
+    question_representation = resource.representations.with_metum_named(ScavengerHunt::Game::QUESTION_METUM_NAME).approved.first
+    self.prompt = question_representation.text if question_representation.present?
     true
   end
 end
