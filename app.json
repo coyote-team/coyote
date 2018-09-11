@@ -5,7 +5,7 @@
   "repository": "https://github.com/coyote-team/coyote",
   "keywords": ["rails"],
   "scripts": {
-    "postdeploy": "gem install bundler --no-ri --no-rdoc && bin/rake db:structure:load db:seed scavenger_hunt:seed"
+    "postdeploy": "bin/rake db:structure:load db:seed scavenger_hunt:seed"
   },
   "image": "heroku/ruby",
   "env": {

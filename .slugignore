@@ -1,5 +1,6 @@
-/docs
-/.yardoc
-/coverage
+spec/!(factories)
+docs
+.yardoc
+coverage
 bin/setup
-/lib/tasks/dev_only.rake
+lib/tasks/dev_only.rake
