@@ -33,7 +33,9 @@
 # resources are network "retrievable"; e.g., human beings, corporations, and bound books in a library can also be considered resources."
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
-class Resource < ApplicationRecord  
+class Resource < ApplicationRecord
+  before_save :set_canonical_id
+
   belongs_to :resource_group, inverse_of: :resources
   belongs_to :organization, inverse_of: :resources
 
@@ -43,6 +45,8 @@ class Resource < ApplicationRecord
   has_many :object_resource_links,  foreign_key: :object_resource_id,  class_name: :ResourceLink, inverse_of: :object_resource
   has_many :assignments, inverse_of: :resource
   has_many :meta, through: :representations
+
+  has_one_attached :uploaded_resource
 
   scope :represented,              -> { joins(:representations).distinct }
   scope :unrepresented,            -> { left_outer_joins(:representations).where(representations: { resource_id: nil }) }
@@ -55,7 +59,7 @@ class Resource < ApplicationRecord
 
   validates :identifier, presence: true, uniqueness: true
   validates :resource_type, presence: true
-  validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
+  #validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -83,7 +87,7 @@ class Resource < ApplicationRecord
   end
 
   def viewable?
-    source_uri.present? && Coyote::Resource::IMAGE_LIKE_TYPES.include?(resource_type.to_sym)
+    (source_uri.present? || uploaded_resource.attached?) && Coyote::Resource::IMAGE_LIKE_TYPES.include?(resource_type.to_sym)
   end
 
   # @return [String] a human-friendly means of identifying this resource in titles and select boxes
@@ -157,5 +161,18 @@ class Resource < ApplicationRecord
 
   def assigned?
     !unassigned?
+  end
+
+  def generate_canonical_id
+    self.canonical_id = SecureRandom.uuid
+  end
+
+  def set_canonical_id
+    if canonical_id.blank?
+      generate_canonical_id
+      while Resource.where(canonical_id: canonical_id).where.not(id: id).any?
+        next
+      end
+    end
   end
 end

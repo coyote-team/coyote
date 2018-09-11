@@ -5,6 +5,7 @@ module ScavengerHunt
     include ComponentHelper
     include CombineOptionsHelper
     include IdRegistryHelper
+    include ResourcesHelper
     include TitleHelper
     include ToolbarHelper
 

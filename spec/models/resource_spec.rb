@@ -36,10 +36,8 @@ RSpec.describe Resource do
 
   it { is_expected.to validate_presence_of(:identifier) }
   it { is_expected.to validate_presence_of(:resource_type) }
-  it { is_expected.to validate_presence_of(:canonical_id) }
 
   it { is_expected.to validate_uniqueness_of(:identifier) }
-  it { is_expected.to validate_uniqueness_of(:canonical_id).scoped_to(:organization_id) }
 
   specify { expect(subject.label).to eq("Mona Lisa (abc123)") }
 
@@ -87,6 +85,22 @@ RSpec.describe Resource do
     it 'returns correctly labeled predicates' do
       expect(subject_resource.related_resources).to eq([['hasPart', resource_link, object_resource]])
       expect(object_resource.related_resources).to eq([['isPartOf', resource_link, subject_resource]])
+    end
+  end
+
+  context 'when saved' do
+    it 'sets a unique canonical id' do
+      resource = build(:resource)
+      expect(resource.canonical_id).to be_blank
+      resource.save!
+      expect(resource.canonical_id).to be_present
+    end
+
+    it 'does not set a canonical ID if one is given' do
+      resource = build(:resource)
+      resource.canonical_id = '123'
+      resource.save!
+      expect(resource.canonical_id).to eq('123')
     end
   end
 end

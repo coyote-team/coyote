@@ -20,6 +20,7 @@
   .list-item-actions
     text-align: left
 
+
 .list
   display: block
 
@@ -28,8 +29,12 @@
     border-top: 1px solid $border
     display: flex
     justify-content: space-between
-    padding: $gutter 0
+    padding: $gutter
     transition: all 150ms $swift
+
+    &-dashboard-metric
+      @extend .list-item
+      border: 0
 
     .list-item-label, .list-item-header, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
       display: block
@@ -41,9 +46,6 @@
       display: flex
       flex: 0 0 33%
       white-space: nowrap
-
-      img
-        border: 1px solid $border
 
       @include ie-only
         order: -1 // Remove from the IE flex flow manually
@@ -94,7 +96,7 @@
 
       .list-item
         @include list-item-vertical
-        border-width: 0
+        border: 1px solid #000
         flex: 1 1 0%
         -ms-flex: 1 1 20% // Patches IE 11 insantiy
         margin: $gutter

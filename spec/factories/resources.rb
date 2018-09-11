@@ -27,13 +27,10 @@
 #  index_resources_on_resource_group_id                 (resource_group_id)
 #
 
-require 'digest/md5'
-
 FactoryBot.define do
   factory :resource, aliases: %i[subject_resource object_resource] do
     title { 'Mona Lisa' }
     resource_type { 'still_image' }
-    sequence(:canonical_id) { |n| Digest::MD5.hexdigest(n.to_s) }
     identifier { "#{title.underscore.gsub(/\s+/, '_')}_#{SecureRandom.hex(2)}" }
 
     trait :priority do

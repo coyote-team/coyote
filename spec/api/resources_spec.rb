@@ -136,6 +136,22 @@ RSpec.describe 'Accessing resources' do
         expect(data).to have_relationships(:organization, :representations)
       end
     end
+
+    scenario 'GET /resources/:id with canonical ID' do
+      get api_resource_path(resource.canonical_id), headers: auth_headers
+      expect(response).to be_successful
+
+      json_data.fetch(:data).tap do |data|
+        expect(data).to have_id(resource.id.to_s)
+        expect(data).to have_type('resource')
+
+        expect(data).to have_attribute(:resource_type).with_value(resource.resource_type)
+        expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+        expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+
+        expect(data).to have_relationships(:organization, :representations)
+      end
+    end
   end
 
   context 'without authorization' do

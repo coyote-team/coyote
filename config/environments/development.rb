@@ -47,4 +47,5 @@ Coyote::Application.configure do
   # config.assets.css_compressor = :sass
 
   #config.action_controller.perform_caching = true
+  config.active_storage.service = :amazon
 end

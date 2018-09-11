@@ -18,6 +18,7 @@ gem 'analytical' # analytics
 gem 'apipie-rails'
 gem 'audited'
 gem 'autoprefixer-rails'
+gem 'aws-sdk-s3', require: false
 gem 'bootsnap'
 gem 'devise' # user auth
 gem 'dotenv-rails'
@@ -61,6 +62,7 @@ group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'         # optional dependency of better_errors
   gem 'brakeman', require: false  # basic security checks
+  gem 'figaro', '1.0'
   gem 'pry-rails'                 # gives us binding.pry calls
   gem 'rails_real_favicon'        # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem 'spring'

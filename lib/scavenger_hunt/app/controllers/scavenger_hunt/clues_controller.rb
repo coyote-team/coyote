@@ -7,5 +7,6 @@ class ScavengerHunt::CluesController < ScavengerHunt::ApplicationController
   end
 
   def show
+    redirect_to(correct_game_clue_answer_path(@game, @clue)) if @clue.answered?
   end
 end

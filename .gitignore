@@ -22,3 +22,6 @@ pickle-email-*.html
 
 #dotenv
 .env
+
+# Ignore application configuration
+/config/application.yml
