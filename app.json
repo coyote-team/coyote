@@ -33,7 +33,7 @@
     "S3_BUCKET": {
       "required": true
     },
-    "S3_SECRETY_KEY": {
+    "S3_SECRET_KEY": {
       "required": true
     },
     "SECRET_KEY_BASE": {
