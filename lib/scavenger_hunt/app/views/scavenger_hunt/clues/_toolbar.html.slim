@@ -2,7 +2,6 @@
   .toolbar.toolbar--nav
     .toolbar-item
       h2.sr-only Location
-      = link_to "Change location", locations_path, class: "default", aria: { describedby: "location-name" }
       #location-name.default= @game.location.title
     .toolbar-item.large aria-hidden="true"
       ' Clue #{@clue.position.succ}/#{@game.clues.count}
