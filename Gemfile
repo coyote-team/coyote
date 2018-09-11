@@ -23,7 +23,6 @@ gem 'bootsnap'
 gem 'devise' # user auth
 gem 'dotenv-rails'
 gem 'easymarklet', git: 'https://github.com/seeread/easymarklet.git', ref: '53829a6'
-gem 'factory_bot_rails', require: false
 gem 'great_pretender' # TODO: Move back to dev after redesign
 gem 'haml-rails', '>= 1.0.0'
 gem 'iconv'
@@ -51,8 +50,12 @@ gem 'sprockets-rails'
 gem 'uglifier', '>= 2.7.1' # js compression
 gem 'vanilla-ujs'
 
-group :development, :test do
+group :development, :review, :test do
+  gem 'factory_bot_rails', require: false
   gem 'faker'
+end
+
+group :development, :test do
   gem 'rspec-rails', '>= 3.6.1'
   gem 'spring-commands-rspec'
 end

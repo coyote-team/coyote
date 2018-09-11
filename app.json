@@ -23,10 +23,8 @@
     "MAIL_DOMAIN": {
       "required": true
     },
-    "RAILS_ENV": {
-      "description": "The name of the environment we should run the app in",
-      "value": "production"
-    },
+    "RACK_ENV": "review",
+    "RAILS_ENV": "review",
     "S3_ACCESS_KEY": {
       "required": true
     },
