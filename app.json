@@ -21,7 +21,7 @@
       "description": "The initial password used for the first Coyote admin user",
       "generator": "secret"
     },
-    "COYOTE_ONE_CLICK_INSTALLATION": "true"
+    "COYOTE_REVIEW_APP": "true"
   },
   "addons": [
     {
