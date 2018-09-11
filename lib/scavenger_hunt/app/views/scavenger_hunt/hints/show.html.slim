@@ -8,6 +8,8 @@ h1
 
 = toolbar title: "Hint controls" do
   = toolbar_item class: "toolbar-item--full" do
-    = link_to "Return<br />to clue".html_safe, game_clue_path(@game, @clue), class: "large"
-
+    = link_to game_clue_path(@game, @clue), class: "large" do
+      | Return
+      br
+      | to clue
 = render 'scavenger_hunt/games/footer'

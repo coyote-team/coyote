@@ -2,9 +2,15 @@
 
   = toolbar title: "Game controls" do
     = toolbar_item do
-      = link_to "End<br />Game".html_safe, finish_game_path(@game), class: "small end-game"
+      = link_to finish_game_path(@game), class: "small end-game" do
+        | End
+        br
+        | Game
     = toolbar_item do
-      = link_to "See all<br />clues".html_safe, game_clues_path(@game), class: "small"
+      = link_to game_clues_path(@game), class: "small" do
+        | See all
+        br
+        | clues
   h2#game-progress.sr-only Game Progress
   ul.toolbar-item.small aria-labelledby="game-progress"
     li.toolbar Total time: #{@game.total_time}

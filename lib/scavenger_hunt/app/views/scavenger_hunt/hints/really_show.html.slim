@@ -12,6 +12,9 @@
       = link_to 'Next hint', game_clue_hint_path(@game, @clue, @hint.next_hint), class: "large"
 
   = toolbar_item do
-    = link_to 'Return<br />to clue'.html_safe, game_clue_path(@game, @clue), class: "large"
+    = link_to game_clue_path(@game, @clue), class: "large" do
+      | Return
+      br
+      | to clue
 
 = render "scavenger_hunt/games/footer"
