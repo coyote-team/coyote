@@ -67,6 +67,21 @@ CREATE TYPE public.resource_type AS ENUM (
 );
 
 
+--
+-- Name: reset_sequence(text, text, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+      DECLARE
+      BEGIN
+      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
+      END;
+
+    $$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -2179,7 +2194,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180327144408'),
 ('20180614200303'),
 ('20180710164016'),
-('20180821193559'),
 ('20180825140356'),
 ('20180825140408'),
 ('20180825193305'),
