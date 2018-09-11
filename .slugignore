@@ -1,7 +1,5 @@
-!/spec/factories
 /docs
 /.yardoc
-/spec
 /coverage
 bin/setup
 /lib/tasks/dev_only.rake
