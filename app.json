@@ -9,19 +9,43 @@
   },
   "image": "heroku/ruby",
   "env": {
+    "COYOTE_REVIEW_APP": "true",
+    "COYOTE_SEED_USER_PASSWORD": {
+      "description": "The initial password used for the first Coyote admin user",
+      "generator": "secret"
+    },
+    "DEVISE_MAILER_SENDER": {
+      "required": true
+    },
+    "MAIL_ADDRESS": {
+      "required": true
+    },
+    "MAIL_DOMAIN": {
+      "required": true
+    },
     "RAILS_ENV": {
       "description": "The name of the environment we should run the app in",
       "value": "production"
+    },
+    "S3_ACCESS_KEY": {
+      "required": true
+    },
+    "S3_BUCKET": {
+      "required": true
+    },
+    "S3_SECRETY_KEY": {
+      "required": true
     },
     "SECRET_KEY_BASE": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"
     },
-    "COYOTE_SEED_USER_PASSWORD": {
-      "description": "The initial password used for the first Coyote admin user",
-      "generator": "secret"
+    "SENDGRID_PASSWORD": {
+      "required": true
     },
-    "COYOTE_REVIEW_APP": "true"
+    "SENDGRID_USERNAME": {
+      "required": true
+    }
   },
   "addons": [
     {
