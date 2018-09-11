@@ -7,7 +7,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   CLUE_METUM_NAME = "Scavenger Hunt: Clue".freeze
   CLUE_POSITION_METUM_NAME = "Scavenger Hunt: Clue Position".freeze
   HINT_METUM_NAME = "Scavenger Hunt: Hint".freeze
-  QUESTION_METUM_NAME = "Scavenger Hunt: Question".freeze
+  QUESTION_METUM_NAME = "Scavenger Hunt: Clue Prompt".freeze
 
   after_create :create_clues
 
