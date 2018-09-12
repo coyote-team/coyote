@@ -13,7 +13,7 @@ RSpec.describe ScavengerHunt::Game do
   let(:clue_metum) do
     create(:metum, organization: organization, title: ScavengerHunt::Game::CLUE_METUM_NAME)
   end
-  let(:clue_prompt_metum) do
+  let(:question_metum) do
     create(:metum, organization: organization, title: ScavengerHunt::Game::QUESTION_METUM_NAME)
   end
   let(:hint_metum) do
@@ -56,10 +56,10 @@ RSpec.describe ScavengerHunt::Game do
     })
   end
 
-  # ...and a custom answer prompt
-  let!(:prompt_1) do
+  # ...and a custom question
+  let!(:question_1) do
     create(:representation, {
-      metum: clue_prompt_metum,
+      metum: question_metum,
       resource: resource_1,
       status: "approved",
       text: "This is the first answer:"
@@ -100,10 +100,10 @@ RSpec.describe ScavengerHunt::Game do
     })
   end
 
-  # ...and an answer prompt
-  let!(:prompt_2) do
+  # ...and a question
+  let!(:question_2) do
     create(:representation, {
-      metum: clue_prompt_metum,
+      metum: question_metum,
       resource: resource_2,
       status: "approved",
       text: "Answer #2 is..."
@@ -181,9 +181,9 @@ RSpec.describe ScavengerHunt::Game do
     expect(subject.clues.last.answer).to eq(answer_1.text)
   end
 
-  it "uses the prompt metum to set clue prompts" do
-    expect(subject.clues.first.prompt).to eq(prompt_2.text)
-    expect(subject.clues.last.prompt).to eq(prompt_1.text)
+  it "uses the question metum to set questions" do
+    expect(subject.clues.first.question).to eq(question_2.text)
+    expect(subject.clues.last.question).to eq(question_1.text)
   end
 
   it "generates hints on clues ordered by ordinality" do
