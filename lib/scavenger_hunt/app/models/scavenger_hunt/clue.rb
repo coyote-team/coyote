@@ -44,7 +44,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
 
   def set_question
     question_representation = resource.representations.with_metum_named(ScavengerHunt::Game::QUESTION_METUM_NAME).approved.first
-    self.prompt = question_representation.text if question_representation.present?
+    self.question = question_representation.text if question_representation.present?
     true
   end
 end

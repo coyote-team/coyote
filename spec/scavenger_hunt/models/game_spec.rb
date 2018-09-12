@@ -182,8 +182,8 @@ RSpec.describe ScavengerHunt::Game do
   end
 
   it "uses the question metum to set questions" do
-    expect(subject.clues.first.prompt).to eq(question_2.text)
-    expect(subject.clues.last.prompt).to eq(question_1.text)
+    expect(subject.clues.first.question).to eq(question_2.text)
+    expect(subject.clues.last.question).to eq(question_1.text)
   end
 
   it "generates hints on clues ordered by ordinality" do
