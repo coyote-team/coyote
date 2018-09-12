@@ -11,7 +11,7 @@ FactoryBot.factories[:license].defined_traits.to_a.map do |trait|
   FactoryBot.create(:license,trait.name)
 end
 
-endpoints = FactoryBot.factories[:endpoint].defined_traits.to_a.map do |trait|
+FactoryBot.factories[:endpoint].defined_traits.to_a.map do |trait|
   FactoryBot.create(:endpoint,trait.name)
 end
 
@@ -28,8 +28,6 @@ end
 uri = URI.parse(ENV.fetch('JAWSDB_URL'))
 db = uri.path[1..-1]
 client = Mysql2::Client.new(host: uri.host, username: uri.user, database: db, password: uri.password)
-binding.pry
-      csv << ["Old Resource ID", "New Resource ID", "Representation ID", "Resource Path", "Resource URL", "Representation Path", "Representation URL"]
 
 org = Organization.find(1)
 
