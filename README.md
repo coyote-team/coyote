@@ -100,6 +100,35 @@ _Re-seeding the Database_
 
 You can regenerate development environment data by running `bundle exec rake dev_only:reseed`.
 
+## Development Workflow
+
+### Topic Branches & Review Apps
+
+We use Heroku Pipelines and a modified "git flow" workflow for our development process. It's very important you follow the process outlined below!
+
+1. Create a topic branch off of master related to your work, typically something like
+
+   ```bash
+   git checkout master
+   git checkout -b {name}/{issue-numer}-{description} # (e.g.) `flip/208-fix-dev-workflow
+   ```
+
+2. Write your code and then run tests, either locally (`guard` or `rspec`) or via CI (simply push your topic branch to Github: `git push origin flip/208-fix-dev-workflow`)
+
+3. When CI has run on Github, create a pull request ("PR") and request a review from one or more team members _who aren't you_
+
+4. Heroku will deploy a review app for every pull request you create. The review apps automatically generate seed data to use with testing. Reviewers can use them to test new functionality with one of the seed user accounts.
+
+### Deploying to Staging
+
+Deploying to staging happens automatically whenever the `master` branch is modified (in this, `master` is similar to `develop` in git flow). Staging is available at [staging.coyote.pics](https://staging.coyote.pics).
+
+**IMPORTANT NOTE:** when you deploy to staging, the production database is cloned and then migrations are run on staging. This means _every_ commit to `master` will overwrite the staging database.
+
+### Deploying to Production
+
+Deploying to production is as simple as merging `master` into `production`. Doing this will automatically deploy your code and run migrations **TO THE PRODUCTION INSTANCE**, so be 100% sure you know what you're doing and test a _lot_ on staging first.
+
 ## <a name="documentation"></a>Documentation
 
 YARD documentation is hosted at [coyote-team.github.io](https://coyote-team.github.io/coyote/).
