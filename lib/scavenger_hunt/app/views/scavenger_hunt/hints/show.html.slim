@@ -1,13 +1,15 @@
 - body_class :inverted
 = render 'toolbar'
 
-p.hint-text
+h1
   | Viewing this hint will add 30 seconds to your score.
 
 = link_to "I still want it", game_clue_hint_path(@game, @clue, @hint, confirm: true), class: "title"
 
 = toolbar title: "Hint controls" do
   = toolbar_item class: "toolbar-item--full" do
-    = link_to 'Return to clue', game_clue_path(@game, @clue), class: "large"
-
+    = link_to game_clue_path(@game, @clue), class: "large" do
+      | Return
+      br
+      | to clue
 = render 'scavenger_hunt/games/footer'

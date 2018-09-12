@@ -1,8 +1,7 @@
 - body_class :inverted
 = render 'toolbar'
 
-.hint-text
-  = representation_content @hint.representation
+= representation_content @hint.representation
 
 = toolbar title: "Options" do
   = toolbar_item do
@@ -13,6 +12,9 @@
       = link_to 'Next hint', game_clue_hint_path(@game, @clue, @hint.next_hint), class: "large"
 
   = toolbar_item do
-    = link_to 'Return to clue', game_clue_path(@game, @clue), class: "large"
+    = link_to game_clue_path(@game, @clue), class: "large" do
+      | Return
+      br
+      | to clue
 
 = render "scavenger_hunt/games/footer"

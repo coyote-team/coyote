@@ -3,7 +3,10 @@
   = text_field_tag :answer, "", placeholder: "Enter object title"
 
     = toolbar_item do
-      = link_to "Return to clue", game_clue_path(@game, @clue), class: "large"
+      = link_to game_clue_path(@game, @clue), class: "large" do
+        | Return
+        br
+        | to clue
     = toolbar_item do
       button.large type="submit" Submit
 

@@ -13,6 +13,11 @@ h1
 = toolbar class: "toolbar--bottom", title: "Game Controls" do
   - if @game.clues.any?
     = toolbar_item do
-      = link_to 'Begin game', game_clue_path(@game, @game.clues.by_unanswered.first), class: "title"
-  = toolbar_item do
-    = link_to 'End game', locations_path, class: "default"
+      = link_to finish_game_path(@game), class: "small end-game" do
+        | End
+        br
+        | Game    = toolbar_item do
+      = link_to game_clue_path(@game, @game.clues.by_unanswered.first), class: "title" do
+        | Begin
+        br
+        | Game
