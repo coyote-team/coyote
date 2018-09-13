@@ -11,12 +11,13 @@ h1
   ' at this location
 
 = toolbar class: "toolbar--bottom", title: "Game Controls" do
+  = toolbar_item do
+    = link_to finish_game_path(@game), class: "small end-game" do
+      | End
+      br
+      | Game
   - if @game.clues.any?
     = toolbar_item do
-      = link_to finish_game_path(@game), class: "small end-game" do
-        | End
-        br
-        | Game    = toolbar_item do
       = link_to game_clue_path(@game, @game.clues.by_unanswered.first), class: "title" do
         | Begin
         br
