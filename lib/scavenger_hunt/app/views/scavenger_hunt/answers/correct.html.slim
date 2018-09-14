@@ -10,11 +10,11 @@ h1 You are correct!
     p.default
       | Elapsed time
       br
-      #{@game.elapsed_time}
+      | #{@game.elapsed_time}
     p.default
       | Penalty
       br
-      #{@game.penalty_time}
+      | #{@game.penalty_time}
   = toolbar_item do
     - if next_clue = @clue.next
       = link_to "Next clue", game_clue_path(@game, next_clue), class: "title"
