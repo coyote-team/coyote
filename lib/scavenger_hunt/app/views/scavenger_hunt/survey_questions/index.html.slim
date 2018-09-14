@@ -1,5 +1,5 @@
 h1 Survey
-.default Survey thanks/explanation
+.default.survey-message Help us improve the game!
 
 ol.title
   - @survey_questions.each do |survey_question|
@@ -10,4 +10,8 @@ ol.title
           - survey_question.options.each do |option|
             = link_to option, answer_survey_question_path(survey_question, answer: option), class: "survey-option"
       - else
-        = text_field_tag "answer", "", data: { uri: answer_survey_question_path(survey_question) }, placeholder: "Enter answer here"
+        = text_area_tag "answer", "", data: { uri: answer_survey_question_path(survey_question) }, placeholder: "Enter answer here", rows: 4, class: "survey-text-area"
+
+.toolbar.bottom
+  = toolbar_item do
+    button.large.survey-submit-button type="submit" Submit
