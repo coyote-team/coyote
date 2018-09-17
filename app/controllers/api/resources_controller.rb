@@ -166,21 +166,6 @@ module Api
         "id": "t.y.f.f.s.h.,_2011_929d",
         "type": "resource",
         "attributes": {
-          "title": "T.Y.F.F.S.H., 2011",
-          "resource_type": "still_image",
-          "canonical_id": "c4ca4238a0b923820dcc509a6f75849b",
-          "source_uri": "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
-          "created_at": "2017-11-06T16:17:49.630Z",
-          "updated_at": "2017-11-06T16:55:10.207Z",
-          "resource_group": "collection"
-        },
-        "relationships": {
-          "organization": {
-            "data": {
-              "type": "organization",
-
-        "type": "resource",
-        "attributes": {
           "id": "t.y.f.f.s.h.,_2011_929d",
           "title": "T.Y.F.F.S.H., 2011",
           "resource_type": "still_image",
