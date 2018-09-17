@@ -53,7 +53,7 @@ module Api
 
     def find_resource_and_organization
       self.resource = current_user.resources.where(canonical_id: params[:resource_identifier]).or(
-        current_user.resources.where(id: params[:resource_identifier])
+        current_user.resources.where(identifier: params[:resource_identifier])
       ).first!
       self.current_organization = resource.organization
     end
