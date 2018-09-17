@@ -163,10 +163,10 @@ module Api
     curl  -H 'Authorization: CHANGEME' http://localhost:10000/api/v1/resources/1 | jsonlint
     {
       "data": {
-        "id": "1",
+        "id": "t.y.f.f.s.h.,_2011_929d",
         "type": "resource",
         "attributes": {
-          "id": 1,
+          "id": "t.y.f.f.s.h.,_2011_929d",
           "title": "T.Y.F.F.S.H., 2011",
           "resource_type": "still_image",
           "canonical_id": "c4ca4238a0b923820dcc509a6f75849b",
@@ -272,13 +272,6 @@ module Api
 
     attr_accessor :resource
     attr_writer :current_organization
-
-    def find_resource
-      self.resource = current_user.resources.where(canonical_id: params[:id]).or(
-        current_user.resources.where(id: params[:id])
-      ).first!
-      self.current_organization = resource.organization
-    end
 
     def authorize_general_access
       authorize(Resource)
