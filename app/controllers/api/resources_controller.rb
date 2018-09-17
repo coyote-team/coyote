@@ -163,10 +163,25 @@ module Api
     curl  -H 'Authorization: CHANGEME' http://localhost:10000/api/v1/resources/1 | jsonlint
     {
       "data": {
-        "id": "1",
+        "id": "t.y.f.f.s.h.,_2011_929d",
         "type": "resource",
         "attributes": {
-          "id": 1,
+          "title": "T.Y.F.F.S.H., 2011",
+          "resource_type": "still_image",
+          "canonical_id": "c4ca4238a0b923820dcc509a6f75849b",
+          "source_uri": "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
+          "created_at": "2017-11-06T16:17:49.630Z",
+          "updated_at": "2017-11-06T16:55:10.207Z",
+          "resource_group": "collection"
+        },
+        "relationships": {
+          "organization": {
+            "data": {
+              "type": "organization",
+
+        "type": "resource",
+        "attributes": {
+          "id": "t.y.f.f.s.h.,_2011_929d",
           "title": "T.Y.F.F.S.H., 2011",
           "resource_type": "still_image",
           "canonical_id": "c4ca4238a0b923820dcc509a6f75849b",
@@ -272,13 +287,6 @@ module Api
 
     attr_accessor :resource
     attr_writer :current_organization
-
-    def find_resource
-      self.resource = current_user.resources.where(canonical_id: params[:id]).or(
-        current_user.resources.where(id: params[:id])
-      ).first!
-      self.current_organization = resource.organization
-    end
 
     def authorize_general_access
       authorize(Resource)

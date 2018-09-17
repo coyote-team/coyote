@@ -34,14 +34,14 @@ RSpec.describe 'Accessing resources' do
 
     scenario 'PATCH /resources/:id' do
       expect {
-        patch api_resource_path(existing_resource.id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
+        patch api_resource_path(existing_resource.canonical_id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
         expect(response).to be_successful
 
         existing_resource.reload
       }.to change(existing_resource, :title).
         to('NEWTITLE')
 
-      patch api_resource_path(existing_resource.id), params: { resource: { identifier: nil } }, headers: auth_headers
+      patch api_resource_path(existing_resource.canonical_id), params: { resource: { identifier: nil } }, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
@@ -122,7 +122,7 @@ RSpec.describe 'Accessing resources' do
     end
 
     scenario 'GET /resources/:id' do
-      get api_resource_path(resource), headers: auth_headers
+      get api_resource_path(resource.identifier), headers: auth_headers
       expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
