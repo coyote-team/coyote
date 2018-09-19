@@ -20,7 +20,6 @@ class OrganizationPolicy < ApplicationPolicy
   # @return [true] if the user is an owner of the organization
   # @return [false] otherwise
   def update?
-    binding.pry
     organization_user.owner?
   end
 
