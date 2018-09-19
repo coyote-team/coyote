@@ -11,8 +11,8 @@ table
       tr
         td= link_to(org.title, organization_path(org))
         td.table-cell-actions
-          / - if current_user == organization.owner/creator? Need to insert policy here.
-          = link_to('Edit', edit_organization_path(org), class: 'button button--outline', title: "Edit #{org}")
+          - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).edit?
+            = link_to('Edit', edit_organization_path(org), class: 'button button--outline', title: "Edit #{org}")
 
 
 nav.toolbar.toolbar--footer
