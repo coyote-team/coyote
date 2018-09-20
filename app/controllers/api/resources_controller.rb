@@ -286,7 +286,7 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :scope)
+      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, scope: [])
     end
   end
 end

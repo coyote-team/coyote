@@ -21,8 +21,10 @@ module Api
     def index
       links = { self: request.url }
 
+      representations = record_filter.records
+
       render({
-        jsonapi: resource.representations.to_a,
+        jsonapi: representations.to_a,
         include: %i[resource],
         links: links
       })
@@ -59,11 +61,11 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params, {}, current_user.representations.approved)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, resource.representations)
     end
 
     def filter_params
-      {} # TODO: will want to support search by metum, context, etc.
+      params.fetch(:filter, {}).permit(:updated_at_gt, scope: [])
     end
   end
 end

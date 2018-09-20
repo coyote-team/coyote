@@ -66,6 +66,12 @@ RSpec.describe 'Accessing resources' do
       user_org_resources.first
     end
 
+    let!(:older_resource) do
+      create(:resource, organization: user_organization, title: "This should be filtered out using the updated_at_gt filter").tap do |resource|
+        resource.update_attribute(:updated_at, 10.days.ago)
+      end
+    end
+
     let!(:representation) do
       create(:representation, resource: represented_resource, text: 'can search for the term "polyphonic"')
     end
@@ -111,6 +117,19 @@ RSpec.describe 'Accessing resources' do
 
       data = json_data.fetch(:data)
       expect(data.size).to eq(1)
+    end
+
+    scenario 'GET /organizations/:id/resources filtered by updated_at' do
+      # First, make sure all resources are included here
+      request_path = api_resources_path(user_organization, page: { number: user_organization.resources.count / default_page_size })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].size).to eq(2) # Including the resource updated 10 days ago
+      expect(json_data[:links].keys).to eq(%w[self first previous])
+
+      request_path = api_resources_path(user_organization, filter: { updated_at_gt: 9.days.ago }, page: { number: user_organization.resources.count / default_page_size })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].size).to eq(1) # Just the recently updated resources
+      expect(json_data[:links].keys).to eq(%w[self first previous])
     end
   end
 
