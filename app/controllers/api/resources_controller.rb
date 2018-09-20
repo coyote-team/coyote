@@ -37,6 +37,7 @@ module Api
     param_group :pagination, Api::ApplicationController
     param :filter, Hash do
       param :identifier_or_title_or_representations_text_cont_all, String, 'Search Resource identifier, title, or associated Representation text for this value'
+      param :updated_at_gt, Date, 'Filter returned resources to those whose `updated_at` value is after the given date'
       param :scope, Resource.ransackable_scopes.to_a, 'Limit search to Resources in these states'
     end
     example <<~EXAMPLE
@@ -286,7 +287,7 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :scope)
+      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, scope: [])
     end
   end
 end
