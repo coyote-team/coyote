@@ -3,10 +3,10 @@ module Api
   class RepresentationsController < Api::ApplicationController
     include PermittedParameters
 
-    before_action :find_representation_and_organization, only: %i[show update destroy]
-    before_action :find_resource_and_organization,       only: %i[index]
-    before_action :authorize_general_access,             only: %i[index]
-    before_action :authorize_unit_access,                only: %i[show update destroy]
+    before_action :find_representation,      only: %i[show update destroy]
+    before_action :find_resource,            only: %i[index]
+    before_action :authorize_general_access, only: %i[index]
+    before_action :authorize_unit_access,    only: %i[show update destroy]
 
     resource_description do
       short 'Complementary and alternative sensory impressions of a Resource'
@@ -44,16 +44,10 @@ module Api
     private
 
     attr_accessor :representation, :resource
-    attr_writer :current_organization
 
-    def find_representation_and_organization
+    def find_representation
       self.representation = current_user.representations.find(params[:id])
       self.current_organization = representation.organization
-    end
-
-    def find_resource_and_organization
-      self.resource = current_user.resources.find_by!(identifier: params[:resource_identifier])
-      self.current_organization = resource.organization
     end
 
     def authorize_general_access

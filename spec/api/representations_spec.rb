@@ -34,6 +34,11 @@ RSpec.describe 'Representations' do
       expect(link_paths).to eq(expected_link_paths)
     end
 
+    scenario 'GET /resources/:resource_id/representations with canonical id' do
+      get api_representations_path(representation.resource.canonical_id), headers: auth_headers
+      expect(response).to be_successful
+    end
+
     scenario 'GET /representations/:id' do
       get api_representation_path(representation.id), headers: auth_headers
       expect(response).to be_successful
