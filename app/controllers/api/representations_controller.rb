@@ -3,10 +3,10 @@ module Api
   class RepresentationsController < Api::ApplicationController
     include PermittedParameters
 
-    before_action :find_representation_and_organization, only: %i[show update destroy]
-    before_action :find_resource_and_organization,       only: %i[index]
-    before_action :authorize_general_access,             only: %i[index]
-    before_action :authorize_unit_access,                only: %i[show update destroy]
+    before_action :find_representation,      only: %i[show update destroy]
+    before_action :find_resource,            only: %i[index]
+    before_action :authorize_general_access, only: %i[index]
+    before_action :authorize_unit_access,    only: %i[show update destroy]
 
     resource_description do
       short 'Complementary and alternative sensory impressions of a Resource'
@@ -21,8 +21,10 @@ module Api
     def index
       links = { self: request.url }
 
+      representations = record_filter.records
+
       render({
-        jsonapi: resource.representations.to_a,
+        jsonapi: representations.to_a,
         include: %i[resource],
         links: links
       })
@@ -44,16 +46,10 @@ module Api
     private
 
     attr_accessor :representation, :resource
-    attr_writer :current_organization
 
-    def find_representation_and_organization
+    def find_representation
       self.representation = current_user.representations.find(params[:id])
       self.current_organization = representation.organization
-    end
-
-    def find_resource_and_organization
-      self.resource = current_user.resources.find_by!(identifier: params[:resource_identifier])
-      self.current_organization = resource.organization
     end
 
     def authorize_general_access
@@ -65,11 +61,11 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params, {}, current_user.representations.approved)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, resource.representations)
     end
 
     def filter_params
-      {} # TODO: will want to support search by metum, context, etc.
+      params.fetch(:filter, {}).permit(:updated_at_gt, scope: [])
     end
   end
 end

@@ -15,6 +15,7 @@ class Api::ApplicationController < ActionController::API
   private
 
   attr_accessor :current_user
+  attr_writer :current_organization
 
   def require_api_authentication
     authenticate_token || render_unauthorized
@@ -22,6 +23,14 @@ class Api::ApplicationController < ActionController::API
 
   def authenticate_token
     self.current_user = User.find_for_authentication(authentication_token: request.authorization)
+  end
+
+  def find_resource
+    id = params[:resource_identifier] || params[:id]
+    self.resource = current_user.resources.where(canonical_id: id).or(
+      current_user.resources.where(identifier: id)
+    ).first!
+    self.current_organization = resource.organization
   end
 
   def current_organization

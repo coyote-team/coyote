@@ -37,6 +37,7 @@ module Api
     param_group :pagination, Api::ApplicationController
     param :filter, Hash do
       param :identifier_or_title_or_representations_text_cont_all, String, 'Search Resource identifier, title, or associated Representation text for this value'
+      param :updated_at_gt, Date, 'Filter returned resources to those whose `updated_at` value is after the given date'
       param :scope, Resource.ransackable_scopes.to_a, 'Limit search to Resources in these states'
     end
     example <<~EXAMPLE
@@ -163,10 +164,10 @@ module Api
     curl  -H 'Authorization: CHANGEME' http://localhost:10000/api/v1/resources/1 | jsonlint
     {
       "data": {
-        "id": "1",
+        "id": "t.y.f.f.s.h.,_2011_929d",
         "type": "resource",
         "attributes": {
-          "id": 1,
+          "id": "t.y.f.f.s.h.,_2011_929d",
           "title": "T.Y.F.F.S.H., 2011",
           "resource_type": "still_image",
           "canonical_id": "c4ca4238a0b923820dcc509a6f75849b",
@@ -273,13 +274,6 @@ module Api
     attr_accessor :resource
     attr_writer :current_organization
 
-    def find_resource
-      self.resource = current_user.resources.where(canonical_id: params[:id]).or(
-        current_user.resources.where(id: params[:id])
-      ).first!
-      self.current_organization = resource.organization
-    end
-
     def authorize_general_access
       authorize(Resource)
     end
@@ -293,7 +287,7 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :scope)
+      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, scope: [])
     end
   end
 end

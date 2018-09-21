@@ -34,14 +34,14 @@ RSpec.describe 'Accessing resources' do
 
     scenario 'PATCH /resources/:id' do
       expect {
-        patch api_resource_path(existing_resource.id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
+        patch api_resource_path(existing_resource.canonical_id), params: { resource: { title: 'NEWTITLE' } }, headers: auth_headers
         expect(response).to be_successful
 
         existing_resource.reload
       }.to change(existing_resource, :title).
         to('NEWTITLE')
 
-      patch api_resource_path(existing_resource.id), params: { resource: { identifier: nil } }, headers: auth_headers
+      patch api_resource_path(existing_resource.canonical_id), params: { resource: { identifier: nil } }, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
@@ -64,6 +64,12 @@ RSpec.describe 'Accessing resources' do
 
     let(:represented_resource) do
       user_org_resources.first
+    end
+
+    let!(:older_resource) do
+      create(:resource, organization: user_organization, title: "This should be filtered out using the updated_at_gt filter").tap do |resource|
+        resource.update_attribute(:updated_at, 10.days.ago)
+      end
     end
 
     let!(:representation) do
@@ -112,6 +118,19 @@ RSpec.describe 'Accessing resources' do
       data = json_data.fetch(:data)
       expect(data.size).to eq(1)
     end
+
+    scenario 'GET /organizations/:id/resources filtered by updated_at' do
+      # First, make sure all resources are included here
+      request_path = api_resources_path(user_organization, page: { number: user_organization.resources.count / default_page_size })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].size).to eq(2) # Including the resource updated 10 days ago
+      expect(json_data[:links].keys).to eq(%w[self first previous])
+
+      request_path = api_resources_path(user_organization, filter: { updated_at_gt: 9.days.ago }, page: { number: user_organization.resources.count / default_page_size })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].size).to eq(1) # Just the recently updated resources
+      expect(json_data[:links].keys).to eq(%w[self first previous])
+    end
   end
 
   context 'with a resource' do
@@ -122,7 +141,7 @@ RSpec.describe 'Accessing resources' do
     end
 
     scenario 'GET /resources/:id' do
-      get api_resource_path(resource), headers: auth_headers
+      get api_resource_path(resource.identifier), headers: auth_headers
       expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
