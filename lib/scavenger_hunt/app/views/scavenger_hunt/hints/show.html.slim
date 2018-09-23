@@ -6,10 +6,11 @@ h1
 
 = link_to "I still want it", game_clue_hint_path(@game, @clue, @hint, confirm: true), class: "title"
 
-= toolbar title: "Hint controls" do
-  = toolbar_item class: "toolbar-item--full" do
-    = link_to game_clue_path(@game, @clue), class: "large" do
-      | Return
-      br
-      | to clue
+.secondary-footer
+  = toolbar title: "Hint controls" do
+    = toolbar_item class: "toolbar-item--full" do
+      = link_to game_clue_path(@game, @clue), class: "large" do
+        | Return
+        br
+        | to clue
 = render 'scavenger_hunt/games/footer'

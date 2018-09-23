@@ -2,14 +2,14 @@
 
 .large
   = representation_content @clue.representation
-
-= toolbar title: "Clue options" do
-  - hint = @clue.first_hint
-  = toolbar_item do
-    = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
-  = toolbar_item aria: { hidden: !hint.present? } do
-    - if hint.present?
-      = link_to 'I need a hint', game_clue_hint_path(@game, @clue, hint), class: "large"
+.secondary-footer
+  = toolbar title: "Clue options" do
+    - hint = @clue.first_hint
+    = toolbar_item do
+      = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
+    = toolbar_item aria: { hidden: !hint.present? } do
+      - if hint.present?
+        = link_to 'I need a hint', game_clue_hint_path(@game, @clue, hint), class: "large"
 
 
 = render 'scavenger_hunt/games/footer'

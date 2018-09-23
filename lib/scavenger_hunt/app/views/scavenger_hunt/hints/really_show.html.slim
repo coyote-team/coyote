@@ -3,18 +3,19 @@
 
 = representation_content @hint.representation
 
-= toolbar title: "Options" do
-  = toolbar_item do
-    = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
-
-  - if @hint.next_hint
+.secondary-footer
+  = toolbar title: "Options" do
     = toolbar_item do
-      = link_to 'Next hint', game_clue_hint_path(@game, @clue, @hint.next_hint), class: "large"
+      = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
 
-  = toolbar_item do
-    = link_to game_clue_path(@game, @clue), class: "large" do
-      | Return
-      br
-      | to clue
+    - if @hint.next_hint
+      = toolbar_item do
+        = link_to 'Next hint', game_clue_hint_path(@game, @clue, @hint.next_hint), class: "large"
+
+    = toolbar_item do
+      = link_to game_clue_path(@game, @clue), class: "large" do
+        | Return
+        br
+        | to clue
 
 = render "scavenger_hunt/games/footer"
