@@ -1,8 +1,19 @@
-h1= title 'Your Organizations'
+table
+  caption
+    h1= title 'Your Organizations'
+  thead
+    tr
+      th Organization
+      th.table-cell-actions Actions
 
-= list do |org|
-  - current_user.organizations.each do |org|
-    = link_to_list_item(org.title, organization_path(org))
+  tbody
+    - organizations.each do |org|
+      tr
+        td= link_to(org.title, organization_path(org))
+        td.table-cell-actions
+          - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).edit?
+            = link_to('Edit', edit_organization_path(org), class: 'button button--outline', title: "Edit #{org}")
+
 
 nav.toolbar.toolbar--footer
   h2.sr-only Actions
