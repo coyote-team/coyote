@@ -15,4 +15,9 @@ class ScavengerHunt::Hint < ScavengerHunt::ApplicationRecord
     return @next_hint if defined? @next_hint
     @next_hint = clue.hints.where("position > ?", position).first
   end
+
+  def previous_hint
+    return @previous_hint if defined? @previous_hint
+    @previous_hint = clue.hints.where("position < ?", position).order(position: :desc).first
+  end
 end
