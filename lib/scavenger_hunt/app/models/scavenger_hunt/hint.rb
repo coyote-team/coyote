@@ -6,7 +6,7 @@ class ScavengerHunt::Hint < ScavengerHunt::ApplicationRecord
   belongs_to :clue
   belongs_to :representation
 
-  default_scope -> { order(:position) }
+  scope :by_position, -> { order(:position) }
   scope :position_scope, -> (hint) { where(clue_id: hint.clue_id) }
   scope :unused, -> { where(used_at: nil) }
   scope :used, -> { where.not(used_at: nil) }

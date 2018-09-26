@@ -8,12 +8,12 @@ class RecordFilter
   # @param base_scope [ActiveRecord::Relation] the basis of all queries;
   #   typically this is based on who is logged-in, and whether the query is Coyote-wide (as in a UI index page)
   #   or organization-specific (as in an API call)
-  def initialize(filter_params, pagination_params, base_scope)
+  def initialize(filter_params, pagination_params, base_scope, default_order: [])
     @filter_params = filter_params.to_hash.with_indifferent_access
     @pagination_params = pagination_params
     @base_scope = base_scope
 
-    filter_scope = @filter_params.delete(:scope)
+    filter_scope = @filter_params.delete(:scope) || default_order
 
     Array(filter_scope).each { |scope| @filter_params[scope] = true } if filter_scope.present?
   end
