@@ -83,4 +83,6 @@ Coyote::Application.configure do
   # config.autoflush_log = false
 
   config.active_storage.service = :amazon
+
+  Rails.application.routes.default_url_options[:protocol] = 'https'
 end
