@@ -1,13 +1,21 @@
 h1 Survey
 .default Survey thanks/explanation
 
-ol.title
-  - @survey_questions.each do |survey_question|
-    li
-      = survey_question.text
-      - if survey_question.options.present?
-        .large.survey
-          - survey_question.options.each do |option|
-            = link_to option, answer_survey_question_path(survey_question, answer: option), class: "survey-option"
-      - else
-        = text_field_tag "answer", "", data: { uri: answer_survey_question_path(survey_question) }, placeholder: "Enter answer here"
+= form_tag answer_survey_questions_path do
+  ol.title
+    - @survey_questions.each do |survey_question|
+      li
+        = survey_question.text
+        - if survey_question.options.present?
+          .large.survey
+            - survey_question.options.each do |option|
+              label.survey-option
+                = radio_button_tag "answers[#{survey_question.id}]", option
+                span.survey-option-label= option
+        - else
+          = text_area_tag "answers[#{survey_question.id}]", "", placeholder: "Enter answer here", rows: 5
+
+  .toolbar
+    = toolbar_item do
+    = toolbar_item do
+      button.large type="submit" Submit
