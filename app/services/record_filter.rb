@@ -9,7 +9,11 @@ class RecordFilter
   #   typically this is based on who is logged-in, and whether the query is Coyote-wide (as in a UI index page)
   #   or organization-specific (as in an API call)
   def initialize(filter_params, pagination_params, base_scope, default_order: [])
-    @filter_params = filter_params.to_hash.with_indifferent_access
+    @filter_params = filter_params.to_hash.with_indifferent_access.tap do |params|
+      params.each do |key, value|
+        params[key] = value.to_s.split(" ") if key.to_s =~ /_cont_all$/
+      end
+    end
     @pagination_params = pagination_params
     @base_scope = base_scope
 

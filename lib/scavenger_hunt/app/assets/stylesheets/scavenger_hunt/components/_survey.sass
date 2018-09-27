@@ -4,9 +4,22 @@
 
   .survey-option
     border-color: transparent
+    cursor: pointer
 
-    &.survey-option--active
-      border-color: $border
+    input
+      border-width: 0
+      height: 0
+      left: -10000px
+      position: absolute
+      width: 0
+
+      &:focus + .survey-option-label
+        box-shadow: 0 0 5px $tint
+        border: 0 solid $tint
+        outline: none
+
+      &:checked + .survey-option-label
+        border-bottom: 2px solid $border
 
 .survey-answer-message
   color: $tint
