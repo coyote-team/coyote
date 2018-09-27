@@ -1,9 +1,9 @@
-RSpec.describe 'Representations' do
+RSpec.fdescribe 'Representations' do
   context 'with authentication' do
     include_context 'API author user'
 
     let!(:representation) do
-      create(:representation, :approved, organization: user_organization)
+      create(:representation, :approved, ordinality: 0, organization: user_organization)
     end
 
     let!(:unapproved_representation) do
@@ -11,7 +11,7 @@ RSpec.describe 'Representations' do
     end
 
     let!(:old_representation) do
-      create(:representation, :approved, organization: user_organization, resource: representation.resource).tap do |representation|
+      create(:representation, :approved, ordinality: 1, organization: user_organization, resource: representation.resource).tap do |representation|
         representation.update_attribute(:updated_at, 10.days.ago)
       end
     end

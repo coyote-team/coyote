@@ -6,7 +6,7 @@ class ScavengerHunt::Hint < ScavengerHunt::ApplicationRecord
   belongs_to :clue
   belongs_to :representation
 
-  default_scope -> { order(:position) }
+  scope :by_position, -> { order(:position) }
   scope :position_scope, -> (hint) { where(clue_id: hint.clue_id) }
   scope :unused, -> { where(used_at: nil) }
   scope :used, -> { where.not(used_at: nil) }
@@ -14,5 +14,10 @@ class ScavengerHunt::Hint < ScavengerHunt::ApplicationRecord
   def next_hint
     return @next_hint if defined? @next_hint
     @next_hint = clue.hints.where("position > ?", position).first
+  end
+
+  def previous_hint
+    return @previous_hint if defined? @previous_hint
+    @previous_hint = clue.hints.where("position < ?", position).order(position: :desc).first
   end
 end
