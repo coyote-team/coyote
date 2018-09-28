@@ -1,6 +1,8 @@
 class ScavengerHunt::Location < ScavengerHunt::ApplicationRecord
   before_save :set_position
   belongs_to :organization, class_name: "::Organization"
+  has_many :games
+  has_many :players, through: :games
 
   delegate :representations, :title, to: :organization
 

@@ -1,4 +1,6 @@
 class ScavengerHunt::SurveyQuestionsController < ScavengerHunt::ApplicationController
+  before_action :find_location
+
   def answer
     params[:answers].each do |id, answer|
       survey_question = ScavengerHunt::SurveyQuestion.find(id)
