@@ -14,7 +14,7 @@ class ScavengerHunt::PlayersController < ScavengerHunt::ApplicationController
   end
 
   def show
-    redirect_to new_player_path unless current_player?
+    redirect_to new_player_path unless current_player? && current_player.name.present?
   end
 
   def update
