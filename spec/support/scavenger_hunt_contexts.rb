@@ -1,25 +1,23 @@
 RSpec.shared_context "Scavenger Hunt" do
   # Set up a Scavenger Hunt game
   let(:organization) { create(:organization) }
-  let(:location) { ScavengerHunt::Location.create!(organization: organization, tint: "#ff0000") }
+  let(:location) do
+    ScavengerHunt::Location.find_or_initialize_by(organization_id: organization.id).tap { |location| location.update_attributes!(tint: "#ff0000") }
+  end
   let(:player) { ScavengerHunt::Player.create!(ip: "127.0.0.1", user_agent: "test") }
 
   # ...include the meta used to identify content in Coyote that powers the game
-  let(:answer_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::ANSWER_METUM_NAME)
+  def metum_named(name)
+    organization.meta.find_or_initialize_by(title: name).tap do |meta|
+      meta.update_attributes!(instructions: "Test")
+    end
   end
-  let(:clue_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::CLUE_METUM_NAME)
-  end
-  let(:question_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::QUESTION_METUM_NAME)
-  end
-  let(:hint_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::HINT_METUM_NAME)
-  end
-  let(:position_metum) do
-    create(:metum, organization: organization, title: ScavengerHunt::Game::CLUE_POSITION_METUM_NAME)
-  end
+
+  let(:answer_metum) { metum_named(ScavengerHunt::Game::ANSWER_METUM_NAME) }
+  let(:clue_metum) { metum_named(ScavengerHunt::Game::CLUE_METUM_NAME) }
+  let(:question_metum) { metum_named(ScavengerHunt::Game::QUESTION_METUM_NAME) }
+  let(:hint_metum) { metum_named(ScavengerHunt::Game::HINT_METUM_NAME) }
+  let(:position_metum) { metum_named(ScavengerHunt::Game::CLUE_POSITION_METUM_NAME) }
 
   # Set up the first clue using a base resource
   let(:resource_1) { create(:resource, organization: organization) }

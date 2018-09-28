@@ -1,4 +1,4 @@
-RSpec.fdescribe 'Representations' do
+RSpec.describe 'Representations' do
   context 'with authentication' do
     include_context 'API author user'
 

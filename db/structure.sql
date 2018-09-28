@@ -737,7 +737,8 @@ CREATE TABLE public.scavenger_hunt_games (
     player_id bigint NOT NULL,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    is_archived boolean DEFAULT false
 );
 
 
@@ -2193,6 +2194,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180829010109'),
 ('20180830121901'),
 ('20180904221446'),
-('20180912004124');
+('20180912004124'),
+('20180928203337');
 
 
