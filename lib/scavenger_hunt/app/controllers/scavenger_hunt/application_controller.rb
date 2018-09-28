@@ -33,6 +33,10 @@ module ScavengerHunt
       @hint = @clue.hints.find(params[:hint_id] || params[:id])
     end
 
+    def find_location
+      @location = ScavengerHunt::Location.find(params[:location_id] || params[:id])
+    end
+
     def require_player!
       raise ActiveRecord::RecordNotFound unless current_player.present?
     end

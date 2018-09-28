@@ -2,6 +2,13 @@ ScavengerHunt::Engine.routes.draw do
   root to: 'home#index'
   resources :locations, only: %w(index show) do
     resource :game, only: :new
+    resource :leaderboard, only: :show
+    resource :player, except: %w(destroy)
+    resources :survey_questions, path: "survey", only: %w(index) do
+      collection do
+        post :answer
+      end
+    end
   end
 
   resources :games, only: :show do
@@ -20,13 +27,4 @@ ScavengerHunt::Engine.routes.draw do
       end
     end
   end
-
-  resource :player, except: %w(destroy)
-  resources :survey_questions, path: "survey", only: %w(index) do
-    collection do
-      post :answer
-    end
-  end
-
-  get "leaderboard", to: "leaderboard#index"
 end

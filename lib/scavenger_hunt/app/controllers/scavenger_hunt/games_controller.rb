@@ -5,7 +5,7 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
   def finish
     if params[:confirm]
       @game.touch(:ended_at)
-      redirect_to player_path
+      redirect_to location_player_path(location_id: @game.location_id)
     end
   end
 
