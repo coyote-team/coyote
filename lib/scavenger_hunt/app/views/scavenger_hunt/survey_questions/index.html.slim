@@ -1,7 +1,7 @@
 h1 Survey
 .default.survey-message Help us improve the game!
 
-= form_tag answer_survey_questions_path do
+= form_tag answer_location_survey_questions_path(location_id: @location) do
   ol.title
     - @survey_questions.each do |survey_question|
       li
