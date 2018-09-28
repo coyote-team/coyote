@@ -29,4 +29,28 @@ RSpec.describe ScavengerHunt::Game do
     expect(clue.hints.first.representation).to eq(hint_2_2)
     expect(clue.hints.last.representation).to eq(hint_2_1)
   end
+
+  it "becomes archived when its underlying representations change" do
+    expect(game.is_archived).to be false
+    question_1.update_attributes(text: "Changing this text should archive past games")
+    expect(game.reload.is_archived).to be true
+  end
+
+  it "becomes archived when its underlying resource changes" do
+    expect(game.is_archived).to be false
+    question_1.resource.update_attributes(title: "Changing this text should archive past games")
+    expect(game.reload.is_archived).to be true
+  end
+
+  it "does not become archived when unimportant representations change" do
+    expect(game.is_archived).to be false
+    position_1.update_attributes(text: "10000")
+    expect(game.reload.is_archived).to be false
+  end
+
+  it "does not become archived when unapproved representations change" do
+    expect(game.is_archived).to be false
+    answer_3.update_attributes(text: "This shouldn't change anything, folks!")
+    expect(game.reload.is_archived).to be false
+  end
 end
