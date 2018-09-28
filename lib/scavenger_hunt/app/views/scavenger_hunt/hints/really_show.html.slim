@@ -8,6 +8,10 @@
     = toolbar_item do
       = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
 
+    - if @hint.previous_hint
+      = toolbar_item do
+        = link_to 'Previous hint', game_clue_hint_path(@game, @clue, @hint.previous_hint), class: "large"
+
     - if @hint.next_hint
       = toolbar_item do
         = link_to 'Next hint', game_clue_hint_path(@game, @clue, @hint.next_hint), class: "large"

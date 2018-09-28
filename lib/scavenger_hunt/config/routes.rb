@@ -23,8 +23,8 @@ ScavengerHunt::Engine.routes.draw do
 
   resource :player, except: %w(destroy)
   resources :survey_questions, path: "survey", only: %w(index) do
-    member do
-      get :answer
+    collection do
+      post :answer
     end
   end
 

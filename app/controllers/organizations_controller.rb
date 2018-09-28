@@ -1,7 +1,7 @@
 # Manges requests to view and manipulate Organization objects
 # @see Organization
 class OrganizationsController < ApplicationController
-  before_action :set_current_organization, only: %i[show edit] # helps avoid scenario where ActionView::Template::Error can swallow ActiveRecord::RecordNotFound, when a user is not a member of an org
+  before_action :set_current_organization, only: %i[show edit update] # helps avoid scenario where ActionView::Template::Error can swallow ActiveRecord::RecordNotFound, when a user is not a member of an org
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access,    only: %i[show edit update destroy]
 

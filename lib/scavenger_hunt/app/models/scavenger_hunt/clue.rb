@@ -22,7 +22,7 @@ class ScavengerHunt::Clue < ScavengerHunt::ApplicationRecord
   end
 
   def first_hint
-    hints.order(:used_at).first
+    hints.order(Arel.sql(%(used_at NULLS FIRST)), :position).first
   end
 
   def next

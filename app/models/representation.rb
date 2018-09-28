@@ -59,7 +59,7 @@ class Representation < ApplicationRecord
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
-    %i[approved not_approved ready_to_review]
+    %i[approved by_ordinality not_approved ready_to_review]
   end
 
   def to_s
