@@ -1,4 +1,4 @@
-h1 Welcome to the Coyote scavenger hunt
+h1 Welcome to the Coyote Scavenger Hunt
 p.large
   | The coyote scavenger hunt is a time trial. You cannot save your progress.
     You can end the game at anytime.
@@ -12,6 +12,6 @@ ol.subtitle aria-labelledby="how-it-works"
 = toolbar class: "large toolbar--bottom", title: 'Game Controls' do
   li
     - if @game.present?
-      = link_to 'Return to Game', game_path(@game)
+      = link_to 'Return to game', game_path(@game)
     - else
-      = link_to 'Begin Game', locations_path
+      = link_to 'Begin game', locations_path

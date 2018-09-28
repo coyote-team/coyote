@@ -1,5 +1,5 @@
 - content_for :nav do
-  = link_to "Change Location", locations_path, class: 'small'
+  = link_to "Change location", locations_path, class: 'small'
   .subtitle= @game.location.title
 
 h1
@@ -15,10 +15,10 @@ h1
     = link_to finish_game_path(@game), class: "small end-game" do
       | End
       br
-      | Game
+      | game
   - if @game.clues.any?
     = toolbar_item do
       = link_to game_clue_path(@game, @game.clues.by_unanswered.first), class: "title" do
         | Begin
         br
-        | Game
+        | game
