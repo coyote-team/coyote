@@ -41,7 +41,7 @@ Rails.logger.silence do
   resource_groups = client.query(<<~SQL
   SELECT DISTINCT i.group_id AS id, g.title
   FROM images i
-  INNER JOIN groups g
+  INNER JOIN #{db}.groups g
   ON i.group_id = g.id
   SQL
   ).to_a
@@ -74,7 +74,7 @@ Rails.logger.silence do
       puts "Importing #{images.count} images"
       images.each do |image|
         # Prepare the resource by massaging old columns to new
-        image.delete('priority')
+        image['priority_flag'] = image.delete('priority') != 0
 
         path = image.delete('path')
         image['source_uri'] = "https://mcachicago.org#{path}"
@@ -103,7 +103,10 @@ Rails.logger.silence do
           puts "    New ID: #{image['id']}"
           resource_ids[image['id']] = duplicate_resource['id']
         else
-          org.resources.create!(image)
+          resource_ids[image['id']] = image['id']
+          org.resources.create!(image).tap do |resource|
+            resource.update_columns(image.slice("updated_at", "created_at"))
+          end
         end
       end
     end
@@ -122,30 +125,33 @@ Rails.logger.silence do
 
     endpoint = Endpoint.first
 
-    representations = descriptions.map do |rep|
-      rep['language'] = rep.delete('locale')
-      status = rep.delete('status_id')
-      status = statuses.fetch(status)
-      rep['status'] = status
-      old_resource_id = rep.delete('image_id')
-      resource_id = resource_ids[old_resource_id]
-      puts "#{rep['id']}: resource ID #{old_resource_id} (correlates to #{resource_id})"
-      rep['resource_id'] = resource_id
-      if resource_id != old_resource_id
-        # We're moving a representation to its duplicate
-        puts "Duplicate description #{rep.inspect}"
-        resource_path = "/resources/#{resource_id}"
-        representation_path = "/representations/#{rep['id']}"
-        csv << [old_resource_id, resource_id, rep['id'], resource_path, "https://staging.coyote.pacs#{resource_path}", representation_path, "https://staging.coyote.pacs#{resource_path}"]
+    Representation.without_auditing  do
+      descriptions.each_with_index do |rep, i|
+        rep['language'] = rep.delete('locale')
+        status = rep.delete('status_id')
+        status = statuses.fetch(status)
+        rep['status'] = status
+        old_resource_id = rep.delete('image_id')
+        resource_id = resource_ids[old_resource_id]
+        rep['resource_id'] = resource_id
+        if resource_id != old_resource_id
+          binding.pry
+          # We're moving a representation to its duplicate
+          puts "Duplicate description #{rep.inspect}"
+          resource_path = "/resources/#{resource_id}"
+          representation_path = "/representations/#{rep['id']}"
+          csv << [old_resource_id, resource_id, rep['id'], resource_path, "https://staging.coyote.pacs#{resource_path}", representation_path, "https://staging.coyote.pacs#{resource_path}"]
+        end
+        rep['author_id'] = rep.delete('user_id')
+        rep.delete('license')
+        rep['endpoint_id'] = endpoint.id
+        rep['license_id'] = license.id
+        Representation.create!(rep).tap do |representation|
+          representation.update_columns(rep.slice("updated_at", "created_at"))
+        end
       end
-      rep['author_id'] = rep.delete('user_id')
-      rep.delete('license')
-      rep['endpoint_id'] = endpoint.id
-      rep['license_id'] = license.id
-      rep
     end
 
-    Representation.without_auditing { Representation.create!(representations) }
     puts "Imported #{Representation.count} representations"
   end
 
