@@ -5,7 +5,7 @@
       = link_to finish_game_path(@game), class: "small end-game" do
         | End
         br
-        | Game
+        | game
     = toolbar_item do
       = link_to game_clues_path(@game), class: "small" do
         | See all
@@ -13,7 +13,7 @@
         | clues
   h2#game-progress.sr-only Game Progress
   ul.toolbar-item.small aria-labelledby="game-progress"
-    li.toolbar Total time: #{@game.total_time}
-    li.toolbar
+    li.toolbar.game-progress Total time: #{@game.total_time}
+    li.toolbar.game-progress
       span.sr-only Clues
-      | completed: #{@game.clues.answered.count}/#{@game.clues.count}
+      | Completed: #{@game.clues.answered.count}/#{@game.clues.count}

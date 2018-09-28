@@ -14,7 +14,7 @@ class ScavengerHunt::PlayersController < ScavengerHunt::ApplicationController
   end
 
   def show
-    redirect_to new_player_path unless current_player? && current_player.email.present?
+    redirect_to new_player_path unless current_player?
   end
 
   def update
@@ -35,4 +35,3 @@ class ScavengerHunt::PlayersController < ScavengerHunt::ApplicationController
     params[:player].permit(:email, :name)
   end
 end
-

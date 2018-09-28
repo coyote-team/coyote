@@ -1,7 +1,7 @@
 h1 Leaderboard
 .default Click to expand scores
 
-table
+table.leaderboard
   thead
     tr
       th: span.sr-only Rank
@@ -10,12 +10,16 @@ table
       th Stats
   tbody
     - @players.each_with_index do |player, index|
-      tr
-        td= index.succ
-        td= player.name
-        td= player.location_count
-        td
-          = player.aggregate_time
-          br
-          = player.clue_count
-
+      - if player.name.present?
+        tr
+          td= index.succ
+          td= player.name
+          td= player.location_count
+          td
+            | Time:
+            '
+            = player.aggregate_time
+            br
+            | Clues:
+            '
+            = player.clue_count
