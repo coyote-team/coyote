@@ -4,7 +4,7 @@ class ScavengerHunt::Player < ScavengerHunt::ApplicationRecord
   has_many :survey_answers
 
   def aggregate_time
-    games.sum(&:total_time)
+    games.unarchived.sum(&:total_time)
   end
 
   def clue_count
