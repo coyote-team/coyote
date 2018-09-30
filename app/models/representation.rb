@@ -55,6 +55,8 @@ class Representation < ApplicationRecord
   scope :by_title_length, -> { order(Arel.sql('length(text) DESC')) }
   scope :with_metum_named, ->(title) { joins(:metum).where(meta: { title: title }) }
 
+  after_update :unassign_user, if: -> { status_changed? && not_approved? }
+
   audited
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
@@ -72,5 +74,13 @@ class Representation < ApplicationRecord
     return if text.present?
     return if content_uri.present?
     errors.add(:text, 'Either text or content URI must be present')
+  end
+
+  def unassign_user
+    assignment = resource.assignments.where(user_id: self.author_id, resource_id: self.resource_id).first
+    id = assignment.id
+
+    if resource.representations.where(user: user).all? {|representation| represenation.not_approved? }
+      assignment.destroy(id)
   end
 end
