@@ -1,17 +1,17 @@
 h1 Thanks for playing!
-h3 Enter your username to submit your score
+h3 Submit your score.
 p.large
-  | Your email is required for prizes. Only your username is displayed on the leaderboard.
-
+  | Your email is required to win a prize. We will only contact if you are a winner. Only your username is displayed on the leaderboard.
 = form_for [@location, @player] do |form|
   .form-field
-    = form.text_field :name, placeholder: "Username", required: true
+    = form.text_field :name, placeholder: "Username (required)", required: true
 
   .form-field
     = form.text_field :email, placeholder: "Email (optional)"
 
     p.large
-      | Did you know that the Coyote Scavenger Hunt uses descriptions we created to help visitors who are blind or low-vision enjoy artworks and cultural objects? Learn more at
+      | Did you know that Coyote Scavenger Hunt uses descriptions that were created to help visitors who are blind or have low vision enjoy artworks and cultural objects? Learn more at
+      '
       a href="https://live.coyote.pics/" coyote.pics
       | .
 

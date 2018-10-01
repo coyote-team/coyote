@@ -50,11 +50,11 @@ namespace :scavenger_hunt do
         options: ["Yes", "No", "Kind of"]
       },
       {
-        text: "Would you play this game again?",
+        text: "Would you play it again?",
         options: ["Yes", "No", "Maybe"]
       },
       {
-        text: "What would you change about the game?"
+        text: "What would you change?"
       }
     ]
 
