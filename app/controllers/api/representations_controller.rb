@@ -34,7 +34,7 @@ module Api
     def show
       representation = current_user.organization_representations.find(params[:id])
 
-      links = { self: request.url }
+      links = { self: request.url, coyote: representation_url(representation)  }
 
       render({
         jsonapi: representation,
