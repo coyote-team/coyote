@@ -19,7 +19,7 @@ RSpec.feature 'Resource viewing' do
     expect(page).to have_content("My Organization's Resource")
     expect(page).not_to have_content('Should Not See This')
 
-    fill_in 'q[identifier_or_title_or_representations_text_cont_all]', with: 'cezanne'
+    fill_in 'Search by caption or description', with: 'cezanne'
     click_button 'Search'
 
     expect(page).to have_content('Painting by Cezanne')
