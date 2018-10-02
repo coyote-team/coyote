@@ -236,6 +236,9 @@ module Api
     def show
       render({
         jsonapi: resource,
+        links: {
+          coyote: resource_url(resource)
+        },
         include: %i[organization representations]
       })
     end
@@ -251,7 +254,9 @@ module Api
 
       if resource.save
         logger.info "Created #{resource}"
-        render jsonapi: resource, status: :created
+        render jsonapi: resource, status: :created, links: {
+          coyote: resource_url(resource)
+        }
       else
         logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
         render jsonapi_errors: resource.errors, status: :unprocessable_entity
@@ -262,7 +267,9 @@ module Api
     def update
       if resource.update_attributes(resource_params)
         logger.info "Updated #{resource}"
-        render jsonapi: resource
+        render jsonapi: resource, links: {
+          coyote: resource_url(resource)
+        }
       else
         logger.warn "Unable to update resource due to '#{resource.error_sentence}'"
         render jsonapi_errors: resource.errors, status: :unprocessable_entity
