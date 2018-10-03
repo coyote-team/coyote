@@ -44,7 +44,7 @@ FactoryBot.define do
 
     after(:build) do |resource, evaluator|
       resource.organization ||= evaluator.organization || build(:organization)
-      resource.resource_group ||= evaluator.resource_group || build(:resource_group, organization: resource.organization)
+      resource.resource_group ||= evaluator.resource_group || resource.organization.resource_groups.first || build(:resource_group, organization: resource.organization)
     end
 
     Coyote::Resource.each_type do |_, type_name|
