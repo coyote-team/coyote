@@ -561,7 +561,8 @@ CREATE TABLE public.resource_groups (
     title character varying NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    organization_id integer NOT NULL
+    organization_id integer NOT NULL,
+    "default" boolean DEFAULT false
 );
 
 
@@ -2197,6 +2198,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180904221446'),
 ('20180912004124'),
 ('20180928203337'),
-('20181003184315');
+('20181003184315'),
+('20181003222901');
 
 

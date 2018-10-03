@@ -1,5 +1,6 @@
 # @abstract Base class for all Coyote controllers
 class ApplicationController < ActionController::Base
+  include OrganizationScope
   include Pundit
 
   protect_from_forgery with: :exception
@@ -13,15 +14,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization, :current_organization?, :organization_scope, :organization_user, :pagination_link_params, :filter_params
 
   protected
-
-  def organization_scope
-    # can't do this in Pundit, since Pundit needs the results of this scoping
-    if current_user.staff?
-      Organization.all
-    else
-      Organization.joins(:memberships).where(memberships: { user: current_user })
-    end
-  end
 
   def organization_user
     @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)

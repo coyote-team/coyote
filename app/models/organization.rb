@@ -14,6 +14,8 @@
 
 # Represents a group of users, usually associated with a particular institution
 class Organization < ApplicationRecord
+  after_create :create_default_resource_group
+
   validates :title, presence: true, uniqueness: true
 
   has_many :memberships, inverse_of: :organization
@@ -25,7 +27,11 @@ class Organization < ApplicationRecord
   has_many :assignments, through: :resources
   has_many :representations, through: :resources
 
-  has_many :unassigned_unrepresented_resources, ->() { unassigned_unrepresented }, class_name: :Resource
+  has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource
+
+  def create_default_resource_group
+    resource_groups.find_or_create_by(default: true, title: ResourceGroup::DEFAULT_TITLE)
+  end
 
   def ready_to_review_representations
     representations.ready_to_review

@@ -3,6 +3,7 @@
 # @abstract Base class for all API controllers
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
+  include OrganizationScope
   include Pundit
 
   before_action :require_api_authentication
@@ -30,11 +31,11 @@ class Api::ApplicationController < ActionController::API
     self.resource = current_user.resources.where(canonical_id: id).or(
       current_user.resources.where(identifier: id)
     ).first!
-    self.current_organization = resource.organization
+    self.current_organization = params[:organization_id] ? current_organization : resource.organization
   end
 
   def current_organization
-    @current_organization ||= current_user.organizations.find(params[:organization_id])
+    @current_organization ||= organization_scope.find(params[:organization_id])
   end
 
   def organization_user
