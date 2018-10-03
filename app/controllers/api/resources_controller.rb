@@ -292,7 +292,12 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, scope: [])
+      filter = params.fetch(:filter, {})
+      if filter[:scope].is_a?(Array)
+        filter.permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, scope: [])
+      else
+        filter.permit(:identifier_or_title_or_representations_text_cont_all, :updated_at_gt, :scope)
+      end
     end
   end
 end

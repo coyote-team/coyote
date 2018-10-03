@@ -65,7 +65,12 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:updated_at_gt, scope: [])
+      filter = params.fetch(:filter, {})
+      if filter[:scope].is_a?(Array)
+        filter.permit(:updated_at_gt, scope: [])
+      else
+        filter.permit(:updated_at_gt, :scope)
+      end
     end
   end
 end
