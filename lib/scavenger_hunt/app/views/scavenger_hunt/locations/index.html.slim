@@ -1,5 +1,4 @@
 h1 Where are you?
-h2.default#location Choose your location
 ul.subtitle aria-labelledby="location"
   - @locations.each do |location|
     li= link_to location.title, new_location_game_path(location), style: "border-color: #{location.tint}; color: #{location.tint};"
