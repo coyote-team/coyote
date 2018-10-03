@@ -8,6 +8,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  role            :enum             default("guest"), not null
+#  active          :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -27,6 +28,8 @@ class Membership < ApplicationRecord
   enum role: Coyote::Membership::ROLES
 
   delegate :assignments, to: :user, prefix: true
+
+  scope :active, -> { where(active: true) }
 
   # @return [Boolean] whether this membership represents the last owner of an organization
   def last_owner?

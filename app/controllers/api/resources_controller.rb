@@ -22,14 +22,12 @@ module Api
 
     def_param_group :resource do
       param :resource, Hash, action_aware: true do
-        param :id,              Integer, 'Resource ID', required: true
-        param :identifier,      String,  'Unique human-readable identifier (slug) for this resource', required: true
-        param :title,           String,  'Caption that helps humans identify the resource', required: false
-        param :resource_type,   String,  'Dublin Core Metadata type for this resource', required: true
-        param :canonical_id,    String,  'Unique identifier assigned by the organization that owns this resource', required: true
+        param :identifier,      String,  'Unique human-readable identifier (slug) for this resource', required: false
+        param :title,           String,  'Caption that helps humans identify the resource', required: true
+        param :resource_type,   Coyote::Resource::TYPES.values,  'Dublin Core Metadata type for this resource', required: true
+        param :canonical_id,    String,  'Unique identifier assigned by the organization that owns this resource', required: false
         param :source_uri,      String,  'The canonical location of the resource', required: false
         param :resource_group,  String,  'Identifies the organizationl resource_group to which this resource belongs', required: true
-        param :organization_id, Integer, 'Identifies which organization owns the resource', required: true
       end
     end
 

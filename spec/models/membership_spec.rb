@@ -8,6 +8,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  role            :enum             default("guest"), not null
+#  active          :boolean          default(TRUE)
 #
 # Indexes
 #
