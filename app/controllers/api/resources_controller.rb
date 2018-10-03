@@ -27,7 +27,7 @@ module Api
         param :resource_type,   Coyote::Resource::TYPES.values,  'Dublin Core Metadata type for this resource', required: true
         param :canonical_id,    String,  'Unique identifier assigned by the organization that owns this resource', required: false
         param :source_uri,      String,  'The canonical location of the resource', required: false
-        param :resource_group,  String,  'Identifies the organizationl resource_group to which this resource belongs', required: true
+        param :resource_group_id, Integer, 'Identifies the resource group to which this resource belongs. If omitted, will be set to the default resource group for this organization.', required: false
       end
     end
 
@@ -241,11 +241,13 @@ module Api
       })
     end
 
-    api :POST, 'resources', 'Create a new resource'
+    api :POST, 'organizations/:organization_id/resources', 'Create a new resource'
     param_group :resource
     def create
       resource_group_id = resource_params.delete(:resource_group_id)
-      resource_group = current_user.resource_groups.find(resource_group_id)
+      resource_group = (
+        resource_group_id.present? && current_user.resource_groups.find_by(id: resource_group_id)
+      ) || current_organization.resource_groups.default
 
       resource = current_organization.resources.new(resource_params)
       resource.resource_group = resource_group

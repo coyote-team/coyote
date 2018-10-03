@@ -48,12 +48,6 @@ html(lang="en")
           = render "organization_selector"
           = render "user_nav"
 
-      /%nav#bs-navbar.collapse.navbar-collapse{role: "navigation"}
-        /%h2.sr-only Navigation
-        /%ul.nav.navbar-nav
-          /= render partial: "navbar_items" if current_organization?
-          /= render partial: "drop_down_menu" if current_user
-    /= render partial: "nav" if current_user
     = render "notifications"
 
     main#main role="main"

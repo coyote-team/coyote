@@ -7,6 +7,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
+#  default         :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -17,15 +18,24 @@
 # Examples of resource_groups include Web, Exhibitions, Poetry, Digital Interactive, Mobile, Audio Tour
 # @see https://github.com/coyote-team/coyote/issues/112
 class ResourceGroup < ApplicationRecord
+  DEFAULT_TITLE = "Uncategorized".freeze
+
   validates_presence_of :title
   validates_uniqueness_of :title, scope: :organization_id
+  validates_uniqueness_of :default, if: :default?, scope: :organization_id
 
   has_many :resources, inverse_of: :resource_group
 
   belongs_to :organization, inverse_of: :resource_groups
 
+  scope :default, -> { where(default: true).first }
+
   # @return [String] title of this group
   def to_s
     title
+  end
+
+  def title_with_default_annotation
+    "#{to_s}#{default ? " (default)" : ""}"
   end
 end

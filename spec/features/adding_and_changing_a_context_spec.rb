@@ -11,9 +11,9 @@ RSpec.feature "Adding and editing a resource group" do
 
       expect {
         click_button 'Create Resource Group'
-      }.to change(ResourceGroup, :count).from(0).to(1)
+      }.to change(ResourceGroup, :count).from(1).to(2)
 
-      resource_group = ResourceGroup.first
+      resource_group = ResourceGroup.last
       expect(page.current_path).to eq(organization_resource_group_path(user_organization, resource_group))
 
       click_link "Edit"

@@ -7,6 +7,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
+#  default         :boolean          default(FALSE)
 #
 # Indexes
 #
