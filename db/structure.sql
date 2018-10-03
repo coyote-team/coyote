@@ -422,7 +422,8 @@ CREATE TABLE public.memberships (
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    role public.membership_role DEFAULT 'guest'::public.membership_role NOT NULL
+    role public.membership_role DEFAULT 'guest'::public.membership_role NOT NULL,
+    active boolean DEFAULT true
 );
 
 
@@ -2195,6 +2196,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180830121901'),
 ('20180904221446'),
 ('20180912004124'),
-('20180928203337');
+('20180928203337'),
+('20181003184315');
 
 

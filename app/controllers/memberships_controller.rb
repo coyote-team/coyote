@@ -42,7 +42,7 @@ class MembershipsController < ApplicationController
       return :redirect_after_preventing_destruction # avoid leaking nil
     end
 
-    membership.destroy
+    membership.update_attribute(:active, false)
     redirect_back fallback_location: organization_memberships_url, notice: "#{membership.user} has been removed from #{current_organization.title}"
   end
 
