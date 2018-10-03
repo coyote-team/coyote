@@ -75,7 +75,7 @@ header
 
   h3#ready_to_review Descriptions Ready to Review
   - if current_organization.ready_to_review_representations.any?
-    = list class: 'list--grid' do
+    = list class: 'list--grid', id: "ready_to_review_partial" do
       = render partial: 'representations/resource', collection: current_organization.ready_to_review_representations.first(50).group_by(&:resource), as: :resource_and_representations
   - else
     p There are currently no descriptions in the 'Ready to Review' state for this orgnization

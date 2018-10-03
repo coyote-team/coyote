@@ -7,7 +7,7 @@ li.list-item
     span.sr-only Caption:
     = to_html resource.title
     - representations.each do |representation|
-      .timeline-item
+      .timeline-item class="representation-#{representation.id}"
         - if defined? form
           = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation #{representation.id} for bulk update"}
         = to_html representation.text
@@ -34,9 +34,9 @@ li.list-item
               li.list-item-actions-item
                 = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  method: :delete, data: { confirm: "Are you sure you want to delete #{representation}?"}, aria: { describedby: dom_id(representation) }
           - else
-            = simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+            = simple_form_for representation, remote: true, html: { class: 'form form--inline' }, wrapper: :inline do |f|
               = f.input_field :status, as: :hidden, value: "approved"
               = f.submit "Approve", class: "button button--outline", aria: { label: "Approve representation ##{representation.id}" }
-            = simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+            = simple_form_for representation, remote: true, html: { class: 'form form--inline' }, wrapper: :inline do |f|
               = f.input_field :status, as: :hidden, value: "not_approved"
               = f.submit "Reject", class: "button button--outline", aria: { label: "Approve representation ##{representation.id}" }
