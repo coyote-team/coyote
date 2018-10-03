@@ -35,6 +35,7 @@
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
   before_save :set_canonical_id
+  before_save :set_identifier
 
   belongs_to :resource_group, inverse_of: :resources
   belongs_to :organization, inverse_of: :resources
@@ -57,9 +58,10 @@ class Resource < ApplicationRecord
   scope :by_priority,              -> { order('priority_flag DESC') }
   scope :represented_by, -> (user) { joins(:representations).where(representations: { author_id: user.id }) }
 
-  validates :identifier, presence: true, uniqueness: true
+  validates :identifier, uniqueness: true
   validates :resource_type, presence: true
   #validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
+  validates :title, presence: true
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -168,11 +170,19 @@ class Resource < ApplicationRecord
   end
 
   def set_canonical_id
-    if canonical_id.blank?
-      generate_canonical_id
-      while Resource.where(canonical_id: canonical_id).where.not(id: id).any?
-        next
-      end
+    return unless canonical_id.blank?
+    next while Resource.where(canonical_id: generate_canonical_id).where.not(id: id).any?
+  end
+
+  def set_identifier
+    return unless identifier.blank?
+    root_identifier = title.parameterize
+    identifier = root_identifier
+    i = 1
+    while Resource.where(identifier: identifier).where.not(id: id).any?
+      i += 1
+      identifier = "#{root_identifier}-#{i}"
     end
+    self.identifier = identifier
   end
 end
