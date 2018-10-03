@@ -11,8 +11,8 @@ module ResourcesHelper
       current_organization.resource_groups
     else
       current_user.resource_groups
-    end.map do |c|
-      [c.title, c.id]
+    end.order({ default: :desc }, { title: :asc }).map do |c|
+      [c.title_with_default_annotation, c.id]
     end
   end
 

@@ -61,7 +61,7 @@ class Resource < ApplicationRecord
 
   validates :identifier, uniqueness: true
   validates :resource_type, presence: true
-  #validates :canonical_id, presence: true, uniqueness: { scope: :organization_id }
+  validates :canonical_id, uniqueness: { scope: :organization_id }
   validates :title, presence: true
 
   enum resource_type: Coyote::Resource::TYPES

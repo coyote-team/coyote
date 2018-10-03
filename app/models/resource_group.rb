@@ -34,4 +34,8 @@ class ResourceGroup < ApplicationRecord
   def to_s
     title
   end
+
+  def title_with_default_annotation
+    "#{to_s}#{default ? " (default)" : ""}"
+  end
 end
