@@ -34,7 +34,6 @@ RSpec.describe Resource do
     build(:resource, :image, title: 'Mona Lisa', identifier: 'abc123', source_uri: source_uri)
   end
 
-  it { is_expected.to validate_presence_of(:identifier) }
   it { is_expected.to validate_presence_of(:resource_type) }
 
   it { is_expected.to validate_uniqueness_of(:identifier) }
@@ -89,6 +88,16 @@ RSpec.describe Resource do
   end
 
   context 'when saved' do
+    it 'sets a unique identifier based on the title' do
+      resource = build(:resource, identifier: "", title: "This is a test, isn't it?! YES!")
+      expect(resource.identifier).to be_blank
+      resource.save!
+      expect(resource.identifier).to eq("this-is-a-test-isn-t-it-yes")
+
+      resource_2 = create(:resource, identifier: "", title: "This is a test, isn't it?! YES!")
+      expect(resource_2.identifier).to eq("this-is-a-test-isn-t-it-yes-2")
+    end
+
     it 'sets a unique canonical id' do
       resource = build(:resource)
       expect(resource.canonical_id).to be_blank

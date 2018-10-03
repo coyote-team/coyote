@@ -26,7 +26,7 @@ RSpec.describe 'Accessing resources' do
         expect(resource.resource_group_title).to eq('website')
       end
 
-      invalid_params = { resource: new_resource_params.except(:identifier) }
+      invalid_params = { resource: new_resource_params.except(:title) }
       post api_resources_path, params: invalid_params, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
@@ -41,7 +41,7 @@ RSpec.describe 'Accessing resources' do
       }.to change(existing_resource, :title).
         to('NEWTITLE')
 
-      patch api_resource_path(existing_resource.canonical_id), params: { resource: { identifier: nil } }, headers: auth_headers
+      patch api_resource_path(existing_resource.canonical_id), params: { resource: { title: nil } }, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
