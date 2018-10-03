@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type='text/css' rel='stylesheet' href='./index/stylesheets/bundled/bootstrap.min.css'/>
+<link type='text/css' rel='stylesheet' href='./index/stylesheets/bundled/prettify.css'/>
+<link type='text/css' rel='stylesheet' href='./index/stylesheets/bundled/bootstrap-responsive.min.css'/>
+  <link type='text/css' rel='stylesheet' href='./index/stylesheets/application.css'/>
+  <!-- IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id='container'>
+        <ul class='breadcrumb'>
+  <li class='active'><a href='./index.html'>Coyote 1.0</a></li>
+
+</ul>
+
+<div>
+<p><a href="http://jsonapi.org/">JSON API</a> for <a
+href="https://coyote-team.github.io/coyote/">Coyote</a>.</p>
+
+<p>Accessing the API requires use of the authorization token that appears at
+the bottom of Coyote pages for logged-in users. Example: curl  -H
+&#39;Authorization: CHANGEME&#39; <a
+href="http://localhost:10000/api/v1/organizations/1/resources">localhost:10000/api/v1/organizations/1/resources</a>
+| jsonlint</p>
+</div>
+
+<h1 class='page-header'>Resources</h1>
+
+  <h2>
+    <a href='./index/representations.html'>
+      Representations
+    </a>
+    <br>
+    <small>Complementary and alternative sensory impressions of a Resource</small>
+  </h2>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td>
+              <a href='./index/representations/index.html'>GET /resources/:resource_id/representations</a>
+            </td>
+            <td width='60%'>Return list of representations for a particular resource ID</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./index/representations/show.html'>GET /representations/:id</a>
+            </td>
+            <td width='60%'>Return attributes of a particular representation</td>
+          </tr>
+    </tbody>
+  </table>
+  <h2>
+    <a href='./index/resources.html'>
+      Resources
+    </a>
+    <br>
+    <small>Anything with an identity that can be represented in the Coyote database</small>
+  </h2>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td>
+              <a href='./index/resources/index.html'>GET /resources</a>
+            </td>
+            <td width='60%'>Return a list of resources available to the authenticated user</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./index/resources/show.html'>GET /resources/:id</a>
+            </td>
+            <td width='60%'>Return attributes of a particular resource</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./index/resources/create.html'>POST /organizations/:organization_id/resources</a>
+            </td>
+            <td width='60%'>Create a new resource</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./index/resources/update.html'>PATCH /resources/:id</a>
+            </td>
+            <td width='60%'>Update attributes of a particular resource</td>
+          </tr>
+    </tbody>
+  </table>
+
+
+
+      </div>
+    </div>
+    <hr>
+    <footer></footer>
+  </div>
+  <script type='text/javascript' src='./index/javascripts/bundled/jquery.js'></script>
+<script type='text/javascript' src='./index/javascripts/bundled/bootstrap-collapse.js'></script>
+<script type='text/javascript' src='./index/javascripts/bundled/prettify.js'></script>
+<script type='text/javascript' src='./index/javascripts/apipie.js'></script>
+</body>
+</html>

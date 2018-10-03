@@ -159,13 +159,43 @@ open http://127.0.0.1:1080/ # mail delivery console
 
 <p>You can regenerate development environment data by running <code>bundle exec rake dev_only:reseed</code>.</p>
 
+<h2>Development Workflow</h2>
+
+<h3>Topic Branches &amp; Review Apps</h3>
+
+<p>We use Heroku Pipelines and a modified &quot;git flow&quot; workflow for our development process. It&#39;s very important you follow the process outlined below!</p>
+
+<ol>
+<li>Create a topic branch off of master related to your work, typically something like</li>
+</ol>
+
+<pre class="code bash"><code class="bash">   git checkout master
+   git checkout -b {name}/{issue-numer}-{description} # (e.g.) `flip/208-fix-dev-workflow
+</code></pre>
+
+<ol>
+<li><p>Write your code and then run tests, either locally (<code>guard</code> or <code>rspec</code>) or via CI (simply push your topic branch to Github: <code>git push origin flip/208-fix-dev-workflow</code>)</p></li>
+<li><p>When CI has run on Github, create a pull request (&quot;PR&quot;) and request a review from one or more team members <em>who aren&#39;t you</em></p></li>
+<li><p>Heroku will deploy a review app for every pull request you create. The review apps automatically generate seed data to use with testing. Reviewers can use them to test new functionality with one of the seed user accounts.</p></li>
+</ol>
+
+<h3>Deploying to Staging</h3>
+
+<p>Deploying to staging happens automatically whenever the <code>master</code> branch is modified (in this, <code>master</code> is similar to <code>develop</code> in git flow). Staging is available at <a href="https://staging.coyote.pics">staging.coyote.pics</a>.</p>
+
+<p><strong>IMPORTANT NOTE:</strong> when you deploy to staging, the production database is cloned and then migrations are run on staging. This means <em>every</em> commit to <code>master</code> will overwrite the staging database.</p>
+
+<h3>Deploying to Production</h3>
+
+<p>Deploying to production is as simple as merging <code>master</code> into <code>production</code>. Doing this will automatically deploy your code and run migrations <strong>TO THE PRODUCTION INSTANCE</strong>, so be 100% sure you know what you&#39;re doing and test a <em>lot</em> on staging first.</p>
+
 <h2><a name="documentation"></a>Documentation</h2>
 
 <p>YARD documentation is hosted at <a href="https://coyote-team.github.io/coyote/">coyote-team.github.io</a>.</p>
 
 <p>Fresh documentation can be generated locally by running <code>bundle exec rake coyote:docs OUT=docs/apipie</code>. The <code>OUT</code> parameter is for <code>apipie</code>.</p>
 
-<p>Coyote design refinements are documented in <a href="doc_assets/design_refinements.pdf">design_refinements.pdf</a>.</p>
+<p>Coyote design refinements are documented in <a href="https://github.com/coyote-team/coyote/blob/master/doc_assets/design_refinements.pdf">design_refinements.pdf</a>.</p>
 
 <h2><a name="api"></a> API</h2>
 
@@ -209,9 +239,9 @@ open http://127.0.0.1:1080/ # mail delivery console
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jan 17 12:28:23 2018 by
+  Generated on Wed Oct  3 16:56:08 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.4.1).
 </div>
 
     </div>
