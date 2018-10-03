@@ -8,6 +8,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  role            :enum             default("guest"), not null
+#  active          :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -86,7 +87,7 @@ RSpec.describe MembershipsController do
       expect {
         delete :destroy, params: base_params.merge(id: user_membership.id)
         expect(response).to be_redirect
-      }.to change { Membership.exists?(user_membership.id) }.
+      }.to change { Membership.active.exists?(user_membership.id) }.
         from(true).to(false)
     end
   end
@@ -114,7 +115,7 @@ RSpec.describe MembershipsController do
       expect {
         delete :destroy, params: membership_params
         expect(response).to be_redirect
-      }.to change(organization.memberships, :size).
+      }.to change(organization.active_users, :count).
         by(-1)
 
       expect {
@@ -152,7 +153,7 @@ RSpec.describe MembershipsController do
       expect {
         delete :destroy, params: own_membership_params
         expect(response).to be_redirect
-      }.to change { Membership.exists?(user_membership.id) }.
+      }.to change { Membership.active.exists?(user_membership.id) }.
         from(true).to(false)
     end
   end
@@ -181,7 +182,7 @@ RSpec.describe MembershipsController do
       expect {
         delete :destroy, params: own_membership_params
         expect(response).to be_redirect
-      }.not_to change { Membership.exists?(user_membership.id) }.
+      }.not_to change { Membership.active.exists?(user_membership.id) }.
         from(true)
 
       expect(flash[:alert]).to be_present
