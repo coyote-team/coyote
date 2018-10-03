@@ -28,9 +28,9 @@ RSpec.describe "Changing organizational memberships" do
 
     within "#membership_#{membership.id}" do
       expect {
-        click_button 'Delete'
+        click_button 'Archive'
       }.to change {
-        user_organization.users.exists?(member_user.id)
+        user_organization.active_users.exists?(member_user.id)
       }.from(true).to(false)
     end
   end
