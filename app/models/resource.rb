@@ -41,7 +41,7 @@ class Resource < ApplicationRecord
   belongs_to :organization, inverse_of: :resources
 
   has_many :representations, inverse_of: :resource
-  has_many :approved_representations, ->() { approved }, class_name: :Representation
+  has_many :approved_representations, -> { approved }, class_name: :Representation
   has_many :subject_resource_links, foreign_key: :subject_resource_id, class_name: :ResourceLink, inverse_of: :subject_resource
   has_many :object_resource_links,  foreign_key: :object_resource_id,  class_name: :ResourceLink, inverse_of: :object_resource
   has_many :assignments, inverse_of: :resource
@@ -56,7 +56,8 @@ class Resource < ApplicationRecord
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :by_priority,              -> { order('priority_flag DESC') }
-  scope :represented_by, -> (user) { joins(:representations).where(representations: { author_id: user.id }) }
+  scope :represented_by, ->(user) { joins(:representations).where(representations: { author_id: user.id }) }
+  scope :with_approved_representations, -> { joins(:representations).where(representations: { status: Coyote::Representation::STATUSES[:approved] }) }
 
   validates :identifier, uniqueness: true
   validates :resource_type, presence: true
@@ -74,7 +75,7 @@ class Resource < ApplicationRecord
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
-    %i[represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented]
+    %i[represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented with_approved_representations]
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource

@@ -87,6 +87,18 @@ RSpec.describe Resource do
     end
   end
 
+  context "::has_approved_representations" do
+    let!(:approved_resource) { create(:resource) }
+    let!(:approved_representation) { create(:representation, resource: approved_resource, status: "approved") }
+
+    let!(:unapproved_resource) { create(:resource) }
+    let!(:unapproved_representation) { create(:representation, resource: approved_resource, status: "not_approved") }
+
+    it "returns resources that have approved represents" do
+      expect(Resource.with_approved_representations).to eq([approved_resource])
+    end
+  end
+
   context 'when saved' do
     it 'sets a unique identifier based on the title' do
       resource = build(:resource, identifier: "", title: "This is a test, isn't it?! YES!")

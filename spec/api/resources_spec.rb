@@ -72,6 +72,12 @@ RSpec.describe 'Accessing resources' do
       end
     end
 
+    let!(:approved_resource) do
+      create(:resource, organization: user_organization, title: "This should be the only response using the with_approved_representations filter").tap do |resource|
+        create(:representation, resource: resource, status: "approved")
+      end
+    end
+
     let!(:representation) do
       create(:representation, resource: represented_resource, text: 'can search for the term "polyphonic"')
     end
@@ -124,12 +130,24 @@ RSpec.describe 'Accessing resources' do
       request_path = api_resources_path(user_organization, page: { number: user_organization.resources.count / default_page_size })
       get request_path, headers: auth_headers
       expect(json_data[:data].size).to eq(2) # Including the resource updated 10 days ago
-      expect(json_data[:links].keys).to eq(%w[self first previous])
+      expect(json_data[:links].keys).to eq(%w[self first previous next])
 
       request_path = api_resources_path(user_organization, filter: { updated_at_gt: 9.days.ago }, page: { number: user_organization.resources.count / default_page_size })
       get request_path, headers: auth_headers
-      expect(json_data[:data].size).to eq(1) # Just the recently updated resources
+      expect(json_data[:data].size).to eq(2) # Just the recently updated resources
       expect(json_data[:links].keys).to eq(%w[self first previous])
+    end
+
+    scenario 'GET /organizations/:id/resources filtered by with_approved_representations' do
+      request_path = api_resources_path(user_organization, filter: { scope: "with_approved_representations" })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].map {|r| r.fetch(:id).to_i }).to eq([approved_resource.id])
+    end
+
+    scenario 'GET /organizations/:id/resources filtered multiple ways' do
+      request_path = api_resources_path(user_organization, filter: { scope: %w( unrepresented with_approved_representations ) })
+      get request_path, headers: auth_headers
+      expect(json_data[:data].map {|r| r.fetch(:id).to_i }).to eq([])
     end
   end
 
