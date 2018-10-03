@@ -59,7 +59,7 @@
             span.sr-only Grid View
 
         - if record_filter.browser_pagination_link_params.any?
-          = toolbar_item class: 'non-mobile-only' do
+          = toolbar_item do
             = paginate record_filter.records
 
       - if params[:grid].present?
