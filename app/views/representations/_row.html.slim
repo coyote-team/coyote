@@ -2,7 +2,7 @@ tr
   td.table-cell-select rowspan=2
     - if organization_user.admin?
       label
-        = check_box_tag "representation_status_change[representation_ids][]", representation.id, aria: { label: "Select representation #{representation.id} for bulk update" }
+        = check_box_tag "representation_status_change[representation_ids][]", representation.id, false, aria: { label: "Select representation #{representation.id} for bulk update" }
         = resource_link(representation.resource, alt: representation)
     - else
       = resource_link(representation.resource, alt: representation)
