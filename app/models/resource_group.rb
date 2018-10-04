@@ -28,7 +28,7 @@ class ResourceGroup < ApplicationRecord
 
   belongs_to :organization, inverse_of: :resource_groups
 
-  scope :default, -> { where(default: true).first }
+  scope :default, -> { where(default: true) }
 
   # @return [String] title of this group
   def to_s

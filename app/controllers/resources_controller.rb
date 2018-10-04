@@ -17,7 +17,10 @@ class ResourcesController < ApplicationController
   end
 
   def new
-    self.resource = current_organization.resources.new(title: '', resource_group: current_organization.resource_groups.default)
+    self.resource = current_organization.resources.new(
+      title: '',
+      resource_group: current_organization.resource_groups.default.first
+    )
   end
 
   def edit
