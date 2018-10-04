@@ -3,7 +3,8 @@
 
 h1 You are correct!
 
-= image_tag resource_content_uri(@clue.resource), alt: @clue.resource.title
+- if @clue.resource.viewable?
+  = image_tag resource_content_uri(@clue.resource), alt: @clue.resource.title
 
 = toolbar do
   = toolbar_item
