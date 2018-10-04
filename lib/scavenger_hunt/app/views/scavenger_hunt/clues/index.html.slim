@@ -5,7 +5,7 @@ h1#clues #{@game.clues.answered.count}/#{@game.clues.count} Clues Completed
 ul.grid aria-labelledby="clues"
   - @game.clues.each_with_index do |clue, index|
     li
-      = link_to "Clue #{index.succ}", game_clue_path(@game, clue), class: "subtitle"
-      .default= clue.answered? ? "Complete" : "Incomplete"
+      = link_to "Clue #{index.succ}", game_clue_path(@game, clue), class: "title"
+      .clue-status= clue.answered? ? "Complete" : "Incomplete"
 
 = render "scavenger_hunt/games/footer"
