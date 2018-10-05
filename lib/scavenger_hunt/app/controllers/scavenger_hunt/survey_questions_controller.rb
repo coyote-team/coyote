@@ -6,6 +6,7 @@ class ScavengerHunt::SurveyQuestionsController < ScavengerHunt::ApplicationContr
       survey_question = ScavengerHunt::SurveyQuestion.find(id)
       survey_question.answer(current_player, answer)
     end
+    redirect_to location_leaderboard_path(@location)
   end
 
   def index

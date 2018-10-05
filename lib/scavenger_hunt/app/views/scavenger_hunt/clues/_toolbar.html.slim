@@ -1,8 +1,9 @@
 = content_for :nav do
   .toolbar.toolbar--nav
     .toolbar-item
+      = link_to "Change location", locations_path, class: 'small'
       h2.sr-only Location
-      #location-name.default= @game.location.title
+      #location-name.default.location-link= @game.location.title
     .toolbar-item.small aria-hidden="true"
       ' Clue #{@clue.position.succ}/#{@game.clues.count}
 
