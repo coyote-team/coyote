@@ -7,7 +7,7 @@ h1
   '
   = link_to(pluralize(@game.clues.size, 'clue'), game_clues_path(@game), class: "no-border")
   '
-  ' at this location
+  ' at this location.
 
 = toolbar class: "toolbar--bottom", title: "Game Controls" do
   - if @game.clues.any?
