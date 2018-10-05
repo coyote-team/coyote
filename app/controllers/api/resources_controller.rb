@@ -290,7 +290,7 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_user.resources)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_user.resources, default_order: :order_by_priority_and_date)
     end
 
     def filter_params
