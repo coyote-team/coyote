@@ -247,7 +247,7 @@ module Api
       resource_group_id = resource_params.delete(:resource_group_id)
       resource_group = (
         resource_group_id.present? && current_user.resource_groups.find_by(id: resource_group_id)
-      ) || current_organization.resource_groups.default
+      ) || current_organization.resource_groups.default.first
 
       resource = current_organization.resources.new(resource_params)
       resource.resource_group = resource_group
