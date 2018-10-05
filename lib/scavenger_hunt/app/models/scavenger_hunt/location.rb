@@ -44,6 +44,10 @@ class ScavengerHunt::Location < ScavengerHunt::ApplicationRecord
     end
   end
 
+  def played?(by)
+    by && games.ended.where(player_id: by.id).any?
+  end
+
   def representations_by_metum(metum_name)
     representations.with_metum_named(metum_name)
   end

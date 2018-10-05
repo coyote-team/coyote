@@ -3,14 +3,15 @@ ScavengerHunt::Engine.routes.draw do
 
   resources :locations, only: %w(index show) do
     resource :game, only: :new
-    resource :leaderboard, only: :show
-    resource :player, except: %w(destroy)
-    resources :survey_questions, path: "survey", only: %w(index) do
-      collection do
-        post :answer
-      end
+  end
+
+  resource :player, except: %w(destroy)
+  resources :survey_questions, path: "survey", only: %w(index) do
+    collection do
+      post :answer
     end
   end
+  resource :leaderboard, only: :show
 
   resources :pages, only: :show
 

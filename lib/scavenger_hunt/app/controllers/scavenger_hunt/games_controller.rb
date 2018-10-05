@@ -5,8 +5,11 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
   def finish
     if params[:confirm]
       @game.touch(:ended_at)
-      redirect_to new_location_player_path(location_id: @game.location_id)
+      redirect_to locations_path
     end
+  end
+
+  def finished
   end
 
   def new
@@ -20,6 +23,13 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
   end
 
   private
+
+  helper_method def all_locations_played?
+    return @all_locations_played if defined? @all_locations_played
+    @all_locations_played = ScavengerHunt::Location.all.all? do |location|
+      location.played?(current_player)
+    end
+  end
 
   def create_player!
     ScavengerHunt::Player.create!(ip: request.ip, user_agent: request.user_agent).tap do |player|

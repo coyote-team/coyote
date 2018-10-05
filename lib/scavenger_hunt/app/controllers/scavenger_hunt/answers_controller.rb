@@ -10,7 +10,7 @@ class ScavengerHunt::AnswersController < ScavengerHunt::ApplicationController
 
     if @answer.valid? && @answer.is_correct?
       if @game.finished?
-        redirect_to finished_game_path(@game)
+        redirect_to finish_game_path(@game, confirm: true)
       else
         redirect_to correct_game_clue_answer_path
       end

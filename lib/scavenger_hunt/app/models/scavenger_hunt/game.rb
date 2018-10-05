@@ -25,6 +25,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   has_many :hints, through: :clues
 
   scope :active, -> { where(ended_at: nil) }
+  scope :ended, -> { where.not(ended_at: nil) }
   scope :unarchived, -> { where(is_archived: false) }
 
   hook(::Representation, :create, :update, :destroy) do
