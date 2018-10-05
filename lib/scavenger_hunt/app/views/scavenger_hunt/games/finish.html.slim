@@ -1,6 +1,6 @@
-h1 Are you sure you want to end the game?
+h1 When you switch to a new site you cannot go back. Are you sure you're done?
 
-.title= link_to "Yes!", finish_game_path(@game, confirm: true)
-.title= link_to "No! I want to keep playing!", game_clues_path(@game)
-/add conditional if the user has completed all clues at all other locations, don't show this next option.
-.title= link_to "No! I want to keep playing at a new site!", locations_path
+.title= link_to "No! I want to keep playing where I am!", game_clues_path(@game)
+.title= link_to "Yes! I want to start at a new site.", finish_game_path(@game, confirm: true)
+
+= render 'scavenger_hunt/players/end_game'

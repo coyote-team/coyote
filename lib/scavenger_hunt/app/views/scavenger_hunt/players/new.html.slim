@@ -1,7 +1,7 @@
 h1 Submit your score.
 p.large
   | Your email is required to win a prize. We will only contact if you are a winner. Only your username is displayed on the leaderboard.
-= form_for [@location, @player] do |form|
+= form_for @player do |form|
   .form-field
     = form.text_field :name, placeholder: "Username (required)", required: true
 
