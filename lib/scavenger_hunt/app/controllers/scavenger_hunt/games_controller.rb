@@ -13,7 +13,7 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
     location = ScavengerHunt::Location.find(params[:location_id])
     player = current_player || create_player!
     game = player.games.find_or_create_by!(location: location)
-    redirect_to game.finished? ? finished_game_path(@game) : game_path(game)
+    redirect_to game.finished? ? finished_game_path(game) : game_path(game)
   end
 
   def show
