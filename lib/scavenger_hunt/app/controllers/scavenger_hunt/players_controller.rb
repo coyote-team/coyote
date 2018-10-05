@@ -5,7 +5,7 @@ class ScavengerHunt::PlayersController < ScavengerHunt::ApplicationController
 
   def create
     if @player.update_attributes(player_attributes)
-      redirect_to location_player_path(@location)
+      redirect_to location_survey_questions_path
     else
       render :new
     end
@@ -20,7 +20,7 @@ class ScavengerHunt::PlayersController < ScavengerHunt::ApplicationController
 
   def update
     if @player.update_attributes(player_attributes)
-      redirect_to location_player_path(@location)
+      redirect_to location_survey_questions_path
     else
       render :new
     end

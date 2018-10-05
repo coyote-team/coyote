@@ -1,5 +1,4 @@
-h1 Thanks for playing!
-h3 Submit your score.
+h1 Submit your score.
 p.large
   | Your email is required to win a prize. We will only contact if you are a winner. Only your username is displayed on the leaderboard.
 = form_for [@location, @player] do |form|
@@ -10,10 +9,11 @@ p.large
     = form.email_field :email, placeholder: "Email (optional)"
 
     p.large
-      | Did you know that Coyote Scavenger Hunt uses descriptions that were created to help visitors who are blind or have low vision enjoy artworks and cultural objects? Learn more at
+      | When you submit your score you end your game at all site. Instead of ending the game,
       '
-      a href="https://coyote.pics/" coyote.pics
-      | .
+      = link_to "change your site", locations_path
+      '
+      | to keep playing and compete for a grand prize.
 
   .form-field
     = form.button "Submit", class: "toolbar large toolbar--bottom"

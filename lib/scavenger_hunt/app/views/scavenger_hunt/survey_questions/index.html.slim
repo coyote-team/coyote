@@ -1,10 +1,9 @@
-h1 Survey
+h1 Thanks for playing!
 .default.survey-message Your responses will help us improve the game.
 
 = form_tag answer_location_survey_questions_path(location_id: @location) do
   ol.title
     - @survey_questions.each do |survey_question|
-      li
         = survey_question.text
         - if survey_question.options.present?
           .large.survey
@@ -14,7 +13,6 @@ h1 Survey
                 span.survey-option-label= option
         - else
           = text_area_tag "answers[#{survey_question.id}]", "", placeholder: "Enter answer here", rows: 5
-
   .toolbar
     = toolbar_item do
-      button.large type="submit" Submit
+      button.large type="submit" Submit and view the leaderboard
