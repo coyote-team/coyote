@@ -1,5 +1,6 @@
 ScavengerHunt::Engine.routes.draw do
   root to: 'home#index'
+
   resources :locations, only: %w(index show) do
     resource :game, only: :new
     resource :leaderboard, only: :show
@@ -10,6 +11,8 @@ ScavengerHunt::Engine.routes.draw do
       end
     end
   end
+
+  resources :pages, only: :show
 
   resources :games, only: :show do
     member do
