@@ -15,11 +15,19 @@ class RecordFilter
       end
     end
     @pagination_params = pagination_params
-    @base_scope = base_scope
+    @default_order = default_order
 
-    filter_scope = @filter_params.delete(:scope) || default_order
-
+    filter_scope = @filter_params.delete(:scope)
     Array(filter_scope).each { |scope| @filter_params[scope] = true } if filter_scope.present?
+
+    # TODO: Separate filtering and ordering properly.
+    # This applies default ordering unless filter params are present - for now.
+    default_order = Array(default_order)
+    @base_scope = if default_order.any? && @filter_params.empty?
+                    default_order.inject(base_scope) { |scope, filter| scope.send(filter) }
+                  else
+                    base_scope
+                  end
   end
 
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper

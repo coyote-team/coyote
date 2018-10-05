@@ -59,7 +59,7 @@ RSpec.describe 'Accessing resources' do
     end
 
     let!(:user_org_resources) do
-      create_list(:resource, user_org_resource_count, organization: user_organization)
+      create_list(:resource, user_org_resource_count, organization: user_organization, priority_flag: true)
     end
 
     let(:represented_resource) do
