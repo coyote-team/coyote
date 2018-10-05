@@ -69,7 +69,7 @@ class ResourceGroupsController < ApplicationController
   end
 
   def resource_groups
-    @resource_groups ||= current_organization.resource_groups
+    @resource_groups ||= current_organization.resource_groups.by_default_and_name
   end
 
   def resource_group_params

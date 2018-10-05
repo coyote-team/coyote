@@ -20,6 +20,8 @@
 class ResourceGroup < ApplicationRecord
   DEFAULT_TITLE = "Uncategorized".freeze
 
+  before_destroy :check_for_resources_or_default
+
   validates_presence_of :title
   validates_uniqueness_of :title, scope: :organization_id
   validates_uniqueness_of :default, if: :default?, scope: :organization_id
@@ -28,6 +30,7 @@ class ResourceGroup < ApplicationRecord
 
   belongs_to :organization, inverse_of: :resource_groups
 
+  scope :by_default_and_name, -> { order({ default: :desc }, { title: :asc }) }
   scope :default, -> { where(default: true) }
 
   # @return [String] title of this group
@@ -37,5 +40,14 @@ class ResourceGroup < ApplicationRecord
 
   def title_with_default_annotation
     "#{to_s}#{default ? " (default)" : ""}"
+  end
+
+  private
+
+  def check_for_resources_or_default
+    if default? || resources.any?
+      errors.add(:base, default? ? "The default resource group cannot be deleted" : "It has resources in it")
+      throw(:abort)
+    end
   end
 end
