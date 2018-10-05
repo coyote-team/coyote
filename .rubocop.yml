@@ -10,7 +10,7 @@ AllCops:
 Layout/IndentHeredoc:
   Enabled: false
   # reason: Rubocop doesn't seem to handle <<~-style heredocs well
-  
+
 Bundler/OrderedGems:
   Enabled: false
   # reason: a good idea but a little too nitpicky
@@ -27,7 +27,7 @@ Metrics/MethodLength:
 #Metrics/BlockLength:
   #Exclude:
     #- 'spec/controllers/*'
-      
+
 Layout/DotPosition:
   Enabled: false
   # reason: I think this is too picky
@@ -39,10 +39,14 @@ Style/EmptyMethod:
   Enabled: false
   # reason: usually a method is left empty more as a guide to the user, as with simple Rails actions that just render a view
 
+Style/GuardClause:
+  Enabled: false
+  # reason: this rule asks you not to use `if` statements ... which is crazy
+
 Performance/RedundantMerge:
   Enabled: false
   # reason: .merge/.merge! is helpful for concision when setting multiple keys at once
-  
+
 Style/BracesAroundHashParameters:
   Enabled: false
   # reason: I think adding a brace to hashes in a multiline set of parameters is easier to read/more clear
