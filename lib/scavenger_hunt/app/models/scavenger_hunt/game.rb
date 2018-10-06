@@ -17,6 +17,7 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   ].freeze
 
   after_create :create_clues
+  before_save :record_elapsed_time
 
   belongs_to :location
   belongs_to :player
@@ -48,11 +49,11 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
   end
 
   def elapsed_time
-    ScavengerHunt::Time.new((ended_at || Time.now) - created_at)
+    ScavengerHunt::Time.new((ended_at || Time.now) - (created_at || Time.now))
   end
 
   def penalty_time
-    ScavengerHunt::Time.new(hints.used.count * ScavengerHunt::Hint::PENALTY)
+    ScavengerHunt::Time.new(penalty_time_in_seconds)
   end
 
   def total_time
@@ -72,5 +73,9 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
       answer = metum_attr(representation.resource, ANSWER_METUM_NAME)
       clues.create!(answer: answer, game: self, representation: representation) if answer.present?
     end
+  end
+
+  def record_elapsed_time
+    self.elapsed_time_in_seconds = elapsed_time.seconds
   end
 end

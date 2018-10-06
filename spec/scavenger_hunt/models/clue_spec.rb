@@ -9,5 +9,6 @@ RSpec.describe ScavengerHunt::Clue do
 
     hints.first.update_attribute(:used_at, Time.now)
     expect(clue.first_hint).to eq(hints.last)
+    expect(game.reload.penalty_time_in_seconds).to eq(ScavengerHunt::Hint::PENALTY)
   end
 end
