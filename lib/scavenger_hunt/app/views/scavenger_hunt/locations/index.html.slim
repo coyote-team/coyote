@@ -1,5 +1,5 @@
 h1 Where are you?
-ul.subtitle aria-labelledby="location"
+ul.subtitle.title-spacing aria-labelledby="location"
   - @locations.each do |location|
     li class=(location.played?(current_player) ? 'strikethrough' : nil)
       = link_to_unless location.played?(current_player), location.title, new_location_game_path(location), style: "border-color: #{location.tint}; color: #{location.tint};"
