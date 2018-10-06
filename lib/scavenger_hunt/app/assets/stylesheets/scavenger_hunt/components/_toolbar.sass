@@ -12,6 +12,10 @@
     position: fixed
     right: 0
 
+  &:not(.toolbar--nav)
+    .toolbar-item, > *,
+      line-height: $line-height-ratio
+
   &.toolbar--nav
     > *, .toolbar-item
       &:nth-child(2n)

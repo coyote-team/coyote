@@ -1,20 +1,24 @@
 h1, .title
   font-size: $font-size-h1
   font-weight: 600
+  line-height: 1
   margin: 0 0 $superview 0
 
 h2, .subtitle
   font-size: $font-size-h2
   font-weight: 600
+  //line-height: $line-height-ratio
   margin: 0 0 $superview 0
   padding-top: $gutter
 
 h3, .large
   font-size: $font-size-h3
   font-weight: 600
+  line-height: 1.05
 
 p
-  line-height: $line-height
+  line-height: inherit
+  margin: 0
 
 = typogryphy($name, $border-width)
   .#{$name} p, p.#{$name}
@@ -31,17 +35,19 @@ p
   font-size: $font-size
   font-weight: 600
 
+.long-text
+  line-height: $line-height-ratio
+
 .small
   font-size: $font-size
   font-weight: 600
 
 a
-  line-height: $line-height-ratio
+  //line-height: $line-height-ratio
 
-p, .clue-hint-text
-  font-size: $font-size-h1
-  font-weight: 600
-  line-height: 40px
+.clue-hint-text
+  //font-size: $font-size-h1
+  //font-weight: 600
   margin: 0 0 $superview 0
 
 .strikethrough
