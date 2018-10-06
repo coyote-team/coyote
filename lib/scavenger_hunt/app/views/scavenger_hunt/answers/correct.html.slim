@@ -19,8 +19,8 @@ h1 You are correct!
   = toolbar_item do
     .clue-link
       - if next_clue = @clue.next
-        = link_to "Next clue", game_clue_path(@game, next_clue), class: "title"
+        = link_to "Next clue", game_clue_path(@game, next_clue), class: "title title-spacing"
       - else
-        = link_to "All clues", game_clues_path(@game), class: "title"
+        = link_to "All clues", game_clues_path(@game), class: "title title-spacing"
 
 = render 'scavenger_hunt/games/footer'
