@@ -3,6 +3,9 @@ ScavengerHunt::Engine.routes.draw do
 
   resources :locations, only: %w(index show) do
     resource :game, only: :new
+    collection do
+      get :end, to: "locations#end_all"
+    end
   end
 
   resource :player, except: %w(destroy)

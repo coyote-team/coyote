@@ -1,4 +1,7 @@
 class ScavengerHunt::LocationsController < ScavengerHunt::ApplicationController
+  def end_all
+  end
+
   def index
     @locations = ScavengerHunt::Location.all
   end
