@@ -13,12 +13,11 @@ html(lang="en")
   body class=(body_class.join(" "))
     nav#nav-main role="navigation"
       h2.sr-only#navigation Navigation
-      ul aria-labelledby="navigation"
-      .toolbar
-          li
-            = link_to 'Coyote', root_path, class: "scavenger-hunt-logo"
-          li
-            = link_to "?", page_path("about"), aria: {label: "Credits"}, class: "scavenger-hunt-about"
+      ul.toolbar aria-labelledby="navigation"
+        li
+          span.scavenger-hunt-logo Coyote
+        li
+          = link_to "?", page_path("about"), aria: {label: "Credits"}, class: "scavenger-hunt-about"
       = yield :nav
     main#main
       = yield
