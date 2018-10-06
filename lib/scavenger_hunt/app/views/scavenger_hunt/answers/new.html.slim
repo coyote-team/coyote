@@ -1,8 +1,6 @@
 - body_class :inverted
 = render 'scavenger_hunt/clues/toolbar'
 
-h1.sr-only Clue #{@clue.position.succ}/#{@game.clues.count}
-
-h1= @clue.question
+.title= @clue.question
 
 = render "form"

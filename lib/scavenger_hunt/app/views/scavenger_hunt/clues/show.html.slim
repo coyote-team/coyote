@@ -4,7 +4,7 @@
   = representation_content @clue.representation
 
 .secondary-footer
-  = toolbar title: "Clue options" do
+  = toolbar title: "Clue Controls" do
     - hint = @clue.first_hint
     = toolbar_item do
       = link_to 'I found it!', new_game_clue_answer_path(@game, @clue), class: "large"
