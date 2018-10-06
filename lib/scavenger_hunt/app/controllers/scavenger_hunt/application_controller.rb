@@ -18,6 +18,13 @@ module ScavengerHunt
       :current_player_id
     end
 
+    def default_player_attributes
+      {
+        ip: request.ip,
+        user_agent: request.user_agent
+      }
+    end
+
     def find_clue
       require_player!
       @clue = @game.clues.find(params[:clue_id] || params[:id])

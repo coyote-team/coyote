@@ -32,7 +32,7 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
   end
 
   def create_player!
-    ScavengerHunt::Player.create!(ip: request.ip, user_agent: request.user_agent).tap do |player|
+    ScavengerHunt::Player.create!(default_player_attributes).tap do |player|
       cookies[current_player_key] = player.id
     end
   end
