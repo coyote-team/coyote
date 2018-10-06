@@ -4,15 +4,19 @@ h1 Thanks for playing!
 = form_tag answer_survey_questions_path do
   ol.title
     - @survey_questions.each do |survey_question|
+      - if survey_question.options.blank?
+        label for="answers_#{survey_question.id}" = survey_question.text
+
+      - else
         = survey_question.text
-        - if survey_question.options.present?
-          .large.survey
-            - survey_question.options.each do |option|
-              label.survey-option
-                = radio_button_tag "answers[#{survey_question.id}]", option
-                span.survey-option-label= option
-        - else
-          = text_area_tag "answers[#{survey_question.id}]", "", placeholder: "Enter answer here", rows: 5
+      - if survey_question.options.present?
+        .large.survey
+          - survey_question.options.each do |option|
+            label.survey-option
+              = radio_button_tag "answers[#{survey_question.id}]", option
+              span.survey-option-label= option
+      - else
+        = text_area_tag "answers[#{survey_question.id}]", "", placeholder: "Enter answer here", rows: 5
   .toolbar
     = toolbar_item do
       button.large type="submit" Submit and view the leaderboard

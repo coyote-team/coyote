@@ -1,6 +1,7 @@
-h1 When you switch to a new site you cannot go back. Are you sure you're done?
+h1 id="confirmation" When you switch to a new site you cannot go back. Are you sure you're done?
 
-.title= link_to "No! I want to keep playing where I am!", game_clues_path(@game)
-.title= link_to "Yes! I want to start at a new site.", finish_game_path(@game, confirm: "skip")
+ul aria-labelledby="confirmation"
+  li: .title= link_to "No! I want to keep playing where I am!", game_clues_path(@game)
+  li: .title= link_to "Yes! I want to start at a new site.", finish_game_path(@game, confirm: "skip")
 
 = render 'scavenger_hunt/players/end_game'
