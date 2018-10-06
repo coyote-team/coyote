@@ -14,8 +14,6 @@ h1
     = toolbar_item do
       = link_to game_clue_path(@game, @game.clues.by_unanswered.first), class: "large" do
         | Begin
-        br
-        | game
     = toolbar_item do
       = link_to finish_game_path(@game), class: "small end-game" do
         | I'm done
