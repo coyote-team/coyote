@@ -4,8 +4,8 @@ class ScavengerHunt::GamesController < ScavengerHunt::ApplicationController
 
   def finish
     if params[:confirm]
-      @game.touch(:ended_at)
-      redirect_to locations_path
+      @game.update_attributes(ended_at: Time.now)
+      redirect_to params[:confirm] == "skip" ? locations_path : finished_game_path(@game)
     end
   end
 

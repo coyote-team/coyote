@@ -740,7 +740,9 @@ CREATE TABLE public.scavenger_hunt_games (
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    is_archived boolean DEFAULT false
+    is_archived boolean DEFAULT false,
+    elapsed_time_in_seconds integer DEFAULT 0,
+    penalty_time_in_seconds integer DEFAULT 0
 );
 
 
@@ -2199,6 +2201,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180912004124'),
 ('20180928203337'),
 ('20181003184315'),
-('20181003222901');
+('20181003222901'),
+('20181005234836');
 
 
