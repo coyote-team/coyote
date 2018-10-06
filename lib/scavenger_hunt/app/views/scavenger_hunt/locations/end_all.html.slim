@@ -2,5 +2,9 @@ h1 id="confirmation" Are you sure you want to end the game?
 
 ul aria-labelledby="confirmation"
   li: .title.title-spacing= link_to "Yes!", new_player_path
-  li: .title.title-spacing= link_to "No! I want to keep playing!", locations_path
+  - if params[:game_id].present?
+    li: .title.title-spacing= link_to "No! I want to keep playing!", game_path(params[:game_id])
+    li: .title.title-spacing= link_to "No! I want to keep playing at a new site!", locations_path
+  - else
+    li: .title.title-spacing= link_to "No! I want to keep playing!", locations_path
 
