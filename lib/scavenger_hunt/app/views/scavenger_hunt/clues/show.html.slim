@@ -1,7 +1,8 @@
 = render 'toolbar'
 
-h1
+.title.clue-hint-text
   = representation_content @clue.representation
+
 .secondary-footer
   = toolbar title: "Clue options" do
     - hint = @clue.first_hint
