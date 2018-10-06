@@ -1,11 +1,11 @@
 h2.sr-only Location
 #location-name.default= @game.location.title
 
-h1#clues #{@game.clues.answered.count}/#{@game.clues.count} Clues Completed
+h1#clues #{@game.clues.answered.count}/#{@game.clues.count} Clues Found
 ul.grid aria-labelledby="clues"
   - @game.clues.each_with_index do |clue, index|
     li
       = link_to "Clue #{index.succ}", game_clue_path(@game, clue), class: "title"
-      .clue-status= clue.answered? ? "Complete" : "Incomplete"
+      .clue-status= clue.answered? ? "Found" : "Not Found"
 
 = render "scavenger_hunt/games/footer"
