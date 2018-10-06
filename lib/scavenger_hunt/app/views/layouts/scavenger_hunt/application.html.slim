@@ -7,6 +7,7 @@ html(lang="en")
     = csrf_meta_tags
     = render "layouts/scavenger_hunt/location_styles" if @game.present?
     meta name="viewport" content="initial-scale=1,maximum-scale=1"/
+    meta http-equiv="content-language" content="en"/
     title Scavenger Hunt
 
   body class=(body_class.join(" "))
@@ -17,7 +18,7 @@ html(lang="en")
           li
             = link_to 'Coyote', root_path, class: "scavenger-hunt-logo"
           li
-            = link_to "?", page_path("about"), class: "scavenger-hunt-about"
+            = link_to "?", page_path("about"), aria: {label: "Credits"}, class: "scavenger-hunt-about"
       = yield :nav
     main#main
       = yield
