@@ -1,7 +1,7 @@
 h1 Thanks for playing!
 .default.survey-message Your responses will help us improve the game.
 
-= form_tag answer_location_survey_questions_path(location_id: @location) do
+= form_tag answer_survey_questions_path do
   ol.title
     - @survey_questions.each do |survey_question|
       - if survey_question.options.blank?

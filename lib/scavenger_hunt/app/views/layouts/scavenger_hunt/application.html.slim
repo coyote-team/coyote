@@ -13,8 +13,11 @@ html(lang="en")
     nav#nav-main role="navigation"
       h2.sr-only#navigation Navigation
       ul aria-labelledby="navigation"
-        li
-          = link_to 'Coyote', root_path, class: "scavenger-hunt-logo"
+      .toolbar
+          li
+            = link_to 'Coyote', root_path, class: "scavenger-hunt-logo"
+          li
+            = link_to "?", page_path("about"), class: "scavenger-hunt-about"
       = yield :nav
     main#main
       = yield

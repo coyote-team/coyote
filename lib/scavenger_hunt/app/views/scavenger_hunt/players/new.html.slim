@@ -1,7 +1,7 @@
 h1 Submit your score.
 p.large
   | Your email is required to win a prize. We will only contact if you are a winner. Only your username is displayed on the leaderboard.
-= form_for [@location, @player] do |form|
+= form_for @player do |form|
   .form-field
     = form.text_field :name, placeholder: "Username (required)", required: true
 
@@ -9,7 +9,7 @@ p.large
     = form.email_field :email, placeholder: "Email (optional)"
 
     p.large
-      | When you submit your score you end your game at all site. Instead of ending the game,
+      | When you submit your score you end your game at all sites. Instead of ending the game,
       '
       = link_to "change your site", locations_path
       '

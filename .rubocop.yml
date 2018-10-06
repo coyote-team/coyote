@@ -32,6 +32,9 @@ Layout/DotPosition:
   Enabled: false
   # reason: I think this is too picky
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 

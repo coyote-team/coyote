@@ -3,8 +3,12 @@ h1
   |Congrats!
   br/
   br/
-  | You've completed all clues at this location!
+  - if all_locations_played?
+    | You've completed all locations!
+  - else
+    | You've completed all clues at this location!
 
-= link_to "Start new location", locations_path, class: "large"
-
-= render "scavenger_hunt/games/footer"
+- if all_locations_played?
+  = link_to "Submit your score", new_player_path, class: "large"
+- else
+  = link_to "Start new location", locations_path, class: "large"

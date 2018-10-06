@@ -6,7 +6,7 @@ class ScavengerHunt::HintsController < ScavengerHunt::ApplicationController
 
   def show
     if @hint.used_at.present? || params[:confirm]
-      @hint.touch(:used_at) unless @hint.used_at.present?
+      @hint.update_attributes(used_at: Time.now) unless @hint.used_at.present?
       render :really_show
     end
   end

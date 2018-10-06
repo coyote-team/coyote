@@ -55,7 +55,9 @@ class Resource < ApplicationRecord
   scope :unassigned,               -> { left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
   scope :assigned_unrepresented,   -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: { resource_id: nil }) }
-  scope :by_priority,              -> { order('priority_flag DESC') }
+  scope :by_date,                  -> { order(created_at: :desc) }
+  scope :by_priority,              -> { order(priority_flag: :desc) }
+  scope :order_by_priority_and_date,     -> { by_priority.by_date }
   scope :represented_by, ->(user) { joins(:representations).where(representations: { author_id: user.id }) }
   scope :with_approved_representations, -> { joins(:representations).where(representations: { status: Coyote::Representation::STATUSES[:approved] }) }
 
@@ -69,13 +71,13 @@ class Resource < ApplicationRecord
   audited
 
   paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
-  max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
+  #max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
   delegate :title, to: :resource_group, prefix: true
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
-    %i[represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented with_approved_representations]
+    %i[order_by_priority_and_date represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented with_approved_representations]
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
