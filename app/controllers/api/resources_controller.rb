@@ -244,15 +244,17 @@ module Api
     api :POST, 'organizations/:organization_id/resources', 'Create a new resource'
     param_group :resource
     def create
+      resource = current_organization.resources.find_or_initialize_by(canonical_id: resource_params[:canonical_id])
+
+      # Assign a resource group if it has changed or is not assigned, falling back to a default group
       resource_group_id = resource_params.delete(:resource_group_id)
-      resource_group = (
-        resource_group_id.present? && current_user.resource_groups.find_by(id: resource_group_id)
-      ) || current_organization.resource_groups.default.first
+      unless resource.resource_group_id != resource_group_id
+        resource.resource_group = (
+          resource_group_id.present? && current_user.resource_groups.find_by(id: resource_group_id)
+        ) || current_organization.resource_groups.default.first
+      end
 
-      resource = current_organization.resources.new(resource_params)
-      resource.resource_group = resource_group
-
-      if resource.save
+      if resource.update_attributes(resource_params)
         logger.info "Created #{resource}"
         render jsonapi: resource, status: :created, links: {
           coyote: resource_url(resource)

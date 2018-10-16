@@ -21,15 +21,21 @@ RSpec.describe 'Accessing resources' do
       }.to change(user_organization.resources, :count).
         from(0).to(1)
 
-      user_organization.resources.first.tap do |resource|
+      new_resource = user_organization.resources.first.tap do |resource|
         expect(resource.title).to eq('Mona Lisa')
         expect(resource.resource_group_title).to eq('website')
       end
 
-      invalid_params = { resource: new_resource_params.except(:title) }
+      invalid_params = { resource: new_resource_params.except(:title).merge(canonical_id: "rewriting-canonical-id-for-test-reasons") }
       post api_resources_path, params: invalid_params, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
+
+      update_params = { resource: new_resource_params.merge(canonical_id: new_resource.canonical_id, title: "This is the new title; it should update the old resource") }
+      post api_resources_path, params: update_params, headers: auth_headers
+      new_resource.reload
+      expect(new_resource.title).to eq('This is the new title; it should update the old resource')
+      expect(new_resource.resource_group_title).to eq('website')
     end
 
     scenario 'PATCH /resources/:id' do
