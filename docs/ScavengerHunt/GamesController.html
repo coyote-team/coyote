@@ -143,6 +143,28 @@
         <li class="public ">
   <span class="summary_signature">
 
+      <a href="#finished-instance_method" title="#finished (instance method)">#<strong>finished</strong>  &#x21d2; Object </a>
+
+
+
+  </span>
+
+
+
+
+
+
+
+
+
+    <span class="summary_desc"><div class='inline'></div></span>
+
+</li>
+
+
+        <li class="public ">
+  <span class="summary_signature">
+
       <a href="#new-instance_method" title="#new (instance method)">#<strong>new</strong>  &#x21d2; Object </a>
 
 
@@ -227,9 +249,37 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finish'>finish</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:confirm</span><span class='rbracket'>]</span>
-    <span class='ivar'>@game</span><span class='period'>.</span><span class='id identifier rubyid_touch'>touch</span><span class='lparen'>(</span><span class='symbol'>:ended_at</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_location_player_path'>location_player_path</span><span class='lparen'>(</span><span class='label'>location_id:</span> <span class='ivar'>@game</span><span class='period'>.</span><span class='id identifier rubyid_location_id'>location_id</span><span class='rparen'>)</span>
+    <span class='ivar'>@game</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='label'>ended_at:</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:confirm</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skip</span><span class='tstring_end'>&quot;</span></span> <span class='op'>?</span> <span class='id identifier rubyid_locations_path'>locations_path</span> <span class='op'>:</span> <span class='id identifier rubyid_finished_game_path'>finished_game_path</span><span class='lparen'>(</span><span class='ivar'>@game</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+
+      <div class="method_details ">
+  <h3 class="signature " id="finished-instance_method">
+
+    #<strong>finished</strong>  &#x21d2; <tt>Object</tt>
+
+
+
+
+
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/games_controller.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finished'>finished</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -251,21 +301,21 @@
       <pre class="lines">
 
 
-12
-13
-14
 15
 16
-17</pre>
+17
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/games_controller.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/games_controller.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Location.html" title="ScavengerHunt::Location (class)">Location</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:location_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_player'>player</span> <span class='op'>=</span> <span class='id identifier rubyid_current_player'>current_player</span> <span class='op'>||</span> <span class='id identifier rubyid_create_player!'>create_player!</span>
-  <span class='id identifier rubyid_game'>game</span> <span class='op'>=</span> <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_games'>games</span><span class='period'>.</span><span class='id identifier rubyid_active'>active</span><span class='period'>.</span><span class='id identifier rubyid_find_or_create_by!'>find_or_create_by!</span><span class='lparen'>(</span><span class='label'>location:</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_game_path'>game_path</span><span class='lparen'>(</span><span class='id identifier rubyid_game'>game</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_game'>game</span> <span class='op'>=</span> <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_games'>games</span><span class='period'>.</span><span class='id identifier rubyid_find_or_create_by!'>find_or_create_by!</span><span class='lparen'>(</span><span class='label'>location:</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_game'>game</span><span class='period'>.</span><span class='id identifier rubyid_finished?'>finished?</span> <span class='op'>?</span> <span class='id identifier rubyid_finished_game_path'>finished_game_path</span><span class='lparen'>(</span><span class='id identifier rubyid_game'>game</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_game_path'>game_path</span><span class='lparen'>(</span><span class='id identifier rubyid_game'>game</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -287,11 +337,11 @@
       <pre class="lines">
 
 
-19
-20</pre>
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/games_controller.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/games_controller.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
 <span class='kw'>end</span></pre>
@@ -305,7 +355,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:07 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

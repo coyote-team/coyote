@@ -183,7 +183,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
   <span class='kw'>if</span> <span class='ivar'>@hint</span><span class='period'>.</span><span class='id identifier rubyid_used_at'>used_at</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:confirm</span><span class='rbracket'>]</span>
-    <span class='ivar'>@hint</span><span class='period'>.</span><span class='id identifier rubyid_touch'>touch</span><span class='lparen'>(</span><span class='symbol'>:used_at</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='ivar'>@hint</span><span class='period'>.</span><span class='id identifier rubyid_used_at'>used_at</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='ivar'>@hint</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='label'>used_at:</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='ivar'>@hint</span><span class='period'>.</span><span class='id identifier rubyid_used_at'>used_at</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:really_show</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -197,7 +197,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:07 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

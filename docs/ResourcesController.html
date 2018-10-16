@@ -341,9 +341,6 @@
       <pre class="lines">
 
 
-26
-27
-28
 29
 30
 31
@@ -351,10 +348,13 @@
 33
 34
 35
-36</pre>
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_params'>resource_params</span><span class='rparen'>)</span>
@@ -387,13 +387,13 @@
       <pre class="lines">
 
 
-48
-49
-50
-51</pre>
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -419,11 +419,11 @@
       <pre class="lines">
 
 
-23
-24</pre>
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
@@ -477,13 +477,19 @@
 
 19
 20
-21</pre>
+21
+22
+23
+24</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>resource_group:</span> <span class='id identifier rubyid_current_organization'>current_organization</span><span class='period'>.</span><span class='id identifier rubyid_resource_groups'>resource_groups</span><span class='period'>.</span><span class='id identifier rubyid_default'>default</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -533,18 +539,18 @@
       <pre class="lines">
 
 
-38
-39
-40
 41
 42
 43
 44
 45
-46</pre>
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/resources_controller.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_params'>resource_params</span><span class='rparen'>)</span>
@@ -565,7 +571,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 16:56:09 2018 by
+  Generated on Tue Oct 16 09:38:15 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

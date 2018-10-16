@@ -236,12 +236,12 @@ organization</p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/membership.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'app/models/membership.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_last_owner?'>last_owner?</span>
   <span class='id identifier rubyid_owner?'>owner?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="" title="Membership (class)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>organization:</span> <span class='id identifier rubyid_organization'>organization</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_one?'>one?</span>
@@ -266,12 +266,12 @@ organization</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/membership.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/models/membership.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_role_rank'>role_rank</span>
   <span class='const'><span class='object_link'><a href="Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Coyote/Membership.html" title="Coyote::Membership (module)">Membership</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_rank'><span class='object_link'><a href="Coyote/Membership.html#role_rank-class_method" title="Coyote::Membership.role_rank (method)">role_rank</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_role'>role</span><span class='rparen'>)</span>
@@ -286,9 +286,9 @@ organization</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 17 12:28:24 2018 by
+  Generated on Tue Oct 16 09:38:15 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.4.1).
 </div>
 
     </div>

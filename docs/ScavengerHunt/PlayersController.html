@@ -125,6 +125,8 @@
 
 
 
+      (also: #update)
+
   </span>
 
 
@@ -184,28 +186,6 @@
 </li>
 
 
-        <li class="public ">
-  <span class="summary_signature">
-
-      <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>  &#x21d2; Object </a>
-
-
-
-  </span>
-
-
-
-
-
-
-
-
-
-    <span class="summary_desc"><div class='inline'></div></span>
-
-</li>
-
-
     </ul>
 
 
@@ -229,6 +209,10 @@
 
 
 
+    <span class="aliases">Also known as:
+    <span class="names"><span id='update-instance_method'>update</span></span>
+    </span>
+
 
 
 </h3><table class="source_code">
@@ -237,6 +221,7 @@
       <pre class="lines">
 
 
+5
 6
 7
 8
@@ -246,11 +231,12 @@
 12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='kw'>if</span> <span class='ivar'>@player</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_player_attributes'>player_attributes</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_location_player_path'>location_player_path</span><span class='lparen'>(</span><span class='ivar'>@location</span><span class='rparen'>)</span>
+    <span class='ivar'>@player</span><span class='period'>.</span><span class='id identifier rubyid_games'>games</span><span class='period'>.</span><span class='id identifier rubyid_active'>active</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='label'>ended_at:</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_questions_path'>survey_questions_path</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:new</span>
   <span class='kw'>end</span>
@@ -275,11 +261,11 @@
       <pre class="lines">
 
 
-14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
@@ -303,53 +289,15 @@
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_new_location_player_path'>new_location_player_path</span><span class='lparen'>(</span><span class='ivar'>@location</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_current_player?'>current_player?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_current_player'>current_player</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-
-      <div class="method_details ">
-  <h3 class="signature " id="update-instance_method">
-
-    #<strong>update</strong>  &#x21d2; <tt>Object</tt>
-
-
-
-
-
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-21
-22
-23
-24
-25
-26
-27</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/players_controller.rb', line 21</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
-  <span class='kw'>if</span> <span class='ivar'>@player</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_player_attributes'>player_attributes</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_location_player_path'>location_player_path</span><span class='lparen'>(</span><span class='ivar'>@location</span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:new</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_new_player_path'>new_player_path</span> <span class='kw'>unless</span> <span class='id identifier rubyid_current_player?'>current_player?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_current_player'>current_player</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -361,7 +309,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:08 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

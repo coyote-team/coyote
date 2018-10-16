@@ -267,7 +267,7 @@
 
   <span class='kw'>if</span> <span class='ivar'>@answer</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@answer</span><span class='period'>.</span><span class='id identifier rubyid_is_correct?'>is_correct?</span>
     <span class='kw'>if</span> <span class='ivar'>@game</span><span class='period'>.</span><span class='id identifier rubyid_finished?'>finished?</span>
-      <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_finished_game_path'>finished_game_path</span><span class='lparen'>(</span><span class='ivar'>@game</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_finish_game_path'>finish_game_path</span><span class='lparen'>(</span><span class='ivar'>@game</span><span class='comma'>,</span> <span class='label'>confirm:</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_correct_game_clue_answer_path'>correct_game_clue_answer_path</span>
     <span class='kw'>end</span>
@@ -319,7 +319,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:08 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

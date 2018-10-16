@@ -193,21 +193,23 @@
       <pre class="lines">
 
 
+2
+3
 4
 5
 6
 7
-8
-9</pre>
+8</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/survey_questions_controller.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/survey_questions_controller.rb', line 2</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer'>answer</span>
   <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:answers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='op'>|</span>
     <span class='id identifier rubyid_survey_question'>survey_question</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SurveyQuestion.html" title="ScavengerHunt::SurveyQuestion (class)">SurveyQuestion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_survey_question'>survey_question</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span><span class='lparen'>(</span><span class='id identifier rubyid_current_player'>current_player</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_leaderboard_path'>leaderboard_path</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -229,12 +231,12 @@
       <pre class="lines">
 
 
+10
 11
-12
-13</pre>
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/survey_questions_controller.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/survey_questions_controller.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
   <span class='ivar'>@survey_questions</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SurveyQuestion.html" title="ScavengerHunt::SurveyQuestion (class)">SurveyQuestion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -249,7 +251,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:08 2018 by
+  Generated on Tue Oct 16 09:38:17 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

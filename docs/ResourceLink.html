@@ -110,10 +110,10 @@
 
 <p>Table name: resource_links</p>
 
-<pre class="code ruby"><code class="ruby">id                  :integer          not null, primary key
-subject_resource_id :integer          not null
+<pre class="code ruby"><code class="ruby">id                  :bigint(8)        not null, primary key
+subject_resource_id :bigint(8)        not null
 verb                :string           not null
-object_resource_id  :integer          not null
+object_resource_id  :bigint(8)        not null
 created_at          :datetime         not null
 updated_at          :datetime         not null</code></pre>
 
@@ -258,9 +258,9 @@ isPartOf, etc.)</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:35:34 2017 by
+  Generated on Tue Oct 16 09:38:15 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.16 (ruby-2.4.1).
 </div>
 
     </div>

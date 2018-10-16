@@ -630,12 +630,12 @@ recently-created resource</p>
       <pre class="lines">
 
 
-83
-84
-85</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_latest_timestamp'>latest_timestamp</span>
   <span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:created_at</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:created_at</span><span class='rparen'>)</span>
@@ -676,15 +676,15 @@ recently-created resource</p>
       <pre class="lines">
 
 
-77
-78
-79</pre>
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ransackable_scopes'>ransackable_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>represented</span><span class='words_sep'> </span><span class='tstring_content'>assigned</span><span class='words_sep'> </span><span class='tstring_content'>unassigned</span><span class='words_sep'> </span><span class='tstring_content'>unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>assigned_unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>unassigned_unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>with_approved_representations</span><span class='words_sep'>]</span>
+  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>order_by_priority_and_date</span><span class='words_sep'> </span><span class='tstring_content'>represented</span><span class='words_sep'> </span><span class='tstring_content'>assigned</span><span class='words_sep'> </span><span class='tstring_content'>unassigned</span><span class='words_sep'> </span><span class='tstring_content'>unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>assigned_unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>unassigned_unrepresented</span><span class='words_sep'> </span><span class='tstring_content'>with_approved_representations</span><span class='words_sep'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -734,13 +734,13 @@ recently-created resource</p>
       <pre class="lines">
 
 
-136
-137
 138
-139</pre>
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_approved?'>approved?</span>
   <span class='kw'>return</span> <span class='ivar'>@approved</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@approved</span>
@@ -788,12 +788,12 @@ recently-created resource</p>
       <pre class="lines">
 
 
-165
-166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assigned?'>assigned?</span>
   <span class='op'>!</span><span class='id identifier rubyid_unassigned?'>unassigned?</span>
@@ -818,13 +818,13 @@ recently-created resource</p>
       <pre class="lines">
 
 
-131
-132
 133
-134</pre>
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_best_representation'>best_representation</span>
   <span class='kw'>return</span> <span class='ivar'>@best_representation</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@best_representation</span>
@@ -872,13 +872,13 @@ recently-created resource</p>
       <pre class="lines">
 
 
-141
-142
 143
-144</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_complete?'>complete?</span>
   <span class='kw'>return</span> <span class='ivar'>@complete</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@complete</span>
@@ -904,12 +904,12 @@ recently-created resource</p>
       <pre class="lines">
 
 
-169
-170
-171</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_canonical_id'>generate_canonical_id</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_canonical_id'>canonical_id</span> <span class='op'>=</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_uuid'>uuid</span>
@@ -963,12 +963,12 @@ recently-created resource</p>
       <pre class="lines">
 
 
-88
-89
-90</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_host_uris='>host_uris=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:host_uris</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[\r\n]+</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1024,12 +1024,12 @@ boxes</p>
       <pre class="lines">
 
 
-97
-98
-99</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_label'>label</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_title'>title</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_identifier'>identifier</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
@@ -1076,13 +1076,13 @@ boxes</p>
       <pre class="lines">
 
 
-146
-147
 148
-149</pre>
+149
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_partially_complete?'>partially_complete?</span>
   <span class='kw'>return</span> <span class='ivar'>@partially_complete</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@partially_complete</span>
@@ -1139,8 +1139,6 @@ verbs given from this resource&#39;s perspective</p>
       <pre class="lines">
 
 
-104
-105
 106
 107
 108
@@ -1151,10 +1149,12 @@ verbs given from this resource&#39;s perspective</p>
 113
 114
 115
-116</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_related_resources'>related_resources</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1211,12 +1211,12 @@ verbs given from this resource&#39;s perspective</p>
       <pre class="lines">
 
 
-156
-157
-158</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_represented?'>represented?</span>
   <span class='op'>!</span><span class='id identifier rubyid_unrepresented?'>unrepresented?</span>
@@ -1241,13 +1241,13 @@ verbs given from this resource&#39;s perspective</p>
       <pre class="lines">
 
 
-173
-174
 175
-176</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_canonical_id'>set_canonical_id</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_canonical_id'>canonical_id</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1273,8 +1273,6 @@ verbs given from this resource&#39;s perspective</p>
       <pre class="lines">
 
 
-178
-179
 180
 181
 182
@@ -1283,10 +1281,12 @@ verbs given from this resource&#39;s perspective</p>
 185
 186
 187
-188</pre>
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_identifier'>set_identifier</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_identifier'>identifier</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1331,8 +1331,6 @@ identifiers</p>
       <pre class="lines">
 
 
-120
-121
 122
 123
 124
@@ -1340,10 +1338,12 @@ identifiers</p>
 126
 127
 128
-129</pre>
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_statuses'>statuses</span>
   <span class='ivar'>@statuses</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statuses'>statuses</span><span class='op'>|</span>
@@ -1397,13 +1397,13 @@ identifiers</p>
       <pre class="lines">
 
 
-160
-161
 162
-163</pre>
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unassigned?'>unassigned?</span>
   <span class='kw'>return</span> <span class='ivar'>@unassigned</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@unassigned</span>
@@ -1451,13 +1451,13 @@ identifiers</p>
       <pre class="lines">
 
 
-151
-152
 153
-154</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unrepresented?'>unrepresented?</span>
   <span class='kw'>return</span> <span class='ivar'>@unrepresented</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@unrepresented</span>
@@ -1505,12 +1505,12 @@ identifiers</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'app/models/resource.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewable?'>viewable?</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_source_uri'>source_uri</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_uploaded_resource'>uploaded_resource</span><span class='period'>.</span><span class='id identifier rubyid_attached?'>attached?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Coyote.html" title="Coyote (module)">Coyote</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Coyote/Resource.html" title="Coyote::Resource (module)">Resource</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Coyote/Resource.html#IMAGE_LIKE_TYPES-constant" title="Coyote::Resource::IMAGE_LIKE_TYPES (constant)">IMAGE_LIKE_TYPES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_type'>resource_type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -1525,7 +1525,7 @@ identifiers</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 16:56:09 2018 by
+  Generated on Tue Oct 16 09:38:14 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>
