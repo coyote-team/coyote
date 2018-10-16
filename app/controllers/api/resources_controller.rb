@@ -235,9 +235,6 @@ module Api
     def show
       render({
         jsonapi: resource,
-        links: {
-          coyote: resource_url(resource)
-        },
         include: %i[organization representations]
       })
     end

@@ -19,4 +19,8 @@ class SerializableResource < JSONAPI::Serializable::Resource
       @object.approved_representations
     end
   end
+
+  link :coyote do
+    @url_helpers.resource_url(@object.id)
+  end
 end
