@@ -60,5 +60,8 @@ module Coyote
       authentication:       ENV.fetch('MAIL_AUTHENTICATION',:plain).to_sym,
       enable_starttls_auto: ENV.fetch('MAIL_ENABLE_STARTTLS_AUTO','true').downcase == 'true'
     }
+
+    # Prevent Rails from messing up generated URLs in the API
+    config.active_support.escape_html_entities_in_json = false
   end
 end
