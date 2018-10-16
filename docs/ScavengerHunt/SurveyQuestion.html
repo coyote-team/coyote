@@ -178,12 +178,14 @@
 
 4
 5
-6</pre>
+6
+7</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/survey_question.rb', line 4</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer'>answer</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_player'>player</span>
   <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_survey_answers'>survey_answers</span><span class='period'>.</span><span class='id identifier rubyid_find_or_initialize_by'>find_or_initialize_by</span><span class='lparen'>(</span><span class='label'>survey_question_id:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes!'>update_attributes!</span><span class='lparen'>(</span><span class='label'>answer:</span> <span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -196,7 +198,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:07 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

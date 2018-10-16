@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: RecordPaginator
-  
+
     &mdash; Coyote
-  
+
 </title>
 
   <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
@@ -35,16 +35,16 @@
     <div id="main" tabindex="-1">
       <div id="header">
         <div id="menu">
-  
+
     <a href="_index.html">Index (R)</a> &raquo;
-    
-    
+
+
     <span class="title">RecordPaginator</span>
-  
+
 </div>
 
         <div id="search">
-  
+
     <a class="full_list_link" id="class_list_link"
         href="class_list.html">
 
@@ -54,54 +54,54 @@
           <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
         </svg>
     </a>
-  
+
 </div>
         <div class="clear"></div>
       </div>
 
       <div id="content"><h1>Class: RecordPaginator
-  
-  
-  
+
+
+
 </h1>
 <div class="box_info">
-  
+
   <dl>
     <dt>Inherits:</dt>
     <dd>
       <span class="inheritName">Object</span>
-      
+
         <ul class="fullTree">
           <li>Object</li>
-          
+
             <li class="next">RecordPaginator</li>
-          
+
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
-      
+
     </dd>
   </dl>
-  
 
-  
-  
-  
-  
-  
 
-  
 
-  
+
+
+
+
+
+
+
+
   <dl>
     <dt>Defined in:</dt>
     <dd>app/services/record_paginator.rb</dd>
   </dl>
-  
+
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
+
 <p>Manages creation of links for a subset of paginated ActiveRecord objects.
 Depends on Kaminari having already been mixed-into ActiveRecord.</p>
 
@@ -109,13 +109,13 @@ Depends on Kaminari having already been mixed-into ActiveRecord.</p>
   </div>
 </div>
 <div class="tags">
-  
+
 
   <p class="tag_title">See Also:</p>
   <ul class="see">
-    
+
       <li><a href="https://github.com/kaminari/kaminari" target="_parent" title="https://github.com/kaminari/kaminari">https://github.com/kaminari/kaminari</a></li>
-    
+
   </ul>
 
 </div>
@@ -125,114 +125,114 @@ Depends on Kaminari having already been mixed-into ActiveRecord.</p>
 
 
 
-  
+
     <h2>
       Instance Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(params, records)  &#x21d2; RecordPaginator </a>
-    
 
-    
+
+
   </span>
-  
-  
-    <span class="note title constructor">constructor</span>
-  
-  
-  
-  
-  
-  
 
-  
+
+    <span class="note title constructor">constructor</span>
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>A new instance of RecordPaginator.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
-      <a href="#pagination_links_for-instance_method" title="#pagination_links_for (instance method)">#<strong>pagination_links_for</strong>(base_link_params)  &#x21d2; Hash&lt;Symbol,String&gt; </a>
-    
 
-    
+      <a href="#pagination_links_for-instance_method" title="#pagination_links_for (instance method)">#<strong>pagination_links_for</strong>(base_link_params)  &#x21d2; Hash&lt;Symbol, String&gt; </a>
+
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>Named link parameters suitable for rendering in the UI or API.</p>
 </div></span>
-  
+
 </li>
 
-      
+
         <li class="public ">
   <span class="summary_signature">
-    
+
       <a href="#query-instance_method" title="#query (instance method)">#<strong>query</strong>  &#x21d2; ActiveRecord::Relation </a>
-    
 
-    
+
+
   </span>
-  
-  
-  
-  
-  
-  
-  
 
-  
+
+
+
+
+
+
+
+
     <span class="summary_desc"><div class='inline'>
 <p>The original records query with which we were initialized, with Kaminari
 pagination applied.</p>
 </div></span>
-  
+
 </li>
 
-      
+
     </ul>
-  
+
 
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
-  
+
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
-  
-    #<strong>initialize</strong>(params, records)  &#x21d2; <tt><span class='object_link'><a href="" title="RecordPaginator (class)">RecordPaginator</a></span></tt> 
-  
 
-  
+    #<strong>initialize</strong>(params, records)  &#x21d2; <tt><span class='object_link'><a href="" title="RecordPaginator (class)">RecordPaginator</a></span></tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Returns a new instance of RecordPaginator</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
+
 
 </div><table class="source_code">
   <tr>
@@ -248,7 +248,7 @@ pagination applied.</p>
     <td>
       <pre class="code"><span class="info file"># File 'app/services/record_paginator.rb', line 5</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span><span class='id identifier rubyid_records'>records</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_records'>records</span><span class='rparen'>)</span>
   <span class='ivar'>@params</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span>
   <span class='ivar'>@records</span> <span class='op'>=</span> <span class='id identifier rubyid_records'>records</span>
 <span class='kw'>end</span></pre>
@@ -256,26 +256,26 @@ pagination applied.</p>
   </tr>
 </table>
 </div>
-  
+
 </div>
 
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
-    
+
       <div class="method_details first">
   <h3 class="signature first" id="pagination_links_for-instance_method">
-  
-    #<strong>pagination_links_for</strong>(base_link_params)  &#x21d2; <tt>Hash&lt;Symbol,String&gt;</tt> 
-  
 
-  
+    #<strong>pagination_links_for</strong>(base_link_params)  &#x21d2; <tt>Hash&lt;Symbol, String&gt;</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Returns named link parameters suitable for rendering in the UI or API</p>
 
 
@@ -284,37 +284,37 @@ pagination applied.</p>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
+
     <li>
-      
+
         <span class='name'>base_link_params</span>
-      
-      
+
+
         <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
+
+
+
     </li>
-  
+
 </ul>
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
-        <span class='type'>(<tt>Hash&lt;Symbol,String&gt;</tt>)</span>
-      
-      
-      
+
+
+        <span class='type'>(<tt>Hash&lt;Symbol, String&gt;</tt>)</span>
+
+
+
         &mdash;
         <div class='inline'>
 <p>named link parameters suitable for rendering in the UI or API</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -323,6 +323,7 @@ pagination applied.</p>
       <pre class="lines">
 
 
+22
 23
 24
 25
@@ -343,11 +344,10 @@ pagination applied.</p>
 40
 41
 42
-43
-44</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/services/record_paginator.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/services/record_paginator.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pagination_links_for'>pagination_links_for</span><span class='lparen'>(</span><span class='id identifier rubyid_base_link_params'>base_link_params</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base_page_params'>base_page_params</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='id identifier rubyid_pagination_size'>pagination_size</span> <span class='rbrace'>}</span>
@@ -355,16 +355,16 @@ pagination applied.</p>
 
   <span class='id identifier rubyid_first_page_params'>first_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_base_link_params'>base_link_params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_first_page'>first_page</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='lbrace'>{</span> 
+  <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>first:</span> <span class='id identifier rubyid_first_page_params'>first_page_params</span>
   <span class='rbrace'>}</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_first_page?'>first_page?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_prev_page'>prev_page</span>
     <span class='id identifier rubyid_previous_page_params'>previous_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_base_page_params'>base_page_params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>number:</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_prev_page'>prev_page</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_links'>links</span><span class='lbracket'>[</span><span class='symbol'>:previous</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_base_link_params'>base_link_params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_previous_page_params'>previous_page_params</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_last_page?'>last_page?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_next_page'>next_page</span>
     <span class='id identifier rubyid_next_page_params'>next_page_params</span> <span class='op'>=</span> <span class='id identifier rubyid_base_page_params'>base_page_params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>number:</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_next_page'>next_page</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_links'>links</span><span class='lbracket'>[</span><span class='symbol'>:next</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_base_link_params'>base_link_params</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>page:</span> <span class='id identifier rubyid_next_page_params'>next_page_params</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -375,19 +375,19 @@ pagination applied.</p>
   </tr>
 </table>
 </div>
-    
+
       <div class="method_details ">
   <h3 class="signature " id="query-instance_method">
-  
-    #<strong>query</strong>  &#x21d2; <tt>ActiveRecord::Relation</tt> 
-  
 
-  
+    #<strong>query</strong>  &#x21d2; <tt>ActiveRecord::Relation</tt>
 
-  
+
+
+
+
 </h3><div class="docstring">
   <div class="discussion">
-    
+
 <p>Returns the original records query with which we were initialized, with
 Kaminari pagination applied</p>
 
@@ -395,25 +395,25 @@ Kaminari pagination applied</p>
   </div>
 </div>
 <div class="tags">
-  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
-  
+
     <li>
-      
-      
+
+
         <span class='type'>(<tt>ActiveRecord::Relation</tt>)</span>
-      
-      
-      
+
+
+
         &mdash;
         <div class='inline'>
 <p>the original records query with which we were initialized, with Kaminari
 pagination applied</p>
 </div>
-      
+
     </li>
-  
+
 </ul>
 
 </div><table class="source_code">
@@ -429,8 +429,7 @@ pagination applied</p>
 15
 16
 17
-18
-19</pre>
+18</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/services/record_paginator.rb', line 11</span>
@@ -438,25 +437,24 @@ pagination applied</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_query'>query</span>
   <span class='ivar'>@query</span> <span class='op'>||=</span> <span class='kw'>begin</span>
                <span class='id identifier rubyid_records'>records</span><span class='period'>.</span>
-                 <span class='id identifier rubyid_by_id'>by_id</span><span class='period'>.</span>
                  <span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_pagination_number'>pagination_number</span><span class='rparen'>)</span><span class='period'>.</span>
-                 <span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='id identifier rubyid_pagination_size'>pagination_size</span><span class='rparen'>)</span><span class='period'>.</span>
-                 <span class='id identifier rubyid_without_count'>without_count</span>
-             <span class='kw'>end</span>
+                 <span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='id identifier rubyid_pagination_size'>pagination_size</span><span class='rparen'>)</span>
+                <span class='comment'>#  without_count
+</span>             <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
-    
+
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 17 12:28:24 2018 by
+  Generated on Tue Oct 16 09:38:15 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.4.1).
+  0.9.16 (ruby-2.4.1).
 </div>
 
     </div>

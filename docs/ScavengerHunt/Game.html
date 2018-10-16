@@ -304,15 +304,15 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_elapsed_time'>elapsed_time</span>
-  <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Time.html#initialize-instance_method" title="ScavengerHunt::Time#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_ended_at'>ended_at</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_created_at'>created_at</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Time.html#initialize-instance_method" title="ScavengerHunt::Time#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_ended_at'>ended_at</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_created_at'>created_at</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -356,12 +356,12 @@
       <pre class="lines">
 
 
-45
-46
-47</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finished?'>finished?</span>
   <span class='id identifier rubyid_clues'>clues</span><span class='period'>.</span><span class='id identifier rubyid_answered'>answered</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='id identifier rubyid_clues'>clues</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
@@ -386,15 +386,15 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_penalty_time'>penalty_time</span>
-  <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Time.html#initialize-instance_method" title="ScavengerHunt::Time#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_hints'>hints</span><span class='period'>.</span><span class='id identifier rubyid_used'>used</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hint.html" title="ScavengerHunt::Hint (class)">Hint</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hint.html#PENALTY-constant" title="ScavengerHunt::Hint::PENALTY (constant)">PENALTY</a></span></span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Time.html" title="ScavengerHunt::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Time.html#initialize-instance_method" title="ScavengerHunt::Time#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_penalty_time_in_seconds'>penalty_time_in_seconds</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -416,12 +416,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/game.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_total_time'>total_time</span>
   <span class='id identifier rubyid_elapsed_time'>elapsed_time</span> <span class='op'>+</span> <span class='id identifier rubyid_penalty_time'>penalty_time</span>
@@ -436,7 +436,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:07 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

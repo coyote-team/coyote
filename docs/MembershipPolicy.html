@@ -384,7 +384,7 @@ admin and is not attempting to destroy another admin&#39;s membership</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy?'>destroy?</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_organization_user'>organization_user</span><span class='period'>.</span><span class='id identifier rubyid_staff?'>staff?</span>
-  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_self?'>self?</span> 
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_self?'>self?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_same_rank_or_lower?'>same_rank_or_lower?</span>
   <span class='id identifier rubyid_organization_user'>organization_user</span><span class='period'>.</span><span class='id identifier rubyid_admin?'>admin?</span>
 <span class='kw'>end</span></pre>
@@ -543,9 +543,9 @@ own membership</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Nov 10 16:35:36 2017 by
+  Generated on Tue Oct 16 09:38:15 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.16 (ruby-2.4.1).
 </div>
 
     </div>

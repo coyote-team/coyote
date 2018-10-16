@@ -121,6 +121,28 @@
         <li class="public ">
   <span class="summary_signature">
 
+      <a href="#played%3F-instance_method" title="#played? (instance method)">#<strong>played?</strong>(by)  &#x21d2; Boolean </a>
+
+
+
+  </span>
+
+
+
+
+
+
+
+
+
+    <span class="summary_desc"><div class='inline'></div></span>
+
+</li>
+
+
+        <li class="public ">
+  <span class="summary_signature">
+
       <a href="#representations_by_metum-instance_method" title="#representations_by_metum (instance method)">#<strong>representations_by_metum</strong>(metum_name)  &#x21d2; Object </a>
 
 
@@ -162,7 +184,59 @@
 
 
       <div class="method_details first">
-  <h3 class="signature first" id="representations_by_metum-instance_method">
+  <h3 class="signature first" id="played?-instance_method">
+
+    #<strong>played?</strong>(by)  &#x21d2; <tt>Boolean</tt>
+
+
+
+
+
+</h3><div class="docstring">
+  <div class="discussion">
+
+
+  </div>
+</div>
+<div class="tags">
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+
+    <li>
+
+
+        <span class='type'>(<tt>Boolean</tt>)</span>
+
+
+
+    </li>
+
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/location.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_played?'>played?</span><span class='lparen'>(</span><span class='id identifier rubyid_by'>by</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_by'>by</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_games'>games</span><span class='period'>.</span><span class='id identifier rubyid_ended'>ended</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>player_id:</span> <span class='id identifier rubyid_by'>by</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+
+      <div class="method_details ">
+  <h3 class="signature " id="representations_by_metum-instance_method">
 
     #<strong>representations_by_metum</strong>(metum_name)  &#x21d2; <tt>Object</tt>
 
@@ -176,12 +250,12 @@
       <pre class="lines">
 
 
-47
-48
-49</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/location.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/models/scavenger_hunt/location.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_representations_by_metum'>representations_by_metum</span><span class='lparen'>(</span><span class='id identifier rubyid_metum_name'>metum_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_representations'>representations</span><span class='period'>.</span><span class='id identifier rubyid_with_metum_named'>with_metum_named</span><span class='lparen'>(</span><span class='id identifier rubyid_metum_name'>metum_name</span><span class='rparen'>)</span>
@@ -196,7 +270,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:07 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>

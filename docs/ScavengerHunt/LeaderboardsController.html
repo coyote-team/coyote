@@ -171,15 +171,15 @@
       <pre class="lines">
 
 
-5
-6
-7</pre>
+2
+3
+4</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/leaderboards_controller.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/scavenger_hunt/app/controllers/scavenger_hunt/leaderboards_controller.rb', line 2</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-  <span class='ivar'>@players</span> <span class='op'>=</span> <span class='ivar'>@location</span><span class='period'>.</span><span class='id identifier rubyid_players'>players</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='period'>.</span><span class='id identifier rubyid_not'>not</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span>
+  <span class='ivar'>@players</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ScavengerHunt.html" title="ScavengerHunt (module)">ScavengerHunt</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Player.html" title="ScavengerHunt::Player (class)">Player</a></span></span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='period'>.</span><span class='id identifier rubyid_not'>not</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_for_leaderboard'>for_leaderboard</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -191,7 +191,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  3 15:38:08 2018 by
+  Generated on Tue Oct 16 09:38:16 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.16 (ruby-2.4.1).
 </div>
