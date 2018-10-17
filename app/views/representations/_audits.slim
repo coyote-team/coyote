@@ -1,36 +1,55 @@
-table
-  caption.sr-only Audit table of this description
-  thead
-    tr
-      th User
-      th Action
-      th Time
-      th Text
-      th Author
-      th Content Type
-      th Language
-      th Status
-      th Order
-      th Metum
-      th Endpoint
-      th License
-      th Content URI
-      th Notes
-
-  tbody
-    - audits.each do |a, text: '', author_id: nil, content_type: nil, language: nil, status: nil, ordinality: '', metum_id: nil, endpoint_id: nil, license_id: nil, content_uri: '', notes: '', **other|
+- audits.each do |a, text: '', author_id: nil, content_type: nil, language: nil, status: nil, ordinality: '', metum_id: nil, endpoint_id: nil, license_id: nil, content_uri: '', notes: '', **other|
+  table
+    caption.sr-only Audit list of this description
+    h3= "Audit #{a.version} - by #{a.user}"
+    tbody
       tr
-        td= a.user
+        th Action
         td= a.action
+      tr
+        th Time
         td= a.created_at
-        td= to_html(text.to_s)
-        td= User.find_by(id: author_id)&.username
-        td= content_type
-        td= language
-        td= status
-        td= ordinality
-        td= Metum.find_by(id: metum_id)&.title
-        td= Endpoint.find_by(id: endpoint_id)&.name
-        td= License.find_by(id: license_id)&.name
-        td= content_uri
-        td= notes
+      tr
+      - if to_html(text.to_s).present?
+          th Text
+          td= audit_change_to_text(text)
+      tr
+      - if author_id.present?
+        th Author
+        td= id_to_title(author_id, User, 'username')
+      tr
+      - if content_type.present?
+        th Content Type
+        td= audit_change_to_text(content_type)
+      tr
+      - if language.present?
+        th Language
+        td= audit_change_to_text(language)
+      tr
+      - if status.present?
+        th Status
+        td= audit_change_to_text(status).gsub!(/\_/,' ')
+      tr
+      - if ordinality.present?
+        th Order
+        td= audit_change_to_text(ordinality)
+      tr
+      - if metum_id.present?
+        th Metum
+        td= id_to_title(metum_id, Metum, 'title')
+      tr
+      - if endpoint_id.present?
+        th Endpoint
+        td= id_to_title(endpoint_id, Endpoint, 'name')
+      tr
+      - if license_id.present?
+        th License
+        td= id_to_title(license_id, License, 'title')
+      tr
+      - if content_uri.present?
+        th Content URI
+        td= audit_change_to_text(content_uri)
+      tr
+      - if notes.present?
+        th Notes
+        td= audit_change_to_text(notes)
