@@ -52,6 +52,54 @@
 
 
 
+  <h2>Examples</h2>
+    <pre class="prettyprint">curl -H 'Content-Type: application/json' -H 'Authorization: CHANGEME' http://localhost:10000/api/v1/organizations/1/resources -d '{"organization_id": 1, "resource": { "title": "Test title", "resource_type": "image", "source_uri": "https://www.example.com/images/website-image.jpg", "canonical_id": "1234", "resource_group_id": 1, "host_uris": "https://www.example.com/hello-world" }}'</pre>
+
+    PHP script to ingest resources from a CSV with the following columns: Image URL, Title, Host URI, Canonical ID
+    <pre class="prettyprint">#!/usr/bin/php
+&lt;?php
+
+ini_set('auto_detect_line_endings', true);
+
+$file = fopen('alt-texts.csv','r');
+
+while (!feof($file)) {
+    $row = fgetcsv($file);
+    $data = ['organization_id' => 7,
+             'resource' => [
+                 'title' => $row[1],
+                 'resource_type' => 'image',
+                 'source_uri' => $row[0],
+                 'canonical_id' => $row[3],
+                 'resource_group_id' => 2,
+                 'host_uris' => $row[2],
+             ],
+    ];
+    $data_string = json_encode($data);
+
+    $ch = curl_init('http://localhost:10000/api/v1/organizations/1/resources');
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Authorization: CHANGEME',
+    ]
+    );
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch,CURLINFO_HEADER_OUT, true);
+
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    print_r($result); print "\n";
+}
+
+fclose($file);
+
+</pre>
+
+
+
   <h2>Params</h2>
   <table class='table'>
     <thead>
