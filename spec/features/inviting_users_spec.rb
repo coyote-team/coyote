@@ -1,30 +1,32 @@
-require 'nokogiri'
+# frozen_string_literal: true
 
-RSpec.feature 'Inviting users' do
+require "nokogiri"
+
+RSpec.describe "Inviting users" do
   include_context "as a logged-in admin user"
 
-  let(:new_member_email) { 'newmember@example.com' }
+  let(:new_member_email) { "newmember@example.com" }
 
-  context 'who do already have a Coyote account' do
+  describe "who do already have a Coyote account" do
     let!(:preexisting_user) do
       create(:user, email: new_member_email)
     end
 
-    scenario 'succeeds' do
+    it "succeeds" do
       visit organization_path(user_organization)
-      expect(page.current_path).to eq(organization_path(user_organization))
+      expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
-      click_link 'Invite a user to join'
-      expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
+      click_link "Invite a user to join"
+      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
 
-      fill_in 'invitation[recipient_email]', with: new_member_email
-      select('Editor', from: 'Role')
+      fill_in "invitation[recipient_email]", with: new_member_email
+      select("Editor", from: "Role")
 
       expect {
-        click_button 'Send invitation'
-        expect(page.current_path).to eq(organization_path(user_organization))
-      }.to change(user_organization.users, :count).
-        from(1).to(2)
+        click_button "Send invitation"
+        expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
+      }.to change(user_organization.users, :count)
+        .from(1).to(2)
 
       Membership.find_by!(user: preexisting_user, organization: user_organization).tap do |m|
         expect(m).to be_editor
@@ -39,25 +41,25 @@ RSpec.feature 'Inviting users' do
     end
   end
 
-  context 'who do not already have a Coyote account' do
-    scenario 'succeeds' do
+  describe "who do not already have a Coyote account" do
+    it "succeeds" do
       visit organization_path(user_organization)
-      expect(page.current_path).to eq(organization_path(user_organization))
+      expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
-      click_link 'Invite a user to join'
-      expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
+      click_link "Invite a user to join"
+      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
 
-      fill_in 'invitation[recipient_email]', with: new_member_email
-      fill_in 'invitation[first_name]', with: 'John'
-      fill_in 'invitation[last_name]', with: 'Doe'
+      fill_in "invitation[recipient_email]", with: new_member_email
+      fill_in "invitation[first_name]", with: "John"
+      fill_in "invitation[last_name]", with: "Doe"
 
-      select('Author', from: 'Role')
+      select("Author", from: "Role")
 
       expect {
-        click_button 'Send invitation'
-        expect(page.current_path).to eq(organization_path(user_organization))
-      }.to change(User, :count).
-        from(1).to(2)
+        click_button "Send invitation"
+        expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
+      }.to change(User, :count)
+        .from(1).to(2)
 
       new_user = User.find_by!(email: new_member_email)
 
@@ -84,13 +86,13 @@ RSpec.feature 'Inviting users' do
       visit invite_link
       expect(page.current_url).to eq(invite_link)
 
-      fill_in 'user[email]', with: new_member_email
-      fill_in 'user[password]', with: '*' * 10
-      fill_in 'user[password_confirmation]', with: '*' * 10
+      fill_in "user[email]", with: new_member_email
+      fill_in "user[password]", with: "*" * 10
+      fill_in "user[password_confirmation]", with: "*" * 10
 
       expect {
-        click_button 'Sign up'
-        expect(page.current_path).to eq(organization_path(user_organization))
+        click_button "Sign up"
+        expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
         invitation.reload
       }.to change(invitation, :redeemed?).from(false).to(true)
 
@@ -98,26 +100,26 @@ RSpec.feature 'Inviting users' do
     end
   end
 
-  context "who are already members of the organization" do
+  describe "who are already members of the organization" do
     let!(:existing_member) do
-      create(:user, organization: user_organization, role: 'editor', email: new_member_email)
+      create(:user, organization: user_organization, role: "editor", email: new_member_email)
     end
 
-    scenario 'fails with error message' do
+    it "fails with error message" do
       visit organization_path(user_organization)
-      expect(page.current_path).to eq(organization_path(user_organization))
+      expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
-      click_link 'Invite a user to join'
-      expect(page.current_path).to eq(new_organization_invitation_path(user_organization))
+      click_link "Invite a user to join"
+      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
 
-      fill_in 'invitation[recipient_email]', with: new_member_email
-      select('Viewer', from: 'Role')
+      fill_in "invitation[recipient_email]", with: new_member_email
+      select("Viewer", from: "Role")
 
       expect {
-        click_button 'Send invitation'
+        click_button "Send invitation"
       }.not_to raise_error
 
-      expect(page.current_path).to eq(organization_invitations_path(user_organization))
+      expect(page).to have_current_path(organization_invitations_path(user_organization), ignore_query: true)
 
       Membership.find_by!(user: existing_member, organization: user_organization).tap do |m|
         expect(m).to be_editor
@@ -128,13 +130,13 @@ RSpec.feature 'Inviting users' do
   end
 end
 
-RSpec.feature "Attempting to redeem a previously-redeemed invitation" do
+RSpec.describe "Attempting to redeem a previously-redeemed invitation" do
   let!(:redeemed_invitation) do
     create(:invitation, :redeemed)
   end
 
-  scenario 'fails with error message' do
+  it "fails with error message" do
     visit new_registration_path(token: redeemed_invitation.token)
-    expect(page.current_path).to eq(new_user_session_path)
+    expect(page).to have_current_path(new_user_session_path, ignore_query: true)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: assignments
@@ -17,7 +19,7 @@ RSpec.describe AssignmentsController do
   let(:organization) { create(:organization) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:resource) { create(:resource, organization: organization) }
@@ -33,10 +35,10 @@ RSpec.describe AssignmentsController do
   let(:new_assignment_resource) { create(:resource, organization: organization) }
 
   let(:new_assignment_params) do
-    base_params.merge(assignment: { user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id] })
+    base_params.merge(assignment: {user_id: new_assignment_user.id, resource_ids: [new_assignment_resource.id]})
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -56,7 +58,7 @@ RSpec.describe AssignmentsController do
     end
   end
 
-  context "as an editor" do
+  describe "as an editor" do
     include_context "signed-in editor user"
 
     it "fails for basic actions" do
@@ -78,7 +80,7 @@ RSpec.describe AssignmentsController do
     end
   end
 
-  context "as an admin" do
+  describe "as an admin" do
     include_context "signed-in admin user"
 
     it "can view and edit assignments" do
@@ -89,18 +91,18 @@ RSpec.describe AssignmentsController do
       expect(response).to be_successful
     end
 
-    it 'can create and destroy assignments' do
+    it "can create and destroy assignments" do
       expect {
         delete :destroy, params: assignment_params
         expect(response).to be_redirect
-      }.to change { Assignment.exists?(assignment.id) }.
-        from(true).to(false)
+      }.to change { Assignment.exists?(assignment.id) }
+        .from(true).to(false)
 
       expect {
         post :create, params: new_assignment_params
         expect(response).to be_redirect
-      }.to change(new_assignment_user.assignments, :count).
-        from(0).to(1)
+      }.to change(new_assignment_user.assignments, :count)
+        .from(0).to(1)
     end
   end
 end

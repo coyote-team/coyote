@@ -5,14 +5,22 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
 --
 
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
 
 
 --
@@ -628,7 +636,7 @@ CREATE TABLE public.resources (
     title character varying DEFAULT 'Unknown'::character varying NOT NULL,
     resource_type public.resource_type NOT NULL,
     canonical_id character varying NOT NULL,
-    source_uri character varying,
+    source_uri public.citext,
     resource_group_id bigint NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -2067,6 +2075,14 @@ ALTER TABLE ONLY public.representations
 
 
 --
+-- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_attachments
+    ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
 -- Name: representations fk_rails_d040284b2b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2202,6 +2218,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180928203337'),
 ('20181003184315'),
 ('20181003222901'),
-('20181005234836');
+('20181005234836'),
+('20200402174009'),
+('20200423170945');
 
 

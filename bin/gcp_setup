@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+env=$1
+env_name="staging" && [[ "${env}" == "production" ]] && env_name="live"
+project="${env_name}-coyote"
+
+region="us-east4"
+alias gcloud="gcloud --project=${project}"
+alias gsutil="gsutil -p ${project}"
+
+# Step 1: enable the APIs
+gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com run.googleapis.com
+
+# Step 2: create and configure the SQL instance
+# gcloud sql instances create coyote --database-version=POSTGRES_11 --tier db-g1-small --region=${region}
+
+db_password=`bundle exec rails runner "puts SecureRandom.hex(20)"`
+echo "Setting database password: ${db_password}"
+gcloud sql users set-password postgres --instance=coyote --password=${db_password}
+
+db_host=`gcloud sql instances describe coyote | sed -rn 's/connectionName: (.+)/\1/p'`
+db_host="/cloudsql/${db_host}"
+db_host=`rails runner "puts CGI.escape('${db_host}')"`
+db_url="postgresql://postgres:${db_password}@${db_host}/coyote_production"
+
+# Step 3: copy various credentials to the secrets manager
+secrets=`gcloud secrets list`
+add_secret() {
+  name=$1
+  value=$2
+  has_secret=`echo -n ${secrets} |grep "\b${name}\b"`
+  if [[ -z "${has_secret}" ]]; then
+    echo "Setting ${name} to '${value}'"
+    echo -n "${value}" | gcloud --project=${project} secrets create ${name} --replication-policy="automatic" --data-file=-
+  else
+    echo "Updating ${name} to '${value}'"
+    echo -n "${value}" | gcloud --project=${project} secrets versions add ${name} --data-file=-
+  fi
+}
+
+add_secret "DATABASE_URL" "${db_url}"
+add_secret "RAILS_BASE_KEY" `cat config/master.key`
+add_secret "RAILS_MASTER_KEY" `cat config/credentials/production.key`
+add_secret "RAILS_STAGING_KEY" `cat config/credentials/staging.key`
+add_secret "MAILER_PASSWORD" `rails credentials:show --environment ${env} |grep mailer -A10 | sed -rn 's/\s*password: "(.+)"/\1/p'`
+
+# Step 4: set up the storage bucket
+bucket="teamcoyote-uploads-${env}"
+has_bucket=`gsutil ls | grep "\b${bucket}\b"`
+# [[ -z "${has_bucket}" ]] && gsutil mb -l ${region} gs://${bucket}/
+
+# Step 5:

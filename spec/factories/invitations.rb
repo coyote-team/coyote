@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invitations
@@ -38,7 +40,7 @@ FactoryBot.define do
     end
 
     trait :redeemed do
-      redeemed_at { Time.new(2017, 9, 10, 13, 52) }
+      redeemed_at { Time.zone.local(2017, 9, 10, 13, 52) }
     end
 
     Coyote::Membership.each_role do |_, role_name|

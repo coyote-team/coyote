@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: memberships
@@ -26,7 +28,7 @@ RSpec.describe Membership do
     expect(subject.role_rank).to eq(0)
   end
 
-  context 'when the membership represents an organization owner' do
+  describe "when the membership represents an organization owner" do
     subject { create(:membership, :owner) }
 
     it { is_expected.to be_last_owner }
@@ -35,7 +37,7 @@ RSpec.describe Membership do
       expect(subject.role_rank).to be > 0
     end
 
-    context 'and there are other owner memberships' do
+    describe "and there are other owner memberships" do
       let!(:other_owner) do
         create(:membership, :owner, organization: subject.organization)
       end

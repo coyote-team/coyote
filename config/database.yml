@@ -1,16 +1,17 @@
 default: &default
   adapter: postgresql
-  pool: <%= (ENV["COYOTE_DB_POOL_SIZE"] || ENV["COYOTE_NUM_THREADS"] || 5).to_i %>
+  pool: <%= Credentials.fetch(:app, :database_pool) { 5 }.to_i %>
+  url: <%= Credentials.fetch(:app, :database_url) { "postgresql://postgres:postgres@localhost:5432/" }  %>
+
 development:
   <<: *default
-  url: <%= ENV["COYOTE_DEV_DATABASE_URL"] %>
+  database: coyote_development
+
 test: &test
   <<: *default
-  url: <%= ENV["COYOTE_TEST_DATABASE_URL"] %>
-staging:
-  <<: *default
-  url: <%= ENV.values_at(*%w(COYOTE_STAGING_DATABASE_URL DATABASE_URL)).first %>
+  database: coyote_test
+
 production:
   <<: *default
-  url: <%= ENV.values_at(*%w(COYOTE_PRODUCTION_DATABASE_URL DATABASE_URL)).first %>
+  database: coyote_production
   reconnect: true

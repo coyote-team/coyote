@@ -1,24 +1,26 @@
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+# frozen_string_literal: true
+
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../../config/environment", __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production? # Extra check to prevent database changes if the environment is production
 
-require 'rspec/rails'
-require 'factory_bot_rails'
-require 'devise'
-require 'webmock/rspec'
-require 'capybara/rspec'
-require 'simplecov'
-require 'shoulda-matchers'
-require 'airborne'
-require 'vcr'
-require 'pathname'
-require 'database_cleaner'
-require 'pry'
-require 'pundit/matchers'
+require "rspec/rails"
+require "factory_bot_rails"
+require "devise"
+require "webmock/rspec"
+require "capybara/rspec"
+require "simplecov"
+require "shoulda-matchers"
+require "airborne"
+require "vcr"
+require "pathname"
+require "database_cleaner"
+require "pry"
+require "pundit/matchers"
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |file| require file }
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
@@ -33,7 +35,7 @@ RSpec.configure do |config|
 
   config.order = "random"
   config.filter_run focus: true
-  config.filter_run show_in_doc: true if ENV['APIPIE_RECORD'] # see https://github.com/Apipie/apipie-rails#examples-recording
+  config.filter_run show_in_doc: true if ENV["APIPIE_RECORD"] # see https://github.com/Apipie/apipie-rails#examples-recording
   config.run_all_when_everything_filtered = true
   config.disable_monkey_patching!
   config.infer_spec_type_from_file_location!
@@ -54,7 +56,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.strategy = :transaction
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 JSONAPI::Rails.configure do |config|
   # # Set a default serializable class mapping.
   # config.jsonapi_class = Hash.new { |h, k|

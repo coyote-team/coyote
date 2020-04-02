@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -38,10 +40,10 @@ RSpec.describe UsersController do
   let(:user_of_interest) { create(:user, organization: organization) }
 
   let(:base_params) do
-    { id: user_of_interest.id }
+    {id: user_of_interest.id}
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -52,7 +54,7 @@ RSpec.describe UsersController do
     end
   end
 
-  context "as a guest user" do
+  describe "as a guest user" do
     include_context "signed-in guest user"
 
     it "succeeds for critical actions" do

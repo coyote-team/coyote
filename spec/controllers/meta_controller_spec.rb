@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: meta
@@ -20,7 +22,7 @@ RSpec.describe MetaController do
   let(:metum) { create(:metum, organization: organization) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:metum_params) do
@@ -32,18 +34,18 @@ RSpec.describe MetaController do
   end
 
   let(:update_metum_params) do
-    metum_params.merge(metum: { title: "NEWTITLE" })
+    metum_params.merge(metum: {title: "NEWTITLE"})
   end
 
   let(:foreign_metum) { create(:metum) }
 
   let(:foreign_metum_params) do
-    { id: foreign_metum.id,
-      organization_id: foreign_metum.organization_id,
-      metum: { title: 'SHOULDNOTBEALLOWED' } }
+    {id:              foreign_metum.id,
+     organization_id: foreign_metum.organization_id,
+     metum:           {title: "SHOULDNOTBEALLOWED"}}
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -69,7 +71,7 @@ RSpec.describe MetaController do
     end
   end
 
-  context "as an editor" do
+  describe "as an editor" do
     include_context "signed-in editor user"
 
     let!(:metum) { create(:metum, organization: organization) }
@@ -99,7 +101,7 @@ RSpec.describe MetaController do
     end
   end
 
-  context "as an admin" do
+  describe "as an admin" do
     include_context "signed-in admin user"
 
     it "succeeds for all actions involving organization-owned metums" do
@@ -117,19 +119,19 @@ RSpec.describe MetaController do
 
       expect {
         post :create, params: new_metum_params
-      }.to change(organization.meta, :count).
-        by(1)
+      }.to change(organization.meta, :count)
+        .by(1)
 
-      post :create, params: base_params.merge(metum: { title: '' })
+      post :create, params: base_params.merge(metum: {title: ""})
       expect(response).to render_template(:new)
 
       expect {
         patch :update, params: update_metum_params
         metum.reload
-      }.to change(metum, :title).
-        to("NEWTITLE")
+      }.to change(metum, :title)
+        .to("NEWTITLE")
 
-      patch :update, params: metum_params.merge(metum: { title: '' })
+      patch :update, params: metum_params.merge(metum: {title: ""})
       expect(response).to render_template(:edit)
 
       expect {

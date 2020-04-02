@@ -1,0 +1,73 @@
+steps:
+
+# Prepare to import secrets
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - mkdir -p tmp/
+
+## Import passwords
+# Database URL
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=DATABASE_URL > tmp/database_url.txt
+
+# SMTP
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=MAILER_PASSWORD > tmp/mailer_password.txt
+
+## Import encryption keys
+# Base
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=RAILS_BASE_KEY > tmp/base_key.txt
+
+# Master
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=RAILS_MASTER_KEY > tmp/master_key.txt
+
+# Staging (optional)
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=RAILS_STAGING_KEY > tmp/staging_key.txt
+
+## Build
+# Run the Docker build command, importing the secrets we just dumped and using Kaniko to cache
+# intermediate build images
+- name: gcr.io/kaniko-project/executor:debug
+  entrypoint: sh
+  args:
+  - -c
+  - executor --destination=gcr.io/$PROJECT_ID/coyote --cache=true --cache-ttl=168h --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt` --build-arg staging_key=`cat tmp/staging_key.txt`
+
+# - name: gcr.io/cloud-builders/docker
+#   entrypoint: bash
+#   args:
+#   - -c
+#   - docker build --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt` --build-arg staging_key=`cat tmp/staging_key.txt` --tag gcr.io/$PROJECT_ID/coyote:latest .
+
+# Push new image to Google Container Registry
+# - name: gcr.io/cloud-builders/docker
+#   args:
+#     - push
+#     - gcr.io/$PROJECT_ID/coyote:latest
+
+# Deploy the new image to Cloud run
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud run deploy coyote --image=gcr.io/$PROJECT_ID/coyote:latest --platform=managed --region=us-east4 --allow-unauthenticated --add-cloudsql-instances=$PROJECT_ID:us-east4:coyote --update-env-vars MAILER_PASSWORD=`cat tmp/mailer_password.txt`

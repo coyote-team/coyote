@@ -1,8 +1,16 @@
+# frozen_string_literal: true
+
 # View methods for displaying resources
 module ResourcesHelper
-  def scope_search_collection
-    Resource.ransackable_scopes.map do |scope_name|
-      [scope_name.to_s.titleize.split(/\s+/).join(' &amp; ').html_safe, scope_name]
+  def resource_content_uri(resource)
+    if resource.source_uri.present?
+      resource.source_uri
+    elsif resource.uploaded_resource.attached?
+      # FIXME: Metamagic's, ahem, "magic" is hijacking `url_for` and causing
+      # this to explode, so we call the helper method directly rather than
+      # using the included one that has been overridden by, ahem, poorly
+      # behaving libraries
+      Rails.application.routes.url_helpers.url_for(resource.uploaded_resource)
     end
   end
 
@@ -25,20 +33,6 @@ module ResourcesHelper
     end
   end
 
-  def resource_content_uri(resource)
-    if resource.source_uri.present?
-      resource.source_uri
-    elsif resource.uploaded_resource.attached?
-      # FIXME: Metamagic's, ahem, "magic" is hijacking `url_for` and causing
-      # this to explode, so we call the helper method directly rather than
-      # using the included one that has been overridden by, ahem, poorly
-      # behaving libraries
-      Rails.application.routes.url_helpers.url_for(resource.uploaded_resource)
-    else
-      nil
-    end
-  end
-
   # @param target_resource [Resource] the Resource that is being displayed
   # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
@@ -58,26 +52,32 @@ module ResourcesHelper
     tags = []
 
     if resource.unrepresented?
-      tags.push(tag_for('Undescribed', type: :neutral, hint: 'Status'))
+      tags.push(tag_for("Undescribed", type: :neutral, hint: "Status"))
     elsif resource.partially_complete?
-      tags.push(tag_for('Partially Completed', type: :partial, hint: 'Status'))
+      tags.push(tag_for("Partially Completed", type: :partial, hint: "Status"))
     elsif resource.approved?
-      tags.push(tag_for('Approved', type: :success, hint: 'Status'))
+      tags.push(tag_for("Approved", type: :success, hint: "Status"))
     end
 
     resource.meta.each do |metum|
       tags.push(metum_tag(metum, tag: :li))
     end
 
-    tags.push(tag_for('Urgent', type: :error)) if resource.priority_flag?
+    tags.push(tag_for("Urgent", type: :error)) if resource.priority_flag?
 
     if resource.ordinality.present?
       tags.push(tag_for(resource.ordinality.to_s))
     end
 
     (
-      content_tag(title_tag, class: 'sr-only', id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
-        content_tag(:ul, aria: { labelledby: "tag-list-#{id}" }, class: 'tag-list') { tags.join.html_safe }
+      content_tag(title_tag, class: "sr-only", id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
+        content_tag(:ul, aria: {labelledby: "tag-list-#{id}"}, class: "tag-list") { tags.join.html_safe }
     ).html_safe
+  end
+
+  def scope_search_collection
+    Resource.ransackable_scopes.map do |scope_name|
+      [scope_name.to_s.titleize.split(/\s+/).join(" &amp; ").html_safe, scope_name]
+    end
   end
 end

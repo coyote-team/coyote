@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: organizations
@@ -20,14 +22,14 @@ class Organization < ApplicationRecord
 
   has_many :memberships, inverse_of: :organization
   has_many :users, through: :memberships
-  has_many :active_users, -> { where(memberships: { active: true }) }, source: :user, through: :memberships
+  has_many :active_users, -> { where(memberships: {active: true}) }, source: :user, through: :memberships
   has_many :resources, dependent: :restrict_with_exception, inverse_of: :organization
   has_many :resource_groups, inverse_of: :organization
   has_many :meta, inverse_of: :organization
   has_many :assignments, through: :resources
   has_many :representations, through: :resources
 
-  has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource
+  has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource, inverse_of: :organization
 
   def create_default_resource_group
     resource_groups.find_or_create_by(default: true, title: ResourceGroup::DEFAULT_TITLE)

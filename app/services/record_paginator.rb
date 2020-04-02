@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Manages creation of links for a subset of paginated ActiveRecord objects. Depends on Kaminari
 # having already been mixed-into ActiveRecord.
 # @see https://github.com/kaminari/kaminari
@@ -7,26 +9,16 @@ class RecordPaginator
     @records = records
   end
 
-  # @return [ActiveRecord::Relation] the original records query with which we were initialized, with Kaminari pagination applied
-  def query
-    @query ||= begin
-                 records.
-                   page(pagination_number).
-                   per(pagination_size)
-                  #  without_count
-               end
-  end
-
   # @param base_link_params [Hash]
   # @return [Hash<Symbol, String>] named link parameters suitable for rendering in the UI or API
   def pagination_links_for(base_link_params)
-    base_page_params = { size: pagination_size }
+    base_page_params = {size: pagination_size}
     first_page = base_page_params.merge(number: 1)
 
     first_page_params = base_link_params.merge(page: first_page)
 
     links = {
-      first: first_page_params
+      first: first_page_params,
     }
 
     if query.prev_page
@@ -40,6 +32,16 @@ class RecordPaginator
     end
 
     links
+  end
+
+  # @return [ActiveRecord::Relation] the original records query with which we were initialized, with Kaminari pagination applied
+  def query
+    @query ||= begin
+                 records
+                   .page(pagination_number)
+                   .per(pagination_size)
+                 #  without_count
+               end
   end
 
   private

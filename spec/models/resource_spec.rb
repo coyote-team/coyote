@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resources
@@ -27,12 +29,13 @@
 #  index_resources_on_resource_group_id                 (resource_group_id)
 #
 
+# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe Resource do
-  let(:source_uri) { 'http://example.com/100.jpg' }
-
   subject do
-    build(:resource, :image, title: 'Mona Lisa', identifier: 'abc123', source_uri: source_uri)
+    build(:resource, :image, title: "Mona Lisa", identifier: "abc123", source_uri: source_uri)
   end
+
+  let(:source_uri) { "http://example.com/100.jpg" }
 
   it { is_expected.to validate_presence_of(:resource_type) }
 
@@ -52,9 +55,9 @@ RSpec.describe Resource do
     expect(subject).to be_viewable
   end
 
-  context 'without the presence of a source URI' do
+  describe "without the presence of a source URI" do
     subject do
-      build(:resource, :image, source_uri: '')
+      build(:resource, :image, source_uri: "")
     end
 
     specify do
@@ -62,7 +65,7 @@ RSpec.describe Resource do
     end
   end
 
-  context 'with a non-image resource type' do
+  describe "with a non-image resource type" do
     subject do
       build(:resource, :physical_object)
     end
@@ -72,22 +75,22 @@ RSpec.describe Resource do
     end
   end
 
-  context '#related_resources' do
+  describe "#related_resources" do
     # this test requires the database as rspec stubs don't completely replicate has_many behaviors
     let!(:resource_link) do
-      create(:resource_link, verb: 'hasPart')
+      create(:resource_link, verb: "hasPart")
     end
 
     let(:subject_resource) { resource_link.subject_resource }
     let(:object_resource) { resource_link.object_resource }
 
-    it 'returns correctly labeled predicates' do
-      expect(subject_resource.related_resources).to eq([['hasPart', resource_link, object_resource]])
-      expect(object_resource.related_resources).to eq([['isPartOf', resource_link, subject_resource]])
+    it "returns correctly labeled predicates" do
+      expect(subject_resource.related_resources).to eq([["hasPart", resource_link, object_resource]])
+      expect(object_resource.related_resources).to eq([["isPartOf", resource_link, subject_resource]])
     end
   end
 
-  context "::has_approved_representations" do
+  describe "::has_approved_representations" do
     let!(:approved_resource) { create(:resource) }
     let!(:approved_representation) { create(:representation, resource: approved_resource, status: "approved") }
 
@@ -95,12 +98,12 @@ RSpec.describe Resource do
     let!(:unapproved_representation) { create(:representation, resource: approved_resource, status: "not_approved") }
 
     it "returns resources that have approved represents" do
-      expect(Resource.with_approved_representations).to eq([approved_resource])
+      expect(described_class.with_approved_representations).to eq([approved_resource])
     end
   end
 
-  context 'when saved' do
-    it 'sets a unique identifier based on the title' do
+  describe "when saved" do
+    it "sets a unique identifier based on the title" do
       resource = build(:resource, identifier: "", title: "This is a test, isn't it?! YES!")
       expect(resource.identifier).to be_blank
       resource.save!
@@ -110,18 +113,18 @@ RSpec.describe Resource do
       expect(resource_2.identifier).to eq("this-is-a-test-isn-t-it-yes-2")
     end
 
-    it 'sets a unique canonical id' do
+    it "sets a unique canonical id" do
       resource = build(:resource)
       expect(resource.canonical_id).to be_blank
       resource.save!
       expect(resource.canonical_id).to be_present
     end
 
-    it 'does not set a canonical ID if one is given' do
+    it "does not set a canonical ID if one is given" do
       resource = build(:resource)
-      resource.canonical_id = '123'
+      resource.canonical_id = "123"
       resource.save!
-      expect(resource.canonical_id).to eq('123')
+      expect(resource.canonical_id).to eq("123")
     end
   end
 end

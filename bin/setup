@@ -1,42 +1,16 @@
 #!/usr/bin/env ruby
 
-# This is the developer setup script. To install on a production server, see install.sh
-# Based on https://github.com/mattbrictson/rails-template/blob/master/bin/setup
-
 require "pathname"
 require "fileutils"
 
 def setup!
-  within_project_root do |working_path|
+  Dir.chdir(Pathname(__dir__).parent) do
     check_ruby_version
-    run  "gem install bundler --no-document --conservative"
+    run  "gem install bundler -v 2.1.4 --no-document --conservative"
     run  "bundle install"
 
-    env_path = working_path.join(".env")
-
-    copy_flag = if env_path.exist?
-                  puts "\nIt looks like you already have a .env file at #{env_path}. Should we overwrite it with the default values in sample.env? (Y/N)"
-                  answer = gets.strip.upcase
-                  answer == "Y"
-                else
-                  true
-                end
-
-    if copy_flag
-      sample_path = working_path.join("sample.env")
-      puts "Copying #{sample_path} to #{env_path}"
-      FileUtils.cp sample_path, env_path
-
-      puts "Generating and appending SECRET_KEY_BASE to #{env_path}"
-      secret = `bin/rake secret`.strip
-
-      env_path.open("a") do |io|
-        io.puts("SECRET_KEY_BASE=#{secret}")
-      end
-    end
-
-    check_for_database()
-    run("bin/rake db:drop db:create db:structure:load db:migrate db:test:prepare db:seed")
+    check_for_database
+    run("bin/rake db:drop db:setup db:test:prepare")
   end
 end
 
@@ -44,20 +18,12 @@ def check_for_database
   command = ["begin"]
   command << %q|ActiveRecord::Base.connection.select_value("SELECT 1")|
   command << %q|rescue|
-  command << %q|warn "We were unable to connect to your database. Please check that you have MySQL installed and that it is currently running (#{$!.message})"|
-  command << %q|else| 
+  command << %q|warn "We were unable to connect to your database. Please check that you have PostgreSQL installed and that it is currently running (#{$!.message})"|
+  command << %q|else|
   command << %q|puts "Successfully connected to database"|
   command << %q|end|
 
   run "bin/rails runner '#{command.join(";")}'"
-end
-
-def within_project_root
-  working_dir = Pathname(__dir__).parent
-
-  Dir.chdir(working_dir) do
-    yield working_dir
-  end
 end
 
 def check_ruby_version

@@ -12,9 +12,7 @@
                 "declare_only_default_icon": true
             }
         },
-        "desktop_browser": [
-
-        ],
+        "desktop_browser": [],
         "windows": {
             "picture_aspect": "white_silhouette",
             "background_color": "#2b5797",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invitations
@@ -31,14 +33,14 @@ RSpec.describe InvitationsController do
   let(:organization) { create(:organization) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:creation_params) do
-    base_params.merge(invitation: { recipient_email: 'me@example.com', role: 'author' })
+    base_params.merge(invitation: {recipient_email: "me@example.com", role: "author"})
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -52,7 +54,7 @@ RSpec.describe InvitationsController do
     end
   end
 
-  context "as an admin" do
+  describe "as an admin" do
     include_context "signed-in admin user"
 
     it "succeeds for basic actions" do
@@ -62,12 +64,12 @@ RSpec.describe InvitationsController do
       expect {
         post :create, params: creation_params
         expect(response).to be_redirect
-      }.to change(Invitation, :count).
-        from(0).to(1)
+      }.to change(Invitation, :count)
+        .from(0).to(1)
 
       new_user = Invitation.first.recipient_user
 
-      expect(Membership.exists?(user: new_user, organization: organization, role: 'author')).to be true
+      expect(Membership.exists?(user: new_user, organization: organization, role: "author")).to be true
 
       expect {
         post :create, params: creation_params

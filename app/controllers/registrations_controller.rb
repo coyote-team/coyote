@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handles new user signup; since new users get created during the invitaitons process, this controller
 # merely serves up a 'new user' form, which updates the invited user's account with new password and potentially
 # a different email address
@@ -24,7 +26,7 @@ class RegistrationsController < ApplicationController
 
     user = invitation.recipient_user
 
-    if user.update_attributes(user_attributes.except(:token))
+    if user.update(user_attributes.except(:token))
       logger.info "Successfully completed registration of #{user} for #{invitation}"
       invitation.redeem!
       sign_in(user) # Devise helper so user doesn't have to sign-in again; now the invited user is current_user
@@ -39,10 +41,6 @@ class RegistrationsController < ApplicationController
 
   attr_accessor :invitation, :user
 
-  def user_attributes
-    params.require(:user).permit(:email, :password, :password_confirmation, :token)
-  end
-
   def setup_invitation(token)
     self.invitation = Invitation.find_by!(token: token)
     self.user = invitation.recipient_user
@@ -54,5 +52,9 @@ class RegistrationsController < ApplicationController
     else
       true
     end
+  end
+
+  def user_attributes
+    params.require(:user).permit(:email, :password, :password_confirmation, :token)
   end
 end

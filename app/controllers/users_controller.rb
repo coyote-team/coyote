@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Provides read-only access to view the profile of individual users
 class UsersController < ApplicationController
   before_action :authorize_access
@@ -10,10 +12,10 @@ class UsersController < ApplicationController
 
   private
 
-  attr_accessor :user
+  attr_writer :user
 
-  def user
-    @user ||= User.find(params[:id])
+  def authorize_access
+    authorize(user)
   end
 
   def pundit_user
@@ -21,7 +23,7 @@ class UsersController < ApplicationController
     @pundit_user ||= Coyote::OrganizationUser.new(current_user, nil)
   end
 
-  def authorize_access
-    authorize(user)
+  def user
+    @user ||= User.find(params[:id])
   end
 end

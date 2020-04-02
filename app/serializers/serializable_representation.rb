@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # JSONAPI serializer for Representations
 class SerializableRepresentation < JSONAPI::Serializable::Resource
-  type 'representation'
+  type "representation"
 
   attributes :status, :content_uri, :content_type, :language, :text, :created_at, :updated_at
 
@@ -19,6 +21,6 @@ class SerializableRepresentation < JSONAPI::Serializable::Resource
   belongs_to :resource
 
   link :self do
-    #@url_helpers.api_representation_url(@object.id)
+    # @url_helpers.api_representation_url(@object.id)
   end
 end

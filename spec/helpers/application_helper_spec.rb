@@ -1,14 +1,16 @@
-RSpec.describe ApplicationHelper do
-  let(:current_user) { build_stubbed(:user, first_name: "Hal") }
-  let(:resource_uri) { 'http://example.com/1.png' }
+# frozen_string_literal: true
 
+RSpec.describe ApplicationHelper do
   subject do
     Struct.new(:current_user) {
       include ApplicationHelper
     }.new(current_user)
   end
 
-  context '#resource_link_target with an image resource' do
+  let(:current_user) { build_stubbed(:user, first_name: "Hal") }
+  let(:resource_uri) { "http://example.com/1.png" }
+
+  describe "#resource_link_target with an image resource" do
     let(:resource) do
       build_stubbed(:resource, :image)
     end
@@ -19,22 +21,22 @@ RSpec.describe ApplicationHelper do
     end
 
     specify do
-      link = helper.resource_link_target(resource, id: 'resource_100', alt: 'some text')
+      link = helper.resource_link_target(resource, id: "resource_100", alt: "some text")
       expect(link).to match(/src="#{resource_uri}"/)
     end
   end
 
-  context '#resource_link_target without image resource' do
+  describe "#resource_link_target without image resource" do
     let(:resource) do
       build_stubbed(:resource, :sound)
     end
 
     specify do
-      expect(helper.resource_link_target(resource, id: 'resource_100')).to eq('Mona Lisa (sound)')
+      expect(helper.resource_link_target(resource, id: "resource_100")).to eq("Mona Lisa (sound)")
     end
   end
 
-  context "#welcome_message" do
+  describe "#welcome_message" do
     it "greets a logged-in user" do
       expect(subject.welcome_message).to match(/Welcome.+Hal/)
     end

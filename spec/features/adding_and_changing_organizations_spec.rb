@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 RSpec.describe "Adding and changing an organization" do
   include_context "as a logged-in staff user"
 
   it "succeeds" do
     click_link "Organizations"
-    expect(current_path).to eq(organizations_path)
+    expect(page).to have_current_path(organizations_path, ignore_query: true)
     click_first_link "New Organization"
-    expect(page.current_path).to eq(new_organization_path)
+    expect(page).to have_current_path(new_organization_path, ignore_query: true)
 
     fill_in "Title", with: "Acme Museum"
 
@@ -15,11 +17,11 @@ RSpec.describe "Adding and changing an organization" do
 
     organization = user.organizations.find_by!(title: "Acme Museum")
 
-    expect(user.memberships.find_by!(organization: organization).role).to eq('owner')
-    expect(page.current_path).to eq(organization_path(organization))
+    expect(user.memberships.find_by!(organization: organization).role).to eq("owner")
+    expect(page).to have_current_path(organization_path(organization), ignore_query: true)
     expect(page).to have_content("Acme Museum")
 
-    click_first_link 'Assignments'
-    expect(page.current_path).to eq(organization_assignments_path(organization))
+    click_first_link "Assignments"
+    expect(page).to have_current_path(organization_assignments_path(organization), ignore_query: true)
   end
 end

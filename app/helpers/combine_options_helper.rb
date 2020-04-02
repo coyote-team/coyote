@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CombineOptionsHelper
   def combine_options(options, defaults)
     defaults.each_key do |key|

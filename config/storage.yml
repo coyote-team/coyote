@@ -7,26 +7,27 @@ local:
   root: <%= Rails.root.join("storage") %>
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
-amazon:
+aws:
   service: S3
-  access_key_id: <%= ENV["S3_ACCESS_KEY"] %>
-  secret_access_key: <%= ENV["S3_SECRET_KEY"] %>
-  region: us-east-1
-  bucket: <%= ENV["S3_BUCKET"] %>
+  access_key_id: <%= Credentials.dig(:aws, :access_key_id) %>
+  secret_access_key: <%= Credentials.dig(:aws, :secret_access_key) %>
+  region: <%= Credentials.fetch(:aws, :region) { "us-east-1" } %>
+  bucket: <%= Credentials.fetch(:aws, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
-# Remember not to checkin your GCS keyfile to a repository
-# google:
-#   service: GCS
-#   project: your_project
-#   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
-#   bucket: your_own_bucket
+# Use rails credentials:edit to set the Azure Storage secret (as azure:access_key)
+azure:
+  service: AzureStorage
+  storage_account_name: <%= Credentials.dig(:azure, :account_name) %>
+  storage_access_key: <%= Credentials.dig(:azure, :access_key) %>
+  container: <%= Credentials.fetch(:azure, :container) { "teamcoyote-uploads-#{Rails.env}" } %>
 
-# Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
-# microsoft:
-#   service: AzureStorage
-#   storage_account_name: your_account_name
-#   storage_access_key: <%= Rails.application.credentials.dig(:azure_storage, :storage_access_key) %>
-#   container: your_container_name
+# Use rails credentials:edit to set the GCS details (as google:bucket|project). Remember not to
+# checkin your GCS keyfile to a repository!
+google:
+  service: GCS
+  project: <%= Credentials.dig(:google, :project) %>
+  credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
+  bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
 # mirror:
 #   service: Mirror

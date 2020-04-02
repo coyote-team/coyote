@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Utilities for building ResourceLink views
 # @see ResourceLink
 module ResourceLinksHelper
@@ -7,10 +9,10 @@ module ResourceLinksHelper
   def object_resource_choices_for(resources, subject_resource)
     resources.map do |resource|
       option_name = if resource == subject_resource
-                      "#{resource.title} #{SELF_ID}"
-                    else
-                      resource.label
-                    end
+        "#{resource.title} #{SELF_ID}"
+      else
+        resource.label
+      end
       [option_name, resource.id]
     end
   end
@@ -21,5 +23,5 @@ module ResourceLinksHelper
     "#{sanitize(resource_link.subject_resource_title)} #{content_tag(:em, resource_link.verb)} #{sanitize(resource_link.object_resource_title)}".html_safe
   end
 
-  SELF_ID = ' (self)'.freeze
+  SELF_ID = " (self)"
 end

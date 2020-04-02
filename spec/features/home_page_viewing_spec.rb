@@ -1,5 +1,7 @@
-RSpec.feature "Home page viewing" do
-  scenario "succeeds" do
+# frozen_string_literal: true
+
+RSpec.describe "Home page viewing" do
+  it "succeeds" do
     visit root_url
 
     expect(page.status_code).to eq(200)

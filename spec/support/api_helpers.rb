@@ -1,4 +1,6 @@
-require 'uri'
+# frozen_string_literal: true
+
+require "uri"
 
 module Coyote
   module Testing

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: endpoints
@@ -19,15 +21,15 @@ FactoryBot.define do
     end
 
     trait :any do
-      name { 'Any' }
+      name { "Any" }
     end
 
     trait :website do
-      name { 'Website' }
+      name { "Website" }
     end
 
     trait :kiosk do
-      name { 'Kiosk' }
+      name { "Kiosk" }
     end
   end
 end

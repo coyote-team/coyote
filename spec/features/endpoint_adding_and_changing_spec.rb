@@ -1,45 +1,47 @@
-RSpec.describe 'Endpoint adding and changing' do
-  include_context 'as a logged-in staff user'
+# frozen_string_literal: true
+
+RSpec.describe "Endpoint adding and changing" do
+  include_context "as a logged-in staff user"
 
   let!(:endpoint_to_change) { create(:endpoint, :website) }
 
-  scenario 'succeeds' do
-    click_first_link 'Endpoint Management (Staff)'
-    expect(page.current_path).to eq(staff_endpoints_path)
+  it "succeeds" do
+    click_first_link "Endpoint Management (Staff)"
+    expect(page).to have_current_path(staff_endpoints_path, ignore_query: true)
 
-    click_first_link 'New Endpoint'
-    fill_in 'Name', with: 'Mobile App'
+    click_first_link "New Endpoint"
+    fill_in "Name", with: "Mobile App"
 
     expect {
-      click_button 'Create Endpoint'
-    }.to change(Endpoint, :count).
-      from(1).to(2)
+      click_button "Create Endpoint"
+    }.to change(Endpoint, :count)
+      .from(1).to(2)
 
-    new_endpoint = Endpoint.find_by!(name: 'Mobile App')
-    expect(page.current_path).to eq(staff_endpoint_path(new_endpoint))
+    new_endpoint = Endpoint.find_by!(name: "Mobile App")
+    expect(page).to have_current_path(staff_endpoint_path(new_endpoint), ignore_query: true)
 
-    click_first_link 'Endpoint Management (Staff)'
+    click_first_link "Endpoint Management (Staff)"
     click_first_link endpoint_to_change.name
-    expect(page.current_path).to eq(staff_endpoint_path(endpoint_to_change))
+    expect(page).to have_current_path(staff_endpoint_path(endpoint_to_change), ignore_query: true)
 
-    click_first_link 'Edit'
-    expect(page.current_path).to eq(edit_staff_endpoint_path(endpoint_to_change))
+    click_first_link "Edit"
+    expect(page).to have_current_path(edit_staff_endpoint_path(endpoint_to_change), ignore_query: true)
 
-    fill_in 'Name', with: 'Special Device'
+    fill_in "Name", with: "Special Device"
 
     expect {
-      click_button 'Update Endpoint'
+      click_button "Update Endpoint"
       endpoint_to_change.reload
-    }.to change(endpoint_to_change, :name).
-      to('Special Device')
+    }.to change(endpoint_to_change, :name)
+      .to("Special Device")
 
-    expect(page.current_path).to eq(staff_endpoint_path(endpoint_to_change))
+    expect(page).to have_current_path(staff_endpoint_path(endpoint_to_change), ignore_query: true)
 
     expect {
-      click_button 'Delete'
-    }.to change { Endpoint.exists?(endpoint_to_change.id) }.
-      from(true).to(false)
+      click_button "Delete"
+    }.to change { Endpoint.exists?(endpoint_to_change.id) }
+      .from(true).to(false)
 
-    expect(page.current_path).to eq(staff_endpoints_path)
+    expect(page).to have_current_path(staff_endpoints_path, ignore_query: true)
   end
 end

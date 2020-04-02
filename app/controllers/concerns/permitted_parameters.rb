@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines common parameter handling behavior among controllers
 # @see http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
 module PermittedParameters

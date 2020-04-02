@@ -2,11 +2,11 @@
 
 [![Build Status][travis-badge]][travis]
 
-An open source image annotation app enabling the distributed annotation and comprehensive representation of images. Long descriptions can range from one sentence to several paragraphs. The software was developed by the [Museum of Contemporary Art Chicago](https://mcachicago.org/) to support a distributed workflow for describing their images and publishing those descriptions to the web. 
+An open source image annotation app enabling the distributed annotation and comprehensive representation of images. Long descriptions can range from one sentence to several paragraphs. The software was developed by the [Museum of Contemporary Art Chicago](https://mcachicago.org/) to support a distributed workflow for describing their images and publishing those descriptions to the web.
 
 ## Example
 
-An image like this would traditionally be described by [alt text](https://en.wikipedia.org/wiki/Alt_attribute) like <q>A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.</q>: 
+An image like this would traditionally be described by [alt text](https://en.wikipedia.org/wiki/Alt_attribute) like <q>A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.</q>:
 
 ![MCAChicago sample image T.Y.F.F.S.H](doc_assets/mca_sample.png "A red, white, and blue fabric canopy presses against walls of room; portable fans blow air into the room through a doorway.")
 
@@ -14,11 +14,11 @@ An image like this would traditionally be described by [alt text](https://en.wik
 
 Coyote aims to provide more comprehensive representations:
 
-> This is an installation that viewers are invited to walk inside of. From this viewpoint you are looking through a doorway at a slight distance, as if standing inside of a large cave and looking out of its narrow entrance at the world outside. 
-> The walls of this cave are alternating stripes of red, white, and blue material that seems to be made of some kind of thin fabric. These colored stripes spiral around toward the entrance, as if being sucked out of the opening. 
-> The inside of the cave is more shadowed and the area outside is brightly lit. Gradually you notice that there are in fact two openings lined up in front of each other, straight ahead of you: the first one is a tall rectangle—the red, white and blue 
-> fabric is wrapped through the edges of a standard doorway; beyond that it continues to spiral around toward another circular opening. The center of this circle is much brighter, as if one had finally escape from the cave. 
-> At the center of that circular opening you see two large white fans facing your direction, blowing air into the cave-like opening. Beyond the fans you see a brown, square form, which is the bottom of a huge wicker basket. 
+> This is an installation that viewers are invited to walk inside of. From this viewpoint you are looking through a doorway at a slight distance, as if standing inside of a large cave and looking out of its narrow entrance at the world outside.
+> The walls of this cave are alternating stripes of red, white, and blue material that seems to be made of some kind of thin fabric. These colored stripes spiral around toward the entrance, as if being sucked out of the opening.
+> The inside of the cave is more shadowed and the area outside is brightly lit. Gradually you notice that there are in fact two openings lined up in front of each other, straight ahead of you: the first one is a tall rectangle—the red, white and blue
+> fabric is wrapped through the edges of a standard doorway; beyond that it continues to spiral around toward another circular opening. The center of this circle is much brighter, as if one had finally escape from the cave.
+> At the center of that circular opening you see two large white fans facing your direction, blowing air into the cave-like opening. Beyond the fans you see a brown, square form, which is the bottom of a huge wicker basket.
 > This basket, lying on its side, helps to reveal the truth about what you are seeing: You are standing inside of a huge hot air balloon, which is lying on its side. Blown by the fans, the fabric billows out to press out against the existing w
 > alls of a large room, the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 
@@ -29,74 +29,67 @@ More information about image description projects at the MCA and elsewhere is av
 - [Developer Setup](#developer-setup)
 - [Documentation](#documentation)
 - [API](#api)
-- [Strategies](#strategies)
 - [Data Model](#data-model)
 - [Links](#links)
 - [Contributors](#contributors)
 - [License](#license)
 
-## <a name="developer-setup"></a>Developer Setup 
+## <a name="developer-setup"></a>Developer Setup
 
-_Beginning Developers_
+### Set up the Docker environment
 
-The app can run in a self-contained Docker container, which you can use for development. For more details see [local development with Docker Compose](https://devcenter.heroku.com/articles/local-development-with-docker-compose).
+The app runs in a self-contained Docker environment, which you can use for development. For more details see [local development with Docker Compose](https://devcenter.heroku.com/articles/local-development-with-docker-compose).
 
-1) Install [Docker Community Edition](https://www.docker.com/get-docker)
+**Using Docker ensures the environment you develop in very closely matches the environment to which we deploy!** Please use it for local development - it is set up to be as painless as possible.
 
-2) Run the following commands:
+Follow these steps:
 
 ```bash
 git clone https://github.com/coyote-team/coyote.git
 cd coyote
-docker-compose build   # downloads images, builds containers
-docker-compose up      # start running containers
-docker-compose up test # run the test suite
-docker-compose exec web bin/rake db:setup db:migrate db:seed                    # prepare database, add seed data
-docker-compose exec web bin/rake coyote:admin:create[user@example.com,password] # create initial user
+docker-compose build             # first, build images and containers
+docker-compose run web bin/setup # set up the environment for development
+docker-compose up web            # start the web app in development
+docker-compose up test           # run the test suite
 ```
 
-3) Open `http://localhost:3000` in your browser.
+That's it! It's really that simple. You should be able to visit [http://localhost:3000/](http://localhost:3000) to see the app, and the tests should run (and pass). The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `admin@example.com`.
 
 Once the app is running you can interact with it using commands like this:
 
 ```bash
-docker ps                                   # list running containers
-docker-compose build                        # rebuild web container when new gems are installed
-docker-compose exec web pumactl restart     # restart Puma
-docker-compose exec web bin/rails console   # access Rails console
-docker-compose exec web bin/rake db:migrate # update the Postgres server managed by Docker
+docker ps                                    # list running containers
+docker-compose exec web pumactl restart      # restart Puma
+docker-compose exec web bin/rails console    # access Rails console
+docker-compose exec web bin/rails db:migrate # update the Postgres server managed by Docker
 ```
 
-_Experienced Developers_
+#### Error starting userland proxy: listen tcp 0.0.0.0:5432: bind: address already in use
 
-The app can also run in your local development environment, but requires a bit more know-how.
+If you encounter an error starting Docker processes like the above, you may have your own version of Postgres running in the background. You'll need to stop it in an environment-appropriate way, e.g. `sudo service postgresql stop` on Linux or `brew services stop postgresql` on Mac OS.
 
-1) [Install Postgres](https://www.postgresql.org/) (on MacOS try [Postgres.app](http://postgresapp.com/)).
+### Configuring secure credentials
 
-2) Run the following commands:
+The app uses [Rails secure credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) with sane development-time defaults. This allows us to ship Dockerized versions of the app with zero configuration, for both development and production.
 
-```bash
-git clone https://github.com/coyote-team/coyote.git
-cd coyote
-bin/setup
-bin/rails server && open http://localhost:3000
-```
+**If you are deploying this application yourself,** you will want to use your own production credentials. You can find an example configuration in `config/credentials.yml.example`. To deploy your own version of Coyote, you will want to:
 
-The [seed script](https://github.com/coyote-team/coyote/blob/master/db/seeds.rb) builds a simple user, so you can login as `admin@example.com`.
+1. Copy the example credentials file (e.g. `pbcopy < config/credentials.yml.example`)
+2. Remove the existing production credentials: `rm config/credentials/production*`
+3. Generate your own production credentials: `rails credentials:edit --environment production`
+4. Paste in the example credentials you copied in step 1, and overwrite their values to more useful stuff
 
-We have setup a `Guardfile` to speed up development. Try `bundle exec guard`.
+### Testing Mailers in Development Mode
 
-_Testing Mailers in Development Mode_
-
-The settings in [sample.env] work with [mailcatcher](https://mailcatcher.me/):
+The secure credentials work with [mailcatcher](https://mailcatcher.me/) out of the box:
 
 ```bash
 gem install mailcatcher     # runs independently of the app, so this gem is not part of our Gemfile
-mailcatcher -f              # much better to run this in foreground vs. the default daemon mode
+mailcatcher -f              # optionally run as `mailcatcher -f` to run in the foreground
 open http://127.0.0.1:1080/ # mail delivery console
 ```
 
-_Re-seeding the Database_
+### Re-seeding the Database
 
 You can regenerate development environment data by running `bundle exec rake dev_only:reseed`.
 
@@ -113,7 +106,7 @@ We use Heroku Pipelines and a modified "git flow" workflow for our development p
    git checkout -b {name}/{issue-numer}-{description} # (e.g.) `flip/208-fix-dev-workflow
    ```
 
-2. Write your code and then run tests, either locally (`guard` or `rspec`) or via CI (simply push your topic branch to Github: `git push origin flip/208-fix-dev-workflow`)
+2. Write your code and then run tests, either locally (`rspec`) or via CI (simply push your topic branch to Github: `git push origin flip/208-fix-dev-workflow`)
 
 3. When CI has run on Github, create a pull request ("PR") and request a review from one or more team members _who aren't you_
 
@@ -139,17 +132,13 @@ Coyote design refinements are documented in [design_refinements.pdf](https://git
 
 ## <a name="api"></a> API
 
-Coyote's API is based on the [JSON API standard](http://jsonapi.org/). Coyote-specific JSON API documentation is generated by 
+Coyote's API is based on the [JSON API standard](http://jsonapi.org/). Coyote-specific JSON API documentation is generated by
 [apipie](https://github.com/Apipie/apipie-rails) and can be viewed [here](apipie).
-
-## <a name="strategies"></a> Strategies
-
-We can extend the functionality of Coyote to better integrate with your particular CMS with a strategy file. For an example, check out [/lib/coyote/strategies/mca.rb](https://github.com/coyote-team/coyote/blob/master/lib/coyote/strategies/mca.rb).
 
 ## <a name="links"></a> Links
 
 - [Coyote.pics](https://coyote.pics/)
-- [Museum of Contemporary Art Chicago](http://www.mcachicago.org/) 
+- [Museum of Contemporary Art Chicago](http://www.mcachicago.org/)
 
 More info regarding accessibility:
 

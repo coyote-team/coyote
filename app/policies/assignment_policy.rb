@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Protects Assignment objects with policies.
 class AssignmentPolicy < ApplicationPolicy
   # @return [Boolean] if the user is a admin, they can work with assignments

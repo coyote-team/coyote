@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # JSONAPI serializer for Resources
 class SerializableResource < JSONAPI::Serializable::Resource
-  type 'resource'
+  type "resource"
 
   attribute :id do
     @object.identifier

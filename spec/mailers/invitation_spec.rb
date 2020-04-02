@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 RSpec.describe InvitationMailer do
   let(:organization) { build_stubbed(:organization) }
   let(:invitation) { build_stubbed(:invitation, organization: organization) }
 
   describe "new_user" do
     let(:mail) do
-      InvitationMailer.new_user(invitation)
+      described_class.new_user(invitation)
     end
 
     it "renders the headers" do
@@ -23,7 +25,7 @@ RSpec.describe InvitationMailer do
 
   describe "existing_user" do
     let(:mail) do
-      InvitationMailer.existing_user(invitation)
+      described_class.existing_user(invitation)
     end
 
     it "renders the headers" do

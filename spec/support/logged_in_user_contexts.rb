@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_context "as a logged-in user" do
   let(:password) { "ABCD1234" }
   let(:user_organization) { create(:organization) }

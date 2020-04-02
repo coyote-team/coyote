@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 RSpec.describe Dashboard, type: :integration do
+  subject do
+    described_class.new(user, organization)
+  end
+
   let(:organization) { create(:organization) }
   let(:user) { create(:user, organization: organization) }
   let(:other_user) { create(:user, organization: organization) }
 
-  subject do
-    Dashboard.new(user, organization)
-  end
-
-  context "with no resources or representations" do
-    scenario "returns correct values" do
+  describe "with no resources or representations" do
+    it "returns correct values" do
       aggregate_failures do
         expect(subject.current_user_approved_representation_count).to eq(0)
         expect(subject.current_user_assigned_items_count).to eq(0)
@@ -37,16 +39,16 @@ RSpec.describe Dashboard, type: :integration do
     end
   end
 
-  context "with resources and representations" do
+  describe "with resources and representations" do
     let(:resource_group) { create(:resource_group, organization: organization) }
 
     let!(:resources) do
       create_list(:resource, 5, organization: organization, resource_group: resource_group)
     end
 
-    let(:first_resource)      { resources[0] }
-    let(:second_resource)     { resources[1] }
-    let(:third_resource)      { resources[2] }
+    let(:first_resource) { resources[0] }
+    let(:second_resource) { resources[1] }
+    let(:third_resource) { resources[2] }
     let(:unassigned_resource) { resources[3] }
     let(:other_user_resource) { resources[4] }
 
@@ -71,10 +73,10 @@ RSpec.describe Dashboard, type: :integration do
     let(:latest_timestamp) { 1.hour.from_now }
 
     before do
-      third_resource.update_attributes!(created_at: latest_timestamp)
+      third_resource.update!(created_at: latest_timestamp)
     end
 
-    scenario "returns correct values" do
+    it "returns correct values" do
       aggregate_failures do
         expect(subject.organization_resource_count).to eq(5)
         expect(subject.organization_representation_count).to eq(2)

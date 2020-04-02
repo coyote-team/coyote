@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module PolicyHelper
   PERMISSION_ALIASES = {
-    list: :index
+    list: :index,
   }.with_indifferent_access.freeze
 
   def can?(*actions)

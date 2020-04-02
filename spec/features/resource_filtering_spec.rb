@@ -1,28 +1,30 @@
-RSpec.feature 'Resource viewing' do
-  include_context 'as a logged-in author user'
+# frozen_string_literal: true
+
+RSpec.describe "Resource viewing" do
+  include_context "as a logged-in author user"
 
   let!(:resource) do
     create(:resource, organization: user_organization, title: "My Organization's Resource")
   end
 
   let!(:cezannne_resource) do
-    create(:resource, organization: user_organization, title: 'Painting by Cezanne')
+    create(:resource, organization: user_organization, title: "Painting by Cezanne")
   end
 
   let!(:other_resource) do
-    create(:resource, title: 'Should Not See This')
+    create(:resource, title: "Should Not See This")
   end
 
-  scenario 'succeeds' do
-    click_first_link 'Resources'
+  it "succeeds" do
+    click_first_link "Resources"
 
     expect(page).to have_content("My Organization's Resource")
-    expect(page).not_to have_content('Should Not See This')
+    expect(page).not_to have_content("Should Not See This")
 
-    fill_in 'Search by caption or description', with: 'cezanne'
-    click_button 'Search'
+    fill_in "Search by caption or description", with: "cezanne"
+    click_button "Search"
 
-    expect(page).to have_content('Painting by Cezanne')
+    expect(page).to have_content("Painting by Cezanne")
     expect(page).not_to have_content("My Organization's Resource")
   end
 end

@@ -1,13 +1,53 @@
-FROM ruby:2.4.1
-MAINTAINER Mike Subelsky <mike@subelsky.com>
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs software-properties-common
+FROM ruby:2.6-alpine
 
-RUN add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get update
-RUN apt-get install -y postgresql-client-9.6
-
-ADD . /coyote
 WORKDIR /coyote
-RUN gem install bundler
-RUN bundle install
+
+ARG bundle_without="development test"
+ARG database_url
+ARG env="production"
+ARG base_key
+ARG master_key
+ARG staging_key
+
+ENV DATABASE_URL ${database_url}
+ENV RAILS_ENV ${env:-"production"}
+ENV RACK_ENV ${RAILS_ENV}
+ENV NODE_ENV ${RAILS_ENV}
+ENV RAILS_LOG_TO_STDOUT 1
+ENV RAILS_BASE_KEY ${base_key}
+ENV RAILS_MASTER_KEY ${master_key}
+ENV RAILS_STAGING_KEY ${staging_key}
+ENV PORT 3000
+
+RUN apk update \
+  && apk upgrade \
+  && apk add --update --no-cache \
+  build-base \
+  git \
+  libxml2-dev \
+  libxslt-dev \
+  nodejs \
+  postgresql-client \
+  postgresql-dev \
+  ruby-json \
+  tzdata \
+  yaml-dev
+
+# Install (and clean) Gem dependencies
+ADD Gemfile* ./
+RUN gem install bundler:`tail -1 Gemfile.lock | xargs` --no-document --conservative
+RUN bundle config --global frozen 1 \
+  && bundle config set without "${bundle_without}" \
+  && bundle config build.nokogiri --use-system-libraries \
+  && bundle install \
+  && rm -rf /usr/local/bundle/cache/*.gem \
+  && find /usr/local/bundle/gems/ -name "*.c" -delete \
+  && find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Copy and configure the app
+ADD . ./
+RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile; fi
+
+# Launch!
+EXPOSE $PORT
+CMD ./bin/release && bundle exec puma -C config/puma.rb

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: representations
@@ -33,9 +35,9 @@ RSpec.describe Representation do
 
   it { is_expected.to validate_presence_of(:language) }
 
-  context 'with text and content URI blank' do
+  describe "with text and content URI blank" do
     subject do
-      build(:representation, text: '', content_uri: '').tap(&:valid?)
+      build(:representation, text: "", content_uri: "").tap(&:valid?)
     end
 
     specify do

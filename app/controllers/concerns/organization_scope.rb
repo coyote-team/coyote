@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrganizationScope
   private
 
@@ -6,7 +8,7 @@ module OrganizationScope
     if current_user.staff?
       Organization.all
     else
-      Organization.joins(:memberships).where(memberships: { user: current_user })
+      Organization.joins(:memberships).where(memberships: {user: current_user})
     end
   end
 end

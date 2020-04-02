@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handles all of the logic for transforming a user's query parameters into a subset of records
 # @see RecordPaginator
 class RecordFilter
@@ -11,7 +13,7 @@ class RecordFilter
   def initialize(filter_params, pagination_params, base_scope, default_order: [])
     @filter_params = filter_params.to_hash.with_indifferent_access.tap do |params|
       params.each do |key, value|
-        params[key] = value.to_s.split(" ") if key.to_s =~ /_cont_all$/
+        params[key] = value.to_s.split(/(\s|,)/) if /_(cont_all|any)$/.match?(key.to_s)
       end
     end
     @pagination_params = pagination_params
@@ -24,20 +26,10 @@ class RecordFilter
     # This applies default ordering unless filter params are present - for now.
     default_order = Array(default_order)
     @base_scope = if default_order.any? && @filter_params.empty?
-                    default_order.inject(base_scope) { |scope, filter| scope.send(filter) }
-                  else
-                    base_scope
-                  end
-  end
-
-  # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
-  def search
-    @search ||= base_scope.search(filter_params)
-  end
-
-  # @return [ActiveRecord::Relation] the filtered collection of records, ready to be enumerated
-  def records
-    @records ||= record_paginator.query
+      default_order.inject(base_scope) { |scope, filter| scope.send(filter) }
+    else
+      base_scope
+    end
   end
 
   # A set of links that should be rendered for browser users. The only difference between this and what an API user
@@ -54,6 +46,16 @@ class RecordFilter
     base_link_params = {}
     base_link_params[:q] = filter_params.to_hash if filter_params.present?
     record_paginator.pagination_links_for(base_link_params)
+  end
+
+  # @return [ActiveRecord::Relation] the filtered collection of records, ready to be enumerated
+  def records
+    @records ||= record_paginator.query
+  end
+
+  # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
+  def search
+    @search ||= base_scope.ransack(filter_params)
   end
 
   private

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -40,13 +42,13 @@ class User < ApplicationRecord
   has_many :organizations, through: :memberships, counter_cache: :organizations_count
 
   devise :database_authenticatable,
-         :registerable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable,
-         :lockable,
-         password_length: 8..128
+    :registerable,
+    :recoverable,
+    :rememberable,
+    :trackable,
+    :validatable,
+    :lockable,
+    password_length: 8..128
 
   has_many :assignments, inverse_of: :user, dependent: :destroy
   has_many :assigned_resources, class_name: :Resource, through: :assignments, source: :resource
@@ -58,16 +60,16 @@ class User < ApplicationRecord
   has_many :resource_groups, through: :organizations
 
   scope :active, -> { where(active: true) }
-  scope :sorted, -> { order(Arel.sql('LOWER(users.last_name) asc')) }
+  scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) asc")) }
 
   def self.find_for_authentication(warden_conditions)
-    where(warden_conditions.merge(active: true)).first
+    find_by(warden_conditions.merge(active: true))
   end
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
-    if !first_name.blank? || !last_name.blank?
-      [first_name, last_name].join(' ')
+    if first_name.present? || last_name.present?
+      [first_name, last_name].join(" ")
     else
       email
     end

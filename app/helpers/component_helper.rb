@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ComponentHelper
   # Builds an HTML tag (`tag` parameter) that includes an optional screen
   # reader title and deep-merges options.

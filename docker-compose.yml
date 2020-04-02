@@ -1,35 +1,66 @@
-version: '3'
-services:
-  web:
-    build: .
-    ports:
-      - 3000:3000
-    environment:
-      COYOTE_DEV_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_development
-      RAILS_ENV: development
-      SECRET_KEY_BASE: DEV_ONLY_09f0f5a7621eb1835061d53c0f1ebc105d4104058f5c8d42827e48abe133dbbff85b63a4b40176290336082141f2e84a150bb0ce8dc2db72d
-    volumes:
-      - ./:/coyote
-    command: bundle exec puma -C config/puma.rb
-    depends_on:
-      - db
-  test:
-    build: .
-    env_file: sample.env
-    environment:
-      COYOTE_TEST_DATABASE_URL: postgres://postgres:docker@db:5432/coyote_test
-      RAILS_ENV: test
-      SECRET_KEY_BASE: TEST_ONLY_09f0f5a7621eb1835061d53c0f1ebc105d4104058f5c8d42827e48abe133dbbff85b63a4b40176290336082141f2e84a150bb0ce8dc2db72d
-    volumes:
-      - ./:/coyote
-    command: ["bundle", "exec", "rails", "db:environment:set", "db:test:prepare", "db:migrate", "spec"]
-    depends_on:
-      - db
+version: "3"
 
+volumes:
+  postgres_data: {}
+
+services:
   db:
-    image: postgres:9.6
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: coyote_development
+      POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  web: &rails
+    build:
+      args:
+        bundle_without: ""
+        database_url: postgresql://postgres:postgres@db:5432/
+        env: "development"
+      context: .
+    command: bundle exec rails server -b 0.0.0.0
+    depends_on:
+      - db
+    entrypoint: ./bin/docker_entrypoint
     environment:
-      POSTGRES_DB: coyote_test
-      POSTGRES_PASSWORD: docker
+      BOOTSNAP_CACHE_DIR: /bundle/bootsnap
+      DATABASE_HOST: db
+      NODE_ENV: ${NODE_ENV:-development}
+      RAILS_ENV: ${RAILS_ENV:-development}
+      WEBPACKER_DEV_SERVER_HOST: webpacker
+      WEB_CONCURRENCY: 1
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tmpfs:
+      - /tmp
+    tty: true
+    volumes:
+      - .:/coyote:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/coyote/node_modules
+      - packs:/coyote/public/packs
+      - rails_cache:/coyote/tmp/cache
+
+  test:
+    <<: *rails
+    command: bundle exec rails db:test:prepare spec
+    environment:
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+      DATABASE_HOST: db
+      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:5432
+      NODE_ENV: test
+      RAILS_ENV: test
+      SECRET_KEY_BASE: 0c46014ccd12dae8ddf7094d53d2e0befb9580f8a81ac95ba0f3f735acba275fa4999ff9aeac421d26a0ca4207072f13dd0ba6d540cb39b8fccff341091d3e66
+      WEB_CONCURRENCY: 1
+
+volumes:
+  bundle:
+  node_modules:
+  packs:
+  postgres:
+  rails_cache:
+  redis:

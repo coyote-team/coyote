@@ -81,5 +81,6 @@ html(lang="en")
     = raw analytical.body_append_javascript
 
     = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"
+    script integrity="sha384-Nrg+xiw+qRl3grVrxJtWazjeZmUwoSt0FAVsbthlJ5OMpx0G08bqIq3b/v0hPjhB" crossorigin="anonymous" src="https://browser.sentry-cdn.com/5.15.4/bundle.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => false
     = yield :javascript_footer

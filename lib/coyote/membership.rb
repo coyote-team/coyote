@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 module Coyote
   # Utility functions for managing Organizational Roles
   module Membership
     # Enumerates the roles available in the Postgres 'user_role' ENUM, for use with ActiveRecord::Base.enum
     ROLES = {
-      guest:  'guest',
-      viewer: 'viewer',
-      author: 'author',
-      editor: 'editor',
-      admin:  'admin',
-      owner:  'owner'
+      guest:  "guest",
+      viewer: "viewer",
+      author: "author",
+      editor: "editor",
+      admin:  "admin",
+      owner:  "owner",
     }.freeze
 
     module_function

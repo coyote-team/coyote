@@ -20,8 +20,11 @@ pickle-email-*.html
 /.bundle
 /vendor/bundle
 
-#dotenv
-.env
-
 # Ignore application configuration
 /config/application.yml
+
+/config/master.key
+
+/config/credentials/production.key
+
+/config/credentials/staging.key

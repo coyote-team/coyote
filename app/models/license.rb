@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: licenses
@@ -14,7 +16,7 @@
 # @see Representation
 class License < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  validates :url,  presence: true
+  validates :url, presence: true
 
   has_many :representations, inverse_of: :license
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: representations
@@ -43,11 +45,11 @@ FactoryBot.define do
       blue and maroon and light yellow stripes.
     TEXT
 
-    language { 'en' }
+    language { "en" }
 
     trait :audio do
-      content_type { 'audio/mp3' }
-      content_uri { 'http://cdn.example.com/speech.mp3' }
+      content_type { "audio/mp3" }
+      content_uri { "http://cdn.example.com/speech.mp3" }
     end
 
     trait :ready_to_review do
@@ -72,11 +74,11 @@ FactoryBot.define do
     end
 
     before(:create) do |representation, evaluator|
-      representation.resource  = evaluator.resource     || build(:resource, organization: evaluator.organization)
-      representation.metum     = evaluator.metum        || build(:metum, organization: evaluator.organization)
-      representation.author    = evaluator.author       || build(:user, organization: evaluator.organization)
-      representation.license   = evaluator.license      || build(:license)
-      representation.endpoint  = evaluator.endpoint     || build(:endpoint)
+      representation.resource = evaluator.resource || build(:resource, organization: evaluator.organization)
+      representation.metum = evaluator.metum || build(:metum, organization: evaluator.organization)
+      representation.author = evaluator.author || build(:user, organization: evaluator.organization)
+      representation.license = evaluator.license || build(:license)
+      representation.endpoint = evaluator.endpoint || build(:endpoint)
     end
   end
 end

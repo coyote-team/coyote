@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resource_groups
@@ -18,28 +20,28 @@
 # Examples of resource_groups include Web, Exhibitions, Poetry, Digital Interactive, Mobile, Audio Tour
 # @see https://github.com/coyote-team/coyote/issues/112
 class ResourceGroup < ApplicationRecord
-  DEFAULT_TITLE = "Uncategorized".freeze
+  DEFAULT_TITLE = "Uncategorized"
 
   before_destroy :check_for_resources_or_default
 
-  validates_presence_of :title
-  validates_uniqueness_of :title, scope: :organization_id
-  validates_uniqueness_of :default, if: :default?, scope: :organization_id
+  validates :title, presence: true
+  validates :title, uniqueness: {scope: :organization_id}
+  validates :default, uniqueness: {if: :default?, scope: :organization_id}
 
   has_many :resources, inverse_of: :resource_group
 
   belongs_to :organization, inverse_of: :resource_groups
 
-  scope :by_default_and_name, -> { order({ default: :desc }, { title: :asc }) }
+  scope :by_default_and_name, -> { order({default: :desc}, {title: :asc}) }
   scope :default, -> { where(default: true) }
+
+  def title_with_default_annotation
+    "#{self}#{default ? " (default)" : ""}"
+  end
 
   # @return [String] title of this group
   def to_s
     title
-  end
-
-  def title_with_default_annotation
-    "#{to_s}#{default ? " (default)" : ""}"
   end
 
   private

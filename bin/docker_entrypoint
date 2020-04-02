@@ -1,0 +1,11 @@
+#!/bin/sh
+
+until nc -z -v -w30 $DATABASE_HOST 5432
+do
+  sleep 1
+done
+
+sleep 2 # Well give it a second, jeez
+
+echo "Starting with '$@'"
+exec $@

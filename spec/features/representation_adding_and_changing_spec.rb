@@ -1,5 +1,7 @@
-RSpec.feature 'Representation adding and changing' do
-  include_context 'as a logged-in editor user'
+# frozen_string_literal: true
+
+RSpec.describe "Representation adding and changing" do
+  include_context "as a logged-in editor user"
 
   let(:resource) do
     create(:resource, organization: user_organization)
@@ -9,49 +11,49 @@ RSpec.feature 'Representation adding and changing' do
   let!(:license) { create(:license) }
   let!(:endpoint) { create(:endpoint) }
 
-  scenario 'succeeds' do
+  it "succeeds" do
     visit resource_url(resource)
 
-    click_first_link('Describe')
-    expect(page.current_path).to eq(new_organization_representation_path(user_organization))
+    click_first_link("Describe")
+    expect(page).to have_current_path(new_organization_representation_path(user_organization), ignore_query: true)
 
     new_text = attributes_for(:representation).fetch(:text)
 
-    fill_in 'Text', with: new_text
-    select metum.title, from: 'Metum'
+    fill_in "Text", with: new_text
+    select metum.title, from: "Metum"
 
     expect {
-      click_button('Create Description')
-    }.to change(resource.representations, :count).
-      from(0).to(1)
+      click_button("Create Description")
+    }.to change(resource.representations, :count)
+      .from(0).to(1)
 
     representation = resource.representations.first
-    expect(page.current_path).to eq(representation_path(representation))
+    expect(page).to have_current_path(representation_path(representation), ignore_query: true)
     # TODO: this expectation fails because of weird Capybara text matching reasons
-    #expect(page).to have_content(representation.text)
+    # expect(page).to have_content(representation.text)
 
-    click_first_link 'Edit'
-    expect(page.current_path).to eq(edit_representation_path(representation))
+    click_first_link "Edit"
+    expect(page).to have_current_path(edit_representation_path(representation), ignore_query: true)
 
-    fill_in 'Text', with: 'XYZ123'
+    fill_in "Text", with: "XYZ123"
 
     expect {
-      click_button('Update Description')
-      expect(page.current_path).to eq(representation_path(representation))
+      click_button("Update Description")
+      expect(page).to have_current_path(representation_path(representation), ignore_query: true)
       representation.reload
-    }.to change(representation, :text).
-      to('XYZ123')
+    }.to change(representation, :text)
+      .to("XYZ123")
 
-    click_first_link 'Descriptions'
-    expect(page.current_path).to eq(organization_representations_path(user_organization))
+    click_first_link "Descriptions"
+    expect(page).to have_current_path(organization_representations_path(user_organization), ignore_query: true)
 
     expect(page).to have_content(resource.title)
 
     expect {
-      click_first_link('Delete')
-    }.to change { Representation.exists?(representation.id) }.
-      from(true).to(false)
+      click_first_link("Delete")
+    }.to change { Representation.exists?(representation.id) }
+      .from(true).to(false)
 
-    expect(page.current_path).to eq(organization_representations_path(user_organization))
+    expect(page).to have_current_path(organization_representations_path(user_organization), ignore_query: true)
   end
 end

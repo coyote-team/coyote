@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Style/ClassAndModuleChildren necessary to flatten namespace here because of how Rails autoloading works
 
 # @abstract Base class for all staff-only controllers

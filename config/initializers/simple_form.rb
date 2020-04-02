@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   # Wrappers are used by the form builder to generate a
@@ -5,35 +7,35 @@ SimpleForm.setup do |config|
   # wrapper, change the order or even add your own to the
   # stack. The options given below are used to wrap the
   # whole input.
-  config.wrappers :default, class: 'form-field', error_class: 'form-field--error' do |b|
+  config.wrappers :default, class: "form-field", error_class: "form-field--error" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'form-field-label label--stack'
+    b.use :label, class: "form-field-label label--stack"
 
     b.use :input
-    b.use :error, wrap_with: { class: 'form-field-error-message' }
-    b.use :hint,  wrap_with: { class: 'form-field-hint' }
+    b.use :error, wrap_with: {class: "form-field-error-message"}
+    b.use :hint, wrap_with: {class: "form-field-hint"}
   end
 
-  config.wrappers :filter_set, class: 'filter-set-item', error_class: 'form-field--error' do |b|
+  config.wrappers :filter_set, class: "filter-set-item", error_class: "form-field--error" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'filter-set-item-title'
+    b.use :label, class: "filter-set-item-title"
 
     b.use :input
-    b.use :error, wrap_with: { tag: 'span', class: 'form-field-error-message' }
-    b.use :hint,  wrap_with: { class: 'form-field-hint' }
+    b.use :error, wrap_with: {tag: "span", class: "form-field-error-message"}
+    b.use :hint, wrap_with: {class: "form-field-hint"}
   end
 
-  config.wrappers :inline, error_class: 'form-field--error' do |b|
+  config.wrappers :inline, error_class: "form-field--error" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -44,8 +46,8 @@ SimpleForm.setup do |config|
 
     b.use :input
 
-    b.optional :error, wrap_with: { class: 'form-field-error-message' }
-    b.optional :hint,  wrap_with: { class: 'form-field-hint' }
+    b.optional :error, wrap_with: {class: "form-field-error-message"}
+    b.optional :hint, wrap_with: {class: "form-field-hint"}
   end
 
   config.default_wrapper = :default
@@ -60,7 +62,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'button button--default'
+  config.button_class = "button button--default"
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.
@@ -71,7 +73,7 @@ SimpleForm.setup do |config|
   config.error_notification_tag = :div
 
   # CSS class to add for error notification helper.
-  config.error_notification_class = 'notification notification--error notification-title'
+  config.error_notification_class = "notification notification--error notification-title"
 
   # ID to add for error notification helper.
   # config.error_notification_id = nil
@@ -103,7 +105,7 @@ SimpleForm.setup do |config|
 
   # You can define the default class to be used on forms. Can be overriden
   # with `html: { :class }`. Defaulting to none.
-  config.default_form_class = 'form'
+  config.default_form_class = "form"
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]
@@ -153,7 +155,7 @@ SimpleForm.setup do |config|
   # config.input_class = nil
 
   # Define the default class of the input wrapper of the boolean input.
-  config.boolean_label_class = 'label label--checkbox'
+  config.boolean_label_class = "label label--checkbox"
 
   # Defines if the default input wrapper class should be included in radio
   # collection wrappers.

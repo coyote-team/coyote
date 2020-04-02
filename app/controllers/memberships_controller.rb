@@ -1,16 +1,32 @@
+# frozen_string_literal: true
+
 # Manages CRUD operations for adding/removing users from an Organization
 # @see Membership
 class MembershipsController < ApplicationController
-  before_action :set_membership,           only: %i[show edit update destroy]
+  before_action :set_membership, only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[index]
-  before_action :authorize_unit_access,    only: %i[edit update destroy]
+  before_action :authorize_unit_access, only: %i[edit update destroy]
 
   helper_method :membership, :organization_users
 
-  def index
+  # @note will not allow an organization owner to delete their membership, if there are no remaining owners
+  def destroy
+    if membership.last_owner?
+      logger.warn "#{current_user} attempted to remove him- or herself from #{current_organization}, but the actionw was prevented since there are no other owners of that organization"
+      err_msg = "We cannot let you remove yourself as the last owner of the '#{current_organization.title}' organization. Please choose another user to be an owner, or delete the organization itself."
+
+      redirect_back fallback_location: organization_memberships_url, alert: err_msg
+      return :redirect_after_preventing_destruction # avoid leaking nil
+    end
+
+    membership.update_attribute(:active, false)
+    redirect_back fallback_location: organization_memberships_url, notice: "#{membership.user} has been removed from #{current_organization.title}"
   end
 
   def edit
+  end
+
+  def index
   end
 
   # @raise [Coyote::SecurityError] if the user with a certain rank attempts to promote another user above that rank
@@ -32,26 +48,20 @@ class MembershipsController < ApplicationController
     end
   end
 
-  # @note will not allow an organization owner to delete their membership, if there are no remaining owners
-  def destroy
-    if membership.last_owner?
-      logger.warn "#{current_user} attempted to remove him- or herself from #{current_organization}, but the actionw was prevented since there are no other owners of that organization"
-      err_msg = "We cannot let you remove yourself as the last owner of the '#{current_organization.title}' organization. Please choose another user to be an owner, or delete the organization itself."
-
-      redirect_back fallback_location: organization_memberships_url, alert: err_msg
-      return :redirect_after_preventing_destruction # avoid leaking nil
-    end
-
-    membership.update_attribute(:active, false)
-    redirect_back fallback_location: organization_memberships_url, notice: "#{membership.user} has been removed from #{current_organization.title}"
-  end
-
   private
 
   attr_accessor :membership
 
-  def set_membership
-    self.membership = current_organization.memberships.find(params[:id])
+  def authorize_general_access
+    authorize Membership
+  end
+
+  def authorize_unit_access
+    authorize(membership)
+  end
+
+  def membership_params
+    params.require(:membership).permit(:role)
   end
 
   def organization_users
@@ -62,15 +72,7 @@ class MembershipsController < ApplicationController
                             end
   end
 
-  def membership_params
-    params.require(:membership).permit(:role)
-  end
-
-  def authorize_general_access
-    authorize Membership
-  end
-
-  def authorize_unit_access
-    authorize(membership)
+  def set_membership
+    self.membership = current_organization.memberships.find(params[:id])
   end
 end

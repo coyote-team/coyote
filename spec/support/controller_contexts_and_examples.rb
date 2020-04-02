@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # see https://github.com/plataformatec/devise/wiki/How-To:-Stub-authentication-in-controller-specs
 
 RSpec.shared_context "signed-out user" do

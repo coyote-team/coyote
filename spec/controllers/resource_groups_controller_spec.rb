@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resource_groups
@@ -19,7 +21,7 @@ RSpec.describe ResourceGroupsController do
   let(:resource_group) { create(:resource_group, organization: organization) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:resource_group_params) do
@@ -31,18 +33,18 @@ RSpec.describe ResourceGroupsController do
   end
 
   let(:update_resource_group_params) do
-    resource_group_params.merge(resource_group: { title: "NEWTITLE" })
+    resource_group_params.merge(resource_group: {title: "NEWTITLE"})
   end
 
   let(:foreign_resource_group) { create(:resource_group) }
 
   let(:foreign_resource_group_params) do
-    { id: foreign_resource_group.id,
-      organization_id: foreign_resource_group.organization_id,
-      resource_group: { title: 'SHOULDNOTBEALLOWED' } }
+    {id:              foreign_resource_group.id,
+     organization_id: foreign_resource_group.organization_id,
+     resource_group:  {title: "SHOULDNOTBEALLOWED"}}
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -71,7 +73,7 @@ RSpec.describe ResourceGroupsController do
     end
   end
 
-  context "as an editor" do
+  describe "as an editor" do
     include_context "signed-in editor user"
 
     let!(:resource_group) { create(:resource_group, organization: organization) }
@@ -105,7 +107,7 @@ RSpec.describe ResourceGroupsController do
     end
   end
 
-  context "as an admin" do
+  describe "as an admin" do
     include_context "signed-in admin user"
 
     it "succeeds for all actions involving organization-owned resource_groups" do
@@ -123,19 +125,19 @@ RSpec.describe ResourceGroupsController do
 
       expect {
         post :create, params: new_resource_group_params
-      }.to change(organization.resource_groups, :count).
-        by(1)
+      }.to change(organization.resource_groups, :count)
+        .by(1)
 
       expect {
         patch :update, params: update_resource_group_params
         resource_group.reload
-      }.to change(resource_group, :title).
-        to("NEWTITLE")
+      }.to change(resource_group, :title)
+        .to("NEWTITLE")
 
       expect {
         delete :destroy, params: resource_group_params
-      }.to change(organization.resource_groups, :size).
-        by(-1)
+      }.to change(organization.resource_groups, :size)
+        .by(-1)
 
       expect {
         get :edit, params: foreign_resource_group_params

@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
 RSpec.describe Staff::EndpointsController do
   let(:editable_endpoint) { create(:endpoint) }
   let(:organization) { create(:organization) }
 
   let(:endpoint_params) do
-    { id: editable_endpoint.id }
+    {id: editable_endpoint.id}
   end
 
   let(:create_endpoint_params) do
-    { endpoint: { name: 'ABC123' } }
+    {endpoint: {name: "ABC123"}}
   end
 
   let(:update_endpoint_params) do
-    endpoint_params.merge(endpoint: { name: 'XYZ' })
+    endpoint_params.merge(endpoint: {name: "XYZ"})
   end
 
-  context "as a signed-out endpoint" do
-    include_context 'signed-out user'
+  describe "as a signed-out endpoint" do
+    include_context "signed-out user"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -43,8 +45,8 @@ RSpec.describe Staff::EndpointsController do
     end
   end
 
-  context "as a signed-in owner" do
-    include_context 'signed-in owner user'
+  describe "as a signed-in owner" do
+    include_context "signed-in owner user"
 
     it "requires endpoint to be a staff member for all actions" do
       aggregate_failures do
@@ -79,8 +81,8 @@ RSpec.describe Staff::EndpointsController do
     end
   end
 
-  context "as a staff member" do
-    include_context 'signed-in staff user'
+  describe "as a staff member" do
+    include_context "signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
       get :new
@@ -101,18 +103,18 @@ RSpec.describe Staff::EndpointsController do
       expect {
         patch :update, params: update_endpoint_params
         editable_endpoint.reload
-      }.to change(editable_endpoint, :name).
-        to('XYZ')
+      }.to change(editable_endpoint, :name)
+        .to("XYZ")
 
       expect(response).to be_redirect
 
-      patch :update, params: endpoint_params.merge(endpoint: { name: '' })
+      patch :update, params: endpoint_params.merge(endpoint: {name: ""})
       expect(response).not_to be_redirect
 
       expect {
         delete :destroy, params: endpoint_params
-      }.to change { Endpoint.exists?(editable_endpoint.id) }.
-        from(true).to(false)
+      }.to change { Endpoint.exists?(editable_endpoint.id) }
+        .from(true).to(false)
     end
   end
 end

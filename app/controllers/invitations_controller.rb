@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Creates invitations for users to join organizations (works with new and pre-existing users)
 # @see Invitation
 # @see InvitationMailer
@@ -6,13 +8,6 @@ class InvitationsController < ApplicationController
   before_action :authenticate_user!
 
   helper_method :invitation, :title
-
-  # GET /organizations/1/invitations/new
-  def new
-    self.title = "Invite a user to join #{current_organization.title}"
-    self.invitation = Invitation.new
-    authorize invitation
-  end
 
   # POST /create
   def create
@@ -29,6 +24,13 @@ class InvitationsController < ApplicationController
 
     logger.info "Created #{invitation} for #{invitation.recipient_email} to #{invitation.organization}"
     redirect_to organization_url(current_organization), notice: "Invitation sent to #{invitation.recipient_email}"
+  end
+
+  # GET /organizations/1/invitations/new
+  def new
+    self.title = "Invite a user to join #{current_organization.title}"
+    self.invitation = Invitation.new
+    authorize invitation
   end
 
   private

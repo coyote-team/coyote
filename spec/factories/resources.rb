@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resources
@@ -29,9 +31,9 @@
 
 FactoryBot.define do
   factory :resource, aliases: %i[subject_resource object_resource] do
-    title { 'Mona Lisa' }
-    resource_type { 'still_image' }
-    identifier { "#{title.underscore.gsub(/\s+/, '_')}_#{SecureRandom.hex(2)}" }
+    title { "Mona Lisa" }
+    resource_type { "still_image" }
+    identifier { "#{title.underscore.gsub(/\s+/, "_")}_#{SecureRandom.hex(2)}" }
 
     trait :priority do
       priority_flag { true }

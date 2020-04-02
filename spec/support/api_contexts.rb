@@ -1,13 +1,15 @@
-RSpec.shared_context 'API access headers' do
+# frozen_string_literal: true
+
+RSpec.shared_context "API access headers" do
   let(:api_headers) do
-    mime_type = format(Rails.configuration.x.api_mime_type_template, version: 'v1')
-    { Accept: mime_type }
+    mime_type = format(Rails.configuration.x.api_mime_type_template, version: "v1")
+    {Accept: mime_type}
   end
 end
 
 Coyote::Membership.each_role do |_, role_name|
   RSpec.shared_context "API #{role_name} user" do
-    include_context 'API access headers'
+    include_context "API access headers"
 
     let(:user_organization) { create(:organization) }
 

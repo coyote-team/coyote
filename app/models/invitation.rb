@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invitations
@@ -27,8 +29,8 @@ class Invitation < ApplicationRecord
 
   validates :recipient_email, presence: true
 
-  belongs_to :sender_user, class_name: 'User'
-  belongs_to :recipient_user, class_name: 'User'
+  belongs_to :sender_user, class_name: "User"
+  belongs_to :recipient_user, class_name: "User"
   belongs_to :organization
 
   enum role: Coyote::Membership::ROLES
@@ -36,14 +38,10 @@ class Invitation < ApplicationRecord
   attr_accessor :first_name
   attr_accessor :last_name
 
-  def role_rank
-    Coyote::Membership.role_rank(role)
-  end
-
   # @raise [Coyote::SecurityError]
   def redeem!
     raise Coyote::SecurityError, "that token has already been used" if redeemed?
-    update_attributes!(redeemed_at: Time.now)
+    update!(redeemed_at: Time.zone.now)
   end
 
   # @return [Boolean] if this invitation has been redeemed
@@ -51,14 +49,16 @@ class Invitation < ApplicationRecord
     !!redeemed_at
   end
 
+  def role_rank
+    Coyote::Membership.role_rank(role)
+  end
+
+  # @return [String] identifies the organization that sent this invitation
+  delegate :title, to: :organization, prefix: true
+
   # @return [String] identifies the user who sent this invitation
   # @see User#to_s
   def sender_name
     sender_user.to_s
-  end
-
-  # @return [String] identifies the organization that sent this invitation
-  def organization_title
-    organization.title
   end
 end

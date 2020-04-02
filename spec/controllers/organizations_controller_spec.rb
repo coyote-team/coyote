@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: organizations
@@ -16,18 +18,18 @@ RSpec.describe OrganizationsController do
   let(:organization) { create(:organization) }
 
   let(:existing_organization_params) do
-    { id: organization.id }
+    {id: organization.id}
   end
 
   let(:new_organization_params) do
-    { organization: attributes_for(:organization) }
+    {organization: attributes_for(:organization)}
   end
 
   let(:update_organization_params) do
-    { organization: { title: "NEWTITLE" } }
+    {organization: {title: "NEWTITLE"}}
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -35,10 +37,10 @@ RSpec.describe OrganizationsController do
         get :index
         expect(response).to redirect_to(new_user_session_url)
 
-        get :show, params: { id: 1 }
+        get :show, params: {id: 1}
         expect(response).to redirect_to(new_user_session_url)
 
-        get :edit, params: { id: 1 }
+        get :edit, params: {id: 1}
         expect(response).to redirect_to(new_user_session_url)
 
         get :new
@@ -53,7 +55,7 @@ RSpec.describe OrganizationsController do
     end
   end
 
-  context "as an admin" do
+  describe "as an admin" do
     include_context "signed-in guest user"
 
     it "succeeds for basic actions" do
@@ -77,7 +79,7 @@ RSpec.describe OrganizationsController do
         user.memberships.owner.where.not(organization: organization).count
       }.from(0).to(1)
 
-      post :create, params: { organization: { title: '' } }
+      post :create, params: {organization: {title: ""}}
       expect(response).not_to be_redirect
 
       expect {
@@ -86,7 +88,7 @@ RSpec.describe OrganizationsController do
     end
   end
 
-  context "as an organization ower" do
+  describe "as an organization ower" do
     include_context "signed-in owner user"
 
     it "succeeds for critical actions" do
@@ -98,7 +100,7 @@ RSpec.describe OrganizationsController do
         organization.reload
       }.to change(organization, :title).to("NEWTITLE")
 
-      patch :update, params: existing_organization_params.merge(organization: { title: '' })
+      patch :update, params: existing_organization_params.merge(organization: {title: ""})
       expect(response).not_to be_redirect
     end
   end

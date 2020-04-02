@@ -1,7 +1,7 @@
 //= require_tree ./polyfills
 //= require_tree ./components
 //= require vendor/bootstrap-native-v4
-//= require vendor/rollbar
+//= require vendor/sentry
 //= require vanilla-ujs
 //= require activestorage
 

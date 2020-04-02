@@ -1,11 +1,9 @@
+# frozen_string_literal: true
+
 # IDRegistryHelper ensures no ID's overlap on the page by keeping track of
 # those that have been generated and providing iterations to them as things
 # move forward
 module IdRegistryHelper
-  def ids
-    @ids ||= Set.new
-  end
-
   def id_for(string)
     original_id = id = string.parameterize
     i = 0
@@ -15,5 +13,9 @@ module IdRegistryHelper
     end
     ids.add(id)
     id
+  end
+
+  def ids
+    @ids ||= Set.new
   end
 end

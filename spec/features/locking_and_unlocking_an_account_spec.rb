@@ -1,24 +1,26 @@
-RSpec.feature 'Locking and unlocking an account' do
-  let(:password) { 'ABC12345' }
+# frozen_string_literal: true
+
+RSpec.describe "Locking and unlocking an account" do
+  let(:password) { "ABC12345" }
   let(:user) { create(:user, password: password) }
 
-  scenario 'succeeds' do
+  it "succeeds" do
     visit new_user_session_path
 
     expect {
       Rails.application.config.x.maximum_login_attempts.times do
-        within('.new_user') do
-          fill_in 'Email', with: user.email
-          fill_in 'Password', with: 'XYZPDQ987'
+        within(".new_user") do
+          fill_in "Email", with: user.email
+          fill_in "Password", with: "XYZPDQ987"
         end
 
-        click_button 'Log in'
-        expect(page.current_path).to eq(new_user_session_path)
+        click_button "Log in"
+        expect(page).to have_current_path(new_user_session_path, ignore_query: true)
       end
 
       user.reload
-    }.to change(user, :access_locked?).
-      from(false).to(true)
+    }.to change(user, :access_locked?)
+      .from(false).to(true)
 
     expect(ActionMailer::Base.deliveries.size).to eq(1)
 
@@ -32,10 +34,10 @@ RSpec.feature 'Locking and unlocking an account' do
       expect {
         visit unlock_link
         user.reload
-      }.to change(user, :access_locked?).
-        from(true).to(false)
+      }.to change(user, :access_locked?)
+        .from(true).to(false)
 
-      expect(current_path).to eq(new_user_session_path)
+      expect(page).to have_current_path(new_user_session_path, ignore_query: true)
 
       login(user, password, true)
     end

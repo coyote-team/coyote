@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resource_links
@@ -21,28 +23,28 @@ RSpec.describe ResourceLinksController do
   let(:subject_resource) { create(:resource, organization: organization) }
   let(:object_resource) { create(:resource, organization: organization) }
   let(:resource_link) do
-    create(:resource_link, verb: 'hasPart', subject_resource: subject_resource, object_resource: object_resource)
+    create(:resource_link, verb: "hasPart", subject_resource: subject_resource, object_resource: object_resource)
   end
 
   let(:resource_link_params) do
-    { id: resource_link.id }
+    {id: resource_link.id}
   end
 
   let(:new_resource_link_params) do
     {
       resource_link: {
         subject_resource_id: subject_resource.id,
-        verb: 'isVersionOf',
-        object_resource_id: object_resource.id
-      }
+        verb:                "isVersionOf",
+        object_resource_id:  object_resource.id,
+      },
     }
   end
 
   let(:update_resource_link_params) do
-    resource_link_params.merge(resource_link: { verb: 'hasFormat' })
+    resource_link_params.merge(resource_link: {verb: "hasFormat"})
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -68,7 +70,7 @@ RSpec.describe ResourceLinksController do
     end
   end
 
-  context "as an author" do
+  describe "as an author" do
     include_context "signed-in author user"
 
     it "succeeds for basic actions" do
@@ -79,7 +81,7 @@ RSpec.describe ResourceLinksController do
         get :edit, params: resource_link_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
-      get :new, params: { subject_resource_id: subject_resource.id }
+      get :new, params: {subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       expect {
@@ -90,9 +92,9 @@ RSpec.describe ResourceLinksController do
       bad_params = {
         resource_link: {
           subject_resource_id: subject_resource.id,
-          verb: '',
-          object_resource_id: object_resource.id
-        }
+          verb:                "",
+          object_resource_id:  object_resource.id,
+        },
       }
 
       post :create, params: bad_params
@@ -108,11 +110,11 @@ RSpec.describe ResourceLinksController do
     end
   end
 
-  context "as an editor" do
+  describe "as an editor" do
     include_context "signed-in editor user"
 
     it "succeeds for critical actions" do
-      get :new, params: { subject_resource_id: subject_resource.id }
+      get :new, params: {subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       get :edit, params: resource_link_params
@@ -122,10 +124,10 @@ RSpec.describe ResourceLinksController do
         patch :update, params: update_resource_link_params
         expect(response).to redirect_to(resource_link)
         resource_link.reload
-      }.to change(resource_link, :verb).to('hasFormat')
+      }.to change(resource_link, :verb).to("hasFormat")
 
       bad_params = update_resource_link_params.dup
-      bad_params[:resource_link][:verb] = ''
+      bad_params[:resource_link][:verb] = ""
 
       patch :update, params: bad_params
       expect(response).not_to be_redirect
@@ -133,8 +135,8 @@ RSpec.describe ResourceLinksController do
       expect {
         delete :destroy, params: resource_link_params
         expect(response).to redirect_to(subject_resource)
-      }.to change { ResourceLink.exists?(resource_link.id) }.
-        from(true).to(false)
+      }.to change { ResourceLink.exists?(resource_link.id) }
+        .from(true).to(false)
     end
   end
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module TitleHelper
   # Returns a title tag if a 'title' option is present. Also modifies options
   # to point to the title tag as `aria-labelledby`.
   def title_for(options = {})
     title = options.delete(:title)
-    return "".html_safe unless title.present?
+    return "".html_safe if title.blank?
 
     case title
     when Hash
@@ -19,10 +21,10 @@ module TitleHelper
     id = id_for(title)
 
     # Update the options hash so that subsequent uses include the label
-    combine_options(options, aria: { labelledby: id })
+    combine_options(options, aria: {labelledby: id})
 
     # Configure the title tag
-    title_options = combine_options(title_options, { class: sr_only ? 'sr-only' : nil, id: id })
+    title_options = combine_options(title_options, {class: sr_only ? "sr-only" : nil, id: id})
     content_tag(tag, title_options) { title }
   end
 end

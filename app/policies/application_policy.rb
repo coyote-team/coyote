@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Base class for Coyote authorization policies. Uses Pundit.
 # @abstract intended to be subclassed for each ActiveRecord class that needs policy protection
 # @see https://github.com/elabs/pundit
@@ -6,20 +8,10 @@ class ApplicationPolicy
   # @param organization_user [organization_user]
   # @param record [ActiveRecord::Base]
   def initialize(organization_user, record)
-    raise Pundit::NotAuthorizedError, 'must be logged in' unless organization_user
+    raise Pundit::NotAuthorizedError, "must be logged in" unless organization_user
 
     @organization_user = organization_user
     @record = record
-  end
-
-  # @return [false]
-  def index?
-    false
-  end
-
-  # @return [false]
-  def show?
-    false
   end
 
   # @return [false]
@@ -27,13 +19,8 @@ class ApplicationPolicy
     false
   end
 
-  # @return (see #create?)
-  def new?
-    create?
-  end
-
   # @return [false]
-  def update?
+  def destroy?
     false
   end
 
@@ -43,8 +30,13 @@ class ApplicationPolicy
   end
 
   # @return [false]
-  def destroy?
+  def index?
     false
+  end
+
+  # @return (see #create?)
+  def new?
+    create?
   end
 
   # @return [ActiveRecord::Base] the scope upon which to base ActiveRecord queries, based on the class of the record passed in
@@ -54,6 +46,16 @@ class ApplicationPolicy
     Pundit.policy_scope!(organization_user, record.class)
   end
 
+  # @return [false]
+  def show?
+    false
+  end
+
+  # @return [false]
+  def update?
+    false
+  end
+
   # @private only used for pundit-matchers spec error reporting
   def user
     organization_user
@@ -61,14 +63,11 @@ class ApplicationPolicy
 
   # Restricts ActiveRecord queries using scopes based on the user's access permissions
   class Scope
-    # @private only used for pundit-matchers specs
-    attr_reader :scope
-
     # @!attribute [r] organization_user
     #   @return [Coyote::OrganizationUser]
     # @!attribute [r] scope
     #   @return [ActiveRecord::Associations::CollectionProxy] the scope upon which to base ActiveRecord queries
-    #attr_reader :organization_user, :scope
+    # attr_reader :organization_user, :scope
 
     # @param organization_user [Coyote::OrganizationUser]
     # @param scope [ActiveRecord::Associations::CollectionProxy] the scope upon which to base ActiveRecord queries, which this class may scope further
@@ -84,6 +83,7 @@ class ApplicationPolicy
 
     private
 
+    # @private only used for pundit-matchers specs
     attr_reader :organization_user, :scope
   end
 

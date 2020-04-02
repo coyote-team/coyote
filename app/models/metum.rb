@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: meta
@@ -18,8 +20,8 @@
 # Represents a classification for Representations, such as 'Alt' or 'Long'
 # @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
-  validates_presence_of :title, :instructions
-  validates_uniqueness_of :title, scope: :organization_id
+  validates :title, :instructions, presence: true
+  validates :title, uniqueness: {scope: :organization_id}
 
   belongs_to :organization, inverse_of: :meta
 

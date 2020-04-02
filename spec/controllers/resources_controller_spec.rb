@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: resources
@@ -33,7 +35,7 @@ RSpec.describe ResourcesController do
   let(:resource) { create(:resource, organization: organization) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:resource_params) do
@@ -47,10 +49,10 @@ RSpec.describe ResourcesController do
   end
 
   let(:update_resource_params) do
-    resource_params.merge(resource: { title: "NEWTITLE" })
+    resource_params.merge(resource: {title: "NEWTITLE"})
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -79,7 +81,7 @@ RSpec.describe ResourcesController do
     end
   end
 
-  context "as an author" do
+  describe "as an author" do
     include_context "signed-in author user"
 
     it "succeeds for basic actions" do
@@ -101,7 +103,7 @@ RSpec.describe ResourcesController do
         expect(response).to be_redirect
       }.to change(organization.resources, :count).by(1)
 
-      post :create, params: base_params.merge(resource: { resource_group_id: nil })
+      post :create, params: base_params.merge(resource: {resource_group_id: nil})
       expect(response).not_to be_redirect
 
       expect {
@@ -114,7 +116,7 @@ RSpec.describe ResourcesController do
     end
   end
 
-  context "as an editor" do
+  describe "as an editor" do
     include_context "signed-in editor user"
 
     it "succeeds for critical actions" do
@@ -130,14 +132,14 @@ RSpec.describe ResourcesController do
         resource.reload
       }.to change(resource, :title).to("NEWTITLE")
 
-      post :update, params: update_resource_params.merge(resource: { resource_type: '' })
+      post :update, params: update_resource_params.merge(resource: {resource_type: ""})
       expect(response).not_to be_redirect
 
       expect {
         delete :destroy, params: update_resource_params
         expect(response).to redirect_to(organization_resources_url(organization))
-      }.to change { Resource.exists?(resource.id) }.
-        from(true).to(false)
+      }.to change { Resource.exists?(resource.id) }
+        .from(true).to(false)
     end
   end
 end

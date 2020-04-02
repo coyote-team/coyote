@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Coyote
   # Utility functions for managing Representations
   module Representation
     # Enumerates all states that a Representation can be in, corresponding to the database's
     # resource_status enum
     STATUSES = {
-      ready_to_review: 'ready_to_review',
-      approved:        'approved',
-      not_approved:    'not_approved'
+      ready_to_review: "ready_to_review",
+      approved:        "approved",
+      not_approved:    "not_approved",
     }.freeze
     # A list of MIME types for which Coyote accepts representations
     # @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types

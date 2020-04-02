@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Staff
   # Allows staff to inititate password resets
   class UserPasswordResetsController < Staff::ApplicationController

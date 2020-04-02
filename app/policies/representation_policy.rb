@@ -1,7 +1,16 @@
+# frozen_string_literal: true
+
 # Protects Representation objects
 # @see Representation
 # @see RepresentationsController
 class RepresentationPolicy < ApplicationPolicy
+  # @return [Boolean] whether or not the user can create representations for this organization
+  def create?
+    organization_user.author?
+  end
+
+  alias new? create?
+
   # @return [true] everyone can list representations in their organizations
   def index?
     true
@@ -11,13 +20,6 @@ class RepresentationPolicy < ApplicationPolicy
   def show?
     true
   end
-
-  # @return [Boolean] whether or not the user can create representations for this organization
-  def create?
-    organization_user.author?
-  end
-
-  alias new? create?
 
   # @return [Boolean] if the user can change the representation
   def update?

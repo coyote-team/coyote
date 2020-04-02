@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 RSpec.describe Staff::UserPasswordResetsController do
   let(:resetable_user) { create(:user) }
   let(:organization) { create(:organization) }
 
   let(:user_params) do
-    { user_id: resetable_user.id }
+    {user_id: resetable_user.id}
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -15,7 +17,7 @@ RSpec.describe Staff::UserPasswordResetsController do
     end
   end
 
-  context "as a signed-in owner" do
+  describe "as a signed-in owner" do
     include_context "signed-in owner user"
 
     it "requires user to be a staff member for all actions" do
@@ -25,7 +27,7 @@ RSpec.describe Staff::UserPasswordResetsController do
     end
   end
 
-  context "as a staff member" do
+  describe "as a staff member" do
     include_context "signed-in staff user"
 
     before do
@@ -37,8 +39,8 @@ RSpec.describe Staff::UserPasswordResetsController do
 
       expect {
         post :create, params: user_params
-      }.to change(ActionMailer::Base.deliveries, :count).
-        from(0).to(1)
+      }.to change(ActionMailer::Base.deliveries, :count)
+        .from(0).to(1)
 
       resetable_user.reload
       expect(resetable_user.reset_password_token).to be_present

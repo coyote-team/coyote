@@ -1,5 +1,11 @@
+# frozen_string_literal: true
+
 RSpec.describe SerializableResource do
-  include_context 'serializable object'
+  include_context "serializable object"
+
+  subject do
+    serialized.fetch(:attributes)
+  end
 
   let(:object) { build_stubbed(:resource) }
 
@@ -8,15 +14,11 @@ RSpec.describe SerializableResource do
   end
 
   before do
-    allow(object).
-      to receive_messages({
-        resource_group_title: 'Website',
-        approved_representations: approved_representations
+    allow(object)
+      .to receive_messages({
+        resource_group_title:     "Website",
+        approved_representations: approved_representations,
       })
-  end
-
-  subject do
-    serialized.fetch(:attributes)
   end
 
   it { is_expected.to include(id: object.identifier) }

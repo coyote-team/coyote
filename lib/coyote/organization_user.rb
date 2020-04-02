@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Coyote
   # Encapsulates a particular user acting within a particular organization, using a role defined via the Membership model.
   # Used by Pundit.

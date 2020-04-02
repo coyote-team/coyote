@@ -1,6 +1,6 @@
 defaults: &defaults
   google:
-    key: <%= ENV['GOOGLE_ANALYTICS_ID'] %>
+    key: <%= Credentials.dig(:google, :analytics_id) %>
 production:
   <<: *defaults
 development:

@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 RSpec.describe Staff::UsersController do
   let(:editable_user) { create(:user, active: true) }
   let(:organization) { create(:organization) }
 
   let(:user_params) do
-    { id: editable_user.id }
+    {id: editable_user.id}
   end
 
   let(:update_user_params) do
-    user_params.merge(user: { first_name: 'XYZ' })
+    user_params.merge(user: {first_name: "XYZ"})
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     it "requires login for all actions" do
@@ -33,7 +35,7 @@ RSpec.describe Staff::UsersController do
     end
   end
 
-  context "as a signed-in owner" do
+  describe "as a signed-in owner" do
     include_context "signed-in owner user"
 
     it "requires user to be a staff member for all actions" do
@@ -61,7 +63,7 @@ RSpec.describe Staff::UsersController do
     end
   end
 
-  context "as a staff member" do
+  describe "as a staff member" do
     include_context "signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
@@ -77,16 +79,16 @@ RSpec.describe Staff::UsersController do
       expect {
         patch :update, params: update_user_params
         editable_user.reload
-      }.to change(editable_user, :first_name).
-        to('XYZ')
+      }.to change(editable_user, :first_name)
+        .to("XYZ")
 
-      patch :update, params: user_params.merge(user: { email: '' })
+      patch :update, params: user_params.merge(user: {email: ""})
       expect(response).not_to be_redirect
 
       expect {
         delete :destroy, params: user_params
-      }.to change { User.find(editable_user.id).active }.
-        from(true).to(false)
+      }.to change { User.find(editable_user.id).active }
+        .from(true).to(false)
 
       expect(response).to be_redirect
     end

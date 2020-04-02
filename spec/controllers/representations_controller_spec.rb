@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: representations
@@ -36,7 +38,7 @@ RSpec.describe RepresentationsController do
   let(:endpoint) { create(:endpoint) }
 
   let(:base_params) do
-    { organization_id: organization.id }
+    {organization_id: organization.id}
   end
 
   let(:representation_params) do
@@ -52,19 +54,19 @@ RSpec.describe RepresentationsController do
 
     base_params.merge({
       representation: representation,
-      resource_id: resource.id
+      resource_id:    resource.id,
     })
   end
 
   let(:update_representation_params) do
-    representation_params.merge(representation: { text: 'NEWTEXT' })
+    representation_params.merge(representation: {text: "NEWTEXT"})
   end
 
   let(:representation) do
     create(:representation, organization: organization)
   end
 
-  context "as a signed-out user" do
+  describe "as a signed-out user" do
     include_context "signed-out user"
 
     let(:user) { build_stubbed(:user) }
@@ -95,10 +97,10 @@ RSpec.describe RepresentationsController do
     end
   end
 
-  context 'as a viewer user' do
+  describe "as a viewer user" do
     include_context "signed-in viewer user"
 
-    it 'succeeds for view-only actions, fails for edit actions' do
+    it "succeeds for view-only actions, fails for edit actions" do
       get :index, params: base_params
       expect(response).to be_successful
 
@@ -127,7 +129,7 @@ RSpec.describe RepresentationsController do
     end
   end
 
-  context 'as an author working with his or her own content' do
+  describe "as an author working with his or her own content" do
     include_context "signed-in author user"
 
     let(:representation) do
@@ -145,33 +147,33 @@ RSpec.describe RepresentationsController do
         post :create, params: new_representation_params
         expect(response).to be_redirect
         resource.reload
-      }.to change(resource.representations, :count).
-        from(0).to(1)
+      }.to change(resource.representations, :count)
+        .from(0).to(1)
 
-      post :create, params: base_params.merge(representation: { metum_id: metum.id }, resource_id: resource.id)
+      post :create, params: base_params.merge(representation: {metum_id: metum.id}, resource_id: resource.id)
       expect(response).not_to be_redirect
 
       expect {
         patch :update, params: update_representation_params
         representation.reload
-      }.to change(representation, :text).
-        to('NEWTEXT')
+      }.to change(representation, :text)
+        .to("NEWTEXT")
 
       expect(response).to redirect_to(representation_url(representation))
 
-      patch :update, params: representation_params.merge(representation: { license_id: nil })
+      patch :update, params: representation_params.merge(representation: {license_id: nil})
       expect(response).not_to be_redirect
 
       expect {
         delete :destroy, params: update_representation_params
-      }.to change { Representation.exists?(representation.id) }.
-        from(true).to(false)
+      }.to change { Representation.exists?(representation.id) }
+        .from(true).to(false)
 
       expect(response).to redirect_to(organization_representations_url(organization))
     end
   end
 
-  context "as an author working with another author's content" do
+  describe "as an author working with another author's content" do
     include_context "signed-in author user"
 
     let(:other_author) do
@@ -182,7 +184,7 @@ RSpec.describe RepresentationsController do
       create(:representation, author: other_author, organization: organization)
     end
 
-    it 'fails for all actions' do
+    it "fails for all actions" do
       expect {
         get :edit, params: representation_params
       }.to raise_error(Pundit::NotAuthorizedError)
