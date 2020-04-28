@@ -633,7 +633,7 @@ ALTER SEQUENCE public.resource_links_id_seq OWNED BY public.resource_links.id;
 CREATE TABLE public.resources (
     id bigint NOT NULL,
     identifier character varying NOT NULL,
-    title character varying DEFAULT 'Unknown'::character varying NOT NULL,
+    title character varying DEFAULT '(no title provided)'::character varying NOT NULL,
     resource_type public.resource_type NOT NULL,
     canonical_id character varying NOT NULL,
     source_uri public.citext,
@@ -2220,6 +2220,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181003222901'),
 ('20181005234836'),
 ('20200402174009'),
-('20200423170945');
+('20200423170945'),
+('20200428200839');
 
 

@@ -25,8 +25,6 @@ module PermittedParameters
       :source_uri,
       :title,
       :uploaded_resource,
-    ).tap do |resource_params|
-      resource_params[:title] = Resource::DEFAULT_TITLE if resource_params[:title].blank?
-    end
+    )
   end
 end

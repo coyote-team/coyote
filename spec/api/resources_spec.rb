@@ -62,7 +62,7 @@ RSpec.describe "Accessing resources" do
       }.to change(existing_resource, :title)
         .to("NEWTITLE")
 
-      patch api_resource_path(existing_resource.canonical_id), params: {resource: {resource_type: nil}}, headers: auth_headers
+      patch api_resource_path(existing_resource.canonical_id), params: {resource: {title: nil}}, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
