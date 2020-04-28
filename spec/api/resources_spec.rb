@@ -40,6 +40,19 @@ RSpec.describe "Accessing resources" do
       expect(new_resource.resource_group_title).to eq("website")
     end
 
+    it "POST /organizations/:id/resources without a title" do
+      expect {
+        post api_resources_path(user_organization.id), params: {resource: new_resource_params.except(:title)}, headers: auth_headers
+        expect(response).to be_created
+      }.to change(user_organization.resources, :count)
+        .from(0).to(1)
+
+      user_organization.resources.first.tap do |resource|
+        expect(resource.title).to eq(Resource::DEFAULT_TITLE)
+        expect(resource.resource_group_title).to eq("website")
+      end
+    end
+
     it "PATCH /resources/:id" do
       expect {
         patch api_resource_path(existing_resource.canonical_id), params: {resource: {title: "NEWTITLE"}}, headers: auth_headers
@@ -49,7 +62,7 @@ RSpec.describe "Accessing resources" do
       }.to change(existing_resource, :title)
         .to("NEWTITLE")
 
-      patch api_resource_path(existing_resource.canonical_id), params: {resource: {title: nil}}, headers: auth_headers
+      patch api_resource_path(existing_resource.canonical_id), params: {resource: {resource_type: nil}}, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
@@ -86,11 +99,8 @@ RSpec.describe "Accessing resources" do
       end
     end
 
-    let!(:representation) do
+    before do
       create(:representation, resource: represented_resource, text: 'can search for the term "polyphonic"')
-    end
-
-    let!(:other_org_resource) do
       create(:resource, source_uri: Faker::Internet.unique.url, title: "Current user should not be seeing this due to other org privacy restrictions")
     end
 

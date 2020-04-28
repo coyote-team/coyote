@@ -11,7 +11,7 @@ alias gsutil="gsutil -p ${project}"
 gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com run.googleapis.com
 
 # Step 2: create and configure the SQL instance
-# gcloud sql instances create coyote --database-version=POSTGRES_11 --tier db-g1-small --region=${region}
+gcloud sql instances create coyote --database-version=POSTGRES_11 --tier db-g1-small --region=${region}
 
 db_password=`bundle exec rails runner "puts SecureRandom.hex(20)"`
 echo "Setting database password: ${db_password}"

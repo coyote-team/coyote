@@ -14,6 +14,19 @@ module PermittedParameters
   end
 
   def resource_params
-    params.require(:resource).permit(:identifier, :title, :resource_type, :canonical_id, :source_uri, :resource_group_id, :priority_flag, :host_uris, :ordinality, :uploaded_resource)
+    params.require(:resource).permit(
+      :canonical_id,
+      :host_uris,
+      :identifier,
+      :ordinality,
+      :priority_flag,
+      :resource_group_id,
+      :resource_type,
+      :source_uri,
+      :title,
+      :uploaded_resource,
+    ).tap do |resource_params|
+      resource_params[:title] = Resource::DEFAULT_TITLE if resource_params[:title].blank?
+    end
   end
 end

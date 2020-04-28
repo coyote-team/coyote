@@ -36,6 +36,8 @@
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
+  DEFAULT_TITLE = "(no title provided)"
+
   before_save :set_canonical_id
   before_save :set_identifier
 
