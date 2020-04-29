@@ -135,7 +135,6 @@ Rails.logger.silence do
         resource_id = resource_ids[old_resource_id]
         rep['resource_id'] = resource_id
         if resource_id != old_resource_id
-          binding.pry
           # We're moving a representation to its duplicate
           puts "Duplicate description #{rep.inspect}"
           resource_path = "/resources/#{resource_id}"

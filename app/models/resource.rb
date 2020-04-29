@@ -4,20 +4,19 @@
 #
 # Table name: resources
 #
-#  id                    :bigint(8)        not null, primary key
+#  id                    :bigint           not null, primary key
+#  host_uris             :string           default([]), not null, is an Array
 #  identifier            :string           not null
-#  title                 :string           default("Unknown"), not null
+#  ordinality            :integer
+#  priority_flag         :boolean          default(FALSE), not null
+#  representations_count :integer          default(0), not null
 #  resource_type         :enum             not null
-#  canonical_id          :string           not null
-#  source_uri            :string
-#  resource_group_id     :bigint(8)        not null
-#  organization_id       :bigint(8)        not null
+#  source_uri            :citext
+#  title                 :string           default("(no title provided)"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  representations_count :integer          default(0), not null
-#  priority_flag         :boolean          default(FALSE), not null
-#  host_uris             :string           default([]), not null, is an Array
-#  ordinality            :integer
+#  canonical_id          :string           not null
+#  organization_id       :bigint           not null
 #
 # Indexes
 #
@@ -26,7 +25,11 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_resource_group_id                 (resource_group_id)
+#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id) ON DELETE => restrict ON UPDATE => cascade
 #
 
 # We use the Dublin Core meaning for what a Resource represents:
@@ -38,10 +41,12 @@
 class Resource < ApplicationRecord
   DEFAULT_TITLE = "(no title provided)"
 
+  before_create :set_default_resource_group
   before_save :set_canonical_id
   before_save :set_identifier
 
-  belongs_to :resource_group, inverse_of: :resources
+  after_save :notify_webhook!, if: :content_changed?
+
   belongs_to :organization, inverse_of: :resources
 
   has_many :representations, inverse_of: :resource
@@ -50,6 +55,10 @@ class Resource < ApplicationRecord
   has_many :object_resource_links, foreign_key: :object_resource_id, class_name: :ResourceLink, inverse_of: :object_resource
   has_many :assignments, inverse_of: :resource
   has_many :meta, through: :representations
+
+  has_many :resource_group_resources, inverse_of: :resource
+  has_many :resource_groups, through: :resource_group_resources, inverse_of: :resources
+  has_many :resource_webhook_calls, dependent: :destroy
 
   has_one_attached :uploaded_resource
 
@@ -68,6 +77,7 @@ class Resource < ApplicationRecord
   validates :identifier, uniqueness: true
   validates :resource_type, presence: true
   validates :canonical_id, uniqueness: {scope: :organization_id}
+  validates :source_uri, uniqueness: {scope: :organization_id}, if: :source_uri?
   validates :title, presence: true
 
   enum resource_type: Coyote::Resource::TYPES
@@ -109,6 +119,10 @@ class Resource < ApplicationRecord
     @complete = representations.count >= organization.meta.count
   end
 
+  def content_changed?
+    (previous_changes.keys & %w[identifier title resource_type canonical_id source_uri priority_flag host_uris ordinality]).any?
+  end
+
   def generate_canonical_id
     self.canonical_id = SecureRandom.uuid
   end
@@ -121,6 +135,10 @@ class Resource < ApplicationRecord
   # @return [String] a human-friendly means of identifying this resource in titles and select boxes
   def label
     "#{title} (#{identifier})"
+  end
+
+  def notify_webhook!
+    NotifyWebhookWorker.perform_async(id) if resource_groups.has_webhook.any?
   end
 
   def partially_complete?
@@ -147,6 +165,23 @@ class Resource < ApplicationRecord
 
   def represented?
     !unrepresented?
+  end
+
+  def resource_group
+    @resource_group ||= resource_groups.first
+  end
+
+  # def resource_group=(new_resource_group)
+  #   resource_group_resources << resource_group_resources.find_or_initialize_by(resource_group: new_resource_group)
+  # end
+
+  # def resource_group_id
+  #   resource_groups_ids.first
+  # end
+
+  def resource_group_id=(new_resource_group_id)
+    resource_group = new_resource_group_id.presence && organization.resource_groups.find_by(id: new_resource_group_id)
+    resource_groups << resource_group if resource_group.present? && !resource_group_ids.include?(resource_group.id)
   end
 
   def set_canonical_id
@@ -190,5 +225,11 @@ class Resource < ApplicationRecord
 
   def viewable?
     (source_uri.present? || uploaded_resource.attached?) && Coyote::Resource::IMAGE_LIKE_TYPES.include?(resource_type&.to_sym)
+  end
+
+  private
+
+  def set_default_resource_group
+    resource_groups << organization.resource_groups.default.first unless resource_groups.any?
   end
 end

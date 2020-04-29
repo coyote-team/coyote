@@ -10,7 +10,7 @@ module Api
 
     api :GET, "profile", "Return the authenticated user and their organization memberships"
     def show
-      render jsonapi: current_user, include: [:organizations]
+      render jsonapi: current_user, include: %i[organizations]
     end
   end
 end

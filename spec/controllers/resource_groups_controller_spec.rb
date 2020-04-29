@@ -10,6 +10,7 @@
 #  updated_at      :datetime
 #  organization_id :integer          not null
 #  default         :boolean          default(FALSE)
+#  webhook_uri     :string
 #
 # Indexes
 #

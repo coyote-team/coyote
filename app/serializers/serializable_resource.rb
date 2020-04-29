@@ -16,6 +16,8 @@ class SerializableResource < JSONAPI::Serializable::Resource
 
   belongs_to :organization
 
+  has_many :resource_groups
+
   has_many :representations do
     data do
       @object.approved_representations

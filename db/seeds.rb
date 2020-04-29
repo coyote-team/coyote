@@ -30,7 +30,7 @@ end
 resource = FactoryBot.create(:resource,{
   title: "T.Y.F.F.S.H., 2011",
   organization: organization,
-  resource_group: resource_groups.first,
+  resource_groups: [resource_groups.first],
   source_uri: 'https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png'
 })
 

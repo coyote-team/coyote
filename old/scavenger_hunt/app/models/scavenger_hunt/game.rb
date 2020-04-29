@@ -70,7 +70,6 @@ class ScavengerHunt::Game < ScavengerHunt::ApplicationRecord
     representations = representations.sort_by { |representation|
       (metum_attr(representation.resource, CLUE_POSITION_METUM_NAME) || 1_000_000).to_s.strip.to_i
     }
-    # binding.pry
     representations.each do |representation|
       answer = metum_attr(representation.resource, ANSWER_METUM_NAME)
       clues.create!(answer: answer, game: self, representation: representation) if answer.present?

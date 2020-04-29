@@ -4,10 +4,10 @@
 #
 # Table name: resource_links
 #
-#  id                  :bigint(8)        not null, primary key
-#  subject_resource_id :bigint(8)        not null
+#  id                  :bigint           not null, primary key
+#  subject_resource_id :bigint           not null
 #  verb                :string           not null
-#  object_resource_id  :bigint(8)        not null
+#  object_resource_id  :bigint           not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

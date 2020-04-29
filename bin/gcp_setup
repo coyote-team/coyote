@@ -1,38 +1,62 @@
 #!/usr/bin/env bash
+if [ $# -lt 1 ]
+then
+  echo "Usage: gcp_setup ENVIRONMENT [REGION] (where ENVIRONMENT is either 'production' or 'staging')"
+  exit
+fi
+
 env=$1
 env_name="staging" && [[ "${env}" == "production" ]] && env_name="live"
-project="${env_name}-coyote"
+project="staging-coyote"
 
-region="us-east4"
+region=$2 && [[ -z "$2" ] && "us-east1"
 alias gcloud="gcloud --project=${project}"
 alias gsutil="gsutil -p ${project}"
 
 # Step 1: enable the APIs
-gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com run.googleapis.com
+# gcloud services enable cloudbuild.googleapis.com secretmanager.googleapis.com run.googleapis.com
 
-# Step 2: create and configure the SQL instance
-gcloud sql instances create coyote --database-version=POSTGRES_11 --tier db-g1-small --region=${region}
+# Step 2: configure the SQL instance
+db_instance="coyote-${region}"
+existing_instance=`gcloud sql instances list | grep ${db_instance}`
+if [[ -z "${existing_instance}" ]]; then
+  echo "Creating Cloud SQL instance '${db_instance}'"
+  gcloud sql instances create ${db_instance} --database-version=POSTGRES_11 --tier db-g1-small --region=${region}
+else
+  echo "Using existing Cloud SQL instance '${db_instance}'"
+fi
 
-db_password=`bundle exec rails runner "puts SecureRandom.hex(20)"`
-echo "Setting database password: ${db_password}"
-gcloud sql users set-password postgres --instance=coyote --password=${db_password}
+db_user="coyote_${env}"
+if [[ -z "${DB_PASSWORD}" ]]; then
+  db_password=`bundle exec rails runner "puts SecureRandom.hex(20)"`
+  echo "Updating password for PostgreSQL user '${db_user}': '${db_password}'"
+  gcloud sql users set-password ${db_user} --instance=${db_instance} --password="${db_password}"
+else
+  echo "Using database password '${DB_PASSWORD}'"
+fi
 
-db_host=`gcloud sql instances describe coyote | sed -rn 's/connectionName: (.+)/\1/p'`
+db_host=`gcloud sql instances describe ${db_instance} | sed -rn 's/connectionName: (.+)/\1/p'`
 db_host="/cloudsql/${db_host}"
 db_host=`rails runner "puts CGI.escape('${db_host}')"`
-db_url="postgresql://postgres:${db_password}@${db_host}/coyote_production"
+db_url="postgresql://${db_user}:${db_password}@${db_host}/coyote_${env}"
 
 # Step 3: copy various credentials to the secrets manager
 secrets=`gcloud secrets list`
 add_secret() {
+  echo "Updating secret ${name}..."
   name=$1
   value=$2
   has_secret=`echo -n ${secrets} |grep "\b${name}\b"`
+  if [[ -z "${value}" ]]; then
+    echo "  Skipping (blank value)"
+    return
+  fi
+
   if [[ -z "${has_secret}" ]]; then
-    echo "Setting ${name} to '${value}'"
+    echo "  Creating: '${value}'"
     echo -n "${value}" | gcloud --project=${project} secrets create ${name} --replication-policy="automatic" --data-file=-
   else
-    echo "Updating ${name} to '${value}'"
+    echo "  Revising: '${value}'"
     echo -n "${value}" | gcloud --project=${project} secrets versions add ${name} --data-file=-
   fi
 }
@@ -40,12 +64,22 @@ add_secret() {
 add_secret "DATABASE_URL" "${db_url}"
 add_secret "RAILS_BASE_KEY" `cat config/master.key`
 add_secret "RAILS_MASTER_KEY" `cat config/credentials/production.key`
-add_secret "RAILS_STAGING_KEY" `cat config/credentials/staging.key`
 add_secret "MAILER_PASSWORD" `rails credentials:show --environment ${env} |grep mailer -A10 | sed -rn 's/\s*password: "(.+)"/\1/p'`
+if [[ "${env}" == "staging" ]]; then
+  add_secret "RAILS_STAGING_KEY" `cat config/credentials/staging.key`
+fi
 
 # Step 4: set up the storage bucket
 bucket="teamcoyote-uploads-${env}"
 has_bucket=`gsutil ls | grep "\b${bucket}\b"`
 # [[ -z "${has_bucket}" ]] && gsutil mb -l ${region} gs://${bucket}/
 
-# Step 5:
+# Step 5: create the Cloudtasker queue
+queue_command= "RAILS_ENV=production rails cloudtasker:setup_queue"
+if [[ "${env}" == "staging" ]]; then
+  STAGING=1 ${queue_command}
+else
+  ${queue_command}
+fi
+
+# Step 6:

@@ -12,3 +12,4 @@
    2. Bookmarklet
    3. ~~MySQL migrator~~
 8. ~~Cut over to Circle pipelines~~
+9. User request_tokens should be split out into a separate model

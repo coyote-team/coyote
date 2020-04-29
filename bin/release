@@ -1,7 +1,2 @@
 #!/usr/bin/env sh
-if [ "$STAGING" != "" ] && [ "$CLONE_DATABASE_URL" != "" ]
-then
-  pg_dump -c -O -x $CLONE_DATABASE_URL | psql $DATABASE_URL
-fi
-
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/rake db:migrate_or_setup

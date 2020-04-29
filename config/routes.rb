@@ -6,16 +6,22 @@
 #                          get_api_resources POST   /api/v1/organizations/:organization_id/resources/get(.:format)                           api/resources#index
 #                              api_resources GET    /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#index
 #                                            POST   /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#create
+#                        api_resource_groups GET    /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#index
+#                                            POST   /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#create
 #                        api_representations GET    /api/v1/resources/:resource_identifier/representations(.:format)                         api/representations#index
 #                                            POST   /api/v1/resources/:resource_identifier/representations(.:format)                         api/representations#create
 #                               api_resource GET    /api/v1/resources/:id(.:format)                                                          api/resources#show
 #                                            PATCH  /api/v1/resources/:id(.:format)                                                          api/resources#update
 #                                            PUT    /api/v1/resources/:id(.:format)                                                          api/resources#update
-#                                            DELETE /api/v1/resources/:id(.:format)                                                          api/resources#destroy
+#                         api_resource_group GET    /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#show
+#                                            PATCH  /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#update
+#                                            PUT    /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#update
+#                                            DELETE /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#destroy
 #                         api_representation GET    /api/v1/representations/:id(.:format)                                                    api/representations#show
 #                                            PATCH  /api/v1/representations/:id(.:format)                                                    api/representations#update
 #                                            PUT    /api/v1/representations/:id(.:format)                                                    api/representations#update
 #                                            DELETE /api/v1/representations/:id(.:format)                                                    api/representations#destroy
+#                                   api_user GET    /api/v1/profile(.:format)                                                                api/users#show
 #                              edit_resource GET    /resources/:id/edit(.:format)                                                            resources#edit
 #                                   resource GET    /resources/:id(.:format)                                                                 resources#show
 #                                            PATCH  /resources/:id(.:format)                                                                 resources#update
@@ -131,6 +137,8 @@ Rails.application.routes.draw do
             post :get, to: "resources#index"
           end
         end
+
+        resources :resource_groups, only: %i[index create]
       end
 
       scope "resources/:resource_identifier" do
@@ -138,6 +146,7 @@ Rails.application.routes.draw do
       end
 
       resources :resources, only: %i[show update]
+      resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show update destroy]
       resource :user, only: %(show), path: "profile"
     end

@@ -8,6 +8,9 @@ table
   caption
     text-align: left
 
+  tr
+    height: 100%
+
   th, td
     padding: $gutter
     vertical-align: middle
@@ -32,12 +35,26 @@ table
         margin-right: 0
 
     &.table-cell-link
+      cursor: pointer
       height: 100%
       padding: 0
+      position: relative
 
       a
-        display: block
+        display: inline-block
         padding: $gutter
+
+        &,
+        &:focus
+          box-shadow: none
+
+        &:after
+          bottom: 0
+          content: ""
+          left: 0
+          position: absolute
+          right: 0
+          top: 0
 
         &:first-child
           padding-left: 0
@@ -75,7 +92,7 @@ table
         td
           color: $placeholder
 
-      @include non-mobile
+      +non-mobile
         th
           padding-right: $gutter
           width: 10px
@@ -84,7 +101,8 @@ table
           ~ td
             padding-left: $gutter
 
-      @include mobile
+
+      +mobile
         th
           display: block
 

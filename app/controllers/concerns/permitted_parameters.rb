@@ -10,7 +10,19 @@ module PermittedParameters
   end
 
   def representation_params
-    params.require(:representation).permit(:content_uri, :text, :metum_id, :content_type, :language, :license_id, :notes, :status, :author_id, :endpoint_id, :ordinality)
+    params.require(:representation).permit(
+      :author_id,
+      :content_type,
+      :content_uri,
+      :endpoint_id,
+      :language,
+      :license_id,
+      :metum_id,
+      :notes,
+      :ordinality,
+      :status,
+      :text,
+    )
   end
 
   def resource_params
@@ -21,10 +33,12 @@ module PermittedParameters
       :ordinality,
       :priority_flag,
       :resource_group_id,
+      :resource_group_ids,
       :resource_type,
       :source_uri,
       :title,
       :uploaded_resource,
+      resource_group_ids: [],
     )
   end
 end

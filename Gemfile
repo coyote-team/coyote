@@ -13,10 +13,12 @@ gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"
 gem "autoprefixer-rails"
-gem "aws-sdk-s3", require: false
-gem "bootsnap"
+# gem "aws-sdk-s3", require: false # Comment this in to use S3 instead of Google Cloud Storage - see config/storage.yml
+gem "bootsnap", require: false
+gem "cloudtasker"
 gem "devise" # user auth
 gem "easymarklet", git: "https://github.com/seeread/easymarklet.git", ref: "53829a6"
+gem "faraday"
 gem "haml-rails", ">= 1.0.0"
 gem "iconv"
 gem "jquery-rails", ">= 4.0.4"
@@ -26,7 +28,7 @@ gem "language_list"
 gem "lightbox2-rails", github: "johansmitsnl/lightbox2-rails" # for resource lightboxes on index pages
 gem "metamagic" # meta
 gem "mini_racer", require: false
-gem "pg", "~> 0.20.0" # our version of activerecord has a bug with v0.21; see https://stackoverflow.com/questions/44607324/installing-newest-version-of-rails-4-with-postgres-the-pgconn-pgresult-and-p
+gem "pg"
 gem "puma"
 gem "pundit"
 gem "rake"
@@ -69,7 +71,6 @@ group :development do
     gem "guard-livereload", require: false
     gem "guard-rspec", require: false
     gem "guard-rubocop", require: false
-    gem "guard-sass", require: false
     gem "rb-fsevent" # osx file system changes
   end
 end
@@ -89,8 +90,27 @@ group :test do
   gem "webmock"
 end
 
+# This hack is to ensure that Google's protocol buffers and GRPC libraries build correctly in
+# Docker. It's the worst. I know it. I'm sorry. But otherwise we can't use Google libraries in
+# Alpine.
+module BundlerHack
+  def __materialize__
+    if name == "grpc" || name == "google-protobuf"
+      Bundler.settings.temporary(force_ruby_platform: true) do
+        super
+      end
+    else
+      super
+    end
+  end
+end
+
+Bundler::LazySpecification.prepend(BundlerHack)
+
 group :production do
-  gem "google-cloud-storage"
+  gem "google-cloud-storage", require: false
+  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"]
+  gem "grpc", "1.27.0", platforms: ["ruby"]
   gem "sentry-raven"
 end
 

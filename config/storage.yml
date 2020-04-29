@@ -26,7 +26,7 @@ azure:
 google:
   service: GCS
   project: <%= Credentials.dig(:google, :project) %>
-  credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
+  credentials: <%= Credentials.fetch(:google, :application_credentials) { Rails.root.join("path/to/gcs.keyfile") } %>
   bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
 # mirror:

@@ -43,7 +43,7 @@ RSpec.describe Dashboard, type: :integration do
     let(:resource_group) { create(:resource_group, organization: organization) }
 
     let!(:resources) do
-      create_list(:resource, 5, organization: organization, resource_group: resource_group)
+      create_list(:resource, 5, organization: organization, resource_groups: [resource_group])
     end
 
     let(:first_resource) { resources[0] }

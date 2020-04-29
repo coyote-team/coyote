@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access, only: %i[show destroy]
 
-  helper_method :assignment, :assigned_users, :next_resource, :users, :resources
+  helper_method :assignment, :assigned_users
 
   # POST /assignments
   def create
@@ -63,10 +63,6 @@ class AssignmentsController < ApplicationController
 
   attr_accessor :assigned_users, :assignment
 
-  def assigned_resource
-    current_organization.resources.find(assignment_params[:resource_id])
-  end
-
   def assigned_user
     current_organization.users.find(assignment_params[:user_id])
   end
@@ -83,19 +79,7 @@ class AssignmentsController < ApplicationController
     authorize(assignment)
   end
 
-  def next_resource
-    current_organization.resources.unassigned.first
-  end
-
-  def resources
-    current_organization.resources
-  end
-
   def set_assignment
     self.assignment = current_organization.assignments.find(params[:id])
-  end
-
-  def users
-    current_organization.users.sorted
   end
 end

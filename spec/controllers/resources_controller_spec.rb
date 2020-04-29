@@ -4,14 +4,13 @@
 #
 # Table name: resources
 #
-#  id                    :bigint(8)        not null, primary key
+#  id                    :bigint           not null, primary key
 #  identifier            :string           not null
-#  title                 :string           default("Unknown"), not null
+#  title                 :string           default("(no title provided)"), not null
 #  resource_type         :enum             not null
 #  canonical_id          :string           not null
-#  source_uri            :string
-#  resource_group_id     :bigint(8)        not null
-#  organization_id       :bigint(8)        not null
+#  source_uri            :citext
+#  organization_id       :bigint           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  representations_count :integer          default(0), not null
@@ -26,7 +25,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_resource_group_id                 (resource_group_id)
+#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
 
 RSpec.describe ResourcesController do
@@ -84,32 +83,46 @@ RSpec.describe ResourcesController do
   describe "as an author" do
     include_context "signed-in author user"
 
-    it "succeeds for basic actions" do
+    it "shows resources" do
       get :show, params: resource_params
       expect(response).to be_successful
+    end
 
+    it "lists resources" do
       get :index, params: base_params
       expect(response).to be_successful
+    end
 
+    it "shows an edit page" do
       expect {
         get :edit, params: resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
+    end
 
+    it "shows a new page" do
       get :new, params: base_params
       expect(response).to be_successful
+    end
 
+    it "creates valid resources" do
       expect {
         post :create, params: new_resource_params
         expect(response).to be_redirect
       }.to change(organization.resources, :count).by(1)
+    end
 
+    it "does not create invalid resources" do
       post :create, params: base_params.merge(resource: {resource_group_id: nil})
       expect(response).not_to be_redirect
+    end
 
+    it "updates resources" do
       expect {
         patch :update, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
+    end
 
+    it "deletes resources" do
       expect {
         delete :destroy, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)

@@ -38,8 +38,6 @@ guard :bundler do
   watch("Gemfile")
 end
 
-guard "sass", input: "sass", output: "css"
-
 guard "livereload" do
   watch(%r{app/views/.+\.(erb|haml|slim)$})
   watch(%r{app/helpers/.+\.rb})

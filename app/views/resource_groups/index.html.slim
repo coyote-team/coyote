@@ -4,11 +4,13 @@ table
   thead
     tr
       th Title
+      th Webhook
       th.table-cell-actions Actions
   tbody
     - resource_groups.each_with_index do |resource_group, idx|
       tr
         td.table-cell-primary.table-cell-link= link_to resource_group.title_with_default_annotation, organization_resource_group_path(current_organization, resource_group)
+        td.table-cell-link= link_to resource_group.webhook_uri || "", organization_resource_group_path(current_organization, resource_group)
         td.table-cell-actions
           = link_to 'Edit', edit_organization_resource_group_path(current_organization, resource_group), class: "button button--outline", title: "Edit this resource group"
           = button_to 'Delete', organization_resource_group_path(current_organization, resource_group), title: "Delete this resource group", class: 'button button--outline', method: :delete, disabled: resource_group.resources.any? || resource_group.default?, data: { confirm: "Are you sure you want to delete #{resource_group}?" }

@@ -8,7 +8,7 @@
   = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names, label_method: -> (t) { t.to_s.titleize }
   = f.input :canonical_id, required: true, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
   = f.input :identifier, hint: 'This should be a unique string that does not change - used to identify the resource within Coyote. If blank, we will attempt to set one for you based on the title field.'
-  = f.association :resource_group, label: 'Resource Group', prompt: "Pick a resource group", collection: resource_group_list
+  = f.association :resource_groups, label: 'Resource Group', prompt: "Pick a resource group", collection: resource_group_list
   = f.input :source_uri, as: :url, label: 'Source URI', hint: 'Identifies the canonical location of the resource, if available', required: false
   = f.input :host_uris, label: 'Host URIs', hint: 'Identifies the locations where the resource is normally hosted or viewed. Separate lines are considered separate URIs.', as: :text, input_html: { value: resource.host_uris.join("\n") }
 

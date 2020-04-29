@@ -5,15 +5,20 @@
 # Table name: resource_groups
 #
 #  id              :integer          not null, primary key
+#  default         :boolean          default(FALSE)
 #  title           :string           not null
+#  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
-#  default         :boolean          default(FALSE)
 #
 # Indexes
 #
 #  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id) ON DELETE => cascade ON UPDATE => cascade
 #
 
 FactoryBot.define do

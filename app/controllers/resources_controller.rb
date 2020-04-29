@@ -13,9 +13,9 @@ class ResourcesController < ApplicationController
   helper_method :resource, :record_filter, :filter_params
 
   def create
-    self.resource = current_organization.resources.new(resource_params)
+    self.resource = current_organization.resources.new
 
-    if resource.save
+    if resource.update(resource_params)
       logger.info "Created #{resource}"
       redirect_to resource, notice: "The resource has been created"
     else
@@ -37,8 +37,8 @@ class ResourcesController < ApplicationController
 
   def new
     self.resource = current_organization.resources.new(
-      title:          "",
-      resource_group: current_organization.resource_groups.default.first,
+      title:           "",
+      resource_groups: current_organization.resource_groups.default.to_a,
     )
   end
 

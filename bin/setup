@@ -10,7 +10,7 @@ def setup!
     run  "bundle install"
 
     check_for_database
-    run("bin/rake db:drop db:setup db:test:prepare")
+    run("bin/rake db:setup db:test:prepare")
   end
 end
 

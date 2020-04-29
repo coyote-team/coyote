@@ -145,14 +145,6 @@ module Api
     def create
       resource = current_organization.resources.find_or_initialize_by(canonical_id: resource_params[:canonical_id])
 
-      # Assign a resource group if it has changed or is not assigned, falling back to a default group
-      resource_group_id = resource_params.delete(:resource_group_id)
-      unless resource.resource_group_id != resource_group_id
-        resource.resource_group = (
-          resource_group_id.present? && current_user.resource_groups.find_by(id: resource_group_id)
-        ) || current_organization.resource_groups.default.first
-      end
-
       if resource.update(resource_params)
         logger.info "Created #{resource}"
         render jsonapi: resource, status: :created, links: {
@@ -280,7 +272,6 @@ module Api
     private
 
     attr_accessor :resource
-    attr_writer :current_organization
 
     def authorize_general_access
       authorize(Resource)

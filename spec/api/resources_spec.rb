@@ -66,6 +66,30 @@ RSpec.describe "Accessing resources" do
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
+
+    it "PATCH /resources/:id with multiple resource group IDs" do
+      default_resource_group = user_organization.resource_groups.default.first
+      params = {
+        resource: {
+          resource_group_ids: [
+            default_resource_group.id,
+            resource_group.id,
+          ],
+        },
+      }
+
+      expect {
+        patch api_resource_path(existing_resource.canonical_id), params: params, headers: auth_headers
+        expect(response).to be_successful
+
+        existing_resource.reload
+        existing_resource.resource_groups.reload
+      }.to change { existing_resource.resource_groups.to_a }
+        .to([
+          default_resource_group,
+          resource_group,
+        ])
+    end
   end
 
   describe "with multiple resources" do
@@ -80,7 +104,9 @@ RSpec.describe "Accessing resources" do
     end
 
     let!(:user_org_resources) do
-      create_list(:resource, user_org_resource_count, organization: user_organization, priority_flag: true, source_uri: -> { Faker::Internet.unique.url })
+      create_list(:resource, user_org_resource_count, organization: user_organization, priority_flag: true) do |resource|
+        resource.source_uri = Faker::Internet.unique.url
+      end
     end
 
     let(:represented_resource) do

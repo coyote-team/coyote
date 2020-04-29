@@ -75,12 +75,12 @@ CREATE TYPE public.resource_type AS ENUM (
 CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-      BEGIN
-      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
-      END;
+        DECLARE
+        BEGIN
+        EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
+        END;
 
-    $$;
+      $$;
 
 
 SET default_tablespace = '';
@@ -561,6 +561,38 @@ ALTER SEQUENCE public.representations_id_seq OWNED BY public.representations.id;
 
 
 --
+-- Name: resource_group_resources; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_group_resources (
+    id bigint NOT NULL,
+    resource_group_id bigint,
+    resource_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_group_resources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_group_resources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_group_resources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_group_resources_id_seq OWNED BY public.resource_group_resources.id;
+
+
+--
 -- Name: resource_groups; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -570,7 +602,8 @@ CREATE TABLE public.resource_groups (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     organization_id integer NOT NULL,
-    "default" boolean DEFAULT false
+    "default" boolean DEFAULT false,
+    webhook_uri character varying
 );
 
 
@@ -627,6 +660,41 @@ ALTER SEQUENCE public.resource_links_id_seq OWNED BY public.resource_links.id;
 
 
 --
+-- Name: resource_webhook_calls; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_webhook_calls (
+    id bigint NOT NULL,
+    resource_id bigint NOT NULL,
+    uri character varying NOT NULL,
+    body json,
+    response integer,
+    error text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_webhook_calls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_webhook_calls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_webhook_calls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_webhook_calls_id_seq OWNED BY public.resource_webhook_calls.id;
+
+
+--
 -- Name: resources; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -637,7 +705,6 @@ CREATE TABLE public.resources (
     resource_type public.resource_type NOT NULL,
     canonical_id character varying NOT NULL,
     source_uri public.citext,
-    resource_group_id bigint NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -1180,6 +1247,13 @@ ALTER TABLE ONLY public.representations ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: resource_group_resources id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_group_resources ALTER COLUMN id SET DEFAULT nextval('public.resource_group_resources_id_seq'::regclass);
+
+
+--
 -- Name: resource_groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1191,6 +1265,13 @@ ALTER TABLE ONLY public.resource_groups ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.resource_links ALTER COLUMN id SET DEFAULT nextval('public.resource_links_id_seq'::regclass);
+
+
+--
+-- Name: resource_webhook_calls id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_webhook_calls ALTER COLUMN id SET DEFAULT nextval('public.resource_webhook_calls_id_seq'::regclass);
 
 
 --
@@ -1397,6 +1478,14 @@ ALTER TABLE ONLY public.representations
 
 
 --
+-- Name: resource_group_resources resource_group_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_group_resources
+    ADD CONSTRAINT resource_group_resources_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: resource_groups resource_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1410,6 +1499,14 @@ ALTER TABLE ONLY public.resource_groups
 
 ALTER TABLE ONLY public.resource_links
     ADD CONSTRAINT resource_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_webhook_calls resource_webhook_calls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_webhook_calls
+    ADD CONSTRAINT resource_webhook_calls_pkey PRIMARY KEY (id);
 
 
 --
@@ -1720,6 +1817,20 @@ CREATE INDEX index_representations_on_status ON public.representations USING btr
 
 
 --
+-- Name: index_resource_group_resources_on_resource_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_group_resources_on_resource_group_id ON public.resource_group_resources USING btree (resource_group_id);
+
+
+--
+-- Name: index_resource_group_resources_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_group_resources_on_resource_id ON public.resource_group_resources USING btree (resource_id);
+
+
+--
 -- Name: index_resource_groups_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1745,6 +1856,13 @@ CREATE INDEX index_resource_links_on_object_resource_id ON public.resource_links
 --
 
 CREATE INDEX index_resource_links_on_subject_resource_id ON public.resource_links USING btree (subject_resource_id);
+
+
+--
+-- Name: index_resource_webhook_calls_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_webhook_calls_on_resource_id ON public.resource_webhook_calls USING btree (resource_id);
 
 
 --
@@ -1783,10 +1901,10 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 
 
 --
--- Name: index_resources_on_resource_group_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resources_on_source_uri_and_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resources_on_resource_group_id ON public.resources USING btree (resource_group_id);
+CREATE UNIQUE INDEX index_resources_on_source_uri_and_organization_id ON public.resources USING btree (source_uri, organization_id) WHERE ((source_uri IS NOT NULL) AND (source_uri OPERATOR(public.<>) ''::public.citext));
 
 
 --
@@ -1968,14 +2086,6 @@ ALTER TABLE ONLY public.assignments
 
 ALTER TABLE ONLY public.resource_links
     ADD CONSTRAINT fk_rails_34c53ccf50 FOREIGN KEY (subject_resource_id) REFERENCES public.resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: resources fk_rails_445f527f69; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.resources
-    ADD CONSTRAINT fk_rails_445f527f69 FOREIGN KEY (resource_group_id) REFERENCES public.resource_groups(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -2221,6 +2331,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181005234836'),
 ('20200402174009'),
 ('20200423170945'),
-('20200428200839');
+('20200428200839'),
+('20200429211742'),
+('20200429212438'),
+('20200429224758'),
+('20200501205106');
 
 

@@ -4,21 +4,21 @@
 #
 # Table name: representations
 #
-#  id           :bigint(8)        not null, primary key
-#  resource_id  :bigint(8)        not null
-#  text         :text
-#  content_uri  :string
-#  status       :enum             default("ready_to_review"), not null
-#  metum_id     :bigint(8)        not null
-#  author_id    :bigint(8)        not null
+#  id           :bigint           not null, primary key
 #  content_type :string           default("text/plain"), not null
+#  content_uri  :string
 #  language     :string           not null
-#  license_id   :bigint(8)        not null
+#  notes        :text
+#  ordinality   :integer
+#  status       :enum             default("ready_to_review"), not null
+#  text         :text
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  notes        :text
-#  endpoint_id  :bigint(8)        not null
-#  ordinality   :integer
+#  author_id    :bigint           not null
+#  endpoint_id  :bigint           not null
+#  license_id   :bigint           not null
+#  metum_id     :bigint           not null
+#  resource_id  :bigint           not null
 #
 # Indexes
 #
@@ -28,6 +28,14 @@
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
 #  index_representations_on_status       (status)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (author_id => users.id) ON DELETE => restrict ON UPDATE => cascade
+#  fk_rails_...  (endpoint_id => endpoints.id) ON DELETE => cascade
+#  fk_rails_...  (license_id => licenses.id) ON DELETE => restrict ON UPDATE => cascade
+#  fk_rails_...  (metum_id => meta.id) ON DELETE => restrict ON UPDATE => cascade
+#  fk_rails_...  (resource_id => resources.id) ON DELETE => restrict ON UPDATE => cascade
 #
 
 RSpec.describe Representation do

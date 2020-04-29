@@ -13,5 +13,5 @@ test: &test
 
 production:
   <<: *default
-  database: coyote_production
+  database: <%= ENV["STAGING"].present? ? "coyote_staging" : "coyote_production" %>
   reconnect: true

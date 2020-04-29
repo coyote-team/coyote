@@ -4,7 +4,7 @@
 #
 # Table name: licenses
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  name       :string           not null
 #  title      :string           not null
 #  url        :string           not null

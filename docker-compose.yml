@@ -24,6 +24,7 @@ services:
     command: bundle exec rails server -b 0.0.0.0
     depends_on:
       - db
+      - worker
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
@@ -59,6 +60,12 @@ services:
       WEB_CONCURRENCY: 1
     ports:
       - 3030:3030
+
+  worker:
+    <<: *rails
+    command: bundle exec cloudtasker
+    depends_on: []
+    ports: []
 
 volumes:
   bundle:
