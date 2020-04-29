@@ -53,9 +53,12 @@ services:
       DATABASE_HOST: db
       DATABASE_URL: postgres://postgres:postgres@db/coyote_test:5432
       NODE_ENV: test
+      PORT: 3030
       RAILS_ENV: test
       SECRET_KEY_BASE: 0c46014ccd12dae8ddf7094d53d2e0befb9580f8a81ac95ba0f3f735acba275fa4999ff9aeac421d26a0ca4207072f13dd0ba6d540cb39b8fccff341091d3e66
       WEB_CONCURRENCY: 1
+    ports:
+      - 3030:3030
 
 volumes:
   bundle:

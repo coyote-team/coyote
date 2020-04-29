@@ -43,7 +43,7 @@ end
 # 2. RAILS_ENV specific
 # 3. Staging specific (if a STAGING flag is given)
 base_config = Credential.load("credentials", key_path: "master", env_name: "base")
-env_config = Rails.application.credentials.config.symbolize_keys
+env_config = Credential.load("credentials/#{Rails.env}", env_name: "master") # Rails.application.credentials.config.symbolize_keys
 staging_config = ENV["STAGING"].present? ? Credential.load("credentials/staging") : {}
 
 env_config = env_config.deep_merge(staging_config)

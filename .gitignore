@@ -23,8 +23,6 @@ pickle-email-*.html
 # Ignore application configuration
 /config/application.yml
 
-/config/master.key
-
 /config/credentials/production.key
 
 /config/credentials/staging.key
