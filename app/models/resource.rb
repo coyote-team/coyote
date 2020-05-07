@@ -158,10 +158,9 @@ class Resource < ApplicationRecord
     return if identifier.present?
     root_identifier = title.parameterize
     identifier = root_identifier
-    i = 1
-    while Resource.where(identifier: identifier).where.not(id: id).any?
-      i += 1
-      identifier = "#{root_identifier}-#{i}"
+    scope = persisted? ? Resource.where.not(id: id) : Resource
+    while scope.where(identifier: identifier).any?
+      identifier = "#{root_identifier}-#{SecureRandom.hex(3)}"
     end
     self.identifier = identifier
   end
