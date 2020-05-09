@@ -20,7 +20,6 @@ gem "devise" # user auth
 gem "easymarklet", git: "https://github.com/seeread/easymarklet.git", ref: "53829a6"
 gem "faraday"
 gem "haml-rails", ">= 1.0.0"
-gem "iconv"
 gem "jquery-rails", ">= 4.0.4"
 gem "jsonapi-rails"
 gem "kaminari"
@@ -57,7 +56,6 @@ end
 group :development do
   gem "annotate"
   gem "brakeman", require: false # basic security checks
-  gem "figaro", "1.0"
   gem "pry-rails" # gives us binding.pry calls
   gem "rails_real_favicon" # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem "yard"
@@ -67,27 +65,24 @@ group :development do
     gem "guard", require: false
     gem "guard-brakeman", require: false
     gem "guard-bundler", require: false
-    gem "guard-coffeescript", require: false
-    gem "guard-livereload", require: false
     gem "guard-rspec", require: false
     gem "guard-rubocop", require: false
-    gem "rb-fsevent" # osx file system changes
   end
 end
 
 group :test do
-  gem "airborne"
-  gem "capybara"
-  gem "codeclimate-test-reporter", require: nil
-  gem "database_cleaner"
-  gem "jsonapi-rspec"
-  gem "launchy" #  to use save_and_open_page from Capybara
-  gem "pundit-matchers" # better rspec testing of policies
-  gem "rails-controller-testing" # so we can use render_template matcher in controller functional specs
-  gem "selenium-webdriver"
-  gem "shoulda-matchers"
-  gem "vcr"
-  gem "webmock"
+  gem "capybara", require: false
+  gem "database_cleaner", require: false
+  gem "jsonapi-rspec", require: false
+  gem "launchy", require: false #  to use save_and_open_page from Capybara
+  gem "pundit-matchers", require: false # better rspec testing of policies
+  gem "rails-controller-testing", require: false # so we can use render_template matcher in controller functional specs
+  gem "selenium-webdriver", require: false
+  gem "shoulda-matchers", require: false
+  gem "simplecov", require: false
+  gem "simplecov-material", require: false
+  gem "vcr", require: false
+  gem "webmock", require: false
 end
 
 # This hack is to ensure that Google's protocol buffers and GRPC libraries build correctly in

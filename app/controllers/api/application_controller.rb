@@ -42,10 +42,6 @@ class Api::ApplicationController < ActionController::API
 
   alias pundit_user organization_user
 
-  def pagination_params
-    params.fetch(:page, {}).permit(:number, :size)
-  end
-
   def render_unauthorized
     render jsonapi_errors: [{
       title:  "Invalid Authorization Token",

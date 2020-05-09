@@ -6,18 +6,6 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
-  def admin?
-    current_user.try(:admin?)
-  end
-
-  def audited_value(value)
-    if value.is_a? Array
-      value.last
-    else
-      value
-    end
-  end
-
   def body_class(class_name = "")
     class_name = "#{body_class_default} #{class_name}"
     content_for :body_class, class_name
@@ -25,19 +13,6 @@ module ApplicationHelper
 
   def body_class_default
     [controller_name, action_name].join("-") + "#{controller_name} #{action_name}"
-  end
-
-  def description_css_class(description)
-    klass = "item "
-    case description.status_id
-    when 2
-      klass += "success"
-    when 1
-      klass += "warning"
-    when 3
-      klass += "danger"
-    end
-    klass
   end
 
   # Unwraps Devise error messages so they look like flash messages, the way regular application alerts work
@@ -55,23 +30,6 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
-  # @param text [String] the link text to show the user
-  # @param path [String] the link target
-  # @param icon_name [String] what Font Awesome icon to associate with the link. Optional, defaults to nil.
-  # @param options [Hash] passed on to the Rails link_to helper
-  # @return [String] HTML link with the given icon attached
-  # @see http://fontawesome.io/icons/
-  def drop_down_menu_link(text, path, icon_name = nil, options = {})
-    classes = %w[fa fa-fw]
-    classes << "fa-#{icon_name}" if icon_name
-
-    link_to(path, options) do
-      concat tag.i("", class: classes, 'aria-hidden': true)
-      concat "\n"
-      concat text
-    end
-  end
-
   # @return [Array<String, Integer>] list of Endpoints suitable for use in select boxes in Representation forms
   # @see Endpoint
   def endpoint_collection
@@ -82,21 +40,6 @@ module ApplicationHelper
   # @return [String] CSS class to use when styling a flash message
   def flash_class(level)
     FLASH_CLASSES.fetch(level.to_sym)
-  end
-
-  def image_status_css_class(status_code)
-    klass = ""
-    case status_code
-    when 0
-      klass += "undescribed"
-    when 1
-      klass += "partial"
-    when 2
-      klass += "warning"
-    when 3
-      klass += "success"
-    end
-    klass
   end
 
   # @return [Array<Array>] a collection of languages suitable for use in a select box
@@ -110,21 +53,6 @@ module ApplicationHelper
   # @see https://github.com/scsmith/language_list
   def language_name(language_code)
     LanguageList::LanguageInfo.find(language_code)&.name
-  end
-
-  def license_link(license)
-    "https://choosealicense.com/licenses/" + license
-  end
-
-  def license_title(license)
-    case license
-    when "cc0-1.0"
-      "Creative Commons Zero v1.0 Universal"
-    when "cc-by-sa-4.0"
-      "Creative Commons Attribution Share Alike 4.0"
-    when "cc-by-4.0"
-      "Creative Commons Attribution 4.0"
-    end
   end
 
   # @return [Integer] minimum number of password characters we accept
@@ -180,10 +108,6 @@ module ApplicationHelper
     end
   end
 
-  def to_html_attr(content)
-    h to_text(content)
-  end
-
   # @param content [String] a piece of text annotated with Markdown
   # @return [String] HTML-formatted string, suitable for use in an H1 tag
   # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
@@ -191,14 +115,6 @@ module ApplicationHelper
     html = to_html(content)
     html.gsub!(%r{(?:^<p>|</p>\n)}i, "")
     html.html_safe
-  end
-
-  def to_text(content)
-    if content.blank?
-      ""
-    else
-      strip_tags to_html(content)
-    end
   end
 
   # @return [String] welcome message, including the user's name if someone is logged-in

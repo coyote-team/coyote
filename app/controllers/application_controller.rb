@@ -51,10 +51,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # :nocov:
   def configure_sentry
     Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if user_signed_in?
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
+  # :nocov:
 
   def storable_location?
     request.get? && is_navigational_format? && !devise_controller? && !request.xhr?

@@ -1,22 +1,49 @@
 # frozen_string_literal: true
 
+require "simplecov"
+require "simplecov-material"
+
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::MaterialFormatter,
+])
+
+SimpleCov.start "rails" do
+  # Organize coverage of the `app` folder a little bit better
+  app = File.join(Dir.pwd, "app")
+  Dir[File.join(app, "*")].each do |folder|
+    folder = File.basename(folder)
+    name = folder
+      .split("_")
+      .inject("") { |whole, part| [whole, part[0].upcase + part[1..-1]].join(" ").strip }
+
+    next if folder == "views" || groups[name]
+
+    paths = [File.join("app", folder)]
+    add_group name, paths
+  end
+
+  groups.delete("Jobs")
+  self.groups = Hash[*groups.sort.flatten]
+end
+
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production? # Extra check to prevent database changes if the environment is production
 
 require "rspec/rails"
-require "factory_bot_rails"
-require "devise"
-require "webmock/rspec"
 require "capybara/rspec"
-require "simplecov"
-require "shoulda-matchers"
-require "airborne"
-require "vcr"
-require "pathname"
 require "database_cleaner"
+require "devise"
+require "factory_bot_rails"
+require "jsonapi/rspec"
+require "pathname"
 require "pry"
 require "pundit/matchers"
+require "rails-controller-testing"
+require "shoulda-matchers"
+require "simplecov"
+require "vcr"
+require "webmock/rspec"
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")
 
@@ -30,6 +57,12 @@ RSpec.configure do |config|
   config.include Coyote::Testing::EmailHelpers, type: :feature
   config.include Coyote::Testing::ApiHelpers, type: :request
   config.include JSONAPI::RSpec, type: :request
+
+  %i[controller view request].each do |type|
+    config.include ::Rails::Controller::Testing::TestProcess, type: type
+    config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
+    config.include ::Rails::Controller::Testing::Integration, type: type
+  end
 
   config.render_views # see https://relishapp.com/rspec/rspec-rails/v/3-6/docs/controller-specs/render-views#render-views-globally
 
@@ -91,18 +124,13 @@ ActiveRecord::Migration.maintain_test_schema!
 VCR.configure do |config|
   config.cassette_library_dir = "vcr"
   config.hook_into :webmock
-  config.ignore_hosts "codeclimate.com"
 end
 
-WebMock.disable_net_connect!(allow: [/validator/, /codeclimate/])
+WebMock.disable_net_connect!(allow: [/validator/])
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-SimpleCov.start do
-  add_filter "/config/" # Ignores any file containing "/config/" in its path.
 end

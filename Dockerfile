@@ -27,14 +27,12 @@ RUN apk update \
   && apk add --update --no-cache \
   build-base \
   git \
-  grpc-dev \
   libc6-compat \
   libxml2-dev \
   libxslt-dev \
   nodejs \
   postgresql-client \
   postgresql-dev \
-  protobuf-dev \
   ruby-json \
   tzdata \
   yaml-dev

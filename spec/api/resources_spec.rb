@@ -204,7 +204,8 @@ RSpec.describe "Accessing resources" do
     it "POST /organizations/:id/resources/get filtered by source_uri" do
       request_path = get_api_resources_path(user_organization)
       post request_path, headers: auth_headers, params: {filter: {source_uri_eq_any: "#{approved_resource.source_uri} #{older_resource.source_uri}"}}
-      expect(json_data[:data].map { |r| r.fetch(:id).to_i }).to eq([older_resource.id, approved_resource.id])
+      # TODO: Remove the 'sort' from here - this is dependent on ironing out the ordering TODO in RecordFilter
+      expect(json_data[:data].map { |r| r.fetch(:id).to_i }.sort).to eq([older_resource.id, approved_resource.id])
       expect(json_data[:links].keys).to eq(%w[self first]) # Shouldn't return any other (non-matching) resources
     end
   end

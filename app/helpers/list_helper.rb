@@ -12,15 +12,6 @@ module ListHelper
     component(defaults: {class: "list"}, options: options) { yield }
   end
 
-  def list_item(options = {})
-    options = combine_options(options, class: "list-item")
-    label = options.delete(:label)
-    value = options.delete(:value)
-    component(defaults: {class: "list-item"}) do
-      (list_item_label(label) + list_item_value(value) + (block_given? ? yield : "")).html_safe
-    end
-  end
-
   def list_item_label(label = nil)
     return "" unless label.present? || block_given?
     content_tag(:span, class: "list-item-label") { block_given? ? yield : label }
