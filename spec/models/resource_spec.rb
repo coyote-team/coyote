@@ -157,3 +157,4 @@ RSpec.describe Resource do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

@@ -67,6 +67,9 @@ class Representation < ApplicationRecord
 
   audited
 
+  delegate :notify_webhook!, to: :resource, allow_nil: true
+  after_save :notify_webhook!
+
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
     %i[approved by_ordinality not_approved ready_to_review]

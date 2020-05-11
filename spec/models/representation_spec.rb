@@ -44,12 +44,39 @@ RSpec.describe Representation do
   it { is_expected.to validate_presence_of(:language) }
 
   describe "with text and content URI blank" do
-    subject do
-      build(:representation, text: "", content_uri: "").tap(&:valid?)
+    let(:representation) { build(:representation, text: "", content_uri: "").tap(&:valid?) }
+
+    it "requires a textual representation" do
+      expect(representation.errors[:text]).to be_present
+    end
+  end
+
+  describe "#notify_webhook!" do
+    let(:resource_group) { create(:resource_group, webhook_uri: "http://www.example.com/webhook/goes/here") }
+    let(:resource) { create(:resource, resource_groups: [resource_group]) }
+
+    before do
+      stub_request(:post, resource_group.webhook_uri).to_return(
+        body:   "OKAY",
+        status: 200,
+      )
     end
 
-    specify do
-      expect(subject.errors[:text]).to be_present
+    around do |example|
+      VCR.use_cassette("webhooks", record: :new_episodes) do
+        example.run
+      end
     end
+
+    # rubocop:disable RSpec/MultipleExpectations
+    it "sends webhook notifications when resources are created" do
+      create(:representation, resource: resource)
+      expect(a_request(:post, resource_group.webhook_uri).with { |req|
+        body = JSON.parse(req.body)
+        expect(body.dig("data", "attributes", "canonical_id")).to eq(resource.canonical_id)
+        # expect(body.dig("data", "attributes", "canonical_id")).to eq(resource.canonical_id)
+      }).to have_been_made.times(2)
+    end
+    # rubocop:enable RSpec/MultipleExpectations
   end
 end
