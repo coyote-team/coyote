@@ -45,7 +45,7 @@ class Resource < ApplicationRecord
   before_save :set_canonical_id
   before_save :set_identifier
 
-  after_save :notify_webhook!, if: :content_changed?
+  after_commit :notify_webhook!, if: :content_changed?
 
   belongs_to :organization, inverse_of: :resources
 

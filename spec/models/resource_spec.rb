@@ -133,26 +133,13 @@ RSpec.describe Resource do
   end
 
   describe "#notify_webhook!" do
-    let(:resource_group) { create(:resource_group, webhook_uri: "http://www.example.com/webhook/goes/here") }
-
-    before do
-      stub_request(:post, "http://www.example.com/webhook/goes/here").to_return(
-        body:   "OKAY",
-        status: 200,
-      )
-    end
-
-    around do |example|
-      VCR.use_cassette("webhooks", record: :new_episodes) do
-        example.run
-      end
-    end
+    include_context "webhooks"
 
     it "sends webhook notifications when resources are created" do
       resource = create(:resource, resource_groups: [resource_group])
       expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
-        body = JSON.parse(req.body)
-        expect(body.dig("data", "attributes", "canonical_id")).to eq(resource.canonical_id)
+        data = JSON.parse(req.body)["data"]
+        expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
       }).to have_been_made
     end
   end

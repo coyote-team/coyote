@@ -45,6 +45,14 @@ class NotifyWebhookWorker
 
   private
 
+  def on_error(error)
+    if defined? Raven
+      Raven.capture_exception(exception)
+    else
+      raise error
+    end
+  end
+
   def record_webhook_call(resource_group, body, response, error)
     attributes = {
       body:     body,

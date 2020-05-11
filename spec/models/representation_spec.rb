@@ -52,30 +52,32 @@ RSpec.describe Representation do
   end
 
   describe "#notify_webhook!" do
-    let(:resource_group) { create(:resource_group, webhook_uri: "http://www.example.com/webhook/goes/here") }
-    let(:resource) { create(:resource, resource_groups: [resource_group]) }
+    include_context "webhooks"
 
-    before do
-      stub_request(:post, resource_group.webhook_uri).to_return(
-        body:   "OKAY",
-        status: 200,
-      )
-    end
-
-    around do |example|
-      VCR.use_cassette("webhooks", record: :new_episodes) do
-        example.run
-      end
-    end
+    let!(:resource) { create(:resource, resource_groups: [resource_group]) }
 
     # rubocop:disable RSpec/MultipleExpectations
-    it "sends webhook notifications when resources are created" do
-      create(:representation, resource: resource)
+    it "sends webhook notifications when represenations are created" do
+      WebMock.reset!
+      representation = create(:representation, resource: resource, status: :approved)
       expect(a_request(:post, resource_group.webhook_uri).with { |req|
         body = JSON.parse(req.body)
-        expect(body.dig("data", "attributes", "canonical_id")).to eq(resource.canonical_id)
-        # expect(body.dig("data", "attributes", "canonical_id")).to eq(resource.canonical_id)
-      }).to have_been_made.times(2)
+        included = body["included"]
+        expect(included).to include(have_type("representation").and(have_id(representation.id.to_s)))
+      }).to have_been_made
+    end
+
+    it "sends webhook notifications when representations are deleted" do
+      representation = create(:representation, resource: resource, status: :approved)
+      WebMock.reset!
+      representation.destroy
+      expect(a_request(:post, resource_group.webhook_uri).with { |req|
+        body = JSON.parse(req.body)
+        data = body["data"]
+        included = body["included"]
+        expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+        expect(included).not_to include(have_type("representation").and(have_id(representation.id.to_s)))
+      }).to have_been_made
     end
     # rubocop:enable RSpec/MultipleExpectations
   end
