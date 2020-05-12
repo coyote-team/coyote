@@ -68,7 +68,7 @@ class Representation < ApplicationRecord
   audited
 
   delegate :notify_webhook!, to: :resource, allow_nil: true
-  after_commit :notify_webhook!
+  after_commit :notify_webhook!, if: :should_notify_webhook?
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
@@ -85,5 +85,17 @@ class Representation < ApplicationRecord
     return if text.present?
     return if content_uri.present?
     errors.add(:text, "Either text or content URI must be present")
+  end
+
+  def should_notify_webhook?
+    # Always notify when approved representations change
+    return true if approved?
+
+    # Check if the status changed
+    status_change = previous_changes[:status]
+    return false if status_change.blank?
+
+    # Only notify the webhook if it has changed from approved to something else
+    status_change.first == Coyote::Representation::STATUSES[:approved]
   end
 end

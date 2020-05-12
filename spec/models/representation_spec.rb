@@ -56,14 +56,38 @@ RSpec.describe Representation do
 
     let!(:resource) { create(:resource, resource_groups: [resource_group]) }
 
-    # rubocop:disable RSpec/MultipleExpectations
-    it "sends webhook notifications when represenations are created" do
+    before do
       WebMock.reset!
+    end
+
+    # rubocop:disable RSpec/MultipleExpectations
+    it "sends webhook notifications when represenations are created (as approved)" do
       representation = create(:representation, resource: resource, status: :approved)
       expect(a_request(:post, resource_group.webhook_uri).with { |req|
         body = JSON.parse(req.body)
         included = body["included"]
         expect(included).to include(have_type("representation").and(have_id(representation.id.to_s)))
+      }).to have_been_made
+    end
+
+    it "sends webhook notifications when pre-exisitng represenations are marked as approved" do
+      representation = create(:representation, resource: resource, status: :ready_to_review)
+      representation.update!(status: :approved)
+      expect(a_request(:post, resource_group.webhook_uri).with { |req|
+        body = JSON.parse(req.body)
+        included = body["included"]
+        expect(included).to include(have_type("representation").and(have_id(representation.id.to_s)))
+      }).to have_been_made
+    end
+
+    it "sends webhook notifications when approved represenations are marked as unapproved" do
+      representation = create(:representation, resource: resource, status: :approved)
+      WebMock.reset!
+      representation.update!(status: :not_approved)
+      expect(a_request(:post, resource_group.webhook_uri).with { |req|
+        body = JSON.parse(req.body)
+        included = body["included"]
+        expect(included).not_to include(have_type("representation").and(have_id(representation.id.to_s)))
       }).to have_been_made
     end
 
@@ -79,6 +103,13 @@ RSpec.describe Representation do
         expect(included).not_to include(have_type("representation").and(have_id(representation.id.to_s)))
       }).to have_been_made
     end
+
+    it "does not send webhook notifications when unapproved representations change" do
+      representation = create(:representation, resource: resource, status: :not_approved)
+      representation.update!(status: :ready_to_review)
+      expect(a_request(:post, resource_group.webhook_uri)).not_to have_been_made
+    end
+
     # rubocop:enable RSpec/MultipleExpectations
   end
 end

@@ -197,7 +197,7 @@ RSpec.describe "Accessing resources" do
     it "GET /organizations/:id/resources filtered by source_uri" do
       request_path = api_resources_path(user_organization, filter: {source_uri_eq_any: "#{approved_resource.source_uri} #{older_resource.source_uri}"})
       get request_path, headers: auth_headers
-      expect(json_data[:data].map { |r| r.fetch(:id).to_i }).to eq([older_resource.id, approved_resource.id])
+      expect(json_data[:data].map { |r| r.fetch(:id).to_i }.sort).to eq([older_resource.id, approved_resource.id])
       expect(json_data[:links].keys).to eq(%w[self first]) # Shouldn't return any other (non-matching) resources
     end
 
