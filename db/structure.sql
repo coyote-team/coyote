@@ -242,115 +242,6 @@ ALTER SEQUENCE public.audits_id_seq OWNED BY public.audits.id;
 
 
 --
--- Name: descriptions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.descriptions (
-    id integer NOT NULL,
-    locale character varying DEFAULT 'en'::character varying,
-    text text,
-    status_id integer NOT NULL,
-    image_id integer NOT NULL,
-    metum_id integer NOT NULL,
-    user_id integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    license character varying DEFAULT 'cc0-1.0'::character varying
-);
-
-
---
--- Name: descriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.descriptions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: descriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.descriptions_id_seq OWNED BY public.descriptions.id;
-
-
---
--- Name: endpoints; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.endpoints (
-    id bigint NOT NULL,
-    name character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: endpoints_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.endpoints_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: endpoints_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.endpoints_id_seq OWNED BY public.endpoints.id;
-
-
---
--- Name: images; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.images (
-    id integer NOT NULL,
-    path character varying,
-    context_id integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    canonical_id character varying,
-    assignments_count integer DEFAULT 0 NOT NULL,
-    descriptions_count integer DEFAULT 0 NOT NULL,
-    title text,
-    priority boolean DEFAULT false NOT NULL,
-    status_code integer DEFAULT 0 NOT NULL,
-    old_page_urls character varying[] DEFAULT ARRAY[]::character varying[] NOT NULL,
-    organization_id bigint NOT NULL,
-    page_urls text[] DEFAULT '{}'::text[] NOT NULL
-);
-
-
---
--- Name: images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.images_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.images_id_seq OWNED BY public.images.id;
-
-
---
 -- Name: invitations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -394,10 +285,11 @@ ALTER SEQUENCE public.invitations_id_seq OWNED BY public.invitations.id;
 CREATE TABLE public.licenses (
     id bigint NOT NULL,
     name character varying NOT NULL,
-    title character varying NOT NULL,
+    description character varying NOT NULL,
     url character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    is_default boolean DEFAULT false
 );
 
 
@@ -460,7 +352,7 @@ ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 CREATE TABLE public.meta (
     id integer NOT NULL,
-    title character varying NOT NULL,
+    name character varying NOT NULL,
     instructions text DEFAULT ''::text NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -493,7 +385,7 @@ ALTER SEQUENCE public.meta_id_seq OWNED BY public.meta.id;
 
 CREATE TABLE public.organizations (
     id integer NOT NULL,
-    title text NOT NULL,
+    name text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -536,7 +428,6 @@ CREATE TABLE public.representations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     notes text,
-    endpoint_id bigint NOT NULL,
     ordinality integer
 );
 
@@ -598,7 +489,7 @@ ALTER SEQUENCE public.resource_group_resources_id_seq OWNED BY public.resource_g
 
 CREATE TABLE public.resource_groups (
     id integer NOT NULL,
-    title character varying NOT NULL,
+    name character varying NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     organization_id integer NOT NULL,
@@ -700,18 +591,16 @@ ALTER SEQUENCE public.resource_webhook_calls_id_seq OWNED BY public.resource_web
 
 CREATE TABLE public.resources (
     id bigint NOT NULL,
-    identifier character varying NOT NULL,
-    title character varying DEFAULT '(no title provided)'::character varying NOT NULL,
+    name character varying DEFAULT '(no title provided)'::character varying NOT NULL,
     resource_type public.resource_type NOT NULL,
-    canonical_id character varying NOT NULL,
-    source_uri public.citext,
+    canonical_id public.citext,
+    source_uri public.citext NOT NULL,
     organization_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     representations_count integer DEFAULT 0 NOT NULL,
     priority_flag boolean DEFAULT false NOT NULL,
-    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
-    ordinality integer
+    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -1011,102 +900,6 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: statuses; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.statuses (
-    id integer NOT NULL,
-    title character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.statuses_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
-
-
---
--- Name: taggings; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.taggings (
-    id integer NOT NULL,
-    tag_id integer NOT NULL,
-    taggable_id integer NOT NULL,
-    taggable_type character varying NOT NULL,
-    tagger_id integer NOT NULL,
-    tagger_type character varying NOT NULL,
-    context character varying(128),
-    created_at timestamp without time zone
-);
-
-
---
--- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.taggings_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.taggings_id_seq OWNED BY public.taggings.id;
-
-
---
--- Name: tags; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.tags (
-    id integer NOT NULL,
-    name character varying NOT NULL,
-    taggings_count integer DEFAULT 0 NOT NULL
-);
-
-
---
--- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.tags_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1181,27 +974,6 @@ ALTER TABLE ONLY public.assignments ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.audits ALTER COLUMN id SET DEFAULT nextval('public.audits_id_seq'::regclass);
-
-
---
--- Name: descriptions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions ALTER COLUMN id SET DEFAULT nextval('public.descriptions_id_seq'::regclass);
-
-
---
--- Name: endpoints id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.endpoints ALTER COLUMN id SET DEFAULT nextval('public.endpoints_id_seq'::regclass);
-
-
---
--- Name: images id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images ALTER COLUMN id SET DEFAULT nextval('public.images_id_seq'::regclass);
 
 
 --
@@ -1338,27 +1110,6 @@ ALTER TABLE ONLY public.scavenger_hunt_survey_questions ALTER COLUMN id SET DEFA
 
 
 --
--- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
-
-
---
--- Name: taggings id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.taggings ALTER COLUMN id SET DEFAULT nextval('public.taggings_id_seq'::regclass);
-
-
---
--- Name: tags id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1403,30 +1154,6 @@ ALTER TABLE ONLY public.assignments
 
 ALTER TABLE ONLY public.audits
     ADD CONSTRAINT audits_pkey PRIMARY KEY (id);
-
-
---
--- Name: descriptions descriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions
-    ADD CONSTRAINT descriptions_pkey PRIMARY KEY (id);
-
-
---
--- Name: endpoints endpoints_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.endpoints
-    ADD CONSTRAINT endpoints_pkey PRIMARY KEY (id);
-
-
---
--- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images
-    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
 
 
 --
@@ -1582,30 +1309,6 @@ ALTER TABLE ONLY public.scavenger_hunt_survey_questions
 
 
 --
--- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.statuses
-    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
-
-
---
--- Name: taggings taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.taggings
-    ADD CONSTRAINT taggings_pkey PRIMARY KEY (id);
-
-
---
--- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.tags
-    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
-
-
---
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1670,55 +1373,6 @@ CREATE INDEX index_audits_on_request_uuid ON public.audits USING btree (request_
 
 
 --
--- Name: index_descriptions_on_image_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_descriptions_on_image_id ON public.descriptions USING btree (image_id);
-
-
---
--- Name: index_descriptions_on_metum_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_descriptions_on_metum_id ON public.descriptions USING btree (metum_id);
-
-
---
--- Name: index_descriptions_on_status_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_descriptions_on_status_id ON public.descriptions USING btree (status_id);
-
-
---
--- Name: index_descriptions_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_descriptions_on_user_id ON public.descriptions USING btree (user_id);
-
-
---
--- Name: index_endpoints_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_endpoints_on_name ON public.endpoints USING btree (name);
-
-
---
--- Name: index_images_on_context_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_images_on_context_id ON public.images USING btree (context_id);
-
-
---
--- Name: index_images_on_organization_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_images_on_organization_id ON public.images USING btree (organization_id);
-
-
---
 -- Name: index_invitations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1761,17 +1415,17 @@ CREATE INDEX index_meta_on_organization_id ON public.meta USING btree (organizat
 
 
 --
--- Name: index_meta_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
+-- Name: index_meta_on_organization_id_and_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_meta_on_organization_id_and_title ON public.meta USING btree (organization_id, title);
+CREATE UNIQUE INDEX index_meta_on_organization_id_and_name ON public.meta USING btree (organization_id, name);
 
 
 --
--- Name: index_organizations_on_title; Type: INDEX; Schema: public; Owner: -
+-- Name: index_organizations_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_organizations_on_title ON public.organizations USING btree (title);
+CREATE UNIQUE INDEX index_organizations_on_name ON public.organizations USING btree (name);
 
 
 --
@@ -1779,13 +1433,6 @@ CREATE UNIQUE INDEX index_organizations_on_title ON public.organizations USING b
 --
 
 CREATE INDEX index_representations_on_author_id ON public.representations USING btree (author_id);
-
-
---
--- Name: index_representations_on_endpoint_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_representations_on_endpoint_id ON public.representations USING btree (endpoint_id);
 
 
 --
@@ -1831,10 +1478,10 @@ CREATE INDEX index_resource_group_resources_on_resource_id ON public.resource_gr
 
 
 --
--- Name: index_resource_groups_on_organization_id_and_title; Type: INDEX; Schema: public; Owner: -
+-- Name: index_resource_groups_on_organization_id_and_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_resource_groups_on_organization_id_and_title ON public.resource_groups USING btree (organization_id, title);
+CREATE UNIQUE INDEX index_resource_groups_on_organization_id_and_name ON public.resource_groups USING btree (organization_id, name);
 
 
 --
@@ -1863,13 +1510,6 @@ CREATE INDEX index_resource_links_on_subject_resource_id ON public.resource_link
 --
 
 CREATE INDEX index_resource_webhook_calls_on_resource_id ON public.resource_webhook_calls USING btree (resource_id);
-
-
---
--- Name: index_resources_on_identifier; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_resources_on_identifier ON public.resources USING btree (identifier);
 
 
 --
@@ -1978,20 +1618,6 @@ CREATE INDEX index_scavenger_hunt_survey_answers_on_survey_question_id ON public
 
 
 --
--- Name: index_taggings_on_taggable_id_and_taggable_type_and_context; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_taggings_on_taggable_id_and_taggable_type_and_context ON public.taggings USING btree (taggable_id, taggable_type, context);
-
-
---
--- Name: index_tags_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_tags_on_name ON public.tags USING btree (name);
-
-
---
 -- Name: index_users_on_authentication_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2017,13 +1643,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 --
 
 CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
-
-
---
--- Name: taggings_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX taggings_idx ON public.taggings USING btree (tag_id, taggable_id, taggable_type, context, tagger_id, tagger_type);
 
 
 --
@@ -2057,22 +1676,6 @@ ALTER TABLE ONLY public.representations
 
 
 --
--- Name: descriptions fk_rails_1baaf0e406; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions
-    ADD CONSTRAINT fk_rails_1baaf0e406 FOREIGN KEY (metum_id) REFERENCES public.meta(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: images fk_rails_21cb428019; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images
-    ADD CONSTRAINT fk_rails_21cb428019 FOREIGN KEY (organization_id) REFERENCES public.organizations(id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
 -- Name: assignments fk_rails_24272542fc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2086,14 +1689,6 @@ ALTER TABLE ONLY public.assignments
 
 ALTER TABLE ONLY public.resource_links
     ADD CONSTRAINT fk_rails_34c53ccf50 FOREIGN KEY (subject_resource_id) REFERENCES public.resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: descriptions fk_rails_58ab0d4634; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions
-    ADD CONSTRAINT fk_rails_58ab0d4634 FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2134,22 +1729,6 @@ ALTER TABLE ONLY public.resource_groups
 
 ALTER TABLE ONLY public.memberships
     ADD CONSTRAINT fk_rails_99326fb65d FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
-
-
---
--- Name: descriptions fk_rails_9f01492e23; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions
-    ADD CONSTRAINT fk_rails_9f01492e23 FOREIGN KEY (status_id) REFERENCES public.statuses(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: images fk_rails_a71674751c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images
-    ADD CONSTRAINT fk_rails_a71674751c FOREIGN KEY (context_id) REFERENCES public.resource_groups(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2198,22 +1777,6 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 ALTER TABLE ONLY public.representations
     ADD CONSTRAINT fk_rails_d040284b2b FOREIGN KEY (license_id) REFERENCES public.licenses(id) ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
---
--- Name: descriptions fk_rails_d1b03e17ed; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.descriptions
-    ADD CONSTRAINT fk_rails_d1b03e17ed FOREIGN KEY (image_id) REFERENCES public.images(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: representations fk_rails_e007b1bcf9; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.representations
-    ADD CONSTRAINT fk_rails_e007b1bcf9 FOREIGN KEY (endpoint_id) REFERENCES public.endpoints(id) ON DELETE CASCADE;
 
 
 --
@@ -2335,6 +1898,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200429211742'),
 ('20200429212438'),
 ('20200429224758'),
-('20200501205106');
+('20200501205106'),
+('20200514191454'),
+('20200519172348'),
+('20200519183148'),
+('20200519184306'),
+('20200520195141'),
+('20200520204316');
 
 

@@ -10,7 +10,7 @@ RSpec.describe "Accessing resource groups" do
 
     let(:new_resource_group_params) do
       {
-        title:       "website",
+        name:        "website",
         webhook_uri: "https://test/test",
       }
     end
@@ -23,10 +23,10 @@ RSpec.describe "Accessing resource groups" do
         .from(1).to(2)
 
       user_organization.resource_groups.order(id: :desc).first.tap do |resource_group|
-        expect(resource_group.title).to eq("website")
+        expect(resource_group.name).to eq("website")
       end
 
-      invalid_params = {resource_group: new_resource_group_params.except(:title)}
+      invalid_params = {resource_group: new_resource_group_params.except(:name)}
       post api_resource_groups_path, params: invalid_params, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
@@ -34,14 +34,14 @@ RSpec.describe "Accessing resource groups" do
 
     it "PATCH /resource_groups/:id" do
       expect {
-        patch api_resource_group_path(resource_group.id), params: {resource_group: {title: "NEWTITLE"}}, headers: auth_headers
+        patch api_resource_group_path(resource_group.id), params: {resource_group: {name: "NEWNAME"}}, headers: auth_headers
         expect(response).to be_successful
 
         resource_group.reload
-      }.to change(resource_group, :title)
-        .to("NEWTITLE")
+      }.to change(resource_group, :name)
+        .to("NEWNAME")
 
-      patch api_resource_group_path(resource_group.id), params: {resource_group: {title: nil}}, headers: auth_headers
+      patch api_resource_group_path(resource_group.id), params: {resource_group: {name: nil}}, headers: auth_headers
       expect(response).to be_unprocessable
       expect(json_data).to have_key(:errors)
     end
@@ -120,7 +120,7 @@ RSpec.describe "Accessing resource groups" do
         expect(data).to have_id(resource_group.id.to_s)
         expect(data).to have_type("resource_group")
 
-        expect(data).to have_attribute(:title).with_value(resource_group.title)
+        expect(data).to have_attribute(:name).with_value(resource_group.name)
         expect(data).to have_attribute(:webhook_uri).with_value(resource_group.webhook_uri)
       end
     end

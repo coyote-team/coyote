@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
     token = params.require(:token)
     return unless setup_invitation(token)
 
-    flash.now[:notice] = "Welcome to Coyote! After completing this form, you will become a member of the #{invitation.organization_title} organization."
+    flash.now[:notice] = "Welcome to Coyote! After completing this form, you will become a member of the #{invitation.organization_name} organization."
   end
 
   # PATCH /users
@@ -30,7 +30,7 @@ class RegistrationsController < ApplicationController
       logger.info "Successfully completed registration of #{user} for #{invitation}"
       invitation.redeem!
       sign_in(user) # Devise helper so user doesn't have to sign-in again; now the invited user is current_user
-      redirect_to invitation.organization, notice: "Welcome to Coyote! You are now a member of the #{invitation.organization_title} organization."
+      redirect_to invitation.organization, notice: "Welcome to Coyote! You are now a member of the #{invitation.organization_name} organization."
     else
       logger.warn "Unable to complete registration for #{user} due to '#{user.error_sentence}'"
       render :new

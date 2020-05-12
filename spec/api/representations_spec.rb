@@ -5,7 +5,9 @@ RSpec.describe "Representations" do
     include_context "API author user"
 
     let!(:representation) do
-      create(:representation, :approved, ordinality: 0, organization: user_organization)
+      create(:representation, :approved, ordinality: 0, organization: user_organization).tap do |representation|
+        representation.resource.update_attribute(:canonical_id, "abc123")
+      end
     end
 
     let!(:unapproved_representation) do
@@ -19,7 +21,7 @@ RSpec.describe "Representations" do
     end
 
     it "GET /resources/:resource_id/representations" do
-      get api_representations_path(representation.resource_identifier), headers: auth_headers
+      get api_representations_path(representation.resource_id), headers: auth_headers
       expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|
@@ -34,7 +36,7 @@ RSpec.describe "Representations" do
       end
 
       expected_link_paths = {
-        self: CGI.unescape(api_representations_path(representation.resource_identifier)),
+        self: CGI.unescape(api_representations_path(representation.resource_id)),
       }
 
       link_paths = jsonapi_link_paths(json_data)
@@ -43,19 +45,19 @@ RSpec.describe "Representations" do
     end
 
     it "GET /resources/:resource_id/representations with updated_at_gt filter" do
-      get api_representations_path(representation.resource_identifier), headers: auth_headers
+      get api_representations_path(representation.resource_id), headers: auth_headers
       data = json_data[:data]
       expect(data.size).to eq(2)
       expect(data.map { |datum| datum[:id] }).to eq([representation.id.to_s, old_representation.id.to_s])
 
-      get api_representations_path(representation.resource_identifier, filter: {updated_at_gt: 9.days.ago}), headers: auth_headers
+      get api_representations_path(representation.resource_id, filter: {updated_at_gt: 9.days.ago}), headers: auth_headers
       data = json_data[:data]
       expect(data.size).to eq(1)
       expect(data.map { |datum| datum[:id] }).to eq([representation.id.to_s])
     end
 
-    it "GET /resources/:resource_id/representations with canonical id" do
-      get api_representations_path(representation.resource.canonical_id), headers: auth_headers
+    it "GET /resources/canonical/:resource_id/representations with canonical id" do
+      get api_canonical_representations_path(representation.resource.canonical_id), headers: auth_headers
       expect(response).to be_successful
     end
 

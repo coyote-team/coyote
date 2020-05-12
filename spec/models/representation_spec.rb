@@ -15,7 +15,6 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  author_id    :bigint           not null
-#  endpoint_id  :bigint           not null
 #  license_id   :bigint           not null
 #  metum_id     :bigint           not null
 #  resource_id  :bigint           not null
@@ -23,7 +22,6 @@
 # Indexes
 #
 #  index_representations_on_author_id    (author_id)
-#  index_representations_on_endpoint_id  (endpoint_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
@@ -32,7 +30,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (author_id => users.id) ON DELETE => restrict ON UPDATE => cascade
-#  fk_rails_...  (endpoint_id => endpoints.id) ON DELETE => cascade
 #  fk_rails_...  (license_id => licenses.id) ON DELETE => restrict ON UPDATE => cascade
 #  fk_rails_...  (metum_id => meta.id) ON DELETE => restrict ON UPDATE => cascade
 #  fk_rails_...  (resource_id => resources.id) ON DELETE => restrict ON UPDATE => cascade

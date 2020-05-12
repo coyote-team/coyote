@@ -8,8 +8,10 @@ RSpec.describe "Representation adding and changing" do
   end
 
   let!(:metum) { create(:metum, :long, organization: user_organization) }
-  let!(:license) { create(:license) }
-  let!(:endpoint) { create(:endpoint) }
+
+  before do
+    create(:license)
+  end
 
   it "succeeds" do
     visit resource_url(resource)
@@ -20,7 +22,7 @@ RSpec.describe "Representation adding and changing" do
     new_text = attributes_for(:representation).fetch(:text)
 
     fill_in "Text", with: new_text
-    select metum.title, from: "Metum"
+    select metum.name, from: "Metum"
 
     expect {
       click_button("Create Description")
@@ -46,8 +48,6 @@ RSpec.describe "Representation adding and changing" do
 
     click_first_link "Descriptions"
     expect(page).to have_current_path(organization_representations_path(user_organization), ignore_query: true)
-
-    expect(page).to have_content(resource.title)
 
     expect {
       click_first_link("Delete")

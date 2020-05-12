@@ -3,5 +3,4 @@
   = dropdown_option link_to('Profile', edit_user_registration_path)
   = dropdown_option link_to('Organizations', organizations_path)
   = dropdown_option link_to('User Management (Staff)', staff_users_path) if current_user.staff?
-  = dropdown_option link_to('Endpoint Management (Staff)', staff_endpoints_path) if current_user.staff?
   = dropdown_option link_to('Log out', destroy_user_session_path, method: :delete)

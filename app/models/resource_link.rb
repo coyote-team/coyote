@@ -27,8 +27,8 @@ class ResourceLink < ApplicationRecord
   belongs_to :subject_resource, class_name: :Resource, inverse_of: :subject_resource_links
   belongs_to :object_resource, class_name: :Resource, inverse_of: :object_resource_links
 
-  delegate :organization, :label, :title, to: :subject_resource, prefix: true
-  delegate :organization, :label, :title, to: :object_resource, prefix: true
+  delegate :organization, :label, :name, to: :subject_resource, prefix: true
+  delegate :organization, :label, :name, to: :object_resource, prefix: true
 
   validates :verb, presence: true, inclusion: {in: Coyote::ResourceLink::VERB_NAMES, message: "%<value>s is not one of Coyote's accepted verbs: #{Coyote::ResourceLink::VERB_NAMES.to_sentence(last_word_connector: "or")}"}
   validates :verb, uniqueness: {scope: %i[subject_resource_id object_resource_id]}

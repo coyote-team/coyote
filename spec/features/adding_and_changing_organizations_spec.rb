@@ -9,13 +9,13 @@ RSpec.describe "Adding and changing an organization" do
     click_first_link "New Organization"
     expect(page).to have_current_path(new_organization_path, ignore_query: true)
 
-    fill_in "Title", with: "Acme Museum"
+    fill_in "Name", with: "Acme Museum"
 
     expect {
       click_button "Create Organization"
     }.to change(user.organizations, :count).from(1).to(2)
 
-    organization = user.organizations.find_by!(title: "Acme Museum")
+    organization = user.organizations.find_by!(name: "Acme Museum")
 
     expect(user.memberships.find_by!(organization: organization).role).to eq("owner")
     expect(page).to have_current_path(organization_path(organization), ignore_query: true)

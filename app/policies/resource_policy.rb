@@ -10,6 +10,7 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   alias new? create?
+  alias create_many? create?
 
   # @return [true] everyone can list resources in their organizations
   def index?

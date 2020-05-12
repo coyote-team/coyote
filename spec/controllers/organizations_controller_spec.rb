@@ -5,13 +5,13 @@
 # Table name: organizations
 #
 #  id         :integer          not null, primary key
-#  title      :text             not null
+#  name      :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_organizations_on_title  (title) UNIQUE
+#  index_organizations_on_name  (name) UNIQUE
 #
 
 RSpec.describe OrganizationsController do
@@ -26,7 +26,7 @@ RSpec.describe OrganizationsController do
   end
 
   let(:update_organization_params) do
-    {organization: {title: "NEWTITLE"}}
+    {organization: {name: "NEWNAME"}}
   end
 
   describe "as a signed-out user" do
@@ -79,7 +79,7 @@ RSpec.describe OrganizationsController do
         user.memberships.owner.where.not(organization: organization).count
       }.from(0).to(1)
 
-      post :create, params: {organization: {title: ""}}
+      post :create, params: {organization: {name: ""}}
       expect(response).not_to be_redirect
 
       expect {
@@ -98,9 +98,9 @@ RSpec.describe OrganizationsController do
       expect {
         patch :update, params: existing_organization_params.merge(update_organization_params)
         organization.reload
-      }.to change(organization, :title).to("NEWTITLE")
+      }.to change(organization, :name).to("NEWNAME")
 
-      patch :update, params: existing_organization_params.merge(organization: {title: ""})
+      patch :update, params: existing_organization_params.merge(organization: {name: ""})
       expect(response).not_to be_redirect
     end
   end

@@ -12,7 +12,7 @@
           th Resource
           td
             = link_to representation.resource do
-              = to_html(representation.resource_title)
+              = to_html(representation.resource_name)
         tr
           th Author
           td= link_to(representation.author, representation.author)
@@ -32,11 +32,8 @@
           th Metum
           td= metum_tag(representation.metum, hint: false)
         tr
-          th Endpoint
-          td= representation.endpoint_name
-        tr
           th License
-          td= representation.license_title
+          td= representation.license_description
         tr
           th Content URI
           td= link_to(nil, representation.content_uri)

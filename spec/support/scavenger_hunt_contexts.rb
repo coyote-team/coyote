@@ -9,7 +9,7 @@
 
 #   # ...include the meta used to identify content in Coyote that powers the game
 #   def metum_named(name)
-#     organization.meta.find_or_initialize_by(title: name).tap do |meta|
+#     organization.meta.find_or_initialize_by(name: name).tap do |meta|
 #       meta.update!(instructions: "Test")
 #     end
 #   end

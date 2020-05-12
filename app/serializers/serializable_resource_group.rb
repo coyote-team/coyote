@@ -4,7 +4,7 @@
 class SerializableResourceGroup < JSONAPI::Serializable::Resource
   type "resource_group"
 
-  attributes :title, :default, :webhook_uri
+  attributes :name, :default, :webhook_uri
 
   belongs_to :organization
 

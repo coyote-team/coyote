@@ -30,12 +30,6 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
-  # @return [Array<String, Integer>] list of Endpoints suitable for use in select boxes in Representation forms
-  # @see Endpoint
-  def endpoint_collection
-    Endpoint.sorted
-  end
-
   # @param level [String] level of flash message to be styled
   # @return [String] CSS class to use when styling a flash message
   def flash_class(level)

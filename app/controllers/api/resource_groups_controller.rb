@@ -75,7 +75,7 @@ module Api
 
     def resource_group_params
       params.require(:resource_group).permit(
-        :title,
+        :name,
         :webhook_uri,
       )
     end

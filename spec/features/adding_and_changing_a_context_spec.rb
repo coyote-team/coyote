@@ -9,7 +9,7 @@ RSpec.describe "Adding and editing a resource group" do
       click_link "New Resource Group"
       expect(page).to have_current_path(new_organization_resource_group_path(user_organization), ignore_query: true)
 
-      fill_in "Title", with: "Scavenger Hunt"
+      fill_in "Name", with: "Scavenger Hunt"
 
       expect {
         click_button "Create Resource Group"
@@ -19,12 +19,12 @@ RSpec.describe "Adding and editing a resource group" do
       expect(page).to have_current_path(organization_resource_group_path(user_organization, resource_group), ignore_query: true)
 
       click_link "Edit"
-      fill_in "Title", with: "Treasure Hunt"
+      fill_in "Name", with: "Treasure Hunt"
 
       expect {
         click_button "Update Resource Group"
         resource_group.reload
-      }.to change(resource_group, :title).to("Treasure Hunt")
+      }.to change(resource_group, :name).to("Treasure Hunt")
 
       expect(page).to have_current_path(organization_resource_group_path(user_organization, resource_group), ignore_query: true)
     end

@@ -1,6 +1,6 @@
 table
   caption
-    h1= title "Resource Groups for #{current_organization.title}"
+    h1= title "Resource Groups for #{current_organization.name}"
   thead
     tr
       th Title
@@ -9,7 +9,7 @@ table
   tbody
     - resource_groups.each_with_index do |resource_group, idx|
       tr
-        td.table-cell-primary.table-cell-link= link_to resource_group.title_with_default_annotation, organization_resource_group_path(current_organization, resource_group)
+        td.table-cell-primary.table-cell-link= link_to resource_group.name_with_default_annotation, organization_resource_group_path(current_organization, resource_group)
         td.table-cell-link= link_to resource_group.webhook_uri || "", organization_resource_group_path(current_organization, resource_group)
         td.table-cell-actions
           = link_to 'Edit', edit_organization_resource_group_path(current_organization, resource_group), class: "button button--outline", title: "Edit this resource group"

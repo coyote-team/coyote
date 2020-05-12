@@ -20,7 +20,8 @@ inherit_gem:
 AllCops:
   Exclude:
     - bin/**/*
-    - db/**/*
+    - db/migrate/**/*
+    - db/schema.rb
     - node_modules/**/*
     - script/**/*
     - vendor/**/*

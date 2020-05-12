@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  title           :string           not null
+#  name            :string           not null
 #  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -14,7 +14,7 @@
 #
 # Indexes
 #
-#  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
 # Foreign Keys
 #
@@ -24,7 +24,7 @@
 RSpec.describe ResourceGroup do
   subject { build(:resource_group) }
 
-  it { is_expected.to validate_uniqueness_of(:title).scoped_to(:organization_id) }
+  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:organization_id) }
 
   describe "#webhook_uri=" do
     let(:organization) { build_stubbed(:organization, id: 1) }

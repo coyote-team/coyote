@@ -1,33 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: resources
-#
-#  id                    :bigint           not null, primary key
-#  identifier            :string           not null
-#  title                 :string           default("(no title provided)"), not null
-#  resource_type         :enum             not null
-#  canonical_id          :string           not null
-#  source_uri            :citext
-#  organization_id       :bigint           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  representations_count :integer          default(0), not null
-#  priority_flag         :boolean          default(FALSE), not null
-#  host_uris             :string           default([]), not null, is an Array
-#  ordinality            :integer
-#
-# Indexes
-#
-#  index_resources_on_identifier                        (identifier) UNIQUE
-#  index_resources_on_organization_id                   (organization_id)
-#  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
-#  index_resources_on_priority_flag                     (priority_flag)
-#  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
-#
-
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
   let(:resource_group) { create(:resource_group, organization: organization) }
@@ -48,7 +20,7 @@ RSpec.describe ResourcesController do
   end
 
   let(:update_resource_params) do
-    resource_params.merge(resource: {title: "NEWTITLE"})
+    resource_params.merge(resource: {name: "NEWNAME"})
   end
 
   describe "as a signed-out user" do
@@ -143,7 +115,7 @@ RSpec.describe ResourcesController do
         patch :update, params: update_resource_params
         expect(response).to redirect_to(resource)
         resource.reload
-      }.to change(resource, :title).to("NEWTITLE")
+      }.to change(resource, :name).to("NEWNAME")
 
       post :update, params: update_resource_params.merge(resource: {resource_type: ""})
       expect(response).not_to be_redirect

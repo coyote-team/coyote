@@ -1,13 +1,13 @@
 .filter-view
   .filter-view-filters
-    / h1= title "Descriptions for #{current_organization.title}"
+    / h1= title "Descriptions for #{current_organization.name}"
     h1= title "Descriptions"
 
     = search_form_for record_filter.search, url: organization_representations_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
       label.filter-set-item.field.field--accessory
         span.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
-        = f.search_field :text_or_resource_identifier_or_resource_title_cont_all, required: false, placeholder: 'Search representation text'
+        = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: 'Search representation text'
 
       .filter-set-item
         .filter-set-item-title Status
@@ -23,7 +23,7 @@
           - available_meta.each do |meta|
             label.checkbox-list-item
               = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
-              = meta.title
+              = meta.name
 
       = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
 

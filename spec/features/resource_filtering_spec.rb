@@ -4,15 +4,15 @@ RSpec.describe "Resource viewing" do
   include_context "as a logged-in author user"
 
   let!(:resource) do
-    create(:resource, organization: user_organization, title: "My Organization's Resource")
+    create(:resource, organization: user_organization, name: "My Organization's Resource")
   end
 
   let!(:cezannne_resource) do
-    create(:resource, organization: user_organization, title: "Painting by Cezanne")
+    create(:resource, organization: user_organization, name: "Painting by Cezanne")
   end
 
   let!(:other_resource) do
-    create(:resource, title: "Should Not See This")
+    create(:resource, name: "Should Not See This")
   end
 
   it "succeeds" do

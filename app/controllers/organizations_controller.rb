@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
     if current_organization.valid?
       current_organization.memberships.owner.create!(user: current_user)
       logger.info "Created #{current_organization} and assigned #{current_user}"
-      redirect_to current_organization, success: "Created #{current_organization.title}"
+      redirect_to current_organization, success: "Created #{current_organization.name}"
     else
       logger.warn "Unable to create Organization: #{current_organization.error_sentence}"
       flash.now[:alert] = "There was an error creating this Organization"
@@ -45,7 +45,7 @@ class OrganizationsController < ApplicationController
   # PATCH /organizations/1
   def update
     if current_organization.update(organization_params)
-      redirect_to current_organization, success: "Saved changes to #{current_organization.title}"
+      redirect_to current_organization, success: "Saved changes to #{current_organization.name}"
     else
       flash.now[:alert] = "There was an error updating this Organization"
       render action: "edit"
@@ -73,7 +73,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:title)
+    params.require(:organization).permit(:name)
   end
 
   def pundit_user

@@ -1,4 +1,4 @@
-h1= title(to_html_title(resource.title))
+h1= title(to_html_title(resource.name))
 = resource_status_list(resource)
 
 .split-view
@@ -16,9 +16,6 @@ h1= title(to_html_title(resource.title))
           th Priority
           td= resource.priority_flag ? 'High' : 'Low'
         tr
-          th Order
-          td= resource.ordinality
-        tr
           th= link_to('Resource Type', 'http://dublincore.org/documents/dcmi-terms/#section-7', target: :_blank)
           td= resource.resource_type.to_s.titleize
         tr
@@ -30,9 +27,6 @@ h1= title(to_html_title(resource.title))
         tr
           th Resource Group
           td= link_to(resource.resource_group, [resource.organization, resource.resource_group])
-        tr
-          th Identifier (Slug)
-          td= resource.identifier
         tr
           th Host URIs
           td= list_of(resource.host_uris) { |uri| link_to(uri, uri) }

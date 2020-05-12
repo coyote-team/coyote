@@ -13,14 +13,14 @@ class MembershipsController < ApplicationController
   def destroy
     if membership.last_owner?
       logger.warn "#{current_user} attempted to remove him- or herself from #{current_organization}, but the actionw was prevented since there are no other owners of that organization"
-      err_msg = "We cannot let you remove yourself as the last owner of the '#{current_organization.title}' organization. Please choose another user to be an owner, or delete the organization itself."
+      err_msg = "We cannot let you remove yourself as the last owner of the '#{current_organization.name}' organization. Please choose another user to be an owner, or delete the organization itself."
 
       redirect_back fallback_location: organization_memberships_url, alert: err_msg
       return :redirect_after_preventing_destruction # avoid leaking nil
     end
 
     membership.update_attribute(:active, false)
-    redirect_back fallback_location: organization_memberships_url, notice: "#{membership.user} has been removed from #{current_organization.title}"
+    redirect_back fallback_location: organization_memberships_url, notice: "#{membership.user} has been removed from #{current_organization.name}"
   end
 
   def edit

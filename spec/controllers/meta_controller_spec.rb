@@ -5,7 +5,7 @@
 # Table name: meta
 #
 #  id              :integer          not null, primary key
-#  title           :string           not null
+#  name           :string           not null
 #  instructions    :text             default(""), not null
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -14,7 +14,7 @@
 # Indexes
 #
 #  index_meta_on_organization_id            (organization_id)
-#  index_meta_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_meta_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
 
 RSpec.describe MetaController do
@@ -34,7 +34,7 @@ RSpec.describe MetaController do
   end
 
   let(:update_metum_params) do
-    metum_params.merge(metum: {title: "NEWTITLE"})
+    metum_params.merge(metum: {name: "NEWNAME"})
   end
 
   let(:foreign_metum) { create(:metum) }
@@ -42,7 +42,7 @@ RSpec.describe MetaController do
   let(:foreign_metum_params) do
     {id:              foreign_metum.id,
      organization_id: foreign_metum.organization_id,
-     metum:           {title: "SHOULDNOTBEALLOWED"}}
+     metum:           {name: "SHOULDNOTBEALLOWED"}}
   end
 
   describe "as a signed-out user" do
@@ -122,16 +122,16 @@ RSpec.describe MetaController do
       }.to change(organization.meta, :count)
         .by(1)
 
-      post :create, params: base_params.merge(metum: {title: ""})
+      post :create, params: base_params.merge(metum: {name: ""})
       expect(response).to render_template(:new)
 
       expect {
         patch :update, params: update_metum_params
         metum.reload
-      }.to change(metum, :title)
-        .to("NEWTITLE")
+      }.to change(metum, :name)
+        .to("NEWNAME")
 
-      patch :update, params: metum_params.merge(metum: {title: ""})
+      patch :update, params: metum_params.merge(metum: {name: ""})
       expect(response).to render_template(:edit)
 
       expect {

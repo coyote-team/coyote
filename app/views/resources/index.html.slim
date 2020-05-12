@@ -1,13 +1,13 @@
 .filter-view
   .filter-view-filters
-    / h1= title "Resources for #{current_organization.title}"
+    / h1= title "Resources for #{current_organization.name}"
     h1= title "Resources"
 
     = search_form_for record_filter.search, url: organization_resources_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
       label.filter-set-item.field.field--accessory
         span.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
-        = f.search_field :canonical_id_or_identifier_or_title_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
+        = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
 
       .filter-set-item
         .filter-set-item-title Priority
@@ -75,7 +75,7 @@
       /         = form.input :select_all_resources_for_bulk_assignment, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all resources on the page' }
       /       th Resource
       /       th= sort_link(record_filter.search, :priority_flag, 'Priority')
-      /       th= sort_link(record_filter.search, :title, 'Caption')
+      /       th= sort_link(record_filter.search, :name, 'Caption')
       /       th= sort_link(record_filter.search, :representations_count, 'Descriptions')
       /       th Actions
 

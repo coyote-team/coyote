@@ -27,7 +27,7 @@ class UserInvitationService
       .find_or_initialize_by(email: invitation.recipient_email)
 
     if organization.users.exists?(recipient_user.id)
-      yield "#{recipient_user} is already a member of #{organization.title}"
+      yield "#{recipient_user} is already a member of #{organization.name}"
       return
     end
 

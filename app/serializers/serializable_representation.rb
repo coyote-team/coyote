@@ -7,7 +7,7 @@ class SerializableRepresentation < JSONAPI::Serializable::Resource
   attributes :status, :content_uri, :content_type, :language, :text, :created_at, :updated_at
 
   attribute :metum do
-    @object.metum_title
+    @object.metum_name
   end
 
   attribute :author do
@@ -15,7 +15,7 @@ class SerializableRepresentation < JSONAPI::Serializable::Resource
   end
 
   attribute :license do
-    @object.license_title
+    @object.license_name
   end
 
   belongs_to :resource

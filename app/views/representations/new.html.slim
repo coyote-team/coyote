@@ -1,2 +1,2 @@
-h1= title "Create Description of #{current_resource.title.truncate(25)}"
+h1= title "Create Description of #{current_resource.name.truncate(25)}"
 = render partial: 'form', locals: { target: [current_organization, representation] }

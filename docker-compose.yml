@@ -28,6 +28,7 @@ services:
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_HOST: db
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}

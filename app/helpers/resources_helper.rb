@@ -20,7 +20,7 @@ module ResourcesHelper
     else
       current_user.resource_groups
     end.by_default_and_name.map do |c|
-      [c.title_with_default_annotation, c.id]
+      [c.name_with_default_annotation, c.id]
     end
   end
 
@@ -41,7 +41,7 @@ module ResourcesHelper
     if resource.viewable?
       image_tag(resource_content_uri(resource), options)
     else
-      "#{resource.title} (#{resource.resource_type})"
+      "#{resource.name} (#{resource.resource_type})"
     end
   end
 
@@ -64,10 +64,6 @@ module ResourcesHelper
     end
 
     tags.push(tag_for("Urgent", type: :error)) if resource.priority_flag?
-
-    if resource.ordinality.present?
-      tags.push(tag_for(resource.ordinality.to_s))
-    end
 
     (
       content_tag(title_tag, class: "sr-only", id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +

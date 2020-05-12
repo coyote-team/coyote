@@ -6,21 +6,18 @@
 #
 #  id                    :bigint           not null, primary key
 #  host_uris             :string           default([]), not null, is an Array
-#  identifier            :string           not null
-#  ordinality            :integer
+#  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             not null
-#  source_uri            :citext
-#  title                 :string           default("(no title provided)"), not null
+#  source_uri            :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  canonical_id          :string           not null
+#  canonical_id          :citext
 #  organization_id       :bigint           not null
 #
 # Indexes
 #
-#  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
@@ -38,12 +35,10 @@ require "webmock/rspec"
 RSpec.describe Resource do
   subject { resource }
 
-  let(:resource) { build(:resource, :image, title: "Mona Lisa", identifier: "abc123", source_uri: source_uri) }
+  let(:resource) { build(:resource, :image, canonical_id: "abc123", name: "Mona Lisa", source_uri: source_uri) }
   let(:source_uri) { "http://example.com/100.jpg" }
 
   it { is_expected.to validate_presence_of(:resource_type) }
-
-  it { is_expected.to validate_uniqueness_of(:identifier) }
 
   specify { expect(resource.label).to eq("Mona Lisa (abc123)") }
 
@@ -104,34 +99,6 @@ RSpec.describe Resource do
     end
   end
 
-  describe "when saved" do
-    it "sets a unique identifier based on the title" do
-      resource = build(:resource, identifier: "", title: "This is a test, isn't it?! YES!")
-      expect(resource.identifier).to be_blank
-      resource.save!
-      expect(resource.identifier).to eq("this-is-a-test-isn-t-it-yes")
-
-      expect(SecureRandom).to receive(:hex).with(3).and_return("abcdef")
-
-      resource_2 = create(:resource, identifier: "", title: "This is a test, isn't it?! YES!")
-      expect(resource_2.identifier).to eq("this-is-a-test-isn-t-it-yes-abcdef")
-    end
-
-    it "sets a unique canonical id" do
-      resource = build(:resource)
-      expect(resource.canonical_id).to be_blank
-      resource.save!
-      expect(resource.canonical_id).to be_present
-    end
-
-    it "does not set a canonical ID if one is given" do
-      resource = build(:resource)
-      resource.canonical_id = "123"
-      resource.save!
-      expect(resource.canonical_id).to eq("123")
-    end
-  end
-
   describe "#notify_webhook!" do
     include_context "webhooks"
 
@@ -141,6 +108,71 @@ RSpec.describe Resource do
         data = JSON.parse(req.body)["data"]
         expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
       }).to have_been_made
+    end
+  end
+
+  describe "receiving representations in attributes", clean_db: true do
+    let(:organization) { create(:organization) }
+    let!(:user) { create(:membership, organization: organization).user }
+    let!(:user_2) { create(:membership, organization: organization).user }
+
+    let!(:license) { create(:license, :universal) }
+    let!(:license_2) { create(:license, :attribution_international) }
+
+    let!(:metum) { create(:metum, :short, organization: organization) }
+    let!(:metum_2) { create(:metum, :long, organization: organization) }
+
+    let(:representation_attributes) { attributes_for(:representation) }
+
+    describe "on new records" do
+      let(:resource) {
+        create(:resource,
+          organization:               organization,
+          representations_attributes: [representation_attributes])
+      }
+      let(:representation) { resource.representations.first }
+
+      it "creates representations for the resource" do
+        expect(resource).to be_persisted
+        expect(representation.attributes.symbolize_keys).to include(representation_attributes)
+      end
+
+      it "automatically assigns the first active organization user" do
+        expect(representation.author).to eq(user)
+      end
+
+      it "accepts an author_id" do
+        representation_attributes[:author_id] = user_2.id
+        expect(representation.author).to eq(user_2)
+      end
+
+      it "automatically assigns the universal license" do
+        expect(representation.license).to eq(license)
+      end
+
+      it "accepts a license by name" do
+        representation_attributes[:license] = license_2.name
+        expect(representation.license).to eq(license_2)
+      end
+
+      it "accepts a license by ID" do
+        representation_attributes[:license_id] = license_2.id
+        expect(representation.license).to eq(license_2)
+      end
+
+      it "automatically assigns the 'Short' metum" do
+        expect(representation.metum).to eq(metum)
+      end
+
+      it "accepts a metum by name" do
+        representation_attributes[:metum] = metum_2.name
+        expect(representation.metum).to eq(metum_2)
+      end
+
+      it "accepts a metum by ID" do
+        representation_attributes[:metum_id] = metum_2.id
+        expect(representation.metum).to eq(metum_2)
+      end
     end
   end
 end

@@ -14,9 +14,9 @@ RSpec.describe SerializableRepresentation do
   before do
     allow(object)
       .to receive_messages({
-        author_name:   "John Doe",
-        license_title: "CC1",
-        metum_title:   "Alt",
+        author_name:  "John Doe",
+        license_name: "CC1",
+        metum_name:   "Alt",
       })
   end
 

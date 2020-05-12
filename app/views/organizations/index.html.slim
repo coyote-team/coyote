@@ -9,7 +9,7 @@ table
   tbody
     - organizations.each do |org|
       tr
-        td= link_to(org.title, organization_path(org))
+        td= link_to(org.name, organization_path(org))
         td.table-cell-actions
           - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).edit?
             = link_to('Edit', edit_organization_path(org), class: 'button button--outline', title: "Edit #{org}")
@@ -23,4 +23,4 @@ nav.toolbar.toolbar--footer
   h2= title 'All Organizations'
 
   = list_of(Organization.all) do |org|
-    = link_to(org.title, organization_path(org))
+    = link_to(org.name, organization_path(org))

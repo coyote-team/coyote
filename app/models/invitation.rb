@@ -60,7 +60,7 @@ class Invitation < ApplicationRecord
   end
 
   # @return [String] identifies the organization that sent this invitation
-  delegate :title, to: :organization, prefix: true
+  delegate :name, to: :organization, prefix: true
 
   # @return [String] identifies the user who sent this invitation
   # @see User#to_s

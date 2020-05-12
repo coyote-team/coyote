@@ -6,21 +6,18 @@
 #
 #  id                    :bigint           not null, primary key
 #  host_uris             :string           default([]), not null, is an Array
-#  identifier            :string           not null
-#  ordinality            :integer
+#  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             not null
-#  source_uri            :citext
-#  title                 :string           default("(no title provided)"), not null
+#  source_uri            :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  canonical_id          :string           not null
+#  canonical_id          :citext
 #  organization_id       :bigint           not null
 #
 # Indexes
 #
-#  index_resources_on_identifier                        (identifier) UNIQUE
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
@@ -39,11 +36,9 @@
 # @see http://dublincore.org/documents/dc-xml-guidelines/
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
-  DEFAULT_TITLE = "(no title provided)"
+  DEFAULT_NAME = "(no title provided)"
 
   before_create :set_default_resource_group
-  before_save :set_canonical_id
-  before_save :set_identifier
 
   after_commit :notify_webhook!, if: :content_changed?
 
@@ -74,11 +69,10 @@ class Resource < ApplicationRecord
   scope :represented_by, ->(user) { joins(:representations).where(representations: {author_id: user.id}) }
   scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}) }
 
-  validates :identifier, uniqueness: true
   validates :resource_type, presence: true
-  validates :canonical_id, uniqueness: {scope: :organization_id}
-  validates :source_uri, uniqueness: {scope: :organization_id}, if: :source_uri?
-  validates :title, presence: true
+  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true
+  validates :source_uri, presence: true, uniqueness: {scope: :organization_id}
+  validates :name, presence: true
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -87,7 +81,7 @@ class Resource < ApplicationRecord
   paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
   # max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
-  delegate :title, to: :resource_group, prefix: true
+  delegate :name, to: :resource_group, prefix: true
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
   # @return [nil] if no resources exist
@@ -111,7 +105,7 @@ class Resource < ApplicationRecord
 
   def best_representation
     return @best_representation if defined? @best_representation
-    @best_representation = representations.by_status.by_title_length.first
+    @best_representation = representations.by_status.by_length.first
   end
 
   def complete?
@@ -120,11 +114,7 @@ class Resource < ApplicationRecord
   end
 
   def content_changed?
-    (previous_changes.keys & %w[identifier title resource_type canonical_id source_uri priority_flag host_uris ordinality]).any?
-  end
-
-  def generate_canonical_id
-    self.canonical_id = SecureRandom.uuid
+    (previous_changes.keys & %w[name resource_type canonical_id source_uri priority_flag host_uris]).any?
   end
 
   # @param value [String] a newline-delimited list of host URIs to store for this Resource
@@ -132,9 +122,9 @@ class Resource < ApplicationRecord
     self[:host_uris] = value.to_s.split(/[\r\n]+/)
   end
 
-  # @return [String] a human-friendly means of identifying this resource in titles and select boxes
+  # @return [String] a human-friendly means of identifying this resource in names and select boxes
   def label
-    "#{title} (#{identifier})"
+    @label ||= canonical_id.present? ? "#{name} (#{canonical_id})" : name
   end
 
   def notify_webhook!
@@ -163,6 +153,30 @@ class Resource < ApplicationRecord
     result
   end
 
+  def representations_attributes=(representations_attributes)
+    representations_attributes.each do |attributes|
+      attributes = attributes.with_indifferent_access
+      representation = representations.find_or_initialize_by(attributes.slice(:language, :text))
+
+      if representation.new_record?
+        # Set the author_id if it needs to be set
+        attributes[:author_id] ||= organization.memberships.active.by_creation.first_id(:user_id)
+
+        # Increase ordinality for new representations when there are other representations this metum
+        attributes[:ordinality] = representations.where.not(id: representation.id).with_metum(attributes[:metum_id]).count
+      end
+
+      # Allow assigning license by name, e.g. "cc0-1.0"
+      representation.select_default_license(attributes)
+
+      # Allow assigning metum by name, e.g. "Short" or "Long"
+      representation.select_default_metum(attributes, organization.meta)
+
+      # Assign whatever is left
+      representation.assign_attributes(attributes)
+    end
+  end
+
   def represented?
     !unrepresented?
   end
@@ -182,22 +196,6 @@ class Resource < ApplicationRecord
   def resource_group_id=(new_resource_group_id)
     resource_group = new_resource_group_id.presence && organization.resource_groups.find_by(id: new_resource_group_id)
     resource_groups << resource_group if resource_group.present? && !resource_group_ids.include?(resource_group.id)
-  end
-
-  def set_canonical_id
-    return if canonical_id.present?
-    next while Resource.where(canonical_id: generate_canonical_id).where.not(id: id).any?
-  end
-
-  def set_identifier
-    return if identifier.present?
-    root_identifier = title.parameterize
-    identifier = root_identifier
-    scope = persisted? ? Resource.where.not(id: id) : Resource
-    while scope.where(identifier: identifier).any?
-      identifier = "#{root_identifier}-#{SecureRandom.hex(3)}"
-    end
-    self.identifier = identifier
   end
 
   # TODO: Should maybe move this stuff to a presenter / decorator

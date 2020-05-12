@@ -1,6 +1,6 @@
 = simple_form_for metum, validate: true, url: [current_organization, metum], html: { multipart: true } do |f|
   = f.error_notification
-  = f.input :title
+  = f.input :name
   = f.input :instructions, input_html: { rows: 5 }
 
   = form_toolbar f

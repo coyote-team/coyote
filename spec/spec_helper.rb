@@ -110,6 +110,7 @@ RSpec.configure do |config|
     end
   end
 
+  config.around(:each, clean_db: true, &db_cleaning)
   config.around(:each, type: :controller, &db_cleaning)
   config.around(:each, type: :feature, &db_cleaning)
   config.around(:each, type: :request, &db_cleaning)

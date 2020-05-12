@@ -1,6 +1,6 @@
 table
   caption
-    h1= title "Meta for #{current_organization.title}"
+    h1= title "Meta for #{current_organization.name}"
   thead
     tr
       th Title
@@ -10,7 +10,7 @@ table
   tbody
     - list_of_meta.each do |metum|
       tr
-        td.table-cell-primary.table-cell-link= link_to metum.title, [current_organization, metum]
+        td.table-cell-primary.table-cell-link= link_to metum.name, [current_organization, metum]
         td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), [current_organization, metum]
         td.table-cell-actions
           = link_to 'Edit', edit_organization_metum_path(current_organization, metum), class: "button button--outline"

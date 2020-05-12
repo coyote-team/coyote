@@ -10,7 +10,7 @@ RSpec.describe InvitationMailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to match(organization.title)
+      expect(mail.subject).to match(organization.name)
       expect(mail.to).to eq([invitation.recipient_email])
     end
 
@@ -29,7 +29,7 @@ RSpec.describe InvitationMailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to match(organization.title)
+      expect(mail.subject).to match(organization.name)
       expect(mail.to).to eq([invitation.recipient_email])
     end
 

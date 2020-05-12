@@ -45,6 +45,7 @@ class NotifyWebhookWorker
 
   private
 
+  # :nocov:
   def on_error(error)
     if defined? Raven
       Raven.capture_exception(exception)
@@ -52,6 +53,7 @@ class NotifyWebhookWorker
       raise error
     end
   end
+  # :nocov:
 
   def record_webhook_call(resource_group, body, response, error)
     attributes = {

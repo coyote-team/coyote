@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InvitationMailer < ApplicationMailer
-  helper_method :invitation, :recipient_email, :role, :organization_title, :sender_name, :organization, :signup_link
+  helper_method :invitation, :recipient_email, :role, :organization_name, :sender_name, :organization, :signup_link
 
   def existing_user(invitation)
     self.invitation = invitation
@@ -22,8 +22,8 @@ class InvitationMailer < ApplicationMailer
     invitation.organization
   end
 
-  def organization_title
-    invitation.organization_title
+  def organization_name
+    invitation.organization_name
   end
 
   def recipient_email
@@ -39,6 +39,6 @@ class InvitationMailer < ApplicationMailer
   end
 
   def subject
-    "#{Rails.configuration.x.site_name}: Invitation to join '#{organization_title}'"
+    "#{Rails.configuration.x.site_name}: Invitation to join '#{organization_name}'"
   end
 end

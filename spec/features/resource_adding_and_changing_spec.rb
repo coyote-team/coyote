@@ -6,18 +6,23 @@ RSpec.describe "Resource adding and changing" do
   let!(:resource_group) { create(:resource_group, organization: user_organization) }
 
   let(:resource_attributes) do
-    attributes_for(:resource).tap(&:symbolize_keys!).merge(title: title)
+    attributes_for(:resource, canonical_id: "abc123").symbolize_keys
   end
 
   it "succeeds" do
     click_first_link "Resources"
     click_first_link("New Resource")
 
-    select(resource_group.title, from: "Resource Group", match: :first)
+    within(".form-field.resource_resource_groups") do
+      user_organization.resource_groups.default.each do |other_group|
+        uncheck(other_group.name)
+      end
+      check(resource_group.name)
+    end
 
-    fill_in "Identifier", with: resource_attributes[:identifier]
-    fill_in "Caption", with: resource_attributes[:title]
+    fill_in "Caption", with: resource_attributes[:name]
     fill_in "Canonical ID", with: resource_attributes[:canonical_id]
+    fill_in "Source URI", with: resource_attributes[:source_uri]
     fill_in "Host URIs", with: "http://example.com/abc\nhttp://example.com/xyz"
 
     select(resource_attributes[:resource_type].titleize, from: "Type")
@@ -27,10 +32,11 @@ RSpec.describe "Resource adding and changing" do
     }.to change(Resource, :count)
       .from(0).to(1)
 
-    resource = Resource.find_by!(identifier: resource_attributes[:identifier])
+    resource = Resource.find_by!(canonical_id: resource_attributes[:canonical_id])
+    expect(resource.resource_groups).to match_array([resource_group])
     expect(resource.host_uris).to match_array(%w[http://example.com/abc http://example.com/xyz])
 
     expect(page).to have_current_path(resource_path(resource), ignore_query: true)
-    expect(page).to have_content(resource.title)
+    expect(page).to have_content(resource.name)
   end
 end

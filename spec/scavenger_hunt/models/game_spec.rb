@@ -39,7 +39,7 @@
 
 #   it "becomes archived when its underlying resource changes" do
 #     expect(game.is_archived).to be false
-#     question_1.resource.update(title: "Changing this text should archive past games")
+#     question_1.resource.update(name: "Changing this text should archive past games")
 #     expect(game.reload.is_archived).to be true
 #   end
 

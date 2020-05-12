@@ -36,7 +36,7 @@ RSpec.describe "Inviting users" do
 
       ActionMailer::Base.deliveries.first.tap do |email|
         expect(email.to).to eq([new_member_email])
-        expect(email.subject).to match(user_organization.title)
+        expect(email.subject).to match(user_organization.name)
       end
     end
   end
@@ -71,7 +71,7 @@ RSpec.describe "Inviting users" do
 
       email = ActionMailer::Base.deliveries.first
       expect(email.to).to eq([new_member_email])
-      expect(email.subject).to match(user_organization.title)
+      expect(email.subject).to match(user_organization.name)
 
       html_part = email.parts.find { |p| p.content_type =~ %r{text/html} }
       html_body = Nokogiri::HTML(html_part.body.to_s)

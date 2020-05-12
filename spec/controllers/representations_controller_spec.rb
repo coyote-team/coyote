@@ -17,13 +17,11 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  notes        :text
-#  endpoint_id  :bigint           not null
 #  ordinality   :integer
 #
 # Indexes
 #
 #  index_representations_on_author_id    (author_id)
-#  index_representations_on_endpoint_id  (endpoint_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
@@ -35,7 +33,6 @@ RSpec.describe RepresentationsController do
   let(:metum) { create(:metum) }
   let(:license) { create(:license) }
   let(:resource) { create(:resource, organization: organization) }
-  let(:endpoint) { create(:endpoint) }
 
   let(:base_params) do
     {organization_id: organization.id}
@@ -49,7 +46,6 @@ RSpec.describe RepresentationsController do
     representation = attributes_for(:representation)
     representation[:metum_id] = metum.id
     representation[:license_id] = license.id
-    representation[:endpoint_id] = endpoint.id
     representation[:author_id] = user.id
 
     base_params.merge({

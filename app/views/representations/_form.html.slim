@@ -14,7 +14,6 @@
       = f.input :notes, as: :text, hint: 'Useful for communicating internally with other Coyote members about this representation'
       = f.input :ordinality, label: 'Ordinality', input_html: { min: 0, max: 100 }
       = f.association :metum, collection: available_meta
-      = f.association :endpoint, collection: endpoint_collection, include_blank: false
       = f.input :language, as: :select, collection: language_list, include_blank: false
       = f.association :license, collection: License.all, include_blank: false
       = f.association :author, collection: organizational_user_collection, include_blank: false

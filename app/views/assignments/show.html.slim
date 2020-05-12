@@ -10,7 +10,7 @@ h1= title "Showing #{assignment}"
         tr
           th Resource
           td= link_to(assignment.resource) do
-            = assignment.resource.title
+            = assignment.resource.name
         tr
           th User
           td= link_to assignment.user, assignment.user

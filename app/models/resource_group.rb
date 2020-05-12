@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  title           :string           not null
+#  name            :string           not null
 #  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -14,7 +14,7 @@
 #
 # Indexes
 #
-#  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
 # Foreign Keys
 #
@@ -25,12 +25,12 @@
 # Examples of resource_groups include Web, Exhibitions, Poetry, Digital Interactive, Mobile, Audio Tour
 # @see https://github.com/coyote-team/coyote/issues/112
 class ResourceGroup < ApplicationRecord
-  DEFAULT_TITLE = "Uncategorized"
+  DEFAULT_NAME = "Uncategorized"
 
   before_destroy :check_for_resources_or_default
 
-  validates :title, presence: true
-  validates :title, uniqueness: {scope: :organization_id}
+  validates :name, presence: true
+  validates :name, uniqueness: {scope: :organization_id}
   validates :default, uniqueness: {if: :default?, scope: :organization_id}
   validate :webhook_uri_is_valid?, if: :webhook_uri?
 
@@ -39,17 +39,12 @@ class ResourceGroup < ApplicationRecord
 
   belongs_to :organization, inverse_of: :resource_groups
 
-  scope :by_default_and_name, -> { order({default: :desc}, {title: :asc}) }
+  scope :by_default_and_name, -> { order({default: :desc}, {name: :asc}) }
   scope :default, -> { where(default: true) }
   scope :has_webhook, -> { where.not(webhook_uri: nil) }
 
-  def title_with_default_annotation
+  def name_with_default_annotation
     "#{self}#{default ? " (default)" : ""}"
-  end
-
-  # @return [String] title of this group
-  def to_s
-    title
   end
 
   private
@@ -62,7 +57,7 @@ class ResourceGroup < ApplicationRecord
   end
 
   def webhook_uri_is_valid?
-    return true if URI.regexp(%w[http https]).match?(webhook_uri) && URI.parse(webhook_uri).host.present?
+    return true if URI::DEFAULT_PARSER.make_regexp(%w[http https]).match?(webhook_uri) && URI.parse(webhook_uri).host.present?
     raise URI::InvalidURIError
   rescue URI::InvalidURIError
     errors.add(:webhook_uri, "is not a valid URL")

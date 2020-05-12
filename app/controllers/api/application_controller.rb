@@ -29,11 +29,16 @@ class Api::ApplicationController < ActionController::API
   end
 
   def find_resource
-    id = params[:resource_identifier] || params[:id]
-    self.resource = current_user.resources.where(canonical_id: id).or(
-      current_user.resources.where(identifier: id),
-    ).first!
+    scope = current_user.resources
+    self.resource = params[:canonical_id].present? ?
+      scope.find_by!(canonical_id: params[:canonical_id]) :
+      scope.find(params[:resource_id] || params[:id])
     self.current_organization = params[:organization_id] ? current_organization : resource.organization
+  rescue
+    pp params.to_unsafe_hash
+    puts request.path
+    binding.pry
+    raise $!
   end
 
   def organization_user

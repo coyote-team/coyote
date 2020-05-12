@@ -66,7 +66,7 @@ class MetaController < ApplicationController
   end
 
   def metum_params
-    params.require(:metum).permit(:title, :instructions)
+    params.require(:metum).permit(:name, :instructions)
   end
 
   def set_metum

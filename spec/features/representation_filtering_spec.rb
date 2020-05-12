@@ -21,13 +21,13 @@ RSpec.describe "Representation filtering" do
     expect(page).to have_content("My Organization's Description")
     expect(page).not_to have_content("Should Not See This")
 
-    fill_in "q[text_or_resource_identifier_or_resource_title_cont_all]", with: "smiling"
+    fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: "smiling"
     click_button "Search"
 
     expect(page).to have_content("A woman smiling")
     expect(page).not_to have_content("My Organization's Description")
 
-    fill_in "q[text_or_resource_identifier_or_resource_title_cont_all]", with: ""
+    fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: ""
     check "Not Approved"
     click_button "Search"
 

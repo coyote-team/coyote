@@ -1,11 +1,11 @@
 - resource, representations = resource_and_representations
-- id = id_for(resource.identifier)
+- id = id_for(resource)
 li.list-item
   = resource_link(resource)
 
   .list-item-body.timeline
     span.sr-only Caption:
-    = to_html resource.title
+    = to_html resource.name
     - representations.each do |representation|
       .timeline-item
         - if defined? form

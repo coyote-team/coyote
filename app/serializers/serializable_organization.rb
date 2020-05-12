@@ -4,5 +4,5 @@
 class SerializableOrganization < JSONAPI::Serializable::Resource
   type "organization"
 
-  attributes :title
+  attributes :name
 end

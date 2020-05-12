@@ -5,7 +5,7 @@
 # Table name: resource_groups
 #
 #  id              :integer          not null, primary key
-#  title           :string           not null
+#  name           :string           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
@@ -14,7 +14,7 @@
 #
 # Indexes
 #
-#  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
 
 RSpec.describe ResourceGroupsController do
@@ -34,7 +34,7 @@ RSpec.describe ResourceGroupsController do
   end
 
   let(:update_resource_group_params) do
-    resource_group_params.merge(resource_group: {title: "NEWTITLE"})
+    resource_group_params.merge(resource_group: {name: "NEWNAME"})
   end
 
   let(:foreign_resource_group) { create(:resource_group) }
@@ -42,7 +42,7 @@ RSpec.describe ResourceGroupsController do
   let(:foreign_resource_group_params) do
     {id:              foreign_resource_group.id,
      organization_id: foreign_resource_group.organization_id,
-     resource_group:  {title: "SHOULDNOTBEALLOWED"}}
+     resource_group:  {name: "SHOULDNOTBEALLOWED"}}
   end
 
   describe "as a signed-out user" do
@@ -132,8 +132,8 @@ RSpec.describe ResourceGroupsController do
       expect {
         patch :update, params: update_resource_group_params
         resource_group.reload
-      }.to change(resource_group, :title)
-        .to("NEWTITLE")
+      }.to change(resource_group, :name)
+        .to("NEWNAME")
 
       expect {
         delete :destroy, params: resource_group_params

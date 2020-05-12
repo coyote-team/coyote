@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  title           :string           not null
+#  name            :string           not null
 #  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -14,7 +14,7 @@
 #
 # Indexes
 #
-#  index_resource_groups_on_organization_id_and_title  (organization_id,title) UNIQUE
+#  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
 # Foreign Keys
 #
@@ -23,12 +23,12 @@
 
 FactoryBot.define do
   factory :resource_group do
-    title { Faker::Lorem.unique.word }
+    name { Faker::Lorem.unique.word }
     organization
 
     %i[collection website exhibitions events].each do |trait_name|
       trait trait_name do
-        title { trait_name }
+        name { trait_name }
       end
     end
   end

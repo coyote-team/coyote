@@ -3,13 +3,16 @@
 # == Route Map
 #
 #                                     Prefix Verb   URI Pattern                                                                              Controller#Action
+#                  create_many_api_resources POST   /api/v1/organizations/:organization_id/resources/create(.:format)                        api/resources#create_many
 #                          get_api_resources POST   /api/v1/organizations/:organization_id/resources/get(.:format)                           api/resources#index
 #                              api_resources GET    /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#index
 #                                            POST   /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#create
 #                        api_resource_groups GET    /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#index
 #                                            POST   /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#create
-#                        api_representations GET    /api/v1/resources/:resource_identifier/representations(.:format)                         api/representations#index
-#                                            POST   /api/v1/resources/:resource_identifier/representations(.:format)                         api/representations#create
+#                        api_representations GET    /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#index
+#                                            POST   /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#create
+#                                            GET    /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#index
+#                                            POST   /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#create
 #                               api_resource GET    /api/v1/resources/:id(.:format)                                                          api/resources#show
 #                                            PATCH  /api/v1/resources/:id(.:format)                                                          api/resources#update
 #                                            PUT    /api/v1/resources/:id(.:format)                                                          api/resources#update
@@ -111,14 +114,6 @@
 #                                            PATCH  /staff/users/:id(.:format)                                                               staff/users#update
 #                                            PUT    /staff/users/:id(.:format)                                                               staff/users#update
 #                                            DELETE /staff/users/:id(.:format)                                                               staff/users#destroy
-#                            staff_endpoints GET    /staff/endpoints(.:format)                                                               staff/endpoints#index
-#                                            POST   /staff/endpoints(.:format)                                                               staff/endpoints#create
-#                         new_staff_endpoint GET    /staff/endpoints/new(.:format)                                                           staff/endpoints#new
-#                        edit_staff_endpoint GET    /staff/endpoints/:id/edit(.:format)                                                      staff/endpoints#edit
-#                             staff_endpoint GET    /staff/endpoints/:id(.:format)                                                           staff/endpoints#show
-#                                            PATCH  /staff/endpoints/:id(.:format)                                                           staff/endpoints#update
-#                                            PUT    /staff/endpoints/:id(.:format)                                                           staff/endpoints#update
-#                                            DELETE /staff/endpoints/:id(.:format)                                                           staff/endpoints#destroy
 #                 staff_user_password_resets POST   /staff/user_password_resets(.:format)                                                    staff/user_password_resets#create
 #                                    support GET    /support(.:format)                                                                       pages#support
 #                                       root GET    /                                                                                        pages#home
@@ -127,6 +122,10 @@
 #                         rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
 #                  update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
 #                       rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
+#                                cloudtasker        /cloudtasker                                                                             Cloudtasker::Engine
+#
+# Routes for Cloudtasker::Engine:
+#    run POST /run(.:format) cloudtasker/worker#run
 
 Rails.application.routes.draw do
   namespace :api do
@@ -134,6 +133,7 @@ Rails.application.routes.draw do
       scope "organizations/:organization_id" do
         resources :resources, only: %i[index create] do
           collection do
+            post "create", as: :create_many, to: "resources#create_many"
             post :get, to: "resources#index"
           end
         end
@@ -141,10 +141,15 @@ Rails.application.routes.draw do
         resources :resource_groups, only: %i[index create]
       end
 
-      scope "resources/:resource_identifier" do
+      scope "resources/:resource_id" do
         resources :representations, only: %i[index create]
       end
 
+      scope "resources/canonical/:canonical_id" do
+        resources :representations, as: :canonical_representations, only: %i[index create]
+      end
+
+      resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show update], param: :canonical_id
       resources :resources, only: %i[show update]
       resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show update destroy]
@@ -180,7 +185,6 @@ Rails.application.routes.draw do
 
   namespace :staff do
     resources :users, except: %i[new create]
-    resources :endpoints
     resource :user_password_resets, only: %i[create]
   end
 

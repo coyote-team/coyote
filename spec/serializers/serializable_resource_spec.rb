@@ -16,11 +16,11 @@ RSpec.describe SerializableResource do
   before do
     allow(object)
       .to receive_messages({
-        resource_group_title:     "Website",
+        resource_group_name:      "Website",
         approved_representations: approved_representations,
       })
   end
 
-  it { is_expected.to include(id: object.identifier) }
+  it { is_expected.to include(id: object.id) }
   it { is_expected.to include(canonical_id: object.canonical_id) }
 end

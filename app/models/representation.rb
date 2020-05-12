@@ -15,7 +15,6 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  author_id    :bigint           not null
-#  endpoint_id  :bigint           not null
 #  license_id   :bigint           not null
 #  metum_id     :bigint           not null
 #  resource_id  :bigint           not null
@@ -23,7 +22,6 @@
 # Indexes
 #
 #  index_representations_on_author_id    (author_id)
-#  index_representations_on_endpoint_id  (endpoint_id)
 #  index_representations_on_license_id   (license_id)
 #  index_representations_on_metum_id     (metum_id)
 #  index_representations_on_resource_id  (resource_id)
@@ -32,7 +30,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (author_id => users.id) ON DELETE => restrict ON UPDATE => cascade
-#  fk_rails_...  (endpoint_id => endpoints.id) ON DELETE => cascade
 #  fk_rails_...  (license_id => licenses.id) ON DELETE => restrict ON UPDATE => cascade
 #  fk_rails_...  (metum_id => meta.id) ON DELETE => restrict ON UPDATE => cascade
 #  fk_rails_...  (resource_id => resources.id) ON DELETE => restrict ON UPDATE => cascade
@@ -44,7 +41,6 @@ class Representation < ApplicationRecord
   belongs_to :metum, inverse_of: :representations
   belongs_to :author, inverse_of: :authored_representations, class_name: :User
   belongs_to :license, inverse_of: :representations
-  belongs_to :endpoint, inverse_of: :representations
 
   has_one :organization, through: :resource
 
@@ -53,17 +49,16 @@ class Representation < ApplicationRecord
   validates :language, presence: true
   validate :must_have_text_or_content_uri
 
-  delegate :title, :source_uri, to: :resource, prefix: true
-  delegate :title, to: :metum, prefix: true
-  delegate :title, to: :license, prefix: true
-  delegate :name, to: :endpoint, prefix: true
+  delegate :name, :source_uri, to: :resource, prefix: true
+  delegate :name, to: :metum, prefix: true
+  delegate :description, :name, to: :license, prefix: true
   delegate :name, to: :author, prefix: true
-  delegate :identifier, to: :resource, prefix: true
 
   scope :by_ordinality, -> { order(ordinality: :asc) }
   scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? "DESC" : "ASC"}")) }
-  scope :by_title_length, -> { order(Arel.sql("length(text) DESC")) }
-  scope :with_metum_named, ->(title) { joins(:metum).where(meta: {title: title}) }
+  scope :by_length, -> { order(Arel.sql("length(text) DESC")) }
+  scope :with_metum, ->(metum_id) { where(metum_id: metum_id) }
+  scope :with_metum_named, ->(name) { joins(:metum).where(meta: {name: name}) }
 
   audited
 
@@ -73,6 +68,22 @@ class Representation < ApplicationRecord
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
     %i[approved by_ordinality not_approved ready_to_review]
+  end
+
+  def select_default_license(attributes)
+    name = attributes.delete(:license)
+    self.license_id = attributes.delete(:license_id) ||
+      (name.present? && License.where(name: name).first_id) ||
+      license_id ||
+      License.is_default.first_id
+  end
+
+  def select_default_metum(attributes, meta)
+    name = attributes.delete(:metum)
+    self.metum_id = attributes.delete(:metum_id) ||
+      (name.present? && meta.where(name: name).first_id) ||
+      metum_id ||
+      meta.where(name: "Short").first_id
   end
 
   def to_s

@@ -15,7 +15,7 @@ class InvitationsController < ApplicationController
     authorize invitation
 
     user_invitation_service.call(invitation) do |err_msg|
-      self.title = "Inviting a user to join #{current_organization.title}"
+      self.title = "Inviting a user to join #{current_organization.name}"
       logger.warn "Unable to create Invitation: #{err_msg}"
       flash.now[:error] = err_msg
       render :new
@@ -28,7 +28,7 @@ class InvitationsController < ApplicationController
 
   # GET /organizations/1/invitations/new
   def new
-    self.title = "Invite a user to join #{current_organization.title}"
+    self.title = "Invite a user to join #{current_organization.name}"
     self.invitation = Invitation.new
     authorize invitation
   end

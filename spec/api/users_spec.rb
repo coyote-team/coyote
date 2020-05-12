@@ -13,7 +13,7 @@ RSpec.describe "Accessing a user profile" do
       expect(organizations.size).to eq(user.organizations.size)
       user.organizations.each do |organization|
         serialized_organization = organizations.find { |other_organization| other_organization[:id].to_i == organization.id }
-        expect(serialized_organization.dig(:attributes, :title)).to eq(organization.title)
+        expect(serialized_organization.dig(:attributes, :name)).to eq(organization.name)
       end
     end
   end
