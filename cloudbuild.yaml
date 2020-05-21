@@ -51,7 +51,7 @@ steps:
   entrypoint: sh
   args:
   - -c
-  - executor --destination=gcr.io/$PROJECT_ID/coyote --cache=true --cache-ttl=168h --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt` --build-arg staging_key=`cat tmp/staging_key.txt`
+  - executor --destination=gcr.io/$PROJECT_ID/coyote --cache=true --cache-ttl=672h --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt` --build-arg staging_key=`cat tmp/staging_key.txt`
 
 # Deploy the new image to Cloud run
 - name: gcr.io/cloud-builders/gcloud
