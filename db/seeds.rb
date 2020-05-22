@@ -9,13 +9,13 @@ rescue FactoryBot::DuplicateDefinitionError
   Rails.logger.debug "Factory Girl definitions previously loaded"
 end
 
-organization = FactoryBot.create(:organization, title: "Acme Museum")
+organization = FactoryBot.create(:organization, name: "Acme Museum")
 
 resource_groups = organization.resource_groups.create!([
-  {title: "collection"},
-  {title: "website"},
-  {title: "exhibitions"},
-  {title: "events"},
+  {name: "collection"},
+  {name: "website"},
+  {name: "exhibitions"},
+  {name: "events"},
 ])
 
 short_metum = FactoryBot.create(:metum, :short, organization: organization)
@@ -26,7 +26,7 @@ FactoryBot.factories[:license].defined_traits.to_a.map do |trait|
 end
 
 resource = FactoryBot.create(:resource, {
-  title:           "T.Y.F.F.S.H., 2011",
+  name:            "T.Y.F.F.S.H., 2011",
   organization:    organization,
   resource_groups: [resource_groups.first],
   source_uri:      "https://coyote.pics/wp-content/uploads/2016/02/Screen-Shot-2016-02-29-at-10.05.14-AM-1024x683.png",
@@ -52,14 +52,14 @@ FactoryBot.create(:representation, resource: resource, metum: short_metum, text:
 FactoryBot.create(:representation, resource: resource, metum: long_metum, text: long_text)
 
 undescribed_resource = FactoryBot.create(:resource, {
-  title:        "Installation view, _The Making of A Fugitive_, MCA Chicago, Jul 16–Dec 4,2016",
+  name:         "Installation view, _The Making of A Fugitive_, MCA Chicago, Jul 16–Dec 4,2016",
   organization: organization,
   source_uri:   "https://mcachicago.org/api/v1/attachment_images/thumbs/57c06fc6101f31476d000044.jpg",
 })
 
 # undescribed, unassigned resource
 FactoryBot.create(:resource, {
-  title:        "Unknown",
+  name:         "Unknown",
   organization: organization,
   source_uri:   "https://mcachicago.org/api/v1/attachment_images/thumbs/55bb7af13164660b2f000a36.jpg",
 })
