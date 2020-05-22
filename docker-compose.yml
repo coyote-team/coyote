@@ -10,15 +10,23 @@ services:
       POSTGRES_DB: coyote_development
       POSTGRES_PASSWORD: postgres
     ports:
-      - 5432:5432
+      - 6543:5432
     volumes:
       - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
 
   web: &rails
     build:
       args:
         bundle_without: "production"
-        database_url: postgresql://postgres:postgres@db:5432/
+        database_url: postgresql://postgres:postgres@db:6543/
         env: "development"
       context: .
     command: bundle exec rails server -b 0.0.0.0
@@ -53,7 +61,7 @@ services:
     environment:
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_HOST: db
-      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:5432
+      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:6543
       NODE_ENV: test
       PORT: 3030
       RAILS_ENV: test
@@ -65,7 +73,8 @@ services:
   worker:
     <<: *rails
     command: bundle exec cloudtasker
-    depends_on: []
+    depends_on:
+      - redis
     ports: []
 
 volumes:
