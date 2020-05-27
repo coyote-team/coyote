@@ -26,7 +26,7 @@ services:
     build:
       args:
         bundle_without: "production"
-        database_url: postgresql://postgres:postgres@db:6543/
+        database_url: postgresql://postgres:postgres@db:5432/
         env: "development"
       context: .
     command: bundle exec rails server -b 0.0.0.0
@@ -61,7 +61,7 @@ services:
     environment:
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_HOST: db
-      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:6543
+      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:5432
       NODE_ENV: test
       PORT: 3030
       RAILS_ENV: test

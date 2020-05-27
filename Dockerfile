@@ -3,21 +3,6 @@ FROM ruby:2.6-alpine
 WORKDIR /coyote
 
 ARG bundle_without="development test"
-ARG database_url
-ARG env="production"
-ARG base_key
-ARG master_key
-ARG staging_key
-
-ENV DATABASE_URL ${database_url}
-ENV RAILS_ENV ${env:-"production"}
-ENV RACK_ENV ${RAILS_ENV}
-ENV NODE_ENV ${RAILS_ENV}
-ENV RAILS_LOG_TO_STDOUT 1
-ENV RAILS_BASE_KEY ${base_key}
-ENV RAILS_MASTER_KEY ${master_key}
-ENV RAILS_STAGING_KEY ${staging_key}
-ENV PORT 3000
 
 # This is needed to make Google's RPC stuff work - ugh
 ENV LD_LIBRARY_PATH /lib64
@@ -48,6 +33,23 @@ RUN bundle config --global frozen 1 \
   && rm -rf /usr/local/bundle/cache/*.gem \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
   && find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Accept the remainder of the args (prevents rebuilding gems when we don't need to)
+ARG database_url
+ARG env="production"
+ARG base_key
+ARG master_key
+ARG staging_key
+
+ENV DATABASE_URL ${database_url}
+ENV RAILS_ENV ${env:-"production"}
+ENV RACK_ENV ${RAILS_ENV}
+ENV NODE_ENV ${RAILS_ENV}
+ENV RAILS_LOG_TO_STDOUT 1
+ENV RAILS_BASE_KEY ${base_key}
+ENV RAILS_MASTER_KEY ${master_key}
+ENV RAILS_STAGING_KEY ${staging_key}
+ENV PORT 3000
 
 # Copy and configure the app
 ADD . ./
