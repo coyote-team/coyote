@@ -3,7 +3,7 @@
 RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
   let(:resource_group) { create(:resource_group, organization: organization) }
-  let(:resource) { create(:resource, organization: organization) }
+  let(:resource) { create(:resource, canonical_id: "test-resource", organization: organization) }
 
   let(:base_params) do
     {organization_id: organization.id}
@@ -58,6 +58,11 @@ RSpec.describe ResourcesController do
     it "shows resources" do
       get :show, params: resource_params
       expect(response).to be_successful
+    end
+
+    it "shows resources by canonical_id" do
+      get :show, params: base_params.merge(canonical_id: resource.canonical_id)
+      expect(response).to redirect_to(resource_path(resource.id))
     end
 
     it "lists resources" do

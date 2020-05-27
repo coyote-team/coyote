@@ -6,6 +6,7 @@
 class ResourcesController < ApplicationController
   include PermittedParameters
 
+  before_action :check_for_canonical_id, only: %i[show]
   before_action :set_resource, only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access, only: %i[show edit update destroy]
@@ -66,6 +67,13 @@ class ResourcesController < ApplicationController
 
   def authorize_unit_access
     authorize(resource)
+  end
+
+  def check_for_canonical_id
+    if params[:canonical_id]
+      resource = resources_scope.find_by!(canonical_id: params[:canonical_id])
+      redirect_to resource_path(resource.id)
+    end
   end
 
   def current_organization?

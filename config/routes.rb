@@ -9,10 +9,13 @@
 #                                            POST   /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#create
 #                        api_resource_groups GET    /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#index
 #                                            POST   /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#create
-#                        api_representations GET    /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#index
-#                                            POST   /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#create
-#                                            GET    /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#index
+#                        api_representations GET    /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#index
 #                                            POST   /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#create
+#              api_canonical_representations GET    /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#index
+#                                            POST   /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#create
+#                     api_canonical_resource GET    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#show
+#                                            PATCH  /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
+#                                            PUT    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
 #                               api_resource GET    /api/v1/resources/:id(.:format)                                                          api/resources#show
 #                                            PATCH  /api/v1/resources/:id(.:format)                                                          api/resources#update
 #                                            PUT    /api/v1/resources/:id(.:format)                                                          api/resources#update
@@ -25,6 +28,7 @@
 #                                            PUT    /api/v1/representations/:id(.:format)                                                    api/representations#update
 #                                            DELETE /api/v1/representations/:id(.:format)                                                    api/representations#destroy
 #                                   api_user GET    /api/v1/profile(.:format)                                                                api/users#show
+#                         canonical_resource GET    /resources/canonical/:canonical_id(.:format)                                             resources#show
 #                              edit_resource GET    /resources/:id/edit(.:format)                                                            resources#edit
 #                                   resource GET    /resources/:id(.:format)                                                                 resources#show
 #                                            PATCH  /resources/:id(.:format)                                                                 resources#update
@@ -157,6 +161,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show], param: :canonical_id
   resources :resources, only: %i[show edit update destroy]
   resources :representations, only: %i[show edit update destroy]
 
