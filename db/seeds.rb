@@ -23,6 +23,7 @@ long_metum = FactoryBot.create(:metum, :long, organization: organization)
 
 FactoryBot.factories[:license].defined_traits.to_a.map do |trait|
   FactoryBot.create(:license, trait.name)
+rescue ActiveRecord::RecordInvalid
 end
 
 resource = FactoryBot.create(:resource, {

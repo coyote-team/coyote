@@ -85,8 +85,6 @@ CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
