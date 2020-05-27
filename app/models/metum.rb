@@ -6,6 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  instructions    :text             default(""), not null
+#  is_required     :boolean          default(FALSE), not null
 #  name            :citext           not null
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -26,4 +27,6 @@ class Metum < ApplicationRecord
   belongs_to :organization, inverse_of: :meta
 
   has_many :representations, inverse_of: :metum
+
+  scope :is_required, -> { where(is_required: true) }
 end

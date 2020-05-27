@@ -112,7 +112,8 @@ class Resource < ApplicationRecord
 
   def complete?
     return @complete if defined? @complete
-    @complete = representations.count >= organization.meta.count
+    required_ids = organization.meta.is_required.pluck("id")
+    @complete = (representations.pluck("DISTINCT(metum_id)") & required_ids).size == required_ids.size
   end
 
   def content_changed?

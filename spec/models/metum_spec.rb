@@ -6,6 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  instructions    :text             default(""), not null
+#  is_required     :boolean          default(FALSE), not null
 #  name            :citext           not null
 #  created_at      :datetime
 #  updated_at      :datetime

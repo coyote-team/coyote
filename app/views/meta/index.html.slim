@@ -4,6 +4,7 @@ table
   thead
     tr
       th Title
+      th Required
       th Instructions
       th.table-cell-actions Actions
 
@@ -11,6 +12,7 @@ table
     - list_of_meta.each do |metum|
       tr
         td.table-cell-primary.table-cell-link= link_to metum.name, [current_organization, metum]
+        td.table-cell-link= link_to metum.is_required? ? "Yes" : "No", [current_organization, metum]
         td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), [current_organization, metum]
         td.table-cell-actions
           = link_to 'Edit', edit_organization_metum_path(current_organization, metum), class: "button button--outline"

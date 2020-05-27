@@ -353,7 +353,8 @@ CREATE TABLE public.meta (
     instructions text DEFAULT ''::text NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    organization_id bigint NOT NULL
+    organization_id bigint NOT NULL,
+    is_required boolean DEFAULT false NOT NULL
 );
 
 
@@ -1907,6 +1908,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200522191610'),
 ('20200527215343'),
 ('20200527221219'),
-('20200527223134');
+('20200527223134'),
+('20200527224933');
 
 

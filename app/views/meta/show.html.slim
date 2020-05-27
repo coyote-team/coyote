@@ -6,6 +6,10 @@ table
       th Title:
       td= metum.name
     tr
+      th Is required?
+      td= metum.is_required? ? "Yes" : "No"
+
+    tr
       th Instructions:
       td= metum.instructions
 

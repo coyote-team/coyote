@@ -177,5 +177,28 @@ RSpec.describe Resource do
       end
     end
   end
+
+  describe "#complete?" do
+    let(:organization) { resource.organization }
+
+    let!(:required_metum) { create(:metum, :short, is_required: true, organization: organization) }
+    let!(:other_required_metum) { create(:metum, is_required: true, organization: organization) }
+    let!(:unrequired_metum) { create(:metum, :long, is_required: false, organization: organization) }
+
+    it "returns `true` if the resource has representations for all required meta" do
+      expect(resource.complete?).to eq(false)
+
+      # No matter how many UN-required representations you create, it's not complete
+      create_list(:representation, 2, metum: unrequired_metum, resource: resource)
+      expect(resource.reload.complete?).to eq(false)
+
+      # Once you've created a representation for all REQUIRED meta, it's complete
+      create(:representation, metum: required_metum, resource: resource)
+      expect(resource.reload.complete?).to eq(false)
+
+      create(:representation, metum: other_required_metum, resource: resource)
+      expect(resource.reload.complete?).to eq(false)
+    end
+  end
 end
 # rubocop:enable RSpec/MultipleExpectations
