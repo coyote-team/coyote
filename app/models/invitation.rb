@@ -5,10 +5,10 @@
 # Table name: invitations
 #
 #  id                :bigint           not null, primary key
-#  recipient_email   :string           not null
+#  recipient_email   :citext           not null
 #  redeemed_at       :datetime
 #  role              :enum             default("viewer"), not null
-#  token             :string           not null
+#  token             :citext           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  organization_id   :bigint           not null

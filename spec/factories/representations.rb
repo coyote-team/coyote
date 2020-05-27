@@ -6,8 +6,8 @@
 #
 #  id           :bigint           not null, primary key
 #  content_type :string           default("text/plain"), not null
-#  content_uri  :string
-#  language     :string           not null
+#  content_uri  :citext
+#  language     :citext           not null
 #  notes        :text
 #  ordinality   :integer
 #  status       :enum             default("ready_to_review"), not null

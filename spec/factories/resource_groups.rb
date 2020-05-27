@@ -6,9 +6,9 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  name            :string           not null
+#  name            :citext           not null
 #  token           :string
-#  webhook_uri     :string
+#  webhook_uri     :citext
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null

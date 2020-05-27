@@ -6,9 +6,9 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  name            :string           not null
+#  name            :citext           not null
 #  token           :string
-#  webhook_uri     :string
+#  webhook_uri     :citext
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
@@ -32,7 +32,7 @@ class ResourceGroup < ApplicationRecord
   before_save :set_token, if: :webhook_uri?
 
   validates :name, presence: true
-  validates :name, uniqueness: {scope: :organization_id}
+  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}
   validates :default, uniqueness: {if: :default?, scope: :organization_id}
   validate :webhook_uri_is_valid?, if: :webhook_uri?
 

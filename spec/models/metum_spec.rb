@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  instructions    :text             default(""), not null
-#  name            :string           not null
+#  name            :citext           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :bigint           not null
@@ -22,5 +22,5 @@ RSpec.describe Metum do
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:instructions) }
-  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:organization_id) }
+  it { is_expected.to validate_uniqueness_of(:name).case_insensitive.scoped_to(:organization_id) }
 end

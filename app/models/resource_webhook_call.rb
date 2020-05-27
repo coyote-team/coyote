@@ -5,13 +5,13 @@
 # Table name: resource_webhook_calls
 #
 #  id          :bigint           not null, primary key
-#  resource_id :bigint           not null
-#  uri         :string           not null
 #  body        :json
-#  response    :integer
 #  error       :text
+#  response    :integer
+#  uri         :citext           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  resource_id :bigint           not null
 #
 # Indexes
 #

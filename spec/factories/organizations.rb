@@ -5,7 +5,7 @@
 # Table name: organizations
 #
 #  id                 :integer          not null, primary key
-#  name               :text             not null
+#  name               :citext           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  default_license_id :integer          not null

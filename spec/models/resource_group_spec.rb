@@ -6,9 +6,9 @@
 #
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
-#  name            :string           not null
+#  name            :citext           not null
 #  token           :string
-#  webhook_uri     :string
+#  webhook_uri     :citext
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :integer          not null
@@ -25,7 +25,7 @@
 RSpec.describe ResourceGroup do
   subject { build(:resource_group) }
 
-  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:organization_id) }
+  it { is_expected.to validate_uniqueness_of(:name).case_insensitive.scoped_to(:organization_id) }
 
   describe "#webhook_uri=" do
     let(:organization) { build_stubbed(:organization, id: 1) }

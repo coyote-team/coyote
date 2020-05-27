@@ -6,8 +6,8 @@
 #
 #  id          :bigint           not null, primary key
 #  description :string           not null
-#  name        :string           not null
-#  url         :string           not null
+#  name        :citext           not null
+#  url         :citext           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

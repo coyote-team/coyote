@@ -247,8 +247,8 @@ ALTER SEQUENCE public.audits_id_seq OWNED BY public.audits.id;
 
 CREATE TABLE public.invitations (
     id bigint NOT NULL,
-    recipient_email character varying NOT NULL,
-    token character varying NOT NULL,
+    recipient_email public.citext NOT NULL,
+    token public.citext NOT NULL,
     sender_user_id bigint NOT NULL,
     recipient_user_id bigint NOT NULL,
     organization_id bigint NOT NULL,
@@ -284,9 +284,9 @@ ALTER SEQUENCE public.invitations_id_seq OWNED BY public.invitations.id;
 
 CREATE TABLE public.licenses (
     id bigint NOT NULL,
-    name character varying NOT NULL,
+    name public.citext NOT NULL,
     description character varying NOT NULL,
-    url character varying NOT NULL,
+    url public.citext NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -351,7 +351,7 @@ ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 CREATE TABLE public.meta (
     id integer NOT NULL,
-    name character varying NOT NULL,
+    name public.citext NOT NULL,
     instructions text DEFAULT ''::text NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -384,7 +384,7 @@ ALTER SEQUENCE public.meta_id_seq OWNED BY public.meta.id;
 
 CREATE TABLE public.organizations (
     id integer NOT NULL,
-    name text NOT NULL,
+    name public.citext NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     default_license_id integer NOT NULL
@@ -418,12 +418,12 @@ CREATE TABLE public.representations (
     id bigint NOT NULL,
     resource_id bigint NOT NULL,
     text text,
-    content_uri character varying,
+    content_uri public.citext,
     status public.representation_status DEFAULT 'ready_to_review'::public.representation_status NOT NULL,
     metum_id bigint NOT NULL,
     author_id bigint NOT NULL,
     content_type character varying DEFAULT 'text/plain'::character varying NOT NULL,
-    language character varying NOT NULL,
+    language public.citext NOT NULL,
     license_id bigint NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -489,12 +489,12 @@ ALTER SEQUENCE public.resource_group_resources_id_seq OWNED BY public.resource_g
 
 CREATE TABLE public.resource_groups (
     id integer NOT NULL,
-    name character varying NOT NULL,
+    name public.citext NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     organization_id integer NOT NULL,
     "default" boolean DEFAULT false,
-    webhook_uri character varying,
+    webhook_uri public.citext,
     token character varying
 );
 
@@ -558,7 +558,7 @@ ALTER SEQUENCE public.resource_links_id_seq OWNED BY public.resource_links.id;
 CREATE TABLE public.resource_webhook_calls (
     id bigint NOT NULL,
     resource_id bigint NOT NULL,
-    uri character varying NOT NULL,
+    uri public.citext NOT NULL,
     body json,
     response integer,
     error text,
@@ -906,7 +906,7 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    email character varying DEFAULT ''::character varying NOT NULL,
+    email public.citext DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying,
     reset_password_sent_at timestamp without time zone,
@@ -918,8 +918,8 @@ CREATE TABLE public.users (
     last_sign_in_ip character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    first_name character varying,
-    last_name character varying,
+    first_name public.citext,
+    last_name public.citext,
     authentication_token character varying NOT NULL,
     staff boolean DEFAULT false NOT NULL,
     failed_attempts integer DEFAULT 0 NOT NULL,
@@ -1908,6 +1908,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200520204316'),
 ('20200522191610'),
 ('20200527215343'),
-('20200527221219');
+('20200527221219'),
+('20200527223134');
 
 

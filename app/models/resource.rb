@@ -73,7 +73,7 @@ class Resource < ApplicationRecord
 
   validates :resource_type, presence: true
   validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true
-  validates :source_uri, presence: true, uniqueness: {scope: :organization_id}
+  validates :source_uri, presence: true, uniqueness: {case_sensitive: false, scope: :organization_id}
   validates :name, presence: true
 
   enum resource_type: Coyote::Resource::TYPES

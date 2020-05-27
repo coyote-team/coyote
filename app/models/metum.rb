@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  instructions    :text             default(""), not null
-#  name            :string           not null
+#  name            :citext           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :bigint           not null
@@ -21,7 +21,7 @@
 # @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
   validates :name, :instructions, presence: true
-  validates :name, uniqueness: {scope: :organization_id}
+  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}
 
   belongs_to :organization, inverse_of: :meta
 

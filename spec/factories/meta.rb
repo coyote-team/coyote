@@ -6,7 +6,7 @@
 #
 #  id              :integer          not null, primary key
 #  instructions    :text             default(""), not null
-#  name            :string           not null
+#  name            :citext           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #  organization_id :bigint           not null
