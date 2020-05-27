@@ -109,6 +109,16 @@ RSpec.describe Resource do
         expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
       }).to have_been_made
     end
+
+    it "adds a JWT token header with the resource ID in it" do
+      create(:resource, resource_groups: [resource_group])
+      expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
+        data = JSON.parse(req.body)["data"]
+        payload = {id: data["id"]}
+        token = JWT.encode(payload, resource_group.token, "HS256")
+        expect(req.headers["X-Coyote-Token"]).to eq(token)
+      }).to have_been_made
+    end
   end
 
   describe "receiving representations in attributes", clean_db: true do

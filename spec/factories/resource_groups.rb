@@ -7,6 +7,7 @@
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
 #  name            :string           not null
+#  token           :string
 #  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime

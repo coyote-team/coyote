@@ -22,6 +22,7 @@ gem "faraday"
 gem "haml-rails", ">= 1.0.0"
 gem "jquery-rails", ">= 4.0.4"
 gem "jsonapi-rails"
+gem "jwt"
 gem "kaminari"
 gem "language_list"
 gem "lightbox2-rails", github: "johansmitsnl/lightbox2-rails" # for resource lightboxes on index pages

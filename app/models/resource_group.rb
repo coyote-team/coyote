@@ -7,6 +7,7 @@
 #  id              :integer          not null, primary key
 #  default         :boolean          default(FALSE)
 #  name            :string           not null
+#  token           :string
 #  webhook_uri     :string
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -28,6 +29,7 @@ class ResourceGroup < ApplicationRecord
   DEFAULT_NAME = "Uncategorized"
 
   before_destroy :check_for_resources_or_default
+  before_save :set_token, if: :webhook_uri?
 
   validates :name, presence: true
   validates :name, uniqueness: {scope: :organization_id}
@@ -54,6 +56,10 @@ class ResourceGroup < ApplicationRecord
       errors.add(:base, default? ? "The default resource group cannot be deleted" : "It has resources in it")
       throw(:abort)
     end
+  end
+
+  def set_token
+    self.token ||= SecureRandom.hex(16)
   end
 
   def webhook_uri_is_valid?

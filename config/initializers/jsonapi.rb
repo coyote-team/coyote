@@ -31,4 +31,10 @@ JSONAPI::Rails.configure do |config|
   #
   # # Set a default pagination scheme.
   # config.jsonapi_pagination = ->(_) { nil }
+  config.jsonapi_fields = lambda {
+    {
+      resource_group:  SerializableResourceGroup::ATTRIBUTES,
+      resource_groups: SerializableResourceGroup::ATTRIBUTES,
+    }
+  }
 end

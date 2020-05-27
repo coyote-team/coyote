@@ -122,6 +122,7 @@ RSpec.describe "Accessing resource groups" do
 
         expect(data).to have_attribute(:name).with_value(resource_group.name)
         expect(data).to have_attribute(:webhook_uri).with_value(resource_group.webhook_uri)
+        expect(data).to have_attribute(:token).with_value(resource_group.token)
       end
     end
   end

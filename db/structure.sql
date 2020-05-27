@@ -85,8 +85,6 @@ CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
-
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
@@ -494,7 +492,8 @@ CREATE TABLE public.resource_groups (
     updated_at timestamp without time zone,
     organization_id integer NOT NULL,
     "default" boolean DEFAULT false,
-    webhook_uri character varying
+    webhook_uri character varying,
+    token character varying
 );
 
 
@@ -1904,6 +1903,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200519183148'),
 ('20200519184306'),
 ('20200520195141'),
-('20200520204316');
+('20200520204316'),
+('20200522191610');
 
 

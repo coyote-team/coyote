@@ -541,6 +541,7 @@ DEPENDENCIES
   jquery-rails (>= 4.0.4)
   jsonapi-rails
   jsonapi-rspec
+  jwt
   kaminari
   language_list
   launchy
