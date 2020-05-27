@@ -350,6 +350,12 @@ RSpec.describe "Accessing resources" do
         expect(data).to have_relationships(:organization, :representations)
       end
     end
+
+    it "GET /resources/:id with an invalid ID" do
+      expect {
+        get api_resource_path("notanid"), headers: auth_headers
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   describe "without authorization" do
