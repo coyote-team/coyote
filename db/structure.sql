@@ -288,8 +288,7 @@ CREATE TABLE public.licenses (
     description character varying NOT NULL,
     url character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    is_default boolean DEFAULT false
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -387,7 +386,8 @@ CREATE TABLE public.organizations (
     id integer NOT NULL,
     name text NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    default_license_id integer NOT NULL
 );
 
 
@@ -1907,6 +1907,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200520195141'),
 ('20200520204316'),
 ('20200522191610'),
-('20200527215343');
+('20200527215343'),
+('20200527221219');
 
 

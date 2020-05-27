@@ -93,7 +93,7 @@ RSpec.describe "Accessing resources" do
     end
 
     describe "creating many resources" do
-      let!(:license) { create(:license, :universal) }
+      let!(:license) { License.find_by(name: attributes_for(:license, :universal)[:name]) || create(:license, :universal) }
       let!(:short) { create(:metum, :short, organization: user_organization) }
       let!(:long) { create(:metum, :long, organization: user_organization) }
 

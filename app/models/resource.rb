@@ -171,7 +171,7 @@ class Resource < ApplicationRecord
       end
 
       # Allow assigning license by name, e.g. "cc0-1.0"
-      representation.select_default_license(attributes)
+      representation.select_default_license(attributes, organization)
 
       # Allow assigning metum by name, e.g. "Short" or "Long"
       representation.select_default_metum(attributes, organization.meta)

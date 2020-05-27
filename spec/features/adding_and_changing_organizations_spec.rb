@@ -10,6 +10,7 @@ RSpec.describe "Adding and changing an organization" do
     expect(page).to have_current_path(new_organization_path, ignore_query: true)
 
     fill_in "Name", with: "Acme Museum"
+    select "cc0-1.0", from: "Default license"
 
     expect {
       click_button "Create Organization"

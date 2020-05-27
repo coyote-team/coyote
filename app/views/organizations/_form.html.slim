@@ -1,5 +1,6 @@
 = simple_form_for current_organization, validate: true do |f|
   = f.error_notification
-  = f.input :name
+  = f.input :name, required: true
+  = f.association :default_license, required: true
 
   = form_toolbar f

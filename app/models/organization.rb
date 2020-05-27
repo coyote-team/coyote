@@ -4,10 +4,11 @@
 #
 # Table name: organizations
 #
-#  id         :integer          not null, primary key
-#  name       :text             not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                 :integer          not null, primary key
+#  name               :text             not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  default_license_id :integer          not null
 #
 # Indexes
 #
@@ -19,6 +20,8 @@ class Organization < ApplicationRecord
   after_create :create_default_resource_group
 
   validates :name, presence: true, uniqueness: true
+
+  belongs_to :default_license, class_name: "License"
 
   has_many :memberships, inverse_of: :organization
   has_many :users, through: :memberships

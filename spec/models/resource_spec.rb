@@ -118,7 +118,7 @@ RSpec.describe Resource do
     let!(:user) { create(:membership, organization: organization).user }
     let!(:user_2) { create(:membership, organization: organization).user }
 
-    let!(:license) { create(:license, :universal) }
+    let!(:license) { License.find_by(name: attributes_for(:license, :universal)[:name]) || create(:license, :universal) }
     let!(:license_2) { create(:license, :attribution_international) }
 
     let!(:metum) { create(:metum, :short, organization: organization) }

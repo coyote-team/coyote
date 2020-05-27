@@ -73,7 +73,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:name)
+    params.require(:organization).permit(:name, :default_license_id)
   end
 
   def pundit_user
