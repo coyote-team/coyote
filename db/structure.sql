@@ -85,6 +85,8 @@ CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_
 
 SET default_tablespace = '';
 
+SET default_table_access_method = heap;
+
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
@@ -591,7 +593,7 @@ ALTER SEQUENCE public.resource_webhook_calls_id_seq OWNED BY public.resource_web
 CREATE TABLE public.resources (
     id bigint NOT NULL,
     name character varying DEFAULT '(no title provided)'::character varying NOT NULL,
-    resource_type public.resource_type NOT NULL,
+    resource_type public.resource_type DEFAULT 'image'::public.resource_type NOT NULL,
     canonical_id public.citext,
     source_uri public.citext NOT NULL,
     organization_id bigint NOT NULL,
@@ -1904,6 +1906,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200519184306'),
 ('20200520195141'),
 ('20200520204316'),
-('20200522191610');
+('20200522191610'),
+('20200527215343');
 
 

@@ -9,7 +9,7 @@
 #  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
-#  resource_type         :enum             not null
+#  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -35,7 +35,7 @@ require "webmock/rspec"
 RSpec.describe Resource do
   subject { resource }
 
-  let(:resource) { build(:resource, :image, canonical_id: "abc123", name: "Mona Lisa", source_uri: source_uri) }
+  let(:resource) { build(:resource, canonical_id: "abc123", name: "Mona Lisa", source_uri: source_uri) }
   let(:source_uri) { "http://example.com/100.jpg" }
 
   it { is_expected.to validate_presence_of(:resource_type) }
@@ -55,15 +55,7 @@ RSpec.describe Resource do
   end
 
   describe "without the presence of a source URI" do
-    let(:resource) { build(:resource, :image, source_uri: "") }
-
-    specify do
-      expect(resource).not_to be_viewable
-    end
-  end
-
-  describe "with a non-image resource type" do
-    let(:resource) { build(:resource, :physical_object) }
+    let(:resource) { build(:resource, source_uri: "") }
 
     specify do
       expect(resource).not_to be_viewable

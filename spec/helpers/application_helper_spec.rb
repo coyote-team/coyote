@@ -12,7 +12,7 @@ RSpec.describe ApplicationHelper do
 
   describe "#resource_link_target with an image resource" do
     let(:resource) do
-      build_stubbed(:resource, :image)
+      build_stubbed(:resource)
     end
 
     before do
@@ -23,16 +23,6 @@ RSpec.describe ApplicationHelper do
     specify do
       link = helper.resource_link_target(resource, id: "resource_100", alt: "some text")
       expect(link).to match(/src="#{resource_uri}"/)
-    end
-  end
-
-  describe "#resource_link_target without image resource" do
-    let(:resource) do
-      build_stubbed(:resource, :sound)
-    end
-
-    specify do
-      expect(helper.resource_link_target(resource, id: "resource_100")).to eq("Mona Lisa (sound)")
     end
   end
 

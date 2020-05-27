@@ -9,7 +9,7 @@
 #  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
-#  resource_type         :enum             not null
+#  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -32,7 +32,7 @@
 FactoryBot.define do
   factory :resource, aliases: %i[subject_resource object_resource] do
     name { "Mona Lisa" }
-    resource_type { "still_image" }
+    resource_type { "image" }
     source_uri { Faker::Internet.unique.url }
 
     trait :priority do
@@ -42,12 +42,6 @@ FactoryBot.define do
     after(:build) do |resource, evaluator|
       resource.organization ||= evaluator.organization || build(:organization)
       resource.resource_groups ||= evaluator.resource_groups || [resource.organization.resource_groups.first] || [build(:resource_group, organization: resource.organization)]
-    end
-
-    Coyote::Resource.each_type do |_, type_name|
-      trait type_name do
-        resource_type { type_name }
-      end
     end
   end
 end

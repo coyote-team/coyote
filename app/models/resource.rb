@@ -9,7 +9,7 @@
 #  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
-#  resource_type         :enum             not null
+#  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

@@ -25,8 +25,6 @@ RSpec.describe "Resource adding and changing" do
     fill_in "Source URI", with: resource_attributes[:source_uri]
     fill_in "Host URIs", with: "http://example.com/abc\nhttp://example.com/xyz"
 
-    select(resource_attributes[:resource_type].titleize, from: "Type")
-
     expect {
       click_button("Create Resource")
     }.to change(Resource, :count)
