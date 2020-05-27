@@ -38,6 +38,8 @@
 class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
 
+  attr_accessor :union_host_uris
+
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -119,7 +121,9 @@ class Resource < ApplicationRecord
 
   # @param value [String] a newline-delimited list of host URIs to store for this Resource
   def host_uris=(value)
-    self[:host_uris] = value.to_s.split(/[\r\n]+/)
+    new_uris = value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)
+    new_uris = (host_uris || []).union(new_uris) if union_host_uris
+    self[:host_uris] = new_uris
   end
 
   # @return [String] a human-friendly means of identifying this resource in names and select boxes

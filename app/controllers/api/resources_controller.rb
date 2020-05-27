@@ -172,6 +172,7 @@ module Api
       resources = params.require(:resources).map { |resource_params|
         resource_params = clean_resource_params(resource_params)
         resource = resource_for(resource_params)
+        resource.union_host_uris = true
         resource.update(resource_params)
         resource
       }

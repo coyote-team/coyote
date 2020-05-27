@@ -56,6 +56,7 @@ module PermittedParameters
       source_uri
       uploaded_resource
     ] + [{
+      host_uris:          [],
       representations:    REPRESENTATION_PARAMS,
       resource_group_ids: [],
     }]).freeze

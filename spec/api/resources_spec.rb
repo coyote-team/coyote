@@ -99,7 +99,8 @@ RSpec.describe "Accessing resources" do
 
       let(:representation_attributes) { attributes_for(:representation) }
 
-      let!(:existing_resource) { create(:resource, organization: user_organization) }
+      let!(:existing_resource) { create(:resource, host_uris: Array.new(3) { Faker::Internet.unique.url }, organization: user_organization) }
+      let(:existing_resource_uris) { existing_resource.host_uris }
       let!(:existing_nested_resource) {
         create(:resource, organization: user_organization).tap do |resource|
           create(:representation, representation_attributes.merge(metum: long, resource: resource))
@@ -180,6 +181,19 @@ RSpec.describe "Accessing resources" do
         # It should also not modify the existing representation since it was a duplicate
         representation = existing_nested_resource.representations.first
         expect(representation.metum).to eq(long) # It should not have updated the metum to short
+      end
+
+      it "POST /organizations/:id/resources/create joins host URIs" do
+        params = {resources: [
+          existing_resource_params.merge(host_uris: ["http://www.other-host-uri-is-here-yay.com/scrmpth"]),
+        ]}
+
+        # It should union the host_uris from the original resource
+        expect {
+          post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
+          expect(response).to be_created
+        }.to change { existing_resource.reload.host_uris }
+          .from(existing_resource_uris).to(existing_resource_uris + ["http://www.other-host-uri-is-here-yay.com/scrmpth"])
       end
     end
   end
