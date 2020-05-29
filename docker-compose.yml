@@ -61,7 +61,7 @@ services:
     environment:
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_HOST: db
-      DATABASE_URL: postgres://postgres:postgres@db/coyote_test:5432
+      DATABASE_URL: postgres://postgres:postgres@db:5432/coyote_test
       NODE_ENV: test
       PORT: 3030
       RAILS_ENV: test
