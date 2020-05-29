@@ -51,6 +51,9 @@ h1= title(to_html_title(resource.name))
     - if policy(ResourceLink).new?
       = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--outline' do
         | Create Link to Another Resource
+    - if policy(resource).destroy?
+      = link_to resource_path(resource.id), title: 'Delete this resource', class: 'button button--outline', data: {confirm: "Are you sure you want to delete this resource? This cannot be undone."}, method: :delete do
+        | Delete
   - if policy(Assignment).new?
     = toolbar_item
       = render partial: 'assign', resource: resource
