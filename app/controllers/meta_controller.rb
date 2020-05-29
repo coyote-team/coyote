@@ -3,9 +3,9 @@
 # Handles CRUD operations for Metum objects
 # @see Metum
 class MetaController < ApplicationController
-  before_action :set_metum, only: %i[show edit update]
+  before_action :set_metum, only: %i[show edit update destroy]
   before_action :authorize_general_access, only: %i[new index create]
-  before_action :authorize_unit_access, only: %i[show edit update]
+  before_action :authorize_unit_access, only: %i[show edit update destroy]
 
   helper_method :list_of_meta, :metum
 
@@ -20,6 +20,11 @@ class MetaController < ApplicationController
       logger.warn "Unable to create Metum: '#{metum.error_sentence}'"
       render :new
     end
+  end
+
+  def destroy
+    metum.destroy
+    redirect_to organization_meta_path, info: "#{metum.name} was deleted"
   end
 
   # GET /meta/1/edit

@@ -172,7 +172,7 @@ Rails.application.routes.draw do
     resources :memberships, only: %i[index show edit update destroy]
     resources :assignments, only: %i[index show new create destroy]
     resources :resource_groups
-    resources :meta, except: %i[destroy]
+    resources :meta
     resources :invitations, only: %i[new create]
   end
 

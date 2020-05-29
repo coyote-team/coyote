@@ -59,6 +59,9 @@ RSpec.describe MetaController do
         get :edit, params: metum_params
         expect(response).to redirect_to(new_user_session_url)
 
+        delete :destroy, params: metum_params
+        expect(response).to redirect_to(new_user_session_url)
+
         get :new, params: base_params
         expect(response).to redirect_to(new_user_session_url)
 
@@ -85,6 +88,10 @@ RSpec.describe MetaController do
 
       expect {
         get :edit, params: metum_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        delete :destroy, params: metum_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
       expect {
@@ -141,6 +148,11 @@ RSpec.describe MetaController do
       expect {
         patch :update, params: foreign_metum_params
       }.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect {
+        delete :destroy, params: metum_params
+      }.to change(organization.meta, :count)
+        .by(-1)
     end
   end
 end
