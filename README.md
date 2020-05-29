@@ -26,13 +26,13 @@ More information about image description projects at the MCA and elsewhere is av
 
 ## Table of contents
 
-- [Developer Setup](#developer-setup)
-- [Documentation](#documentation)
-- [API](#api)
-- [Data Model](#data-model)
-- [Links](#links)
-- [Contributors](#contributors)
-- [License](#license)
+- [Developer Setup](https://github.com/coyote-team/coyote#developer-setup)
+- [Documentation](https://github.com/coyote-team/coyote#documentation)
+- [API](https://github.com/coyote-team/coyote#api)
+- [Data Model](https://github.com/coyote-team/coyote#data-model)
+- [Links](https://github.com/coyote-team/coyote#links)
+- [Contributors](https://github.com/coyote-team/coyote#contributors)
+- [License](https://github.com/coyote-team/coyote#license)
 
 ## <a name="developer-setup"></a>Developer Setup
 
