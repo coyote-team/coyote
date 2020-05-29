@@ -153,8 +153,8 @@ Rails.application.routes.draw do
         resources :representations, as: :canonical_representations, only: %i[index create]
       end
 
-      resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show update], param: :canonical_id
-      resources :resources, only: %i[show update]
+      resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[destroy show update], param: :canonical_id
+      resources :resources, only: %i[destroy show update]
       resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show destroy]
       resource :user, only: %(show), path: "profile"

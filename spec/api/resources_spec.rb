@@ -92,6 +92,33 @@ RSpec.describe "Accessing resources" do
         ])
     end
 
+    it "DELETE /resources/:id" do
+      expect {
+        delete api_resource_path(existing_resource.id), headers: auth_headers
+      }.to change {
+        Resource.exists?(existing_resource.id)
+      }.from(true).to(false)
+      expect(response).to be_successful
+    end
+
+    it "DELETE /resources/:canonical_id" do
+      existing_resource.update_attribute(:canonical_id, "canonical-yey")
+      expect {
+        delete api_canonical_resource_path("canonical-yey"), headers: auth_headers
+      }.to change {
+        Resource.exists?(existing_resource.id)
+      }.from(true).to(false)
+      expect(response).to be_successful
+    end
+
+    it "DELETE /resources/:id with a resource we don't own" do
+      outside_resource = create(:resource)
+
+      expect {
+        delete api_resource_path(outside_resource.id), headers: auth_headers
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
     describe "creating many resources" do
       let!(:license) { License.find_by(name: attributes_for(:license, :universal)[:name]) || create(:license, :universal) }
       let!(:short) { create(:metum, :short, organization: user_organization) }

@@ -5,9 +5,10 @@ module Api
   class ResourcesController < Api::ApplicationController
     include PermittedParameters
 
-    before_action :find_resource, only: %i[show update]
     before_action :authorize_general_access, only: %i[index create create_many]
-    before_action :authorize_unit_access, only: %i[show update]
+
+    before_action :find_resource, only: %i[destroy show update]
+    before_action :authorize_unit_access, only: %i[destroy show update]
 
     resource_description do
       short "Anything with an identity that can be represented in the Coyote database"
@@ -182,6 +183,12 @@ module Api
       render jsonapi:        valid_resources,
              jsonapi_errors: invalid_resources.map(&:errors),
              status:         invalid_resources.size == resources.size ? :unprocessable_entity : :created
+    end
+
+    api :DELETE, "resources/:id", "Delete existing resource"
+    def destroy
+      resource.destroy
+      head :no_content
     end
 
     api :GET, "resources/:id", "Return attributes of a particular resource"
