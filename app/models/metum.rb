@@ -26,7 +26,5 @@ class Metum < ApplicationRecord
 
   belongs_to :organization, inverse_of: :meta
 
-  has_many :representations, inverse_of: :metum
-
   scope :is_required, -> { where(is_required: true) }
 end

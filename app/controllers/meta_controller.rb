@@ -3,9 +3,9 @@
 # Handles CRUD operations for Metum objects
 # @see Metum
 class MetaController < ApplicationController
-  before_action :set_metum, only: %i[show edit update destroy]
+  before_action :set_metum, only: %i[show edit update]
   before_action :authorize_general_access, only: %i[new index create]
-  before_action :authorize_unit_access, only: %i[show edit update destroy]
+  before_action :authorize_unit_access, only: %i[show edit update]
 
   helper_method :list_of_meta, :metum
 

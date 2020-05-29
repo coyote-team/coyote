@@ -36,7 +36,7 @@ class ResourceGroup < ApplicationRecord
   validates :default, uniqueness: {if: :default?, scope: :organization_id}
   validate :webhook_uri_is_valid?, if: :webhook_uri?
 
-  has_many :resource_group_resources, inverse_of: :resource_group
+  has_many :resource_group_resources, inverse_of: :resource_group, dependent: :destroy
   has_many :resources, through: :resource_group_resources, inverse_of: :resource_groups
 
   belongs_to :organization, inverse_of: :resource_groups

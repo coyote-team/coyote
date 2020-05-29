@@ -38,7 +38,7 @@
 class User < ApplicationRecord
   has_secure_token :authentication_token
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships, counter_cache: :organizations_count
 
   devise :database_authenticatable,
@@ -50,7 +50,7 @@ class User < ApplicationRecord
     :lockable,
     password_length: 8..128
 
-  has_many :assignments, inverse_of: :user, dependent: :destroy
+  has_many :assignments, inverse_of: :user, dependent: :restrict_with_exception
   has_many :assigned_resources, class_name: :Resource, through: :assignments, source: :resource
   has_many :authored_representations, dependent: :restrict_with_exception, inverse_of: :author, foreign_key: :author_id, class_name: :Representation
   has_many :organization_representations, through: :organizations, class_name: :Representation, source: :representations

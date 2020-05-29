@@ -5,10 +5,10 @@ module Api
   class RepresentationsController < Api::ApplicationController
     include PermittedParameters
 
-    before_action :find_representation, only: %i[show update destroy]
+    before_action :find_representation, only: %i[show destroy]
     before_action :find_resource, only: %i[index]
     before_action :authorize_general_access, only: %i[index]
-    before_action :authorize_unit_access, only: %i[show update destroy]
+    before_action :authorize_unit_access, only: %i[show destroy]
 
     resource_description do
       short "Complementary and alternative sensory impressions of a Resource"

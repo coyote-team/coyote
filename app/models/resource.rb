@@ -46,14 +46,14 @@ class Resource < ApplicationRecord
 
   belongs_to :organization, inverse_of: :resources
 
-  has_many :representations, inverse_of: :resource
+  has_many :representations, inverse_of: :resource, dependent: :destroy
   has_many :approved_representations, -> { approved }, class_name: :Representation, inverse_of: :resource
-  has_many :subject_resource_links, foreign_key: :subject_resource_id, class_name: :ResourceLink, inverse_of: :subject_resource
-  has_many :object_resource_links, foreign_key: :object_resource_id, class_name: :ResourceLink, inverse_of: :object_resource
-  has_many :assignments, inverse_of: :resource
+  has_many :subject_resource_links, foreign_key: :subject_resource_id, class_name: :ResourceLink, inverse_of: :subject_resource, dependent: :destroy
+  has_many :object_resource_links, foreign_key: :object_resource_id, class_name: :ResourceLink, inverse_of: :object_resource, dependent: :destroy
+  has_many :assignments, inverse_of: :resource, dependent: :destroy
   has_many :meta, through: :representations
 
-  has_many :resource_group_resources, inverse_of: :resource
+  has_many :resource_group_resources, inverse_of: :resource, dependent: :destroy
   has_many :resource_groups, through: :resource_group_resources, inverse_of: :resources
   has_many :resource_webhook_calls, dependent: :destroy
 

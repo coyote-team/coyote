@@ -38,9 +38,9 @@
 # An alternate sensory impression of a Resource
 class Representation < ApplicationRecord
   belongs_to :resource, inverse_of: :representations, counter_cache: true
-  belongs_to :metum, inverse_of: :representations
+  belongs_to :metum
   belongs_to :author, inverse_of: :authored_representations, class_name: :User
-  belongs_to :license, inverse_of: :representations
+  belongs_to :license
 
   has_one :organization, through: :resource
 

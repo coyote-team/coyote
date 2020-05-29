@@ -29,6 +29,9 @@ class MembershipsController < ApplicationController
   def index
   end
 
+  def show
+  end
+
   # @raise [Coyote::SecurityError] if the user with a certain rank attempts to promote another user above that rank
   def update
     new_role = membership_params[:role]

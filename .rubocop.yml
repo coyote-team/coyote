@@ -33,9 +33,6 @@ Layout/HashAlignment:
 Rails/FilePath:
   EnforcedStyle: arguments
 
-Rails/HasManyOrHasOneDependent:
-  Enabled: false # TODO: Restore this
-
 Rails/HelperInstanceVariable:
   Enabled: false # We memoize helpers using instance variables - that's okay
 
@@ -46,7 +43,7 @@ Rails/RakeEnvironment:
   Enabled: false
 
 Rails/SkipsModelValidations:
-  Enabled: false # TODO: Enable this and double-check all the instances it throws
+  Enabled: false # We consciously use methods that skip validation - for a reason!
 
 RSpec/ContextWording:
   Enabled: false
