@@ -1,11 +1,15 @@
 #!/bin/sh
 
-until nc -z -v -w30 $DATABASE_HOST 5432
-do
-  sleep 1
-done
+bundle check || bundle install --jobs=$(getconf _NPROCESSORS_ONLN)
 
-sleep 2 # Well give it a second, jeez
+if [ -n "${DATABASE_URL}" ]; then
+  database_host=$(echo ${DATABASE_URL} | cut -d "/" -f3 | cut -d "@" -f2 | cut -d ":" -f1)
+  database_port=$(echo ${DATABASE_URL} | cut -d "/" -f3 | cut -d "@" -f2 | cut -d ":" -f2)
+  until nc -z -v -w30 ${database_host} ${database_port}; do
+    echo "Waiting for ${database_host}:${database_port}..."
+    sleep 1
+  done
+fi
 
 echo "Starting with '$@'"
 exec $@

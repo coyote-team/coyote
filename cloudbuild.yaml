@@ -1,3 +1,4 @@
+timeout: 1200s
 steps:
 
 # Prepare to import secrets
@@ -58,4 +59,4 @@ steps:
   entrypoint: bash
   args:
   - -c
-  - gcloud run deploy coyote --image=gcr.io/$PROJECT_ID/coyote:latest --platform=managed --region=us-east1 --allow-unauthenticated --add-cloudsql-instances=$PROJECT_ID:us-east1:coyote-us-east1 --update-env-vars MAILER_PASSWORD=`cat tmp/mailer_password.txt`
+  - gcloud run deploy coyote --image=gcr.io/$PROJECT_ID/coyote:latest --platform=managed --region=us-east1 --allow-unauthenticated --add-cloudsql-instances=$PROJECT_ID:us-east1:coyote-$BRANCH_NAME-us-east1 --update-env-vars MAILER_PASSWORD=`cat tmp/mailer_password.txt`

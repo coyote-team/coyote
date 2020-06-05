@@ -37,7 +37,6 @@ services:
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
-      DATABASE_HOST: db
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}
       WEBPACKER_DEV_SERVER_HOST: webpacker
@@ -60,7 +59,6 @@ services:
     command: bundle exec rails db:test:prepare spec
     environment:
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
-      DATABASE_HOST: db
       DATABASE_URL: postgres://postgres:postgres@db:5432/coyote_test
       NODE_ENV: test
       PORT: 3030

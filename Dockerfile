@@ -29,7 +29,7 @@ RUN bundle config --global frozen 1 \
   && bundle config set without "${bundle_without}" \
   && bundle config build.google-protobuf --with-cflags=-D__va_copy=va_copy \
   && bundle config build.nokogiri --use-system-libraries \
-  && bundle install --jobs=20 \
+  && bundle install --jobs=$(getconf _NPROCESSORS_ONLN) \
   && rm -rf /usr/local/bundle/cache/*.gem \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
   && find /usr/local/bundle/gems/ -name "*.o" -delete
