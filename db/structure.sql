@@ -75,12 +75,12 @@ CREATE TYPE public.resource_type AS ENUM (
 CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
     LANGUAGE plpgsql
     AS $$
-        DECLARE
-        BEGIN
-        EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
-        END;
+      DECLARE
+      BEGIN
+      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
+      END;
 
-      $$;
+    $$;
 
 
 SET default_tablespace = '';
