@@ -31,12 +31,19 @@ steps:
   - -c
   - gcloud secrets versions access latest --secret=RAILS_BASE_KEY > tmp/base_key.txt
 
-# Master (production)
+# Master
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: bash
   args:
   - -c
   - gcloud secrets versions access latest --secret=RAILS_MASTER_KEY > tmp/master_key.txt
+
+# Staging (optional)
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: bash
+  args:
+  - -c
+  - gcloud secrets versions access latest --secret=RAILS_STAGING_KEY > tmp/staging_key.txt
 
 ## Build
 # Run the Docker build command, importing the secrets we just dumped and using Kaniko to cache
@@ -45,11 +52,11 @@ steps:
   entrypoint: sh
   args:
   - -c
-  - executor --destination=gcr.io/$PROJECT_ID/coyote --cache=true --cache-ttl=672h --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt`
+  - executor --destination=gcr.io/$PROJECT_ID/coyote --cache=true --cache-ttl=672h --build-arg database_url=`cat tmp/database_url.txt` --build-arg base_key=`cat tmp/base_key.txt` --build-arg master_key=`cat tmp/master_key.txt` --build-arg staging_key=`cat tmp/staging_key.txt`
 
 # Deploy the new image to Cloud run
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: bash
   args:
   - -c
-  - gcloud run deploy coyote --image=gcr.io/$PROJECT_ID/coyote:latest --platform=managed --region=us-east4 --allow-unauthenticated --add-cloudsql-instances=$PROJECT_ID:us-east4:coyote-$BRANCH_NAME-us-east4 --update-env-vars MAILER_PASSWORD=`cat tmp/mailer_password.txt`
+  - gcloud run deploy coyote --image=gcr.io/$PROJECT_ID/coyote:latest --platform=managed --region=us-east1 --allow-unauthenticated --add-cloudsql-instances=$PROJECT_ID:us-east1:coyote-$BRANCH_NAME-us-east1 --update-env-vars MAILER_PASSWORD=`cat tmp/mailer_password.txt`
