@@ -11,6 +11,10 @@ RSpec.describe "Representation filtering" do
     create(:representation, :approved, organization: user_organization, text: "A woman smiling")
   end
 
+  let!(:representation_of_deleted_resource) do
+    create(:representation, :approved, organization: user_organization, resource: create(:resource, organization: user_organization, is_deleted: true), text: "Deleted resource")
+  end
+
   let!(:other_representation) do
     create(:representation, text: "Should Not See This")
   end
@@ -18,20 +22,23 @@ RSpec.describe "Representation filtering" do
   it "succeeds" do
     click_first_link "Descriptions"
 
-    expect(page).to have_content("My Organization's Description")
-    expect(page).not_to have_content("Should Not See This")
+    expect(page).to have_content(representation.text)
+    expect(page).not_to have_content(other_representation.text)
+    expect(page).not_to have_content(representation_of_deleted_resource.text)
 
     fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: "smiling"
     click_button "Search"
 
-    expect(page).to have_content("A woman smiling")
-    expect(page).not_to have_content("My Organization's Description")
+    expect(page).to have_content(representation_search_target.text)
+    expect(page).not_to have_content(representation.text)
+    expect(page).not_to have_content(representation_of_deleted_resource.text)
 
     fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: ""
     check "Not Approved"
     click_button "Search"
 
-    expect(page).not_to have_content("A woman smiling")
-    expect(page).to have_content("My Organization's Description")
+    expect(page).not_to have_content(representation_search_target.text)
+    expect(page).to have_content(representation.text)
+    expect(page).not_to have_content(representation_of_deleted_resource.text)
   end
 end

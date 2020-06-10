@@ -6,9 +6,10 @@ RSpec.describe RepresentationPolicy do
   subject { described_class.new(org_user, representation) }
 
   let(:representation) { build_stubbed(:representation) }
+  let(:resource) { build_stubbed(:resource) }
 
   before do
-    allow(representation).to receive_messages(author: org_user)
+    allow(representation).to receive_messages(author: org_user.user, resource: resource)
   end
 
   it { is_expected.to permit_action(:index) }
@@ -20,6 +21,10 @@ RSpec.describe RepresentationPolicy do
   describe "as an author working with own content" do
     include_context "author organization user"
 
+    before do
+      allow(resource).to receive(:assigned_to?).with(org_user.user).and_return(true)
+    end
+
     it { is_expected.to permit_new_and_create_actions }
     it { is_expected.to permit_edit_and_update_actions }
     it { is_expected.to permit_action(:destroy) }
@@ -29,10 +34,11 @@ RSpec.describe RepresentationPolicy do
     include_context "author organization user"
 
     before do
-      allow(representation).to receive_messages(author: :another_user)
+      allow(resource).to receive(:assigned_to?).and_return(false)
+      allow(representation).to receive(:author).and_return(double(:user))
     end
 
-    it { is_expected.to permit_new_and_create_actions }
+    it { is_expected.to forbid_new_and_create_actions }
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
   end

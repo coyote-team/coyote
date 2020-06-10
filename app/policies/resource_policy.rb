@@ -6,11 +6,16 @@
 class ResourcePolicy < ApplicationPolicy
   # @return [Boolean] whether or not the user can create resources for this organization
   def create?
-    organization_user.author?
+    organization_user.editor?
   end
 
   alias new? create?
   alias create_many? create?
+
+  # @return [Boolean] if the user can create representations of this resource
+  def describe?
+    return true if RepresentationPolicy.new(organization_user, Representation.new(resource: record)).new?
+  end
 
   # @return [true] everyone can list resources in their organizations
   def index?

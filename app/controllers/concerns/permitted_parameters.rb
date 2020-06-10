@@ -34,6 +34,7 @@ module PermittedParameters
   RESOURCE_FILTERS = (%i[
     assignments_user_id_eq
     canonical_id_or_name_or_representations_text_cont_all
+    is_deleted_eq
     priority_flag_eq
     representations_author_id_eq
     representations_updated_at_gt

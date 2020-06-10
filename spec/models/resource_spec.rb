@@ -6,6 +6,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  host_uris             :string           default([]), not null, is an Array
+#  is_deleted            :boolean          default(FALSE), not null
 #  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null

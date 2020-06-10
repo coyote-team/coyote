@@ -600,7 +600,8 @@ CREATE TABLE public.resources (
     updated_at timestamp without time zone NOT NULL,
     representations_count integer DEFAULT 0 NOT NULL,
     priority_flag boolean DEFAULT false NOT NULL,
-    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
+    host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    is_deleted boolean DEFAULT false NOT NULL
 );
 
 
@@ -1909,6 +1910,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200527215343'),
 ('20200527221219'),
 ('20200527223134'),
-('20200527224933');
+('20200527224933'),
+('20200603164622');
 
 

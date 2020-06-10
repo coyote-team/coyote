@@ -15,7 +15,19 @@ class ApplicationController < ActionController::Base
 
   analytical
 
-  helper_method :current_organization, :current_organization?, :organization_scope, :organization_user, :pagination_link_params, :filter_params
+  helper_method :body_class,
+    :current_organization,
+    :current_organization?,
+    :filter_params,
+    :organization_scope,
+    :organization_user,
+    :pagination_link_params
+
+  if Rails.env.production?
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from ActionController::ParameterMissing, with: :bad_request
+    rescue_from Pundit::NotAuthorizedError, with: :unauthorized
+  end
 
   protected
 
@@ -31,6 +43,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def bad_request
+    render "application/bad_request", status: :bad_request
+  end
+
+  def body_class(class_name = nil)
+    @body_class ||= [
+      controller_name,
+      action_name,
+      [controller_name, action_name].join("-"),
+    ]
+    @body_class.push(class_name) if class_name.present?
+    @body_class.join(" ")
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
   end
@@ -43,11 +69,19 @@ class ApplicationController < ActionController::Base
     current_user.present? && organization_scope.exists?(params[:organization_id])
   end
 
+  def not_found
+    render "application/not_found", status: :not_found
+  end
+
   def organization_user
     @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
   alias pundit_user organization_user
+
+  def unauthorized
+    render "application/authorized", status: :unauthorized
+  end
 
   private
 

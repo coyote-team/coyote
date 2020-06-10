@@ -51,7 +51,8 @@ module Coyote
 
     # @return [Membership] the membership we are modeling
     def membership
-      @membership ||= user.memberships.find_by(organization: organization)
+      return @membership if defined? @membership
+      @membership = user.memberships.find_by(organization: organization)
     end
 
     # @return [Symbol] the name of the role held by this user in the current organization. Will return :none if the user is not a member of the organization.

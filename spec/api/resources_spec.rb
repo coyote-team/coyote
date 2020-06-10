@@ -96,8 +96,8 @@ RSpec.describe "Accessing resources" do
       expect {
         delete api_resource_path(existing_resource.id), headers: auth_headers
       }.to change {
-        Resource.exists?(existing_resource.id)
-      }.from(true).to(false)
+        existing_resource.reload.is_deleted?
+      }.from(false).to(true)
       expect(response).to be_successful
     end
 
@@ -106,8 +106,8 @@ RSpec.describe "Accessing resources" do
       expect {
         delete api_canonical_resource_path("canonical-yey"), headers: auth_headers
       }.to change {
-        Resource.exists?(existing_resource.id)
-      }.from(true).to(false)
+        existing_resource.reload.is_deleted?
+      }.from(false).to(true)
       expect(response).to be_successful
     end
 

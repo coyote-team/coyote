@@ -24,7 +24,7 @@ html(lang="en")
 
     = raw analytical.head_append_javascript
 
-  body class=(content_for?(:body_class) ? yield(:body_class) : body_class_default)
+  body class=(body_class)
     = raw analytical.body_prepend_javascript
     nav#nav-main role="navigation"
       /button.navbar-toggle.collapsed aria-controls="bs-navbar" aria-expanded=false data-target="#bs-navbar" data-toggle="collapse" type="button"

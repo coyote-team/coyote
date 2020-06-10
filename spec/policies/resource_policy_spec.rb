@@ -18,7 +18,7 @@ RSpec.describe ResourcePolicy do
   describe "as an author" do
     include_context "author organization user"
 
-    it { is_expected.to permit_new_and_create_actions }
+    it { is_expected.to forbid_new_and_create_actions }
     it { is_expected.to forbid_edit_and_update_actions }
     it { is_expected.to forbid_action(:destroy) }
   end

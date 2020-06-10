@@ -70,36 +70,23 @@ RSpec.describe ResourcesController do
       expect(response).to be_successful
     end
 
-    it "shows an edit page" do
+    it "does not allow creating, editing, or deleting" do
+      expect {
+        get :new, params: base_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        post :create, params: new_resource_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
       expect {
         get :edit, params: resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
-    end
 
-    it "shows a new page" do
-      get :new, params: base_params
-      expect(response).to be_successful
-    end
-
-    it "creates valid resources" do
-      expect {
-        post :create, params: new_resource_params
-        expect(response).to be_redirect
-      }.to change(organization.resources, :count).by(1)
-    end
-
-    it "does not create invalid resources" do
-      post :create, params: base_params.merge(resource: {resource_group_id: nil})
-      expect(response).not_to be_redirect
-    end
-
-    it "updates resources" do
       expect {
         patch :update, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
-    end
 
-    it "deletes resources" do
       expect {
         delete :destroy, params: update_resource_params
       }.to raise_error(Pundit::NotAuthorizedError)
@@ -112,6 +99,13 @@ RSpec.describe ResourcesController do
     it "succeeds for critical actions" do
       get :new, params: base_params
       expect(response).to be_successful
+
+      expect {
+        post :create, params: new_resource_params
+      }.to change(organization.resources, :count).by(1)
+
+      post :create, params: base_params.merge(resource: {resource_group_id: nil})
+      expect(response).not_to be_redirect
 
       get :edit, params: resource_params
       expect(response).to be_successful
@@ -128,8 +122,8 @@ RSpec.describe ResourcesController do
       expect {
         delete :destroy, params: update_resource_params
         expect(response).to redirect_to(organization_resources_url(organization))
-      }.to change { Resource.exists?(resource.id) }
-        .from(true).to(false)
+      }.to change { resource.reload.is_deleted? }
+        .from(false).to(true)
     end
   end
 end

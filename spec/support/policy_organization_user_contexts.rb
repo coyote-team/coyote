@@ -12,6 +12,7 @@ RSpec.shared_context "guest organization user" do
       owner?:    false,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:guest),
+      user:      double(:user),
     })
   end
 end
@@ -28,6 +29,7 @@ RSpec.shared_context "viewer organization user" do
       owner?:    false,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:viewer),
+      user:      double(:user),
     })
   end
 end
@@ -44,6 +46,7 @@ RSpec.shared_context "author organization user" do
       owner?:    false,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:author),
+      user:      double(:user),
     })
   end
 end
@@ -60,6 +63,7 @@ RSpec.shared_context "editor organization user" do
       owner?:    false,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:editor),
+      user:      double(:user),
     })
   end
 end
@@ -76,6 +80,7 @@ RSpec.shared_context "admin organization user" do
       owner?:    false,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:admin),
+      user:      double(:user),
     })
   end
 end
@@ -92,6 +97,7 @@ RSpec.shared_context "owner organization user" do
       owner?:    true,
       staff?:    false,
       role_rank: Coyote::Membership.role_rank(:owner),
+      user:      double(:user),
     })
   end
 end
@@ -107,6 +113,7 @@ RSpec.shared_context "staff organization user" do
       admin?:  true,
       owner?:  true,
       staff?:  true,
+      user:    double(:user),
     })
   end
 end

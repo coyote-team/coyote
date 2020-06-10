@@ -187,7 +187,7 @@ module Api
 
     api :DELETE, "resources/:id", "Delete existing resource"
     def destroy
-      resource.destroy
+      resource.mark_as_deleted!
       head :no_content
     end
 
@@ -325,7 +325,8 @@ module Api
         filter_params,
         pagination_params,
         (current_organization || current_user).resources,
-        default_order: :order_by_priority_and_date,
+        default_filters: {is_deleted_eq: false},
+        default_order:   :order_by_priority_and_date,
       )
     end
 

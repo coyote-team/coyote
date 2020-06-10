@@ -43,13 +43,13 @@ RSpec.describe RepresentationsController do
   end
 
   let(:new_representation_params) do
-    representation = attributes_for(:representation)
-    representation[:metum_id] = metum.id
-    representation[:license_id] = license.id
-    representation[:author_id] = user.id
-
     base_params.merge({
-      representation: representation,
+      representation: attributes_for(
+        :representation,
+        author_id:  user.id,
+        license_id: license.id,
+        metum_id:   metum.id,
+      ),
       resource_id:    resource.id,
     })
   end
@@ -129,7 +129,11 @@ RSpec.describe RepresentationsController do
     include_context "signed-in author user"
 
     let(:representation) do
-      create(:representation, author: user, organization: organization)
+      create(:representation, author: user, organization: organization, resource: resource)
+    end
+
+    before do
+      create(:assignment, resource: resource, user: user)
     end
 
     it "succeeds for basic actions" do
@@ -144,7 +148,7 @@ RSpec.describe RepresentationsController do
         expect(response).to be_redirect
         resource.reload
       }.to change(resource.representations, :count)
-        .from(0).to(1)
+        .from(1).to(2)
 
       post :create, params: base_params.merge(representation: {metum_id: metum.id}, resource_id: resource.id)
       expect(response).not_to be_redirect
@@ -181,6 +185,14 @@ RSpec.describe RepresentationsController do
     end
 
     it "fails for all actions" do
+      expect {
+        post :create, params: new_representation_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      expect {
+        get :new, params: new_representation_params
+      }.to raise_error(Pundit::NotAuthorizedError)
+
       expect {
         get :edit, params: representation_params
       }.to raise_error(Pundit::NotAuthorizedError)

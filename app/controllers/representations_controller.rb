@@ -8,7 +8,8 @@ class RepresentationsController < ApplicationController
 
   before_action :set_representation, only: %i[show edit update destroy]
   before_action :set_current_resource_and_organization, only: %i[new edit create]
-  before_action :authorize_general_access, only: %i[new index create]
+  before_action :authorize_general_access, only: %i[index]
+  before_action :authorize_create_access, only: %i[new create]
   before_action :authorize_unit_access, only: %i[show edit update destroy]
 
   helper_method :representation, :current_resource, :record_filter, :available_meta, :authors, :licenses
@@ -61,6 +62,10 @@ class RepresentationsController < ApplicationController
   attr_accessor :representation, :current_resource
   attr_writer :current_organization
 
+  def authorize_create_access
+    authorize(current_resource, :describe?)
+  end
+
   def authorize_general_access
     authorize Representation
   end
@@ -82,7 +87,12 @@ class RepresentationsController < ApplicationController
   end
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params.reverse_merge(DEFAULT_SEARCH_PARAM), pagination_params, current_organization.representations)
+    @record_filter ||= RecordFilter.new(
+      filter_params.reverse_merge(DEFAULT_SEARCH_PARAM),
+      pagination_params,
+      current_organization.representations,
+      default_filters: {resource_is_deleted_eq: false},
+    )
   end
 
   def representations_scope

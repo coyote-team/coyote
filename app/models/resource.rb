@@ -6,6 +6,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  host_uris             :string           default([]), not null, is an Array
+#  is_deleted            :boolean          default(FALSE), not null
 #  name                  :string           default("(no title provided)"), not null
 #  priority_flag         :boolean          default(FALSE), not null
 #  representations_count :integer          default(0), not null
@@ -93,16 +94,28 @@ class Resource < ApplicationRecord
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
-    %i[order_by_priority_and_date represented assigned unassigned unrepresented assigned_unrepresented unassigned_unrepresented with_approved_representations]
+    %i[
+      order_by_priority_and_date
+      represented
+      assigned
+      unassigned
+      unrepresented
+      assigned_unrepresented
+      unassigned_unrepresented with_approved_representations
+    ]
   end
 
   def approved?
     return @approved if defined? @approved
-    @approved = complete? && representations.all?(&:approved?)
+    @approved = complete? && representations.any? && representations.all?(&:approved?)
   end
 
   def assigned?
     !unassigned?
+  end
+
+  def assigned_to?(user)
+    assignments.where(user_id: user.id).any?
   end
 
   def best_representation
@@ -130,6 +143,10 @@ class Resource < ApplicationRecord
   # @return [String] a human-friendly means of identifying this resource in names and select boxes
   def label
     @label ||= canonical_id.present? ? "#{name} (#{canonical_id})" : name
+  end
+
+  def mark_as_deleted!
+    update_attribute(:is_deleted, true)
   end
 
   def notify_webhook!

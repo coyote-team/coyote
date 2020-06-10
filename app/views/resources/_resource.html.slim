@@ -22,7 +22,7 @@ li.list-item.list-item--card
     - if policy(resource).edit?
       li.list-item-actions-item
         = link_to 'Edit', edit_resource_path(resource), class: 'button button--outline', aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
-    - if resource.assigned?
+    - if policy(resource).describe?
       li.list-item-actions-item
         = link_to 'Describe', new_organization_representation_path(organization_id: current_organization.id, resource_id: resource.id), class: 'button button--outline', aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
     - elsif form.nil? && policy(Assignment).new?

@@ -73,9 +73,9 @@ Coyote::Membership.each_role do |_, role_id|
   user = FactoryBot.create(:user, organization: organization, role: role_id, email: email, password: "password")
   Assignment.create(resource: undescribed_resource, user: user)
 
-  puts "Created #{role_id} user '#{email}' with password 'password'"
+  puts "Created #{role_id} user '#{email}' with password 'password'" # rubocop:disable Rails/Output
 end
 
 email = "staff@example.com"
 FactoryBot.create(:user, :staff, email: email, password: "password")
-puts "Created staff user '#{email}' with password 'password'"
+puts "Created staff user '#{email}' with password 'password'" # rubocop:disable Rails/Output

@@ -59,9 +59,10 @@ RSpec/Dialect:
     context: describe
 
 RSpec/ExampleLength:
-  Max: 15
+  Max: 20
   Exclude:
     - spec/api/**/*
+    - spec/controllers/**/*
     - spec/features/**/*
 
 RSpec/MultipleExpectations:
@@ -70,6 +71,9 @@ RSpec/MultipleExpectations:
     - spec/controllers/**/*
     - spec/features/**/*
     - spec/mailers/**/*
+
+RSpec/NamedSubject:
+  Enabled: false # TODO: Re-enable once other lint issues in rspec are resolve. This is causing too much noise.
 
 RSpec/VerifiedDoubles:
   Enabled: false

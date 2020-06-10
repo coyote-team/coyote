@@ -6,7 +6,8 @@
 class RepresentationPolicy < ApplicationPolicy
   # @return [Boolean] whether or not the user can create representations for this organization
   def create?
-    organization_user.author?
+    return true if organization_user.editor?
+    organization_user.author? && record.resource.assigned_to?(organization_user.user)
   end
 
   alias new? create?
@@ -24,7 +25,7 @@ class RepresentationPolicy < ApplicationPolicy
   # @return [Boolean] if the user can change the representation
   def update?
     return true if organization_user.editor?
-    organization_user.author? && organization_user == record.author
+    organization_user.author? && organization_user.user == record.author
   end
 
   alias edit? update?

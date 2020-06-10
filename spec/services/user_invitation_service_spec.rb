@@ -104,3 +104,4 @@ RSpec.describe UserInvitationService do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

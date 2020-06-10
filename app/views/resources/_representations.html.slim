@@ -17,7 +17,6 @@ table
         td= to_html representation.text
         td= representation.author
         td.table-cell-actions
-          - if policy(Representation).edit?
+          - if policy(representation).edit?
             = link_to 'Edit', edit_representation_path(representation), class: 'button button--outline'
-          - if policy(Representation).index?
-            = link_to 'View', representation_path(representation), class: 'button button--outline'
+          = link_to 'View', representation_path(representation), class: 'button button--outline'
