@@ -75,12 +75,12 @@ CREATE TYPE public.resource_type AS ENUM (
 CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_name text) RETURNS void
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-      BEGIN
-      EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
-      END;
+        DECLARE
+        BEGIN
+        EXECUTE 'SELECT setval( ''' || sequence_name  || ''', ' || '(SELECT MAX(' || columnname || ') FROM ' || tablename || ')' || '+1)';
+        END;
 
-    $$;
+      $$;
 
 
 SET default_tablespace = '';
@@ -1514,6 +1514,13 @@ CREATE INDEX index_resource_webhook_calls_on_resource_id ON public.resource_webh
 
 
 --
+-- Name: index_resources_on_is_deleted; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_is_deleted ON public.resources USING btree (is_deleted);
+
+
+--
 -- Name: index_resources_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1911,6 +1918,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200527221219'),
 ('20200527223134'),
 ('20200527224933'),
-('20200603164622');
+('20200603164622'),
+('20200615211941');
 
 

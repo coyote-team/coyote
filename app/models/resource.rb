@@ -19,6 +19,7 @@
 #
 # Indexes
 #
+#  index_resources_on_is_deleted                        (is_deleted)
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
