@@ -4,25 +4,24 @@
 .sass-cache
 .capybara.html
 .DS_Store
-/log
-/tmp
-/db/*.sqlite3
-/public/system
-/coverage/
-/spec/tmp
+log
+tmp
+db/*.sqlite3
+public/system
+coverage/
+spec/tmp
 **.orig
 rerun.txt
 pickle-email-*.html
-/public/assets/
+node_modules
+public/assets/
 .yardoc
 
 ## Environment normalisation:
-/.bundle
-/vendor/bundle
+.bundle
+vendor/bundle
 
 # Ignore application configuration
-/config/application.yml
-
-/config/credentials/production.key
-
-/config/credentials/staging.key
+config/application.yml
+config/credentials/production.key
+config/credentials/staging.key
