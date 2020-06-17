@@ -9,7 +9,7 @@ module Coyote
       # collection:           "collection",
       # dataset:              "dataset",
       # event:                "event",
-      image:                "image",
+      image: "image",
       # interactive_resource: "interactive_resource",
       # moving_image:         "moving_image",
       # physical_object:      "physical_object",

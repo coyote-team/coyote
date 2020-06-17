@@ -178,11 +178,8 @@ module Api
         resource
       }
 
-      valid_resources = resources.select(&:valid?)
-      invalid_resources = resources - valid_resources
-      render jsonapi:        valid_resources,
-             jsonapi_errors: invalid_resources.map(&:errors),
-             status:         invalid_resources.size == resources.size ? :unprocessable_entity : :created
+      render jsonapi_mixed: resources,
+             status:        resources.any?(&:invalid?) ? :unprocessable_entity : :created
     end
 
     api :DELETE, "resources/:id", "Delete existing resource"

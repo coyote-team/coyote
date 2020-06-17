@@ -187,14 +187,16 @@ RSpec.describe "Accessing resources" do
       it "POST /organizations/:id/resources/create returns a mix of errors and success when some things fail" do
         params = {resources: [
           new_resource_params.except(:source_uri, :name),
+          new_nested_resource_params,
           existing_resource_params,
+          existing_nested_resource_params.merge(resource_type: "still_image"),
         ]}
 
         expect {
           post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
-          expect(response).to be_created
-        }.not_to change(user_organization.resources, :count)
-          .from(2)
+          expect(response).to be_unprocessable
+        }.to change(user_organization.resources, :count)
+          .from(2).to(3)
 
         # It should add a new representation to the resource that had none
         representation = existing_resource.representations.first
@@ -208,6 +210,18 @@ RSpec.describe "Accessing resources" do
         # It should also not modify the existing representation since it was a duplicate
         representation = existing_nested_resource.representations.first
         expect(representation.metum).to eq(long) # It should not have updated the metum to short
+
+        # FINALLY, it should render data AND errors
+        # 1. Data
+        expect(json_data[:data].size).to eq(2)
+        json_data[:data].each do |resource|
+          expect(resource).to have_attribute(:source_uri)
+        end
+
+        # 2. Errors
+        expect(json_data[:errors].size).to eq(2)
+        expect(json_data[:errors][0][:title]).to eq("Invalid source_uri")
+        expect(json_data[:errors][1][:title]).to eq("Invalid resource_type")
       end
 
       it "POST /organizations/:id/resources/create joins host URIs" do
