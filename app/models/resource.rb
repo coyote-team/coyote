@@ -74,8 +74,9 @@ class Resource < ApplicationRecord
   scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}) }
 
   validates :resource_type, presence: true
-  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true
-  validates :source_uri, presence: true, uniqueness: {case_sensitive: false, scope: :organization_id}
+  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :canonical_id_changed?
+  validates :source_uri, presence: true
+  validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :source_uri_changed?
   validates :name, presence: true
 
   enum resource_type: Coyote::Resource::TYPES

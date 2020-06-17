@@ -19,7 +19,8 @@
 class Organization < ApplicationRecord
   after_create :create_default_resource_group
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :name, uniqueness: true, if: :name_changed?
 
   belongs_to :default_license, class_name: "License"
 

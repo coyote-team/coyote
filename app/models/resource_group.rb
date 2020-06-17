@@ -32,8 +32,8 @@ class ResourceGroup < ApplicationRecord
   before_save :set_token, if: :webhook_uri?
 
   validates :name, presence: true
-  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}
-  validates :default, uniqueness: {if: :default?, scope: :organization_id}
+  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?
+  validates :default, uniqueness: {if: :default?, scope: :organization_id}, if: :default_changed?
   validate :webhook_uri_is_valid?, if: :webhook_uri?
 
   has_many :resource_group_resources, inverse_of: :resource_group, dependent: :destroy

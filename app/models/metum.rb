@@ -22,7 +22,7 @@
 # @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
   validates :name, :instructions, presence: true
-  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}
+  validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?
 
   belongs_to :organization, inverse_of: :meta
 

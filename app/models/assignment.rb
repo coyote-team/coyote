@@ -24,7 +24,7 @@ class Assignment < ApplicationRecord
   belongs_to :user, inverse_of: :assignments
   belongs_to :resource, inverse_of: :assignments
 
-  validates :user, uniqueness: {scope: :resource}
+  validates :user, uniqueness: {scope: :resource}, if: :user_id_changed?
 
   scope :by_created_at, -> { order(created_at: :desc) }
 

@@ -31,7 +31,7 @@ class ResourceLink < ApplicationRecord
   delegate :organization, :label, :name, to: :object_resource, prefix: true
 
   validates :verb, presence: true, inclusion: {in: Coyote::ResourceLink::VERB_NAMES, message: "%<value>s is not one of Coyote's accepted verbs: #{Coyote::ResourceLink::VERB_NAMES.to_sentence(last_word_connector: "or")}"}
-  validates :verb, uniqueness: {scope: %i[subject_resource_id object_resource_id]}
+  validates :verb, uniqueness: {scope: %i[subject_resource_id object_resource_id]}, if: :verb_changed?
 
   audited
 
