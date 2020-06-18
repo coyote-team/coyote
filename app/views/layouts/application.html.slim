@@ -27,12 +27,7 @@ html(lang="en")
   body class=(body_class)
     = raw analytical.body_prepend_javascript
     nav#nav-main role="navigation"
-      /button.navbar-toggle.collapsed aria-controls="bs-navbar" aria-expanded=false data-target="#bs-navbar" data-toggle="collapse" type="button"
-        /span.sr-only Toggle navigation
-        /span.icon-bar
-        /span.icon-bar
-        /span.icon-bar
-      = link_to current_organization? ? current_organization : root_path, class: "nav-brand" do
+      = link_to !stateless? && current_organization? ? current_organization : root_path, class: "nav-brand" do
         span.nav-brand-fade C
         span.nav-brand-keep o
         span.nav-brand-fade y
@@ -40,15 +35,15 @@ html(lang="en")
         span.nav-brand-fade t
         span.nav-brand-fade e
 
-      - if current_organization?
+      - if !stateless? && current_organization?
         = render "primary_nav"
 
-      - if current_user
+      - if !stateless? && current_user
         .nav-secondary
           = render "organization_selector"
           = render "user_nav"
 
-    = render "notifications"
+    = render "notifications" unless stateless?
 
     main#main role="main"
       = yield
@@ -62,7 +57,7 @@ html(lang="en")
           ' in collaboration with
           a href="https://pac.bz/" Prime Access Consulting
           | . It has been generously supported by Lois and Steve Eisen.
-      - if current_user
+      - if !stateless? && current_user
         p
           small
             ' Check out our #{link_to "API", "https://coyote-team.github.io/coyote/api/"} using your
@@ -77,7 +72,6 @@ html(lang="en")
               ' to your bookmarks then click it to add and view annotations for
                 images on any webpage.
 
-    #loading
     = raw analytical.body_append_javascript
 
     = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   protect_from_forgery with: :exception
+  prepend_view_path "app/assets/html"
 
   before_action :require_user
 
@@ -19,15 +20,17 @@ class ApplicationController < ActionController::Base
     :current_user,
     :current_user?,
     :filter_params,
+    :mark_as_stateless!,
     :organization_scope,
     :organization_user,
     :pagination_link_params,
-    :return_to_path
+    :return_to_path,
+    :stateless?
 
-  if Rails.env.production?
+  if Credentials.dig(:app, :rescue_from_errors)
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from ActionController::ParameterMissing, with: :bad_request
-    rescue_from Pundit::NotAuthorizedError, with: :unauthorized
+    rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
+    rescue_from Pundit::NotAuthorizedError, with: :forbidden
   end
 
   private
@@ -35,10 +38,6 @@ class ApplicationController < ActionController::Base
   def auth_token
     return @auth_token if defined? @auth_token
     @auth_token = session[AuthToken::KEY] || cookies.signed[AuthToken::KEY]
-  end
-
-  def bad_request
-    render "application/bad_request", status: :bad_request
   end
 
   def body_class(class_name = nil)
@@ -56,6 +55,8 @@ class ApplicationController < ActionController::Base
     Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if user_signed_in?
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
+
+  # :nocov:
 
   def current_organization
     return @current_organization if defined? @current_organization
@@ -75,7 +76,9 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
-  # :nocov:
+  def forbidden
+    render_error :forbidden
+  end
 
   def log_user_in(user, options = {})
     remember = options.delete(:remember)
@@ -102,8 +105,13 @@ class ApplicationController < ActionController::Base
     redirect_to_return_path(user, options)
   end
 
+  def mark_as_stateless!
+    body_class "stateless"
+    @stateless = true
+  end
+
   def not_found
-    render "application/not_found", status: :not_found
+    render_error :not_found
   end
 
   def organization_user
@@ -121,6 +129,12 @@ class ApplicationController < ActionController::Base
     redirect_to path, options
   end
 
+  def render_error(status)
+    mark_as_stateless!
+    code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] || 500
+    render template: code.to_s, status: status
+  end
+
   def require_user
     redirect_to new_session_path(Session::RETURN_TO_KEY => request.path) unless current_user?
   end
@@ -129,7 +143,11 @@ class ApplicationController < ActionController::Base
     params[Session::RETURN_TO_KEY]
   end
 
-  def unauthorized
-    render "application/authorized", status: :unauthorized
+  def stateless?
+    @stateless ||= false
+  end
+
+  def unprocessable_entity
+    render_error :unprocessable_entity
   end
 end

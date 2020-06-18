@@ -108,6 +108,7 @@ group :production do
   gem "google-cloud-storage", require: false
   gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"]
   gem "grpc", "1.27.0", platforms: ["ruby"]
+  gem "non-digest-assets"
   gem "sentry-raven"
 end
 

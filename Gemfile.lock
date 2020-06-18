@@ -312,6 +312,8 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    non-digest-assets (1.0.10)
+      sprockets (>= 2.0)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -548,6 +550,7 @@ DEPENDENCIES
   lightbox2-rails!
   metamagic
   mini_racer
+  non-digest-assets
   pg
   pry-rails
   puma
