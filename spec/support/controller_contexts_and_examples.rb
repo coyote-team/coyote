@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-# see https://github.com/plataformatec/devise/wiki/How-To:-Stub-authentication-in-controller-specs
-
 RSpec.shared_context "signed-out user" do
   before do
-    sign_in nil, scope: :user
+    sign_out
   end
 end
 
@@ -18,7 +16,7 @@ Coyote::Membership.each_role do |_, role_name|
     end
 
     before do
-      sign_in(user) # uses https://github.com/plataformatec/devise/blob/master/lib/devise/test/controller_helpers.rb
+      sign_in(user)
     end
   end
 end
@@ -29,7 +27,7 @@ RSpec.shared_context "signed-in staff user" do
   end
 
   before do
-    sign_in(user) # uses https://github.com/plataformatec/devise/blob/master/lib/devise/test/controller_helpers.rb
+    sign_in(user)
   end
 end
 
@@ -51,7 +49,7 @@ end
 
 RSpec.shared_examples "a sign-in redirect controller response" do
   it "redirects the user to the sign-in URL" do
-    expect(response).to redirect_to(new_user_session_url)
+    expect(response).to redirect_to(new_session_url)
   end
 
   it "sets a flash alert message" do

@@ -50,22 +50,22 @@ RSpec.describe ResourceLinksController do
     it "requires login for all actions" do
       aggregate_failures do
         get :show, params: resource_link_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: resource_link_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :new
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: new_resource_link_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_resource_link_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: resource_link_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end

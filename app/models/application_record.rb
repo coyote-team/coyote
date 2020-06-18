@@ -31,7 +31,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   # @return [String] a more human-readable representation of an ActiveRecord object, simplifies logging
   def to_s
-    respond_to?(:name) ? name : "#{self.class.name} #{self[:id]}"
+    respond_to?(:name) ? name : super
   end
 
   private

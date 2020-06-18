@@ -7,9 +7,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  before_action :store_user_location!, if: :storable_location? # see https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
-  before_action :authenticate_user!
-  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :require_user
 
   before_action :configure_sentry if defined? Raven
 
@@ -18,10 +16,13 @@ class ApplicationController < ActionController::Base
   helper_method :body_class,
     :current_organization,
     :current_organization?,
+    :current_user,
+    :current_user?,
     :filter_params,
     :organization_scope,
     :organization_user,
-    :pagination_link_params
+    :pagination_link_params,
+    :return_to_path
 
   if Rails.env.production?
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
@@ -29,18 +30,11 @@ class ApplicationController < ActionController::Base
     rescue_from Pundit::NotAuthorizedError, with: :unauthorized
   end
 
-  protected
+  private
 
-  def after_sign_in_path_for(user)
-    stored_path = stored_location_for(:user)
-
-    if stored_path.present? && stored_path != root_path
-      stored_path
-    elsif user.organizations.one?
-      organization_path(user.organizations.first)
-    else
-      organizations_path
-    end
+  def auth_token
+    return @auth_token if defined? @auth_token
+    @auth_token = session[AuthToken::KEY] || cookies.signed[AuthToken::KEY]
   end
 
   def bad_request
@@ -57,16 +51,55 @@ class ApplicationController < ActionController::Base
     @body_class.join(" ")
   end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name])
+  # :nocov:
+  def configure_sentry
+    Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if user_signed_in?
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
   def current_organization
-    @current_organization ||= organization_scope.find(params[:organization_id])
+    return @current_organization if defined? @current_organization
+    @current_organization = organization_scope.find(params[:organization_id])
   end
 
   def current_organization?
     current_user.present? && organization_scope.exists?(params[:organization_id])
+  end
+
+  def current_user
+    return @current_user if defined? @current_user
+    @current_user = auth_token.presence && User.joins(:auth_tokens).find_by(auth_tokens: {token: auth_token})
+  end
+
+  def current_user?
+    current_user.present?
+  end
+
+  # :nocov:
+
+  def log_user_in(user, options = {})
+    remember = options.delete(:remember)
+    auth_token = user.auth_tokens.create!(user_agent: request.user_agent)
+    token = auth_token.token
+    user.update(
+      current_sign_in_at: Time.zone.now,
+      current_sign_in_ip: request.ip,
+      last_sign_in_at:    user.current_sign_in_at,
+      last_sign_in_ip:    user.current_sign_in_ip,
+    )
+
+    if remember
+      cookie = {
+        httponly: true,
+        expires:  1.month.from_now,
+        value:    token,
+      }
+      cookies.signed[AuthToken::KEY] = cookie
+    else
+      session[AuthToken::KEY] = token
+    end
+
+    redirect_to_return_path(user, options)
   end
 
   def not_found
@@ -79,24 +112,24 @@ class ApplicationController < ActionController::Base
 
   alias pundit_user organization_user
 
+  def redirect_to_return_path(*args)
+    options = args.extract_options!
+    user = args.shift || current_user
+    path = options.delete(:path) || return_to_path
+    organization = return_to_path.blank? && user.organizations.limit(1).pluck(:id).first
+    path ||= organization.present? ? organization_path(organization) : root_path
+    redirect_to path, options
+  end
+
+  def require_user
+    redirect_to new_session_path(Session::RETURN_TO_KEY => request.path) unless current_user?
+  end
+
+  def return_to_path
+    params[Session::RETURN_TO_KEY]
+  end
+
   def unauthorized
     render "application/authorized", status: :unauthorized
-  end
-
-  private
-
-  # :nocov:
-  def configure_sentry
-    Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if user_signed_in?
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
-  end
-  # :nocov:
-
-  def storable_location?
-    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
-  end
-
-  def store_user_location!
-    store_location_for(:user, request.fullpath)
   end
 end

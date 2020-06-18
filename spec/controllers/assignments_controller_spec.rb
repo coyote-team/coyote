@@ -44,16 +44,16 @@ RSpec.describe AssignmentsController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :show, params: base_params.merge(id: 1)
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: base_params.merge(assignment: {})
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: base_params.merge(id: 1)
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end

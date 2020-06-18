@@ -240,6 +240,40 @@ ALTER SEQUENCE public.audits_id_seq OWNED BY public.audits.id;
 
 
 --
+-- Name: auth_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_tokens (
+    id bigint NOT NULL,
+    user_id bigint,
+    token character varying,
+    user_agent character varying,
+    expires_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: auth_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_tokens_id_seq OWNED BY public.auth_tokens.id;
+
+
+--
 -- Name: invitations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -407,6 +441,39 @@ CREATE SEQUENCE public.organizations_id_seq
 --
 
 ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
+
+
+--
+-- Name: password_resets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.password_resets (
+    id bigint NOT NULL,
+    user_id bigint,
+    token character varying NOT NULL,
+    expires_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: password_resets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.password_resets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: password_resets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.password_resets_id_seq OWNED BY public.password_resets.id;
 
 
 --
@@ -908,9 +975,6 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     email public.citext DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
-    reset_password_token character varying,
-    reset_password_sent_at timestamp without time zone,
-    remember_created_at timestamp without time zone,
     sign_in_count integer DEFAULT 0 NOT NULL,
     current_sign_in_at timestamp without time zone,
     last_sign_in_at timestamp without time zone,
@@ -923,10 +987,10 @@ CREATE TABLE public.users (
     authentication_token character varying NOT NULL,
     staff boolean DEFAULT false NOT NULL,
     failed_attempts integer DEFAULT 0 NOT NULL,
-    unlock_token character varying,
     locked_at timestamp without time zone,
     organizations_count integer DEFAULT 0,
-    active boolean DEFAULT true
+    active boolean DEFAULT true,
+    password_digest character varying
 );
 
 
@@ -978,6 +1042,13 @@ ALTER TABLE ONLY public.audits ALTER COLUMN id SET DEFAULT nextval('public.audit
 
 
 --
+-- Name: auth_tokens id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_tokens ALTER COLUMN id SET DEFAULT nextval('public.auth_tokens_id_seq'::regclass);
+
+
+--
 -- Name: invitations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1010,6 +1081,13 @@ ALTER TABLE ONLY public.meta ALTER COLUMN id SET DEFAULT nextval('public.meta_id
 --
 
 ALTER TABLE ONLY public.organizations ALTER COLUMN id SET DEFAULT nextval('public.organizations_id_seq'::regclass);
+
+
+--
+-- Name: password_resets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.password_resets ALTER COLUMN id SET DEFAULT nextval('public.password_resets_id_seq'::regclass);
 
 
 --
@@ -1158,6 +1236,14 @@ ALTER TABLE ONLY public.audits
 
 
 --
+-- Name: auth_tokens auth_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_tokens
+    ADD CONSTRAINT auth_tokens_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: invitations invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1195,6 +1281,14 @@ ALTER TABLE ONLY public.meta
 
 ALTER TABLE ONLY public.organizations
     ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: password_resets password_resets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.password_resets
+    ADD CONSTRAINT password_resets_pkey PRIMARY KEY (id);
 
 
 --
@@ -1374,6 +1468,27 @@ CREATE INDEX index_audits_on_request_uuid ON public.audits USING btree (request_
 
 
 --
+-- Name: index_auth_tokens_on_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_auth_tokens_on_token ON public.auth_tokens USING btree (token);
+
+
+--
+-- Name: index_auth_tokens_on_token_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_auth_tokens_on_token_and_user_id ON public.auth_tokens USING btree (token, user_id);
+
+
+--
+-- Name: index_auth_tokens_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_auth_tokens_on_user_id ON public.auth_tokens USING btree (user_id);
+
+
+--
 -- Name: index_invitations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1427,6 +1542,13 @@ CREATE UNIQUE INDEX index_meta_on_organization_id_and_name ON public.meta USING 
 --
 
 CREATE UNIQUE INDEX index_organizations_on_name ON public.organizations USING btree (name);
+
+
+--
+-- Name: index_password_resets_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_password_resets_on_user_id ON public.password_resets USING btree (user_id);
 
 
 --
@@ -1637,20 +1759,6 @@ CREATE UNIQUE INDEX index_users_on_authentication_token ON public.users USING bt
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
-
-
---
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
-
-
---
--- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
 
 
 --
@@ -1919,6 +2027,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200527223134'),
 ('20200527224933'),
 ('20200603164622'),
-('20200615211941');
+('20200615211941'),
+('20200618182745'),
+('20200618194643'),
+('20200619172655'),
+('20200619192855');
 
 

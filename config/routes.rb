@@ -16,18 +16,32 @@
 #                     api_canonical_resource GET    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#show
 #                                            PATCH  /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
 #                                            PUT    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
+#                                            DELETE /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#destroy
 #                               api_resource GET    /api/v1/resources/:id(.:format)                                                          api/resources#show
 #                                            PATCH  /api/v1/resources/:id(.:format)                                                          api/resources#update
 #                                            PUT    /api/v1/resources/:id(.:format)                                                          api/resources#update
+#                                            DELETE /api/v1/resources/:id(.:format)                                                          api/resources#destroy
 #                         api_resource_group GET    /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#show
 #                                            PATCH  /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#update
 #                                            PUT    /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#update
 #                                            DELETE /api/v1/resource_groups/:id(.:format)                                                    api/resource_groups#destroy
 #                         api_representation GET    /api/v1/representations/:id(.:format)                                                    api/representations#show
-#                                            PATCH  /api/v1/representations/:id(.:format)                                                    api/representations#update
-#                                            PUT    /api/v1/representations/:id(.:format)                                                    api/representations#update
 #                                            DELETE /api/v1/representations/:id(.:format)                                                    api/representations#destroy
 #                                   api_user GET    /api/v1/profile(.:format)                                                                api/users#show
+#                                new_session GET    /login(.:format)                                                                         sessions#new
+#                                      login POST   /login(.:format)                                                                         sessions#create
+#                            destroy_session GET    /logout(.:format)                                                                        sessions#destroy
+#                                     logout DELETE /logout(.:format)                                                                        sessions#destroy
+#                                  edit_user GET    /profile(.:format)                                                                       users#edit
+#                                    profile PUT    /profile(.:format)                                                                       users#update
+#                                   new_user GET    /register(.:format)                                                                      users#new
+#                                       user POST   /register(.:format)                                                                      users#create
+#                         new_password_reset GET    /login/forgot(.:format)                                                                  password_resets#new
+#                               login_forgot POST   /login/forgot(.:format)                                                                  password_resets#create
+#                       sent_password_resets GET    /login/forgot/sent(.:format)                                                             password_resets#sent
+#                             password_reset GET    /login/forgot/:id(.:format)                                                              password_resets#show
+#                                            PATCH  /login/forgot/:id(.:format)                                                              password_resets#update
+#                                            PUT    /login/forgot/:id(.:format)                                                              password_resets#update
 #                         canonical_resource GET    /resources/canonical/:canonical_id(.:format)                                             resources#show
 #                              edit_resource GET    /resources/:id/edit(.:format)                                                            resources#edit
 #                                   resource GET    /resources/:id(.:format)                                                                 resources#show
@@ -72,6 +86,7 @@
 #                         organization_metum GET    /organizations/:organization_id/meta/:id(.:format)                                       meta#show
 #                                            PATCH  /organizations/:organization_id/meta/:id(.:format)                                       meta#update
 #                                            PUT    /organizations/:organization_id/meta/:id(.:format)                                       meta#update
+#                                            DELETE /organizations/:organization_id/meta/:id(.:format)                                       meta#destroy
 #                   organization_invitations POST   /organizations/:organization_id/invitations(.:format)                                    invitations#create
 #                new_organization_invitation GET    /organizations/:organization_id/invitations/new(.:format)                                invitations#new
 #                              organizations GET    /organizations(.:format)                                                                 organizations#index
@@ -90,37 +105,17 @@
 #                                            PATCH  /resource_links/:id(.:format)                                                            resource_links#update
 #                                            PUT    /resource_links/:id(.:format)                                                            resource_links#update
 #                                            DELETE /resource_links/:id(.:format)                                                            resource_links#destroy
-#                           new_user_session GET    /sign_in(.:format)                                                                       devise/sessions#new
-#                               user_session POST   /sign_in(.:format)                                                                       devise/sessions#create
-#                       destroy_user_session DELETE /sign_out(.:format)                                                                      devise/sessions#destroy
-#                          new_user_password GET    /password/new(.:format)                                                                  devise/passwords#new
-#                         edit_user_password GET    /password/edit(.:format)                                                                 devise/passwords#edit
-#                              user_password PATCH  /password(.:format)                                                                      devise/passwords#update
-#                                            PUT    /password(.:format)                                                                      devise/passwords#update
-#                                            POST   /password(.:format)                                                                      devise/passwords#create
-#                   cancel_user_registration GET    /profile/cancel(.:format)                                                                devise/registrations#cancel
-#                      new_user_registration GET    /profile/sign_up(.:format)                                                               devise/registrations#new
-#                     edit_user_registration GET    /profile/edit(.:format)                                                                  devise/registrations#edit
-#                          user_registration PATCH  /profile(.:format)                                                                       devise/registrations#update
-#                                            PUT    /profile(.:format)                                                                       devise/registrations#update
-#                                            DELETE /profile(.:format)                                                                       devise/registrations#destroy
-#                                            POST   /profile(.:format)                                                                       devise/registrations#create
-#                            new_user_unlock GET    /unlock/new(.:format)                                                                    devise/unlocks#new
-#                                user_unlock GET    /unlock(.:format)                                                                        devise/unlocks#show
-#                                            POST   /unlock(.:format)                                                                        devise/unlocks#create
-#                           new_registration GET    /registration/new(.:format)                                                              registrations#new
-#                               registration PATCH  /registration(.:format)                                                                  registrations#update
-#                                            PUT    /registration(.:format)                                                                  registrations#update
-#                                       user GET    /users/:id(.:format)                                                                     users#show
+#                                            GET    /users/:id(.:format)                                                                     users#show
 #                                staff_users GET    /staff/users(.:format)                                                                   staff/users#index
 #                            edit_staff_user GET    /staff/users/:id/edit(.:format)                                                          staff/users#edit
 #                                 staff_user GET    /staff/users/:id(.:format)                                                               staff/users#show
 #                                            PATCH  /staff/users/:id(.:format)                                                               staff/users#update
 #                                            PUT    /staff/users/:id(.:format)                                                               staff/users#update
 #                                            DELETE /staff/users/:id(.:format)                                                               staff/users#destroy
-#                 staff_user_password_resets POST   /staff/user_password_resets(.:format)                                                    staff/user_password_resets#create
+#                      staff_password_resets POST   /staff/password_resets(.:format)                                                         staff/password_resets#create
 #                                    support GET    /support(.:format)                                                                       pages#support
 #                                       root GET    /                                                                                        pages#home
+#                            federal_offense        /deliveries                                                                              FederalOffense::Engine
 #                         rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 #                  rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #                         rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -128,10 +123,17 @@
 #                       rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 #                                cloudtasker        /cloudtasker                                                                             Cloudtasker::Engine
 #
+# Routes for FederalOffense::Engine:
+#      destroy_message POST /:id/destroy(.:format) federal_offense/messages#destroy
+# destroy_all_messages POST /destroy_all(.:format) federal_offense/messages#destroy_all
+#             messages GET  /                      federal_offense/messages#index
+#              message GET  /:id(.:format)         federal_offense/messages#show
+#
 # Routes for Cloudtasker::Engine:
 #    run POST /run(.:format) cloudtasker/worker#run
 
 Rails.application.routes.draw do
+  ## API
   namespace :api do
     scope :v1 do
       scope "organizations/:organization_id" do
@@ -161,10 +163,36 @@ Rails.application.routes.draw do
     end
   end
 
+  ## Registration and sessions
+  # Log in and out
+  get "login", to: "sessions#new", as: :new_session
+  post "login", to: "sessions#create"
+  get "logout", to: "sessions#destroy", as: :destroy_session
+  delete "logout", to: "sessions#destroy"
+
+  # Manage user profile
+  get "profile", to: "users#edit", as: :edit_user
+  put "profile", to: "users#update"
+
+  # Sign up
+  get "register", to: "users#new", as: :new_user
+  post "register", to: "users#create"
+
+  # Reset password
+  get "login/forgot", to: "password_resets#new", as: :new_password_reset
+  post "login/forgot", to: "password_resets#create"
+  resources :password_resets, path: "login/forgot", only: %i[show update] do
+    collection do
+      get :sent
+    end
+  end
+
+  ## Resources and representations
   resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show], param: :canonical_id
   resources :resources, only: %i[show edit update destroy]
   resources :representations, only: %i[show edit update destroy]
 
+  ## Metadata
   resources :organizations do
     resources :resources, only: %i[index new create]
     resources :representations, only: %i[index new create]
@@ -177,30 +205,26 @@ Rails.application.routes.draw do
   end
 
   resources :resource_links
-
-  devise_for :users,
-    only:       %i[passwords registrations sessions unlocks],
-    path:       "/",
-    path_names: {
-      registration: "profile",
-    }
-
-  resource :registration, only: %i[new update]
   resources :users, only: %i[show] # for viewing other user profiles
 
+  ## Admin interface
   namespace :staff do
     resources :users, except: %i[new create]
-    resource :user_password_resets, only: %i[create]
+    resource :password_resets, only: %i[create]
   end
 
+  ## Bookmarklet
   if ENV["BOOKMARKLET"] == "true"
     match "coyote" => "coyote_consumer#iframe", :via => [:get]
     match "coyote_producer" => "coyote_producer#index", :via => [:get]
   end
 
+  ## Scavenger hunt
   # mount ScavengerHunt::Engine, at: 'scavenger'
 
-  # Last but not least, static pages
+  ## Static pages
   get "support", to: "pages#support"
   root to: "pages#home"
+
+  mount FederalOffense::Engine => "deliveries" if Rails.env.development? # This is the super important part
 end

@@ -1,4 +1,7 @@
-= simple_form_for user, validate: true, url: user_registration_path, html: { method: :put } do |f|
+- meta title: 'Edit Profile'
+
+h1= title "Edit Profile"
+= simple_form_for user, validate: true, url: edit_user_path, html: { method: :put } do |f|
   = f.error_notification
 
   = f.input :email, required: true, autofocus: true
@@ -10,5 +13,6 @@
 
   .toolbar.toolbar--footer
     .toolbar-item.field
-      = f.button :submit, user.new_record? ? "Sign Up" : "Update"
+      = f.button :submit, "Update"
+      | &nbsp;
       = link_to "Back", :back, class: 'button button--outline'

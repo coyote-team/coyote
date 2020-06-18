@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Staff::UserPasswordResetsController do
+RSpec.describe Staff::PasswordResetsController do
   let(:resetable_user) { create(:user) }
   let(:organization) { create(:organization) }
 
@@ -13,7 +13,7 @@ RSpec.describe Staff::UserPasswordResetsController do
 
     it "requires login for all actions" do
       post :create, params: user_params
-      expect(response).to redirect_to(new_user_session_url)
+      expect(response).to require_login
     end
   end
 
@@ -35,15 +35,13 @@ RSpec.describe Staff::UserPasswordResetsController do
     end
 
     it "succeeds for all actions involving organization-owned contexts" do
-      expect(resetable_user.reset_password_token).to be_blank
-
       expect {
         post :create, params: user_params
       }.to change(ActionMailer::Base.deliveries, :count)
         .from(0).to(1)
 
       resetable_user.reload
-      expect(resetable_user.reset_password_token).to be_present
+      expect(resetable_user.password_resets.first).to be_present
       expect(response).to redirect_to(staff_user_url(resetable_user))
     end
   end

@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class NotifyWebhookWorker
-  include Cloudtasker::Worker
-
-  cloudtasker_options lock: :until_executed, on_conflict: :reject
-
+class NotifyWebhookWorker < ApplicationWorker
   attr_reader :resource
 
   def perform(resource_id)
@@ -57,16 +53,6 @@ class NotifyWebhookWorker
   end
 
   private
-
-  # :nocov:
-  def on_error(error)
-    if defined? Raven
-      Raven.capture_exception(exception)
-    else
-      raise error
-    end
-  end
-  # :nocov:
 
   def record_webhook_call(resource_group, body, response, error)
     attributes = {

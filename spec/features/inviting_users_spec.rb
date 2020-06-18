@@ -136,7 +136,7 @@ RSpec.describe "Attempting to redeem a previously-redeemed invitation" do
   end
 
   it "fails with error message" do
-    visit new_registration_path(token: redeemed_invitation.token)
-    expect(page).to have_current_path(new_user_session_path, ignore_query: true)
+    visit new_user_path(token: redeemed_invitation.token)
+    expect(page).to have_current_path(new_session_path, ignore_query: true)
   end
 end

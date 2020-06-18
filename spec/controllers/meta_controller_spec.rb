@@ -51,25 +51,25 @@ RSpec.describe MetaController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :show, params: metum_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: metum_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: metum_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :new, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: new_metum_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_metum_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe MetaController do
   describe "as an editor" do
     include_context "signed-in editor user"
 
-    let!(:metum) { create(:metum, organization: organization) }
+    before { metum }
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params

@@ -35,22 +35,22 @@ RSpec.describe OrganizationsController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :show, params: {id: 1}
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: {id: 1}
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :new
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: new_organization_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_organization_params.merge(id: 1)
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end

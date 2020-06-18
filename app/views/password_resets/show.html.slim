@@ -1,0 +1,8 @@
+h1= title 'Reset your password'
+= simple_form_for @password_reset.user, url: password_reset_path do |f|
+  = f.input :password, label: "New password", required: true, autofocus: true
+  = f.input :password_confirmation, label: "Confirm new password", required: true
+
+  .toolbar.toolbar--footer
+    = f.button :submit, "Change my password", class: 'toolbar-item'
+= link_to "Log in", new_session_path

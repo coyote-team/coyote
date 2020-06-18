@@ -4,51 +4,46 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  active                 :boolean          default(TRUE)
-#  authentication_token   :string           not null
-#  current_sign_in_at     :datetime
-#  current_sign_in_ip     :string
-#  email                  :citext           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  failed_attempts        :integer          default(0), not null
-#  first_name             :citext
-#  last_name              :citext
-#  last_sign_in_at        :datetime
-#  last_sign_in_ip        :string
-#  locked_at              :datetime
-#  organizations_count    :integer          default(0)
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  sign_in_count          :integer          default(0), not null
-#  staff                  :boolean          default(FALSE), not null
-#  unlock_token           :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  id                   :integer          not null, primary key
+#  active               :boolean          default(TRUE)
+#  authentication_token :string           not null
+#  current_sign_in_at   :datetime
+#  current_sign_in_ip   :string
+#  email                :citext           default(""), not null
+#  encrypted_password   :string           default(""), not null
+#  failed_attempts      :integer          default(0), not null
+#  first_name           :citext
+#  last_name            :citext
+#  last_sign_in_at      :datetime
+#  last_sign_in_ip      :string
+#  locked_at            :datetime
+#  organizations_count  :integer          default(0)
+#  password_digest      :string
+#  sign_in_count        :integer          default(0), not null
+#  staff                :boolean          default(FALSE), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
 class User < ApplicationRecord
+  MINIMUM_PASSWORD_LENGTH = 8
+
+  attr_accessor :current_password, :remember_me
+
+  has_secure_password
   has_secure_token :authentication_token
+
+  has_many :auth_tokens, dependent: :destroy
+  has_many :password_resets, dependent: :destroy
+  has_one :current_password_reset, -> { unexpired }, class_name: "PasswordReset", inverse_of: :user
 
   has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships, counter_cache: :organizations_count
-
-  devise :database_authenticatable,
-    :registerable,
-    :recoverable,
-    :rememberable,
-    :trackable,
-    :validatable,
-    :lockable,
-    password_length: 8..128
 
   has_many :assignments, inverse_of: :user, dependent: :restrict_with_exception
   has_many :assigned_resources, class_name: :Resource, through: :assignments, source: :resource
@@ -62,14 +57,23 @@ class User < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) asc")) }
 
+  validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true
+  validates :email, uniqueness: true, if: :email_changed?
+  validates :password, length: {minimum: MINIMUM_PASSWORD_LENGTH}, presence: true, if: :password_required?
+  validate :current_password_is_correct
+
   def self.find_for_authentication(warden_conditions)
     find_by(warden_conditions.merge(active: true))
+  end
+
+  def access_locked?
+    failed_attempts >= Rails.application.config.x.maximum_login_attempts
   end
 
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
     if first_name.present? || last_name.present?
-      [first_name, last_name].join(" ")
+      [first_name.presence, last_name.presence].compact.join(" ")
     else
       email
     end
@@ -80,5 +84,19 @@ class User < ApplicationRecord
   # @note for audit log
   def username
     to_s
+  end
+
+  private
+
+  def current_password_is_correct
+    errors.add(:current_password, "is required") if !current_password.nil? && current_password.blank?
+    errors.add(:current_password, "is incorrect") if current_password.present? && !authenticate(current_password)
+  end
+
+  def password_required?
+    # New users are required to set a password
+    !persisted? ||
+      # Passwords are validated if provided
+      password.present? || password_confirmation.present?
   end
 end

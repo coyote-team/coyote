@@ -10,7 +10,7 @@ class InvitationMailer < ApplicationMailer
 
   def new_user(invitation)
     self.invitation = invitation
-    self.signup_link = new_registration_url(token: invitation.token)
+    self.signup_link = new_user_url(token: invitation.token)
     mail to: invitation.recipient_email, subject: subject
   end
 

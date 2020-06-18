@@ -10,7 +10,7 @@ module Coyote
       # @param email [Email::Message] the email message with a body to parse
       # @return [Nokogiri::HTML::Document] the email body as an HTML document that can be queried
       def email_to_dom(email)
-        email_body = email.body.to_s
+        email_body = (email.html_part&.body || email.body).to_s
         Nokogiri::HTML(email_body)
       end
 

@@ -6,7 +6,7 @@ RSpec.describe "Resetting a password" do
   let(:user) { create(:user, :with_membership) }
 
   it "succeeds" do
-    visit new_user_password_path
+    visit new_password_reset_path
 
     fill_in "user[email]", with: user.email
 
@@ -17,13 +17,13 @@ RSpec.describe "Resetting a password" do
 
     ActionMailer::Base.deliveries.pop.tap do |email|
       expect(email.to).to eq([user.email])
-      expect(email.subject).to match(/reset password/i)
+      expect(email.subject).to eq("Reset your Coyote password")
 
       reset_link = extract_email_link(email)
       expect(reset_link).to be_present
 
       visit reset_link
-      expect(page).to have_current_path(edit_user_password_path, ignore_query: true)
+      expect(page).to have_current_path(password_reset_path(user.password_resets.first.token), ignore_query: true)
 
       new_password = "abcdefgh"
 

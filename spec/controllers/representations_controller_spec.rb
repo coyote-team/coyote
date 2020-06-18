@@ -70,25 +70,25 @@ RSpec.describe RepresentationsController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :show, params: representation_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: representation_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :new, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: new_representation_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_representation_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: update_representation_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end

@@ -1,40 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string
-#  last_sign_in_ip        :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  first_name             :string
-#  last_name              :string
-#  authentication_token   :string           not null
-#  staff                  :boolean          default(FALSE), not null
-#  failed_attempts        :integer          default(0), not null
-#  unlock_token           :string
-#  locked_at              :datetime
-#  organizations_count    :integer          default(0)
-#  active                 :boolean          default(TRUE)
-#
-# Indexes
-#
-#  index_users_on_authentication_token  (authentication_token) UNIQUE
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_unlock_token          (unlock_token) UNIQUE
-#
-
 RSpec.describe UsersController do
   let(:organization) { create(:organization) }
   let(:user_of_interest) { create(:user, organization: organization) }
@@ -49,7 +14,7 @@ RSpec.describe UsersController do
     it "requires login for all actions" do
       aggregate_failures do
         get :show, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end
@@ -60,6 +25,56 @@ RSpec.describe UsersController do
     it "succeeds for critical actions" do
       get :show, params: base_params
       expect(response).to be_successful
+    end
+  end
+
+  describe "with an invitation" do
+    let(:invitation) { create(:invitation) }
+
+    let(:base_params) do
+      {token: invitation.token}
+    end
+
+    let(:user_params) do
+      {email: invitation.recipient_email, password: "12345678", password_confirmation: "12345678", token: invitation.token}
+    end
+
+    it "basic actions succeed" do
+      expect {
+        get :new
+      }.to raise_error(ActionController::ParameterMissing)
+
+      get :new, params: base_params
+      expect(response).to be_successful
+
+      bad_params = user_params.merge(password_confirmation: "1")
+
+      expect {
+        post :create, params: {user: bad_params}
+        invitation.reload
+      }.not_to change(invitation, :redeemed?)
+
+      expect(response).not_to be_redirect
+
+      expect {
+        post :create, params: {user: user_params}
+        invitation.reload
+      }.to change(invitation, :redeemed?)
+        .from(false).to(true)
+
+      expect(response).to redirect_to(organization_path(invitation.organization))
+    end
+
+    describe "that has been redeemed" do
+      let(:invitation) { create(:invitation, :redeemed) }
+
+      it "basic actions do not succeed" do
+        get :new, params: base_params
+        expect(response).to require_login
+
+        post :create, params: {user: user_params}
+        expect(response).to require_login
+      end
     end
   end
 end

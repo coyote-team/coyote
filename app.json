@@ -3,7 +3,9 @@
   "description": "An open source image annotation app and API to enable the distributed annotation of museum images",
   "website": "http://coyote.pics/",
   "repository": "https://github.com/coyote-team/coyote",
-  "keywords": ["rails"],
+  "keywords": [
+    "rails"
+  ],
   "scripts": {
     "postdeploy": "bin/rake db:structure:load db:seed scavenger_hunt:seed"
   },
@@ -13,9 +15,6 @@
     "COYOTE_SEED_USER_PASSWORD": {
       "description": "The initial password used for the first Coyote admin user",
       "generator": "secret"
-    },
-    "DEVISE_MAILER_SENDER": {
-      "required": true
     },
     "MAIL_ADDRESS": {
       "required": true

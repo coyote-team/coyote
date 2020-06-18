@@ -32,7 +32,7 @@ table
     tr
       th Reset Password
       td
-        = "Sent at: #{user.reset_password_sent_at}<br/>".html_safe if user.reset_password_sent_at.present?
-        = button_to('Send password reset email', staff_user_password_resets_path, params: { user_id: user.id }, class: 'button')
+        = "Sent at: #{user.current_password_reset.created_at}<br/>".html_safe if user.current_password_reset.present?
+        = button_to('Send password reset email', staff_password_resets_path, params: { user_id: user.id }, class: 'button')
 
 = show_toolbar user, edit: true, delete: user != current_user, delete_title: "Archive"

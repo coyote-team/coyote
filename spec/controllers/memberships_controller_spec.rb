@@ -53,16 +53,16 @@ RSpec.describe MembershipsController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: membership_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_membership_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: membership_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end

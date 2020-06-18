@@ -33,7 +33,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require "rspec/rails"
 require "capybara/rspec"
 require "database_cleaner"
-require "devise"
 require "factory_bot_rails"
 require "jsonapi/rspec"
 require "pathname"
@@ -51,8 +50,7 @@ Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |file| require
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::ControllerHelpers, type: :helper
+  config.include Coyote::Testing::ControllerHelpers, type: :controller
   config.include Coyote::Testing::FeatureHelpers, type: :feature
   config.include Coyote::Testing::EmailHelpers, type: :feature
   config.include Coyote::Testing::ApiHelpers, type: :request

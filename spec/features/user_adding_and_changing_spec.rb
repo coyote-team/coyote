@@ -33,7 +33,7 @@ RSpec.describe "User adding and changing" do
 
     ActionMailer::Base.deliveries.pop.tap do |email|
       expect(email.to).to eq([editable_user.email])
-      expect(email.subject).to match(/reset password/i)
+      expect(email.subject).to match("Reset your Coyote password")
     end
 
     expect(page).to have_current_path(staff_user_path(editable_user), ignore_query: true)

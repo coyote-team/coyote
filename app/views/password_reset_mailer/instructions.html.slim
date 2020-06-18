@@ -1,0 +1,13 @@
+p Hello #{user},
+
+p
+  | Please follow this link to reset your Coyote password:
+  |
+  = link_to url, url
+
+p If you did not request a new password, feel free to ignore this email.
+
+p
+  | Sincerely,
+  |
+  = Rails.configuration.x.site_name

@@ -1,0 +1,11 @@
+h1= title 'Sign up for Coyote'
+= simple_form_for(user, method: :post, url: new_user_path) do |f|
+  = f.error_notification
+
+  = f.input :email, required: true, autofocus: true, input_html: { value: user.email }
+  = f.input :password, required: true, hint: "#{User::MINIMUM_PASSWORD_LENGTH} characters minimum"
+  = f.input :password_confirmation, required: true
+  = f.input :token, as: :hidden, input_html: { value: invitation.token }
+
+  .toolbar.toolbar--footer
+    = f.button :submit, "Sign up"

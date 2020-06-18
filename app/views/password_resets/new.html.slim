@@ -1,0 +1,6 @@
+h1= title 'Reset your password'
+= simple_form_for User.new, url: new_password_reset_path do |f|
+  = f.input :email, label: "What email address do you use to sign into Coyote?", required: true, autofocus: true
+  .toolbar.toolbar--footer
+    = f.button :submit, "Send me reset password instructions", class: 'toolbar-item'
+= link_to "Log in", new_session_path

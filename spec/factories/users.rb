@@ -4,35 +4,30 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  active                 :boolean          default(TRUE)
-#  authentication_token   :string           not null
-#  current_sign_in_at     :datetime
-#  current_sign_in_ip     :string
-#  email                  :citext           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  failed_attempts        :integer          default(0), not null
-#  first_name             :citext
-#  last_name              :citext
-#  last_sign_in_at        :datetime
-#  last_sign_in_ip        :string
-#  locked_at              :datetime
-#  organizations_count    :integer          default(0)
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  sign_in_count          :integer          default(0), not null
-#  staff                  :boolean          default(FALSE), not null
-#  unlock_token           :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  id                   :integer          not null, primary key
+#  active               :boolean          default(TRUE)
+#  authentication_token :string           not null
+#  current_sign_in_at   :datetime
+#  current_sign_in_ip   :string
+#  email                :citext           default(""), not null
+#  encrypted_password   :string           default(""), not null
+#  failed_attempts      :integer          default(0), not null
+#  first_name           :citext
+#  last_name            :citext
+#  last_sign_in_at      :datetime
+#  last_sign_in_ip      :string
+#  locked_at            :datetime
+#  organizations_count  :integer          default(0)
+#  password_digest      :string
+#  sign_in_count        :integer          default(0), not null
+#  staff                :boolean          default(FALSE), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 # Indexes
 #
 #  index_users_on_authentication_token  (authentication_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 
 FactoryBot.define do
@@ -48,6 +43,13 @@ FactoryBot.define do
     transient do
       organization { nil }
       role { :guest }
+    end
+
+    trait :devise do
+      after(:create) do |user, evaluator|
+        user.update_attribute(:password_digest, nil)
+        user.update_attribute(:encrypted_password, BCrypt::Password.create("d3visep@ss", cost: 10))
+      end
     end
 
     trait :with_membership do

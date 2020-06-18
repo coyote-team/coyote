@@ -51,25 +51,25 @@ RSpec.describe ResourceGroupsController do
     it "requires login for all actions" do
       aggregate_failures do
         get :index, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :show, params: resource_group_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :edit, params: resource_group_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         get :new, params: base_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         post :create, params: new_resource_group_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         patch :update, params: update_resource_group_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
 
         delete :destroy, params: resource_group_params
-        expect(response).to redirect_to(new_user_session_url)
+        expect(response).to require_login
       end
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe ResourceGroupsController do
   describe "as an editor" do
     include_context "signed-in editor user"
 
-    let!(:resource_group) { create(:resource_group, organization: organization) }
+    before { create(:resource_group, organization: organization) }
 
     it "permits read-only actions, forbids create/update/delete" do
       get :index, params: base_params

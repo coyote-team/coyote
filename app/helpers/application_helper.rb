@@ -6,21 +6,6 @@
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
 module ApplicationHelper
-  # Unwraps Devise error messages so they look like flash messages, the way regular application alerts work
-  # @param errors [ActiveModel::Errors] a list of model errors set by Devise
-  # @note similar approach to https://github.com/plataformatec/devise/wiki/How-To:-Integrate-I18n-Flash-Messages-with-Devise-and-Bootstrap
-  def devise_form_errors(errors)
-    capture do
-      errors.full_messages.each_with_index.map do |msg, idx|
-        concat render partial: "alert", locals: {flash_type: :error, flash_message: msg, flash_id: "devise_flash_#{idx}"}
-      end
-    end
-  end
-
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
-  end
-
   # @param level [String] level of flash message to be styled
   # @return [String] CSS class to use when styling a flash message
   def flash_class(level)
@@ -38,12 +23,6 @@ module ApplicationHelper
   # @see https://github.com/scsmith/language_list
   def language_name(language_code)
     LanguageList::LanguageInfo.find(language_code)&.name
-  end
-
-  # @return [Integer] minimum number of password characters we accept
-  # @see User
-  def minimum_password_length
-    User.password_length.min
   end
 
   # Used to render top-level navigation, so the current page gets an "active" CSS class applied
