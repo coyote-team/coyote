@@ -6,5 +6,6 @@ if defined?(Raven) && sentry_dsn.present?
   Raven.configure do |config|
     config.dsn = sentry_dsn
     config.current_environment = ENV["STAGING"].present? ? "staging" : "production"
+    config.processors -= [Raven::Processor::PostData]
   end
 end
