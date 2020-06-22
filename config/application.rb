@@ -53,7 +53,7 @@ module Coyote
       g.javascripts false
       g.test_framework :rspec
       g.fixture_replacement :factory_bot
-      g.template_engine :haml
+      g.template_engine :slim
       g.factory_bot dir: Rails.root.join("spec", "factories").to_s
     end
 

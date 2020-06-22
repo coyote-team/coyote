@@ -19,7 +19,6 @@ gem "bootsnap", require: false
 gem "cloudtasker"
 gem "easymarklet", git: "https://github.com/seeread/easymarklet.git", ref: "53829a6"
 gem "faraday"
-gem "haml-rails", ">= 1.0.0"
 gem "jquery-rails", ">= 4.0.4"
 gem "jsonapi-rails"
 gem "jwt"

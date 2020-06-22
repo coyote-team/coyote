@@ -4,8 +4,8 @@
 2. Out of organization URL scopes?
   1. Organization URLs
 3. Dublin core?
-4. Replace old Haml files
-5. Legacy input types
+4. ~~Replace old Haml files~~
+5. ~~Legacy input types~~
 6. ~~Legacy Gemfiles?~~
 7. Investigate full removal of
    1. ~~Scavenger hunt~~

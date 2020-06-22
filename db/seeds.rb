@@ -65,8 +65,6 @@ FactoryBot.create(:resource, {
   source_uri:   "https://mcachicago.org/api/v1/attachment_images/thumbs/55bb7af13164660b2f000a36.jpg",
 })
 
-# TODO: Generate more resources
-
 Coyote::Membership.each_role do |_, role_id|
   email = "#{role_id}@example.com"
 

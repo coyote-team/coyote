@@ -35,7 +35,6 @@ Cloudtasker.configure do |config|
   # Specific queues can be created in Cloud Tasks using the gcloud SDK or
   # via the `rake cloudtasker:setup_queue name=<queue_name>` task.
   #
-  # TODO: Remove the '-new' once Gcloud allows us to recreate the original queue in production
   config.gcp_queue_prefix = "coyote-#{ENV["STAGING"] ? "staging" : Rails.env}-new"
 
   #
