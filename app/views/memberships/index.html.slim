@@ -23,7 +23,7 @@ table
             = link_to('Edit', edit_organization_membership_path(current_organization, org_user.membership), class: 'button button--outline', title: "Change this user's membership")
 
           - if policy(org_user.membership).destroy?
-            = button_to('Archive', [current_organization, org_user.membership], title: 'Delete this user from the organization', class: "button button--outline", data: { confirm: "Are you sure you want to archive #{org_user.user}?" }, method: :delete)
+            = button_to('Remove from organization', [current_organization, org_user.membership], title: 'Remove this user from the organization', class: "button button--outline", data: { confirm: "Are you sure you want to remove #{org_user.user}?" }, method: :delete)
 
 - if policy(:invitation).new?
   nav.toolbar.toolbar--footer
