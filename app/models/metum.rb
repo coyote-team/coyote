@@ -23,7 +23,7 @@
 class Metum < ApplicationRecord
   DEFAULTS = [
     {
-      name:         "Short",
+      name:         "Alt (short)",
       instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision",
     },
     {
