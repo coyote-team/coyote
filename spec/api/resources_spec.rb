@@ -364,7 +364,7 @@ RSpec.describe "Accessing resources" do
       request_path = get_api_resources_path(user_organization)
       post request_path, headers: auth_headers, params: {filter: {source_uri_eq_any: "#{approved_resource.source_uri} #{older_resource.source_uri}"}}
 
-      expect(json_data[:data].map { |r| r.fetch(:id).to_i }).to eq([older_resource.id, approved_resource.id])
+      expect(json_data[:data].map { |r| r.fetch(:id).to_i }).to eq([approved_resource.id, older_resource.id]) # We order by created_at DESC by default
       expect(json_data[:links].keys).to eq(%w[self first]) # Shouldn't return any other (non-matching) resources
     end
   end
