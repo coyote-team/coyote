@@ -230,9 +230,7 @@ RSpec.describe "Accessing resources" do
         # FINALLY, it should render data AND errors
         # 1. Data
         expect(json_data[:data].size).to eq(2)
-        json_data[:data].each do |resource|
-          expect(resource).to have_attribute(:source_uri)
-        end
+        expect(json_data[:data]).to all(have_attribute(:source_uri))
 
         # 2. Errors
         expect(json_data[:errors].size).to eq(2)
