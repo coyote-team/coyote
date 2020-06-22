@@ -7,7 +7,7 @@ class RepresentationsController < ApplicationController
   include PermittedParameters
 
   before_action :set_representation, only: %i[show edit update destroy]
-  before_action :set_current_resource_and_organization, only: %i[new edit create]
+  before_action :set_current_resource_and_organization, only: %i[new edit create update]
   before_action :authorize_general_access, only: %i[index]
   before_action :authorize_create_access, only: %i[new create]
   before_action :authorize_unit_access, only: %i[show edit update destroy]

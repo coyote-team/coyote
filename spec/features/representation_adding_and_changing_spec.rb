@@ -37,6 +37,15 @@ RSpec.describe "Representation adding and changing" do
     click_first_link "Edit"
     expect(page).to have_current_path(edit_representation_path(representation), ignore_query: true)
 
+    # Regression test for #464 - current_resource not set when editing fails
+    fill_in "Text", with: ""
+
+    expect {
+      click_button("Update Description")
+      expect(page).to have_current_path(representation_path(representation), ignore_query: true)
+      representation.reload
+    }.not_to change(representation, :text)
+
     fill_in "Text", with: "XYZ123"
 
     expect {
