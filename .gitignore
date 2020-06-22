@@ -25,3 +25,4 @@ vendor/bundle
 config/application.yml
 config/credentials/production.key
 config/credentials/staging.key
+config/credentials/test.key

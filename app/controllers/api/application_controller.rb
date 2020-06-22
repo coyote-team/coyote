@@ -7,6 +7,7 @@
 class Api::ApplicationController < ActionController::API
   include OrganizationScope
   include Pundit
+  include TrapErrors
 
   before_action :require_api_authentication
 
@@ -51,6 +52,18 @@ class Api::ApplicationController < ActionController::API
 
   def require_api_authentication
     authenticate_token || render_unauthorized
+  end
+
+  def trap_forbidden(_)
+    render json: {error: "Forbidden"}, status: :forbidden
+  end
+
+  def trap_not_found(_)
+    render json: {error: "Not found"}, status: :not_found
+  end
+
+  def trap_unprocessable_entity(exception)
+    render json: {error: I18n.t("actioncontroller.parameter_missing", param: exception.param)}, status: :unprocessable_entity
   end
 end
 

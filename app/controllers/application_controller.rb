@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   include OrganizationScope
   include Pundit
+  include TrapErrors
 
   protect_from_forgery with: :exception
   prepend_view_path "app/assets/html"
@@ -26,12 +27,6 @@ class ApplicationController < ActionController::Base
     :pagination_link_params,
     :return_to_path,
     :stateless?
-
-  if Credentials.dig(:app, :rescue_from_errors)
-    rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
-    rescue_from Pundit::NotAuthorizedError, with: :forbidden
-  end
 
   private
 
@@ -76,10 +71,6 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
-  def forbidden
-    render_error :forbidden
-  end
-
   def log_user_in(user, options = {})
     remember = options.delete(:remember)
     auth_token = user.auth_tokens.create!(user_agent: request.user_agent)
@@ -108,10 +99,6 @@ class ApplicationController < ActionController::Base
   def mark_as_stateless!
     body_class "stateless"
     @stateless = true
-  end
-
-  def not_found
-    render_error :not_found
   end
 
   def organization_user
@@ -147,7 +134,15 @@ class ApplicationController < ActionController::Base
     @stateless ||= false
   end
 
-  def unprocessable_entity
+  def trap_forbidden(_)
+    render_error :forbidden
+  end
+
+  def trap_not_found(_)
+    render_error :not_found
+  end
+
+  def trap_unprocessable_entity(_)
     render_error :unprocessable_entity
   end
 end

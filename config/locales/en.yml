@@ -30,6 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  actioncontroller:
+    parameter_missing: "The required parameter '%{param}' is missing or empty"
   activerecord:
     models:
       membership: Member
