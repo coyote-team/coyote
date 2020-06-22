@@ -7,8 +7,6 @@ RSpec.describe "Representation adding and changing" do
     create(:resource, organization: user_organization)
   end
 
-  let!(:metum) { create(:metum, :long, organization: user_organization) }
-
   before do
     create(:license)
   end
@@ -22,7 +20,7 @@ RSpec.describe "Representation adding and changing" do
     new_text = attributes_for(:representation).fetch(:text)
 
     fill_in "Text", with: new_text
-    select metum.name, from: "Metum"
+    select "Long", from: "Metum"
 
     expect {
       click_button("Create Description")

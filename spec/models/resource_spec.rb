@@ -123,8 +123,8 @@ RSpec.describe Resource do
     let!(:license) { License.find_by(name: attributes_for(:license, :universal)[:name]) || create(:license, :universal) }
     let!(:license_2) { create(:license, :attribution_international) }
 
-    let!(:metum) { create(:metum, :short, organization: organization) }
-    let!(:metum_2) { create(:metum, :long, organization: organization) }
+    let(:metum) { organization.meta.find_by!(name: "Short") }
+    let(:metum_2) { organization.meta.find_by!(name: "Long") }
 
     let(:representation_attributes) { attributes_for(:representation) }
 
@@ -183,9 +183,9 @@ RSpec.describe Resource do
   describe "#complete?" do
     let(:organization) { resource.organization }
 
-    let!(:required_metum) { create(:metum, :short, is_required: true, organization: organization) }
+    let!(:required_metum) { create(:metum, is_required: true, organization: organization) }
     let!(:other_required_metum) { create(:metum, is_required: true, organization: organization) }
-    let!(:unrequired_metum) { create(:metum, :long, is_required: false, organization: organization) }
+    let!(:unrequired_metum) { create(:metum, is_required: false, organization: organization) }
 
     it "returns `true` if the resource has representations for all required meta" do
       expect(resource.complete?).to eq(false)

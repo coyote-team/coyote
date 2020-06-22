@@ -21,6 +21,18 @@
 # Represents a classification for Representations, such as 'Alt' or 'Long'
 # @see https://github.com/coyote-team/coyote/issues/113
 class Metum < ApplicationRecord
+  DEFAULTS = [
+    {
+      name:         "Short",
+      instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision",
+    },
+    {
+      name:         "Long",
+      instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs.",
+
+    },
+  ].freeze
+
   validates :name, :instructions, presence: true
   validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?
 

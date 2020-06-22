@@ -17,6 +17,7 @@
 
 # Represents a group of users, usually associated with a particular institution
 class Organization < ApplicationRecord
+  after_create :create_default_meta
   after_create :create_default_resource_group
 
   validates :name, presence: true
@@ -35,11 +36,22 @@ class Organization < ApplicationRecord
 
   has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource, inverse_of: :organization
 
-  def create_default_resource_group
-    resource_groups.find_or_create_by(default: true, name: ResourceGroup::DEFAULT_NAME)
-  end
-
   def ready_to_review_representations
     representations.ready_to_review
+  end
+
+  private
+
+  def create_default_meta
+    Metum::DEFAULTS.each do |attributes|
+      meta.find_or_create_by(name: attributes[:name]) do |metum|
+        metum.instructions = attributes[:instructions]
+        metum.is_required = true
+      end
+    end
+  end
+
+  def create_default_resource_group
+    resource_groups.find_or_create_by(default: true, name: ResourceGroup::DEFAULT_NAME)
   end
 end
