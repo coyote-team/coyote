@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 
   # :nocov:
   def configure_sentry
-    Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if user_signed_in?
+    Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if current_user?
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
