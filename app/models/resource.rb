@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  canonical_id          :citext
@@ -42,6 +43,8 @@ class Resource < ApplicationRecord
 
   attr_accessor :union_host_uris
 
+  enum status: Coyote::Resource::STATUSES
+
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -57,7 +60,9 @@ class Resource < ApplicationRecord
 
   has_many :resource_group_resources, inverse_of: :resource, dependent: :destroy
   has_many :resource_groups, through: :resource_group_resources, inverse_of: :resources
-  has_many :resource_webhook_calls, dependent: :destroy
+
+  has_many :status_checks, class_name: "ResourceStatusCheck", inverse_of: :resource, dependent: :destroy
+  has_many :webhook_calls, class_name: "ResourceWebhookCall", inverse_of: :resource, dependent: :destroy
 
   has_one_attached :uploaded_resource
 

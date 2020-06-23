@@ -63,7 +63,7 @@ class NotifyWebhookWorker < ApplicationWorker
 
     attributes[:error] = error.message if error
 
-    resource.resource_webhook_calls.create!(attributes)
+    resource.webhook_calls.create!(attributes)
     raise error if error.present?
   end
 end

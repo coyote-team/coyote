@@ -3,6 +3,16 @@
 module Coyote
   # Utility functions for managing Resources
   module Resource
+    # Enumerates all states that a Resource can be in, corresponding to the database's
+    # resource_status enum
+    STATUSES = {
+      active:              "active",
+      archived:            "archived",
+      deleted:             "deleted",
+      not_found:           "not_found",
+      unexpected_response: "unexpected_response",
+    }.freeze
+
     # Categories to which a resource can belong, corresponding to the resource_type database enum
     # @see http://dublincore.org/documents/dcmi-terms/
     TYPES = {

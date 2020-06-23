@@ -49,6 +49,19 @@ CREATE TYPE public.representation_status AS ENUM (
 
 
 --
+-- Name: resource_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.resource_status AS ENUM (
+    'active',
+    'archived',
+    'deleted',
+    'not_found',
+    'unexpected_response'
+);
+
+
+--
 -- Name: resource_type; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -618,6 +631,39 @@ ALTER SEQUENCE public.resource_links_id_seq OWNED BY public.resource_links.id;
 
 
 --
+-- Name: resource_status_checks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_status_checks (
+    id bigint NOT NULL,
+    resource_id bigint,
+    source_uri character varying NOT NULL,
+    response integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_status_checks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_status_checks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_status_checks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_status_checks_id_seq OWNED BY public.resource_status_checks.id;
+
+
+--
 -- Name: resource_webhook_calls; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -668,7 +714,8 @@ CREATE TABLE public.resources (
     representations_count integer DEFAULT 0 NOT NULL,
     priority_flag boolean DEFAULT false NOT NULL,
     host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
-    is_deleted boolean DEFAULT false NOT NULL
+    is_deleted boolean DEFAULT false NOT NULL,
+    status public.resource_status DEFAULT 'active'::public.resource_status NOT NULL
 );
 
 
@@ -1119,6 +1166,13 @@ ALTER TABLE ONLY public.resource_links ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: resource_status_checks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_status_checks ALTER COLUMN id SET DEFAULT nextval('public.resource_status_checks_id_seq'::regclass);
+
+
+--
 -- Name: resource_webhook_calls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1321,6 +1375,14 @@ ALTER TABLE ONLY public.resource_groups
 
 ALTER TABLE ONLY public.resource_links
     ADD CONSTRAINT resource_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: resource_status_checks resource_status_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_status_checks
+    ADD CONSTRAINT resource_status_checks_pkey PRIMARY KEY (id);
 
 
 --
@@ -1626,6 +1688,13 @@ CREATE INDEX index_resource_links_on_object_resource_id ON public.resource_links
 --
 
 CREATE INDEX index_resource_links_on_subject_resource_id ON public.resource_links USING btree (subject_resource_id);
+
+
+--
+-- Name: index_resource_status_checks_on_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_status_checks_on_resource_id ON public.resource_status_checks USING btree (resource_id);
 
 
 --
@@ -2031,6 +2100,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200618182745'),
 ('20200618194643'),
 ('20200619172655'),
-('20200619192855');
+('20200619192855'),
+('20200622231708'),
+('20200622232200');
 
 
