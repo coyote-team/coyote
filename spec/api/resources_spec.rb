@@ -250,6 +250,17 @@ RSpec.describe "Accessing resources" do
         }.to change { existing_resource.reload.host_uris }
           .from(existing_resource_uris).to(existing_resource_uris + ["http://www.other-host-uri-is-here-yay.com/scrmpth"])
       end
+
+      it "POST /organizations/:id/resources/create accepts a hash format" do
+        params = {resources: {
+          "0" => existing_resource_params,
+          "1" => new_resource_params,
+        }}
+
+        # It should map the resources, as this format is pretty much the same as an array
+        post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
+        expect(response).to be_created
+      end
     end
   end
 

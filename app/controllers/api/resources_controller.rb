@@ -170,13 +170,15 @@ module Api
 
     api :POST, "resources/create", "Bulk 'upsert' resources by source_uri"
     def create_many
-      resources = params.require(:resources).map { |resource_params|
+      resources = []
+      params.require(:resources).each do |(key, resource_params)|
+        resource_params ||= key
         resource_params = clean_resource_params(resource_params)
         resource = resource_for(resource_params)
         resource.union_host_uris = true
         resource.update(resource_params)
-        resource
-      }
+        resources.push(resource)
+      end
 
       render jsonapi_mixed: resources,
              status:        resources.any?(&:invalid?) ? :unprocessable_entity : :created
