@@ -50,6 +50,7 @@ Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |file| require
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  config.include Coyote::Testing::RescuingErrors
   config.include Coyote::Testing::ControllerHelpers, type: :controller
   config.include Coyote::Testing::FeatureHelpers, type: :feature
   config.include Coyote::Testing::EmailHelpers, type: :feature

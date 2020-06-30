@@ -4,6 +4,7 @@ module TrapErrors
   def self.included(base)
     base.rescue_from ActionController::ParameterMissing, with: :maybe_trap_unprocessable_entity
     base.rescue_from ActiveRecord::RecordNotFound, with: :maybe_trap_not_found
+    base.rescue_from Coyote::SecurityError, with: :maybe_trap_security_error
     base.rescue_from Pundit::NotAuthorizedError, with: :maybe_trap_forbidden
   end
 
@@ -15,6 +16,11 @@ module TrapErrors
   def maybe_trap_not_found(exception)
     raise exception unless trap_errors?
     trap_not_found(exception)
+  end
+
+  def maybe_trap_security_error(exception)
+    raise exception unless trap_errors?
+    trap_forbidden(exception)
   end
 
   def maybe_trap_unprocessable_entity(exception)

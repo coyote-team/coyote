@@ -188,16 +188,12 @@ RSpec.describe "Accessing resources" do
         params = {resources: []}
 
         # Ensure the controller will trap errors
-        Credentials.app ||= Credentials.new
-        Credentials.app.rescue_from_errors = true
-
-        # Generate a request with empty resources
-        post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
-        expect(response).to be_unprocessable
-        expect(json_data[:error]).to eq(I18n.t("actioncontroller.parameter_missing", param: "resources"))
-
-        # Return false to prevent additional error trapping
-        Credentials.app.rescue_from_errors = false
+        rescuing_errors do
+          # Generate a request with empty resources
+          post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
+          expect(response).to be_unprocessable
+          expect(json_data[:error]).to eq(I18n.t("actioncontroller.parameter_missing", param: "resources"))
+        end
       end
 
       it "POST /organizations/:id/resources/create returns a mix of errors and success when some things fail" do

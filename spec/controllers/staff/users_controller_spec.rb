@@ -61,6 +61,13 @@ RSpec.describe Staff::UsersController do
         }.to raise_error(Coyote::SecurityError)
       end
     end
+
+    it "traps Coyote::SecurityError and renders a 'forbidden' response" do
+      rescuing_errors do
+        delete :destroy, params: user_params
+        expect(response).to be_forbidden
+      end
+    end
   end
 
   describe "as a staff member" do
