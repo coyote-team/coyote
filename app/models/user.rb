@@ -33,9 +33,9 @@
 class User < ApplicationRecord
   MINIMUM_PASSWORD_LENGTH = 8
 
-  attr_accessor :current_password, :remember_me
+  attr_accessor :current_password, :password_confirmation, :remember_me
 
-  has_secure_password
+  has_secure_password validations: false
   has_secure_token :authentication_token
 
   has_many :auth_tokens, dependent: :destroy
@@ -60,6 +60,7 @@ class User < ApplicationRecord
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true
   validates :email, uniqueness: true, if: :email_changed?
   validates :password, length: {minimum: MINIMUM_PASSWORD_LENGTH}, presence: true, if: :password_required?
+  validates :password, confirmation: true, if: :password_confirmation_required?
   validate :current_password_is_correct
 
   def self.find_for_authentication(warden_conditions)
@@ -91,6 +92,10 @@ class User < ApplicationRecord
   def current_password_is_correct
     errors.add(:current_password, "is required") if !current_password.nil? && current_password.blank?
     errors.add(:current_password, "is incorrect") if current_password.present? && !authenticate(current_password)
+  end
+
+  def password_confirmation_required?
+    password.present? && !password_confirmation.nil?
   end
 
   def password_required?
