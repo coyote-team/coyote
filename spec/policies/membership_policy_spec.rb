@@ -4,7 +4,7 @@ RSpec.describe MembershipPolicy do
   subject { described_class.new(org_user, record) }
 
   let(:org_user) do
-    double(:organization_user, admin?: false, editor?: false, id: 2, role_rank: 1, staff?: false)
+    double(:organization_user, admin?: false, editor?: true, id: 2, role_rank: 1, owner?: false, staff?: false)
   end
 
   let(:record) do
@@ -15,8 +15,8 @@ RSpec.describe MembershipPolicy do
 
   it { is_expected.to forbid_new_and_create_actions }
   it { is_expected.to forbid_edit_and_update_actions }
-  it { is_expected.to forbid_action(:show) }
-  it { is_expected.to forbid_action(:index) }
+  it { is_expected.to permit_action(:show) }
+  it { is_expected.to permit_action(:index) }
   it { is_expected.to forbid_action(:destroy) }
 
   specify { expect(subject.scope).to eq(Membership) }
@@ -59,18 +59,18 @@ RSpec.describe MembershipPolicy do
     it { is_expected.to permit_action(:destroy) }
   end
 
-  describe "as an editor" do
+  describe "as an editor editing someone else's membership" do
     before do
-      allow(org_user).to receive_messages(editor?: true, id: 1)
+      allow(org_user).to receive_messages(admin?: false, editor?: true, id: 2)
     end
 
     it { is_expected.to permit_action(:index) }
-    it { is_expected.to permit_action(:destroy) }
+    it { is_expected.to forbid_action(:destroy) }
   end
 
   describe "as a staff member attempting to change self membership" do
     before do
-      allow(org_user).to receive_messages(staff?: true, id: 1)
+      allow(org_user).to receive_messages(owner?: true, staff?: true, id: 1)
     end
 
     it { is_expected.to permit_edit_and_update_actions }
