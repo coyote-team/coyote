@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
   def home
     if current_user? && current_user.organizations.any?
-      redirect_to current_user.organizations.one? ? organization_path(current_user.organizations.first) : organizations_path
+      redirect_to default_landing_path
     end
   end
 end

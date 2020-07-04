@@ -21,6 +21,12 @@ RSpec.describe "Viewing static pages" do
       expect(page).to have_current_path(organization_path(user.organizations.reload.first))
     end
 
+    it "redirects to the organization selector when the user is a staff member" do
+      user.update_attribute(:staff, true)
+      visit root_path
+      expect(page).to have_current_path(organizations_path)
+    end
+
     it "redirects to the organization selector at the root path if the user has more than one organization" do
       organization = create(:organization)
       user.memberships.create!(organization: organization, role: :editor)

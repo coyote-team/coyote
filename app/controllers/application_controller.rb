@@ -71,6 +71,10 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
+  def default_landing_path(user = current_user)
+    !user.staff? && user.organizations.one? ? organization_path(user.organizations.first_id) : organizations_path
+  end
+
   def log_user_in(user, options = {})
     remember = options.delete(:remember)
     auth_token = user.auth_tokens.create!(user_agent: request.user_agent)
@@ -110,9 +114,7 @@ class ApplicationController < ActionController::Base
   def redirect_to_return_path(*args)
     options = args.extract_options!
     user = args.shift || current_user
-    path = options.delete(:path) || return_to_path
-    organization = return_to_path.blank? && user.organizations.limit(1).pluck(:id).first
-    path ||= organization.present? ? organization_path(organization) : root_path
+    path = options.delete(:path) || return_to_path || default_landing_path(user)
     redirect_to path, options
   end
 
