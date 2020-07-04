@@ -59,7 +59,7 @@ module ResourcesHelper
       tags.push(tag_for("Approved", type: :success, hint: "Status"))
     end
 
-    resource.meta.each do |metum|
+    resource.meta.distinct.each do |metum|
       tags.push(metum_tag(metum, tag: :li))
     end
 

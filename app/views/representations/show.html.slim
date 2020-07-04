@@ -49,7 +49,7 @@
 
 = toolbar class: 'toolbar--footer', title: 'Actions' do
   = toolbar_item do
-    - if policy(Representation).new?
+    - if can?(:describe, representation.resource)
       = link_to('Describe Again', new_organization_representation_path(current_organization, resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button')
     = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--outline') if policy(representation).edit?
 

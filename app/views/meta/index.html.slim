@@ -6,7 +6,8 @@ table
       th Title
       th Required
       th Instructions
-      th.table-cell-actions Actions
+      - if can?(:edit, :meta)
+        th.table-cell-actions Actions
 
   tbody
     - list_of_meta.each do |metum|
@@ -14,8 +15,9 @@ table
         td.table-cell-primary.table-cell-link= link_to metum.name, [current_organization, metum]
         td.table-cell-link= link_to metum.is_required? ? "Yes" : "No", [current_organization, metum]
         td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), [current_organization, metum]
-        td.table-cell-actions
-          = link_to 'Edit', edit_organization_metum_path(current_organization, metum), class: "button button--outline"
+        - if can?(:edit, :meta)
+          td.table-cell-actions
+            = link_to 'Edit', edit_organization_metum_path(current_organization, metum), class: "button button--outline"
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer
