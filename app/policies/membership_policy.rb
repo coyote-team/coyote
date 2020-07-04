@@ -19,9 +19,9 @@ class MembershipPolicy < ApplicationPolicy
     organization_user.admin?
   end
 
-  # @return [Boolean] all users can view an organization's memberships
+  # @return [Boolean] only editors or above can view an organization's memberships
   def index?
-    true
+    organization_user.editor?
   end
 
   alias show? index?
