@@ -26,7 +26,7 @@ h1= title(to_html_title(resource.name))
           td= resource.canonical_id
         tr
           th Resource Group
-          td= link_to(resource.resource_group, [resource.organization, resource.resource_group])
+          td= link_to(resource.resource_group, resource.resource_group)
         tr
           th Host URIs
           td= list_of(resource.host_uris) { |uri| link_to(uri, uri) }
@@ -43,17 +43,16 @@ h1= title(to_html_title(resource.name))
 = toolbar class: 'toolbar--footer', title: "Actions" do
   = toolbar_item
     - if policy(resource).describe?
-      = link_to new_organization_representation_path(current_organization, resource_id: resource.id), title: 'Create new description for this resource', class: 'button' do
+      = link_to new_representation_path(resource_id: resource.id), title: 'Create new description for this resource', class: 'button button--aside' do
         | Describe
     - if policy(resource).edit?
-      = link_to edit_resource_path(resource), title: "Edit this resource", class: 'button button--outline' do
-        | Edit
+      = edit_link_to edit_resource_path(resource), title: "Edit this resource"
+    - if policy(resource).destroy?
+      = delete_link_to "Are you sure you want to delete this resource? This cannot be undone.", resource_path(resource.id), title: 'Delete this resource'
     - if policy(ResourceLink).new?
       = link_to new_resource_link_path(subject_resource_id: resource.id), title: 'Create new link from this resource to another resource', class: 'button button--outline' do
-        | Create Link to Another Resource
-    - if policy(resource).destroy?
-      = link_to resource_path(resource.id), title: 'Delete this resource', class: 'button button--outline', data: {confirm: "Are you sure you want to delete this resource? This cannot be undone."}, method: :delete do
-        | Delete
+        = icon(:link)
+        span.button-content Create Link to Another Resource
   - if policy(Assignment).new?
     = toolbar_item
       = render partial: 'assign', resource: resource

@@ -49,7 +49,7 @@ end
 
 RSpec.shared_examples "a sign-in redirect controller response" do
   it "redirects the user to the sign-in URL" do
-    expect(response).to redirect_to(new_session_url)
+    expect(response).to redirect_to(new_session_path)
   end
 
   it "sets a flash alert message" do

@@ -3,7 +3,7 @@
     / h1= title "Resources for #{current_organization.name}"
     h1= title "Resources"
 
-    = search_form_for record_filter.search, url: organization_resources_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+    = search_form_for record_filter.search, url: resources_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
       label.filter-set-item.field.field--accessory
         span.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
@@ -14,7 +14,7 @@
         .checkbox-list
           label.checkbox-list-item
             = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:resource_priority_flag, false).to_s == "true"
-            | Urgent
+            span Urgent
 
       - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
         .filter-set-item: label With representations authored by user #{User.find_by(id: author_id).username}
@@ -25,7 +25,7 @@
             - scope_search_collection.each do |name, scope|
               label.checkbox-list-item
                 = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
-                = name
+                span= name
         / = f.input :scope, label: 'Status', collection: scope_search_collection, selected: filter_params[:scope], required: false, include_blank: true
         = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
 
@@ -33,7 +33,7 @@
         = f.submit 'Search', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--outline'
 
-  = simple_form_for :assignment, url: organization_assignments_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
+  = simple_form_for :assignment, url: assignments_path, html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
     h2#results-title.action
       | Total
@@ -42,7 +42,7 @@
       = number_with_delimiter record_filter.records.total_count
 
       - if policy(Resource).new?
-        = link_to 'New Resource', new_organization_resource_path(current_organization), class: 'button'
+        = link_to 'New Resource', new_resource_path, class: 'button'
 
     - if record_filter.records.any?
       = toolbar do

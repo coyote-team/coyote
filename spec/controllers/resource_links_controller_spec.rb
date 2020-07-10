@@ -27,12 +27,16 @@ RSpec.describe ResourceLinksController do
   end
 
   let(:resource_link_params) do
-    {id: resource_link.id}
+    {
+      id:              resource_link.id,
+      organization_id: organization.id,
+    }
   end
 
   let(:new_resource_link_params) do
     {
-      resource_link: {
+      organization_id: organization.id,
+      resource_link:   {
         subject_resource_id: subject_resource.id,
         verb:                "isVersionOf",
         object_resource_id:  object_resource.id,
@@ -55,7 +59,7 @@ RSpec.describe ResourceLinksController do
         get :edit, params: resource_link_params
         expect(response).to require_login
 
-        get :new
+        get :new, params: {organization_id: organization.id}
         expect(response).to require_login
 
         post :create, params: new_resource_link_params
@@ -81,7 +85,7 @@ RSpec.describe ResourceLinksController do
         get :edit, params: resource_link_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
-      get :new, params: {subject_resource_id: subject_resource.id}
+      get :new, params: {organization_id: organization.id, subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       expect {
@@ -90,7 +94,8 @@ RSpec.describe ResourceLinksController do
       }.to change(subject_resource.subject_resource_links, :count).by(1)
 
       bad_params = {
-        resource_link: {
+        organization_id: organization.id,
+        resource_link:   {
           subject_resource_id: subject_resource.id,
           verb:                "",
           object_resource_id:  object_resource.id,
@@ -114,7 +119,7 @@ RSpec.describe ResourceLinksController do
     include_context "signed-in editor user"
 
     it "succeeds for critical actions" do
-      get :new, params: {subject_resource_id: subject_resource.id}
+      get :new, params: {organization_id: organization.id, subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       get :edit, params: resource_link_params

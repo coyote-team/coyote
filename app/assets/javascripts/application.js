@@ -2,7 +2,7 @@
 //= require_tree ./components
 //= require vendor/bootstrap-native-v4
 //= require vendor/sentry
-//= require vanilla-ujs
+//= require rails-ujs
 //= require activestorage
 
 (function() {
@@ -20,6 +20,10 @@
 
   document.querySelectorAll("[data-select-all]").forEach(function(control) {
     var selectAll = new SelectAll(control);
+  });
+
+  document.querySelectorAll("textarea").forEach(function(control) {
+    var textarea = new TextArea(control);
   });
 
   document.querySelectorAll("[data-toggle-target]").forEach(function(control) {

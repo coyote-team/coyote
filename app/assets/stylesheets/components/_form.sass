@@ -1,6 +1,5 @@
 // COMPONENT: Form: a collection of controls with some standard styling
 .form
-
   &.form--inline
     display: inline-block
 
@@ -18,10 +17,33 @@
       font-weight: bold
       margin-bottom: $gutter
       position: relative
-      text-transform: uppercase
 
-      abbr
-        display: none
+      &.required
+        &::after
+          background-color: map-get($status, danger)
+          content: ""
+          border-radius: 100%
+          display: inline-block
+          height: round($input-padding)
+          overflow: hidden
+          vertical-align: top
+          width: round($input-padding)
+
+        .form-field-label-requirement
+          color: transparent
+          font-size: $font-size-control
+          font-weight: 300
+          display: flex
+          position: absolute
+          right: 0
+          top: 50%
+          transform: translateY(-50%)
+          transition: color 100ms $swift-in
+
+    &:hover,
+    &:focus-within
+      .form-field-label.required .form-field-label-requirement
+        color: $text
 
     &.form-field--error
       #{$controls}

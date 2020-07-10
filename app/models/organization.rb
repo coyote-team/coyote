@@ -5,6 +5,7 @@
 # Table name: organizations
 #
 #  id                 :integer          not null, primary key
+#  is_deleted         :boolean          default(FALSE)
 #  name               :citext           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -12,7 +13,8 @@
 #
 # Indexes
 #
-#  index_organizations_on_name  (name) UNIQUE
+#  index_organizations_on_is_deleted  (is_deleted)
+#  index_organizations_on_name        (name) UNIQUE
 #
 
 # Represents a group of users, usually associated with a particular institution
@@ -35,6 +37,8 @@ class Organization < ApplicationRecord
   has_many :representations, through: :resources
 
   has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource, inverse_of: :organization
+
+  scope :is_active, -> { where(is_deleted: false) }
 
   def ready_to_review_representations
     representations.ready_to_review

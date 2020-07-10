@@ -1,0 +1,54 @@
+*[data-tooltip]
+  $color: rgba($text-dark, 0.9)
+
+  position: relative
+
+  &::before,
+  &::after
+    display: none
+    font-size: $font-size-control
+    font-weight: normal
+    line-height: normal
+    position: absolute
+    speak: none
+    top: 100%
+    transform: translateY(-$input-padding)
+
+  &::before
+    border-color: transparent transparent $color transparent
+    border-style: solid
+    border-width: 0 $input-padding $input-padding $input-padding
+    content: ""
+    height: 0
+    left: 50%
+    margin-left: -$input-padding
+    margin-right: $input-padding
+    margin-top: 1px
+    width: 0
+
+  &::after
+    background-color: $color
+    border-radius: $border-radius
+    color: $background
+    content: attr(data-tooltip)
+    margin-top: $input-padding
+    min-width: 100%
+    padding: $input-padding
+    right: 0
+
+  &:hover
+    z-index: 5
+
+    &::before,
+    &::after
+      animation: tooltip-in 150ms $swift both 500ms
+      display: block
+
+@keyframes tooltip-in
+  0%
+    opacity: 0
+    transform: translateY(-$input-padding)
+
+  100%
+    opacity: 1
+    transform: translateY(1px)

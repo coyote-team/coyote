@@ -66,7 +66,7 @@ class UsersController < ApplicationController
 
     if invitation.redeemed?
       logger.error "Attempt to use previously-redeemed #{invitation}"
-      redirect_to new_session_url, alert: %(We're sorry, but that invitation has already been used.)
+      redirect_to new_session_path, alert: %(We're sorry, but that invitation has already been used.)
       false
     else
       true

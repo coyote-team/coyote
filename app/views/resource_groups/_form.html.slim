@@ -1,4 +1,4 @@
-= simple_form_for [current_organization, resource_group], validate: true  do |f|
+= simple_form_for resource_group, validate: true  do |f|
   = f.error_notification
   = f.input :name
   = f.input :webhook_uri

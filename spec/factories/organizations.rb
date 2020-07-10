@@ -5,6 +5,7 @@
 # Table name: organizations
 #
 #  id                 :integer          not null, primary key
+#  is_deleted         :boolean          default(FALSE)
 #  name               :citext           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -12,7 +13,8 @@
 #
 # Indexes
 #
-#  index_organizations_on_name  (name) UNIQUE
+#  index_organizations_on_is_deleted  (is_deleted)
+#  index_organizations_on_name        (name) UNIQUE
 #
 
 FactoryBot.define do

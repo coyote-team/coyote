@@ -34,7 +34,7 @@ RSpec.describe "Resource adding and changing" do
     expect(resource.resource_groups).to match_array([resource_group])
     expect(resource.host_uris).to match_array(%w[http://example.com/abc http://example.com/xyz])
 
-    expect(page).to have_current_path(resource_path(resource), ignore_query: true)
+    expect(page).to have_current_path(resource_path(resource, organization_id: user_organization), ignore_query: true)
     expect(page).to have_content(resource.name)
   end
 end

@@ -6,8 +6,8 @@ module ToolbarHelper
 
     model_name = form.object.class.model_name.human.titleize
     navigate_back = toolbar_item {
-      (form.object.persisted? ? link_to("View this #{model_name}", {action: :show}, class: "button button--outline") : "".html_safe) +
-        link_to("View all #{model_name.pluralize}", {action: :index}, class: "button button--outline")
+      (form.object.persisted? ? link_to("View this #{model_name}", {action: :show}, class: "button button--neutral") : "".html_safe) +
+        link_to("View all #{model_name.pluralize}", {action: :index}, class: "button button--neutral")
     }
 
     toolbar(options) do
@@ -23,10 +23,10 @@ module ToolbarHelper
       item = "".html_safe
 
       can_edit = options.fetch(:edit) { policy(instance).edit? }
-      item << link_to("Edit", {action: :edit}, class: "button button--outline") if can_edit
+      item << edit_link_to({action: :edit}) if can_edit
 
       can_delete = options.fetch(:delete) { policy(instance).destroy? }
-      item << button_to(delete_title, {action: :show}, title: "#{delete_title} #{instance}", class: "button button--outline", data: {confirm: "Are you sure you want to #{delete_title.downcase} #{instance}?"}, method: :delete) if can_delete
+      item << delete_link_to("Are you sure you want to #{delete_title.downcase} #{instance}?", {action: :show}, title: "#{delete_title} #{instance}") if can_delete
 
       item
     }
@@ -40,9 +40,11 @@ module ToolbarHelper
     end
   end
 
-  def submit_toolbar_item(form)
+  def submit_toolbar_item(form, submit_options: {}, cancel_options: {})
+    submit_options[:class] = Array(submit_options[:class].presence).push("toolbar-item")
+    cancel_options[:class] = Array(cancel_options[:class].presence).push("button button--outline")
     toolbar_item do
-      form.button(:submit, class: "toolbar-item") + link_to("Cancel", :back, class: "button button--outline")
+      form.button(:submit, submit_options) + link_to("Cancel", :back, cancel_options)
     end
   end
 

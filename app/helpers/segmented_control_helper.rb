@@ -4,7 +4,7 @@ module SegmentedControlHelper
   def icon(icon, options = {})
     return "" if icon.blank?
 
-    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon}")
+    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon.to_s.tr("_", "-")}")
     content_tag(:i, options) { "" }
   end
 
@@ -17,10 +17,11 @@ module SegmentedControlHelper
     pressed = !!options.delete(:pressed)
     icon = options.delete(:icon)
     title = options.delete(:title)
+    sr = options.delete(:sr) { true }
     options = combine_options({aria: {pressed: pressed.to_s}, type: :button}, options)
     content_tag(:li, class: "segmented-control-item") do
       content_tag(:button, options) do
-        icon(icon) + sr_only(title) + (block_given? ? yield : "")
+        icon(icon) + (sr ? sr_only(title) : content_tag(:span, title, class: "segmented-control-item-label")) + (block_given? ? yield : "")
       end
     end
   end

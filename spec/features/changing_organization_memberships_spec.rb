@@ -13,10 +13,10 @@ RSpec.describe "Changing organizational memberships" do
     click_first_link "Members"
 
     within "#membership_#{membership.id}" do
-      click_link "Edit"
+      click_link "Change"
     end
 
-    expect(page).to have_current_path(edit_organization_membership_path(user_organization, membership), ignore_query: true)
+    expect(page).to have_current_path(edit_membership_path(membership, organization_id: user_organization), ignore_query: true)
 
     select "Editor", from: "Role"
 
@@ -30,7 +30,7 @@ RSpec.describe "Changing organizational memberships" do
 
     within "#membership_#{membership.id}" do
       expect {
-        click_button "Remove from organization"
+        click_link "Remove"
       }.to change {
         user_organization.active_users.exists?(member_user.id)
       }.from(true).to(false)

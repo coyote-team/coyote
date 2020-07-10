@@ -26,7 +26,7 @@ class AssignmentsController < ApplicationController
   def destroy
     if assignment.destroy
       logger.info "Deleted #{assignment}"
-      redirect_to organization_assignments_url(current_organization), notice: "Assignment was successfully destroyed."
+      redirect_to assignments_path, notice: "Assignment was successfully destroyed."
     else
       logger.warn "Unable to delete #{assignment}: '#{assignment.error_sentence}'"
       flash[:error] = "We were unable to delete the assignment"

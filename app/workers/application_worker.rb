@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class ApplicationWorker
   include Cloudtasker::Worker
 
   cloudtasker_options lock: :until_executed, on_conflict: :reject
-
 
   private
 

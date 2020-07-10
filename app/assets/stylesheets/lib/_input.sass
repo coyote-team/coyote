@@ -2,7 +2,7 @@
 %input-base
   appearance: none
   border-style: solid
-  border-radius: 0
+  border-radius: $border-radius
   border-width: 1px
   display: inline-block
   margin: 0 $input-padding 0 0
@@ -16,12 +16,14 @@
 
 %input-fixed-height
   @extend %input-base
+
   height: $input-height
   line-height: $input-height - 2px
   vertical-align: top
 
 %input-text
   @extend %input-fixed-height
+
   font-family: $font-family-text
   font-size: $font-size
   padding: 0 $input-padding

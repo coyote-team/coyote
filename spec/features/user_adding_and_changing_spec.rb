@@ -39,7 +39,7 @@ RSpec.describe "User adding and changing" do
     expect(page).to have_current_path(staff_user_path(editable_user), ignore_query: true)
 
     expect {
-      click_button "Archive"
+      click_link "Archive"
       editable_user.reload
     }.to(change(editable_user, :active?))
 

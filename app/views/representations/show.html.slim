@@ -50,8 +50,10 @@
 = toolbar class: 'toolbar--footer', title: 'Actions' do
   = toolbar_item do
     - if can?(:describe, representation.resource)
-      = link_to('Describe Again', new_organization_representation_path(current_organization, resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button')
-    = link_to('Edit', edit_representation_path(representation), title: "Edit this representation", class: 'button button--outline') if policy(representation).edit?
+      = link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button button--aside')
+    = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
+  = toolbar_item do
+    = link_to history_representation_path(representation), class: "button button--outline" do
+      = icon(:clock)
+      span.button-content History
 
-h2 Audits
-= render partial: 'audits', object: representation.audits.map { |audit| [audit, audit.audited_changes.tap(&:symbolize_keys!)] }

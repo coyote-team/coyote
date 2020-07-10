@@ -11,7 +11,7 @@ class OrganizationPolicy < ApplicationPolicy
 
   # @return [false] we don't currently support destruction of organizations
   def destroy?
-    false
+    organization_user.staff?
   end
 
   # @return [true] everyone can view at least the subset of organizations to which they belong

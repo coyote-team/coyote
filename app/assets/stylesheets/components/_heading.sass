@@ -13,15 +13,18 @@ h1
   line-height: $heading-line-height
 
 h2
-  $spacing: ($h1-size - $h2-size) + 2px
+  $spacing: $h1-size - $h2-size + 2px
+
   font-size: $h2-size
   font-weight: bold
   line-height: $heading-line-height - $spacing
   padding-top: $spacing
-  text-transform: uppercase
+
+  // text-transform: uppercase
 
 h3
-  $spacing: ($h1-size - $h2-size) + 2px
+  $spacing: $h1-size - $h2-size + 2px
+
   font-size: $h2-size
   font-weight: bold
   line-height: $heading-line-height - $spacing

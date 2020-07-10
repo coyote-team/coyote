@@ -15,7 +15,7 @@ class MetaController < ApplicationController
 
     if metum.save
       logger.info "Created #{metum}"
-      redirect_to [current_organization, metum], notice: "Metum was successfully created."
+      redirect_to metum, notice: "Metum was successfully created."
     else
       logger.warn "Unable to create Metum: '#{metum.error_sentence}'"
       render :new
@@ -24,7 +24,7 @@ class MetaController < ApplicationController
 
   def destroy
     metum.destroy
-    redirect_to organization_meta_path, info: "#{metum.name} was deleted"
+    redirect_to meta_path, info: "#{metum.name} was deleted"
   end
 
   # GET /meta/1/edit
@@ -47,7 +47,7 @@ class MetaController < ApplicationController
   # PATCH /meta/1
   def update
     if metum.update(metum_params)
-      redirect_to [current_organization, metum], notice: "Metum was successfully updated."
+      redirect_to metum, notice: "Metum was successfully updated."
     else
       logger.warn "Unable to update #{metum}: '#{metum.error_sentence}'"
       render :edit

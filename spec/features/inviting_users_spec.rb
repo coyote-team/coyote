@@ -17,7 +17,7 @@ RSpec.describe "Inviting users" do
       expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
       click_link "Invite a user to join"
-      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
+      expect(page).to have_current_path(new_invitation_path(organization_id: user_organization), ignore_query: true)
 
       fill_in "invitation[recipient_email]", with: new_member_email
       select("Editor", from: "Role")
@@ -47,7 +47,7 @@ RSpec.describe "Inviting users" do
       expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
       click_link "Invite a user to join"
-      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
+      expect(page).to have_current_path(new_invitation_path(organization_id: user_organization), ignore_query: true)
 
       fill_in "invitation[recipient_email]", with: new_member_email
       fill_in "invitation[first_name]", with: "John"
@@ -110,7 +110,7 @@ RSpec.describe "Inviting users" do
       expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
 
       click_link "Invite a user to join"
-      expect(page).to have_current_path(new_organization_invitation_path(user_organization), ignore_query: true)
+      expect(page).to have_current_path(new_invitation_path(organization_id: user_organization), ignore_query: true)
 
       fill_in "invitation[recipient_email]", with: new_member_email
       select("Viewer", from: "Role")
@@ -119,7 +119,7 @@ RSpec.describe "Inviting users" do
         click_button "Send invitation"
       }.not_to raise_error
 
-      expect(page).to have_current_path(organization_invitations_path(user_organization), ignore_query: true)
+      expect(page).to have_current_path(invitations_path(organization_id: user_organization), ignore_query: true)
 
       Membership.find_by!(user: existing_member, organization: user_organization).tap do |m|
         expect(m).to be_editor

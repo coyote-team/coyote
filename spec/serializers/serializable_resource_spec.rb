@@ -18,6 +18,7 @@ RSpec.describe SerializableResource do
       .to receive_messages({
         resource_group_name:      "Website",
         approved_representations: approved_representations,
+        organization_id:          1,
       })
   end
 

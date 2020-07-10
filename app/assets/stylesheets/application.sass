@@ -5,21 +5,23 @@
 //
 
 // VARIABLES
-// Color scheme
-$background: #fff
-$border: #000
-$input: #ebebeb
-$placeholder: #999
-$text: #222
-$text-dark: #000
-$tint: #00f
+// Color scheme (derived from Material UI: https://www.materialui.co/colors)
+$background: #FAFAFA
+$border: #B0BEC5
+$input: #EEEEEE
+$placeholder: #616161
+$text: #424242
+$text-dark: #212121
+$text-light: $background
+$tint: #0277BD
 
-$status: (danger: #ff0000, error: #ff0000, info: $tint, neutral: #666, okay: $tint, partial: #fb9900, success: #009f2f, warning: #ffc107)
+$status: (aside: #673AB7, danger: #B71C1C, error: #B71C1C, info: $tint, neutral: $placeholder, okay: #C2185B, partial: #F57C00, success: #4CAF50, warning: #FFCA28)
 
 // Typography
 $font-family-mono: "Space Mono", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace
-$font-family-text: "TeX Gyre Heros", Arial, sans-serif
-$font-size: 18px
+$font-family-text: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif
+$font-size: 16px
+$font-size-control: $font-size - 2px
 $font-size-small: round($font-size / 1.5)
 $line-height-ratio: 1.35
 $line-height: round($font-size * $line-height-ratio)
@@ -29,13 +31,20 @@ $h2-size: round($font-size * $line-height-ratio)
 $heading-line-height: $h1-size + $gutter
 
 // Components
+$border-radius: 3px
 $checkbox-size: $gutter * 2
 $input-height: 40px
 $input-padding: $gutter / 1.5
 $text-inputs: "input[type=color], input[type=date], input[type=datetime], input[type=datetime-local], input[type=email], input[type=file], input[type=month], input[type=number], input[type=password], input[type=research], input[type=search], input[type=tel], input[type=text], input[type=url], input[type=week]"
 $nav-height: 5 * $gutter
 $controls: "#{$text-inputs}, select, textarea"
-$shadow: rgba($text, 0.3) 0 2px 3px
+$focus-shadow-opacity: 0.5
+$focus-shadow-size: 0 0 0 3px
+$focus-shadow-color: rgba($tint, $focus-shadow-opacity)
+$focus-shadow: $focus-shadow-color $focus-shadow-size
+$focus-shadow-inset: inset $focus-shadow-color $focus-shadow-size
+$shadow-level-1: rgba($text, 0.3) 0 2px 3px
+$shadow-level-2: rgba($text, 0.3) 0 5px 8px
 
 // Animations
 $swift: cubic-bezier(0.4, 0, 0.2, 1)
@@ -52,11 +61,11 @@ $breakpoint-mobile-portrait: 480px
 $breakpoint-non-mobile: $breakpoint-mobile + 1px
 
 // Import all of the mixins we need to build our site
-@import "lib/*"
+@import lib/*
 
 // Import universal app styles
-@import "app/*"
+@import app/*
 
 // Each component lives in its own Sass file in the components/ subdirectory.
 // Let's import them all!
-@import "components/*"
+@import components/*

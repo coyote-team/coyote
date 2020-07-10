@@ -85,7 +85,7 @@ RSpec.describe "Accessing resources" do
 
         existing_resource.reload
         existing_resource.resource_groups.reload
-      }.to change { existing_resource.resource_groups.to_a }
+      }.to change { existing_resource.resource_groups.reload.by_id.to_a }
         .to([
           default_resource_group,
           resource_group,

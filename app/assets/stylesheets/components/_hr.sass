@@ -1,0 +1,22 @@
+hr
+  border-color: $border
+  border-style: solid
+  border-width: 2px 0 0 0
+  display: block
+  margin: ($gutter * 3) 0
+
+  &[data-label]
+    overflow: visible
+    position: relative
+
+    &::after
+      background-color: $background
+      bottom: -$gutter
+      content: attr(data-label)
+      display: block
+      font-size: $font-size-control
+      font-weight: bold
+      left: 50%
+      padding: $input-padding
+      position: absolute
+      transform: translate(-50%, 0)

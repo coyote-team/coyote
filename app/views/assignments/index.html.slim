@@ -9,5 +9,5 @@ table
   tbody
     - assigned_users.each do |membership, assignment_count|
       tr
-        td.table-cell-primary.table-cell-link= link_to(membership.user, [current_organization, membership])
+        td.table-cell-primary.table-cell-link= link_to(membership.user, membership)
         td= number_with_delimiter(assignment_count)

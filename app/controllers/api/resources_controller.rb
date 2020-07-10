@@ -160,7 +160,7 @@ module Api
       if resource.update(resource_params)
         logger.info "Created #{resource}"
         render jsonapi: resource, status: :created, links: {
-          coyote: resource_url(resource),
+          coyote: resource_url(resource, organization_id: resource.organization_id),
         }
       else
         logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
@@ -295,7 +295,7 @@ module Api
       if resource.update(resource_params)
         logger.info "Updated #{resource}"
         render jsonapi: resource, links: {
-          coyote: resource_url(resource),
+          coyote: resource_url(resource, organization_id: resource.organization_id),
         }
       else
         logger.warn "Unable to update resource due to '#{resource.error_sentence}'"

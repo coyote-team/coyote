@@ -121,7 +121,7 @@ RSpec.describe ResourcesController do
 
       expect {
         delete :destroy, params: update_resource_params
-        expect(response).to redirect_to(organization_resources_url(organization))
+        expect(response).to redirect_to(resources_path(organization_id: organization))
       }.to change { resource.reload.is_deleted? }
         .from(false).to(true)
     end

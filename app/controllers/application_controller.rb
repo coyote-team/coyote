@@ -28,6 +28,18 @@ class ApplicationController < ActionController::Base
     :return_to_path,
     :stateless?
 
+  def url_options
+    result = super
+    organization_id = params[:organization_id]
+    if organization_id.present?
+      result.merge(organization_id: organization_id)
+    elsif current_organization?
+      result.merge(organization_id: current_organization.id)
+    else
+      result
+    end
+  end
+
   private
 
   def auth_token

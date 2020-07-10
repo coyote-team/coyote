@@ -2,7 +2,7 @@
 
 RSpec.describe "Home page viewing" do
   it "succeeds" do
-    visit root_url
+    visit root_path
 
     expect(page.status_code).to eq(200)
     expect(page).to have_content "Welcome to Coyote!"

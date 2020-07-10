@@ -21,6 +21,6 @@ class SerializableResource < JSONAPI::Serializable::Resource
   end
 
   link :coyote do
-    @url_helpers.resource_url(@object.id)
+    @url_helpers.resource_url(@object.id, organization_id: @object.organization_id)
   end
 end

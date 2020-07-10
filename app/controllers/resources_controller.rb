@@ -27,7 +27,7 @@ class ResourcesController < ApplicationController
 
   def destroy
     resource.mark_as_deleted!
-    redirect_to organization_resources_url(current_organization), notice: "Resource was successfully destroyed."
+    redirect_to resources_path, notice: "Resource was successfully destroyed."
   end
 
   def edit

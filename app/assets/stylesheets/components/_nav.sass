@@ -20,6 +20,7 @@ nav#nav-main
 
     .nav-brand-fade
       $delay: 2s
+
       animation: nav-brand-fade 500ms $swift-out $delay forwards
 
       // COYOTE
@@ -46,19 +47,39 @@ nav#nav-main
     align-items: stretch
     display: flex
 
-    @include mobile
+    +mobile
       display: none
 
+
     li
+      position: relative
+
       a
         display: block
         height: 100%
         line-height: $nav-height - 3px
-        padding: 0 $gutter / 2
+        padding: 0 $gutter
         text-decoration: none
 
         &:hover
           background-color: $input
+
+        &:focus
+          box-shadow: $focus-shadow-inset
+
+      &.active
+        margin-bottom: -1px
+
+        a
+          color: $tint
+
+        &::after
+          border-bottom: 2px solid $tint
+          bottom: 0
+          content: ""
+          left: 0
+          position: absolute
+          right: 0
 
   // Secondary nav
   .nav-secondary
@@ -75,5 +96,6 @@ nav#nav-main
 @keyframes nav-brand-fade
   0%
     opacity: 1
+
   100%
     opacity: 0

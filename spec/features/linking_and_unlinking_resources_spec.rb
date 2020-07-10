@@ -7,11 +7,11 @@ RSpec.describe "Linking and unlinking resources" do
   let!(:object_resource) { create(:resource, name: "Picture of Chrysler Building", organization: user_organization) }
 
   it "succeeds" do
-    visit resource_path(subject_resource)
+    visit resource_path(subject_resource, organization_id: subject_resource.organization_id)
 
     click_first_link("Create Link to Another Resource")
 
-    expect(page).to have_current_path(new_resource_link_path, ignore_query: true)
+    expect(page).to have_current_path(new_resource_link_path(organization_id: subject_resource.organization_id), ignore_query: true)
 
     select("hasVersion", from: "Verb")
     select(object_resource.label, from: "Object resource")
@@ -22,13 +22,13 @@ RSpec.describe "Linking and unlinking resources" do
       .from(0).to(1)
 
     resource_link = ResourceLink.first
-    expect(page).to have_current_path(resource_link_path(resource_link), ignore_query: true)
+    expect(page).to have_current_path(resource_link_path(resource_link, organization_id: subject_resource.organization_id), ignore_query: true)
 
     expect(object_resource.object_resource_links.size).to eq(1)
     expect(subject_resource.subject_resource_links.size).to eq(1)
 
     click_link "Edit"
-    expect(page).to have_current_path(edit_resource_link_path(resource_link), ignore_query: true)
+    expect(page).to have_current_path(edit_resource_link_path(resource_link, organization_id: subject_resource.organization_id), ignore_query: true)
 
     select("hasFormat", from: "Verb")
 
@@ -38,14 +38,14 @@ RSpec.describe "Linking and unlinking resources" do
     }.to change(resource_link, :verb)
       .from("hasVersion").to("hasFormat")
 
-    expect(page).to have_current_path(resource_link_path(resource_link), ignore_query: true)
+    expect(page).to have_current_path(resource_link_path(resource_link, organization_id: subject_resource.organization_id), ignore_query: true)
 
     expect {
-      click_button("Delete")
+      click_link("Delete")
     }.to change {
       ResourceLink.exists?(resource_link.id)
     }.from(true).to(false)
 
-    expect(page).to have_current_path(resource_path(subject_resource), ignore_query: true)
+    expect(page).to have_current_path(resource_path(subject_resource, organization_id: subject_resource.organization_id), ignore_query: true)
   end
 end

@@ -13,7 +13,7 @@ module Api
       if resource_group.save
         logger.info "Created #{resource_group}"
         render_resource_group(resource_group, status: :created, links: {
-          coyote: organization_resource_group_url(resource_group.organization, resource_group),
+          coyote: resource_group_url(resource_group, organization_id: resource_group.organization),
         })
       else
         logger.warn "Unable to create resource group due to '#{resource_group.error_sentence}'"
@@ -42,7 +42,7 @@ module Api
       if resource_group.update(resource_group_params)
         logger.info "Updated #{resource_group}"
         render_resource_group(resource_group, links: {
-          coyote: organization_resource_group_url(resource_group.organization, resource_group),
+          coyote: resource_group_url(resource_group, organization_id: resource_group.organization),
         })
       else
         logger.warn "Unable to update resource group due to '#{resource_group.error_sentence}'"

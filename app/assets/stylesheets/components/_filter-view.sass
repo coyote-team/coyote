@@ -1,6 +1,6 @@
 // COMPONENT: Filter view: provides a filter column / bar and a result set
 .filter-view
-  @include non-mobile
+  +non-mobile
     display: flex
 
     .filter-view-filters
@@ -24,4 +24,5 @@
       display: block
       font-weight: bold
       margin: 0 0 $gutter 0
-      text-transform: uppercase
+
+      // text-transform: uppercase

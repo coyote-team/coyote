@@ -15,7 +15,7 @@ class ResourceGroupsController < ApplicationController
 
     if resource_group.save
       logger.info "Created #{resource_group}"
-      redirect_to [current_organization, resource_group], notice: "Resource Group was successfully created."
+      redirect_to resource_group_path(resource_group), notice: "Resource Group was successfully created."
     else
       logger.warn "Unable to create resource_group: '#{resource_group.error_sentence}'"
       render :new
@@ -32,7 +32,7 @@ class ResourceGroupsController < ApplicationController
       flash[:error] = msg
     end
 
-    redirect_to organization_resource_groups_url(current_organization)
+    redirect_to resource_groups_path
   end
 
   # GET /resource_groups/1/edit
@@ -55,7 +55,7 @@ class ResourceGroupsController < ApplicationController
   # PATCH/PUT /resource_groups/1
   def update
     if resource_group.update(resource_group_params)
-      redirect_to [current_organization, resource_group], notice: "Resource Group was successfully updated."
+      redirect_to resource_group_path(resource_group), notice: "Resource Group was successfully updated."
     else
       logger.warn "Unable to update #{resource_group}: #{resource_group.error_sentence}"
       render :edit

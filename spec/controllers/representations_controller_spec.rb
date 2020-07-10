@@ -159,7 +159,7 @@ RSpec.describe RepresentationsController do
       }.to change(representation, :text)
         .to("NEWTEXT")
 
-      expect(response).to redirect_to(representation_url(representation))
+      expect(response).to redirect_to(representation_path(representation, organization_id: organization))
 
       patch :update, params: representation_params.merge(representation: {license_id: nil})
       expect(response).not_to be_redirect
@@ -169,7 +169,7 @@ RSpec.describe RepresentationsController do
       }.to change { Representation.exists?(representation.id) }
         .from(true).to(false)
 
-      expect(response).to redirect_to(organization_representations_url(organization))
+      expect(response).to redirect_to(representations_path(organization_id: organization))
     end
   end
 

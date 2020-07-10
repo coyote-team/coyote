@@ -15,9 +15,9 @@ class SerializableResourceGroup < JSONAPI::Serializable::Resource
   belongs_to :organization
 
   link :coyote do
-    @url_helpers.organization_resource_group_url(
-      @object.organization_id,
+    @url_helpers.resource_group_url(
       @object.id,
+      organization_id: @object.organization_id,
     )
   end
 end

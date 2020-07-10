@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  canonical_id          :citext
@@ -208,14 +209,6 @@ class Resource < ApplicationRecord
   def resource_group
     @resource_group ||= resource_groups.first
   end
-
-  # def resource_group=(new_resource_group)
-  #   resource_group_resources << resource_group_resources.find_or_initialize_by(resource_group: new_resource_group)
-  # end
-
-  # def resource_group_id
-  #   resource_groups_ids.first
-  # end
 
   def resource_group_id=(new_resource_group_id)
     resource_group = new_resource_group_id.presence && organization.resource_groups.find_by(id: new_resource_group_id)

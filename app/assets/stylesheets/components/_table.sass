@@ -11,6 +11,10 @@ table
   tr
     height: 100%
 
+    &.table-row-link
+      &:hover
+        background-color: $input
+
   th, td
     padding: $gutter
     vertical-align: middle
@@ -30,6 +34,9 @@ table
       > *
         display: inline-block
 
+        + *
+          margin-left: $input-padding
+
       .button:last-child, > *:last-child .button
         margin-bottom: 0
         margin-right: 0
@@ -43,10 +50,13 @@ table
       a
         display: inline-block
         padding: $gutter
+        text-decoration: none
 
         &,
-        &:focus
+        &:focus,
+        &:hover
           box-shadow: none
+          color: $text
 
         &:after
           bottom: 0
@@ -79,6 +89,7 @@ table
 
   th
     color: $text-dark
+    font-size: $font-size-control
     font-weight: bold
     text-align: left
     text-transform: uppercase
@@ -100,6 +111,7 @@ table
 
           ~ td
             padding-left: $gutter
+            word-break: break-word
 
 
       +mobile

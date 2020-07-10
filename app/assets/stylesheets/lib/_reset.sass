@@ -1,11 +1,14 @@
 // Reset (adapted from meyerweb.com/eric/tools/css/reset)
 *
+  scroll-behavior: smooth
+
   &, &::before, &::after
     box-sizing: border-box
 
   &:focus
-    border-color: $tint !important
-    box-shadow: $tint 0 0 5px
+    border-color: $tint
+    border-radius: $border-radius
+    box-shadow: $focus-shadow
     outline: none
 
   &::-moz-focus-inner
@@ -41,8 +44,8 @@ ol, ul
 blockquote, q
   quotes: none
 
-  &::before, &::after,
-    content: ''
+  &::before, &::after
+    content: ""
     content: none
 
 table

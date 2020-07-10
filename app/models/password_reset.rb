@@ -26,7 +26,7 @@ class PasswordReset < ApplicationRecord
   before_create :set_expires_at
   after_create :send_password_reset_instructions
 
-  scope :unexpired, -> { where("expires_at < ?", Time.now)}
+  scope :unexpired, -> { where("expires_at < ?", Time.zone.now) }
 
   def expired?
     expires_at < Time.zone.now

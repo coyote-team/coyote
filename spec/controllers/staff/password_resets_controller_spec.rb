@@ -42,7 +42,7 @@ RSpec.describe Staff::PasswordResetsController do
 
       resetable_user.reload
       expect(resetable_user.password_resets.first).to be_present
-      expect(response).to redirect_to(staff_user_url(resetable_user))
+      expect(response).to redirect_to(staff_user_path(resetable_user))
     end
   end
 end

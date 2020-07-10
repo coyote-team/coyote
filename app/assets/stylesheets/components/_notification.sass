@@ -1,8 +1,11 @@
 // COMPONENT: Notification: Used to notify the user when state has changed in a
 // significant way
 .notification
-  background-color: rgba($text, 0.7)
-  color: $background
+  // background-color: rgba($text, 0.7)
+  border-radius: $border-radius
+  box-shadow: $shadow-level-2
+
+  // color: $background
   display: flex
   margin-bottom: $gutter
 
@@ -26,26 +29,39 @@
 
   @each $name, $color in $status
     &.notification--#{$name}
-      background-color: rgba($color, 0.9)
-
-      .notification-dismiss
-        background-color: $color
-        border-color: $color
+      background-color: $color
+      color: $text-light
 
 // COMPONENT: Notifications container: Contains notifications in an Android
 // "toast" style way
 #notifications
-  left: $gutter
+  bottom: $gutter
+  left: 50%
   position: fixed
-  top: $nav-height + $gutter
+  transform: translateX(-50%)
+  z-index: 100
 
-  @include mobile
-    bottom: $gutter
+  +mobile
+    left: $gutter
     right: $gutter
-    top: auto
+    transform: none
+
 
   .notification
-    box-shadow: $shadow
+    animation: notification-in 150ms $swift-in both
+
+    @for $i from 1 through 10
+      &:nth-child(#{$i})
+        animation-delay: 150ms + $i * 50ms
 
 .error_notification
   @extend .notification.notification--error
+
+@keyframes notification-in
+  0%
+    opacity: 0
+    transform: translateY($gutter)
+
+  100%
+    opacity: 1
+    transform: translateY(0)

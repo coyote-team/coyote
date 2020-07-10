@@ -11,22 +11,23 @@
     white-space: nowrap
 
     &[aria-expanded=true] + .dropdown-menu
+      animation: dropdown-in 150ms both
       display: block
-      opacity: 1
-      transform: translateY($gutter + 1px)
+      z-index: 5
 
   .dropdown-menu
     background: $background
     border: 1px solid $border
-    box-shadow: $shadow
+    border-radius: $border-radius
+    box-shadow: $shadow-level-1
     display: none
     opacity: 0
     min-width: 100%
     position: absolute
     right: 0
-    transition: all 100ms
+    transition: opacity 250ms $swift-in, transform 250ms $swift-in
     transform: none
-    z-index: 5
+    z-index: -1
 
     &:before, &:after
       border-style: solid
@@ -56,3 +57,12 @@
         display: block
         padding: $input-padding
         text-decoration: none
+
+@keyframes dropdown-in
+  0%
+    opacity: 0
+    transform: translateY(0)
+
+  100%
+    opacity: 1
+    transform: translateY($gutter + 1px)

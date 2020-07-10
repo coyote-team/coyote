@@ -14,7 +14,7 @@ RSpec.describe "Logging in and out" do
   end
 
   it "Logging in with correct credentials and logging out" do
-    visit resource_path(resource)
+    visit resource_path(resource, organization_id: organization)
     expect(page.status_code).to eq(200)
     expect(page).to have_current_path(new_session_path, ignore_query: true)
 
@@ -22,12 +22,12 @@ RSpec.describe "Logging in and out" do
 
     expect(page.status_code).to eq(200)
     expect(page).to have_content "Signed in successfully"
-    expect(page).to have_current_path(resource_path(resource), ignore_query: true)
+    expect(page).to have_current_path(resource_path(resource, organization_id: organization), ignore_query: true)
 
     logout
 
     expect(page).to have_content "Signed out successfully"
-    visit organization_resources_path(user.organizations.first)
+    visit resources_path(organization_id: user.organizations.first)
     expect(page).to have_current_path(new_session_path, ignore_query: true)
   end
 

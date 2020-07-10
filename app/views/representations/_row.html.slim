@@ -14,9 +14,9 @@ tr
   td.table-cell-actions
     = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).edit?
-      = link_to 'Edit', edit_representation_path(representation), class: "button button--outline", title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+      = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).destroy?
-      = link_to 'Delete', representation, title: "Delete this representation", class: "button button--outline",  :method => :delete, :data => { :confirm => "Are you sure you want to delete #{representation}?"}, :"aria-describedby" => dom_id(representation)
+      = delete_link_to "Are you sure you want to delete #{representation}?", representation, title: "Delete this representation", aria: {describedby: dom_id(representation)}
 tr style='border-top: 0'
   td id=dom_id(representation) colspan=4
     = to_html(representation.text)

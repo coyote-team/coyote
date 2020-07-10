@@ -11,16 +11,16 @@ table
 
   tbody
     - list_of_meta.each do |metum|
-      tr
-        td.table-cell-primary.table-cell-link= link_to metum.name, [current_organization, metum]
-        td.table-cell-link= link_to metum.is_required? ? "Yes" : "No", [current_organization, metum]
-        td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), [current_organization, metum]
+      tr.table-row-link
+        td.table-cell-primary.table-cell-link= link_to metum.name, metum
+        td.table-cell-link= link_to metum.is_required? ? "Yes" : "No", metum
+        td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), metum
         - if can?(:edit, :meta)
           td.table-cell-actions
-            = link_to 'Edit', edit_organization_metum_path(current_organization, metum), class: "button button--outline"
+            = edit_link_to edit_metum_path(metum)
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer
-    = link_to new_organization_metum_path(current_organization), class: 'button new-link' do
+    = link_to new_metum_path, class: 'button new-link' do
       i.fa.fa-fw.fa-plus aria-hidden=true
       | New Metum

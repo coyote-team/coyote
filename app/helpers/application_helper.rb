@@ -25,17 +25,6 @@ module ApplicationHelper
     LanguageList::LanguageInfo.find(language_code)&.name
   end
 
-  # Used to render top-level navigation, so the current page gets an "active" CSS class applied
-  # @param text [String] the link text to display
-  # @param path [String] the target of the link
-  def nav_menu_link(text, path)
-    link_class = current_page?(path) ? "active" : ""
-
-    content_tag(:li, class: link_class) do
-      link_to(text, path)
-    end
-  end
-
   # @return [Hash] a collection of User roles with human friendly labels that the current organizational user can assign
   # @see User
   def organizational_user_assignable_roles

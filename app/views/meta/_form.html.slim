@@ -1,4 +1,4 @@
-= simple_form_for metum, validate: true, url: [current_organization, metum], html: { multipart: true } do |f|
+= simple_form_for metum, validate: true, url: metum, html: { multipart: true } do |f|
   = f.error_notification
   = f.input :name
   = f.input :is_required, label: "Require this metum?", as: :select, collection: [['No', false], ['Yes', true]], include_blank: false

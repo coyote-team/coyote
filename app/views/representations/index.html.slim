@@ -3,7 +3,7 @@
     / h1= title "Descriptions for #{current_organization.name}"
     h1= title "Descriptions"
 
-    = search_form_for record_filter.search, url: organization_representations_path(current_organization), html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+    = search_form_for record_filter.search, url: representations_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
       label.filter-set-item.field.field--accessory
         span.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
@@ -15,7 +15,7 @@
           - Coyote::Representation.status_collection.each do |name, status|
             label.checkbox-list-item
               = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
-              = name
+              span= name
 
       .filter-set-item
         .filter-set-item-title Metum
@@ -23,7 +23,7 @@
           - available_meta.each do |meta|
             label.checkbox-list-item
               = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
-              = meta.name
+              span= meta.name
 
       = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
 
@@ -31,7 +31,7 @@
         = f.submit 'Search', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--outline'
 
-  = simple_form_for :representation_status_change, url: organization_representation_status_changes_path(current_organization), html: { class: 'filter-view-list', id: 'results' } do |form|
+  = simple_form_for :representation_status_change, url: representation_status_changes_path, html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
     h2#results-title
       | Total
@@ -50,7 +50,7 @@
             = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: 'Bulk Status', required: false, wrapper: :inline
             = form.submit 'Apply', class: 'button'
 
-        = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: 'View options' do
+        = segmented_control class: 'toolbar-item non-portrait-only', title: 'View options' do
           li.segmented-control-item= link_to request.GET.except(:grid), class: params[:grid] ? nil : 'segmented-control-item--active' do
             i.icon-list aria-hidden=true
             span.sr-only List View

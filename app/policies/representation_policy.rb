@@ -4,6 +4,11 @@
 # @see Representation
 # @see RepresentationsController
 class RepresentationPolicy < ApplicationPolicy
+  def approve?
+    organization_user.editor? && record.ready_to_review?
+  end
+  alias reject? approve?
+
   # @return [Boolean] whether or not the user can create representations for this organization
   def create?
     return true if organization_user.editor?

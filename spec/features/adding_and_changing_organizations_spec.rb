@@ -23,6 +23,6 @@ RSpec.describe "Adding and changing an organization" do
     expect(page).to have_content("Acme Museum")
 
     click_first_link "Assignments"
-    expect(page).to have_current_path(organization_assignments_path(organization), ignore_query: true)
+    expect(page).to have_current_path(assignments_path(organization_id: organization), ignore_query: true)
   end
 end

@@ -34,5 +34,4 @@ table
         | Edit
   - if policy(resource_link).destroy?
     = toolbar_item
-      = button_to resource_link, title: 'Delete this Resource Link' , class: "button", method: :delete, data: { confirm: 'Are you sure you want to delete this Resource Link?' } do
-        | Delete
+      = delete_link_to 'Are you sure you want to delete this Resource Link?', resource_link, title: 'Delete this Resource Link'

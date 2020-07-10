@@ -187,15 +187,20 @@ Rails.application.routes.draw do
     end
   end
 
-  ## Resources and representations
+  ## Canonical resources - just redirects to the resource in the organization context
   resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show], param: :canonical_id
-  resources :resources, only: %i[show edit update destroy]
-  resources :representations, only: %i[show edit update destroy]
 
   ## Metadata
-  resources :organizations do
-    resources :resources, only: %i[index new create]
-    resources :representations, only: %i[index new create]
+  resources :organizations
+
+  scope "organizations/:organization_id" do
+    resources :resources
+    resources :representations do
+      member do
+        get :history
+      end
+    end
+    resources :resource_links
     resources :representation_status_changes, only: %i[create]
     resources :memberships, only: %i[index show edit update destroy]
     resources :assignments, only: %i[index show new create destroy]
@@ -204,7 +209,6 @@ Rails.application.routes.draw do
     resources :invitations, only: %i[new create]
   end
 
-  resources :resource_links
   resources :users, only: %i[show] # for viewing other user profiles
 
   ## Admin interface

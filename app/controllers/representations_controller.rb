@@ -6,7 +6,7 @@
 class RepresentationsController < ApplicationController
   include PermittedParameters
 
-  before_action :set_representation, only: %i[show edit update destroy]
+  before_action :set_representation, only: %i[show edit update destroy history]
   before_action :set_current_resource_and_organization, only: %i[new edit create update]
   before_action :authorize_general_access, only: %i[index]
   before_action :authorize_create_access, only: %i[new create]
@@ -19,7 +19,7 @@ class RepresentationsController < ApplicationController
 
     if representation.save
       logger.info "Created #{representation} for #{current_resource}"
-      redirect_to representation, notice: "The description has been created"
+      redirect_to representation_path(representation), notice: "The description has been created"
     else
       logger.warn "Unable to create description due to '#{representation.error_sentence}'"
       render :new
@@ -28,10 +28,13 @@ class RepresentationsController < ApplicationController
 
   def destroy
     representation.destroy
-    redirect_to organization_representations_url(current_organization), notice: "Description was successfully destroyed."
+    redirect_to representations_path, notice: "Description was successfully destroyed."
   end
 
   def edit
+  end
+
+  def history
   end
 
   def index

@@ -21,7 +21,7 @@ class InvitationsController < ApplicationController
     end
 
     logger.info "Created #{invitation} for #{invitation.recipient_email} to #{invitation.organization}"
-    redirect_to organization_url(current_organization), notice: "Invitation sent to #{invitation.recipient_email}"
+    redirect_to organization_path(current_organization), notice: "Invitation sent to #{invitation.recipient_email}"
   end
 
   # GET /organizations/1/invitations/new

@@ -6,9 +6,9 @@ module OrganizationScope
   def organization_scope
     # can't do this in Pundit, since Pundit needs the results of this scoping
     if current_user.staff?
-      Organization.all
+      Organization.is_active
     else
-      Organization.joins(:memberships).where(memberships: {user: current_user})
+      Organization.is_active.joins(:memberships).where(memberships: {user: current_user})
     end
   end
 end

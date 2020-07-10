@@ -1,58 +1,72 @@
 // COMPONENT: Button: an interactive clickable element. Can be applied to
 // BUTTON tags, A tags, and INPUT tags.
 .button
-  @extend %input-text
-  background: $text
-  border-color: $text
-  color: $background
+  @extend %input-fixed-height
+
+  background: $placeholder
+  border-color: $placeholder
+  color: $text-light
   cursor: pointer
-  font-weight: bold
+  font-size: $font-size-control
+  font-weight: 600
+  padding: 0 ($input-padding * 2)
   text-align: center
   text-decoration: none
-  text-transform: uppercase
+  transition: all 100ms $heavy
 
   &:focus, &:hover
-    background-color: $background
-    color: $text
+    color: $text-light
+    transform: scale(1.03)
 
   &.button--outline
     background: $background
-    color: $text
+    color: $placeholder
 
     &:focus, &:hover
-      background-color: $text
-      color: $background
+      color: $placeholder
 
   &.button--block
     display: block
 
+  > *
+    display: inline-block
+
+    + *
+      margin-left: $input-padding
+
   @each $name, $color in $status
     &.button--#{$name}
+      $disabled-color: lighten(desaturate($color, 50%), 20%)
+
       background-color: $color
       border-color: $color
 
-      &:not([disabled])
+      &:focus
+        box-shadow: rgba($color, $focus-shadow-opacity) $focus-shadow-size
+
+      // form:not(:invalid) &,
+      // &:not([disabled])
+      //   &:hover, &:focus
+      //     background-color: $background
+      //     color: $color
+
+      &[disabled],
+      form:invalid &
+        background-color: $disabled-color
+        border-color: $disabled-color
+        color: darken($disabled-color, 35%)
+
+      &.button--outline
+        background-color: transparent
+        border-color: $color
+        color: $color
+
         &:hover, &:focus
           background-color: $background
           color: $color
 
-      &[disabled]
-        $disabled-color: desaturate($color, 30%)
-        background-color: $disabled-color
-        border-color: $disabled-color
-        color: $background
-
-      &.button--outline
-        background-color: $background
-        border-color: $color
-        color: $color
-
+        form:not(:invalid) &,
         &:not([disabled])
-          &:hover, &:focus
-            background-color: $color
-            color: $background
-
-        &[disabled]
-          $disabled-color: desaturate($color, 30%)
-          border-color: $disabled-color
-          color: $disabled-color
+          &[disabled]
+            border-color: $disabled-color
+            color: $disabled-color

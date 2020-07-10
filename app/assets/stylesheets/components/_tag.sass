@@ -6,22 +6,25 @@
 // itself
 .tag
   background-color: $text
-  border: 1px solid $text
+
+  // border: 1px solid $text
+  border-radius: $border-radius
   color: $background
   font-size: $font-size-small
   font-weight: bold
   display: inline-block
   margin: 0 $input-padding $input-padding 0
-  padding: 0 $input-padding 1px $input-padding
+  padding: ($input-padding / 2) $input-padding
   text-align: center
   text-transform: uppercase
 
   &:after
     @extend .sr
-    content: ', '
+
+    content: ", "
 
   &:last-of-type:after
-    content: ''
+    content: ""
     display: none
 
   &.tag--outline
@@ -29,10 +32,13 @@
     color: $text
 
   @each $name, $color in $status
+    $background: lighten($color, 20%)
+    $text: darken($color, 30%)
+
     &.tag--#{$name}
-      background-color: $color
-      border-color: $color
+      background-color: $background
+      border-color: $background
+      color: $text
 
       &.tag--outline
-        background-color: transparent
-        color: $color
+        background-color: lighten($color, 40%)
