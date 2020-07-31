@@ -81,9 +81,9 @@ header
     p There are currently no descriptions in the 'Ready to Review' state for this orgnization
 
 h2#your_queues Resources Assigned to You for Description
-- if current_user.assigned_resources.any?
+- if (resources = current_user.assigned_resources.in_organization(current_organization)).any?
   = list class: 'list--grid' do
-    = render partial: 'resources/resource', collection: current_user.assigned_resources.first(10)
+    = render partial: 'resources/resource', collection: resources.first(10)
 - else
   p.empty-message There are currently no resources assigned to you
 

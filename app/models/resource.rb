@@ -68,6 +68,7 @@ class Resource < ApplicationRecord
   scope :unassigned, -> { left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
   scope :assigned_unrepresented, -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
+  scope :in_organization, ->(organization) { where(organization_id: organization) }
   scope :by_date, -> { order(created_at: :desc) }
   scope :by_priority, -> { order(priority_flag: :desc) }
   scope :order_by_priority_and_date, -> { by_priority.by_date }

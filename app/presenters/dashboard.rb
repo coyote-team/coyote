@@ -25,7 +25,7 @@ class Dashboard
 
   # @return [Itnger] total number of resources assigned to the user which do not have a representation
   def current_user_open_assignments_count
-    current_user.assigned_resources.unrepresented.count
+    current_user.assigned_resources.in_organization(@organization).unrepresented.count
   end
 
   # @return [Boolean] whether or not the user has any assigned items
@@ -144,7 +144,7 @@ class Dashboard
   attr_reader :current_user, :organization
 
   def current_user_assigned_items_queue
-    current_user.assigned_resources.unrepresented
+    current_user.assigned_resources.in_organization(@organization).unrepresented
   end
 
   def organization_ready_to_review_queue
