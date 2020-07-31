@@ -44,7 +44,12 @@ class ApplicationController < ActionController::Base
 
   def auth_token
     return @auth_token if defined? @auth_token
-    @auth_token = session[AuthToken::KEY] || cookies.signed[AuthToken::KEY]
+    @auth_token = session[AuthToken::KEY] || begin
+      cookies.signed[AuthToken::KEY]
+                                             rescue NoMethodError => error
+                                               raise error unless /undefined method `generate_key'/.match?(error.message)
+                                               nil
+    end
   end
 
   def body_class(class_name = nil)
