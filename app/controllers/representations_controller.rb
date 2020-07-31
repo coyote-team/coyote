@@ -91,7 +91,7 @@ class RepresentationsController < ApplicationController
 
   def record_filter
     @record_filter ||= RecordFilter.new(
-      filter_params.reverse_merge(DEFAULT_SEARCH_PARAM),
+      filter_params,
       pagination_params,
       current_organization.representations,
       default_filters: {resource_is_deleted_eq: false},
@@ -117,6 +117,4 @@ class RepresentationsController < ApplicationController
     self.representation = representations_scope.find(params[:id])
     self.current_organization = representation.organization
   end
-
-  DEFAULT_SEARCH_PARAM = {s: "created_at DESC"}.freeze
 end

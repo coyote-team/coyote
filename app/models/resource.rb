@@ -72,7 +72,7 @@ class Resource < ApplicationRecord
   scope :by_priority, -> { order(priority_flag: :desc) }
   scope :order_by_priority_and_date, -> { by_priority.by_date }
   scope :represented_by, ->(user) { joins(:representations).where(representations: {author_id: user.id}) }
-  scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}) }
+  scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}).distinct }
 
   validates :resource_type, presence: true
   validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :canonical_id_changed?
@@ -104,7 +104,8 @@ class Resource < ApplicationRecord
       unassigned
       unrepresented
       assigned_unrepresented
-      unassigned_unrepresented with_approved_representations
+      unassigned_unrepresented
+      with_approved_representations
     ]
   end
 

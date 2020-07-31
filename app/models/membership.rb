@@ -34,9 +34,10 @@ class Membership < ApplicationRecord
 
   enum role: Coyote::Membership::ROLES
 
-  delegate :assignments, to: :user, prefix: true
-
   scope :active, -> { where(active: true) }
+  def assignments
+    user.assignments.joins(:resource).where(resources: {organization_id: organization_id})
+  end
 
   # @return [Boolean] whether this membership represents the last owner of an organization
   def last_owner?

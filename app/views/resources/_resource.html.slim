@@ -24,7 +24,7 @@ li.list-item.list-item--card
         = edit_link_to edit_resource_path(resource), aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
     - if policy(resource).describe?
       li.list-item-actions-item
-        = link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button button--aside', aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--aside', icon: :bubble, aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
     - elsif form.nil? && policy(Assignment).new?
       li.list-item-actions-item
         = render 'resources/assign', resource: resource

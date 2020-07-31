@@ -13,7 +13,7 @@
         .filter-set-item-title Priority
         .checkbox-list
           label.checkbox-list-item
-            = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:resource_priority_flag, false).to_s == "true"
+            = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
             span Urgent
 
       - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
@@ -26,7 +26,6 @@
               label.checkbox-list-item
                 = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
                 span= name
-        / = f.input :scope, label: 'Status', collection: scope_search_collection, selected: filter_params[:scope], required: false, include_blank: true
         = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
 
       .filter-set-submit
@@ -65,21 +64,6 @@
 
       = list id: 'results-list' do
         = render partial: 'resource', collection: record_filter.records, locals: { form: form }
-
-      / table#results-list
-      /   caption.sr-only Index table for resources
-      /   thead
-      /     tr
-      /       th
-      /         span.sr-only This column contains checkboxes for bulk assignment
-      /         = form.input :select_all_resources_for_bulk_assignment, :as => :boolean, label: false, input_html: { :value => nil, :'aria-label' => 'Check this box to select all resources on the page' }
-      /       th Resource
-      /       th= sort_link(record_filter.search, :priority_flag, 'Priority')
-      /       th= sort_link(record_filter.search, :name, 'Caption')
-      /       th= sort_link(record_filter.search, :representations_count, 'Descriptions')
-      /       th Actions
-
-      /   tbody
 
       = toolbar do
         label.label--checkbox.toolbar-item

@@ -71,7 +71,7 @@ class ResourcesController < ApplicationController
 
   def check_for_canonical_id
     if params[:canonical_id]
-      resource = resources_scope.find_by!(canonical_id: params[:canonical_id])
+      resource = current_organization.resources.find_by!(canonical_id: params[:canonical_id])
       redirect_to resource_path(resource.id)
     end
   end
@@ -88,12 +88,8 @@ class ResourcesController < ApplicationController
     @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources, default_filters: {is_deleted_eq: false})
   end
 
-  def resources_scope
-    current_user.staff? ? Resource : current_user.resources
-  end
-
   def set_resource
-    self.resource = resources_scope.find(params[:id])
+    self.resource = current_organization.resources.find(params[:id])
     self.current_organization = resource.organization
   end
 end

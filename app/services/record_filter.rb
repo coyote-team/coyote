@@ -14,9 +14,12 @@ class RecordFilter
     filter_params = filter_params.to_unsafe_h if filter_params.respond_to?(:to_unsafe_h)
 
     @default_filters = (default_filters || {}).with_indifferent_access
-    @filter_params = default_filters.merge(filter_params).with_indifferent_access.tap do |params|
-      params.each do |key, value|
-        params[key] = value.to_s.split(/(\s|,)/) if /_(cont_all|any)$/.match?(key.to_s)
+    @filter_params = {}.with_indifferent_access
+    @default_filters.merge(filter_params.with_indifferent_access).each do |key, value|
+      if /_(cont_all|any)$/.match?(key.to_s)
+        @filter_params[key] = value.to_s.split(/(\s|,)/)
+      elsif value == false || value.present?
+        @filter_params[key] = value
       end
     end
     @pagination_params = pagination_params
@@ -51,8 +54,9 @@ class RecordFilter
     if filter_params.present?
       # Remove default scope
       base_link_params[:q] = filter_params.dup.delete_if { |key, value| @default_filters.key?(key) && @default_filters[key] == value }
-      record_paginator.pagination_links_for(base_link_params)
     end
+
+    record_paginator.pagination_links_for(base_link_params)
   end
 
   # @return [ActiveRecord::Relation] the filtered collection of records, ready to be enumerated
