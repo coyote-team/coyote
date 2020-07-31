@@ -33,7 +33,7 @@ RSpec.describe InvitationsController do
   let(:organization) { create(:organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:creation_params) do

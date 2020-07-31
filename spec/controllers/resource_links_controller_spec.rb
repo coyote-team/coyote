@@ -29,13 +29,13 @@ RSpec.describe ResourceLinksController do
   let(:resource_link_params) do
     {
       id:              resource_link.id,
-      organization_id: organization.id,
+      organization_id: organization,
     }
   end
 
   let(:new_resource_link_params) do
     {
-      organization_id: organization.id,
+      organization_id: organization,
       resource_link:   {
         subject_resource_id: subject_resource.id,
         verb:                "isVersionOf",
@@ -59,7 +59,7 @@ RSpec.describe ResourceLinksController do
         get :edit, params: resource_link_params
         expect(response).to require_login
 
-        get :new, params: {organization_id: organization.id}
+        get :new, params: {organization_id: organization}
         expect(response).to require_login
 
         post :create, params: new_resource_link_params
@@ -85,7 +85,7 @@ RSpec.describe ResourceLinksController do
         get :edit, params: resource_link_params
       }.to raise_error(Pundit::NotAuthorizedError)
 
-      get :new, params: {organization_id: organization.id, subject_resource_id: subject_resource.id}
+      get :new, params: {organization_id: organization, subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       expect {
@@ -94,7 +94,7 @@ RSpec.describe ResourceLinksController do
       }.to change(subject_resource.subject_resource_links, :count).by(1)
 
       bad_params = {
-        organization_id: organization.id,
+        organization_id: organization,
         resource_link:   {
           subject_resource_id: subject_resource.id,
           verb:                "",
@@ -119,7 +119,7 @@ RSpec.describe ResourceLinksController do
     include_context "signed-in editor user"
 
     it "succeeds for critical actions" do
-      get :new, params: {organization_id: organization.id, subject_resource_id: subject_resource.id}
+      get :new, params: {organization_id: organization, subject_resource_id: subject_resource.id}
       expect(response).to be_successful
 
       get :edit, params: resource_link_params

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     if organization_id.present?
       result.merge(organization_id: organization_id)
     elsif current_organization?
-      result.merge(organization_id: current_organization.id)
+      result.merge(organization_id: current_organization)
     else
       result
     end
@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_landing_path(user = current_user)
-    !user.staff? && user.organizations.one? ? organization_path(user.organizations.first_id) : organizations_path
+    !user.staff? && user.organizations.one? ? organization_path(user.organizations.first) : organizations_path
   end
 
   def log_user_in(user, options = {})

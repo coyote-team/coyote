@@ -24,7 +24,7 @@ RSpec.describe MembershipsController do
   let(:membership) { create(:membership, organization: organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:membership_params) do

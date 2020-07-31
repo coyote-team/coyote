@@ -9,14 +9,14 @@ table
   tbody
     - organizations.each do |org|
       tr.table-row-link
-        td.table-cell-link= link_to(org.name, organization_path(org))
+        td.table-cell-link= link_to(org.name, organization_path(org, organization_id: nil))
         td.table-cell-actions
           - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).edit?
-            = edit_link_to(edit_organization_path(org), title: "Edit #{org}")
+            = edit_link_to(edit_organization_path(org, organization_id: nil), title: "Edit #{org}")
           - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).destroy?
-            = delete_link_to(delete_organization_path(org), title: "Delete #{org}")
+            = delete_link_to(delete_organization_path(org, organization_id: nil), title: "Delete #{org}")
 
 
 nav.toolbar.toolbar--footer
   h2.sr-only Actions
-  = new_link_to 'New Organization', new_organization_path
+  = new_link_to 'New Organization', new_organization_path(organization_id: nil)

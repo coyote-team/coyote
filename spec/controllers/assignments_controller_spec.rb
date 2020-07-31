@@ -19,7 +19,7 @@ RSpec.describe AssignmentsController do
   let(:organization) { create(:organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:resource) { create(:resource, organization: organization) }

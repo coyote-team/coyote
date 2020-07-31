@@ -72,7 +72,7 @@ class ResourcesController < ApplicationController
   def check_for_canonical_id
     if params[:canonical_id]
       resource = current_organization.resources.find_by!(canonical_id: params[:canonical_id])
-      redirect_to resource_path(resource.id)
+      redirect_to resource_path(resource)
     end
   end
 

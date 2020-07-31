@@ -22,7 +22,7 @@ RSpec.describe MetaController do
   let(:metum) { create(:metum, organization: organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:metum_params) do

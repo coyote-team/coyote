@@ -7,7 +7,7 @@ RSpec.describe RepresentationStatusChangesController do
   end
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:change_params) do

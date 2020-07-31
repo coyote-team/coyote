@@ -12,8 +12,8 @@ table
   tbody
     - users.each do |user|
       tr.table-row-link
-        td.table-cell-primary.table-cell-link= link_to user.first_name, staff_user_path(user)
-        td.table-cell-primary.table-cell-link= link_to user.last_name, staff_user_path(user)
+        td.table-cell-primary.table-cell-link= link_to user.first_name || "", staff_user_path(user)
+        td.table-cell-primary.table-cell-link= link_to user.last_name || "", staff_user_path(user)
         td.table-cell-link= link_to user.staff ? 'Yes' : %|<span class='sr-only'>No</span>|.html_safe, staff_user_path(user)
         td.table-cell-link= link_to user.email, staff_user_path(user)
         td.table-cell-actions

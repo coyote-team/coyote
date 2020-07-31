@@ -6,7 +6,7 @@ RSpec.describe ResourcesController do
   let(:resource) { create(:resource, canonical_id: "test-resource", organization: organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:resource_params) do

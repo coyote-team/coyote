@@ -18,7 +18,7 @@ RSpec.describe OrganizationsController do
   let(:organization) { create(:organization) }
 
   let(:existing_organization_params) do
-    {id: organization.id}
+    {id: organization}
   end
 
   let(:new_organization_params) do

@@ -47,6 +47,10 @@ class Organization < ApplicationRecord
     representations.ready_to_review
   end
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
   private
 
   def create_default_meta

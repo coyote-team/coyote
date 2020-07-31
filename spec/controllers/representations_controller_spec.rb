@@ -35,7 +35,7 @@ RSpec.describe RepresentationsController do
   let(:resource) { create(:resource, organization: organization) }
 
   let(:base_params) do
-    {organization_id: organization.id}
+    {organization_id: organization}
   end
 
   let(:representation_params) do

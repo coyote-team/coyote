@@ -1,6 +1,6 @@
 h2.sr-only#navigation-title Navigation
 ul.nav-primary aria-labelledby="navigation-title"
-  = nav_menu_link('Dashboard', organization_path(current_organization), exact: true)
+  = nav_menu_link('Dashboard', organization_path(current_organization, organization_id: nil), exact: true)
   - if can?(:list, :assignment)
     = nav_menu_link('Assignments', assignments_path)
   - if can?(:list, :resource)
