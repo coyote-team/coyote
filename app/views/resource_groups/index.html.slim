@@ -18,4 +18,4 @@ table
             = delete_link_to "Are you sure you want to delete #{resource_group}?", resource_group_path(resource_group), title: "Delete this resource group", disabled: resource_group.resources.any? || resource_group.default?
 
 - if policy(::ResourceGroup).new?
-  nav.toolbar.toolbar--footer= link_to('New Resource Group', new_resource_group_path, class: 'button toolbar-item')
+  nav.toolbar.toolbar--footer= new_link_to('New Resource Group', new_resource_group_path, class: 'toolbar-item')

@@ -1,5 +1,2 @@
-= list_of(assignments) do |assignment|
-  - assignments.each do |assignment|
-    = link_to_list_item assignment, class: 'thumbnail'
-      = resource_link_target(assignment.resource, alt: assignment.resource_name)
-    p= assignment.resource_name
+= list do
+  = render assignments.map(&:resource)

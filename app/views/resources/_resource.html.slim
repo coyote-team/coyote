@@ -18,7 +18,7 @@ li.list-item.list-item--card
   ul.list-item-actions aria-labelledby="actions-#{id}"
     - if policy(resource).index?
       li.list-item-actions-item
-        = link_to 'View', resource_path(resource), class: 'button button--outline', aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
+        = view_link_to resource_path(resource), aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
     - if policy(resource).edit?
       li.list-item-actions-item
         = edit_link_to edit_resource_path(resource), aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"

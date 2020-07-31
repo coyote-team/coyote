@@ -1,40 +1,41 @@
 h1= title "#{representation} History"
-table
-  caption.sr-only Audit table of this description
-  thead
-    tr
-      th User
-      th Action
-      th Time
-      th Text
-      th Author
-      th Content Type
-      th Language
-      th Status
-      th Order
-      th Metum
-      th License
-      th Content URI
-      th Notes
-
-  tbody
-    - representation.audits.each do |audit|
-      - changes = audit.audited_changes.with_indifferent_access
+.table-wrapper
+  table
+    caption.sr-only Audit table of this description
+    thead
       tr
-        td= audit.user
-        td= audit.action
-        td= audit.created_at
-        td= to_html(changes[:text].to_s)
-        td= representation_audit_user(changes[:author_id])
-        td= changes[:content_type]
-        td= changes[:language]
-        td= changes[:status]
-        td= changes[:ordinality]
-        td= representation_audit_metum(changes[:metum_id])
-        td= representation_audit_license(changes[:license_id])
-        td= changes[:content_uri]
-        td= changes[:notes]
+        th Action
+        th User
+        th Time
+        th Text
+        th Author
+        th Content Type
+        th Language
+        th Status
+        th Order
+        th Metum
+        th License
+        th Content URI
+        th Notes
+
+    tbody
+      - representation.audits.each do |audit|
+        - changes = audit.audited_changes.with_indifferent_access
+        tr
+          td= tag_for(audit.action.humanize, tag: :span, type: audit.action == "create" ? "success" : audit.action =="update" ? "info" : "neutral")
+          td= audit.user
+          td.table-cell-nowrap= time_ago_in_words audit.created_at
+          td= to_html(changes[:text].to_s)
+          td= representation_audit_user(changes[:author_id])
+          td= changes[:content_type]
+          td= changes[:language]
+          td.table-cell-nowrap= Array(changes[:status]).map {|change| capture { tag_for(change.humanize, tag: :span, type: representation_status_class(change)) } }.join(" #{icon(:arrow_right)} ").html_safe
+          td= changes[:ordinality]
+          td= representation_audit_metum(changes[:metum_id])
+          td= representation_audit_license(changes[:license_id])
+          td= changes[:content_uri]
+          td= changes[:notes]
 
 = toolbar do
   = toolbar_item do
-    = link_to "Return to #{representation}", representation_path(representation), class: "button button--outline"
+    = cancel_link_to "Return to #{representation}", representation_path(representation), icon: :arrow_left

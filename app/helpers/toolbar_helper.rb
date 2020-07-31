@@ -6,8 +6,10 @@ module ToolbarHelper
 
     model_name = form.object.class.model_name.human.titleize
     navigate_back = toolbar_item {
-      (form.object.persisted? ? link_to("View this #{model_name}", {action: :show}, class: "button button--neutral") : "".html_safe) +
-        link_to("View all #{model_name.pluralize}", {action: :index}, class: "button button--neutral")
+      (options.delete(:view) { true } && form.object.persisted? ? view_link_to("View this #{model_name}", url_for(action: :show)) : "".html_safe) +
+        (options.delete(:view_all) { true } ?
+          view_link_to("View all #{model_name.pluralize}", url_for(action: :index), icon: :list, shorten: false) : "".html_safe
+        )
     }
 
     toolbar(options) do
@@ -32,7 +34,7 @@ module ToolbarHelper
     }
 
     object_name = instance.class.model_name.human.titleize
-    view_all = link_to("View all #{object_name.pluralize}", {action: :index}, class: "button button--outline")
+    view_all = button_link_to("View all #{object_name.pluralize}", url_for(action: :index), class: "button--partial", icon: :list)
 
     options = combine_options(options, {class: "toolbar--footer", tag: :nav, title: "Actions"})
     toolbar(options) do
@@ -41,10 +43,9 @@ module ToolbarHelper
   end
 
   def submit_toolbar_item(form, submit_options: {}, cancel_options: {})
-    submit_options[:class] = Array(submit_options[:class].presence).push("toolbar-item")
-    cancel_options[:class] = Array(cancel_options[:class].presence).push("button button--outline")
     toolbar_item do
-      form.button(:submit, submit_options) + link_to("Cancel", :back, cancel_options)
+      form.button(:submit, combine_options({class: "toolbar-item"}, submit_options)) +
+        cancel_link_to(:back, cancel_options)
     end
   end
 

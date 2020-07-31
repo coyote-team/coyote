@@ -42,7 +42,7 @@
       = number_with_delimiter record_filter.records.total_count
 
       - if policy(Resource).new?
-        = link_to 'New Resource', new_resource_path, class: 'button'
+        = new_link_to 'New Resource', new_resource_path
 
     - if record_filter.records.any?
       = toolbar do

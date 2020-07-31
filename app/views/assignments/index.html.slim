@@ -8,6 +8,6 @@ table
 
   tbody
     - assigned_users.each do |membership, assignment_count|
-      tr
-        td.table-cell-primary.table-cell-link= link_to(membership.user, membership)
-        td= number_with_delimiter(assignment_count)
+      tr.table-row-link
+        td.table-cell-primary.table-cell-link= link_to(membership.user, membership_assignments_path(membership))
+        td.table-cell-link= link_to number_with_delimiter(assignment_count), membership_assignments_path(membership)

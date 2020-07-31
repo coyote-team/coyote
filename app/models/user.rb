@@ -43,7 +43,7 @@ class User < ApplicationRecord
   has_one :current_password_reset, -> { unexpired }, class_name: "PasswordReset", inverse_of: :user
 
   has_many :memberships, dependent: :destroy
-  has_many :organizations, through: :memberships, counter_cache: :organizations_count
+  has_many :organizations, -> { is_active }, through: :memberships, counter_cache: :organizations_count
 
   has_many :assignments, inverse_of: :user, dependent: :restrict_with_exception
   has_many :assigned_resources, class_name: :Resource, through: :assignments, source: :resource

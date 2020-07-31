@@ -12,7 +12,7 @@ tr
   td
     span.tag.tag--outline= language_name(representation.language)
   td.table-cell-actions
-    = link_to 'View', representation, class: "button button--outline", title: "Show this representation", :"aria-describedby" => dom_id(representation)
+    = view_link_to representation, title: "View this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).edit?
       = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
     - if policy(representation).destroy?

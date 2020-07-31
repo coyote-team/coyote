@@ -8,7 +8,8 @@ module OrganizationScope
     if current_user.staff?
       Organization.is_active
     else
-      Organization.is_active.joins(:memberships).where(memberships: {user: current_user})
+      current_user.organizations
+      # Organization.is_active.joins(:memberships).where(memberships: {user: current_user})
     end
   end
 end

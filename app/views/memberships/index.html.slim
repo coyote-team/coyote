@@ -17,7 +17,7 @@ table
         td.table-cell-primary.table-cell-link= link_to(org_user.first_name || "", org_user.membership)
         td.table-cell-primary.table-cell-link= link_to(org_user.last_name || "", org_user.membership)
         td.table-cell-link= link_to(org_user.email, org_user.membership)
-        td.table-cell-link= org_user.role.to_s.titleize
+        td.table-cell-link= link_to org_user.role.to_s.titleize, org_user.membership
         td.table-cell-actions
           - if policy(org_user.membership).edit?
             = edit_link_to(edit_membership_path(org_user.membership), title: "Change this user's membership")
@@ -27,4 +27,4 @@ table
 
 - if policy(:invitation).new?
   nav.toolbar.toolbar--footer
-    = link_to 'Invite User', new_invitation_path, class: 'button'
+    = new_link_to 'Invite User', new_invitation_path, icon: :paper_plane

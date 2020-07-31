@@ -1,26 +1,31 @@
 // COMPONENT: Toolbar: lays out a row (or stack) of controls that influence
 // other items
 .toolbar
-  @include non-mobile-portrait
+  +non-mobile-portrait
     align-items: center
     display: flex
     justify-content: space-between
+
+
   border-top: 1px solid $border
   padding: $gutter 0
 
   .toolbar-item
     margin-bottom: 0
-    margin-right: $input-padding
 
-    @include mobile
+    +mobile
       margin-bottom: $input-padding
+
 
     &:last-child
       margin-bottom: 0
       margin-right: 0
 
+    + *
+      margin-left: $input-padding
+
   // SUBCOMPONENT: A footer toolbar pointing the user to additional options,
   // always found below the main page content and above the page footer
   &.toolbar--footer
     border-top-width: 0
-    padding: $gutter * 4 0 $gutter 0
+    padding: ($gutter * 4) 0 $gutter 0

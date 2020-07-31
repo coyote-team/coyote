@@ -19,11 +19,14 @@
 
 # Represents a group of users, usually associated with a particular institution
 class Organization < ApplicationRecord
+  attr_accessor :name_confirmation
+
   after_create :create_default_meta
   after_create :create_default_resource_group
 
   validates :name, presence: true
   validates :name, uniqueness: true, if: :name_changed?
+  validates :name, confirmation: {if: -> { name_confirmation.present? }}
 
   belongs_to :default_license, class_name: "License"
 

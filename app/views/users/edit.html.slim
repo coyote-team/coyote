@@ -11,8 +11,4 @@ h1= title "Edit Profile"
   = f.input :password_confirmation, required: false
   = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
 
-  .toolbar.toolbar--footer
-    .toolbar-item.field
-      = f.button :submit, "Update"
-      | &nbsp;
-      = link_to "Back", :back, class: 'button button--outline'
+  = form_toolbar(f, view: false, view_all: false)

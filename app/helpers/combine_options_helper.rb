@@ -7,8 +7,12 @@ module CombineOptionsHelper
         case defaults[key]
         when Hash
           combine_options(options[key] || {}, defaults[key])
-        else
+        when String, Symbol
           [defaults[key], options[key]].flatten.join(" ").strip
+        when Array
+          defaults[key] + Array(options[key])
+        else
+          defaults[key]
         end
     end
     options

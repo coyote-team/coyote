@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module TitleHelper
+  def title(new_title)
+    super strip_tags(new_title.to_s)
+    new_title
+  end
+
   # Returns a title tag if a 'title' option is present. Also modifies options
   # to point to the title tag as `aria-labelledby`.
   def title_for(options = {})

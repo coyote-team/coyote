@@ -7,6 +7,10 @@
       = f.error_notification
 
       = f.association :metum, collection: available_meta
+      - available_meta.each do |metum|
+        div(data-dependent-on="representation[metum_id]:#{metum.id}" style=(metum == target.metum ? "" : "display: none"))
+          = simple_format metum.instructions
+
       = f.input :resource_id, as: :hidden, input_html: { value: current_resource.id, name: 'resource_id' } if representation.new_record?
       = f.input :text, as: :text, input_html: {rows: 1}
       hr data-label="... or ..."
@@ -29,5 +33,4 @@
         = submit_toolbar_item(f, submit_options: {class: "button--aside"})
         - if representation.persisted?
           = toolbar_item do
-            = link_to representation, class: 'button button--outline' do
-              | View this description
+            = view_link_to representation

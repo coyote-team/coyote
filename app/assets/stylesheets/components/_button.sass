@@ -1,11 +1,35 @@
 // COMPONENT: Button: an interactive clickable element. Can be applied to
 // BUTTON tags, A tags, and INPUT tags.
+=button-colors($background, $text, $disabled)
+  background-color: $background
+  border-color: $background
+  color: $text
+
+  &:focus, &:hover
+    color: $text
+    transform: scale(1.03)
+
+  &:focus
+    border-color: $background
+    box-shadow: rgba($background, $focus-shadow-opacity) $focus-shadow-size
+
+  &.button--outline
+    background-color: transparent
+
+    &,
+    &:focus,
+    &:hover
+      color: $background
+
+  // Disabled state
+  &[disabled],
+  form:invalid &[type]
+    background-color: $disabled !important
+    border-color: $disabled !important
+
 .button
   @extend %input-fixed-height
 
-  background: $placeholder
-  border-color: $placeholder
-  color: $text-light
   cursor: pointer
   font-size: $font-size-control
   font-weight: 600
@@ -14,16 +38,8 @@
   text-decoration: none
   transition: all 100ms $heavy
 
-  &:focus, &:hover
-    color: $text-light
-    transform: scale(1.03)
-
-  &.button--outline
-    background: $background
-    color: $placeholder
-
-    &:focus, &:hover
-      color: $placeholder
+  &:not(:first-child)
+    margin-left: $input-padding
 
   &.button--block
     display: block
@@ -34,39 +50,26 @@
     + *
       margin-left: $input-padding
 
+  .icon
+    font-size: 90%
+
+  // Disabled state
+  &[disabled],
+  form:invalid &[type]
+    cursor: not-allowed !important
+    opacity: 0.6 !important
+
+    &:focus,
+    &:hover
+      transform: none !important
+
+  // Default is a gray button
+  &:not([disabled]),
+  form:not(:invalid)
+    +button-colors($placeholder, $text-light, $border)
+
   @each $name, $color in $status
-    &.button--#{$name}
-      $disabled-color: lighten(desaturate($color, 50%), 20%)
-
-      background-color: $color
-      border-color: $color
-
-      &:focus
-        box-shadow: rgba($color, $focus-shadow-opacity) $focus-shadow-size
-
-      // form:not(:invalid) &,
-      // &:not([disabled])
-      //   &:hover, &:focus
-      //     background-color: $background
-      //     color: $color
-
-      &[disabled],
-      form:invalid &
-        background-color: $disabled-color
-        border-color: $disabled-color
-        color: darken($disabled-color, 35%)
-
-      &.button--outline
-        background-color: transparent
-        border-color: $color
-        color: $color
-
-        &:hover, &:focus
-          background-color: $background
-          color: $color
-
-        form:not(:invalid) &,
-        &:not([disabled])
-          &[disabled]
-            border-color: $disabled-color
-            color: $disabled-color
+    &:not([disabled]),
+    form:not(:invalid) &
+      &.button--#{$name}
+        +button-colors($color, $text-light, desaturate($color, 50%))

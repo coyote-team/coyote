@@ -12,14 +12,15 @@ en:
       default_message: "Please review the problems below:"
     # Examples
     labels:
+      organization:
+        name_confirmation: "Please type the name of the organization to confirm deletion"
       representation:
         content_uri: "Provide a link to a description for this resource"
         ordinality: "Order"
         text: "Provide a visual description"
-    # hints:
-    #   defaults:
-    #     username: 'User name to sign in.'
-    #     password: 'No special characters, please.'
+    hints:
+      organization:
+        name_confirmation: "We ask you to do this just to avoid any accidental deletions"
     # include_blanks:
     #   defaults:
     #     age: 'Rather not say'

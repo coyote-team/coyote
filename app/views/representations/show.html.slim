@@ -53,7 +53,5 @@
       = link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button button--aside')
     = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
   = toolbar_item do
-    = link_to history_representation_path(representation), class: "button button--outline" do
-      = icon(:clock)
-      span.button-content History
+    = button_link_to "History", history_representation_path(representation), class: "button--partial", icon: :clock
 

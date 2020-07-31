@@ -21,6 +21,4 @@ table
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer
-    = link_to new_metum_path, class: 'button new-link' do
-      i.fa.fa-fw.fa-plus aria-hidden=true
-      | New Metum
+    = new_link_to "New Metum", new_metum_path

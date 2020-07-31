@@ -5,7 +5,7 @@ module RepresentationHelper
     ready_to_review: "partial",
     approved:        "success",
     not_approved:    "warning",
-  }.freeze
+  }.with_indifferent_access.freeze
 
   def representation_audit_license(id)
     @audit_licenses ||= {}
@@ -28,8 +28,12 @@ module RepresentationHelper
     end&.username
   end
 
+  def representation_status_class(status)
+    REPRESENTATION_STATUS_CLASSES[status]
+  end
+
   def representation_status_tag(representation, tag: :span)
-    tag_class = REPRESENTATION_STATUS_CLASSES[representation.status.to_sym]
+    tag_class = representation_status_class(representation.status)
     content_tag(tag, class: "tag tag--#{tag_class}") do
       block_given? ? yield : representation.status.to_s.titleize
     end

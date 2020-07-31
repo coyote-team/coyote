@@ -2,8 +2,8 @@
 
 module ListHelper
   def link_to_list_item(*args, &block)
-    options = combine_options(args.extract_options!, class: "list-item")
-    content_tag(:li) do
+    options = combine_options(args.extract_options!, class: "list-item-link")
+    content_tag(:li, class: "list-item list-item--has-link") do
       link_to(*args, options, &block)
     end
   end

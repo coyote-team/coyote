@@ -36,18 +36,24 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments
   def index
-    assignments = current_organization.assignments.to_a
+    if params[:membership_id]
+      @membership = current_organization.memberships.find(params[:membership_id])
+      @assignments = current_organization.assignments.where(user_id: @membership.user_id)
+      render :member_index
+    else
+      assignments = current_organization.assignments.to_a
 
-    assignments.sort_by! do |a|
-      [a.user_last_name, a.user_email].tap(&:compact!).first
-    end
+      assignments.sort_by! do |a|
+        [a.user_last_name, a.user_email].tap(&:compact!).first
+      end
 
-    memberships = current_organization.memberships.index_by(&:user_id)
+      memberships = current_organization.memberships.index_by(&:user_id)
 
-    self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
-      membership = memberships[assignment.user_id]
-      hash[membership] = hash[membership] + 1 if membership.present?
-      hash
+      self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
+        membership = memberships[assignment.user_id]
+        hash[membership] = hash[membership] + 1 if membership.present?
+        hash
+      end
     end
   end
 

@@ -37,6 +37,18 @@
 
       border: 0
 
+    &--has-link
+      align-items: stretch
+      justify-content: stretch
+      padding: 0
+
+      .list-item-link
+        align-items: center
+        display: flex
+        flex: 1
+        justify-content: space-between
+        padding: $gutter
+
     .list-item-label, .list-item-header, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
       display: block
 
@@ -46,6 +58,7 @@
     .list-item-header
       display: flex
       flex: 0 0 33%
+      max-width: $breakpoint-mobile-portrait
       white-space: nowrap
 
       +ie-only

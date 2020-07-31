@@ -467,8 +467,6 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
-    vanilla-ujs (1.3.0)
-      railties (>= 4.2.0)
     vcr (5.1.0)
     webmock (3.8.3)
       addressable (>= 2.3.6)
@@ -550,7 +548,6 @@ DEPENDENCIES
   sprockets-rails
   standard (>= 0.1.0)
   uglifier (>= 2.7.1)
-  vanilla-ujs
   vcr
   webmock
   yard
