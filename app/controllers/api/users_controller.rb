@@ -8,7 +8,7 @@ module Api
       formats %w[json]
     end
 
-    api :GET, "profile", "Return the authenticated user and their organization memberships"
+    api! "Return the authenticated user and their organization memberships"
     def show
       render jsonapi: current_user, include: %i[organizations]
     end

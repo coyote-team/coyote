@@ -12,14 +12,20 @@ module Api
 
     resource_description do
       short "Complementary and alternative sensory impressions of a Resource"
-
       desc <<~DESC
         For a visual resource such as a painting, Coyote can store Representations such as textual descriptions
         or audio recordings of a speaker describing the painting.
       DESC
+      formats %w[json]
     end
 
-    api :GET, "resources/:resource_id/representations", "Return list of representations for a particular resource ID"
+    # Define a param group for how we return representations
+    serializes serializable_representation.tap { |representation| representation.resource = serializable_resource }, {
+      include: %i[resource],
+    }
+
+    api! "Return list of representations for a particular resource ID"
+    returns_serialized array_of: :representation
     def index
       links = {self: request.url}
 
@@ -32,7 +38,8 @@ module Api
       })
     end
 
-    api :GET, "representations/:id", "Return attributes of a particular representation"
+    api! "Return attributes of a particular representation"
+    returns_serialized :representation
     def show
       representation = current_user.organization_representations.find(params[:id])
 

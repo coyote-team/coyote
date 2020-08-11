@@ -5,6 +5,7 @@
 # @abstract Base class for all API controllers
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
+  extend ApipieJSONAPI
   include OrganizationScope
   include Pundit
   include TrapErrors
@@ -12,8 +13,10 @@ class Api::ApplicationController < ActionController::API
   before_action :require_api_authentication
 
   def_param_group :pagination do
-    param :'page[number]', Integer, "Identifies the page of results to retrieve, numbered starting at 1"
-    param :'page[size]', Integer, "How many records to return per page"
+    param :page, Hash, "Optional pagination settings", required: false do
+      param :number, Integer, "Identifies the page of results to retrieve, numbered starting at 1"
+      param :size, Integer, "How many records to return per page"
+    end
   end
 
   private

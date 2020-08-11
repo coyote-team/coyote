@@ -2,10 +2,10 @@
 
 Apipie.configure do |config|
   config.app_name = "Coyote"
-  config.api_base_url = "/"
+  config.api_base_url = "/api/v1/"
   config.doc_base_url = "/apidoc"
   config.validate = :explicitly
-  config.api_controllers_matcher = Rails.root.join("app", "controllers", "api", "**", "*.rb").to_s
+  config.api_controllers_matcher = Rails.root.join("app", "controllers", "api", "**", "*.rb")
   config.app_info = <<~EOT
     {JSON API}[http://jsonapi.org/] for {Coyote}[https://coyote-team.github.io/coyote/].
 

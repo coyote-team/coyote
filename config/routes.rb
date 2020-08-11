@@ -134,6 +134,7 @@
 #    run POST /run(.:format) cloudtasker/worker#run
 
 Rails.application.routes.draw do
+  apipie
   ## API
   namespace :api do
     scope :v1 do
