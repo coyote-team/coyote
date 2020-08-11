@@ -18,9 +18,6 @@ resource_groups = organization.resource_groups.create!([
   {name: "events"},
 ])
 
-short_metum = FactoryBot.create(:metum, :short, organization: organization)
-long_metum = FactoryBot.create(:metum, :long, organization: organization)
-
 FactoryBot.factories[:license].defined_traits.to_a.map do |trait|
   FactoryBot.create(:license, trait.name)
 rescue ActiveRecord::RecordInvalid
@@ -49,8 +46,8 @@ long_text = <<~TEXT
   the malleable shape of the balloon conforming to the rectangular surfaces of an existing building–the gallery that contains it.
 TEXT
 
-FactoryBot.create(:representation, resource: resource, metum: short_metum, text: alt_text)
-FactoryBot.create(:representation, resource: resource, metum: long_metum, text: long_text)
+FactoryBot.create(:representation, resource: resource, metum: organization.meta.first, text: alt_text)
+FactoryBot.create(:representation, resource: resource, metum: organization.meta.last, text: long_text)
 
 undescribed_resource = FactoryBot.create(:resource, {
   name:         "Installation view, _The Making of A Fugitive_, MCA Chicago, Jul 16–Dec 4,2016",
