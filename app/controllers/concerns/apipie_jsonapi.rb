@@ -19,7 +19,8 @@ module ApipieJSONAPI
       returns("serialized_#{param_group}", options, &block)
     end
 
-    example_response = serialize_for_returns(send("serializable_#{param_group}"), jsonapi_options)
+    model = send("serializable_#{param_group}")
+    example_response = serialize_for_returns(array_of ? Array(model) : model, jsonapi_options)
     example JSON.pretty_generate(example_response)
   end
 
