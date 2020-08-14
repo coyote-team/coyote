@@ -21,6 +21,6 @@ class SerializableRepresentation < JSONAPI::Serializable::Resource
   belongs_to :resource
 
   link :self do
-    @url_helpers.api_representation_url(@object.id)
+    # @url_helpers.api_representation_url(@object.id)
   end
 end
