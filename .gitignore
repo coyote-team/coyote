@@ -28,7 +28,6 @@ config/credentials/production.key
 config/credentials/staging.key
 config/credentials/test.key
 
-
 /public/packs
 /public/packs-test
 /node_modules
