@@ -1,0 +1,3 @@
+- unless Rails.env.development?
+  = content_for :head
+    meta http-equiv="refresh" content="1;url=#{request.url}"

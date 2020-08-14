@@ -1,0 +1,14 @@
+.notification.notification--success: .notification-title
+  ' Coyote parsed the columns in your document. Please
+  |
+  = link_to("provide mappings", edit_import_path)
+  '
+  ' to Coyote's data model to continue importing!
+table
+  caption.sr-only Columns
+  tbody
+    - import.columns.each do |column|
+      tr
+        th= column.name
+        td
+          = column.map_to_column.presence || not_applicable("Not mapped")

@@ -16,12 +16,20 @@ class ApplicationRecord < ActiveRecord::Base
         FriendlyEnumType.new(attribute, public_send(attribute.to_s.pluralize), subtype)
       end
 
-      validates attribute, inclusion: {in: values.keys + values.values}
+      validates attribute, inclusion: {in: values.keys.map(&:to_sym) + values.keys.map(&:to_s) + values.values}
     end
   end
 
   def self.first_id(column = :id)
     limit(1).pluck(column).first
+  end
+
+  def self.human_name(capitalize: false)
+    model_name.human.humanize(capitalize: capitalize)
+  end
+
+  def default_name
+    "#{model_name} ##{id}"
   end
 
   # @return [String] a complete human-readable list of any errors on this object, in sentence form
@@ -31,7 +39,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   # @return [String] a more human-readable representation of an ActiveRecord object, simplifies logging
   def to_s
-    respond_to?(:name) ? name : super
+    respond_to?(:name) && name.presence || default_name
   end
 
   private

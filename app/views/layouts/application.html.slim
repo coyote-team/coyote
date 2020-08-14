@@ -23,6 +23,7 @@ html(lang="en")
       }
 
     = raw analytical.head_append_javascript
+    = yield :head
 
   body class=(body_class)
     = raw analytical.body_prepend_javascript

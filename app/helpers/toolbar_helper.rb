@@ -12,9 +12,10 @@ module ToolbarHelper
         )
     }
 
-    toolbar(options) do
+    toolbar_options = options.slice!(:submit_options, :cancel_options)
+    toolbar(toolbar_options) do
       (
-        submit_toolbar_item(form) + navigate_back + (block_given? ? yield : "")
+        submit_toolbar_item(form, options) + navigate_back + (block_given? ? yield : "")
       ).html_safe
     end
   end

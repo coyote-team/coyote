@@ -30,16 +30,19 @@ class Organization < ApplicationRecord
 
   belongs_to :default_license, class_name: "License"
 
+  has_many :imports, dependent: :destroy
+
   has_many :memberships, inverse_of: :organization, dependent: :destroy
-  has_many :users, through: :memberships
   has_many :active_users, -> { where(memberships: {active: true}) }, source: :user, through: :memberships
+  has_many :users, through: :memberships
+
   has_many :resources, dependent: :restrict_with_exception, inverse_of: :organization
-  has_many :resource_groups, inverse_of: :organization, dependent: :destroy
-  has_many :meta, inverse_of: :organization, dependent: :destroy
   has_many :assignments, through: :resources
   has_many :representations, through: :resources
-
   has_many :unassigned_unrepresented_resources, -> { unassigned_unrepresented }, class_name: :Resource, inverse_of: :organization
+
+  has_many :meta, inverse_of: :organization, dependent: :destroy
+  has_many :resource_groups, inverse_of: :organization, dependent: :destroy
 
   scope :is_active, -> { where(is_deleted: false) }
 

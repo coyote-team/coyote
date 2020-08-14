@@ -287,6 +287,41 @@ ALTER SEQUENCE public.auth_tokens_id_seq OWNED BY public.auth_tokens.id;
 
 
 --
+-- Name: imports; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.imports (
+    id bigint NOT NULL,
+    organization_id bigint,
+    user_id bigint,
+    column_mapping json,
+    status integer DEFAULT 0 NOT NULL,
+    error character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.imports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.imports_id_seq OWNED BY public.imports.id;
+
+
+--
 -- Name: invitations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1097,6 +1132,13 @@ ALTER TABLE ONLY public.auth_tokens ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: imports id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports ALTER COLUMN id SET DEFAULT nextval('public.imports_id_seq'::regclass);
+
+
+--
 -- Name: invitations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1296,6 +1338,14 @@ ALTER TABLE ONLY public.audits
 
 ALTER TABLE ONLY public.auth_tokens
     ADD CONSTRAINT auth_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imports imports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports
+    ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 
 
 --
@@ -1549,6 +1599,20 @@ CREATE INDEX index_auth_tokens_on_token_and_user_id ON public.auth_tokens USING 
 --
 
 CREATE INDEX index_auth_tokens_on_user_id ON public.auth_tokens USING btree (user_id);
+
+
+--
+-- Name: index_imports_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_imports_on_organization_id ON public.imports USING btree (organization_id);
+
+
+--
+-- Name: index_imports_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_imports_on_user_id ON public.imports USING btree (user_id);
 
 
 --
@@ -2111,6 +2175,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200619192855'),
 ('20200622231708'),
 ('20200622232200'),
-('20200731042857');
+('20200731042857'),
+('20200814180824');
 
 

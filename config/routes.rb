@@ -201,20 +201,29 @@ Rails.application.routes.draw do
 
   scope "organizations/:organization_id" do
     resources :resources
+
     resources :representations do
       member do
         get :history
       end
     end
+
     resources :resource_links
     resources :representation_status_changes, only: %i[create]
+
     resources :memberships, only: %i[index show edit update destroy] do
       resources :assignments, only: %i[index]
     end
+
     resources :assignments, only: %i[index show new create destroy]
     resources :resource_groups
     resources :meta
     resources :invitations, only: %i[new create]
+    resources :imports, except: %i[destroy] do
+      member do
+        post :process
+      end
+    end
   end
 
   resources :users, only: %i[show] # for viewing other user profiles
