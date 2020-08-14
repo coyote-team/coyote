@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # JSONAPI serializer for Resources
-class SerializableResource < JSONAPI::Serializable::Resource
+class SerializableResource < ApplicationSerializer
   type "resource"
 
   attributes :id, :name, :resource_type, :canonical_id, :source_uri, :created_at, :updated_at
@@ -21,6 +21,6 @@ class SerializableResource < JSONAPI::Serializable::Resource
   end
 
   link :coyote do
-    @url_helpers.resource_url(@object.id, organization_id: @object.organization_id)
+    ApplicationSerializer.url(:resource_url, @object.id, organization_id: @object.organization_id)
   end
 end

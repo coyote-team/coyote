@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # JSONAPI serializer for Resources
-class SerializableResourceGroup < JSONAPI::Serializable::Resource
+class SerializableResourceGroup < ApplicationSerializer
   ATTRIBUTES = %i[name default webhook_uri]
   type "resource_group"
 
@@ -15,9 +15,6 @@ class SerializableResourceGroup < JSONAPI::Serializable::Resource
   belongs_to :organization
 
   link :coyote do
-    @url_helpers.resource_group_url(
-      @object.id,
-      organization_id: @object.organization_id,
-    )
+    ApplicationSerializer.url(:resource_group_url, @object.id, organization_id: @object.organization_id)
   end
 end
