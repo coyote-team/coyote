@@ -1,9 +1,10 @@
 table
-  caption: h2 Parsed Sheets
+  caption: h2 Spreadsheet to Coyote mappings
   tbody
     - import.sheets.each do |sheet|
-      tr: th colspan=2
-        = sheet.name.humanize
+      - if import.sheets.many?
+        tr: th colspan=2
+          = sheet.name.humanize
       - sheet.columns.each do |column|
         tr
           th= column.name

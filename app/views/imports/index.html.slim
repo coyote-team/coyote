@@ -12,7 +12,7 @@ table
         td.table-cell-link= link_to import.name, import
         td.table-cell-link= link_to tag_for(import.status), import
         td.table-cell-link= link_to import.user, import
-        td.table-cell-link= link_to import.created_at, import
+        td.table-cell-link= link_to l(import.created_at, format: :short), import
 
 - if policy(Import).new?
   nav.toolbar.toolbar--footer

@@ -8,20 +8,24 @@ class ProcessImportWorker
   def perform(id)
     @import = Import.find(id)
 
-    successes, failures = 0, 0
+    result = new_result_set
     @import.read_sheets.each do |sheet|
       Import.transaction do
-        sheet_successes, sheet_failures = import_sheet(sheet)
-        successes += sheet_successes
-        failures += sheet_failures
+        sheet_result = import_sheet(sheet)
+        sheet_result.each do |key, value|
+          result[key] += value
+        end
       end
     end
 
-    @import.update_columns(
-      failures:  failures,
-      successes: successes,
-      status:    successes.zero? ? :import_failed : :imported,
-    )
+    if result[:successes].zero?
+      result[:status] = :import_failed
+      result[:error] = "No resources were created or updated"
+    else
+      result[:status] = :imported
+      result[:error] = nil
+    end
+    @import.update_columns(result)
   rescue => error
     @import.update_columns(
       error:  error.message,
@@ -38,11 +42,9 @@ class ProcessImportWorker
 
   def import_sheet(sheet)
     # Loop throw each row of the sheet so we can build resources from it
-    successes, failures = 0, 0
+    result = new_result_set
     sheet.rows.each do |row|
       next if row.empty?
-
-      pp row
 
       # Set up conditions to find_or_initialize a resource for this row
       resource_finder = {}
@@ -111,19 +113,44 @@ class ProcessImportWorker
 
       # Next, find or create the resource and assign the resource groups
       resource = organization.resources.find_or_initialize_by_canonical_id_or_source_uri(resource_finder)
-      resource.update!(resource_finder.merge(resource_attributes))
+      resource.assign_attributes(resource_finder.merge(resource_attributes))
+      was_new = resource.new_record?
+      was_changed = !was_new && resource.changes.any?
+
+      resource.save!
 
       # Finally, find or create representations using the resource's "sane defaults" logic
       representations_attributes = representations.map { |representation|
         representation.merge(representation_attributes)
       }
       resource.update!(representations_attributes: representations_attributes)
-      successes += 1
+      result[:successes] += 1
+
+      # Record what we changed when we ran this import
+      if was_new
+        result[:new_records] += 1
+      elsif was_changed
+        result[:changed_records] += 1
+      else
+        result[:duplicate_records] += 1
+      end
+
     rescue
-      failures += 1
+      # Record a failure and continue to the next row
+      result[:failures] += 1
     end
 
-    [successes, failures]
+    result
+  end
+
+  def new_result_set
+    {
+      successes:         0,
+      failures:          0,
+      new_records:       0,
+      duplicate_records: 0,
+      changed_records:   0,
+    }
   end
 
   def organization

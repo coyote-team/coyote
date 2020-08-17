@@ -1,8 +1,17 @@
 table
   tbody
     tr
-      th Successfully imported
+      th Resources imported
       td= import.successes
+    tr
+      th New resources
+      td= import.new_records
+    tr
+      th Updated resources
+      td= import.changed_records
+    tr
+      th Duplicate, unchanged resources
+      td= import.duplicate_records
     tr
       th Failed to import
       td= import.failures

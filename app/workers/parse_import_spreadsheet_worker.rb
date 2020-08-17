@@ -21,5 +21,7 @@ class ParseImportSpreadsheetWorker
     end
 
     import.update!(sheet_mappings: sheets, status: :parsed)
+  rescue => error
+    import.update(error: error.message, sheet_mappings: {}, status: :parse_failed)
   end
 end
