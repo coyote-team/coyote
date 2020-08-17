@@ -52,6 +52,6 @@ class Membership < ApplicationRecord
   private
 
   def update_user_counter_cache
-    user.update_attribute(:organizations_count, user.organizations.count(true))
+    user.update_organization_counter_cache
   end
 end
