@@ -43,6 +43,20 @@ class Organization < ApplicationRecord
 
   scope :is_active, -> { where(is_deleted: false) }
 
+  def hard_delete
+    original_auditing_enabled = Audited.auditing_enabled
+    Audited.auditing_enabled = false
+    Organization.transaction do
+      Assignment.joins(:resource).where(resources: {organization_id: id}).delete_all
+      Representation.joins(:resource).where(resources: {organization_id: id}).delete_all
+      Resource.where(organization_id: id).destroy_all
+      ResourceGroup.where(organization_id: id).delete_all
+      destroy!
+    end
+  ensure
+    Audited.auditing_enabled = original_auditing_enabled
+  end
+
   def ready_to_review_representations
     representations.ready_to_review
   end
