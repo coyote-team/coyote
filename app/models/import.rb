@@ -5,9 +5,11 @@
 # Table name: imports
 #
 #  id              :bigint           not null, primary key
-#  column_mapping  :json
 #  error           :string
+#  failures        :integer          default(0), not null
+#  sheet_mappings  :json
 #  status          :integer          default("parsing"), not null
+#  successes       :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  organization_id :bigint
@@ -24,7 +26,7 @@ class Import < ApplicationRecord
   ].freeze
 
   RESOURCE_GROUP_IMPORT_COLUMNS = [
-    ["Name", :name],
+    ["Resource Group", :name],
     ["Webhook URI", :webhook_uri],
   ].freeze
 
@@ -50,41 +52,10 @@ class Import < ApplicationRecord
   }
 
   validates :spreadsheet, presence: true, on: :create
+  validate :can_create_resources, if: :changed_to_importing?
 
   after_create_commit :schedule_parse
-
-  def column_mapping=(new_column_mapping)
-    if parsed? || importing?
-      new_column_mapping = (new_column_mapping || {}).with_indifferent_access
-      super (column_mapping || {}).with_indifferent_access.deep_merge(new_column_mapping)
-    else
-      super
-    end
-  end
-
-  def columns
-    return @columns if defined? @columns
-    @columns = column_mapping.map { |name, column|
-      Column.new(column.merge(name: name))
-    }
-  end
-
-  def each_column
-    parsed = open_spreadsheet
-    many_sheets = parsed.sheets.many?
-    parsed.each_with_pagename do |sheet_name, sheet|
-      rows = sheet.parse(headers: true)
-      headers = rows.shift
-      headers.keys.each do |column|
-        name = many_sheets ? "#{name}: #{column}" : column
-        yield column, name, rows
-      end
-    end
-  end
-
-  def each_row
-    parsed = open_spreadsheet
-  end
+  after_update_commit :schedule_processing, if: :updated_with_clean_import_mapping?
 
   def editable?
     parsed? || import_failed? || imported?
@@ -94,11 +65,70 @@ class Import < ApplicationRecord
     "#{default_name}: #{spreadsheet.filename}"
   end
 
+  # Creates a standard interface to a spreadsheet while reading it from the uploaded file - only used in workers
+  def read_sheets
+    workbook = open_spreadsheet
+    [].tap do |sheets|
+      workbook.each_with_pagename do |sheet_name, sheet|
+        rows = sheet.parse(clean: true, headers: true)
+        headers = rows.shift.keys
+        sheets.push(
+          Sheet.new(
+            name:    sheet_name,
+            columns: map_columns(Array((sheet_mappings || {})[sheet_name]), sheet_name),
+            headers: headers,
+            rows:    rows,
+          ),
+        )
+      end
+    end
+  end
+
+  def sheet_mappings=(new_sheet_mappings)
+    if parsed? || importing?
+      new_sheet_mappings = (new_sheet_mappings || {}).with_indifferent_access
+      super (sheet_mappings || {}).with_indifferent_access.deep_merge(new_sheet_mappings)
+    else
+      super
+    end
+  end
+
+  # Creates a standard interface to a spreadsheet based on parsed values stored on the model - only used for mapping spreadsheet columns to Coyote columns
+  def sheets
+    return @sheets if defined? @sheets
+    @sheets = sheet_mappings.map { |sheet_name, columns|
+      Sheet.new(
+        name:    sheet_name,
+        headers: columns.keys,
+        columns: map_columns(columns, sheet_name),
+      )
+    }
+  end
+
   def type
     spreadsheet
   end
 
   private
+
+  def can_create_resources
+    errors.add(:base, :needs_source_uri_mapping) unless can_create_resources?
+  end
+
+  def can_create_resources?
+    return @can_create_resources if defined? @can_create_resources
+    @can_create_resources = sheets.any? { |sheet| sheet.columns.any? { |column| column.map_to_column == "Resource:source_uri" } }
+  end
+
+  def changed_to_importing?
+    importing? && status_changed?
+  end
+
+  def map_columns(columns_hash, sheet_name)
+    columns_hash.map { |column_name, options|
+      Column.new(options.merge(name: column_name, sheet_name: sheet_name))
+    }
+  end
 
   def open_spreadsheet
     spreadsheet.open { |file| Roo::Spreadsheet.open(file) }
@@ -108,13 +138,23 @@ class Import < ApplicationRecord
     ParseImportSpreadsheetWorker.perform_async(id)
   end
 
+  def schedule_processing
+    ProcessImportWorker.perform_async(id)
+  end
+
+  def updated_with_clean_import_mapping?
+    importing? && previous_changes.include?(:status) && can_create_resources?
+  end
+
   class Column < OpenStruct
     def form_name
-      "import[column_mapping][#{name}][map_to_column]"
+      "import[sheet_mappings][#{sheet_name}][#{name}][map_to_column]"
     end
 
     def hint
       "Example values: #{examples}"
     end
   end
+
+  class Sheet < OpenStruct; end
 end

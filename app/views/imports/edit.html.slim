@@ -2,6 +2,16 @@ h1= title "Edit #{import}"
 p Please select a mapping for each column from the imported spreadsheet to a Coyote #{Resource.human_name} or #{Representation.human_name}:
 = simple_form_for import, url: import do |f|
   = f.hidden_field :status, value: :importing
-  - import.columns.each do |column|
-    = f.input :column_mapping, collection: valid_import_columns, hint: column.hint, input_html: {name: column.form_name}, label: column.name
+  - if import.sheets.many?
+    .tabset
+      ul.tabs aria-label="Worksheets" role="tablist"
+        - import.sheets.each_with_index do |sheet, index|
+          li.tab
+            button role="tab" aria-selected=index.zero? aria-controls="sheet-#{index}" id="sheet-tab-#{index}" tabindex=(index.zero? ? "0" : "-1")
+              = sheet.name
+      - import.sheets.each_with_index do |sheet, index|
+        .tab-content role="tabpanel" tabindex=(index.zero? ? "0" : "-1") id="sheet-#{index}" aria-labelledby="sheet-tab-#{index}"
+          = render "edit_sheet", sheet: sheet, f: f
+  - else
+    = render "sheet_form", sheet: import.sheets.first, f: f
   = form_toolbar(f, submit_options: {value: "Import"})

@@ -3,8 +3,10 @@ class CreateImports < ActiveRecord::Migration[6.0]
     create_table :imports do |t|
       t.belongs_to :organization
       t.belongs_to :user
-      t.json :column_mapping
+      t.json :sheet_mappings
       t.integer :status, default: 0, null: false
+      t.integer :successes, default: 0, null: false
+      t.integer :failures, default: 0, null: false
       t.string :error
       t.timestamps
     end

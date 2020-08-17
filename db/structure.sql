@@ -294,8 +294,10 @@ CREATE TABLE public.imports (
     id bigint NOT NULL,
     organization_id bigint,
     user_id bigint,
-    column_mapping json,
+    sheet_mappings json,
     status integer DEFAULT 0 NOT NULL,
+    successes integer DEFAULT 0 NOT NULL,
+    failures integer DEFAULT 0 NOT NULL,
     error character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

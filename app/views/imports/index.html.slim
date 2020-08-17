@@ -1,0 +1,20 @@
+table
+  caption: h1= title "Imports"
+  thead
+    tr
+      th Name
+      th Status
+      th Created by
+      th Created at
+  tbody
+    - imports.each do |import|
+      tr.table-row-link
+        td.table-cell-link= link_to import.name, import
+        td.table-cell-link= link_to tag_for(import.status), import
+        td.table-cell-link= link_to import.user, import
+        td.table-cell-link= link_to import.created_at, import
+
+- if policy(Import).new?
+  nav.toolbar.toolbar--footer
+    = new_link_to "Start a new import", new_import_path
+

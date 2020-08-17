@@ -5,7 +5,7 @@ class ImportsController < ApplicationController
   before_action :authorize_access
   before_action :require_editable_import, only: %i[edit update]
 
-  helper_method :import
+  helper_method :import, :imports
 
   def create
     self.import = current_organization.imports.new(import_params.merge(user: current_user))
@@ -14,6 +14,10 @@ class ImportsController < ApplicationController
   end
 
   def edit
+  end
+
+  def index
+    self.imports = current_organization.imports
   end
 
   def new
@@ -31,7 +35,7 @@ class ImportsController < ApplicationController
 
   private
 
-  attr_accessor :import
+  attr_accessor :import, :imports
 
   def authorize_access
     authorize(import || Import)
@@ -46,13 +50,17 @@ class ImportsController < ApplicationController
   end
 
   def require_editable_import
-    redirect_to import_path, alert: "You cannot edit this import's mappings while it is #{import.status_label}" unless import.editable?
+    unless import.editable?
+      explanation = I18n.t("import.cannot_edit.#{import.status}")
+      message = I18n.t("import.cannot_edit.base", explanation: explanation)
+      redirect_to import_path, alert: message
+    end
   end
 
   def update_import_params
     params.require(:import).permit(
       :status,
-      column_mapping: {},
+      sheet_mappings: {},
     )
   end
 end

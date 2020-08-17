@@ -91,6 +91,13 @@ class Resource < ApplicationRecord
 
   delegate :name, to: :resource_group, prefix: true
 
+  def self.find_or_initialize_by_canonical_id_or_source_uri(options)
+    resource = options[:canonical_id].present? && find_by(canonical_id: options[:canonical_id])
+    resource ||= find_by(source_uri: options[:source_uri])
+    resource ||= new
+    resource
+  end
+
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
   # @return [nil] if no resources exist
   def self.latest_timestamp
@@ -203,7 +210,7 @@ class Resource < ApplicationRecord
         # Set the author_id if it needs to be set
         attributes[:author_id] ||= organization.memberships.active.by_creation.first_id(:user_id)
 
-        # Increase ordinality for new representations when there are other representations this metum
+        # Increase ordinality for new representations when there are other representations with this metum
         attributes[:ordinality] = representations.where.not(id: representation.id).with_metum(attributes[:metum_id]).count
       end
 

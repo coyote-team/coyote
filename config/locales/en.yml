@@ -38,6 +38,12 @@ en:
       representation: Description
       resource_group: Resource Group
       resource_link: Link
+  import:
+    cannot_edit:
+      base: "You cannot edit this import's mappings %{explanation}"
+      parsing: "while it is being analyzed"
+      parse_failed: "because it could not analyzed for import"
+      importing: "while it is running"
   password_reset:
     sent: "You will receive an email with instructions on how to reset your password in a few minutes."
     updated: "Your password has been changed successfully. You are now signed in."

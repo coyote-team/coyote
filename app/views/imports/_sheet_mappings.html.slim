@@ -1,0 +1,11 @@
+table
+  caption: h2 Parsed Sheets
+  tbody
+    - import.sheets.each do |sheet|
+      tr: th colspan=2
+        = sheet.name.humanize
+      - sheet.columns.each do |column|
+        tr
+          th= column.name
+          td
+            = import_column_mapping column.map_to_column
