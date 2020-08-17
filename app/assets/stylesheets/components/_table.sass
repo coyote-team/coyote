@@ -95,9 +95,14 @@ table
     text-transform: uppercase
     white-space: nowrap
 
+  thead
+    tr:last-child
+      border-bottom: 1px solid $border
+
   tbody
     tr
-      border-top: 1px solid $border
+      + tr
+        border-top: 1px solid $border
 
       &.table-row-disabled
         td

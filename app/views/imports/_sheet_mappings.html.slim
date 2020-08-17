@@ -1,12 +1,8 @@
-table
-  caption: h2 Spreadsheet to Coyote mappings
-  tbody
+h2 Spreadsheet to Coyote mappings
+- if import.sheets.many?
+  = tabs label: "Worksheets" do
     - import.sheets.each do |sheet|
-      - if import.sheets.many?
-        tr: th colspan=2
-          = sheet.name.humanize
-      - sheet.columns.each do |column|
-        tr
-          th= column.name
-          td
-            = import_column_mapping column.map_to_column
+      = tab sheet.name do
+        = render "sheet_mapping", sheet: sheet
+- else
+  = render "sheet_mapping", sheet: imports.sheets.first

@@ -51,9 +51,7 @@ class ImportsController < ApplicationController
 
   def require_editable_import
     unless import.editable?
-      explanation = I18n.t("import.cannot_edit.#{import.status}")
-      message = I18n.t("import.cannot_edit.base", explanation: explanation)
-      redirect_to import_path, alert: message
+      redirect_to import_path, alert: import.cannot_edit_message
     end
   end
 

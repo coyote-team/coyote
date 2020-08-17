@@ -38,6 +38,9 @@ en:
       representation: Description
       resource_group: Resource Group
       resource_link: Link
+  helpers:
+    select:
+      prompt: ""
   import:
     cannot_edit:
       base: "You cannot edit this import's mappings %{explanation}"

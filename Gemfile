@@ -40,6 +40,7 @@ gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
 gem "uglifier", ">= 2.7.1" # js compression
+gem "webpacker"
 
 group :development, :test do
   gem "factory_bot_rails", require: false

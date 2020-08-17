@@ -76,7 +76,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization?
-    current_user.present? && organization_scope.exists?(params[:organization_id])
+    return @has_current_organization if defined? @has_current_organization
+    @has_current_organization = current_user.present? && organization_scope.exists?(params[:organization_id])
   end
 
   def current_user

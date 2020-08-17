@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: imports
@@ -23,6 +25,6 @@
 #
 FactoryBot.define do
   factory :import do
-
+    spreadsheet { File.open(Rails.root.join("spec", "fixtures")) }
   end
 end

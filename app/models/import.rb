@@ -60,6 +60,12 @@ class Import < ApplicationRecord
   after_create_commit :schedule_parse
   after_update_commit :schedule_processing, if: :updated_with_clean_import_mapping?
 
+  def cannot_edit_message
+    return nil if editable?
+    explanation = I18n.t("import.cannot_edit.#{status}")
+    I18n.t("import.cannot_edit.base", explanation: explanation)
+  end
+
   def editable?
     parsed? || import_failed? || imported?
   end
