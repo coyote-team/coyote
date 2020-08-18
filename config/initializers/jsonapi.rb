@@ -37,6 +37,7 @@ JSONAPI::Rails.configure do |config|
       resource_groups: SerializableResourceGroup::ATTRIBUTES,
     }
   }
+  config.logger.level = Logger::Severity::WARN
 end
 
 ActionController::Renderers.add(:jsonapi_mixed) do |resources, options|
