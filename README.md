@@ -82,13 +82,7 @@ The app uses [Rails secure credentials](https://edgeguides.rubyonrails.org/secur
 
 ### Testing Mailers in Development Mode
 
-The secure credentials work with [mailcatcher](https://mailcatcher.me/) out of the box:
-
-```bash
-gem install mailcatcher     # runs independently of the app, so this gem is not part of our Gemfile
-mailcatcher -f              # optionally run as `mailcatcher -f` to run in the foreground
-open http://127.0.0.1:1080/ # mail delivery console
-```
+We use [Federal Offense](https://github.com/flipsasser/federal_offense) to preview development emails. It will intercept any messages you send in development. You can preview them at [http://localhost:3000/deliveries](http://localhost:3000/deliveries).
 
 ### Re-seeding the Database
 
