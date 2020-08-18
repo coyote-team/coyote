@@ -132,11 +132,13 @@ RSpec.describe MetaController do
       post :create, params: base_params.merge(metum: {name: ""})
       expect(response).to render_template(:new)
 
+      expect(metum.is_required).to eq(false)
       expect {
-        patch :update, params: update_metum_params
+        patch :update, params: update_metum_params.deep_merge(metum: {is_required: true})
         metum.reload
       }.to change(metum, :name)
         .to("NEWNAME")
+      expect(metum.is_required).to eq(true)
 
       patch :update, params: metum_params.merge(metum: {name: ""})
       expect(response).to render_template(:edit)
