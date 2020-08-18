@@ -30,7 +30,7 @@ module Api
       param :priority_flag, [true, false], "Indicates this is a high-priority resource when `true`"
       param :resource_group_id, Integer, "Identifies the resource group to which this resource belongs. If omitted, will be set to the default resource group for this organization."
       param :resource_group_ids, Array, "Identifies multiple resource groups to which this resource belongs"
-      param :representations, Array, "An array of representations you'd like attached to this resource. See the `representations` jjj for more info.", action_aware: true do
+      param :representations, Array, "An array of representations you'd like attached to this resource. See the `representations` for more info.", action_aware: true do
         param :text, String, "The text of the representation", required: true
         param :language, String, "The language code for this representation", required: true
         param :author_id, Integer, "The user who authored this representation's ID - defaults to the user making the API request", required: false
