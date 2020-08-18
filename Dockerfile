@@ -20,7 +20,8 @@ RUN apk update \
   postgresql-dev \
   ruby-json \
   tzdata \
-  yaml-dev
+  yaml-dev \
+  yarn
 
 # Install (and clean) Gem dependencies
 ADD Gemfile* ./
@@ -33,6 +34,9 @@ RUN bundle config --global frozen 1 \
   && rm -rf /usr/local/bundle/cache/*.gem \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
   && find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Install JavaScript dependencies
+RUN yarn install
 
 # Accept the remainder of the args (prevents rebuilding gems when we don't need to)
 ARG database_url

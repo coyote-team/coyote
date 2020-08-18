@@ -13,9 +13,7 @@ module Api
 
     serializes serializable_resource_group.tap { |group| group.resources = [serializable_resource.tap { |resource| resource.representations = [serializable_representation.tap { |representation| representation.resource = serializable_resource }] }] }, {
       include: %i[resource],
-    } do
-
-    end
+    }
 
     def_param_group :resource_group do
       param :resource_group, Hash, action_aware: true do
