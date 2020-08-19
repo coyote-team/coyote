@@ -12,7 +12,6 @@ gem "rails", "~> 6.0.1"
 gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"
-gem "autoprefixer-rails"
 gem "bcrypt", "~> 3.1.7"
 # gem "aws-sdk-s3", require: false # Comment this in to use S3 instead of Google Cloud Storage - see config/storage.yml
 gem "bootsnap", require: false

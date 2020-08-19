@@ -83,8 +83,6 @@ GEM
     ast (2.4.1)
     audited (4.9.0)
       activerecord (>= 4.2, < 6.1)
-    autoprefixer-rails (9.8.6.1)
-      execjs
     bcrypt (3.1.15)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -515,7 +513,6 @@ DEPENDENCIES
   annotate
   apipie-rails
   audited
-  autoprefixer-rails
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
