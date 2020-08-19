@@ -5,7 +5,7 @@ li.list-item
 
   .list-item-body.timeline
     span.sr-only Caption:
-    = to_html resource.name
+    .timeline-title= to_html resource.name
     - representations.each do |representation|
       .timeline-item
         - if defined? form
