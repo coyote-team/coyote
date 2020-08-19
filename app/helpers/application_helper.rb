@@ -39,10 +39,11 @@ module ApplicationHelper
   end
 
   # @return [Array<String, Integer>] List of users in the current organization, sorted by name, suitable for use in a select box
-  def organizational_user_collection
+  def organizational_user_collection(include_staff: false)
     # @return [Array<String, Integer>] list of users suitable for use in select boxes
-    collection = current_organization.active_users.active.sort_by { |u| u.username.downcase }
-    collection.map! { |u| [u.username, u.id] }
+    collection = current_organization.active_users.active.order("LOWER(users.first_name) DESC NULLS LAST, LOWER(users.last_name) DESC NULLS LAST, LOWER(users.email) DESC").to_a
+    collection.push(current_user) if include_staff && current_user.staff? && !collection.include?(current_user)
+    collection.map { |u| [u.username, u.id] }
   end
 
   def resource

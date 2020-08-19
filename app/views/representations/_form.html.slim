@@ -27,7 +27,7 @@
           = f.input :ordinality, label: 'Ordinality', input_html: { min: 0, max: 100 }
           = f.input :language, as: :select, collection: language_list, include_blank: false
           = f.association :license, collection: License.all, include_blank: false
-          = f.association :author, collection: organizational_user_collection, include_blank: false
+          = f.association :author, collection: organizational_user_collection(include_staff: true), include_blank: false
 
       = toolbar class: 'toolbar--footer' do
         = submit_toolbar_item(f, submit_options: {class: "button--aside"})
