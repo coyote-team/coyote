@@ -21,6 +21,7 @@ end
     end
 
     before do
+      binding.pry
       login(user, password)
     end
   end

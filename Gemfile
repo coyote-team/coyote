@@ -74,6 +74,7 @@ end
 
 group :test do
   gem "capybara", require: false
+  gem "capybara-webmock", require: false
   gem "database_cleaner", require: false
   gem "jsonapi-rspec", require: false
   gem "launchy", require: false #  to use save_and_open_page from Capybara
@@ -85,6 +86,7 @@ group :test do
   gem "simplecov-material", require: false
   gem "vcr", require: false
   gem "webmock", require: false
+  gem "webdrivers", require: false
 end
 
 # This hack is to ensure that Google's protocol buffers and GRPC libraries build correctly in

@@ -98,6 +98,11 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    capybara-webmock (0.5.5)
+      capybara (>= 2.4, < 4)
+      rack (>= 1.4)
+      rack-proxy (>= 0.6.0)
+      selenium-webdriver (~> 3.0)
     childprocess (3.0.0)
     cloudtasker (0.9.3)
       activesupport
@@ -481,6 +486,10 @@ GEM
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
     vcr (6.0.0)
+    webdrivers (4.4.1)
+      nokogiri (~> 1.6)
+      rubyzip (>= 1.3.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     webmock (3.8.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -511,6 +520,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  capybara-webmock
   cloudtasker
   database_cleaner
   easymarklet!
@@ -569,6 +579,7 @@ DEPENDENCIES
   standard (>= 0.1.0)
   uglifier (>= 2.7.1)
   vcr
+  webdrivers
   webmock
   webpacker
   yard

@@ -6,6 +6,7 @@ class Session < OpenStruct
   NO_USER = :no_user
 
   def authenticate!
+    binding.pry
     return NO_USER if user.blank?
     return INCORRECT_PASSWORD if password.blank?
 
