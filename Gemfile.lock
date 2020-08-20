@@ -282,6 +282,7 @@ GEM
     multi_json (1.14.1)
     multipart-post (2.1.1)
     nenv (0.3.0)
+    newrelic_rpm (6.12.0.367)
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -518,6 +519,7 @@ DEPENDENCIES
   lightbox2-rails!
   metamagic
   mini_racer
+  newrelic_rpm
   non-digest-assets
   pg
   pry-rails
