@@ -67,7 +67,7 @@ class MetaController < ApplicationController
   end
 
   def list_of_meta
-    current_organization.meta
+    current_organization.meta.order(name: :asc)
   end
 
   def metum_params

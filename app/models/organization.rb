@@ -70,8 +70,7 @@ class Organization < ApplicationRecord
   def create_default_meta
     Metum::DEFAULTS.each do |attributes|
       meta.find_or_create_by(name: attributes[:name]) do |metum|
-        metum.instructions = attributes[:instructions]
-        metum.is_required = true
+        metum.assign_attributes(attributes)
       end
     end
   end

@@ -17,7 +17,7 @@ table
         td.table-cell-link.table-cell-link--text= link_to simple_format(metum.instructions), metum
         - if can?(:edit, :meta)
           td.table-cell-actions
-            = edit_link_to edit_metum_path(metum)
+            = edit_link_to edit_metum_path(metum), title: "Edit this metum"
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer

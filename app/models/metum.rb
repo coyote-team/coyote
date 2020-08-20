@@ -23,13 +23,14 @@
 class Metum < ApplicationRecord
   DEFAULTS = [
     {
-      name:         "Alt (short)",
+      name:         "Alt",
       instructions: "A brief description enabling a user to interact with the image when it is not rendered or when the user has low vision",
+      is_required:  true,
     },
     {
       name:         "Long",
       instructions: "A long description is a lengthier text than a traditional alt-text that attempts to provide a comprehensive representation of an image. Long descriptions can range from one sentence to several paragraphs.",
-
+      is_required:  false,
     },
   ].freeze
 
