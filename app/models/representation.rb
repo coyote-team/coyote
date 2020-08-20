@@ -84,7 +84,7 @@ class Representation < ApplicationRecord
     self.metum_id = attributes.delete(:metum_id) ||
       (name.present? && meta.where(name: name).first_id) ||
       metum_id ||
-      meta.where(name: "Alt (short)").first_id
+      meta.where(name: "Alt").first_id
   end
 
   def to_s

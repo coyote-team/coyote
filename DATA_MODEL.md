@@ -38,7 +38,7 @@ Resource Groups belong to an organization. They are used to organize resources i
 
 ## Metum
 
-Meta belong to Organizations and are used to clarify the context of a representation, e.g. a resource can have a representation with metum "Alt (short)" which would be appropriate to use as `alt` text on an `img` tag.
+Meta belong to Organizations and are used to clarify the context of a representation, e.g. a resource can have a representation with metum "Alt" which would be appropriate to use as `alt` text on an `img` tag.
 
 - Name: The visible name of the metum.
 - Instructions: The text that appears on screen for authors when writing a representation with a given metum

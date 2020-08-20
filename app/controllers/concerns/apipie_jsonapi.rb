@@ -53,7 +53,7 @@ module ApipieJSONAPI
       author:     User.new(email: "author@example.com"),
       language:   "en",
       license:    License.new(name: "cc0-1.0"),
-      metum:      Metum.new(name: "Alt (short)"),
+      metum:      Metum.new(name: "Alt"),
       status:     :approved,
       text:       "Lorem ipsum dolor sit amet",
       created_at: DateTime.now,

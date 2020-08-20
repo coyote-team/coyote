@@ -124,7 +124,7 @@ RSpec.describe Resource do
     let!(:license) { License.find_by(name: attributes_for(:license, :universal)[:name]) || create(:license, :universal) }
     let!(:license_2) { create(:license, :attribution_international) }
 
-    let(:metum) { organization.meta.find_by!(name: "Alt (short)") }
+    let(:metum) { organization.meta.find_by!(name: "Alt") }
     let(:metum_2) { organization.meta.find_by!(name: "Long") }
 
     let(:representation_attributes) { attributes_for(:representation) }
