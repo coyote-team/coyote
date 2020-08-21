@@ -67,6 +67,13 @@ RSpec.describe Representation do
       }).to have_been_made
     end
 
+    it "doesn't send webhook notifications when represenations are created in a non-webhook block" do
+      Resource.without_webhooks do
+        create(:representation, resource: resource, status: :approved)
+      end
+      expect(a_request(:post, resource_group.webhook_uri)).not_to have_been_made
+    end
+
     it "sends webhook notifications when pre-exisitng represenations are marked as approved" do
       representation = create(:representation, resource: resource, status: :ready_to_review)
       representation.update!(status: :approved)

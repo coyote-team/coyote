@@ -3,9 +3,10 @@
 RSpec.describe "Accessing resources" do
   describe "with authorization" do
     include_context "API editor user"
+    include_context "without webhooks"
 
     let(:resource_group) do
-      create(:resource_group, :website, organization: user_organization)
+      create(:resource_group, :website, organization: user_organization, webhook_uri: "https://example.com/webhook")
     end
 
     let(:new_resource_params) do
@@ -28,7 +29,7 @@ RSpec.describe "Accessing resources" do
         expect(resource.resource_group_name).to eq("website")
       end
 
-      # An explicitly name will cause a rejection
+      # An explicitly blank name will cause a rejection
       invalid_params = {resource: new_resource_params.merge(canonical_id: "rewriting-canonical-id-for-test-reasons", name: "")}
       post api_resources_path, params: invalid_params, headers: auth_headers
       expect(response).to be_unprocessable
@@ -39,6 +40,9 @@ RSpec.describe "Accessing resources" do
       new_resource.reload
       expect(new_resource.name).to eq("This is the new name; it should update the old resource")
       expect(new_resource.resource_group_name).to eq("website")
+
+      # It should never have triggered a webhook request
+      expect(NotifyWebhookWorker.jobs).to be_empty
     end
 
     it "POST /organizations/:id/resources without a name" do

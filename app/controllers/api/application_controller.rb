@@ -11,6 +11,7 @@ class Api::ApplicationController < ActionController::API
   include TrapErrors
 
   before_action :require_api_authentication
+  around_action :skip_webhooks
 
   def_param_group :pagination do
     param :page, Hash, "Optional pagination settings", required: false do
@@ -55,6 +56,12 @@ class Api::ApplicationController < ActionController::API
 
   def require_api_authentication
     authenticate_token || render_unauthorized
+  end
+
+  def skip_webhooks
+    Resource.without_webhooks do
+      yield
+    end
   end
 
   def trap_forbidden(_)

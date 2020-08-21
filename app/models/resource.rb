@@ -40,8 +40,9 @@
 # @see Coyote::Resource::TYPES
 class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
+  SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :union_host_uris
+  attr_accessor :skip_webhooks, :union_host_uris
 
   before_create :set_default_resource_group
 
@@ -110,6 +111,18 @@ class Resource < ApplicationRecord
     ]
   end
 
+  def self.without_webhooks
+    previous_webhooks_setting = Thread.current[SKIP_WEBHOOKS_KEY]
+    Thread.current[SKIP_WEBHOOKS_KEY] = true
+    if block_given?
+      yield
+    else
+      create_with(skip_webhooks: true)
+    end
+  ensure
+    Thread.current[SKIP_WEBHOOKS_KEY] = previous_webhooks_setting
+  end
+
   def approved?
     return @approved if defined? @approved
     @approved = complete? && representations.any? && representations.all?(&:approved?)
@@ -155,6 +168,7 @@ class Resource < ApplicationRecord
   end
 
   def notify_webhook!
+    return if skip_webhooks?
     NotifyWebhookWorker.perform_async(id) if resource_groups.has_webhook.any?
   end
 
@@ -248,5 +262,9 @@ class Resource < ApplicationRecord
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?
+  end
+
+  def skip_webhooks?
+    skip_webhooks.present? || Thread.current[SKIP_WEBHOOKS_KEY].present?
   end
 end

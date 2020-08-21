@@ -105,6 +105,11 @@ RSpec.describe Resource do
       }).to have_been_made
     end
 
+    it "doesn't sent webhook notifications in a `without_webhooks` context" do
+      described_class.without_webhooks { create(:resource, resource_groups: [resource_group]) }
+      expect(a_request(:post, "http://www.example.com/webhook/goes/here")).not_to have_been_made
+    end
+
     it "adds a JWT token header with the resource ID in it" do
       create(:resource, resource_groups: [resource_group])
       expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
