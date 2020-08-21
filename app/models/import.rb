@@ -140,7 +140,16 @@ class Import < ApplicationRecord
   end
 
   def open_spreadsheet
-    spreadsheet.open { |file| Roo::Spreadsheet.open(file) }
+    spreadsheet.open { |file|
+      # Copy the file to a tempfile so it can be embedded - ActiveStorage will remove ITS tempfile
+      # after we read it, which will screw ... just EVERYTHING up. So we make a copy for Roo to
+      # use, because CSVs are not loaded into memory until access time - meaning this block will
+      # have closed and the file will be wiped
+      path = file.path
+      tmp_path = File.join(Dir.tmpdir, "#{SecureRandom.hex(10)}.#{File.extname(path)}")
+      FileUtils.copy(path, tmp_path)
+      Roo::Spreadsheet.open(tmp_path)
+    }
   end
 
   def schedule_parse
