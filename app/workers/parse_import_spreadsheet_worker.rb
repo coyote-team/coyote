@@ -10,7 +10,8 @@ class ParseImportSpreadsheetWorker
     import.read_sheets.each do |sheet|
       columns = {}
       sheet.headers.each do |header|
-        examples = sheet.rows.map { |row| row[header] }.uniq.first(3).to_sentence
+        next if header.blank?
+        examples = sheet.rows.map { |row| row[header] }.uniq.reject(&:blank?).first(3).to_sentence
         columns[header] = {
           examples:      examples,
           map_to_column: nil,

@@ -716,7 +716,8 @@ CREATE TABLE public.resource_webhook_calls (
     response integer,
     error text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    response_body text
 );
 
 
@@ -1747,6 +1748,13 @@ CREATE UNIQUE INDEX index_resource_groups_on_organization_id_and_name ON public.
 
 
 --
+-- Name: index_resource_groups_on_webhook_uri; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_groups_on_webhook_uri ON public.resource_groups USING btree (webhook_uri);
+
+
+--
 -- Name: index_resource_links; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1779,6 +1787,13 @@ CREATE INDEX index_resource_status_checks_on_resource_id ON public.resource_stat
 --
 
 CREATE INDEX index_resource_webhook_calls_on_resource_id ON public.resource_webhook_calls USING btree (resource_id);
+
+
+--
+-- Name: index_resources_on_canonical_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_canonical_id ON public.resources USING btree (canonical_id);
 
 
 --
@@ -1817,10 +1832,24 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 
 
 --
+-- Name: index_resources_on_source_uri; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_source_uri ON public.resources USING btree (source_uri);
+
+
+--
 -- Name: index_resources_on_source_uri_and_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_resources_on_source_uri_and_organization_id ON public.resources USING btree (source_uri, organization_id) WHERE ((source_uri IS NOT NULL) AND (source_uri OPERATOR(public.<>) ''::public.citext));
+
+
+--
+-- Name: index_resources_resource_group_join; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_resource_group_join ON public.resource_group_resources USING btree (resource_id, resource_group_id);
 
 
 --
@@ -2181,6 +2210,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200622231708'),
 ('20200622232200'),
 ('20200731042857'),
-('20200814180824');
+('20200814180824'),
+('20200824203050'),
+('20200825173757'),
+('20200827210043');
 
 

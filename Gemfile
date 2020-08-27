@@ -74,7 +74,6 @@ end
 group :test do
   gem "capybara", require: false
   gem "capybara-webmock", require: false
-  gem "database_cleaner", require: false
   gem "jsonapi-rspec", require: false
   gem "launchy", require: false #  to use save_and_open_page from Capybara
   gem "pundit-matchers", require: false # better rspec testing of policies

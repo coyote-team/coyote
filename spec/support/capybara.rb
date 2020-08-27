@@ -47,7 +47,7 @@ Capybara.server = :puma, {Silent: true}
 RSpec.configure do |config|
   config.before(type: :feature) do |example|
     Capybara::Webmock.start
-    Capybara.current_driver = example.metadata[:ui] ? ui : Capybara.javascript_driver
+    Capybara.current_driver = example.metadata[:ui] ? ui : example.metadata[:javascript] ? Capybara.javascript_driver : Capybara.default_driver
   end
 
   config.after(:suite) do

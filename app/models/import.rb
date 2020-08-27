@@ -24,12 +24,17 @@
 #  index_imports_on_user_id          (user_id)
 #
 class Import < ApplicationRecord
+  METUM_IMPORT_COLUMNS = [
+    ["Add a new description type", :new],
+  ]
+
   REPRESENTATION_IMPORT_COLUMNS = [
-    ["Author Name", :author],
+    ["Author name", :author],
+    ["Status", :status],
   ].freeze
 
   RESOURCE_GROUP_IMPORT_COLUMNS = [
-    ["Resource Group", :name],
+    ["Resource group", :name],
     ["Webhook URI", :webhook_uri],
   ].freeze
 
@@ -37,9 +42,14 @@ class Import < ApplicationRecord
     ["Name", :name],
     ["Canonical ID", :canonical_id],
     ["Source URI", :source_uri],
-    ["Priority Flag", :priority_flag],
+    ["Priority flag", :priority_flag],
     ["Host URI(s)", :host_uris],
   ].freeze
+
+  # For reasons which are unclear, this has to be added before associations in order for upload
+  # callbacks to fire in the right order. Whatever.
+  after_create_commit :schedule_parse
+  after_update_commit :schedule_processing, if: :updated_with_clean_import_mapping?
 
   belongs_to :organization
   belongs_to :user
@@ -56,9 +66,6 @@ class Import < ApplicationRecord
 
   validates :spreadsheet, presence: true, on: :create
   validate :can_create_resources, if: :changed_to_importing?
-
-  after_create_commit :schedule_parse
-  after_update_commit :schedule_processing, if: :updated_with_clean_import_mapping?
 
   def cannot_edit_message
     return nil if editable?
@@ -171,6 +178,10 @@ class Import < ApplicationRecord
 
     def hint
       "Example values: #{examples}"
+    end
+
+    def id
+      @id ||= "import_columns_#{sheet_name}_#{name}".parameterize
     end
   end
 

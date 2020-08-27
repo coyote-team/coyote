@@ -16,6 +16,7 @@
 # Indexes
 #
 #  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
+#  index_resource_groups_on_webhook_uri               (webhook_uri)
 #
 # Foreign Keys
 #
@@ -35,27 +36,29 @@ RSpec.describe ResourceGroup do
     end
 
     it "accepts a valid http URI" do
-      expect(described_class.new(attributes(webhook_uri: "http://test"))).to be_valid
+      expect(group_with(webhook_uri: "http://test").errors[:webhook_uri]).to be_empty
     end
 
     it "accepts a valid https URI" do
-      expect(described_class.new(attributes(webhook_uri: "https://test"))).to be_valid
+      expect(group_with(webhook_uri: "https://test").errors[:webhook_uri]).to be_empty
     end
 
     it "does not accept a non-http or https URI" do
-      expect(described_class.new(attributes(webhook_uri: "ftp://test_host"))).not_to be_valid
+      expect(group_with(webhook_uri: "ftp://test_host").errors[:webhook_uri]).not_to be_empty
     end
 
     it "requires AT LEAST a host when provided an http URI" do
-      expect(described_class.new(attributes(webhook_uri: "http://"))).not_to be_valid
+      expect(group_with(webhook_uri: "http://").errors[:webhook_uri]).not_to be_empty
     end
 
     it "requires a host when provided an https URI" do
-      expect(described_class.new(attributes(webhook_uri: "https://"))).not_to be_valid
+      expect(group_with(webhook_uri: "https://").errors[:webhook_uri]).not_to be_empty
     end
 
-    def attributes(extra = {})
-      attributes_for(:resource_group, extra.merge(organization_id: organization.id))
+    def group_with(attributes = {})
+      described_class.new(attributes_for(:resource_group, attributes.reverse_merge(organization: organization, organization_id: organization.id))).tap do |resource_group|
+        resource_group.valid?
+      end
     end
   end
 end

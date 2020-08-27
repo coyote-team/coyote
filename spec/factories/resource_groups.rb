@@ -16,6 +16,7 @@
 # Indexes
 #
 #  index_resource_groups_on_organization_id_and_name  (organization_id,name) UNIQUE
+#  index_resource_groups_on_webhook_uri               (webhook_uri)
 #
 # Foreign Keys
 #

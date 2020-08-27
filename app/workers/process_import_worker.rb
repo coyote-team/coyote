@@ -35,6 +35,10 @@ class ProcessImportWorker
 
   private
 
+  def convert_to_representation_status(status)
+    Representation.statuses[status.underscore.singularize]
+  end
+
   def find_user_named(name)
     name = name.split(" ").map(&:strip).join(" ")
     organization.users.where("CONCAT(first_name, ' ', last_name) = ?", name).first
@@ -62,7 +66,7 @@ class ProcessImportWorker
       sheet.columns.each do |column_mapping|
         next if column_mapping.map_to_column.blank?
 
-        value = row[column_mapping.name].to_s
+        value = row[column_mapping.name].to_s.strip
         next if value.blank?
 
         model, column = column_mapping.map_to_column.split(":")
@@ -70,36 +74,49 @@ class ProcessImportWorker
 
         case model
         when "Metum"
-          representations.push({
-            metum: organization.meta.find(column.to_s),
-            text:  value,
-          })
+          case column
+          when :new
+            representations.push({
+              metum: organization.meta.find_or_initialize_by(name: column.to_s) { |metum| metum.skip_instructions = true },
+              text:  value,
+            })
+          else
+            representations.push({
+              metum: organization.meta.find(column.to_s),
+              text:  value,
+            })
+          end
 
         when "Resource"
           case column
           when :name
-            resource_attributes[:name] = value.strip
+            resource_attributes[:name] = value
           when :canonical_id
-            resource_finder[:canonical_id] = value.strip
+            resource_finder[:canonical_id] = value
           when :source_uri
-            resource_finder[:source_uri] = value.strip
+            resource_finder[:source_uri] = value
           when :priority_flag
-            resource_attributes[:priority_flag] = value.strip
+            resource_attributes[:priority_flag] = value
           when :host_uris
-            resource_attributes[:host_uris] = value.strip
+            resource_attributes[:host_uris] = value
           end
 
         when "Representation"
           # Right now we only accept one column directly on representation (author); the `text` comes in via the metum
-          if column == :author
-            representation_attributes[:author] = find_user_named(value.strip)
+          case column
+          when :author
+            representation_attributes[:author] = find_user_named(value)
+          when :status
+            status = convert_to_representation_status(value)
+            representation_attributes[:status] = status if status.present?
           end
 
         when "ResourceGroup"
-          if column == :name
-            resource_groups.push(ResourceGroup.find_or_initialize_by(organization_id: import.organization_id, name: value.strip))
-          elsif column == :webhook_uri
-            resource_group_attributes[:webhook_uri] = value.strip
+          case column
+          when :name
+            resource_groups.push(ResourceGroup.find_or_initialize_by(organization_id: import.organization_id, name: value))
+          when :webhook_uri
+            resource_group_attributes[:webhook_uri] = value
           end
         end
       end
@@ -109,7 +126,7 @@ class ProcessImportWorker
       resource_groups.each do |resource_group|
         resource_group.update!(resource_group_attributes)
       end
-      resource_attributes[:resource_groups] = resource_groups
+      resource_attributes[:resource_groups] = resource_groups if resource_groups.any?
 
       # Next, find or create the resource and assign the resource groups
       resource = organization.resources.find_or_initialize_by_canonical_id_or_source_uri(resource_finder)

@@ -1,8 +1,11 @@
-.notification.notification--success: .notification-title
-  ' Coyote successfully parsed your document. Please
-  |
-  = link_to("provide mappings", edit_import_path)
+p
+  ' Coyote successfully parsed your document.
   '
-  ' to Coyote's data model to continue importing!
+  strong.text--success
+    | Please
+    '
+    = link_to("provide mappings", edit_import_path)
+    '
+    ' to Coyote's data model to continue importing!
 
 = render "sheet_mappings"

@@ -34,7 +34,9 @@ class Metum < ApplicationRecord
     },
   ].freeze
 
-  validates :name, :instructions, presence: true
+  attr_accessor :skip_instructions
+
+  validates :name, :instructions, presence: true, unless: :skip_instructions
   validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?
 
   belongs_to :organization, inverse_of: :meta

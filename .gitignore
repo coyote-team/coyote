@@ -22,15 +22,16 @@ tmp
 .bundle
 vendor/bundle
 
-# Ignore application configuration
+# Ignore application credentials
 config/application.yml
 config/credentials/production.key
 config/credentials/staging.key
 config/credentials/test.key
 
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
+# Asset pipeline leftovers
 .yarn-integrity
+node_modules
+public/packs
+public/packs-test
+yarn-debug.log*
+yarn-error.log

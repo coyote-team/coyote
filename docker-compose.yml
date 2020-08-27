@@ -36,7 +36,6 @@ services:
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}
       WEBPACKER_DEV_SERVER_HOST: webpacker
@@ -58,7 +57,6 @@ services:
     <<: *rails
     command: bundle exec rails db:test:prepare spec
     environment:
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_URL: postgres://postgres:postgres@db:5432/coyote_test
       NODE_ENV: test
       PORT: 3030
