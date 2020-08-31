@@ -12,7 +12,7 @@ li.list-item.list-item--card
 
   .list-item-body
     = resource_status_list(resource, id: id, title_tag: :h5)
-    = to_html resource.name
+    .list-item-body-text= to_html resource.name
 
   h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
   ul.list-item-actions aria-labelledby="actions-#{id}"

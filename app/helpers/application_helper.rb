@@ -81,7 +81,7 @@ module ApplicationHelper
   private
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: true, tables: true)
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: false, tables: true)
   end
 
   FLASH_CLASSES = {

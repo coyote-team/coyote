@@ -21,7 +21,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.first_id(column = :id)
-    limit(1).pluck(column).first
+    limit(1).pick(column)
   end
 
   def self.human_name(capitalize: false)

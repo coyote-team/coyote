@@ -34,9 +34,10 @@
         tr
           th License
           td= representation.license_description
-        tr
-          th Content URI
-          td= link_to(nil, representation.content_uri)
+        - if representation.content_uri.present?
+          tr
+            th Content URI
+            td= link_to(nil, representation.content_uri)
         tr
           th Notes
           td= to_html(representation.notes)
