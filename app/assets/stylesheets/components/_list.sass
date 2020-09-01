@@ -26,11 +26,13 @@
 
   .list-item
     align-items: center
-    border-top: 1px solid $border
     display: flex
     justify-content: space-between
     padding: $gutter
     transition: all 150ms $swift
+
+    + .list-item
+      border-top: 1px solid $border
 
     &-dashboard-metric
       @extend .list-item

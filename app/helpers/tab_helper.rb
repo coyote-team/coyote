@@ -44,7 +44,7 @@ module TabHelper
     original_tab_buffer = @tab_buffer
 
     # Set up a new tabset
-    @tabset_id = options[:id].presence || SecureRandom.hex(4).gsub(/^\d+/, "")
+    @tabset_id = options[:id].presence || generate_id
     @tab_index = 0
     @tab_buffer = []
 

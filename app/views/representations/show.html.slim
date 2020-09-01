@@ -1,58 +1,69 @@
-.split-view
+h1= title breadcrumb(representation.resource, representation)
+= tag_list(metum_tag(representation.metum))
+
+= toolbar class: 'toolbar--header', title: 'Actions' do
+  = toolbar_item do
+    - if can?(:describe, representation.resource)
+      = button_link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button--aside', icon: :bubble)
+    = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
+    - if can?(:approve, representation)
+      = render "approve_reject"
+
+  = toolbar_item do
+    = button_link_to "History", history_representation_path(representation), class: "button--partial", icon: :clock
+
+.split-view.split-view--thumbnail
   .split-view-item
     = lightbox_link(representation.resource)
 
   .split-view-item
     table
       caption
-        h1= title "Showing #{representation}"
         = to_html(representation.text)
       tbody
         tr
           th Resource
           td
             = link_to representation.resource do
-              = to_html(representation.resource_name)
+              = representation.resource_name
         tr
           th Author
           td= link_to(representation.author, representation.author)
         tr
-          th Content Type
-          td= representation.content_type
-        tr
-          th Language
-          td: span.tag.tag--outline= representation.language
-        tr
           th Status
           td= representation_status_tag(representation)
-        tr
-          th Order
-          td= representation.ordinality
         tr
           th Metum
           td= metum_tag(representation.metum, hint: false)
         tr
-          th License
-          td= representation.license_description
-        - if representation.content_uri.present?
-          tr
-            th Content URI
-            td= link_to(nil, representation.content_uri)
-        tr
-          th Notes
-          td= to_html(representation.notes)
-        tr
-          th Updated
-          td= representation.updated_at
-        tr
-          th Created
-          td= representation.created_at
-
-= toolbar class: 'toolbar--footer', title: 'Actions' do
-  = toolbar_item do
-    - if can?(:describe, representation.resource)
-      = button_link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button--aside', icon: :bubble)
-    = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
-  = toolbar_item do
-    = button_link_to "History", history_representation_path(representation), class: "button--partial", icon: :clock
-
+          td colspan=2
+            = collapse do
+              table
+                caption.sr-only Additinal details about this description
+                tbody
+                  tr
+                    th Content Type
+                    td= representation.content_type
+                  tr
+                    th Language
+                    td: span.tag.tag--outline= representation.language
+                  tr
+                  tr
+                    th Order
+                    td= representation.ordinality
+                  tr
+                    th License
+                    td= representation.license_description
+                  - if representation.content_uri.present?
+                    tr
+                      th Content URI
+                      td= link_to(nil, representation.content_uri)
+                  tr
+                    th Notes
+                    td= to_html(representation.notes)
+                  tr
+                    th Updated
+                    td= representation.updated_at
+                  tr
+                    th Created
+                    td= representation.created_at

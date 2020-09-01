@@ -4,6 +4,10 @@
 # those that have been generated and providing iterations to them as things
 # move forward
 module IdRegistryHelper
+  def generate_id
+    id_for(SecureRandom.hex(6).gsub(/^\d+/, ""))
+  end
+
   def id_for(object)
     string = if object.respond_to?(:model_name)
       "#{object.model_name.singular}-#{object.to_param || "new"}"

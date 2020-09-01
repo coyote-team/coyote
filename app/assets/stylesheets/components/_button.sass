@@ -41,8 +41,9 @@ button,
   text-decoration: none
   transition: all 100ms $heavy
 
-  &:not(:first-child)
-    margin-left: $input-padding
+  &:not(.button--block)
+    + .button:not(.button-block)
+      margin-left: $input-padding
 
   &.button--block
     display: block

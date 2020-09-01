@@ -19,7 +19,7 @@ table
         td.table-cell-link= link_to representation_path(representation) do
           span.tag.tag--outline= representation.language
         td.table-cell-link= link_to representation_path(representation) do
-          = to_html representation.text
+          = to_html representation.text, truncate: 120
         td.table-cell-link= link_to representation_path(representation) do
           = representation.author
         td.table-cell-actions

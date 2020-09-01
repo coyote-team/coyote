@@ -14,8 +14,8 @@ class ResourceLinksController < ApplicationController
     verb = resource_link_params.fetch(:verb)
     object_resource_id = resource_link_params.fetch(:object_resource_id)
 
-    subject_resource = current_user.resources.find(subject_resource_id)
-    object_resource = current_user.resources.find(object_resource_id)
+    subject_resource = current_organization.resources.find(subject_resource_id)
+    object_resource = current_organization.resources.find(object_resource_id)
 
     self.resource_link = ResourceLink.find_or_initialize_by({
       subject_resource: subject_resource,
@@ -43,7 +43,7 @@ class ResourceLinksController < ApplicationController
   end
 
   def new
-    subject_resource = current_user.resources.find(params.require(:subject_resource_id))
+    subject_resource = current_organization.resources.find(params.require(:subject_resource_id))
     self.resource_link = ResourceLink.new(subject_resource: subject_resource)
     authorize(resource_link)
   end
@@ -78,8 +78,8 @@ class ResourceLinksController < ApplicationController
   end
 
   def set_resource_link
-    self.resource_link = ResourceLink.where(subject_resource: current_user.resources)
-      .or(ResourceLink.where(object_resource: current_user.resources))
+    self.resource_link = ResourceLink.where(subject_resource: current_organization.resources)
+      .or(ResourceLink.where(object_resource: current_organization.resources))
       .find(params[:id])
   end
 end

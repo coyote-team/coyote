@@ -11,7 +11,9 @@ ToggleControl.prototype.watch = function (toggle) {
   var classname = toggle.getAttribute("data-toggle")
   var on = toggle.getAttribute("data-toggle-target-on")
   var off = toggle.getAttribute("data-toggle-target-off")
-  toggle.addEventListener("click", () => {
+  toggle.addEventListener("click", event => {
+    event?.preventDefault()
+
     if (off) {
       this.target.classList.remove(off)
     }
@@ -23,5 +25,7 @@ ToggleControl.prototype.watch = function (toggle) {
     if (classname) {
       this.target.classList.toggle(classname)
     }
+
+    toggle.setAttribute("aria-expanded", toggle.getAttribute("aria-expanded") !== "true")
   })
 }

@@ -34,6 +34,9 @@ en:
     parameter_missing: "The required parameter '%{param}' is missing or empty"
 
   activerecord:
+    attributes:
+      representation:
+        ordinality: Order
     models:
       membership: Member
       representation: Description

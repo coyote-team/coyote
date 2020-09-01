@@ -1,4 +1,4 @@
-h1= title "#{representation} History"
+h1= title breadcrumb(representation.resource, representation, "History")
 .table-wrapper
   table
     caption.sr-only Audit table of this description
@@ -25,16 +25,16 @@ h1= title "#{representation} History"
           td= tag_for(audit.action.humanize, tag: :span, type: audit.action == "create" ? "success" : audit.action =="update" ? "info" : "neutral")
           td= audit.user
           td.table-cell-nowrap= time_ago_in_words audit.created_at
-          td= to_html(changes[:text].to_s)
+          td= change_set(changes[:text]) { |text| to_html(text, truncate: 40) }
           td= representation_audit_user(changes[:author_id])
-          td= changes[:content_type]
-          td= changes[:language]
-          td.table-cell-nowrap= Array(changes[:status]).map {|change| capture { tag_for(change.humanize, tag: :span, type: status_class_for(change)) } }.join(" #{icon(:arrow_right)} ").html_safe
-          td= changes[:ordinality]
+          td= change_set changes[:content_type]
+          td= change_set(changes[:language]) { |language| tag_for(language, type: "outline") }
+          td.table-cell-nowrap= change_set(changes[:status]) { |change| tag_for(change.humanize, tag: :span, type: status_class_for(change)) }
+          td= change_set changes[:ordinality]
           td= representation_audit_metum(changes[:metum_id])
           td= representation_audit_license(changes[:license_id])
-          td= changes[:content_uri]
-          td= changes[:notes]
+          td= change_set changes[:content_uri]
+          td= change_set changes[:notes]
 
 = toolbar do
   = toolbar_item do
