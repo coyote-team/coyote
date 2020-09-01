@@ -11,6 +11,11 @@ Capybara.match = :prefer_exact
 
 headless = :chrome_headless
 ui = :chrome
+options = {
+  browser: :chrome,
+}
+chromium_binary = `which chromium-browser`
+options[:binary] = chromium_binary if chromium_binary.present?
 
 ## Headless Chrome (default)
 # Use a headless Chrome browser for TDD (when we don't want to be interrupted by the UI).
@@ -20,12 +25,7 @@ Capybara.register_driver headless do |app|
   chrome_options = Capybara::Webmock.chrome_options
   chrome_options.add_argument("headless")
   chrome_options.add_argument("window-size=1280,800")
-  options = {
-    browser: :chrome,
-    options: chrome_options,
-  }
-
-  Capybara::Selenium::Driver.new(app, options)
+  Capybara::Selenium::Driver.new(app, options.merge(options: chrome_options))
 end
 
 ## Chrome w/UI (optional)
@@ -33,12 +33,7 @@ end
 # flag in your examples, or with a universal `UI=true bundle exec rspec` ENV flag.
 Capybara.register_driver ui do |app|
   chrome_options = Capybara::Webmock.chrome_options
-  options = {
-    browser: :chrome,
-    options: chrome_options,
-  }
-
-  Capybara::Selenium::Driver.new(app, options)
+  Capybara::Selenium::Driver.new(app, options.merge(options: chrome_options))
 end
 
 Capybara.javascript_driver = ENV["UI"] ? ui : headless
@@ -47,7 +42,13 @@ Capybara.server = :puma, {Silent: true}
 RSpec.configure do |config|
   config.before(type: :feature) do |example|
     Capybara::Webmock.start
-    Capybara.current_driver = example.metadata[:ui] ? ui : example.metadata[:javascript] ? Capybara.javascript_driver : Capybara.default_driver
+    Capybara.current_driver = if example.metadata[:ui]
+      ui
+    elsif example.metadata[:javascript]
+      Capybara.javascript_driver
+    else
+      Capybara.default_driver
+    end
   end
 
   config.after(:suite) do

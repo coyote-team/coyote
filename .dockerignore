@@ -2,6 +2,7 @@
 .travis.yml
 doc_assets/
 log/*
+node_modules/
 public/packs*
 tmp/*
 Dockerfile
