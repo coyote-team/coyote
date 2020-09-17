@@ -1,0 +1,17 @@
+- sheet.columns.each do |column|
+  ruby:
+    options = {
+      collection: valid_import_columns(column.name),
+      hint: column.hint,
+      input_html: {
+        id: column.id,
+        name: column.form_name
+      },
+      label: column.name,
+      label_html: {
+        for: column.id
+      },
+      prompt: true,
+      selected: column.map_to_column,
+    }
+  = f.input :sheet_mappings, options

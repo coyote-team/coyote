@@ -54,10 +54,11 @@ module ApplicationHelper
     :user
   end
 
-  def to_html(content)
+  def to_html(content, truncate: nil)
     if content.blank?
       ""
     else
+      content = truncate(content, length: truncate) if truncate
       raw markdown.render(content)
     end
   end
@@ -81,7 +82,7 @@ module ApplicationHelper
   private
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: true, tables: true)
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, filter_html: true, autolink: false, tables: true)
   end
 
   FLASH_CLASSES = {

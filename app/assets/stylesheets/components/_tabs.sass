@@ -1,0 +1,16 @@
+.tabs
+  display: flex
+
+  .tab
+    border-radius: 1000px
+    display: block
+    font-size: $font-size-control
+    padding: ($gutter / 2) $gutter
+    text-decoration: none
+
+    &[aria-selected=true]
+      background-color: $tint-background
+      color: darken($tint, 10%)
+
+    + .tab
+      margin-left: $gutter

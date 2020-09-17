@@ -12,7 +12,7 @@ RSpec.describe "Changing organizational memberships" do
   it "succeeds" do
     click_first_link "Members"
 
-    within "#membership_#{membership.id}" do
+    within "#membership_#{membership.user_id}" do
       click_link "Change"
     end
 
@@ -28,7 +28,7 @@ RSpec.describe "Changing organizational memberships" do
 
     click_first_link "Members"
 
-    within "#membership_#{membership.id}" do
+    within "#membership_#{membership.user_id}" do
       expect {
         click_link "Remove"
       }.to change {

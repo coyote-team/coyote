@@ -65,10 +65,10 @@ module ResourcesHelper
 
     tags.push(tag_for("Urgent", type: :error)) if resource.priority_flag?
 
-    (
-      content_tag(title_tag, class: "sr-only", id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" } +
-        content_tag(:ul, aria: {labelledby: "tag-list-#{id}"}, class: "tag-list") { tags.join.html_safe }
-    ).html_safe
+    safe_join([
+      content_tag(title_tag, class: "sr-only", id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" },
+      tag_list(tags, aria: {labelledby: "tag-list-#{id}"}),
+    ])
   end
 
   def scope_search_collection

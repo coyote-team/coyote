@@ -1,0 +1,4 @@
+h1= title import.to_s
+= tag_for(import.status)
+= render import.status
+= show_toolbar import, edit_options: {disabled: !import.editable?, data: {tooltip: import.cannot_edit_message}}

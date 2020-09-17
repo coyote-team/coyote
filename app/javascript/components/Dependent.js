@@ -26,17 +26,19 @@ let parents = new Set()
   `data-depends-on` is expected to provide an input name and value separated by a colon, e.g.
   `data-depends-on="opportunity[status]:closed"`.
 */
-document.querySelectorAll("[data-dependent-on], [data-required-when], [data-required-when-all]").forEach(element => {
-  // Find the name of the input this dependent is dependent upon (its "parent"). Either the "dependent-on" or the
-  // "required-when" flags will trigger this.
-  const { dependentOn, requiredWhen, requiredWhenAll } = element.dataset
-  const parentSelector = dependentOn || requiredWhen || requiredWhenAll
+document
+  .querySelectorAll("[data-dependent-on], [data-required-when], [data-required-when-all]")
+  .forEach(element => {
+    // Find the name of the input this dependent is dependent upon (its "parent"). Either the "dependent-on" or the
+    // "required-when" flags will trigger this.
+    const { dependentOn, requiredWhen, requiredWhenAll } = element.dataset
+    const parentSelector = dependentOn || requiredWhen || requiredWhenAll
 
-  parentSelector.split(" ").forEach(parent => {
-    const [name, _] = parent.split(":")
-    parents.add(name)
+    parentSelector.split(" ").forEach(parent => {
+      const [name, _] = parent.split(":")
+      parents.add(name)
+    })
   })
-})
 
 watchParents()
 
@@ -47,7 +49,7 @@ function watchParents() {
 
     // Find the first NON-HIDDEN input to see if it's a combination of hidden (default) / checkbox
     // (override) - and fall back to the hidden one
-    let input =
+    const input =
       document.querySelector(`${selector}:not([type="hidden"])`) || document.querySelector(selector)
     if (input) {
       let type = input.tagName.toLowerCase() === "input" ? input.type : "input"

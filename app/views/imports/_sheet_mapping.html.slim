@@ -1,0 +1,7 @@
+table
+  tbody
+    - sheet.columns.each do |column|
+      tr
+        th= column.name
+        td
+          = import_column_mapping column.map_to_column

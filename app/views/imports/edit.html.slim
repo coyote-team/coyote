@@ -1,0 +1,18 @@
+h1= title "Edit #{import}"
+= simple_form_for import, url: import do |f|
+  = f.hidden_field :status, value: :importing
+  - if import.sheets.many?
+    = tabs label: "Worksheets" do
+      - import.sheets.each do |sheet|
+        = tab sheet.name do
+          = render "sheet_form", sheet: sheet, f: f
+
+    / div.tabs aria-label="Worksheets" role="tablist"
+    /   - import.sheets.each_with_index do |sheet, index|
+    /     a.tab role="tab" aria-selected=index.zero? aria-controls="sheet-#{index}" id="sheet-tab-#{index}" tabindex=(index.zero? ? "0" : "-1")
+    /       = sheet.name
+    /   .tab-content role="tabpanel" tabindex=(index.zero? ? "0" : "-1") id="sheet-#{index}" aria-labelledby="sheet-tab-#{index}"
+    /     = render "sheet_form", sheet: sheet, f: f
+  - else
+    = render "sheet_form", sheet: import.sheets.first, f: f
+  = form_toolbar(f, submit_options: {value: import.imported? ? "Reimport" : "Import"})

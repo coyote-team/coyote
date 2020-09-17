@@ -1,0 +1,20 @@
+.loading
+  $size: $gutter * 3
+  $border-size: $size / 6
+
+  animation: loading 1s infinite $swift
+  border-radius: 50%
+  border: $border-size solid $border
+  border-top-color: $tint
+  height: $size
+  position: relative
+  text-indent: -9999px
+  transform: translateZ(0)
+  width: $size
+
+@keyframes loading
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)

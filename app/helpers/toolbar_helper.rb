@@ -12,23 +12,26 @@ module ToolbarHelper
         )
     }
 
-    toolbar(options) do
+    toolbar_options = options.slice!(:submit_options, :cancel_options)
+    toolbar(toolbar_options) do
       (
-        submit_toolbar_item(form) + navigate_back + (block_given? ? yield : "")
+        submit_toolbar_item(form, options) + navigate_back + (block_given? ? yield : "")
       ).html_safe
     end
   end
 
   def show_toolbar(instance, options = {})
-    delete_title = options.delete(:delete_title) || "Delete"
     edit_or_delete = toolbar_item(tag: :div) {
       item = "".html_safe
 
-      can_edit = options.fetch(:edit) { policy(instance).edit? }
-      item << edit_link_to({action: :edit}) if can_edit
+      can_edit = options.delete(:edit) { policy(instance).edit? }
+      edit_options = options.delete(:edit_options) { {} }
+      item << edit_link_to({action: :edit}, edit_options) if can_edit
 
-      can_delete = options.fetch(:delete) { policy(instance).destroy? }
-      item << delete_link_to("Are you sure you want to #{delete_title.downcase} #{instance}?", {action: :show}, title: "#{delete_title} #{instance}") if can_delete
+      can_delete = options.delete(:delete) { policy(instance).destroy? }
+      delete_title = options.delete(:delete_title) || "Delete"
+      delete_options = options.delete(:delete_options) { {} }
+      item << delete_link_to("Are you sure you want to #{delete_title.downcase} #{instance}?", {action: :show}, delete_options.reverse_merge(title: "#{delete_title} #{instance}")) if can_delete
 
       item
     }

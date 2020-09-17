@@ -1,0 +1,11 @@
+p
+  ' Coyote successfully parsed your document.
+  '
+  strong.text--success
+    | Please
+    '
+    = link_to("provide mappings", edit_import_path)
+    '
+    ' to Coyote's data model to continue importing!
+
+= render "sheet_mappings"

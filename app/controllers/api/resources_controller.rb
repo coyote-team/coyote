@@ -168,11 +168,7 @@ module Api
     end
 
     def resource_for(resource_params)
-      scope = current_organization.resources
-      resource = resource_params[:canonical_id].present? && scope.find_by(canonical_id: resource_params[:canonical_id])
-      resource ||= scope.find_by(source_uri: resource_params[:source_uri])
-      resource ||= scope.build
-      resource
+      current_organization.resources.find_or_initialize_by_canonical_id_or_source_uri(resource_params)
     end
   end
 end

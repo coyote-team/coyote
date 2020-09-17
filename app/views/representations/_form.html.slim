@@ -16,18 +16,14 @@
       hr data-label="... or ..."
       = f.input :content_uri, as: :url, required: false
 
-      .collapse.form-field#toggle-representation-details(data-toggle-target="#toggle-representation-details")
-        .collapse-toggle(data-toggle="collapse--toggled")
-          = icon :arrow_right
-          .collapse-toggle-label Additional details
-        .collapse-content
-          = f.input :status, collection: Coyote::Representation.status_collection if representation.persisted? && organization_user.admin?
-          = f.input :content_type, as: :select, collection: Coyote::Representation::CONTENT_TYPES
-          = f.input :notes, as: :text, hint: 'Useful for communicating internally with other Coyote members about this representation', input_html: {rows: 1}
-          = f.input :ordinality, label: 'Ordinality', input_html: { min: 0, max: 100 }
-          = f.input :language, as: :select, collection: language_list, include_blank: false
-          = f.association :license, collection: License.all, include_blank: false
-          = f.association :author, collection: organizational_user_collection(include_staff: true), include_blank: false
+      = collapse do
+        = f.input :status, collection: Coyote::Representation.status_collection if representation.persisted? && organization_user.admin?
+        = f.input :content_type, as: :select, collection: Coyote::Representation::CONTENT_TYPES
+        = f.input :notes, as: :text, hint: 'Useful for communicating internally with other Coyote members about this representation', input_html: {rows: 1}
+        = f.input :ordinality, input_html: { min: 0, max: 100 }
+        = f.input :language, as: :select, collection: language_list, include_blank: false
+        = f.association :license, collection: License.all, include_blank: false
+        = f.association :author, collection: organizational_user_collection(include_staff: true), include_blank: false
 
       = toolbar class: 'toolbar--footer' do
         = submit_toolbar_item(f, submit_options: {class: "button--aside"})

@@ -1,28 +1,37 @@
-.DS_Store
+**.orig
 *.rbc
 *.sassc
-.sass-cache
-.capybara.html
 .DS_Store
-log
-tmp
-db/*.sqlite3
-public/system
-coverage/
-spec/tmp
-**.orig
-rerun.txt
-pickle-email-*.html
-node_modules
-public/assets/
+.DS_Store
+.capybara.html
+.sass-cache
 .yardoc
+coverage/
+db/*.sqlite3
+log
+node_modules
+pickle-email-*.html
+public/assets/
+public/system
+rerun.txt
+spec/tmp
+storage/
+tmp
 
 ## Environment normalisation:
 .bundle
 vendor/bundle
 
-# Ignore application configuration
+# Ignore application credentials
 config/application.yml
 config/credentials/production.key
 config/credentials/staging.key
 config/credentials/test.key
+
+# Asset pipeline leftovers
+.yarn-integrity
+node_modules
+public/packs
+public/packs-test
+yarn-debug.log*
+yarn-error.log

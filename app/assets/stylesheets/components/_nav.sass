@@ -74,12 +74,15 @@ nav#nav-main
           color: $tint
 
         &::after
-          border-bottom: 2px solid $tint
+          background-color: $tint
+          border-top-left-radius: 2px
+          border-top-right-radius: 2px
           bottom: 0
           content: ""
-          left: 0
+          height: 2px
+          left: $gutter / 2
           position: absolute
-          right: 0
+          right: $gutter / 2
 
   // Secondary nav
   .nav-secondary

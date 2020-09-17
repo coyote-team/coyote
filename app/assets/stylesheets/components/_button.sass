@@ -27,19 +27,23 @@
     background-color: $disabled !important
     border-color: $disabled !important
 
+button,
+.button
+  cursor: pointer
+
 .button
   @extend %input-fixed-height
 
-  cursor: pointer
   font-size: $font-size-control
-  font-weight: 600
+  font-weight: 400
   padding: 0 ($input-padding * 2)
   text-align: center
   text-decoration: none
   transition: all 100ms $heavy
 
-  &:not(:first-child)
-    margin-left: $input-padding
+  &:not(.button--block)
+    + .button:not(.button-block)
+      margin-left: $input-padding
 
   &.button--block
     display: block
@@ -57,7 +61,8 @@
   &[disabled],
   form:invalid &[type]
     cursor: not-allowed !important
-    opacity: 0.6 !important
+
+    // opacity: 0.6 !important
 
     &:focus,
     &:hover

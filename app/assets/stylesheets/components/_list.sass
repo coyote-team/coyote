@@ -26,11 +26,13 @@
 
   .list-item
     align-items: center
-    border-top: 1px solid $border
     display: flex
     justify-content: space-between
     padding: $gutter
     transition: all 150ms $swift
+
+    + .list-item
+      border-top: 1px solid $border
 
     &-dashboard-metric
       @extend .list-item
@@ -74,10 +76,12 @@
     .list-item-body
       flex: 1
 
+      .list-item-body-text
+        word-break: break-all
+
     .list-item-actions
       text-align: right
-
-      // white-space: nowrap
+      white-space: nowrap
 
       .list-item-actions-item
         display: inline-block

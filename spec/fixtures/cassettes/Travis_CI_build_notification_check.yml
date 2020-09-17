@@ -88,6 +88,6 @@ http_interactions:
         more secure seed user password [#103]","event_type":"push"},{"id":254587471,"repository_id":9942526,"number":"185","state":"finished","result":0,"started_at":"2017-07-17T19:57:12Z","finished_at":"2017-07-17T19:59:04Z","duration":112,"commit":"ef95376b3462afe18745a09d9fa2719778e42eb6","branch":"master","message":"cannot
         deploy heroku mysql with an addon name [#103]","event_type":"push"},{"id":254585101,"repository_id":9942526,"number":"184","state":"finished","result":0,"started_at":"2017-07-17T19:50:05Z","finished_at":"2017-07-17T19:53:00Z","duration":175,"commit":"0c33ed58a1a9a7a0faacca654b3c4d1df477d9a2","branch":"master","message":"Initial
         attempt at Heroku one-click installation [#103]","event_type":"push"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 19 Jul 2017 20:17:43 GMT
 recorded_with: VCR 3.0.3

@@ -20,11 +20,13 @@
 #
 # Indexes
 #
+#  index_resources_on_canonical_id                      (canonical_id)
 #  index_resources_on_is_deleted                        (is_deleted)
 #  index_resources_on_organization_id                   (organization_id)
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
 # Foreign Keys
@@ -90,6 +92,13 @@ class Resource < ApplicationRecord
   # max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
   delegate :name, to: :resource_group, prefix: true
+
+  def self.find_or_initialize_by_canonical_id_or_source_uri(options)
+    resource = options[:canonical_id].present? && find_by(canonical_id: options[:canonical_id])
+    resource ||= find_by(source_uri: options[:source_uri])
+    resource ||= new
+    resource
+  end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
   # @return [nil] if no resources exist
@@ -203,7 +212,7 @@ class Resource < ApplicationRecord
         # Set the author_id if it needs to be set
         attributes[:author_id] ||= organization.memberships.active.by_creation.first_id(:user_id)
 
-        # Increase ordinality for new representations when there are other representations this metum
+        # Increase ordinality for new representations when there are other representations with this metum
         attributes[:ordinality] = representations.where.not(id: representation.id).with_metum(attributes[:metum_id]).count
       end
 

@@ -36,7 +36,6 @@ services:
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}
       WEBPACKER_DEV_SERVER_HOST: webpacker
@@ -54,16 +53,25 @@ services:
       - packs:/coyote/public/packs
       - rails_cache:/coyote/tmp/cache
 
+  selenium:
+    image: selenium/standalone-chrome-debug
+    ports:
+      - 4444:4444
+
   test:
     <<: *rails
     command: bundle exec rails db:test:prepare spec
+    depends_on:
+      - db
+      - selenium
     environment:
-      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DATABASE_URL: postgres://postgres:postgres@db:5432/coyote_test
       NODE_ENV: test
       PORT: 3030
       RAILS_ENV: test
       SECRET_KEY_BASE: 0c46014ccd12dae8ddf7094d53d2e0befb9580f8a81ac95ba0f3f735acba275fa4999ff9aeac421d26a0ca4207072f13dd0ba6d540cb39b8fccff341091d3e66
+      SELENIUM_HOST: selenium:4444
+      TEST_HOST: test
       WEB_CONCURRENCY: 1
     ports:
       - 3030:3030

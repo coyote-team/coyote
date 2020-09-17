@@ -2,5 +2,6 @@
   = dropdown_option link_to('Support', support_path)
   = dropdown_option link_to('Profile', edit_user_path)
   = dropdown_option link_to('Organizations', organizations_path)
+  = dropdown_option link_to('Imports', imports_path) if current_organization? && can?(:create, Import)
   = dropdown_option link_to('User Management (Staff)', staff_users_path) if current_user.staff?
   = dropdown_option link_to('Log out', destroy_session_path, method: :delete)

@@ -1,0 +1,7 @@
+h1= title "New Import"
+= simple_form_for import, validate: true, url: import, html: { multipart: true } do |f|
+  = f.error_notification
+  = f.input :spreadsheet
+
+  = form_toolbar f
+

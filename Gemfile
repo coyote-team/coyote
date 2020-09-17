@@ -12,13 +12,13 @@ gem "rails", "~> 6.0.1"
 gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"
-gem "autoprefixer-rails"
 gem "bcrypt", "~> 3.1.7"
 # gem "aws-sdk-s3", require: false # Comment this in to use S3 instead of Google Cloud Storage - see config/storage.yml
 gem "bootsnap", require: false
 gem "cloudtasker"
 gem "easymarklet", git: "https://github.com/seeread/easymarklet.git", ref: "53829a6"
 gem "faraday"
+gem "ffi", require: false
 gem "jquery-rails", ">= 4.0.4"
 gem "jsonapi-rails"
 gem "jwt"
@@ -33,12 +33,14 @@ gem "pundit"
 gem "rake"
 gem "ransack"
 gem "redcarpet"
+gem "roo"
 gem "sass-rails"
 gem "simple_form"
 gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
 gem "uglifier", ">= 2.7.1" # js compression
+gem "webpacker"
 
 group :development, :test do
   gem "factory_bot_rails", require: false
@@ -72,7 +74,7 @@ end
 
 group :test do
   gem "capybara", require: false
-  gem "database_cleaner", require: false
+  gem "capybara-webmock", require: false
   gem "jsonapi-rspec", require: false
   gem "launchy", require: false #  to use save_and_open_page from Capybara
   gem "pundit-matchers", require: false # better rspec testing of policies
@@ -83,6 +85,7 @@ group :test do
   gem "simplecov-material", require: false
   gem "vcr", require: false
   gem "webmock", require: false
+  gem "webdrivers", require: false
 end
 
 # This hack is to ensure that Google's protocol buffers and GRPC libraries build correctly in

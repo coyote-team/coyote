@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 module RepresentationHelper
-  REPRESENTATION_STATUS_CLASSES = {
-    ready_to_review: "partial",
-    approved:        "success",
-    not_approved:    "warning",
-  }.with_indifferent_access.freeze
-
   def representation_audit_license(id)
     @audit_licenses ||= {}
     @audit_licenses.fetch(id) do
@@ -28,13 +22,9 @@ module RepresentationHelper
     end&.username
   end
 
-  def representation_status_class(status)
-    REPRESENTATION_STATUS_CLASSES[status]
-  end
-
   def representation_status_tag(representation, tag: :span)
-    tag_class = representation_status_class(representation.status)
-    content_tag(tag, class: "tag tag--#{tag_class}") do
+    tag_class = status_class_for(representation.status, base: :tag)
+    content_tag(tag, class: "tag #{tag_class}") do
       block_given? ? yield : representation.status.to_s.titleize
     end
   end
