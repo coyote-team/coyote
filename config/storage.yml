@@ -36,7 +36,7 @@ google:
     client_x509_cert_url: <%= Credentials.dig(:google, :credentials, :client_x509_cert_url) %>
     private_key: <%= Credentials.dig(:google, :credentials, :private_key) %>
     private_key_id: <%= Credentials.dig(:google, :credentials, :private_key_id) %>
-    project_id: <%= Credentials.dig(:google, :project %>
+    project_id: <%= Credentials.dig(:google, :project) %>
   bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
 # mirror:
