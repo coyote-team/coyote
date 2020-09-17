@@ -60,9 +60,6 @@ ADD . ./
 RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile; fi
 RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile:pages; fi
 
-# Install Chrome for test runs
-RUN if [ "$RAILS_ENV" = "test" ]; then apk add --update --no-cache chromium; fi
-
 # Launch!
 EXPOSE $PORT
 CMD ./bin/release && bundle exec puma -C config/puma.rb
