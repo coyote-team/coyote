@@ -94,10 +94,9 @@ class Resource < ApplicationRecord
   delegate :name, to: :resource_group, prefix: true
 
   def self.find_or_initialize_by_canonical_id_or_source_uri(options)
-    resource = options[:canonical_id].present? && find_by(canonical_id: options[:canonical_id])
-    resource ||= find_by(source_uri: options[:source_uri])
-    resource ||= new
-    resource
+    source_uri_scope = where(source_uri: options[:source_uri])
+    scope = options[:canonical_id].present? ? where(canonical_id: options[:canonical_id]).or(source_uri_scope) : source_uri_scope
+    scope.first || new
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
