@@ -26,7 +26,17 @@ azure:
 google:
   service: GCS
   project: <%= Credentials.dig(:google, :project) %>
-  credentials: <%= Credentials.fetch(:google, :application_credentials) { Rails.root.join("path/to/gcs.keyfile") } %>
+  credentials:
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+    auth_uri: "https://accounts.google.com/o/oauth2/auth"
+    token_uri: "https://oauth2.googleapis.com/token"
+    type: "service_account"
+    client_email: <%= Credentials.dig(:google, :credentials, :client_email) %>
+    client_id: <%= Credentials.dig(:google, :credentials, :client_id) %>
+    client_x509_cert_url: <%= Credentials.dig(:google, :credentials, :client_x509_cert_url) %>
+    private_key: <%= Credentials.dig(:google, :credentials, :private_key) %>
+    private_key_id: <%= Credentials.dig(:google, :credentials, :private_key_id) %>
+    project_id: <%= Credentials.dig(:google, :project %>
   bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
 # mirror:
