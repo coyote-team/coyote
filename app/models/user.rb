@@ -56,7 +56,7 @@ class User < ApplicationRecord
   has_many :resource_groups, through: :organizations
 
   scope :active, -> { where(active: true) }
-  scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) asc")) }
+  scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) ASC NULLS LAST, users.id ASC")) }
 
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true
   validates :email, uniqueness: true, if: :email_changed?

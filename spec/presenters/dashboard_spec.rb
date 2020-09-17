@@ -34,7 +34,7 @@ RSpec.describe Dashboard, type: :integration do
         expect(subject.organization_unassigned_count).to eq(0)
         expect(subject.organization_unassigned_unrepresented_count).to eq(0)
         expect(subject.organization_unrepresented_count).to eq(0)
-        expect(subject.organization_users).to eq([user, other_user])
+        expect(subject.organization_users).to eq([user, other_user].sort { |a, b| a.last_name&.downcase <=> b.last_name&.downcase })
       end
     end
   end
