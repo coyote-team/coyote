@@ -57,8 +57,7 @@ ENV PORT 3000
 
 # Copy and configure the app
 ADD . ./
-RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile; fi
-RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile:pages; fi
+RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile && bundle exec rails assets:precompile:pages; fi
 
 # Launch!
 EXPOSE $PORT
