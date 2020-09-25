@@ -70,23 +70,6 @@ class Representation < ApplicationRecord
     %i[approved by_ordinality not_approved ready_to_review]
   end
 
-  def select_default_license(attributes, organization)
-    name = attributes.delete(:license)
-    self.license_id = attributes.delete(:license_id) ||
-      (name.present? && License.where(name: name).first_id) ||
-      license_id ||
-      organization.default_license_id ||
-      License.all.first_id
-  end
-
-  def select_default_metum(attributes, meta)
-    name = attributes.delete(:metum)
-    self.metum_id = attributes.delete(:metum_id) ||
-      (name.present? && meta.where(name: name).first_id) ||
-      metum_id ||
-      meta.where(name: "Alt").first_id
-  end
-
   def to_s
     "Description #{self[:id]}"
   end

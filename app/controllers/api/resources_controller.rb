@@ -71,18 +71,23 @@ module Api
     param(:resources, Array) { instance_exec(&resource_params) }
     returns_serialized array_of: :resource
     def create_many
-      resources = []
+      failures = []
+      successes = []
+      overwrite_representations = params[:overwrite_representations].present?
       params.require(:resources).each do |(key, resource_params)|
         resource_params ||= key
-        resource_params = clean_resource_params(resource_params)
+        resource_params = clean_resource_params(resource_params, overwrite_representations: overwrite_representations)
         resource = resource_for(resource_params)
         resource.union_host_uris = true
-        resource.update(resource_params)
-        resources.push(resource)
+        if resource.update(resource_params)
+          successes.push(resource)
+        else
+          failures.push(resource)
+        end
       end
 
-      render jsonapi_mixed: resources,
-             status:        resources.any?(&:invalid?) ? :unprocessable_entity : :created
+      render jsonapi_mixed: [successes, failures],
+             status:        failures.any? ? :unprocessable_entity : :created
     end
 
     api! "Delete existing resource"

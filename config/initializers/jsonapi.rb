@@ -40,16 +40,13 @@ JSONAPI::Rails.configure do |config|
   config.logger.level = Logger::Severity::WARN
 end
 
-ActionController::Renderers.add(:jsonapi_mixed) do |resources, options|
-  valid_resources = resources.select(&:valid?)
-  invalid_resources = resources - valid_resources
-
+ActionController::Renderers.add(:jsonapi_mixed) do |(valid, invalid), options|
   # Renderer proc is evaluated in the controller context.
   self.content_type ||= Mime[:jsonapi]
-  response = JSONAPI::Rails::Railtie::RENDERERS[:jsonapi].render(valid_resources, options, self).as_json
+  response = JSONAPI::Rails::Railtie::RENDERERS[:jsonapi].render(valid, options, self).as_json
 
-  if invalid_resources.any?
-    invalid_response = JSONAPI::Rails::Railtie::RENDERERS[:jsonapi_errors].render(invalid_resources.map(&:errors), options, self).as_json
+  if invalid.any?
+    invalid_response = JSONAPI::Rails::Railtie::RENDERERS[:jsonapi_errors].render(invalid.map(&:errors), options, self).as_json
     response = invalid_response.merge(response)
   end
 

@@ -29,8 +29,8 @@
 class ResourceGroup < ApplicationRecord
   DEFAULT_NAME = "Uncategorized"
 
-  before_destroy :check_for_resources_or_default
   before_save :set_token, if: :webhook_uri?
+  before_destroy :check_for_resources_or_default
 
   validates :name, presence: true
   validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?

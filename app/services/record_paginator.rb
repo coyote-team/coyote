@@ -37,11 +37,11 @@ class RecordPaginator
   # @return [ActiveRecord::Relation] the original records query with which we were initialized, with Kaminari pagination applied
   def query
     @query ||= begin
-                 records
-                   .page(pagination_number)
-                   .per(pagination_size)
-                 #  without_count
-               end
+      records
+        .page(pagination_number)
+        .per(pagination_size)
+      #  without_count
+    end
   end
 
   private

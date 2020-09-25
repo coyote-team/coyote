@@ -34,7 +34,7 @@ class Api::ApplicationController < ActionController::API
   end
 
   def find_resource
-    scope = current_user.resources
+    scope = current_user.staff? ? Resource : current_user.resources
     self.resource = params[:canonical_id].present? ?
       scope.find_by!(canonical_id: params[:canonical_id]) :
       scope.find(params[:resource_id] || params[:id])
@@ -45,7 +45,7 @@ class Api::ApplicationController < ActionController::API
     @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
-  alias pundit_user organization_user
+  alias_method :pundit_user, :organization_user
 
   def render_unauthorized
     render jsonapi_errors: [{

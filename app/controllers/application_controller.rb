@@ -46,9 +46,9 @@ class ApplicationController < ActionController::Base
     return @auth_token if defined? @auth_token
     @auth_token = session[AuthToken::KEY] || begin
       cookies.signed[AuthToken::KEY]
-                                             rescue NoMethodError => error
-                                               raise error unless /undefined method `generate_key'/.match?(error.message)
-                                               nil
+    rescue NoMethodError => error
+      raise error unless /undefined method `generate_key'/.match?(error.message)
+      nil
     end
   end
 
@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
     @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
   end
 
-  alias pundit_user organization_user
+  alias_method :pundit_user, :organization_user
 
   def redirect_to_return_path(*args)
     options = args.extract_options!

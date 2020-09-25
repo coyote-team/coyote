@@ -8,7 +8,7 @@ class UserPolicy < ApplicationPolicy
     false
   end
 
-  alias new? create?
+  alias_method :new?, :create?
 
   # @return [Boolean] whether or not the user is a staff member
   def destroy?
@@ -20,7 +20,7 @@ class UserPolicy < ApplicationPolicy
     self? || organization_user.staff?
   end
 
-  alias update? edit?
+  alias_method :update?, :edit?
 
   # @return [false] we don't allow all users to be enumerated
   # @note will change when we build a separate admin UI

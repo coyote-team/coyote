@@ -81,7 +81,7 @@ class User < ApplicationRecord
     end
   end
 
-  alias name to_s
+  alias_method :name, :to_s
 
   def update_organization_counter_cache
     update_attribute(:organizations_count, organizations.count(true))

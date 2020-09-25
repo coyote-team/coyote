@@ -128,7 +128,7 @@ RSpec.describe "Accessing resources" do
       let(:short) { user_organization.meta.find_by!(name: "Alt") }
       let(:long) { user_organization.meta.find_by!(name: "Long") }
 
-      let(:representation_attributes) { attributes_for(:representation) }
+      let(:representation_attributes) { attributes_for(:representation, :approved) }
 
       let!(:existing_resource) { create(:resource, host_uris: Array.new(3) { Faker::Internet.unique.url }, organization: user_organization) }
       let(:existing_resource_uris) { existing_resource.host_uris }
@@ -156,7 +156,7 @@ RSpec.describe "Accessing resources" do
 
       let(:existing_nested_resource_params) {
         existing_nested_resource.attributes.slice("source_uri").merge(
-          representations: [representation_attributes.merge(metum: short.name)],
+          representations: [representation_attributes.merge(metum: long.name)],
         )
       }
 
@@ -180,7 +180,7 @@ RSpec.describe "Accessing resources" do
         expect(representation.license).to eq(license)
         expect(representation.text).to eq(representation_attributes[:text])
 
-        # It should prevent creation of a duplicate representation on the resource that already had one, and
+        # It should prevent creation of a duplicate representation on the resource that already had one
         expect(existing_nested_resource.representations.count).to eq(1)
 
         # It should also not modify the existing representation since it was a duplicate
@@ -236,6 +236,41 @@ RSpec.describe "Accessing resources" do
         expect(json_data[:errors].size).to eq(2)
         expect(json_data[:errors][0][:title]).to eq("Invalid source_uri")
         expect(json_data[:errors][1][:title]).to eq("Invalid resource_type")
+      end
+
+      it "POST /organizations/:id/resources/create does not add representations when some already exist" do
+        new_representation = attributes_for(:representation, metum_id: existing_nested_resource.representations.first.metum_id)
+        params = {resources: [
+          existing_nested_resource_params.merge(representations: [new_representation]),
+          existing_resource_params,
+        ]}
+
+        expect {
+          post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
+          expect(response).to be_unprocessable
+        }.not_to change(user_organization.resources, :count)
+
+        # It should not add a new representation to the resource, since it already had one
+        representation = existing_resource.representations.first
+        expect(representation.metum).to eq(short)
+        expect(representation.license).to eq(license)
+        expect(representation.text).to eq(representation_attributes[:text])
+
+        # It should prevent creation of a duplicate representation on the resource that already had one, and
+        expect(existing_nested_resource.representations.count).to eq(1)
+
+        # It should also not modify the existing representation
+        representation = existing_nested_resource.representations.first
+        expect(representation.metum).to eq(long) # It should not have updated the metum to short
+
+        # FINALLY, it should render data AND errors
+        # 1. Data: the successful resource update
+        expect(json_data[:data].size).to eq(1)
+
+        # 2. Errors: the unsuccessful resource update
+        expect(json_data[:errors].size).to eq(1)
+        expect(json_data[:errors][0][:title]).to eq("Invalid representations")
+        expect(json_data[:errors][0][:detail]).to eq("Representations cannot be overwritten without an `overwrite_representations` flag on the request")
       end
 
       it "POST /organizations/:id/resources/create joins host URIs" do

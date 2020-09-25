@@ -8,15 +8,15 @@ class MetumPolicy < ApplicationPolicy
     user.admin?
   end
 
-  alias new? create?
-  alias update? create?
-  alias edit? create?
-  alias destroy? create?
+  alias_method :new?, :create?
+  alias_method :update?, :create?
+  alias_method :edit?, :create?
+  alias_method :destroy?, :create?
 
   # @return [Boolean] all users can view meta
   def index?
     true
   end
 
-  alias show? index?
+  alias_method :show?, :index?
 end

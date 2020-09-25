@@ -9,8 +9,8 @@ class ResourcePolicy < ApplicationPolicy
     organization_user.editor?
   end
 
-  alias new? create?
-  alias create_many? create?
+  alias_method :new?, :create?
+  alias_method :create_many?, :create?
 
   # @return [Boolean] if the user can create representations of this resource
   def describe?
@@ -32,6 +32,6 @@ class ResourcePolicy < ApplicationPolicy
     organization_user.editor?
   end
 
-  alias edit? update?
-  alias destroy? update?
+  alias_method :edit?, :update?
+  alias_method :destroy?, :update?
 end

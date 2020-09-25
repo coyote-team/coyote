@@ -9,7 +9,7 @@ class MembershipPolicy < ApplicationPolicy
     false
   end
 
-  alias new? create?
+  alias_method :new?, :create?
 
   # @return [Boolean] if attempting to destroy one's own membership, or if the user is an admin and is not attempting to destroy another admin's membership
   def destroy?
@@ -24,7 +24,7 @@ class MembershipPolicy < ApplicationPolicy
     organization_user.editor?
   end
 
-  alias show? index?
+  alias_method :show?, :index?
 
   # @return [true] if the user is an admin and is not editing his/her own membership
   # @return [false] if the user is not an admin, or is an admin who is trying to edit his/her own membership
@@ -35,7 +35,7 @@ class MembershipPolicy < ApplicationPolicy
     organization_user.admin?
   end
 
-  alias edit? update?
+  alias_method :edit?, :update?
 
   private
 
