@@ -44,7 +44,7 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :skip_webhooks, :union_host_uris
+  attr_accessor :overwrite_representations, :skip_webhooks, :union_host_uris
 
   before_create :set_default_resource_group
 
@@ -83,6 +83,7 @@ class Resource < ApplicationRecord
   validates :source_uri, presence: true
   validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :source_uri_changed?
   validates :name, presence: true
+  validate :cannot_overwrite_representations, on: :update, unless: :overwrite_representations
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -205,7 +206,13 @@ class Resource < ApplicationRecord
   def representations_attributes=(representations_attributes)
     representations_attributes.each do |attributes|
       attributes = attributes.with_indifferent_access
-      representation = representations.find_or_initialize_by(attributes.slice(:language, :text))
+      metum_id = extract_metum_param(attributes)
+
+      finder = attributes.slice(:language, :text)
+      finder[:metum_id] = metum_id if metum_id.present?
+
+      representation = representations.find_or_initialize_by(finder)
+      representation.metum_id ||= metum_id || organization.meta.where(name: "Alt").first_id
 
       if representation.new_record?
         # Set the author_id if it needs to be set
@@ -213,13 +220,14 @@ class Resource < ApplicationRecord
 
         # Increase ordinality for new representations when there are other representations with this metum
         attributes[:ordinality] = representations.where.not(id: representation.id).with_metum(attributes[:metum_id]).count
+        attributes[:status] ||= :approved
       end
 
-      # Allow assigning license by name, e.g. "cc0-1.0"
-      representation.select_default_license(attributes, organization)
-
-      # Allow assigning metum by name, e.g. "Short" or "Long"
-      representation.select_default_metum(attributes, organization.meta)
+      license_id = extract_license_param(attributes)
+      representation.license_id = license_id ||
+        representation.license_id ||
+        organization.default_license_id ||
+        License.all.first_id
 
       # Assign whatever is left
       representation.assign_attributes(attributes)
@@ -236,7 +244,7 @@ class Resource < ApplicationRecord
 
   def resource_group_id=(new_resource_group_id)
     resource_group = new_resource_group_id.presence && organization.resource_groups.find_by(id: new_resource_group_id)
-    resource_groups << resource_group if resource_group.present? && !resource_group_ids.include?(resource_group.id)
+    resource_groups << resource_group if resource_group.present? && resource_group_ids.exclude?(resource_group.id)
   end
 
   # TODO: Should maybe move this stuff to a presenter / decorator
@@ -267,6 +275,34 @@ class Resource < ApplicationRecord
   end
 
   private
+
+  def cannot_overwrite_representations
+    return unless persisted?
+    if representations.any? {|representation|
+      representation.new_record? && representations.approved.where(metum_id: representation.metum_id).any?
+    }
+      errors.add(:representations, :cannot_overwrite)
+    end
+  end
+
+  def could_not_overwrite!
+    errors.add(:representations, :could_not_overwrite)
+    puts "\n\nADDED TO ERRORS #{errors.inspect}\n\n"
+  end
+
+  # Allow assigning license by name, e.g. "cc0-1.0"
+  def extract_license_param(attributes)
+    name = attributes.delete(:license)
+    attributes.delete(:license_id) ||
+      (name.present? && License.where(name: name).first_id)
+  end
+
+  # Allow assigning metum by , e.g. "Short" or "Long"
+  def extract_metum_param(attributes)
+    name = attributes.delete(:metum)
+    attributes.delete(:metum_id) ||
+      (name.present? && organization.meta.where(name: name).first_id)
+  end
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?

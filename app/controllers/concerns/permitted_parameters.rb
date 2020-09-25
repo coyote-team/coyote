@@ -64,10 +64,11 @@ module PermittedParameters
 
   private
 
-  def clean_resource_params(resource_params)
+  def clean_resource_params(resource_params, overwrite_representations: false)
     resource_params.permit(*RESOURCE_PARAMS).tap do |params|
       representations = params.delete(:representations)
       if representations.present?
+        params[:overwrite_representations] = !!overwrite_representations
         params[:representations_attributes] = representations.map { |representation|
           representation[:author_id] ||= current_user.id
           representation

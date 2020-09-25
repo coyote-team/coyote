@@ -7,7 +7,7 @@ class OrganizationPolicy < ApplicationPolicy
     true
   end
 
-  alias new? create?
+  alias_method :new?, :create?
 
   # @return [false] we don't currently support destruction of organizations
   def destroy?
@@ -30,5 +30,5 @@ class OrganizationPolicy < ApplicationPolicy
     organization_user.owner?
   end
 
-  alias edit? update?
+  alias_method :edit?, :update?
 end

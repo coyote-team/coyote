@@ -42,7 +42,7 @@ module ApplicationHelper
   def organizational_user_collection(include_staff: false)
     # @return [Array<String, Integer>] list of users suitable for use in select boxes
     collection = current_organization.active_users.active.order("LOWER(users.first_name) DESC NULLS LAST, LOWER(users.last_name) DESC NULLS LAST, LOWER(users.email) DESC").to_a
-    collection.push(current_user) if include_staff && current_user.staff? && !collection.include?(current_user)
+    collection.push(current_user) if include_staff && current_user.staff? && collection.exclude?(current_user)
     collection.map { |u| [u.username, u.id] }
   end
 

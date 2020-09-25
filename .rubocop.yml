@@ -25,6 +25,7 @@ AllCops:
     - node_modules/**/*
     - script/**/*
     - vendor/**/*
+  NewCops: enable
 
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table

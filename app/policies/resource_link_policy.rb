@@ -9,7 +9,7 @@ class ResourceLinkPolicy < ApplicationPolicy
     organization_user.author?
   end
 
-  alias new? create?
+  alias_method :new?, :create?
 
   # @return [true] anyone can view a resource link belonging to their organization
   def show?
@@ -21,6 +21,6 @@ class ResourceLinkPolicy < ApplicationPolicy
     organization_user.editor?
   end
 
-  alias edit? update?
-  alias destroy? update?
+  alias_method :edit?, :update?
+  alias_method :destroy?, :update?
 end

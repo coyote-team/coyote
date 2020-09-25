@@ -32,7 +32,6 @@
 en:
   actioncontroller:
     parameter_missing: "The required parameter '%{param}' is missing or empty"
-
   activerecord:
     attributes:
       representation:
@@ -42,6 +41,10 @@ en:
       representation: Description
       resource_group: Resource Group
       resource_link: Link
+    errors:
+      models:
+        resource:
+          cannot_overwrite: "cannot be overwritten without an `overwrite_representations` flag on the request"
 
   helpers:
     select:

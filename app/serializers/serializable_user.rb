@@ -6,5 +6,11 @@ class SerializableUser < JSONAPI::Serializable::Resource
 
   attributes :first_name, :last_name
 
-  relationship :organizations
+  has_many :organizations do
+    data do
+      @object.staff? ? Organization.is_active : @object.organizations
+    end
+  end
+
+  # relationship :organizations
 end

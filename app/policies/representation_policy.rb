@@ -7,7 +7,7 @@ class RepresentationPolicy < ApplicationPolicy
   def approve?
     organization_user.editor? && record.ready_to_review?
   end
-  alias reject? approve?
+  alias_method :reject?, :approve?
 
   # @return [Boolean] whether or not the user can create representations for this organization
   def create?
@@ -15,7 +15,7 @@ class RepresentationPolicy < ApplicationPolicy
     organization_user.author? && record.resource.assigned_to?(organization_user.user)
   end
 
-  alias new? create?
+  alias_method :new?, :create?
 
   # @return [true] everyone can list representations in their organizations
   def index?
@@ -33,6 +33,6 @@ class RepresentationPolicy < ApplicationPolicy
     organization_user.author? && organization_user.user == record.author
   end
 
-  alias edit? update?
-  alias destroy? update?
+  alias_method :edit?, :update?
+  alias_method :destroy?, :update?
 end
