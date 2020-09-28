@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe ResourceLinkPolicy do
-  include_context "viewer organization user"
-
   subject { described_class.new(org_user, resource_link) }
+
+  include_context "viewer organization user"
 
   let(:resource_link) do
     double(:resource_link, class: ResourceLink)

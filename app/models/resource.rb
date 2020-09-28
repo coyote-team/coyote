@@ -83,7 +83,6 @@ class Resource < ApplicationRecord
   validates :source_uri, presence: true
   validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :source_uri_changed?
   validates :name, presence: true
-  validate :cannot_overwrite_representations, on: :update, unless: :overwrite_representations
 
   enum resource_type: Coyote::Resource::TYPES
 
@@ -206,14 +205,18 @@ class Resource < ApplicationRecord
   def representations_attributes=(representations_attributes)
     representations_attributes.each do |attributes|
       attributes = attributes.with_indifferent_access
-      metum_id = extract_metum_param(attributes)
 
-      finder = attributes.slice(:language, :text)
-      finder[:metum_id] = metum_id if metum_id.present?
+      # Find a metum for the representation, accepting a name or an ID
+      metum_name = attributes.delete(:metum)
+      metum_id = attributes.delete(:metum_id) || (metum_name.present? && organization.meta.where(name: metum_name).first_id)
+      metum_id ||= organization.meta.where(name: "Alt").first_id
 
-      representation = representations.find_or_initialize_by(finder)
-      representation.metum_id ||= metum_id || organization.meta.where(name: "Alt").first_id
+      # Don't add extra representations for this metum unless `overwrite_representations` is set
+      next if !overwrite_representations && representations.approved.where(language: attributes[:language], metum_id: metum_id).any?
 
+      # If there's a pre-existing representation this this metum, language and text, don't create a
+      # new one - just update the old one
+      representation = representations.find_or_initialize_by(attributes.slice(:language, :text).merge(metum_id: metum_id))
       if representation.new_record?
         # Set the author_id if it needs to be set
         attributes[:author_id] ||= organization.memberships.active.by_creation.first_id(:user_id)
@@ -223,13 +226,12 @@ class Resource < ApplicationRecord
         attributes[:status] ||= :approved
       end
 
-      license_id = extract_license_param(attributes)
-      representation.license_id = license_id ||
-        representation.license_id ||
-        organization.default_license_id ||
-        License.all.first_id
+      # Find a license for the representation, accepting a name or an ID
+      license_name = attributes.delete(:license)
+      license_id = attributes.delete(:license_id) || (license_name.present? && License.where(name: license_name).first_id)
+      representation.license_id ||= license_id || organization.default_license_id || License.all.first_id
 
-      # Assign whatever is left
+      # Assign whatever is left in the attributes
       representation.assign_attributes(attributes)
     end
   end
@@ -275,34 +277,6 @@ class Resource < ApplicationRecord
   end
 
   private
-
-  def cannot_overwrite_representations
-    return unless persisted?
-    if representations.any? {|representation|
-      representation.new_record? && representations.approved.where(metum_id: representation.metum_id).any?
-    }
-      errors.add(:representations, :cannot_overwrite)
-    end
-  end
-
-  def could_not_overwrite!
-    errors.add(:representations, :could_not_overwrite)
-    puts "\n\nADDED TO ERRORS #{errors.inspect}\n\n"
-  end
-
-  # Allow assigning license by name, e.g. "cc0-1.0"
-  def extract_license_param(attributes)
-    name = attributes.delete(:license)
-    attributes.delete(:license_id) ||
-      (name.present? && License.where(name: name).first_id)
-  end
-
-  # Allow assigning metum by , e.g. "Short" or "Long"
-  def extract_metum_param(attributes)
-    name = attributes.delete(:metum)
-    attributes.delete(:metum_id) ||
-      (name.present? && organization.meta.where(name: name).first_id)
-  end
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?

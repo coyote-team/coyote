@@ -247,30 +247,40 @@ RSpec.describe "Accessing resources" do
 
         expect {
           post create_many_api_resources_path(user_organization.id), params: params, as: :json, headers: auth_headers
-          expect(response).to be_unprocessable
+          expect(response).to be_successful
         }.not_to change(user_organization.resources, :count)
 
-        # It should not add a new representation to the resource, since it already had one
+        # It should not modify the existing representation
+        expect(existing_nested_resource.representations.count).to eq(1)
+        representation = existing_nested_resource.representations.first
+
+        # It should include the original representation in the response
+        # expect(json_data[:included]).to include(have_type("representation").and(have_id(representation.id.to_s)))
+        expect(json_data[:included]).to include(have_type("representation").and(have_id(representation.id.to_s).and(have_attribute(:text).with_value(representation_attributes[:text]))))
+        expect(json_data[:data].first).to have_relationship(:representations).with_data(
+          [
+            {
+              id:   representation.id.to_s,
+              type: "representation",
+            }.stringify_keys,
+          ],
+        )
+
+        # It should create a new representation on the representation-less resource
         representation = existing_resource.representations.first
         expect(representation.metum).to eq(short)
         expect(representation.license).to eq(license)
         expect(representation.text).to eq(representation_attributes[:text])
 
-        # It should prevent creation of a duplicate representation on the resource that already had one, and
-        expect(existing_nested_resource.representations.count).to eq(1)
-
-        # It should also not modify the existing representation
-        representation = existing_nested_resource.representations.first
-        expect(representation.metum).to eq(long) # It should not have updated the metum to short
-
-        # FINALLY, it should render data AND errors
-        # 1. Data: the successful resource update
-        expect(json_data[:data].size).to eq(1)
-
-        # 2. Errors: the unsuccessful resource update
-        expect(json_data[:errors].size).to eq(1)
-        expect(json_data[:errors][0][:title]).to eq("Invalid representations")
-        expect(json_data[:errors][0][:detail]).to eq("Representations cannot be overwritten without an `overwrite_representations` flag on the request")
+        expect(json_data[:included]).to include(have_type("representation").and(have_id(representation.id.to_s).and(have_attribute(:text).with_value(representation_attributes[:text]))))
+        expect(json_data[:data].second).to have_relationship(:representations).with_data(
+          [
+            {
+              id:   representation.id.to_s,
+              type: "representation",
+            }.stringify_keys,
+          ],
+        )
       end
 
       it "POST /organizations/:id/resources/create joins host URIs" do

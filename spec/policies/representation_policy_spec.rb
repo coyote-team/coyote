@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe RepresentationPolicy do
-  include_context "viewer organization user"
-
   subject { described_class.new(org_user, representation) }
+
+  include_context "viewer organization user"
 
   let(:representation) { build_stubbed(:representation) }
   let(:resource) { build_stubbed(:resource) }

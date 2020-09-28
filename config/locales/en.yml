@@ -44,7 +44,7 @@ en:
     errors:
       models:
         resource:
-          cannot_overwrite: "cannot be overwritten without an `overwrite_representations` flag on the request"
+          # cannot_overwrite: "cannot be overwritten without an `overwrite_representations` flag on the request"
 
   helpers:
     select:

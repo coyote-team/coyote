@@ -23,6 +23,7 @@ AllCops:
     - db/migrate/**/*
     - db/schema.rb
     - node_modules/**/*
+    - old/**/*
     - script/**/*
     - vendor/**/*
   NewCops: enable

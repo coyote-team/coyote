@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe InvitationPolicy do
-  include_context "editor organization user"
-
   subject { described_class.new(org_user, Invitation) }
+
+  include_context "editor organization user"
 
   it { is_expected.to forbid_action(:index) }
   it { is_expected.to forbid_action(:show) }

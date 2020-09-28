@@ -48,12 +48,12 @@ RSpec.describe "Representations" do
       get api_representations_path(representation.resource_id), headers: auth_headers
       data = json_data[:data]
       expect(data.size).to eq(2)
-      expect(data.map { |datum| datum[:id] }).to eq([representation.id.to_s, old_representation.id.to_s])
+      expect(data.pluck(:id)).to eq([representation.id.to_s, old_representation.id.to_s])
 
       get api_representations_path(representation.resource_id, filter: {updated_at_gt: 9.days.ago}), headers: auth_headers
       data = json_data[:data]
       expect(data.size).to eq(1)
-      expect(data.map { |datum| datum[:id] }).to eq([representation.id.to_s])
+      expect(data.pluck(:id)).to eq([representation.id.to_s])
     end
 
     it "GET /resources/canonical/:resource_id/representations with canonical id" do

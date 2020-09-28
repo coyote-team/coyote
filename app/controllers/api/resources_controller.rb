@@ -73,10 +73,9 @@ module Api
     def create_many
       failures = []
       successes = []
-      overwrite_representations = params[:overwrite_representations].present?
       params.require(:resources).each do |(key, resource_params)|
         resource_params ||= key
-        resource_params = clean_resource_params(resource_params, overwrite_representations: overwrite_representations)
+        resource_params = clean_resource_params(resource_params)
         resource = resource_for(resource_params)
         resource.union_host_uris = true
         if resource.update(resource_params)
@@ -87,6 +86,7 @@ module Api
       end
 
       render jsonapi_mixed: [successes, failures],
+             include:       %i[representations],
              status:        failures.any? ? :unprocessable_entity : :created
     end
 

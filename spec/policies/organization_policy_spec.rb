@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe OrganizationPolicy do
-  include_context "admin organization user"
-
   subject { described_class.new(org_user, org) }
+
+  include_context "admin organization user"
 
   let(:org) do
     double(:org, class: Organization, user_id: org_user.id)

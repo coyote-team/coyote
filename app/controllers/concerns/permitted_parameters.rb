@@ -64,7 +64,10 @@ module PermittedParameters
 
   private
 
-  def clean_resource_params(resource_params, overwrite_representations: false)
+  def clean_resource_params(resource_params)
+    overwrite_representations = params[:overwrite_representations].present?
+    overwrite_representations &&= overwrite_representations.to_s.downcase =~ /^t/
+
     resource_params.permit(*RESOURCE_PARAMS).tap do |params|
       representations = params.delete(:representations)
       if representations.present?

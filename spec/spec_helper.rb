@@ -38,7 +38,6 @@ require "pry"
 require "pundit/matchers"
 require "rails-controller-testing"
 require "shoulda-matchers"
-require "simplecov"
 require "webmock/rspec"
 
 SPEC_DATA_PATH = Pathname(__dir__).join("data")

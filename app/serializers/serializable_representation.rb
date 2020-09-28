@@ -4,7 +4,7 @@
 class SerializableRepresentation < ApplicationSerializer
   type "representation"
 
-  attributes :id, :status, :content_uri, :content_type, :language, :text, :created_at, :updated_at
+  attributes :id, :status, :content_uri, :content_type, :language, :ordinality, :text, :created_at, :updated_at
 
   attribute :metum do
     @object.metum_name

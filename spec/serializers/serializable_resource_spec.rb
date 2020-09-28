@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe SerializableResource do
-  include_context "serializable object"
-
   subject do
     serialized.fetch(:attributes)
   end
+
+  include_context "serializable object"
 
   let(:object) { build_stubbed(:resource) }
 
