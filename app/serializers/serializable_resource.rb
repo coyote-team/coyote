@@ -16,7 +16,7 @@ class SerializableResource < ApplicationSerializer
 
   has_many :representations do
     data do
-      @object.approved_representations.by_ordinality
+      @object.approved_representations.with_distinct_meta
     end
   end
 

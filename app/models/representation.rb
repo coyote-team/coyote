@@ -54,9 +54,10 @@ class Representation < ApplicationRecord
   delegate :description, :name, to: :license, prefix: true
   delegate :name, to: :author, prefix: true
 
-  scope :by_ordinality, -> { order(ordinality: :asc) }
+  scope :by_ordinality, -> { order("#{table_name}.ordinality ASC NULLS LAST, created_at ASC") }
   scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? "DESC" : "ASC"}")) }
   scope :by_length, -> { order(Arel.sql("length(text) DESC")) }
+  scope :with_distinct_meta, -> { Representation.default_scoped.select("DISTINCT ON(metum_id) metum_id, *").from(by_ordinality, table_name).unscope(:order) }
   scope :with_metum, ->(metum_id) { where(metum_id: metum_id) }
   scope :with_metum_named, ->(name) { joins(:metum).where(meta: {name: name}) }
 
@@ -64,6 +65,7 @@ class Representation < ApplicationRecord
 
   delegate :notify_webhook!, to: :resource, allow_nil: true
   after_commit :notify_webhook!, if: :should_notify_webhook?
+  before_create :set_ordinality
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
@@ -80,6 +82,10 @@ class Representation < ApplicationRecord
     return if text.present?
     return if content_uri.present?
     errors.add(:text, "Either text or content URI must be present")
+  end
+
+  def set_ordinality
+    self.ordinality ||= resource.representations.where(metum_id: metum_id).count.succ
   end
 
   def should_notify_webhook?
