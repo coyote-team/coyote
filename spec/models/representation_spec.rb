@@ -51,7 +51,7 @@ RSpec.describe Representation do
   describe "#notify_webhook!" do
     include_context "webhooks"
 
-    let!(:resource) { create(:resource, resource_groups: [resource_group]) }
+    let!(:resource) { create(:resource, organization: resource_group.organization, resource_groups: [resource_group]) }
 
     before do
       WebMock.reset!

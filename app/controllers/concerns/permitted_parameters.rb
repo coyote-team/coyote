@@ -55,6 +55,8 @@ module PermittedParameters
       resource_group_ids
       resource_type
       source_uri
+      union_host_uris
+      union_resource_groups
       uploaded_resource
     ] + [{
       host_uris:          [],

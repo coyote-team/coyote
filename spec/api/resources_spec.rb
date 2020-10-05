@@ -296,6 +296,30 @@ RSpec.describe "Accessing resources" do
           .from(existing_resource_uris).to(existing_resource_uris + ["http://www.other-host-uri-is-here-yay.com/scrmpth"])
       end
 
+      it "POST /organizations/:id/resources/create accepts new resource groups" do
+        new_resource_group = create(:resource_group, organization: user_organization)
+        resource_group_ids = existing_resource.resource_group_ids
+
+        # It should add new_resource_group using the `resource_group_id` attribute
+        expect {
+          post create_many_api_resources_path(user_organization.id), params: {resources: [
+            existing_resource_params.merge(resource_group_id: new_resource_group.id),
+          ]}, as: :json, headers: auth_headers
+          expect(response).to be_created
+        }.to change { existing_resource.reload.resource_group_ids }
+          .from(resource_group_ids).to(resource_group_ids + [new_resource_group.id])
+
+        # It should add another_new_resource_group using the `resource_group_ids` attribute
+        another_new_resource_group = create(:resource_group, organization: user_organization)
+        expect {
+          post create_many_api_resources_path(user_organization.id), params: {resources: [
+            existing_resource_params.merge(resource_group_ids: [another_new_resource_group.id], union_resource_groups: true),
+        ]}, as: :json, headers: auth_headers
+          expect(response).to be_created
+        }.to change { existing_resource.reload.resource_group_ids }
+          .from(resource_group_ids + [new_resource_group.id]).to(resource_group_ids + [new_resource_group.id, another_new_resource_group.id])
+      end
+
       it "POST /organizations/:id/resources/create accepts a hash format" do
         params = {resources: {
           "0" => existing_resource_params,

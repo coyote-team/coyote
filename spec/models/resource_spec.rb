@@ -96,11 +96,26 @@ RSpec.describe Resource do
     end
   end
 
+  describe "#resource_groups" do
+    before { resource.save! }
+
+    it "scopes resource groups to the resource's organization" do
+      resource_group = create(:resource_group)
+      expect(resource_group.organization).not_to eq(resource.organization)
+
+      expect {
+        resource.update(resource_group_ids: [resource_group.id], union_resource_groups: true)
+      }.not_to change {
+        resource.reload.resource_group_ids
+      }.from([resource.resource_group.id])
+    end
+  end
+
   describe "#notify_webhook!" do
     include_context "webhooks"
 
     it "sends webhook notifications when resources are created" do
-      resource = create(:resource, resource_groups: [resource_group])
+      resource = create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
       expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
         data = JSON.parse(req.body)["data"]
         expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
@@ -113,7 +128,7 @@ RSpec.describe Resource do
     end
 
     it "adds a JWT token header with the resource ID in it" do
-      create(:resource, resource_groups: [resource_group])
+      create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
       expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
         data = JSON.parse(req.body)["data"]
         payload = {id: data["id"]}

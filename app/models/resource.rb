@@ -44,8 +44,10 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :overwrite_representations, :skip_webhooks, :union_host_uris
+  attr_accessor :overwrite_representations, :skip_webhooks, :union_host_uris, :union_resource_groups
 
+  before_save :merge_host_uris
+  before_save :merge_resource_groups
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -60,7 +62,7 @@ class Resource < ApplicationRecord
   has_many :meta, through: :representations
 
   has_many :resource_group_resources, inverse_of: :resource, dependent: :destroy
-  has_many :resource_groups, through: :resource_group_resources, inverse_of: :resources
+  has_many :resource_groups, ->(resource) { where(organization_id: resource.organization_id) }, through: :resource_group_resources, inverse_of: :resources
   has_many :resource_webhook_calls, dependent: :destroy
 
   has_one_attached :uploaded_resource
@@ -161,9 +163,7 @@ class Resource < ApplicationRecord
 
   # @param value [String] a newline-delimited list of host URIs to store for this Resource
   def host_uris=(value)
-    new_uris = value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)
-    new_uris = (host_uris || []).union(new_uris) if union_host_uris
-    self[:host_uris] = new_uris
+    @new_host_uris = value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)
   end
 
   # @return [String] a human-friendly means of identifying this resource in names and select boxes
@@ -244,9 +244,14 @@ class Resource < ApplicationRecord
     @resource_group ||= resource_groups.first
   end
 
-  def resource_group_id=(new_resource_group_id)
-    resource_group = new_resource_group_id.presence && organization.resource_groups.find_by(id: new_resource_group_id)
-    resource_groups << resource_group if resource_group.present? && resource_group_ids.exclude?(resource_group.id)
+  def resource_group_id=(resource_group_id)
+    return if resource_group_id.blank?
+    self.resource_group_ids = resource_group_ids + [resource_group_id.to_i] if resource_group_ids.exclude?(resource_group_id)
+  end
+
+  def resource_group_ids=(value)
+    new_ids = value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)
+    @new_resource_group_ids = organization.resource_groups.where(id: new_ids).pluck(:id) # ensure we only attach resource groups for this org
   end
 
   # TODO: Should maybe move this stuff to a presenter / decorator
@@ -277,6 +282,16 @@ class Resource < ApplicationRecord
   end
 
   private
+
+  def merge_host_uris
+    return unless @new_host_uris
+    self[:host_uris] = union_host_uris ? (host_uris || []).union(@new_host_uris) : @new_host_uris
+  end
+
+  def merge_resource_groups
+    return unless @new_resource_group_ids
+    self.resource_groups = organization.resource_groups.find(union_resource_groups ? (resource_group_ids || []).union(@new_resource_group_ids) : @new_resource_group_ids)
+  end
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?
