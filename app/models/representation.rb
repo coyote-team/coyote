@@ -63,13 +63,17 @@ class Representation < ApplicationRecord
 
   audited
 
+  before_save :clean_text
   before_create :set_ordinality
   after_commit :notify_webhook!, if: :should_notify_webhook?
   delegate :notify_webhook!, to: :resource, allow_nil: true
 
+  def self.clean_text(text)
+    HTMLEntities.new(:expanded).decode(text.to_s.strip)
+  end
+
   def self.find_or_initialize_by_text(text, extra = {})
-    text = HTMLEntities.new.decode(text.to_s.strip)
-    find_or_initialize_by(extra.merge(text: text))
+    find_or_initialize_by(extra.merge(text: clean_text(text)))
   end
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
@@ -82,6 +86,10 @@ class Representation < ApplicationRecord
   end
 
   private
+
+  def clean_text
+    self.text = self.class.clean_text(text)
+  end
 
   def must_have_text_or_content_uri
     return if text.present?

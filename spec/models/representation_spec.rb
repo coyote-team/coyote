@@ -50,16 +50,18 @@ RSpec.describe Representation do
 
   describe ".find_or_initialize_by_text" do
     it "converts HTML entities and strips extra characters" do
-      representation = create(:representation, text: %{I'm a "very interesting" representation <with> much to say for myself.})
+      # rubocop:disable RSpec/MultipleExpectations
+      representation = create(:representation, text: %(I'm a "very interesting" representation <with> much to say for myself.))
 
       standard_escape = "I&apos;m a &quot;very interesting&quot; representation &lt;with&gt; much to say for myself."
-      expect(Representation.find_or_initialize_by_text(standard_escape)).to eq(representation)
+      expect(described_class.find_or_initialize_by_text(standard_escape)).to eq(representation)
 
       hex_escape = "I&#x27;m a &#x22;very interesting&#x22; representation &#x3c;with&#x3e; much to say for myself."
-      expect(Representation.find_or_initialize_by_text(hex_escape)).to eq(representation)
+      expect(described_class.find_or_initialize_by_text(hex_escape)).to eq(representation)
 
       extra_whitespace = "\t\t\r\n#{hex_escape}   "
-      expect(Representation.find_or_initialize_by_text(extra_whitespace)).to eq(representation)
+      expect(described_class.find_or_initialize_by_text(extra_whitespace)).to eq(representation)
+      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 
