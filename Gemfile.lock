@@ -225,6 +225,7 @@ GEM
       guard (~> 2.0)
       rubocop (~> 0.20)
     hashdiff (1.0.1)
+    htmlentities (4.3.4)
     httpclient (2.8.3)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
@@ -534,6 +535,7 @@ DEPENDENCIES
   guard-bundler
   guard-rspec
   guard-rubocop
+  htmlentities
   jquery-rails (>= 4.0.4)
   jsonapi-rails
   jsonapi-rspec

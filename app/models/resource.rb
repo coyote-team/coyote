@@ -216,7 +216,7 @@ class Resource < ApplicationRecord
 
       # If there's a pre-existing representation this this metum, language and text, don't create a
       # new one - just update the old one
-      representation = representations.find_or_initialize_by(attributes.slice(:language, :text).merge(metum_id: metum_id))
+      representation = representations.find_or_initialize_by_text(attributes[:text], language: attributes[:language], metum_id: metum_id)
       if representation.new_record?
         # Set the author_id if it needs to be set
         attributes[:author_id] ||= organization.memberships.active.by_creation.first_id(:user_id)

@@ -63,9 +63,14 @@ class Representation < ApplicationRecord
 
   audited
 
-  delegate :notify_webhook!, to: :resource, allow_nil: true
-  after_commit :notify_webhook!, if: :should_notify_webhook?
   before_create :set_ordinality
+  after_commit :notify_webhook!, if: :should_notify_webhook?
+  delegate :notify_webhook!, to: :resource, allow_nil: true
+
+  def self.find_or_initialize_by_text(text, extra = {})
+    text = HTMLEntities.new.decode(text.to_s.strip)
+    find_or_initialize_by(extra.merge(text: text))
+  end
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
