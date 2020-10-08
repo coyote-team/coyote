@@ -21,7 +21,6 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
 
-
   web: &rails
     build:
       args:
@@ -36,8 +35,10 @@ services:
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
+      HOST: http://web:3000/
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}
+      REDIS_URL: "redis://redis:6379/"
       WEBPACKER_DEV_SERVER_HOST: webpacker
       WEB_CONCURRENCY: 1
     ports:
