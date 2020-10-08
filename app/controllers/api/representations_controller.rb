@@ -74,7 +74,7 @@ module Api
     end
 
     def record_filter
-      @record_filter ||= RecordFilter.new(filter_params, pagination_params, resource.representations, default_order: :by_ordinality)
+      @record_filter ||= RecordFilter.new(filter_params, pagination_params, resource.representations, default_order: :by_status_and_ordinality)
     end
   end
 end

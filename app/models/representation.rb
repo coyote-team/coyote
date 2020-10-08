@@ -56,6 +56,7 @@ class Representation < ApplicationRecord
 
   scope :by_ordinality, -> { order("#{table_name}.ordinality ASC NULLS LAST, created_at ASC") }
   scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? "DESC" : "ASC"}")) }
+  scope :by_status_and_ordinality, -> { by_status.by_ordinality }
   scope :by_length, -> { order(Arel.sql("length(text) DESC")) }
   scope :with_distinct_meta, -> { Representation.default_scoped.select("DISTINCT ON(metum_id) metum_id, *").from(by_ordinality, table_name).unscope(:order) }
   scope :with_metum, ->(metum_id) { where(metum_id: metum_id) }
@@ -78,7 +79,7 @@ class Representation < ApplicationRecord
 
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
-    %i[approved by_ordinality not_approved ready_to_review]
+    %i[approved by_ordinality by_status_and_ordinality not_approved ready_to_review]
   end
 
   def to_s
