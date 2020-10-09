@@ -55,11 +55,21 @@ nav#nav-main
       position: relative
 
       a
+        +non-mobile
+          padding: 0 $input-padding
+
+
+        +large-screen
+          font-size: $font-size
+          padding: 0 $gutter
+
+
         display: block
+        font-size: $font-size-control
         height: 100%
         line-height: $nav-height - 3px
-        padding: 0 $gutter
         text-decoration: none
+        white-space: nowrap
 
         &:hover
           background-color: $input

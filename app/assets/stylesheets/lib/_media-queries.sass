@@ -1,3 +1,7 @@
+=large-screen
+  @media screen and (min-width: $breakpoint-large-screen)
+    @content
+
 =desktop
   @media screen and (min-width: $breakpoint-desktop)
     @content
@@ -15,7 +19,7 @@
     @content
 
 =non-mobile
-  @media screen and (min-width: $breakpoint-mobile + 1px)
+  @media screen and (min-width: #{$breakpoint-mobile + 1px})
     @content
 
 =mobile-portrait

@@ -1,0 +1,17 @@
+.initials
+  &:not(&--collapse)
+    text-transform: uppercase
+
+    .initial--collapse
+      display: none
+
+  +non-desktop
+    &--collapse
+      border-radius: 1000px
+
+      .initial
+        &:not(.initial--collapse)
+          text-transform: uppercase
+
+        &.initial--collapse
+          display: none
