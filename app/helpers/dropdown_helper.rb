@@ -39,9 +39,6 @@ module DropdownHelper
   end
 
   def dropdown_option(option)
-    menu_item_options = {
-      class: "dropdown-menu-item",
-    }
-    tag.li(block_given? ? yield(option) : option, menu_item_options)
+    tag.li(class: "dropdown-menu-item") { block_given? ? yield(option) : option }
   end
 end
