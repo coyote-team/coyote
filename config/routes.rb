@@ -153,11 +153,11 @@ Rails.application.routes.draw do
         resources :representations, only: %i[index create]
       end
 
-      scope "resources/canonical/:canonical_id" do
+      scope "resources/canonical/:canonical_id", constraints: {canonical_id: /.+/} do
         resources :representations, as: :canonical_representations, only: %i[index create]
       end
 
-      resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[destroy show update], param: :canonical_id
+      resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[destroy show update], param: :canonical_id, constraints: {canonical_id: /.+/}
       resources :resources, only: %i[destroy show update]
       resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show destroy]
@@ -190,7 +190,7 @@ Rails.application.routes.draw do
   end
 
   ## Canonical resources - just redirects to the resource in the organization context
-  resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show], param: :canonical_id
+  resources :resources, as: :canonical_resources, path: "resources/canonical", only: %i[show], param: :canonical_id, constraints: {canonical_id: /.+/}
 
   ## Metadata
   resources :organizations do
@@ -236,8 +236,8 @@ Rails.application.routes.draw do
 
   ## Bookmarklet
   if ENV["BOOKMARKLET"] == "true"
-    match "coyote" => "coyote_consumer#iframe", :via => [:get]
-    match "coyote_producer" => "coyote_producer#index", :via => [:get]
+    get "coyote" => "coyote_consumer#iframe"
+    get "coyote_producer" => "coyote_producer#index"
   end
 
   ## Scavenger hunt

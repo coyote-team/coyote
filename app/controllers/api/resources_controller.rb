@@ -60,9 +60,12 @@ module Api
       resource = resource_for(resource_params)
       if resource.update(resource_params)
         logger.info "Created #{resource}"
-        render jsonapi: resource, status: :created, links: {
-          coyote: resource_url(resource, organization_id: resource.organization_id),
-        }
+        render jsonapi: resource,
+               status:  :created,
+               links:   {
+                 coyote: resource_url(resource, organization_id: resource.organization_id),
+               },
+               include: %i[organization representations]
       else
         logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
         render jsonapi_errors: resource.errors, status: :unprocessable_entity
