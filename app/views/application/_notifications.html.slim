@@ -1,7 +1,6 @@
 - if flash.any?
   h2.sr-only#notification-title Notifications
-  #notifications
-    ul aria-labelledby="notification-title"
-      - flash.each_with_index do |(type, message), idx|
-        li.notification class=flash_class(type)
-          .notification-title= message
+  #notifications aria-labelledby="notification-title" role="region"
+    - flash.each_with_index do |(type, message), idx|
+      .notification class=flash_class(type)
+        .notification-title= message

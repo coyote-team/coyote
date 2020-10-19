@@ -3,6 +3,8 @@
 # == Route Map
 #
 #                        Prefix Verb   URI Pattern                                                                              Controller#Action
+#        apipie_apipie_checksum GET    /apidoc/apipie_checksum(.:format)                                                        apipie/apipies#apipie_checksum {:format=>/json/}
+#                 apipie_apipie GET    /apidoc(/:version)(/:resource)(/:method)(.:format)                                       apipie/apipies#index {:version=>/[^\/]+/, :resource=>/[^\/]+/, :method=>/[^\/]+/}
 #     create_many_api_resources POST   /api/v1/organizations/:organization_id/resources/create(.:format)                        api/resources#create_many
 #             get_api_resources POST   /api/v1/organizations/:organization_id/resources/get(.:format)                           api/resources#index
 #                 api_resources GET    /api/v1/organizations/:organization_id/resources(.:format)                               api/resources#index
@@ -11,12 +13,12 @@
 #                               POST   /api/v1/organizations/:organization_id/resource_groups(.:format)                         api/resource_groups#create
 #           api_representations GET    /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#index
 #                               POST   /api/v1/resources/:resource_id/representations(.:format)                                 api/representations#create
-# api_canonical_representations GET    /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#index
-#                               POST   /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#create
-#        api_canonical_resource GET    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#show
-#                               PATCH  /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
-#                               PUT    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update
-#                               DELETE /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#destroy
+# api_canonical_representations GET    /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#index {:canonical_id=>/.+/}
+#                               POST   /api/v1/resources/canonical/:canonical_id/representations(.:format)                      api/representations#create {:canonical_id=>/.+/}
+#        api_canonical_resource GET    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#show {:canonical_id=>/.+/}
+#                               PATCH  /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update {:canonical_id=>/.+/}
+#                               PUT    /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#update {:canonical_id=>/.+/}
+#                               DELETE /api/v1/resources/canonical/:canonical_id(.:format)                                      api/resources#destroy {:canonical_id=>/.+/}
 #                  api_resource GET    /api/v1/resources/:id(.:format)                                                          api/resources#show
 #                               PATCH  /api/v1/resources/:id(.:format)                                                          api/resources#update
 #                               PUT    /api/v1/resources/:id(.:format)                                                          api/resources#update
@@ -42,7 +44,8 @@
 #                password_reset GET    /login/forgot/:id(.:format)                                                              password_resets#show
 #                               PATCH  /login/forgot/:id(.:format)                                                              password_resets#update
 #                               PUT    /login/forgot/:id(.:format)                                                              password_resets#update
-#            canonical_resource GET    /resources/canonical/:canonical_id(.:format)                                             resources#show
+#            canonical_resource GET    /resources/canonical/:canonical_id(.:format)                                             resources#show {:canonical_id=>/.+/}
+#           delete_organization GET    /organizations/:id/delete(.:format)                                                      organizations#delete
 #                 organizations GET    /organizations(.:format)                                                                 organizations#index
 #                               POST   /organizations(.:format)                                                                 organizations#create
 #              new_organization GET    /organizations/new(.:format)                                                             organizations#new
@@ -77,6 +80,7 @@
 #                               PUT    /organizations/:organization_id/resource_links/:id(.:format)                             resource_links#update
 #                               DELETE /organizations/:organization_id/resource_links/:id(.:format)                             resource_links#destroy
 # representation_status_changes POST   /organizations/:organization_id/representation_status_changes(.:format)                  representation_status_changes#create
+#        membership_assignments GET    /organizations/:organization_id/memberships/:membership_id/assignments(.:format)         assignments#index
 #                   memberships GET    /organizations/:organization_id/memberships(.:format)                                    memberships#index
 #               edit_membership GET    /organizations/:organization_id/memberships/:id/edit(.:format)                           memberships#edit
 #                    membership GET    /organizations/:organization_id/memberships/:id(.:format)                                memberships#show
@@ -104,8 +108,16 @@
 #                               PATCH  /organizations/:organization_id/meta/:id(.:format)                                       meta#update
 #                               PUT    /organizations/:organization_id/meta/:id(.:format)                                       meta#update
 #                               DELETE /organizations/:organization_id/meta/:id(.:format)                                       meta#destroy
-#                   invitations POST   /organizations/:organization_id/invitations(.:format)                                    invitations#create
-#                new_invitation GET    /organizations/:organization_id/invitations/new(.:format)                                invitations#new
+#                   invitations POST   /organizations/:organization_id/memberships/invitations(.:format)                        invitations#create
+#                new_invitation GET    /organizations/:organization_id/memberships/invitations/new(.:format)                    invitations#new
+#                process_import POST   /organizations/:organization_id/imports/:id/process(.:format)                            imports#process
+#                       imports GET    /organizations/:organization_id/imports(.:format)                                        imports#index
+#                               POST   /organizations/:organization_id/imports(.:format)                                        imports#create
+#                    new_import GET    /organizations/:organization_id/imports/new(.:format)                                    imports#new
+#                   edit_import GET    /organizations/:organization_id/imports/:id/edit(.:format)                               imports#edit
+#                        import GET    /organizations/:organization_id/imports/:id(.:format)                                    imports#show
+#                               PATCH  /organizations/:organization_id/imports/:id(.:format)                                    imports#update
+#                               PUT    /organizations/:organization_id/imports/:id(.:format)                                    imports#update
 #                          user GET    /users/:id(.:format)                                                                     users#show
 #                   staff_users GET    /staff/users(.:format)                                                                   staff/users#index
 #               edit_staff_user GET    /staff/users/:id/edit(.:format)                                                          staff/users#edit
@@ -218,7 +230,7 @@ Rails.application.routes.draw do
     resources :assignments, only: %i[index show new create destroy]
     resources :resource_groups
     resources :meta
-    resources :invitations, only: %i[new create]
+    resources :invitations, path: "memberships/invitations", only: %i[new create]
     resources :imports, except: %i[destroy] do
       member do
         post :process

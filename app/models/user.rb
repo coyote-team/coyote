@@ -72,6 +72,10 @@ class User < ApplicationRecord
     failed_attempts >= Rails.application.config.x.maximum_login_attempts
   end
 
+  def full_name_and_email
+    name == email ? email : "#{name} (#{email})"
+  end
+
   # @return [String] human-friendly name for this user, depending on which of the name columns are filled-in; falls back to email address
   def to_s
     if first_name.present? || last_name.present?
