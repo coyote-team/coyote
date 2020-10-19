@@ -21,7 +21,7 @@ class InvitationsController < ApplicationController
     end
 
     logger.info "Created #{invitation} for #{invitation.recipient_email} to #{invitation.organization}"
-    redirect_to organization_path(current_organization), notice: "#{invitation.recipient_user.full_name_and_email} has been invited as a #{invitation.role} to the #{current_organization.name} organization"
+    redirect_to memberships_path(current_organization), notice: "#{invitation.recipient_user.full_name_and_email} has been invited as a #{invitation.role} to the #{current_organization.name} organization"
   end
 
   # GET /organizations/1/invitations/new
