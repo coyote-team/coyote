@@ -24,7 +24,7 @@ RSpec.describe "Inviting users" do
 
       expect {
         click_button "Send invitation"
-        expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
+        expect(page).to have_current_path(memberships_path(user_organization), ignore_query: true)
       }.to change(user_organization.users, :count)
         .from(1).to(2)
 
@@ -57,7 +57,7 @@ RSpec.describe "Inviting users" do
 
       expect {
         click_button "Send invitation"
-        expect(page).to have_current_path(organization_path(user_organization), ignore_query: true)
+        expect(page).to have_current_path(memberships_path(user_organization), ignore_query: true)
       }.to change(User, :count)
         .from(1).to(2)
 
