@@ -29,7 +29,7 @@ module ResourcesHelper
     target = options.delete(:href) || resource_path(resource)
 
     link_to(target, link_options) do
-      resource_link_target(resource, options.merge(alt: options[:alt] || "Image for resource ##{resource.id}"))
+      resource_link_target(resource, options.merge(alt: options[:alt] || resource.best_representation || "Image for resource ##{resource.id}"))
     end
   end
 
