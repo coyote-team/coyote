@@ -148,7 +148,7 @@ class Resource < ApplicationRecord
 
   def best_representation
     return @best_representation if defined? @best_representation
-    @best_representation = representations.by_status_and_ordinality.first
+    @best_representation = representations.by_status_and_ordinality.pick(:text)
   end
 
   def complete?
