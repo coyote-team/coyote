@@ -56,13 +56,14 @@ class Representation < ApplicationRecord
 
   scope :by_ordinality, -> { order("#{table_name}.ordinality ASC NULLS LAST, created_at ASC") }
   scope :by_status, ->(descending: false) { order(Arel.sql("(case status when 'approved' then 0 when 'ready_to_review' then 1 else 2 end) #{descending ? "DESC" : "ASC"}")) }
-  scope :by_status_and_ordinality, -> { by_status.by_ordinality }
-  scope :by_length, -> { order(Arel.sql("length(text) DESC")) }
+  scope :by_status_and_ordinality, -> { by_status.by_ordinality.by_creation }
   scope :with_distinct_meta, -> { Representation.default_scoped.select("DISTINCT ON(metum_id) metum_id, *").from(by_ordinality, table_name).unscope(:order) }
   scope :with_metum, ->(metum_id) { where(metum_id: metum_id) }
   scope :with_metum_named, ->(name) { joins(:metum).where(meta: {name: name}) }
 
   audited
+
+  acts_as_list column: :ordinality, scope: [:resource_id]
 
   before_save :clean_text
   before_create :set_ordinality

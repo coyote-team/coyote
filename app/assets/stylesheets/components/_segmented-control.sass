@@ -6,10 +6,28 @@
   border-color: $border
   display: inline-flex
 
+  &--scrollable
+    overflow: auto
+
   .segmented-control-item
     .segmented-control-item-label
       display: inline-block
       margin-left: $input-padding
+
+      +desktop
+        &:first-child
+          margin-left: 0
+
+
+      +non-desktop
+        display: none
+
+    .segmented-control-item-icon
+      +desktop
+        display: none
+
+        + .segmented-control-item-label
+          margin-left: 0
 
     > *
       border-right: 1px solid $border
@@ -31,6 +49,10 @@
 
     &:last-child > *
       border-right-width: 0
+
+    &--collapse
+      +non-desktop
+        display: none
 
     + .segmented-control-item
       margin-left: -1px

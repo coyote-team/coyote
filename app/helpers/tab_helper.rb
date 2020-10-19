@@ -17,7 +17,7 @@ module TabHelper
     options[:tabindex] = active ? "0" : "-1"
 
     # Push the pane content onto the tab buffer
-    @tab_buffer.push(content_tag(:div, capture(&block), options))
+    @tab_buffer.push(tag.div(capture(&block), options))
 
     # Return the tab item
     tab_options = {
@@ -32,7 +32,7 @@ module TabHelper
       type:     :button,
     }
 
-    content_tag(:button, label, tab_options)
+    tag.button(label, tab_options)
   ensure
     @tab_index += 1
   end
@@ -60,7 +60,7 @@ module TabHelper
 
     # Concatenate the tab list and the buffer panes
     safe_join([
-      content_tag(:div, tabs, options),
+      tag.div(tabs, options),
       *@tab_buffer,
     ])
   ensure

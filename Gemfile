@@ -9,6 +9,7 @@ end
 
 gem "rails", "~> 6.0.1"
 
+gem "acts_as_list"
 gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"

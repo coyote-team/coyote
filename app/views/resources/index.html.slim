@@ -11,8 +11,8 @@
 
       .filter-set-item
         .filter-set-item-title Priority
-        .checkbox-list
-          label.checkbox-list-item
+        ul.boolean-list
+          li.boolean-list-item: label
             = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
             span Urgent
 
@@ -21,9 +21,9 @@
       - else
         .filter-set-item
           .filter-set-item-title Status
-          .checkbox-list
+          ul.boolean-list
             - scope_search_collection.each do |name, scope|
-              label.checkbox-list-item
+              li.boolean-list-item: label
                 = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
                 span= name
         = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
@@ -35,29 +35,25 @@
   = simple_form_for :assignment, url: assignments_path, html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
     h2#results-title.action
-      | Total
-      span.sr-only Results
-      ' :
-      = number_with_delimiter record_filter.records.total_count
+      ' Results:
+      - count = record_filter.records.total_count
+      = number_with_delimiter count
+      '
+      = "resource".pluralize(count)
 
-    - if can?(:create, Import)
-        = new_link_to 'Import Resources', new_import_path, icon: :cloud_upload
-
-    - if policy(Resource).new?
-      = new_link_to 'New Resource', new_resource_path
-
-    - if record_filter.records.any?
-      = toolbar do
+    - has_resources = record_filter.records.any?
+    = toolbar do
+      - if has_resources
         label.label--checkbox.toolbar-item
           input#select-all data-select-all="#results" type="checkbox"
-          | Select all
+          span Select all
 
         - if policy(Assignment).new?
           = toolbar_item class: 'field' do
-            = form.input_field :user_id, collection: organizational_user_collection, label: false, prompt: 'Bulk Assign', required: false
+            = form.input_field :user_id, collection: organizational_user_collection, label: false, prompt: 'Assign...', required: false
             = form.submit 'Assign', class: 'button'
 
-        = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: 'View options' do
+        = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: {tag: :h3, text: 'View options'} do
           = segmented_control_item pressed: true, data: { toggle_target_off: "list--grid" }, icon: "list", title: "List View"
           = segmented_control_item pressed: false, data: { toggle_target_on: "list--grid" }, icon: "grid", title: "Grid View"
 
@@ -65,16 +61,32 @@
           = toolbar_item do
             = paginate record_filter.records
 
+      ruby:
+        can_import = can?(:create, Import)
+        can_create = policy(Resource).new?
+
+      - if can_import || can_create
+        = toolbar_item
+          - if can_import
+            = new_link_to 'Import Resources', new_import_path, icon: :cloud_upload
+
+          - if can_create
+            = new_link_to 'Add Resource', new_resource_path
+
+    - if has_resources
+      / Render the list
       = list id: 'results-list' do
         = render partial: 'resource', collection: record_filter.records, locals: { form: form }
 
+      / Render the footer
       = toolbar do
         label.label--checkbox.toolbar-item
           input#select-all data-select-all="#results-list" type="checkbox"
-          | Select all
+          span Select all
 
         - if record_filter.browser_pagination_link_params.any?
           = toolbar_item do
             = paginate record_filter.records
+
     - else
       p.empty-message There are no resources

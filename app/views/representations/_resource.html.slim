@@ -6,7 +6,7 @@ li.list-item
   .list-item-body.timeline
     span.sr-only Caption:
     .timeline-title= to_html resource.name
-    - representations.each do |representation|
+    - sorted_representations(representations).each do |representation|
       .timeline-item
         - if defined? form
           = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation #{representation.id} for bulk update"}

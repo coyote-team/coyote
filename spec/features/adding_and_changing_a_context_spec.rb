@@ -6,7 +6,7 @@ RSpec.describe "Adding and editing a resource group" do
 
     it "succeeds" do
       click_link "Resource Groups"
-      click_link "New Resource Group"
+      click_link "Add Resource Group"
       expect(page).to have_current_path(new_resource_group_path(organization_id: user_organization), ignore_query: true)
 
       fill_in "Name", with: "Scavenger Hunt"

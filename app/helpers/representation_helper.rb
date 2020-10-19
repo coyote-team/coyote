@@ -28,4 +28,15 @@ module RepresentationHelper
       block_given? ? yield : representation.status.to_s.titleize
     end
   end
+
+  # Sorts representations for display (when operating on an array rather than an Arel collection)
+  def sorted_representations(representations)
+    representations.sort do |a, b|
+      comparison = a.ordinality <=> b.ordinality
+      comparison = a.status_value <=> b.status_value if comparison.zero?
+      comparison = a.created_at <=> b.created_at if comparison.zero?
+      comparison = a.id <=> b.id if comparison.zero?
+      comparison
+    end
+  end
 end

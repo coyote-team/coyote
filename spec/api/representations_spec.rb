@@ -4,24 +4,27 @@ RSpec.describe "Representations" do
   describe "with authentication" do
     include_context "API author user"
 
+    before do
+      # Create an unapproved representation
+      create(:representation, :not_approved, organization: user_organization)
+    end
+
+    let(:resource) { representation.resource }
+
     let!(:representation) do
-      create(:representation, :approved, ordinality: 0, organization: user_organization).tap do |representation|
+      create(:representation, :approved, ordinality: 1, organization: user_organization).tap do |representation|
         representation.resource.update_attribute(:canonical_id, "abc123")
       end
     end
 
-    let!(:unapproved_representation) do
-      create(:representation, :not_approved, organization: user_organization)
-    end
-
     let!(:old_representation) do
-      create(:representation, :approved, ordinality: 1, organization: user_organization, resource: representation.resource).tap do |representation|
+      create(:representation, :approved, ordinality: 2, organization: user_organization, resource: resource).tap do |representation|
         representation.update_attribute(:updated_at, 10.days.ago)
       end
     end
 
     it "GET /resources/:resource_id/representations" do
-      get api_representations_path(representation.resource_id), headers: auth_headers
+      get api_representations_path(resource.id), headers: auth_headers
       expect(response).to be_successful
 
       json_data.fetch(:data).tap do |data|

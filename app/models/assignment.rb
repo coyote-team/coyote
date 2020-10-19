@@ -27,6 +27,7 @@ class Assignment < ApplicationRecord
   validates :user, uniqueness: {scope: :resource}, if: :user_id_changed?
 
   scope :by_created_at, -> { order(created_at: :desc) }
+  scope :by_priority, -> { joins(:resource).order("resources.representations_count ASC") }
 
   delegate :name, to: :resource, prefix: true
   delegate :first_name, :last_name, :email, to: :user, prefix: true

@@ -1,4 +1,4 @@
-table
+.table-wrapper: table
   caption
     h1= title "#{current_user.staff? ? "All" : "Your"} Organizations"
   thead
@@ -19,4 +19,4 @@ table
 
 nav.toolbar.toolbar--footer
   h2.sr-only Actions
-  = new_link_to 'New Organization', new_organization_path(organization_id: nil)
+  = new_link_to 'Add Organization', new_organization_path(organization_id: nil)

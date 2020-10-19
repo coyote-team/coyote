@@ -20,7 +20,7 @@ module ResourceLinksHelper
   # @param resource_link [ResourceLink] the object to render as a predicate
   # @return [String] a subject-verb-object predicate that describes the resource link
   def predicate_for(resource_link)
-    "#{sanitize(resource_link.subject_resource_name)} #{content_tag(:em, resource_link.verb)} #{sanitize(resource_link.object_resource_name)}".html_safe
+    "#{sanitize(resource_link.subject_resource_name)} #{tag.em(resource_link.verb)} #{sanitize(resource_link.object_resource_name)}".html_safe
   end
 
   SELF_ID = " (self)"

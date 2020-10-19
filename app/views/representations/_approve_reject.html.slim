@@ -1,6 +1,6 @@
-= simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+= simple_form_for representation, html: { class: 'form form--inline' } do |f|
   = f.input_field :status, as: :hidden, value: "approved"
   = f.submit "Approve", class: "button button--success", aria: { label: "Approve description ##{representation.id}" }, data: {confirm: "Are you sure you want to approve this description?"}
-= simple_form_for representation, html: { class: 'form form--inline' }, wrapper: :inline do |f|
+= simple_form_for representation, html: { class: 'form form--inline' } do |f|
   = f.input_field :status, as: :hidden, value: "not_approved"
   = f.submit "Reject", class: "button button--danger", aria: { label: "Approve representation ##{representation.id}" }, data: {confirm: "Are you sure you want to reject this description?"}

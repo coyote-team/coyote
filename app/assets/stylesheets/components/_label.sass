@@ -10,7 +10,13 @@ label
   // Labels *containing* checkbox or radio inputs
   &.label--checkbox, &.label--radio
     @extend %input-fixed-height
+
     border-color: transparent
+    align-items: center
+    display: flex
+
+    span
+      white-space: nowrap
 
   // Stacked labels to the line
   &.label--stack

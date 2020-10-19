@@ -3,7 +3,7 @@
 module CollapseHelper
   def collapse(options = {}, &block)
     label = options.delete(:label) || "Additional details"
-    toggle_options = {data: {toggle: "collapse--toggled"}}.deep_merge(options.delete(:toggle_options) || {})
+    toggle_options = {data: {toggle: "collapse--toggled"}}.deep_merge(options.delete(:toggle) || {})
 
     id = options[:id] ||= generate_id
     options = {

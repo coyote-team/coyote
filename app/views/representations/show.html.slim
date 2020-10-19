@@ -17,7 +17,7 @@ h1= title breadcrumb(representation.resource, representation)
     = lightbox_link(representation.resource)
 
   .split-view-item
-    table
+    .table-wrapper: table
       caption
         = to_html(representation.text)
       tbody

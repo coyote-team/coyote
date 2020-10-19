@@ -1,4 +1,4 @@
-= dropdown toggle_options: {aria: {label: current_user.to_s}, class: "initials initials--collapse"}, label: initials(current_user), title: 'Global Actions' do
+= dropdown toggle: {aria: {label: current_user.to_s}, class: "initials initials--collapse"}, label: initials(current_user), title: 'Global Actions' do
   = dropdown_option link_to('Support', support_path)
   = dropdown_option link_to('Profile', edit_user_path)
   = dropdown_option link_to('Organizations', organizations_path)

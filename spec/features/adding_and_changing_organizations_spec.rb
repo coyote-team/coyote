@@ -6,7 +6,7 @@ RSpec.describe "Adding and changing an organization" do
   it "succeeds" do
     click_link "Organizations"
     expect(page).to have_current_path(organizations_path, ignore_query: true)
-    click_first_link "New Organization"
+    click_first_link "Add Organization"
     expect(page).to have_current_path(new_organization_path, ignore_query: true)
 
     fill_in "Name", with: "Acme Museum"

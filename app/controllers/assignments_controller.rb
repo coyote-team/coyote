@@ -38,7 +38,7 @@ class AssignmentsController < ApplicationController
   def index
     if params[:membership_id]
       @membership = current_organization.memberships.find(params[:membership_id])
-      @assignments = current_organization.assignments.where(user_id: @membership.user_id)
+      @assignments = current_organization.assignments.where(user_id: @membership.user_id).by_priority
       render :member_index
     else
       assignments = current_organization.assignments.to_a

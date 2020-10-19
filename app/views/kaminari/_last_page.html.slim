@@ -1,2 +1,4 @@
 li.segmented-control-item
-  = link_to 'Last', url, remote: remote
+  = link_to url, remote: remote do
+    span.segmented-control-item-label Last
+    span.segmented-control-item-icon.icon-control-end aria-label="Last"

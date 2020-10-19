@@ -4,7 +4,8 @@ module DropdownHelper
   def dropdown(options = {})
     label = options.delete(:label)
     title = options.delete(:title)
-    toggle_options = options.delete(:toggle_options) || {}
+    toggle_options = options.delete(:toggle) || {}
+    wrapper_options = options.delete(:wrapper) || {}
     menu_options = combine_options({class: "dropdown-menu"}, options)
 
     if title.present?
@@ -19,23 +20,24 @@ module DropdownHelper
       aria:  {expanded: false},
       class: "dropdown-toggle",
       data:  {toggle: "dropdown"},
-      type:  "button",
-    )
+      type:  "button")
     toggle = tag.button(label, toggle_options)
+
+    wrapper_options = combine_options(wrapper_options, class: "dropdown")
 
     menu = tag.ul(menu_options) { block_given? ? yield : nil }
     safe_join([
       title_tag,
-      tag.div(safe_join([toggle, menu]), class: "dropdown"),
+      tag.div(safe_join([toggle, menu]), wrapper_options),
     ])
   end
 
-  def dropdown_for(items = [], label: nil, title: nil, &block)
+  def dropdown_for(items, options = {}, &block)
     item_tags = safe_join(items.map { |item|
       dropdown_option(item, &block)
     })
 
-    dropdown(label: label, title: title) { item_tags }
+    dropdown(options) { item_tags }
   end
 
   def dropdown_option(option)

@@ -3,7 +3,7 @@
 module ListHelper
   def link_to_list_item(*args, &block)
     options = combine_options(args.extract_options!, class: "list-item-link")
-    content_tag(:li, class: "list-item list-item--has-link") do
+    tag.li(class: "list-item list-item--has-link") do
       link_to(*args, options, &block)
     end
   end
@@ -14,12 +14,12 @@ module ListHelper
 
   def list_item_label(label = nil)
     return "" unless label.present? || block_given?
-    content_tag(:span, class: "list-item-label") { block_given? ? yield : label }
+    tag.span(class: "list-item-label") { block_given? ? yield : label }
   end
 
   def list_item_value(value = nil)
     return "" unless value.present? || block_given?
-    content_tag(:span, class: "list-item-value") { block_given? ? yield : value }
+    tag.span(class: "list-item-value") { block_given? ? yield : value }
   end
 
   def list_of(items, options = {}, &block)

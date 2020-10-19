@@ -11,7 +11,7 @@ RSpec.describe "Resource adding and changing" do
 
   it "succeeds" do
     click_first_link "Resources"
-    click_first_link("New Resource")
+    click_first_link("Add Resource")
 
     within(".form-field.resource_resource_groups") do
       user_organization.resource_groups.default.each do |other_group|

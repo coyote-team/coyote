@@ -1,4 +1,4 @@
-table
+.table-wrapper: table
   caption
     h1= title "Meta for #{current_organization.name}"
   thead
@@ -21,4 +21,4 @@ table
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer
-    = new_link_to "New Metum", new_metum_path
+    = new_link_to "Add Metum", new_metum_path

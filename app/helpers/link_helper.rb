@@ -8,7 +8,7 @@ module LinkHelper
     icon_position = options.delete(:icon_position) { :end }
     options = combine_options({class: "button"}, options)
     if icon_name.present?
-      label = content_tag(:span, label)
+      label = tag.span(label)
       icon = icon(icon_name)
       label = safe_join(icon_position == :start ? [icon, label] : [label, icon])
     end
@@ -73,7 +73,7 @@ module LinkHelper
     is_active = exact ? path == @uri.path : /^#{path}/.match?(@uri.path)
     link_class = is_active ? "active" : ""
 
-    content_tag(:li, class: link_class) do
+    tag.li(class: link_class) do
       link_to(text, path)
     end
   end

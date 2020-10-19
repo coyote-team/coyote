@@ -5,7 +5,7 @@ module SegmentedControlHelper
     return "" if icon.blank?
 
     options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon.to_s.tr("_", "-")}")
-    content_tag(:i, options) { "" }
+    tag.i(options)
   end
 
   # Returns a component
@@ -19,9 +19,9 @@ module SegmentedControlHelper
     title = options.delete(:title)
     sr = options.delete(:sr) { true }
     options = combine_options({aria: {pressed: pressed.to_s}, type: :button}, options)
-    content_tag(:li, class: "segmented-control-item") do
-      content_tag(:button, options) do
-        icon(icon) + (sr ? sr_only(title) : content_tag(:span, title, class: "segmented-control-item-label")) + (block_given? ? yield : "")
+    tag.li(class: "segmented-control-item") do
+      tag.button(options) do
+        icon(icon) + (sr ? sr_only(title) : tag.span(title, class: "segmented-control-item-label")) + (block_given? ? yield : "")
       end
     end
   end
@@ -30,6 +30,6 @@ module SegmentedControlHelper
     return "" if text.blank?
 
     options = combine_options(options, class: "sr-only")
-    content_tag(:span, options) { text }
+    tag.span(text, options)
   end
 end

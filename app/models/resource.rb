@@ -148,7 +148,7 @@ class Resource < ApplicationRecord
 
   def best_representation
     return @best_representation if defined? @best_representation
-    @best_representation = representations.by_status.by_length.first
+    @best_representation = representations.by_status_and_ordinality.first
   end
 
   def complete?
@@ -259,8 +259,8 @@ class Resource < ApplicationRecord
   def statuses
     @statuses ||= [].tap do |statuses|
       statuses.push(:urgent) if priority_flag?
-      statuses.push(:unrepresented) if unrepresented?
-      statuses.push(:represented) if represented?
+      statuses.push(:undescribed) if unrepresented?
+      statuses.push(:described) if represented?
       statuses.push(:unassigned) if unassigned?
       statuses.push(:assigned) if assigned?
       statuses.push(:partially_complete) if partially_complete?

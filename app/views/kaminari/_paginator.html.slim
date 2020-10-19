@@ -1,5 +1,7 @@
 = paginator.render do
-  ul.segmented-control
+  - pagination_id = generate_id
+  h3.sr-only id=pagination_id Pagination
+  ul.segmented-control.segmented-control--scrollable aria-labelledby=pagination_id
     == first_page_tag unless current_page.first?
     == prev_page_tag unless current_page.first?
     - each_page do |page|

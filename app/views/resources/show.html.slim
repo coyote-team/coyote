@@ -20,7 +20,7 @@ h1= title(to_html_title(resource.name))
     = lightbox_link(resource, alt: resource.best_representation)
 
   .split-view-item
-    table
+    .table-wrapper: table
       caption.sr-only Key value pairs for this resource
       tbody
         tr
@@ -59,7 +59,7 @@ h1= title(to_html_title(resource.name))
 
 h2 Descriptions
 - if resource.representations.any?
-  = render partial: 'representations', object: resource.representations
+  = render partial: 'representations', object: resource.representations.by_status_and_ordinality
 - else
   p No descriptions have been written for this resource.
 
