@@ -83,6 +83,16 @@ class Representation < ApplicationRecord
     %i[approved by_ordinality by_status_and_ordinality not_approved ready_to_review]
   end
 
+  def status_value
+    if approved?
+      0
+    elsif ready_to_review?
+      1
+    else
+      2
+    end
+  end
+
   def to_s
     "Description #{self[:id]}"
   end
