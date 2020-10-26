@@ -5,10 +5,10 @@ module Api
   class RepresentationsController < Api::ApplicationController
     include PermittedParameters
 
-    before_action :find_representation, only: %i[show destroy]
-    before_action :find_resource, only: %i[index]
+    before_action :find_representation, only: %i[show]
+    before_action :find_resource, only: %i[create index]
     before_action :authorize_general_access, only: %i[index]
-    before_action :authorize_unit_access, only: %i[show destroy]
+    before_action :authorize_unit_access, only: %i[show]
 
     resource_description do
       short "Complementary and alternative sensory impressions of a Resource"
@@ -23,6 +23,34 @@ module Api
     serializes serializable_representation.tap { |representation| representation.resource = serializable_resource }, {
       include: %i[resource],
     }
+
+    representation_params = representation_params_builder
+    def_param_group :representation do
+      param(:representation, Hash, action_aware: true, &representation_params)
+    end
+
+    api! "Create a new representation"
+    param_group :representation
+    returns_serialized :representation
+    def create
+      resource_params = clean_resource_params(representations: [representation_params])
+      updated = resource.update(resource_params)
+      representation = resource.new_representations.first
+      if updated
+        logger.info "Created #{representation}"
+        render({
+          jsonapi: representation,
+          status:  :created,
+          links:   {
+            coyote: resource_url(resource, organization_id: resource.organization_id),
+          },
+          include: %i[resource],
+        })
+      else
+        logger.warn "Unable to create representation due to '#{representation.error_sentence}'"
+        render jsonapi_errors: representation.errors, status: :unprocessable_entity
+      end
+    end
 
     api! "Return list of representations for a particular resource ID"
     returns_serialized array_of: :representation

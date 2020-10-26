@@ -11,6 +11,4 @@ class SerializableUser < JSONAPI::Serializable::Resource
       @object.staff? ? Organization.is_active : @object.organizations
     end
   end
-
-  # relationship :organizations
 end

@@ -71,7 +71,7 @@ class Representation < ApplicationRecord
   delegate :notify_webhook!, to: :resource, allow_nil: true
 
   def self.clean_text(text)
-    HTMLEntities.new(:expanded).decode(text.to_s.strip)
+    HTMLEntities.new(:expanded).decode(text.to_s.strip).squish
   end
 
   def self.find_or_initialize_by_text(text, extra = {})

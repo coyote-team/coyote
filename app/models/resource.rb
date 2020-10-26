@@ -175,6 +175,10 @@ class Resource < ApplicationRecord
     update_attribute(:is_deleted, true)
   end
 
+  def new_representations
+    @new_representations ||= []
+  end
+
   def notify_webhook!
     return if skip_webhooks?
     NotifyWebhookWorker.perform_async(id) if resource_groups.has_webhook.any?
@@ -203,6 +207,10 @@ class Resource < ApplicationRecord
   end
 
   def representations_attributes=(representations_attributes)
+    # Reset the latest set of representations we've received
+    @new_representations = []
+
+    # Iterate through the array of hashes and find_or_create representations for each
     representations_attributes.each do |attributes|
       attributes = attributes.with_indifferent_access
 
@@ -233,6 +241,7 @@ class Resource < ApplicationRecord
 
       # Assign whatever is left in the attributes
       representation.assign_attributes(attributes)
+      new_representations.push(representation)
     end
   end
 

@@ -22,6 +22,7 @@ module Api
       formats %w[json]
     end
 
+    representation_params = representation_params_builder
     resource_params = -> {
       param :name, String, "Caption that helps humans identify the resource", required: true
       param :source_uri, String, "The canonical location of the resource", required: true
@@ -30,16 +31,7 @@ module Api
       param :priority_flag, [true, false], "Indicates this is a high-priority resource when `true`"
       param :resource_group_id, Integer, "Identifies the resource group to which this resource belongs. If omitted, will be set to the default resource group for this organization."
       param :resource_group_ids, Array, "Identifies multiple resource groups to which this resource belongs. This will overwrite all other resource groups unless `union_resource_groups` is set to `true`"
-      param :representations, Array, "An array of representations you'd like attached to this resource. See the `representations` for more info.", action_aware: true do
-        param :text, String, "The text of the representation", required: true
-        param :language, String, "The language code for this representation", required: true
-        param :author_id, Integer, "The user who authored this representation's ID - defaults to the user making the API request", required: false
-        param :license, String, "The name of the license which applies to this represenation", required: false
-        param :license_id, Integer, "The ID of the license which applies to this represenation", required: false
-        param :metum, String, "The name of the metum which this represenation uses", required: false
-        param :metum_id, Integer, "The ID of the metum which this represenation uses", required: false
-        param :status, Coyote::Representation::STATUSES.keys, "The status of the representation. New representations default to `ready_to_review`."
-      end
+      param(:representations, Array, "An array of representations you'd like attached to this resource. See the `representations` for more info.", action_aware: true, &representation_params)
       param :union_host_uris, [true, false], "Append new host URIs rather than replace them. This defaults to `true` on the bulk upsert endpoint and cannot be disabled there.", required: false
       param :union_resource_groups, [true, false], "Append new resource groups rather than replace them. This defaults to `true` on the bulk upsert endpoint and cannot be disabled there.", required: false
     }

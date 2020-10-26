@@ -20,6 +20,19 @@ class Api::ApplicationController < ActionController::API
     end
   end
 
+  def self.representation_params_builder
+    -> {
+      param :text, String, "The text of the representation", required: true
+      param :language, String, "The language code for this representation", required: true
+      param :author_id, Integer, "The user who authored this representation's ID - defaults to the user making the API request", required: false
+      param :license, String, "The name of the license which applies to this represenation", required: false
+      param :license_id, Integer, "The ID of the license which applies to this represenation", required: false
+      param :metum, String, "The name of the metum which this represenation uses", required: false
+      param :metum_id, Integer, "The ID of the metum which this represenation uses", required: false
+      param :status, Coyote::Representation::STATUSES.keys, "The status of the representation. New representations default to `ready_to_review`."
+    }
+  end
+
   private
 
   attr_accessor :current_user

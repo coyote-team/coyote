@@ -66,20 +66,27 @@ module PermittedParameters
 
   private
 
-  def clean_resource_params(resource_params)
-    overwrite_representations = params[:overwrite_representations].present?
-    overwrite_representations &&= overwrite_representations.to_s.downcase =~ /^t/
+  def clean_representation_params(representation_params)
+    representation_params.permit(*REPRESENTATION_PARAMS).tap do |params|
+      params[:author_id] ||= current_user.id
+    end
+  end
 
+  def clean_resource_params(resource_params)
+    resource_params = ActionController::Parameters.new(resource_params) unless resource_params.respond_to?(:permit)
     resource_params.permit(*RESOURCE_PARAMS).tap do |params|
       representations = params.delete(:representations)
       if representations.present?
-        params[:overwrite_representations] = !!overwrite_representations
-        params[:representations_attributes] = representations.map { |representation|
-          representation[:author_id] ||= current_user.id
-          representation
-        }
+        params[:overwrite_representations] = overwrite_representations?
+        params[:representations_attributes] = representations.map { |representation_params| clean_representation_params(representation_params) }
       end
     end
+  end
+
+  def overwrite_representations?
+    overwrite_representations = params[:overwrite_representations].present?
+    overwrite_representations &&= overwrite_representations.to_s.downcase =~ /^t/
+    !!overwrite_representations
   end
 
   def pagination_params
@@ -87,7 +94,7 @@ module PermittedParameters
   end
 
   def representation_params
-    params.require(:representation).permit(*REPRESENTATION_PARAMS)
+    clean_representation_params(params.require(:representation))
   end
 
   def resource_params
