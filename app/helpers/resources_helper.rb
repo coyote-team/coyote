@@ -15,11 +15,7 @@ module ResourcesHelper
   end
 
   def resource_group_list
-    if current_user.staff?
-      current_organization.resource_groups
-    else
-      current_user.resource_groups
-    end.by_default_and_name.map do |c|
+    current_organization.resource_groups.by_default_and_name.map do |c|
       [c.name_with_default_annotation, c.id]
     end
   end
