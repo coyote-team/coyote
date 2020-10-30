@@ -23,24 +23,32 @@ module Api
     param_group :membership
     returns_serialized :membership
     def create
-      invitation_params = {
-        recipient_email: params[:email],
-        role:            params[:role],
-      }
-      invitation = Invitation.new(invitation_params)
-      authorize invitation
+      membership = current_organization.memberships.joins(:user).find_by(users: {email: params[:email]})
+      if membership.present?
+        authorize membership, :update?
+        # Update the membership record
+        membership.active = true
+        membership.role = params[:role] if params[:role].present?
 
-      invitation_service = UserInvitationService.new(current_user, current_organization)
-      invitation_service.call(invitation) do |err_msg|
-        logger.warn "Unable to create membership due to '#{invitation.error_sentence}'"
-        render jsonapi_errors: invitation.errors, status: :unprocessable_entity
-        return :bail
+        membership.save
+        render_membership(membership)
+      else
+        # Invite the member
+        invitation = Invitation.new(
+          recipient_email: params[:email],
+          role: params[:role],
+        )
+        authorize invitation
+
+        invitation_service = UserInvitationService.new(current_user, current_organization)
+        invitation_service.call(invitation) do |err_msg|
+          logger.warn "Unable to create membership due to '#{invitation.error_sentence}'"
+          render jsonapi_errors: invitation.errors, status: :unprocessable_entity
+          return :bail
+        end
+
+        render_membership(invitation.membership)
       end
-
-      render({
-        jsonapi: invitation.membership,
-        status:  :created,
-      })
     end
 
     api! "Remove a member from this organization"
@@ -53,7 +61,7 @@ module Api
     returns_serialized array_of: :membership
     def index
       render({
-        jsonapi: current_organization.memberships,
+        jsonapi: current_organization.memberships.active,
       })
     end
 
@@ -66,6 +74,13 @@ module Api
     def find_membership
       @membership = current_organization.memberships.active.find(params[:id])
       authorize(@membership)
+    end
+
+    def render_membership(membership)
+      render({
+        jsonapi: membership,
+        status:  :created,
+      })
     end
   end
 end
