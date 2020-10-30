@@ -30,6 +30,8 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :organization
 
+  delegate :first_name, :last_name, :email, to: :user, allow_nil: true
+
   validates :role, presence: true
 
   enum role: Coyote::Membership::ROLES

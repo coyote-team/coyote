@@ -314,7 +314,7 @@ RSpec.describe "Accessing resources" do
         expect {
           post create_many_api_resources_path(user_organization.id), params: {resources: [
             existing_resource_params.merge(resource_group_ids: [another_new_resource_group.id], union_resource_groups: true),
-        ]}, as: :json, headers: auth_headers
+          ]}, as: :json, headers: auth_headers
           expect(response).to be_created
         }.to change { existing_resource.reload.resource_group_ids }
           .from(resource_group_ids + [new_resource_group.id]).to(resource_group_ids + [new_resource_group.id, another_new_resource_group.id])

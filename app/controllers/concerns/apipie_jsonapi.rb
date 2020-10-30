@@ -47,6 +47,17 @@ module ApipieJSONAPI
 
   private
 
+  def serializable_membership
+    Membership.new({
+      id:         1,
+      active:     true,
+      role:       "editor",
+      user:       User.new(first_name: "Editor", last_name: "von Trapp", email: "editor@example.com"),
+      created_at: DateTime.now,
+      updated_at: DateTime.now,
+    })
+  end
+
   def serializable_representation
     Representation.new({
       id:         1,
@@ -88,6 +99,7 @@ module ApipieJSONAPI
   def serialize_for_returns(model, options = {})
     default_render_options = {
       class:  {
+        Membership:     SerializableMembership,
         Organization:   SerializableOrganization,
         Representation: SerializableRepresentation,
         Resource:       SerializableResource,

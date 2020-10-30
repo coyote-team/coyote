@@ -9,6 +9,7 @@ JSONAPI::Rails.configure do |config|
   # }
   #
   # # Set a default serializable class mapping for errors.
+  config.jsonapi_errors_class = config.jsonapi_errors_class.dup.merge("ActiveModel::Errors": SerializableActiveModelErrors)
   # config.jsonapi_errors_class = Hash.new { |h, k|
   #   names = k.to_s.split('::')
   #   klass = names.pop

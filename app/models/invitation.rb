@@ -41,8 +41,7 @@ class Invitation < ApplicationRecord
 
   enum role: Coyote::Membership::ROLES
 
-  attr_accessor :first_name
-  attr_accessor :last_name
+  attr_accessor :first_name, :last_name, :membership
 
   # @raise [Coyote::SecurityError]
   def redeem!

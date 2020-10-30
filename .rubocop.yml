@@ -74,6 +74,9 @@ RSpec/MultipleExpectations:
     - spec/features/**/*
     - spec/mailers/**/*
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
 RSpec/NamedSubject:
   Enabled: false # TODO: Re-enable once other lint issues in rspec are resolve. This is causing too much noise.
 

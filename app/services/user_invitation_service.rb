@@ -26,8 +26,10 @@ class UserInvitationService
       .create_with(create_params)
       .find_or_initialize_by(email: invitation.recipient_email)
 
-    if organization.users.exists?(recipient_user.id)
-      yield "#{recipient_user} is already a member of #{organization.name}"
+    if recipient_user.persisted? && organization.memberships.active.where(user_id: recipient_user.id).any?
+      error_message = "#{recipient_user} is already a member of #{organization.name}"
+      invitation.errors.add(:base, error_message)
+      yield error_message
       return
     end
 
@@ -37,14 +39,18 @@ class UserInvitationService
 
     Invitation.transaction do
       delivery_method = if recipient_user.new_record?
-        recipient_user.save!
+        recipient_user.save
         :new_user
       else
         :existing_user
       end
 
       if invitation.save
-        membership = organization.memberships.find_or_create_by!(user: recipient_user, role: invitation.role)
+        membership = organization.memberships.find_or_initialize_by(user: recipient_user)
+        membership.active = true
+        membership.role = invitation.role
+        membership.save!
+        invitation.membership = membership
         Rails.logger.info "Created #{membership}"
         InvitationMailer.public_send(delivery_method, invitation).deliver_now
       else

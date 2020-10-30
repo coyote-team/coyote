@@ -151,6 +151,7 @@ Rails.application.routes.draw do
   namespace :api do
     scope :v1 do
       scope "organizations/:organization_id" do
+        resources :memberships, only: %i[create destroy index update]
         resources :resources, only: %i[index create] do
           collection do
             post "create", as: :create_many, to: "resources#create_many"
