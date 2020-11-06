@@ -38,6 +38,7 @@ module PermittedParameters
     priority_flag_eq
     representations_author_id_eq
     representations_updated_at_gt
+    resource_group_resources_resource_group_id_in
     scope
     source_uri_eq_any
     updated_at_gt

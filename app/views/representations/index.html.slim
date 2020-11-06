@@ -52,10 +52,10 @@
             = form.submit 'Apply', class: 'button'
 
         = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
-          li.segmented-control-item= link_to request.GET.except(:grid), class: params[:grid] ? nil : 'segmented-control-item--active' do
+          li.segmented-control-item= link_to request.GET.except(:grid), class: ["segmented-control-item-link", params[:grid] ? nil : 'segmented-control-item-link--active'] do
             i.icon-list aria-hidden=true
             span.sr-only List View
-          li.segmented-control-item= link_to request.GET.merge(grid: true), class: params[:grid] ? 'segmented-control-item--active' : nil do
+          li.segmented-control-item= link_to request.GET.merge(grid: true), class: ["segmented-control-item-link", params[:grid] ? 'segmented-control-item-link--active' : nil] do
             i.icon-grid aria-hidden=true
             span.sr-only Grid View
 

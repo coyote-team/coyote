@@ -41,7 +41,9 @@ en:
       representation:
         one: Description
         other: Descriptions
-      resource_group: Resource Group
+      resource_group:
+        one: Resource Group
+        other: Resource Groups
       resource_link: Link
     errors:
       models:

@@ -3,13 +3,27 @@
   @extend %input-fixed-height
 
   align-items: stretch
-  border-color: $border
-  display: inline-flex
+  border-width: 0
+  display: flex
+  list-style: none
 
   &--scrollable
-    overflow: auto
+    +mobile
+      overflow: auto
 
   .segmented-control-item
+    align-items: stretch
+    display: flex
+    justify-content: stretch
+
+    &:first-child
+      border-bottom-left-radius: inherit
+      border-top-left-radius: inherit
+
+    &:last-child
+      border-bottom-right-radius: inherit
+      border-top-right-radius: inherit
+
     .segmented-control-item-label
       display: inline-block
       margin-left: $input-padding
@@ -30,25 +44,26 @@
           margin-left: 0
 
     > *
-      border-right: 1px solid $border
+      border-radius: inherit
+      border: 1px solid $border
       cursor: pointer
-      display: inline-block
+      display: block
       height: 100%
       padding: 0 round($input-padding * 1.5)
       text-decoration: none
       white-space: nowrap
 
+      &:active
+        border-color: $tint
+
       &:focus
         position: relative
 
-      &[aria-pressed=true], &.segmented-control-item--active
+      &[aria-pressed=true], &.segmented-control-item-link--active
         background-color: $placeholder
         border-color: $placeholder
         color: $text-light
         position: relative
-
-    &:last-child > *
-      border-right-width: 0
 
     &--collapse
       +non-desktop

@@ -4,23 +4,25 @@
     h1= title "Resources"
 
     = search_form_for record_filter.search, url: resources_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+      h2.sr-only Filter resources
       label.filter-set-item.field.field--accessory
-        span.sr-only Search by caption or description
+        h3.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
         = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
 
       .filter-set-item
-        .filter-set-item-title Priority
+        h3.filter-set-item-title Priority
         ul.boolean-list
           li.boolean-list-item: label
             = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
             span Urgent
 
       - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
-        .filter-set-item: label With representations authored by user #{User.find_by(id: author_id).username}
+        h3.sr-only#representations_by_author_label With representations authored by user
+        .filter-set-item: label aria-label="representations_by_author_label" With representations authored by user #{User.find_by(id: author_id).username}
       - else
         .filter-set-item
-          .filter-set-item-title Status
+          h3.filter-set-item-title Status
           ul.boolean-list
             - scope_search_collection.each do |name, scope|
               li.boolean-list-item: label
@@ -28,13 +30,17 @@
                 span= name
         = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
 
+      - if current_organization.resource_groups.many?
+        h3.sr-only#resource_group_id_label Filter by resource group
+        = f.input :resource_group_resources_resource_group_id_in, label: ResourceGroup.model_name.human, label_html: {aria: {label: "resource_group_id_label"}}, collection: current_organization.resource_groups, as: :select, required: false
+
       .filter-set-submit
         = f.submit 'Search', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--outline'
 
   = simple_form_for :assignment, url: assignments_path, html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
-    h2#results-title.action
+    h2#results-title
       ' Results:
       - count = record_filter.records.total_count
       = number_with_delimiter count
