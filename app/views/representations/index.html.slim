@@ -4,28 +4,30 @@
     h1= title "Descriptions"
 
     = search_form_for record_filter.search, url: representations_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+      h2.sr-only Filter #{Representation.model_name.human(count: 2)}
       label.filter-set-item.field.field--accessory
-        span.sr-only Search by caption or description
+        h3.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
-        = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: 'Search representation text'
+        = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: 'Search representation text', role: "search"
 
       .filter-set-item
-        .filter-set-item-title Status
-        ul.boolean-list
+        h3.filter-set-item-title#status_label Status
+        ul.boolean-list aria-labelled-by="status_label"
           - Coyote::Representation.status_collection.each do |name, status|
             li.boolean-list-item: label
               = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
               = name
 
       .filter-set-item
-        .filter-set-item-title Metum
-        ul.boolean-list
+        h3.filter-set-item-title#metum_label Metum
+        ul.boolean-list aria-labelled-by="metum_label"
           - available_meta.each do |meta|
             li.boolean-list-item: label
               = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
               span= meta.name
 
-      = f.input :author_id_eq, label: 'Created by Author', collection: organizational_user_collection, as: :select, required: false
+      h3.sr-only#author_label Created by author
+      = f.input :author_id_eq, label: 'Created by Author', label_html: {aria: {label: "author_label"}}, collection: organizational_user_collection, as: :select, required: false
 
       .filter-set-submit
         = f.submit 'Search', name: nil, class: 'button'

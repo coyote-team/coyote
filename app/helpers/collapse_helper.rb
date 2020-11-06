@@ -2,22 +2,19 @@
 
 module CollapseHelper
   def collapse(options = {}, &block)
-    label = options.delete(:label) || "Additional details"
-    toggle_options = {data: {toggle: "collapse--toggled"}}.deep_merge(options.delete(:toggle) || {})
-
+    # Give the container an ID so we can toggle the '--toggled' class
     id = options[:id] ||= generate_id
-    options = {
-      data: {toggle_target: "##{id}"},
-    }.deep_merge(options)
 
+    # Set up a "toggler", which has a `data-toggle-target` attribute pointing to our container, and a `toggle` classname
+    toggle_options = {data: {toggle_target: "##{id}", toggle: "collapse--toggled"}}.deep_merge(options.delete(:toggle) || {})
     toggle = tag.button(combine_options(toggle_options, class: "collapse-toggle")) {
       safe_join([
         icon(:arrow_right),
-        tag.div(class: "collapse-toggle-label") { label },
+        tag.div(options.delete(:label) || "Additional details", class: "collapse-toggle-label"),
       ])
     }
-    content = tag.div(class: "collapse-content", &block)
 
+    content = tag.div(class: "collapse-content", &block)
     tag.div(combine_options(options, class: "collapse")) do
       safe_join([
         toggle,

@@ -28,6 +28,8 @@ html(lang="en")
   body class=(body_class)
     = raw analytical.body_prepend_javascript
     nav#nav-main role="navigation"
+      ruby:
+        wants_primary_nav = !stateless? && current_organization?
       = link_to !stateless? && current_organization? ? current_organization : root_path, class: "nav-brand" do
         span.nav-brand-fade C
         span.nav-brand-keep o
@@ -36,13 +38,17 @@ html(lang="en")
         span.nav-brand-fade t
         span.nav-brand-fade e
 
-      - if !stateless? && current_organization?
+      - if wants_primary_nav
         = render "primary_nav"
 
       - if !stateless? && current_user
         .nav-secondary
+          - if wants_primary_nav
+            .dropdown#nav-toggle
+              button.dropdown-toggle.nav-toggle aria-label="Toggle navigation" data-toggle-target="body" data-toggle="nav-toggled" Menu
           = render "organization_selector"
           = render "user_nav"
+
 
     = render "notifications" unless stateless?
 

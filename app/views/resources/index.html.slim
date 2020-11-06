@@ -4,15 +4,15 @@
     h1= title "Resources"
 
     = search_form_for record_filter.search, url: resources_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
-      h2.sr-only Filter resources
+      h2.sr-only Filter #{Resource.model_name.human(count: 2)}
       label.filter-set-item.field.field--accessory
         h3.sr-only Search by caption or description
         = icon :magnifier, class: 'field-accessory'
         = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
 
       .filter-set-item
-        h3.filter-set-item-title Priority
-        ul.boolean-list
+        h3.filter-set-item-title#priority_label Priority
+        ul.boolean-list aria-labelled-by="priority_label"
           li.boolean-list-item: label
             = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
             span Urgent
@@ -22,8 +22,8 @@
         .filter-set-item: label aria-label="representations_by_author_label" With representations authored by user #{User.find_by(id: author_id).username}
       - else
         .filter-set-item
-          h3.filter-set-item-title Status
-          ul.boolean-list
+          h3.filter-set-item-title#status-label Status
+          ul.boolean-list aria-labelled-by="status_label"
             - scope_search_collection.each do |name, scope|
               li.boolean-list-item: label
                 = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
@@ -59,9 +59,9 @@
             = form.input_field :user_id, collection: organizational_user_collection, label: false, prompt: 'Assign...', required: false
             = form.submit 'Assign', class: 'button'
 
-        = segmented_control class: 'toolbar-item non-portrait-only', data: { toggle_target: '#results-list' }, title: {tag: :h3, text: 'View options'} do
-          = segmented_control_item pressed: true, data: { toggle_target_off: "list--grid" }, icon: "list", title: "List View"
-          = segmented_control_item pressed: false, data: { toggle_target_on: "list--grid" }, icon: "grid", title: "Grid View"
+        = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
+          = segmented_control_item pressed: true, data: { toggle_target: "#results-list", toggle_off: "list--grid" }, icon: "list", title: "List View"
+          = segmented_control_item pressed: false, data: { toggle_target: "#results-list", toggle_on: "list--grid" }, icon: "grid", title: "Grid View"
 
         - if record_filter.browser_pagination_link_params.any?
           = toolbar_item do

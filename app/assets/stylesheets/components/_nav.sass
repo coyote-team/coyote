@@ -6,7 +6,10 @@ nav#nav-main
   border-bottom: 1px solid $border
   display: flex
   height: $nav-height
-  justify-content: space-between
+
+  +non-mobile
+    justify-content: space-between
+
 
   // Logo
   .nav-brand
@@ -17,6 +20,9 @@ nav#nav-main
     padding: 0 $gutter
     text-decoration: none
     text-transform: uppercase
+
+    &:focus
+      box-shadow: $focus-shadow-inset
 
     .nav-brand-fade
       $delay: 2s
@@ -43,12 +49,40 @@ nav#nav-main
         animation: none
 
   // Primary nav
+  .nav-toggle
+    // appearance: none
+    // font-variant: small-caps
+    // font-size: $font-size-control
+    // font-weight: bold
+    // padding: 0 $input-padding
+    position: relative
+
+    // text-transform: lowercase
+    z-index: $z-index-modal + 1
+
+    +non-mobile
+      display: none
+
   .nav-primary
     align-items: stretch
     display: flex
 
     +mobile
       display: none
+
+      @at-root .nav-toggled &
+        animation: nav-primary-in 150ms both
+        background: rgba($background, 0.97)
+        bottom: 0
+        display: block
+        left: 0
+        overflow: auto
+        position: fixed
+        right: 0
+
+        // text-align: center
+        top: $nav-height
+        z-index: $z-index-modal
 
 
     li
@@ -60,6 +94,11 @@ nav#nav-main
 
 
         +large-screen
+          font-size: $font-size
+          padding: 0 $gutter
+
+
+        +mobile
           font-size: $font-size
           padding: 0 $gutter
 
@@ -77,22 +116,30 @@ nav#nav-main
         &:focus
           box-shadow: $focus-shadow-inset
 
-      &.active
-        margin-bottom: -1px
+      &.active,
+      &:active
+        +mobile
+          a
+            background-color: $tint
+            color: $background
 
-        a
-          color: $tint
 
-        &::after
-          background-color: $tint
-          border-top-left-radius: 2px
-          border-top-right-radius: 2px
-          bottom: 0
-          content: ""
-          height: 2px
-          left: $gutter / 2
-          position: absolute
-          right: $gutter / 2
+        +non-mobile
+          margin-bottom: -1px
+
+          a
+            color: $tint
+
+          &::after
+            background-color: $tint
+            border-top-left-radius: 2px
+            border-top-right-radius: 2px
+            bottom: 0
+            content: ""
+            height: 2px
+            left: $gutter / 2
+            position: absolute
+            right: $gutter / 2
 
   // Secondary nav
   .nav-secondary
@@ -106,9 +153,25 @@ nav#nav-main
       &:last-child
         margin-right: 0
 
+    +mobile
+      margin-left: auto
+      padding-right: $input-padding
+
+.nav-toggled
+  overflow: hidden
+
 @keyframes nav-brand-fade
   0%
     opacity: 1
 
   100%
     opacity: 0
+
+@keyframes nav-primary-in
+  0%
+    opacity: 0
+    transform: translateY($gutter)
+
+  100%
+    opacity: 1
+    transform: translateY(0)

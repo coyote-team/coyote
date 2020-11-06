@@ -56,7 +56,7 @@ header
           = list_item_label 'Resources Unassigned'
           = list_item_value number_with_delimiter(dashboard.organization_unassigned_unrepresented_count)
 
-    = segmented_control title: { text: 'Scroll to', sr_only: false } do
+    = segmented_control class: "segmented-control--scrollable", title: { text: 'Scroll to', sr_only: false } do
       - if organization_user.admin?
         li.segmented-control-item= link_to('Undescribed', '#undescribed')
         li.segmented-control-item= link_to('Ready to Review', '#ready_to_review')
