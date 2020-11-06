@@ -8,3 +8,41 @@
     tr
       th Last name:
       td= user.last_name
+
+h2= Representation.model_name.human(count: 2)
+- if representations_scope.empty?
+  p.empty This user has no #{representations_scope.model_name.human(count: 2).downcase}.
+- else
+  .table-wrapper: table
+    thead
+      th Status
+      th Order
+      th Metum
+      th Locale
+      th Text
+      th.table-cell-actions Actions
+    tbody
+      - representations_scope.limit(10).each do |representation|
+        tr.table-row-link
+          td.table-cell-link= link_to representation_path(representation) do
+            = representation_status_tag(representation)
+          td.table-cell-link= link_to representation_path(representation) do
+            = representation.ordinality
+          td.table-cell-link= link_to representation_path(representation) do
+            = metum_tag(representation.metum, hint: false)
+          td.table-cell-link= link_to representation_path(representation) do
+            span.tag.tag--outline= representation.language
+          td.table-cell-link= link_to representation_path(representation) do
+            = to_html representation.text, truncate: 120
+          td.table-cell-actions
+            - if policy(representation).approve?
+              = render "representations/approve_reject", representation: representation
+            - if policy(representation).edit?
+              = edit_link_to edit_representation_path(representation)
+      - if current_organization?
+        tr.table-row-link
+          td.table-cell-link.text--center colspan=6
+            = link_to representations_path(q: {author_id_eq: user.id}) do
+              strong View all
+              '
+              = icon(:arrow_right)

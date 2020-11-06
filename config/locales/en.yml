@@ -38,7 +38,9 @@ en:
         ordinality: Order
     models:
       membership: Member
-      representation: Description
+      representation:
+        one: Description
+        other: Descriptions
       resource_group: Resource Group
       resource_link: Link
     errors:

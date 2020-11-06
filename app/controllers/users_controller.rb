@@ -59,6 +59,14 @@ class UsersController < ApplicationController
     @pundit_user ||= Coyote::OrganizationUser.new(current_user, nil)
   end
 
+  def representations_scope
+    return @representations_scope if defined? @representations_scope
+    representations = Representation.where(author_id: user.id).includes(:metum)
+    representations = representations.includes(:resource).references(:resource).where(resources: {organization_id: current_organization.id}) if current_organization?
+    @representations_scope = representations.by_status_and_ordinality
+  end
+  helper_method :representations_scope
+
   def require_invitation
     token = request.get? ? params.require(:token) : new_user_attributes[:token]
     self.invitation = Invitation.find_by!(token: token)
