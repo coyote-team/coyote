@@ -1,4 +1,4 @@
 - if organization_scope.many?
   - organization_name = current_organization? ? current_organization.name : nil
   = dropdown_for organization_scope, toggle: {aria: {label: organization_name}, class: "initials initials--collapse"}, wrapper: {id: "organization-dropdown"}, label: organization_name || "Select an organization", title: "Select an organization" do |organization|
-    = link_to organization.name, organization_path(organization, organization_id: nil)
+    = link_to organization.name, url_for_organization(organization)

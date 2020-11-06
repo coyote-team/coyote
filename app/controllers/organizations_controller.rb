@@ -24,6 +24,9 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def delete
+  end
+
   def destroy
     current_organization.update_attribute(:is_deleted, true)
     redirect_to organizations_path, flash: {success: "#{current_organization} has been deleted"}

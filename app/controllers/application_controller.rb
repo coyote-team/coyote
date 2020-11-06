@@ -30,7 +30,6 @@ class ApplicationController < ActionController::Base
 
   def url_options
     result = super
-    organization_id = params[:organization_id]
     if organization_id.present?
       result.merge(organization_id: organization_id)
     elsif current_organization?
@@ -122,6 +121,21 @@ class ApplicationController < ActionController::Base
     body_class "stateless"
     @stateless = true
   end
+
+  def organization_controller?
+    controller_name == "organizations"
+  end
+  helper_method :organization_controller?
+
+  def organization_id
+    return @organization_id if defined? @organization_id
+    @organization_id = params[organization_id_param] || params[:organization_id]
+  end
+
+  def organization_id_param
+    organization_controller? ? :id : :organization_id
+  end
+  helper_method :organization_id_param
 
   def organization_user
     @organization_user ||= Coyote::OrganizationUser.new(current_user, current_organization)
