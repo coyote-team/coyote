@@ -51,6 +51,10 @@ class Membership < ApplicationRecord
     Coyote::Membership.role_rank(role)
   end
 
+  def to_s
+    "#{user&.to_s} (#{role.titleize})"
+  end
+
   private
 
   def update_user_counter_cache

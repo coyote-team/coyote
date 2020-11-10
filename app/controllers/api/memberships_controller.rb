@@ -36,7 +36,7 @@ module Api
         # Invite the member
         invitation = Invitation.new(
           recipient_email: params[:email],
-          role: params[:role],
+          role:            params[:role],
         )
         authorize invitation
 

@@ -9,4 +9,8 @@
       th Webhook URI:
       td= resource_group.webhook_uri
 
+h2= Resource.model_name.human(count: 2)
+= list_of(resource_group, :resources, limit: 5, view_more: resources_path(q: {resource_group_resources_resource_group_id_in: resource_group.id}), wrap: false) do |resource|
+  = render resource
+
 = show_toolbar(resource_group)

@@ -31,7 +31,7 @@ h1= title(to_html_title(resource.name))
           td= resource.priority_flag ? 'High' : 'Low'
         tr
           th Host URIs
-          td= list_of(resource.host_uris) { |uri| link_to(uri, uri, target: "_#{dom_id(resource)}_#{uri.parameterize}") }
+          td= list_of(resource, :host_uris) { |uri| link_to(uri, uri, target: "_#{dom_id(resource)}_#{uri.parameterize}") }
         tr
           td colspan=2
             = collapse do
@@ -70,7 +70,5 @@ h2 Related Resources
   p No other resources have been linked to this resource.
 
 h2 Assignments
-- if resource.assignments.any?
-  = render partial: 'assignments', object: resource.assignments
-- else
-  p No assignments currently exist for this resource.
+= list_of resource, :assignments do |assignment|
+  = link_to assignment.user, assignment

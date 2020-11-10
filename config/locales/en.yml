@@ -36,11 +36,16 @@ en:
     attributes:
       representation:
         ordinality: Order
+      resource:
+        host_uris: "Host URIs"
     models:
       membership: Member
       representation:
         one: Description
         other: Descriptions
+      resource:
+        one: Resource
+        other: Resources
       resource_group:
         one: Resource Group
         other: Resource Groups

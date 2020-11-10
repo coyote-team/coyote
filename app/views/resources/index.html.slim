@@ -81,7 +81,7 @@
 
     - if has_resources
       / Render the list
-      = list id: 'results-list' do
+      = list aria: {labelled_by: "results-title"}, id: 'results-list' do
         = render partial: 'resource', collection: record_filter.records, locals: { form: form }
 
       / Render the footer

@@ -5,6 +5,7 @@
     tr
       th Title
       th Webhook
+      th Resources
       - if can?(:edit, :resource_group)
         th.table-cell-actions Actions
   tbody
@@ -12,6 +13,7 @@
       tr.table-row-link
         td.table-cell-primary.table-cell-link= link_to resource_group.name_with_default_annotation, resource_group_path(resource_group)
         td.table-cell-link= link_to resource_group.webhook_uri || "", resource_group_path(resource_group)
+        td.table-cell-link= link_to tag_for(resource_group.resources.count), resource_group_path(resource_group)
         - if can?(:edit, :resource_group)
           td.table-cell-actions
             = edit_link_to edit_resource_group_path(resource_group), title: "Edit this resource group"
