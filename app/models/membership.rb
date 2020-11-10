@@ -52,7 +52,9 @@ class Membership < ApplicationRecord
   end
 
   def to_s
-    "#{user&.to_s} (#{role.titleize})"
+    name = user.name
+    name << " (#{role.titleize})" if role.present?
+    name
   end
 
   private
