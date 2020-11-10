@@ -57,13 +57,16 @@ html(lang="en")
 
     footer#footer role="contentinfo"
       h2.sr Footer
-      p
-        small
+      p: small
+        - if current_organization? && current_organization.footer.present?
+          = to_html(current_organization.footer)
+        - else
           ' Coyote is a project of the
           a> href="//mcachicago.org/" Museum of Contemporary Art Chicago
           ' in collaboration with
           a href="https://pac.bz/" Prime Access Consulting
           | . It has been generously supported by Lois and Steve Eisen.
+
       - if !stateless? && current_user
         p
           small

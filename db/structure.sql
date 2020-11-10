@@ -474,7 +474,8 @@ CREATE TABLE public.organizations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     default_license_id integer NOT NULL,
-    is_deleted boolean DEFAULT false
+    is_deleted boolean DEFAULT false,
+    footer character varying
 );
 
 
@@ -2213,6 +2214,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200814180824'),
 ('20200824203050'),
 ('20200825173757'),
-('20200827210043');
+('20200827210043'),
+('20201110000430');
 
 

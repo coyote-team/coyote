@@ -34,6 +34,8 @@ en:
     parameter_missing: "The required parameter '%{param}' is missing or empty"
   activerecord:
     attributes:
+      organization:
+        footer: "Footer notes"
       representation:
         ordinality: Order
       resource:

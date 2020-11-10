@@ -5,6 +5,7 @@
 # Table name: organizations
 #
 #  id                 :integer          not null, primary key
+#  footer             :string
 #  is_deleted         :boolean          default(FALSE)
 #  name               :citext           not null
 #  created_at         :datetime         not null
