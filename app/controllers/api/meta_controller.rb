@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  # Handles API calls for Representations
+  # Handles API calls for Meta
   class MetaController < Api::ApplicationController
     def index
       render({
