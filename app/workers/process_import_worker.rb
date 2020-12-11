@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class ProcessImportWorker
-  include Cloudtasker::Worker
-
+class ProcessImportWorker < ApplicationWorker
   ROWS_PER_IMPORT = 10
 
   attr_reader :import
@@ -11,7 +9,7 @@ class ProcessImportWorker
     @import = Import.find(id)
 
     # Require a sheet to import. Assume we're importing the first sheet starting at row "0".
-    sheets = @import.read_sheets
+    sheets = import.read_sheets
     sheet = sheets[sheet_index]
     return if sheet.blank?
 
@@ -20,7 +18,7 @@ class ProcessImportWorker
 
     # Run the import on just those rows and update the import to reflect the most recent chunk
     result = import_rows(rows, sheet: sheet)
-    @import.update_columns(result)
+    import.update_columns(result)
 
     # Okay, here's where it gets interesting - look ahead to see if there's more rows on this sheet
     # or more sheets in the workbook
@@ -30,12 +28,22 @@ class ProcessImportWorker
     elsif sheets.length > sheet_index + 1
       # There are no more rows, but there are more sheets
       self.class.perform_async(id, sheet_index.succ, 0)
+    elsif import.successes.none?
+      import.update(
+        status: :import_failed,
+        error:  "No resources were created or updated",
+      )
+    else
+      import.update(
+        status: :imported,
+        error:  nil,
+      )
     end
-    # rescue => error
-    #   @import.update_columns(
-    #     error:  error.message,
-    #     status: :import_failed,
-    #   )
+  rescue => error
+    import.update_columns(
+      error:  error.message,
+      status: :import_failed,
+    )
   end
 
   private
