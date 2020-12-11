@@ -25,6 +25,6 @@
 #
 FactoryBot.define do
   factory :import do
-    spreadsheet { File.open(Rails.root.join("spec", "fixtures")) }
+    spreadsheet { File.read(Rails.root.join("spec", "fixtures", "import", "ch.xlsx")) }
   end
 end
