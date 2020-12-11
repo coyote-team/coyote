@@ -166,7 +166,8 @@ class ProcessImportWorker < ApplicationWorker
         result[:duplicate_records] += 1
       end
 
-    rescue
+    rescue => error
+      Rails.logger.warn "[IMPORT ERROR]: Could not import #{row.inspect}: #{error.inspect}"
       # Record a failure and continue to the next row
       result[:failures] += 1
     end
