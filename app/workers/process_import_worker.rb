@@ -3,34 +3,39 @@
 class ProcessImportWorker
   include Cloudtasker::Worker
 
+  ROWS_PER_IMPORT = 10
+
   attr_reader :import
 
-  def perform(id)
+  def perform(id, sheet_index = 0, row_index = 0)
     @import = Import.find(id)
 
-    result = new_result_set
-    @import.read_sheets.each do |sheet|
-      Import.transaction do
-        sheet_result = import_sheet(sheet)
-        sheet_result.each do |key, value|
-          result[key] += value
-        end
-      end
-    end
+    # Require a sheet to import. Assume we're importing the first sheet starting at row "0".
+    sheets = @import.read_sheets
+    sheet = sheets[sheet_index]
+    return if sheet.blank?
 
-    if result[:successes].zero?
-      result[:status] = :import_failed
-      result[:error] = "No resources were created or updated"
-    else
-      result[:status] = :imported
-      result[:error] = nil
-    end
+    # Convert indices to usable row ranges, e.g. sheet_index = 1 would yield rows 200 through 400
+    rows = sheet.rows[row_index, ROWS_PER_IMPORT]
+
+    # Run the import on just those rows and update the import to reflect the most recent chunk
+    result = import_rows(rows, sheet: sheet)
     @import.update_columns(result)
-  rescue => error
-    @import.update_columns(
-      error:  error.message,
-      status: :import_failed,
-    )
+
+    # Okay, here's where it gets interesting - look ahead to see if there's more rows on this sheet
+    # or more sheets in the workbook
+    if sheet.rows.length > row_index + ROWS_PER_IMPORT
+      # There are more rows in this, e.g. row_index = 1, we just fetched 200 + 200, or 400 - so if there are 401, we'll need to fetch from row_index = 400, e.g. 400-600
+      self.class.perform_async(id, sheet_index, row_index + ROWS_PER_IMPORT)
+    elsif sheets.length > sheet_index + 1
+      # There are no more rows, but there are more sheets
+      self.class.perform_async(id, sheet_index.succ, 0)
+    end
+    # rescue => error
+    #   @import.update_columns(
+    #     error:  error.message,
+    #     status: :import_failed,
+    #   )
   end
 
   private
@@ -44,10 +49,11 @@ class ProcessImportWorker
     organization.users.where("CONCAT(first_name, ' ', last_name) = ?", name).first
   end
 
-  def import_sheet(sheet)
+  def import_rows(rows, sheet:)
     # Loop throw each row of the sheet so we can build resources from it
     result = new_result_set
-    sheet.rows.each do |row|
+
+    rows.each do |row|
       next if row.empty?
 
       # Set up conditions to find_or_initialize a resource for this row
@@ -162,11 +168,11 @@ class ProcessImportWorker
 
   def new_result_set
     {
-      successes:         0,
-      failures:          0,
-      new_records:       0,
-      duplicate_records: 0,
-      changed_records:   0,
+      successes:         import.successes,
+      failures:          import.failures,
+      new_records:       import.new_records,
+      duplicate_records: import.duplicate_records,
+      changed_records:   import.changed_records,
     }
   end
 
