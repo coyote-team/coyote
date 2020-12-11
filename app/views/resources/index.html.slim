@@ -1,7 +1,12 @@
 .filter-view
-  .filter-view-filters
-    / h1= title "Resources for #{current_organization.name}"
+  .filter-view-filters#resource-filters
     h1= title "Resources"
+
+    button.button.button--block.button--outline.filter-view-toggle data-toggle-target="#resource-filters" data-toggle="filter-set--toggled" type="button"
+      = icon(:equalizer)
+      '
+      span.filter-view-toggle-label Filter #{Resource.model_name.human(count: 2).downcase}
+      span.filter-view-toggle-label.filter-view-toggle--toggled Close filters
 
     = search_form_for record_filter.search, url: resources_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
       h2.sr-only Filter #{Resource.model_name.human(count: 2)}
@@ -35,8 +40,14 @@
         = f.input :resource_group_resources_resource_group_id_in, label: ResourceGroup.model_name.human, label_html: {aria: {label: "resource_group_id_label"}}, collection: current_organization.resource_groups, as: :select, required: false
 
       .filter-set-submit
-        = f.submit 'Search', name: nil, class: 'button'
+        = f.submit 'Apply Filters', name: nil, class: 'button'
         = f.submit 'Clear', type: 'reset', class: 'button button--outline'
+
+    button.button.button--block.button--outline.filter-view-toggle.filter-view-toggle--toggled data-toggle-target="#resource-filters" data-toggle-off="filter-set--toggled" type="button"
+      = icon(:equalizer)
+      '
+      span Close filters
+
 
   = simple_form_for :assignment, url: assignments_path, html: { class: 'filter-view-list', id: 'results' } do |form|
     / Results toolbar: let users add assignments
@@ -50,18 +61,25 @@
     - has_resources = record_filter.records.any?
     = toolbar do
       - if has_resources
-        label.label--checkbox.toolbar-item
-          input#select-all data-select-all="#results" type="checkbox"
-          span Select all
+        = toolbar_item do
+          label.label--checkbox.toolbar-item
+            input#select-all data-select-all="#results" type="checkbox"
+            span data-checkbox-conditional="hide" Select all
+
+        - if can?(:update, Resource)
+          = toolbar_item class: 'field toolbar-item--start', data: {checkbox_conditional: "show"} do
+            = form.input_field :resource_group_id, collection: current_organization.resource_groups, label: false, prompt: 'Add resource group...', required: false
+            = form.submit 'Go', aria: {label: "Assign"}, class: 'button'
 
         - if policy(Assignment).new?
-          = toolbar_item class: 'field' do
+          = toolbar_item class: 'field toolbar-item--start', data: {checkbox_conditional: "show"} do
             = form.input_field :user_id, collection: organizational_user_collection, label: false, prompt: 'Assign...', required: false
-            = form.submit 'Assign', class: 'button'
+            = form.submit 'Go', aria: {label: "Assign"}, class: 'button'
 
-        = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
-          = segmented_control_item pressed: true, data: { toggle_target: "#results-list", toggle_off: "list--grid" }, icon: "list", title: "List View"
-          = segmented_control_item pressed: false, data: { toggle_target: "#results-list", toggle_on: "list--grid" }, icon: "grid", title: "Grid View"
+        = toolbar_item class: "toolbar-item--end" do
+          = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
+            = segmented_control_item pressed: true, data: { toggle_target: "#results-list", toggle_off: "list--grid" }, icon: "list", title: "List View"
+            = segmented_control_item pressed: false, data: { toggle_target: "#results-list", toggle_on: "list--grid" }, icon: "grid", title: "Grid View"
 
         - if record_filter.browser_pagination_link_params.any?
           = toolbar_item do
