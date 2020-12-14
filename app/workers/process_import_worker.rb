@@ -28,7 +28,7 @@ class ProcessImportWorker < ApplicationWorker
     elsif sheets.length > sheet_index + 1
       # There are no more rows, but there are more sheets
       self.class.perform_async(id, sheet_index.succ, 0)
-    elsif import.successes.none?
+    elsif import.successes.zero?
       import.update(
         status: :import_failed,
         error:  "No resources were created or updated",
@@ -166,7 +166,8 @@ class ProcessImportWorker < ApplicationWorker
         result[:duplicate_records] += 1
       end
 
-    rescue
+    rescue => error
+      Rails.logger.warn "[IMPORT ERROR]: Could not import #{row.inspect}: #{error.inspect}"
       # Record a failure and continue to the next row
       result[:failures] += 1
     end

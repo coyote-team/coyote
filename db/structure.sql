@@ -1833,6 +1833,13 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 
 
 --
+-- Name: index_resources_on_schemaless_source_uri; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING btree (reverse((source_uri)::text) text_pattern_ops);
+
+
+--
 -- Name: index_resources_on_source_uri; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2215,6 +2222,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200824203050'),
 ('20200825173757'),
 ('20200827210043'),
-('20201110000430');
+('20201110000430'),
+('20201203005723');
 
 
