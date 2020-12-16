@@ -486,6 +486,8 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2020.4)
+      tzinfo (>= 1.0.0)
     uber (0.1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -583,6 +585,7 @@ DEPENDENCIES
   sprockets
   sprockets-rails
   standard (>= 0.1.0)
+  tzinfo-data
   uglifier (>= 2.7.1)
   vcr
   webdrivers

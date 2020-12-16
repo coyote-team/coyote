@@ -41,6 +41,7 @@ gem "simple_form"
 gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
+gem "tzinfo-data"
 gem "uglifier", ">= 2.7.1" # js compression
 gem "webpacker"
 
