@@ -91,10 +91,27 @@ group :test do
   gem "webdrivers", require: false
 end
 
+# This hack is to ensure that Google's protocol buffers and GRPC libraries build correctly in
+# Docker. It's the worst. I know it. I'm sorry. But otherwise we can't use Google libraries in
+# Alpine.
+# module BundlerHack
+#   def __materialize__
+#     if name == "grpc" || name == "google-protobuf"
+#       Bundler.settings.temporary(force_ruby_platform: true) do
+#         super
+#       end
+#     else
+#       super
+#     end
+#   end
+# end
+
+# Bundler::LazySpecification.prepend(BundlerHack)
+
 group :production do
   gem "google-cloud-storage", require: false
   gem "google-protobuf", require: false
-  gem "grpc", require: false
+  gem "grpc", "1.27.0", require: false
   gem "newrelic_rpm"
   gem "sentry-raven"
 end

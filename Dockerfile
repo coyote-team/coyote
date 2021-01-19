@@ -11,8 +11,8 @@ RUN apk update \
   && apk upgrade \
   && apk add --update --no-cache \
   build-base \
+  gcompat \
   git \
-  libc6-compat \
   libxml2-dev \
   libxslt-dev \
   nodejs \
