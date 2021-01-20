@@ -96,8 +96,7 @@ end
 # Alpine.
 module BundlerHack
   def __materialize__
-    if name == "google-protobuf"
-      # if name == "grpc" || name == "google-protobuf"
+    if name == "grpc" || name == "google-protobuf"
       Bundler.settings.temporary(force_ruby_platform: true) do
         super
       end
