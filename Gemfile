@@ -106,7 +106,9 @@ module BundlerHack
   end
 end
 
-Bundler::LazySpecification.prepend(BundlerHack)
+unless RUBY_PLATFORM.match?(/darwin|jruby|cygwin|mswin|mingw|bccwin|wince|emx/)
+  Bundler::LazySpecification.prepend(BundlerHack)
+end
 
 group :production do
   gem "google-cloud-storage", require: false

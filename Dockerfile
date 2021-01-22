@@ -23,8 +23,10 @@ RUN apk update \
   yaml-dev \
   yarn
 
+# Copy all dependency files
+ADD Gemfile Gemfile.lock package.json yarn.lock ./
+
 # Install (and clean) Gem dependencies
-ADD Gemfile* ./
 RUN gem install bundler:`tail -1 Gemfile.lock | xargs` --no-document --conservative
 RUN bundle config --global frozen 1 \
   && bundle config set without "${bundle_without}" \
