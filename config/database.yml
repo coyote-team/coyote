@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   pool: <%= Credentials.fetch(:app, :database_pool) { 5 }.to_i %>
-  url: <%= Credentials.fetch(:app, :database_url) { "postgresql://postgres:postgres@localhost:6543/" }  %>
+  url: "postgresql://localhost:5432/" # <%= Credentials.fetch(:app, :database_url) { "postgresql://postgres:postgres@localhost:5432/" }  %>
 
 development:
   <<: *default
