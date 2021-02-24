@@ -27,6 +27,8 @@ AllCops:
     - script/**/*
     - vendor/**/*
   NewCops: enable
+  SuggestExtensions:
+    rubocop-rake: false
 
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
