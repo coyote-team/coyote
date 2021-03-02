@@ -10,7 +10,7 @@ module Api
 
     api! "Return the authenticated user and their organization memberships"
     def show
-      render jsonapi: current_user, include: %i[organizations]
+      render jsonapi: current_user, include: %i[memberships organizations]
     end
   end
 end
