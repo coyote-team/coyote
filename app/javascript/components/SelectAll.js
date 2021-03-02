@@ -7,4 +7,7 @@ export function SelectAll(control) {
 
 SelectAll.prototype.check = function () {
   this.inputs.forEach(input => (input.checked = this.control.checked))
+  document
+    .querySelectorAll(`[data-select-all='${this.control.dataset.selectAll}']`)
+    .forEach(otherSelectAll => (otherSelectAll.checked = this.control.checked))
 }
