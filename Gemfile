@@ -41,6 +41,7 @@ gem "simple_form"
 gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
+gem "tzinfo-data"
 gem "uglifier", ">= 2.7.1" # js compression
 gem "webpacker"
 
@@ -105,14 +106,15 @@ module BundlerHack
   end
 end
 
-Bundler::LazySpecification.prepend(BundlerHack)
+unless RUBY_PLATFORM.match?(/darwin|jruby|cygwin|mswin|mingw|bccwin|wince|emx/)
+  Bundler::LazySpecification.prepend(BundlerHack)
+end
 
 group :production do
   gem "google-cloud-storage", require: false
-  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"]
-  gem "grpc", "1.27.0", platforms: ["ruby"]
+  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"], require: false
+  gem "grpc", "1.27.0", platforms: ["ruby"], require: false
   gem "newrelic_rpm"
-  gem "non-digest-assets"
   gem "sentry-raven"
 end
 

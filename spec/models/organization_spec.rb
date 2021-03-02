@@ -17,6 +17,10 @@
 #  index_organizations_on_is_deleted  (is_deleted)
 #  index_organizations_on_name        (name) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (default_license_id => licenses.id)
+#
 require "spec_helper"
 
 RSpec.describe Organization do

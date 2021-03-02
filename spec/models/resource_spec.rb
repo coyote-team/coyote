@@ -26,6 +26,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_schemaless_source_uri             (reverse((source_uri)::text) text_pattern_ops)
 #  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
@@ -223,6 +224,30 @@ RSpec.describe Resource do
 
       create(:representation, metum: other_required_metum, resource: resource)
       expect(resource.reload.complete?).to eq(false)
+    end
+  end
+
+  describe "::find_or_initialize_by_canonical_id_or_source_uri" do
+    let!(:resource) { create(:resource, canonical_id: "12345", source_uri: "https://www.example.com/example.jpg") }
+
+    it "returns resources with a matching source URI" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri)).to eq(resource)
+    end
+
+    it "returns resources with both a matching canonical ID and a matching source URI" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: resource.source_uri)).to eq(resource)
+    end
+
+    it "returns resources with a matching canonical ID" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: "https://www.not-example.com")).to eq(resource)
+    end
+
+    it "builds a new resource without a matching source URI or canonical ID" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: "98765", source_uri: "https://www.not-example.com")).to be_new_record
+    end
+
+    it "finds resources with mis-matching HTTP protocols" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: "http://www.example.com/example.jpg")).to eq(resource)
     end
   end
 end

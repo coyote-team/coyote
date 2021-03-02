@@ -18,5 +18,10 @@
 #
 #  index_resource_webhook_calls_on_resource_id  (resource_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (resource_id => resources.id)
+#
 class ResourceWebhookCall < ApplicationRecord
+  belongs_to :resource
 end

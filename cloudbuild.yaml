@@ -1,4 +1,4 @@
-timeout: 1200s
+timeout: 2400s
 steps:
 
 # Prepare to import secrets
@@ -41,7 +41,7 @@ steps:
 ## Build
 # Run the Docker build command, importing the secrets we just dumped and using Kaniko to cache
 # intermediate build images
-- name: gcr.io/kaniko-project/executor:debug-v0.22.0
+- name: gcr.io/kaniko-project/executor:debug
   entrypoint: sh
   args:
   - -c

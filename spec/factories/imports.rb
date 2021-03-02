@@ -23,6 +23,11 @@
 #  index_imports_on_organization_id  (organization_id)
 #  index_imports_on_user_id          (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#  fk_rails_...  (user_id => users.id)
+#
 FactoryBot.define do
   factory :import do
     spreadsheet { File.open(Rails.root.join("spec", "fixtures")) }

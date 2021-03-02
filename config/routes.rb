@@ -175,6 +175,8 @@ Rails.application.routes.draw do
       resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show destroy]
       resource :user, only: %(show), path: "profile"
+
+      get "heartbeat", to: "heartbeat#show"
     end
   end
 

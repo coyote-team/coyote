@@ -1833,6 +1833,13 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 
 
 --
+-- Name: index_resources_on_schemaless_source_uri; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING btree (reverse((source_uri)::text) text_pattern_ops);
+
+
+--
 -- Name: index_resources_on_source_uri; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1952,6 +1959,14 @@ CREATE INDEX user_index ON public.audits USING btree (user_id, user_type);
 
 
 --
+-- Name: auth_tokens fk_rails_0d66c22f4c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_tokens
+    ADD CONSTRAINT fk_rails_0d66c22f4c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: invitations fk_rails_0fe4c14f0e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1965,6 +1980,14 @@ ALTER TABLE ONLY public.invitations
 
 ALTER TABLE ONLY public.representations
     ADD CONSTRAINT fk_rails_15f6769de2 FOREIGN KEY (author_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: resource_webhook_calls fk_rails_16dfa60230; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_webhook_calls
+    ADD CONSTRAINT fk_rails_16dfa60230 FOREIGN KEY (resource_id) REFERENCES public.resources(id);
 
 
 --
@@ -1984,6 +2007,14 @@ ALTER TABLE ONLY public.resource_links
 
 
 --
+-- Name: password_resets fk_rails_526379cd99; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.password_resets
+    ADD CONSTRAINT fk_rails_526379cd99 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: representations fk_rails_5dbc0cf401; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2000,11 +2031,35 @@ ALTER TABLE ONLY public.memberships
 
 
 --
+-- Name: resource_group_resources fk_rails_66b6e5785c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_group_resources
+    ADD CONSTRAINT fk_rails_66b6e5785c FOREIGN KEY (resource_id) REFERENCES public.resources(id);
+
+
+--
 -- Name: invitations fk_rails_7c153aa738; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invitations
     ADD CONSTRAINT fk_rails_7c153aa738 FOREIGN KEY (sender_user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: resource_group_resources fk_rails_88737f8f93; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_group_resources
+    ADD CONSTRAINT fk_rails_88737f8f93 FOREIGN KEY (resource_group_id) REFERENCES public.resource_groups(id);
+
+
+--
+-- Name: organizations fk_rails_8a4b69ce6a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.organizations
+    ADD CONSTRAINT fk_rails_8a4b69ce6a FOREIGN KEY (default_license_id) REFERENCES public.licenses(id);
 
 
 --
@@ -2040,6 +2095,14 @@ ALTER TABLE ONLY public.invitations
 
 
 --
+-- Name: imports fk_rails_b1e2154c26; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports
+    ADD CONSTRAINT fk_rails_b1e2154c26 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: resources fk_rails_b7c74d1aaf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2064,11 +2127,27 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: meta fk_rails_cb7ee3d880; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meta
+    ADD CONSTRAINT fk_rails_cb7ee3d880 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
 -- Name: representations fk_rails_d040284b2b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.representations
     ADD CONSTRAINT fk_rails_d040284b2b FOREIGN KEY (license_id) REFERENCES public.licenses(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: imports fk_rails_d57890ddd8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports
+    ADD CONSTRAINT fk_rails_d57890ddd8 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
 
 
 --
@@ -2215,6 +2294,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200824203050'),
 ('20200825173757'),
 ('20200827210043'),
-('20201110000430');
+('20201110000430'),
+('20201203005723'),
+('20210224181332');
 
 

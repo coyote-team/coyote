@@ -26,6 +26,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
+#  index_resources_on_schemaless_source_uri             (reverse((source_uri)::text) text_pattern_ops)
 #  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
@@ -96,8 +97,21 @@ class Resource < ApplicationRecord
   delegate :name, to: :resource_group, prefix: true
 
   def self.find_or_initialize_by_canonical_id_or_source_uri(options)
-    source_uri_scope = where(source_uri: options[:source_uri])
-    scope = options[:canonical_id].present? ? where(canonical_id: options[:canonical_id]).or(source_uri_scope) : source_uri_scope
+    source_uri = options[:source_uri]
+    canonical_id = options[:canonical_id]
+    return new if source_uri.blank? && canonical_id.blank?
+
+    source_uri_scope = where(arel_table[:source_uri].matches("%#{source_uri.to_s.strip.gsub(/\Ahttps?:\/\//, "")}"))
+    canonical_id_scope = where(canonical_id: options[:canonical_id])
+
+    scope = if source_uri.present? && canonical_id.present?
+      canonical_id_scope.or(source_uri_scope)
+    elsif source_uri.present?
+      source_uri_scope
+    else
+      canonical_id_scope
+    end
+
     scope.first || new
   end
 

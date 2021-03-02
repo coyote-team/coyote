@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class ParseImportSpreadsheetWorker
-  include Cloudtasker::Worker
-
+class ParseImportSpreadsheetWorker < ApplicationWorker
   def perform(id)
     import = Import.find(id)
 

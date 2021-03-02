@@ -17,6 +17,10 @@
 #  index_meta_on_organization_id           (organization_id)
 #  index_meta_on_organization_id_and_name  (organization_id,name) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#
 
 # Represents a classification for Representations, such as 'Alt' or 'Long'
 # @see https://github.com/coyote-team/coyote/issues/113

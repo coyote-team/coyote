@@ -5,4 +5,7 @@ p You have been invited to sign up for
   #{organization_name} organization by #{sender_name}. Please visit
   #{link_to(signup_link,signup_link,id: 'signup_link')} to accept the invitation.
 
-p Sincerely, #{Rails.configuration.x.site_name}
+p
+  | Sincerely,
+  br
+  = Rails.configuration.x.site_name

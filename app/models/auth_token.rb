@@ -18,6 +18,10 @@
 #  index_auth_tokens_on_token_and_user_id  (token,user_id)
 #  index_auth_tokens_on_user_id            (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 class AuthToken < ApplicationRecord
   DEFAULT_EXPIRATION = 30.days.freeze
   KEY = "auth_token"
