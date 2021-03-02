@@ -17,6 +17,10 @@
 #  index_organizations_on_is_deleted  (is_deleted)
 #  index_organizations_on_name        (name) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (default_license_id => licenses.id)
+#
 
 # Represents a group of users, usually associated with a particular institution
 class Organization < ApplicationRecord
@@ -52,10 +56,20 @@ class Organization < ApplicationRecord
     original_auditing_enabled = Audited.auditing_enabled
     Audited.auditing_enabled = false
     Organization.transaction do
+      # Delete deep metadata
       Assignment.joins(:resource).where(resources: {organization_id: id}).delete_all
       Representation.joins(:resource).where(resources: {organization_id: id}).delete_all
-      Resource.where(organization_id: id).destroy_all
-      ResourceGroup.where(organization_id: id).delete_all
+      ResourceGroupResource.joins(:resource).where(resources: {organization_id: id}).delete_all
+      ResourceLink.joins(:subject_resource).where(resources: {organization_id: id}).delete_all
+      ResourceLink.joins(:object_resource).where(resources: {organization_id: id}).delete_all
+      ResourceWebhookCall.joins(:resource).where(resources: {organization_id: id}).delete_all
+
+      # Delete direct children
+      imports.delete_all
+      memberships.delete_all
+      meta.delete_all
+      resource_groups.delete_all
+      Resource.where(organization_id: id).delete_all
       destroy!
     end
   ensure
