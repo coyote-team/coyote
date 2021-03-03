@@ -24,6 +24,20 @@ COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings
 
 
 --
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: membership_role; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -1836,7 +1850,7 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 -- Name: index_resources_on_schemaless_source_uri; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING btree (reverse((source_uri)::text) text_pattern_ops);
+CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING gin (source_uri public.gin_trgm_ops);
 
 
 --
@@ -2296,6 +2310,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200827210043'),
 ('20201110000430'),
 ('20201203005723'),
-('20210224181332');
+('20210224181332'),
+('20210303210513');
 
 
