@@ -38,7 +38,6 @@
 
 require "webmock/rspec"
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe Resource do
   subject { resource }
 
@@ -114,7 +113,7 @@ RSpec.describe Resource do
   end
 
   describe "#notify_webhook!" do
-    include_context "webhooks"
+    include_context "with webhooks"
 
     it "sends webhook notifications when resources are created" do
       resource = create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
@@ -213,18 +212,18 @@ RSpec.describe Resource do
     let!(:unrequired_metum) { create(:metum, is_required: false, organization: organization) }
 
     it "returns `true` if the resource has representations for all required meta" do
-      expect(resource.complete?).to eq(false)
-
       # No matter how many UN-required representations you create, it's not complete
       create_list(:representation, 2, metum: unrequired_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(false)
 
-      # Once you've created a representation for all REQUIRED meta, it's complete
+      # If you've created a representation for SOME of the required meta, it's still incomplete
+      create(:representation, metum: organization.meta.find_by!(name: "Alt"), resource: resource)
       create(:representation, metum: required_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(false)
 
+      # Once you've created a representation for ALL of the required meta, it's complete!!
       create(:representation, metum: other_required_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(true)
     end
   end
 
@@ -257,4 +256,3 @@ RSpec.describe Resource do
     end
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

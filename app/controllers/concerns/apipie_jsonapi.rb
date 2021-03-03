@@ -13,7 +13,7 @@ module ApipieJSONAPI
         property array_of.to_s.pluralize, Array, only_in: :response do
           param_group "serialized_#{array_of}"
         end
-        instance_exec(&block) if block_given?
+        instance_exec(&block) if block
       end
     else
       returns("serialized_#{param_group}", options, &block)

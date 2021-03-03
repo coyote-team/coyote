@@ -16,6 +16,20 @@ module ListHelper
     component(defaults: {class: "list-item"}, tag: :li, &block)
   end
 
+  def list_item_actions(instance, options = {}, &block)
+    items = capture(&block)
+    return if items.try(:strip).blank?
+
+    tag.span(items, class: "list-item-actions", role: "list")
+  end
+
+  def list_item_actions_overflow(options = {}, &block)
+    options[:class] = ["list-item-actions", *Array(options[:class])]
+    tag.span(class: "list-item-action") {
+      options_dropdown(options, &block)
+    }
+  end
+
   def list_item_label(label = nil)
     return "" unless label.present? || block_given?
     tag.span(class: "list-item-label") { block_given? ? yield : label }

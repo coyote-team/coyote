@@ -3,7 +3,7 @@
 RSpec.describe RepresentationPolicy do
   subject { described_class.new(org_user, representation) }
 
-  include_context "viewer organization user"
+  include_context "with a viewer organization user"
 
   let(:representation) { build_stubbed(:representation) }
   let(:resource) { build_stubbed(:resource) }
@@ -19,7 +19,7 @@ RSpec.describe RepresentationPolicy do
   it { is_expected.to forbid_action(:destroy) }
 
   describe "as an author working with own content" do
-    include_context "author organization user"
+    include_context "with an author organization user"
 
     before do
       allow(resource).to receive(:assigned_to?).with(org_user.user).and_return(true)
@@ -31,7 +31,7 @@ RSpec.describe RepresentationPolicy do
   end
 
   describe "as an author working with content authored by another user" do
-    include_context "author organization user"
+    include_context "with an author organization user"
 
     before do
       allow(resource).to receive(:assigned_to?).and_return(false)
@@ -44,7 +44,7 @@ RSpec.describe RepresentationPolicy do
   end
 
   describe "as an editor" do
-    include_context "editor organization user"
+    include_context "with an editor organization user"
 
     it { is_expected.to permit_edit_and_update_actions }
     it { is_expected.to permit_action(:destroy) }

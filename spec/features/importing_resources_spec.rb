@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe "Importing resources" do
-  include_context "as a logged-in admin user"
+  include_context "with a logged-in admin user"
 
   before do
     visit organization_path(user_organization)

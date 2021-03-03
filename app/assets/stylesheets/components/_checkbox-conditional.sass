@@ -1,0 +1,11 @@
+[data-checkbox-conditional="show"]
+  &:not([data-checkbox-conditional-applied])
+    display: none !important
+
+  &[data-checkbox-conditional-applied]
+    &[data-checkbox-conditional-prefix]
+      &::before
+        content: attr(data-checkbox-conditional-count) " "
+
+*[data-checkbox-conditional="hide"][data-checkbox-conditional-applied]
+  display: none !important

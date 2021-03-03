@@ -26,7 +26,7 @@
         = f.association :author, collection: organizational_user_collection(include_staff: true), include_blank: false
 
       = toolbar class: 'toolbar--footer' do
-        = submit_toolbar_item(f, submit_options: {class: "button--aside"})
+        = submit_toolbar_item f
         - if representation.persisted?
           = toolbar_item do
             = view_link_to representation

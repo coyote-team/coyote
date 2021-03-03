@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Representation filtering" do
-  include_context "as a logged-in author user"
+  include_context "with a logged-in author user"
 
   let!(:representation) do
     create(:representation, :not_approved, organization: user_organization, text: "My Organization's Description")
@@ -27,7 +27,7 @@ RSpec.describe "Representation filtering" do
     expect(page).not_to have_content(representation_of_deleted_resource.text)
 
     fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: "smiling"
-    click_button "Search"
+    click_button "Apply Filters"
 
     expect(page).to have_content(representation_search_target.text)
     expect(page).not_to have_content(representation.text)
@@ -35,7 +35,7 @@ RSpec.describe "Representation filtering" do
 
     fill_in "q[text_or_resource_canonical_id_or_resource_name_cont_all]", with: ""
     check "Not Approved"
-    click_button "Search"
+    click_button "Apply Filters"
 
     expect(page).not_to have_content(representation_search_target.text)
     expect(page).to have_content(representation.text)

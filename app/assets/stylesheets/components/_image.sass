@@ -4,3 +4,15 @@ img
 
   +non-mobile
     min-width: 18 * $gutter
+
+.image
+  background-size: cover
+  border-radius: $border-radius
+  display: block
+  width: $gutter * 7
+
+  &::before
+    content: ""
+    display: block
+    padding-bottom: 100%
+    width: 100%

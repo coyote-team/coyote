@@ -2,7 +2,7 @@
 
 RSpec.describe "Representations" do
   describe "with authentication" do
-    include_context "API author user"
+    include_context "with an author user"
 
     before do
       # Create an unapproved representation
@@ -79,7 +79,7 @@ RSpec.describe "Representations" do
   end
 
   describe "without authentication" do
-    include_context "API access headers"
+    include_context "with API access headers"
 
     let!(:representation) do
       create(:representation, :approved)

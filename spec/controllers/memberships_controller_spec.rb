@@ -17,8 +17,6 @@
 #  index_memberships_on_user_id_and_organization_id  (user_id,organization_id) UNIQUE
 #
 
-# rubocop:disable Metrics/BlockLength
-
 RSpec.describe MembershipsController do
   let(:organization) { create(:organization) }
   let(:membership) { create(:membership, organization: organization) }
@@ -48,7 +46,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -68,7 +66,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as an editor" do
-    include_context "signed-in editor user"
+    include_context "with a signed-in editor user"
 
     it "permits read-only actions, forbids updating and deleting other memberships, does allow deleting one's own membership" do
       get :index, params: base_params
@@ -95,7 +93,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as an admin" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     it "succeeds for all actions involving organization-owned memberships" do
       get :index, params: base_params
@@ -135,7 +133,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as an admin attempting to change his or her own role" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     let(:own_membership_update_params) do
       own_membership_params.merge({
@@ -161,7 +159,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as an admin attempting to grant an owner role to another user" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     let(:update_membership_params) do
       membership_params.merge(membership: {role: "owner"})
@@ -178,7 +176,7 @@ RSpec.describe MembershipsController do
   end
 
   describe "as the last owner of an organization" do
-    include_context "signed-in owner user"
+    include_context "with a signed-in owner user"
 
     it "cannot remove self from the organization until another owner is created" do
       expect {
@@ -191,5 +189,3 @@ RSpec.describe MembershipsController do
     end
   end
 end
-
-# rubocop:enable Metrics/BlockLength

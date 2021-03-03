@@ -5,26 +5,27 @@
   vertical-align: top
 
   .dropdown-toggle
-    @extend select
-
+    margin-right: 0 !important
     text-overflow: ellipsis
     white-space: nowrap
 
     &[aria-expanded=true] + .dropdown-menu
-      animation: dropdown-in 150ms both
+      animation: dropdown-in 150ms $swift-in both
       display: block
       z-index: $z-index-modal
 
   .dropdown-menu
     background: $background
-    border: 1px solid $border
+    border: 1px solid $border-light
     border-radius: $border-radius
-    box-shadow: $shadow-level-1
+    box-shadow: $shadow-level-2
     display: none
     opacity: 0
     min-width: 100%
+    padding: ($gutter * 2) 0
     position: absolute
     right: 0
+    text-align: left
     transition: opacity 250ms $swift-in, transform 250ms $swift-in
     transform: none
     z-index: -1
@@ -44,7 +45,7 @@
         right: $gutter
 
     &:before
-      border-color: transparent transparent $border transparent
+      border-color: transparent transparent $border-light transparent
       transform: translate(-50%, -1px)
 
     &:after
@@ -52,16 +53,23 @@
       transform: translateX(-50%)
 
     .dropdown-menu-item
-      border-bottom: 1px solid $border
+      position: relative
       white-space: nowrap
-
-      &:last-child
-        border-bottom-width: 0
 
       a
         display: block
-        padding: $input-padding
+        padding: $input-padding ($gutter * 2)
         text-decoration: none
+
+        &:hover
+          background-color: $input
+          color: inherit
+
+  &--end .dropdown-menu
+    &:before,
+    &:after
+      left: auto
+      right: $gutter
 
 @keyframes dropdown-in
   0%

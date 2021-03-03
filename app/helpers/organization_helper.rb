@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrganizationHelper
   def url_for_organization(organization)
     return request.url if current_organization? && current_organization == organization

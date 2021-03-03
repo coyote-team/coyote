@@ -46,7 +46,9 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks, :union_host_uris, :union_resource_groups
+  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks,
+    :union_host_uris, :union_resource_groups
+  attr_reader :assign_to_user_id
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
@@ -79,7 +81,7 @@ class Resource < ApplicationRecord
   scope :in_organization, ->(organization) { where(organization_id: organization) }
   scope :by_date, -> { order(created_at: :desc) }
   scope :by_priority, -> { order(priority_flag: :desc) }
-  scope :order_by_priority_and_date, -> { by_priority.by_date }
+  scope :by_priority_and_date, -> { by_priority.by_date }
   scope :represented_by, ->(user) { joins(:representations).where(representations: {author_id: user.id}) }
   scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}).distinct }
 
@@ -125,7 +127,6 @@ class Resource < ApplicationRecord
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
     %i[
-      order_by_priority_and_date
       represented
       assigned
       unassigned
@@ -155,6 +156,11 @@ class Resource < ApplicationRecord
   def approved?
     return @approved if defined? @approved
     @approved = complete? && representations.any? && representations.all?(&:approved?)
+  end
+
+  def assign_to_user_id=(new_user_id)
+    return if new_user_id.blank?
+    assignments.build(user: organization.users.find(new_user_id))
   end
 
   def assigned?

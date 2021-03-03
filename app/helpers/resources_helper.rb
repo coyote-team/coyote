@@ -25,7 +25,7 @@ module ResourcesHelper
     target = options.delete(:href) || resource_path(resource)
 
     link_to(target, link_options) do
-      resource_link_target(resource, options.merge(alt: options[:alt] || resource.best_representation || "Image for resource ##{resource.id}"))
+      resource_link_target(resource, options)
     end
   end
 
@@ -34,6 +34,7 @@ module ResourcesHelper
   # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
   # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
   def resource_link_target(resource, options = {})
+    options[:alt] = options[:alt].presence || resource.best_representation.presence || "Image for resource ##{resource.id}"
     if resource.viewable?
       image_tag(resource_content_uri(resource), options)
     else
@@ -69,7 +70,7 @@ module ResourcesHelper
 
   def scope_search_collection
     Resource.ransackable_scopes.map do |scope_name|
-      [scope_name.to_s.titleize.split(/\s+/).join(" ").html_safe, scope_name]
+      [t("filters.resource.scope.#{scope_name}", default: scope_name.to_s.titleize).html_safe, scope_name]
     end
   end
 end

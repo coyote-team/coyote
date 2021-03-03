@@ -41,7 +41,7 @@ RSpec.describe InvitationsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -55,7 +55,7 @@ RSpec.describe InvitationsController do
   end
 
   describe "as an admin" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     it "succeeds for basic actions" do
       get :new, params: base_params

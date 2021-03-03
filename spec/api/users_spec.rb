@@ -2,7 +2,7 @@
 
 RSpec.describe "Accessing a user profile" do
   describe "with authorization" do
-    include_context "API author user"
+    include_context "with an author user"
 
     it "GET /profile" do
       get api_user_path, headers: auth_headers
@@ -19,7 +19,7 @@ RSpec.describe "Accessing a user profile" do
   end
 
   describe "without authorization" do
-    include_context "API access headers"
+    include_context "with API access headers"
 
     it "returns an error" do
       get api_user_path, headers: api_headers

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe "User adding and changing" do
-  include_context "as a logged-in staff user"
+  include_context "with a logged-in staff user"
 
   let!(:editable_user) { create(:user) }
-  let!(:representation) { create(:representation, author: editable_user) }
 
   it "succeeds" do
     click_first_link "User Management (Staff)"

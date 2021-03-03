@@ -3,6 +3,7 @@
 # Handles all of the logic for transforming a user's query parameters into a subset of records
 # @see RecordPaginator
 class RecordFilter
+  attr_reader :applied_filters
   attr_writer :record_paginator
 
   # @param filter_params [Hash]
@@ -15,13 +16,17 @@ class RecordFilter
 
     @default_filters = (default_filters || {}).with_indifferent_access
     @filter_params = {}.with_indifferent_access
+    @applied_filters = {}.with_indifferent_access
     @default_filters.merge(filter_params.with_indifferent_access).each do |key, value|
       if /_(cont_all|any)$/.match?(key.to_s)
         @filter_params[key] = value.to_s.split(/(\s|,)/)
       elsif value == false || value.present?
         @filter_params[key] = value
       end
+
+      @applied_filters[key] = value if !@default_filters.key?(key) && value.present?
     end
+
     @pagination_params = pagination_params
     @default_order = default_order
 
@@ -48,6 +53,10 @@ class RecordFilter
     end
   end
 
+  def i18n_key
+    "filters.#{records.model_name.i18n_key}"
+  end
+
   # @return [Hash] links that point to other available filtered pages
   def pagination_link_params
     base_link_params = {}
@@ -67,6 +76,24 @@ class RecordFilter
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
   def search
     @search ||= base_scope.ransack(filter_params)
+  end
+
+  def value_for(filter, value)
+    attribute = search.base[filter]&.attributes&.first
+    return value if attribute.blank? || attribute.try(:klass).blank?
+
+    association = attribute.klass.try(:reflect_on_association, attribute.attr_name.chomp("_id"))
+    if association.present?
+      return association.klass.find_by(id: value)
+    end
+
+    if value.is_a?(Array)
+      attribute.klass.where(attribute.attr_name => value)
+    else
+      attribute.klass.find_by(attribute.attr_name => value)
+    end
+  rescue
+    value
   end
 
   private

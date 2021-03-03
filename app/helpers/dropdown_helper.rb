@@ -43,4 +43,15 @@ module DropdownHelper
   def dropdown_option(option)
     tag.li(class: "dropdown-menu-item") { block_given? ? yield(option) : option }
   end
+
+  def options_dropdown(options = {}, &block)
+    options[:label] ||= icon(:more_vertical)
+    options[:toggle] = combine_options(options[:toggle] || {}, {
+      class: "button button--quiet button--square button--round",
+    })
+    options[:wrapper] = combine_options(options[:wrapper] || {}, {
+      class: "dropdown--end",
+    })
+    dropdown(options, &block)
+  end
 end

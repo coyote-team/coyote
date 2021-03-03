@@ -166,7 +166,7 @@ module Api
         pagination_params,
         (current_organization || current_user).resources,
         default_filters: {is_deleted_eq: false},
-        default_order:   :order_by_priority_and_date,
+        default_order:   :by_priority_and_date,
       )
     end
 

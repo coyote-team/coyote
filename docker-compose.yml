@@ -61,7 +61,7 @@ services:
 
   test:
     <<: *rails
-    command: bundle exec rails db:test:prepare spec
+    command: ./bin/ci
     depends_on:
       - db
       - selenium

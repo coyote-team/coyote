@@ -1,6 +1,0 @@
-h1 Where are you?
-p.paragraph--subtitle Choose your location
-
-ul
-  - @organizations.each do |organization|
-    li= link_to organization.title, new_game_path(organization_id: organization.id)

@@ -4,7 +4,9 @@ module SegmentedControlHelper
   def icon(icon, options = {})
     return "" if icon.blank?
 
-    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon.to_s.tr("_", "-")}")
+    icon = icon.to_s.dasherize
+    icon = "#{icon}-outline" unless icon.ends_with?("-outline")
+    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon}")
     tag.i(options)
   end
 

@@ -1,13 +1,8 @@
 .timeline
-  margin: 0 0 $gutter $gutter
-  padding: $gutter $gutter 0 $gutter
-
-  .timeline-title
-    max-width: 100%
-    word-break: break-all
-
   .timeline-item
-    border-top: 1px solid $border
-    margin: 0 0 0 (-$gutter * 2)
-    padding: ($gutter * 2) ($gutter * 2) 0 ($gutter * 2)
+    + .timeline-item
+      border-top: 1px solid $border
+
+    // margin: 0 0 0 (-$gutter * 2)
+    // padding: ($gutter * 2) $gutter
     position: relative

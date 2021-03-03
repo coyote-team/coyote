@@ -1,8 +1,15 @@
 // COMPONENT: List: the main list element used for all kinds of things -
 // listing statistics, listing complex search results, etc
 =list-item-vertical
-  align-items: stretch
-  flex-direction: column
+  &,
+  .list-item-link
+    align-items: stretch
+    background-color: $input
+    flex-direction: column
+    padding: 0
+
+    > * + *
+      padding: $list-padding
 
   +ie-only
     display: block
@@ -11,75 +18,116 @@
   @supports (display: grid)
     display: block
 
-  .list-item-header, .list-item-body
-    padding-bottom: 0
-    padding-right: 0
+  .list-item-image
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+    height: auto
+    max-width: none
+    width: 100%
 
-  .list-item-header
-    margin-bottom: -1px
+    &::before
+      content: ""
+      display: block
+      padding-bottom: 75%
+      width: 100%
 
-  .list-item-actions
-    text-align: left
+  .list-item-checkbox
+    bottom: auto
+    left: 0
+    right: auto
+    padding: $list-padding
+
+  + .list-item
+    border-top-width: 0
 
 .list
+  &:not(.list--grid)
+    border-bottom: 1px solid $border-light
+    border-top: 1px solid $border-light
+
   display: block
 
   .list-item
-    align-items: center
     display: flex
-    justify-content: space-between
-    padding: $gutter
-    transition: all 150ms $swift
+    position: relative
 
-    + .list-item
-      border-top: 1px solid $border
+    // transition: all 100ms $swift
 
     &-dashboard-metric
-      @extend .list-item
+      justify-content: space-between
 
-      border: 0
+    &--has-checkbox
+      margin-left: $checkbox-size + $list-padding
+
+    &:not(.list-item--has-link),
+    .list-item-link
+      align-items: center
+      padding: $list-padding
+
+    &,
+    .list-item-link
+      > * + *
+        padding-left: $gutter
 
     &--has-link
-      align-items: stretch
-      justify-content: stretch
-      padding: 0
+      &:focus-within,
+      &:hover
+        background-color: $highlight-subtle
 
-      .list-item-link
-        align-items: center
-        display: flex
-        flex: 1
-        justify-content: space-between
-        padding: $gutter
+    .list-item-link
+      display: flex
+      flex: 1
+      text-decoration: none
 
-    .list-item-label, .list-item-header, .list-item-body, .list-item-timeline, .list-item-value, .list-item-actions
+      &:focus
+        box-shadow: none
+
+      ~ *:last-child
+        padding-right: $list-padding
+
+    // All immediate descendents should be block-level elements
+    .list-item-image,
+    .list-item-label,
+    .list-item-title,
+    .list-item-body,
+    .list-item-timeline,
+    .list-item-value
       display: block
 
-    .list-item-label, .list-item-header, .list-item-body
-      padding-right: $gutter
-
-    .list-item-header
+    .list-item-checkbox
+      bottom: 0
+      align-items: center
       display: flex
-      flex: 0 0 33%
-      max-width: $breakpoint-mobile-portrait
-      white-space: nowrap
-
-      +ie-only
-        order: -1
-
-
-      > *
-        display: block
+      margin-right: $list-padding
+      right: 100%
+      position: absolute
+      top: 0
 
       input
-        flex: 1 0 $checkbox-size
+        margin-right: 0
+
+    .list-item-image
+      background-size: cover
+      height: $gutter * 7
+      width: $gutter * 7
+
+      &,
+      img
+        border-radius: $border-radius
+        display: block
+        max-width: $breakpoint-mobile-portrait / 3
+
+    .list-item-title
+      font-weight: 500
+      max-width: 100%
+      word-break: break-all
 
     .list-item-body
       flex: 1
 
-      .list-item-body-text
-        word-break: break-all
-
     .list-item-actions
+      align-items: center
+      display: flex
       text-align: right
       white-space: nowrap
 
@@ -98,16 +146,19 @@
 
     .list-item-value
       font-weight: bold
-      padding-left: $gutter
       text-align: right
       text-decoration: none
 
     +mobile-portrait
       +list-item-vertical
 
+
+    + .list-item
+      border-top: 1px solid $border-light
+
   // COMPONENT SUBTYPE: Render the list as a grid of cards
   &.list--grid
-    margin-bottom: $gutter
+    margin-bottom: $list-padding
 
     +non-mobile-portrait
       // Default grid is just a list of cards
@@ -117,8 +168,7 @@
       .list-item
         +list-item-vertical
 
-        border: 1px solid $border
-        border-radius: $border-radius
+        border-radius: $border-radius * 2
         flex: 1 1 0%
         -ms-flex: 1 1 20%
         margin: $gutter
@@ -130,34 +180,13 @@
         &:nth-child(3n + 1)
           margin-left: 0
 
-        &.list-item--card
-          border: 1px solid $border
-          padding: $gutter
-
       // For browsers with support for the grid layout, we use that to create a masonry effect
       @supports (display: grid)
         display: grid
         grid-auto-rows: $gutter + 2px
         grid-gap: $gutter
-        grid-template-columns: repeat(3, 1fr)
+        grid-template-columns: repeat(4, 1fr)
 
         .list-item
           margin: 0
           max-width: none
-
-  // COMPONENT SUBTYPE: Provide progress indicators above list items
-  &.list--progress
-    .list-item
-      position: relative
-
-      .list-item-progress
-        border-top: 2px solid $tint
-        bottom: 100%
-        left: 0
-        margin-bottom: 1px
-        position: absolute
-        speak: none
-
-        @each $name, $color in $status
-          &.list-item-progress--#{$name}
-            border-color: $color

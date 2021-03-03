@@ -1,4 +1,9 @@
 // MIXIN: Input: draws the basics of an input
+%control-height
+  height: $input-height
+  line-height: $input-height - 2px
+  vertical-align: top
+
 %input-base
   appearance: none
   border-style: solid
@@ -9,16 +14,15 @@
 
   &:focus
     position: relative
+    z-index: $z-index-content + 1
 
   &[disabled]
     cursor: no-drop
 
 %input-fixed-height
-  @extend %input-base
+  @extend %control-height
 
-  height: $input-height
-  line-height: $input-height - 2px
-  vertical-align: top
+  @extend %input-base
 
 %input-text
   @extend %input-fixed-height

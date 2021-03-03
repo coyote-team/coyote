@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Resource viewing" do
-  include_context "as a logged-in author user"
+  include_context "with a logged-in author user"
 
   let!(:resource) do
     create(:resource, organization: user_organization, name: "My Organization's Resource")
@@ -27,7 +27,7 @@ RSpec.describe "Resource viewing" do
     expect(page).not_to have_content(deleted_resource.name)
 
     fill_in "Search by caption or description", with: "cezanne"
-    click_button "Search"
+    click_button "Apply Filters"
 
     expect(page).to have_content(cezannne_resource.name)
     expect(page).not_to have_content(resource.name)

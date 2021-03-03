@@ -2,7 +2,15 @@ import * as ActiveStorage from "@rails/activestorage"
 import UJS from "@rails/ujs"
 
 import "../polyfills"
-import { Lightbox, List, SegmentedControl, SelectAll, Tabs, ToggleControl } from "../components"
+import {
+  Lightbox,
+  List,
+  SegmentedControl,
+  SelectAll,
+  Table,
+  Tabs,
+  ToggleControl,
+} from "../components"
 
 // Boot up the Rails helpers
 ActiveStorage.start()
@@ -23,6 +31,10 @@ document.querySelectorAll(".segmented-control").forEach(function (control) {
 
 document.querySelectorAll("[data-select-all]").forEach(function (control) {
   const _ = new SelectAll(control)
+})
+
+document.querySelectorAll("table").forEach(function (control) {
+  const _ = new Table(control)
 })
 
 // document.querySelectorAll("textarea").forEach(function(control) {

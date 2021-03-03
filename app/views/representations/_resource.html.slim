@@ -1,17 +1,21 @@
-- resource, representations = resource_and_representations
-- id = id_for(resource)
-li.list-item
-  = resource_link(resource)
+ruby:
+  form ||= nil
+  resource, representations = resource_and_representations
+  representations = sorted_representations(representations)
+  id = id_for(resource)
 
+li.list-item
+  = resource_link(resource, href: representation_path(representations.first), link: {class: "list-item-image"})
+  span.sr-only Caption:
+  .list-item-title= resource.name
   .list-item-body.timeline
-    span.sr-only Caption:
-    .timeline-title= to_html resource.name
     - sorted_representations(representations).each do |representation|
       .timeline-item
-        - if defined? form
+        - if form.present?
           = check_box_tag  "representation_status_change[representation_ids][]", representation.id, nil, aria: { label: "Select representation #{representation.id} for bulk update"}
-        = to_html representation.text
-        p by #{representation.author}
+        blockquote= to_html representation.text, truncate: 60
+        = user_tag(representation.author)
+
         h5.sr-only id="properties-#{id}" Properties of representation #{representation.id}
         ul.tag-list aria-labelledby="resource-#{id} tag-list-#{id}"
           = metum_tag(representation.metum, tag: :li)
@@ -22,16 +26,16 @@ li.list-item
             span.sr-only Status:
             = representation.status.to_s.titleize
 
-        h5.sr-only id="actions-representation-#{representation.id}" Actions for representation ##{representation.id}
-        ul.list-item-actions aria-labelledby="actions-representation-#{representation.id}"
-          li.list-item-actions-item
-            = button_link_to 'View', representation, class: "button--partial", icon: :eye, title: "Show this representation", :"aria-describedby" => dom_id(representation)
-          - if policy(representation).edit?
-            li.list-item-actions-item
-              = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
-          - if defined? form
-            - if policy(representation).destroy?
-              li.list-item-actions-item
-                = delete_link_to "Are you sure you want to delete #{representation}?", representation, title: "Delete this representation", aria: { describedby: dom_id(representation) }
-          - elsif policy(representation).approve?
-            li.list-item-actions-item= render "representations/approve_reject", representation: representation
+        / h5.sr-only id="actions-representation-#{representation.id}" Actions for representation ##{representation.id}
+        / ul.list-item-actions aria-labelledby="actions-representation-#{representation.id}"
+        /   li.list-item-actions-item
+        /     = button_link_to 'View', representation, icon: :eye, title: "Show this representation", :"aria-describedby" => dom_id(representation)
+        /   - if policy(representation).edit?
+        /     li.list-item-actions-item
+        /       = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+        /   - if defined? form
+        /     - if policy(representation).destroy?
+        /       li.list-item-actions-item
+        /         = delete_link_to "Are you sure you want to delete #{representation}?", representation, title: "Delete this representation", aria: { describedby: dom_id(representation) }
+        /   - elsif policy(representation).approve?
+        /     li.list-item-actions-item= render "representations/approve_reject", representation: representation

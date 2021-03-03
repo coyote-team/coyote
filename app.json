@@ -7,7 +7,7 @@
     "rails"
   ],
   "scripts": {
-    "postdeploy": "bin/rake db:structure:load db:seed scavenger_hunt:seed"
+    "postdeploy": "bin/rake db:structure:load db:seed"
   },
   "image": "heroku/ruby",
   "env": {

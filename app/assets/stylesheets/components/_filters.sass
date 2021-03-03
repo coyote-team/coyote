@@ -1,0 +1,70 @@
+// COMPONENT: Filters: provides a set of controls that can filter results
+.filters
+  form
+    background-color: $background
+    bottom: 0
+    display: none
+    left: 0
+    padding: $gutter
+    position: fixed
+    right: 0
+    top: 0
+    z-index: $z-index-modal
+
+    +non-mobile
+      border-left: 1px solid $border
+      left: auto
+      width: $gutter * 30
+
+  .filter
+    margin: 0
+    padding: $gutter 0
+
+  .filter
+    .filter-title
+      display: block
+      font-weight: bold
+      margin: 0 0 $gutter 0
+
+  &--toggled
+    .filter-toggle::before
+      background-color: rgba($text, 0.3)
+      bottom: 0
+      content: ""
+      cursor: default
+      filter: blur(10px)
+      left: 0
+      position: fixed
+      right: 0
+      top: 0
+      z-index: $z-index-modal - 1
+
+    form
+      animation: nav-primary-in 150ms $swift-in
+      display: block
+
+      +non-mobile
+        animation: filter-in 150ms $swift-in
+
+.filter-remove
+  border-radius: $border-radius
+  display: inline-block
+  font-size: $font-size-control
+  padding: $border-radius
+  text-decoration: none
+
+  &:hover
+    background-color: $input
+    border-color: $input
+
+  + .filter-remove
+    margin-left: $input-padding
+
+@keyframes filter-in
+  0%
+    opacity: 0
+    transform: translateX(100%)
+
+  100%
+    opacity: 1
+    transform: translateX(0)

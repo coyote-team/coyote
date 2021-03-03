@@ -1,30 +1,29 @@
 - form ||=nil
 - id = id_for(resource)
-li.list-item.list-item--card
+li.list-item.list-item--has-link class=("list-item--has-checkbox" if form.present?)
   h4.sr-only id=id Resource #{resource.name}
   - if form.present? && policy(Assignment).new?
-    label.list-item-header
-      = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
-      = resource_link(resource, alt: resource.best_representation)
-  - else
-    .list-item-header
-      = resource_link(resource, alt: resource.best_representation)
+    label.list-item-checkbox
+      = check_box_tag "resource_ids[]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
+  = link_to resource, class: "list-item-link" do
+    .list-item-image(style="background-image: url(#{resource.source_uri})")
+    .list-item-title= resource.name
+    .list-item-body= resource_status_list(resource, id: id, title_tag: :h5)
 
-  .list-item-body
-    = resource_status_list(resource, id: id, title_tag: :h5)
-    .list-item-body-text= to_html resource.name
-
-  h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
-  ul.list-item-actions aria-labelledby="actions-#{id}"
-    - if policy(resource).index?
-      li.list-item-actions-item
-        = view_link_to resource_path(resource), aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
-    - if policy(resource).edit?
-      li.list-item-actions-item
-        = edit_link_to edit_resource_path(resource), aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+  = list_item_actions(resource) do
     - if policy(resource).describe?
-      li.list-item-actions-item
-        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--aside', icon: :bubble, aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
-    - elsif form.nil? && policy(Assignment).new?
-      li.list-item-actions-item
-        = render 'resources/assign', resource: resource
+      .list-item-actions-item role="listitem"
+        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--submit', icon: :message_circle, aria: { labelledwby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+    - if form.nil? && policy(Assignment).new?
+      = list_item_actions_overflow do
+        .list-item-actions-item role="listitem"
+          = render 'resources/assign', resource: resource
+
+  / h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
+  / span.list-item-actions aria-labelledby="actions-#{id}" role="list"
+  /   - if policy(resource).describe?
+  /     .list-item-actions-item role="listitem"
+  /       = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--submit', icon: :message_circle, aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+  /   - elsif form.nil? && policy(Assignment).new?
+  /     .list-item-actions-item role="listitem"
+  /       = render 'resources/assign', resource: resource

@@ -10,7 +10,7 @@ RSpec.describe Dashboard, type: :integration do
   let(:other_user) { create(:user, organization: organization) }
 
   describe "with no resources or representations" do
-    it "returns correct values" do
+    it "returns correct values" do # rubocop:disable RSpec/ExampleLength
       aggregate_failures do
         expect(subject.current_user_approved_representation_count).to eq(0)
         expect(subject.current_user_assigned_items_count).to eq(0)
@@ -41,6 +41,10 @@ RSpec.describe Dashboard, type: :integration do
 
   describe "with resources and representations" do
     let(:resource_group) { create(:resource_group, organization: organization) }
+    let!(:ready_to_review_representation_of_third_resource_by_user) do
+      create(:representation, :ready_to_review, resource: third_resource, author: user)
+    end
+    let(:latest_timestamp) { 1.hour.from_now }
 
     let!(:resources) do
       create_list(:resource, 5, organization: organization, resource_groups: [resource_group])
@@ -54,29 +58,17 @@ RSpec.describe Dashboard, type: :integration do
 
     let(:resource_for_other_organization) { create(:resource) }
 
-    let!(:approved_representation_of_first_resource_by_user) do
+    before do
       create(:representation, :approved, resource: first_resource, author: user)
-    end
-
-    let!(:resource_assignments) do
       [first_resource, second_resource, third_resource].each do |resource|
         create(:assignment, resource: resource, user: user)
       end
 
       create(:assignment, resource: other_user_resource, user: other_user)
-    end
-
-    let!(:ready_to_review_representation_of_third_resource_by_user) do
-      create(:representation, :ready_to_review, resource: third_resource, author: user)
-    end
-
-    let(:latest_timestamp) { 1.hour.from_now }
-
-    before do
       third_resource.update!(created_at: latest_timestamp)
     end
 
-    it "returns correct values" do
+    it "returns correct values" do # rubocop:disable RSpec/ExampleLength
       aggregate_failures do
         expect(subject.organization_resource_count).to eq(5)
         expect(subject.organization_representation_count).to eq(2)

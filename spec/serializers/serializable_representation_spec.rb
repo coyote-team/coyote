@@ -5,7 +5,7 @@ RSpec.describe SerializableRepresentation do
     serialized.fetch(:attributes)
   end
 
-  include_context "serializable object"
+  include_context "with a serializable object"
 
   let(:object) do
     build_stubbed(:representation, resource_id: 100)

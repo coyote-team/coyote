@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
-
 # Contains general, simple view helper code. Designed to keep code out of our views
 # as much as possible
 # @see http://guides.rubyonrails.org/action_view_overview.html#overview-of-helpers-provided-by-action-view
@@ -63,15 +61,6 @@ module ApplicationHelper
     end
   end
 
-  # @param content [String] a piece of text annotated with Markdown
-  # @return [String] HTML-formatted string, suitable for use in an H1 tag
-  # @note This is a hack to avoid <p> tags when rendering resource titles as H1, see https://github.com/vmg/redcarpet/issues/596
-  def to_html_title(content)
-    html = to_html(content)
-    html.gsub!(%r{(?:^<p>|</p>\n)}i, "")
-    html.html_safe
-  end
-
   # @return [String] welcome message, including the user's name if someone is logged-in
   def welcome_message
     msg = "Welcome to Coyote"
@@ -86,12 +75,10 @@ module ApplicationHelper
   end
 
   FLASH_CLASSES = {
-    alert:        "notification--okay",
-    notice:       "notification--okay",
+    alert:        "notification--info",
+    notice:       "notification--info",
     success:      "notification--success",
     error:        "notification--error",
-    notification: "alert--okay",
+    notification: "notification--info",
   }.freeze
 end
-
-# rubocop:enable Metrics/ModuleLength

@@ -39,7 +39,7 @@ RSpec.describe AssignmentsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -59,7 +59,7 @@ RSpec.describe AssignmentsController do
   end
 
   describe "as an editor" do
-    include_context "signed-in editor user"
+    include_context "with a signed-in editor user"
 
     it "fails for basic actions" do
       expect {
@@ -81,7 +81,7 @@ RSpec.describe AssignmentsController do
   end
 
   describe "as an admin" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     it "can view and edit assignments" do
       get :index, params: base_params

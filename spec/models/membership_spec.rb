@@ -43,7 +43,7 @@ RSpec.describe Membership do
     end
 
     describe "and there are other owner memberships" do
-      let!(:other_owner) do
+      before do
         create(:membership, :owner, organization: subject.organization)
       end
 

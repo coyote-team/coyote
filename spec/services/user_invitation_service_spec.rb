@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe UserInvitationService do
   let(:service) { described_class.new(user, organization) }
   let(:user) { create(:user) }
@@ -82,4 +81,3 @@ RSpec.describe UserInvitationService do
     end
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

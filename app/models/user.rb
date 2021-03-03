@@ -72,6 +72,10 @@ class User < ApplicationRecord
     failed_attempts >= Rails.application.config.x.maximum_login_attempts
   end
 
+  def avatar_url
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.to_s)}?d=retro&s=80"
+  end
+
   def full_name_and_email
     name == email ? email : "#{name} (#{email})"
   end

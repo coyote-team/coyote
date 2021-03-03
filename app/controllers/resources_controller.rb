@@ -11,7 +11,7 @@ class ResourcesController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access, only: %i[show edit update destroy]
 
-  helper_method :resource, :record_filter, :filter_params
+  helper_method :resource, :record_filter, :filter_params, :resource_groups
 
   def create
     self.resource = current_organization.resources.new
@@ -56,6 +56,17 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def update_many
+    resource_ids = params[:resource_ids]
+    if resource_ids.present?
+      resources = policy(Resource).scope.where(id: params[:resource_ids])
+      resources.update(many_resources_params)
+      flash[:notice] = "Your changes were applied!"
+    end
+
+    redirect_back(fallback_location: resources_path)
+  end
+
   private
 
   attr_accessor :resource
@@ -84,8 +95,16 @@ class ResourcesController < ApplicationController
     params.fetch(:q, {}).permit(*RESOURCE_FILTERS)
   end
 
+  def many_resources_params
+    params.require(:resource).permit(:assign_to_user_id, :resource_group_id, :union_resource_groups)
+  end
+
   def record_filter
     @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources, default_filters: {is_deleted_eq: false})
+  end
+
+  def resource_groups
+    @resource_groups ||= ResourceGroup.all
   end
 
   def set_resource

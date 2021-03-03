@@ -1,21 +1,28 @@
 // COMPONENT: Tag list: a list of tags
 .tag-list
-  margin-bottom: $gutter
+  +non-mobile
+    display: flex
+
+    .tag
+      margin-bottom: 0
+
+
+  &:not(:last-child)
+    margin-bottom: $gutter
 
 // COMPONENT: Tag: a piece of status text rendered to make visually distinguish
 // itself
 .tag
-  background-color: $text
-
-  // border: 1px solid $text
+  background-color: $input
   border-radius: $border-radius
-  color: $background
+  color: $text
   font-size: $font-size-small
   font-weight: bold
   display: inline-block
   margin: 0 $input-padding $input-padding 0
   padding: ($input-padding / 2) $input-padding
   text-align: center
+  text-decoration: none
   text-transform: uppercase
 
   &:after
@@ -32,13 +39,13 @@
     color: $text
 
   @each $name, $color in $status
-    $background: lighten($color, 20%)
-    $text: darken($color, 30%)
+    $background: lighten($color, 40%)
+    $text: darken($color, 20%)
 
     &.tag--#{$name}
       background-color: $background
       border-color: $background
       color: $text
 
-      &.tag--outline
-        background-color: lighten($color, 40%)
+      // &.tag--outline
+      //   background-color: lighten($color, 40%)

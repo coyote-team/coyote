@@ -1,4 +1,4 @@
 = simple_form_for :assignment, url: assignments_path, html: { class: 'field form--inline' } do |f|
   = f.input_field :user_id, collection: [["Assign to", ""]] + organizational_user_collection, disabled: [""], label: false, prompt: false, required: false, selected: ""
   / = f.input_field :resource_id, as: :hidden, value: resource.id
-  = f.submit "Assign", class: 'button', aria: { label: "Assign resource ##{resource.id}" }
+  = f.submit "Assign", aria: { label: "Assign resource ##{resource.id}" }
