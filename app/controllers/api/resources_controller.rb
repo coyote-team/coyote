@@ -106,7 +106,7 @@ module Api
     def index
       links = {self: request.url}
 
-      resources = record_filter.records
+      resources = record_filter.records.includes(:organization, representations: %i[license metum])
 
       record_filter.pagination_link_params.each do |rel, link_params|
         link = api_resources_url(link_params)
