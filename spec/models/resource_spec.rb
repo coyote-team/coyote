@@ -238,8 +238,8 @@ RSpec.describe Resource do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: resource.source_uri)).to eq(resource)
     end
 
-    it "returns resources with a matching canonical ID" do
-      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: "https://www.not-example.com")).to eq(resource)
+    it "does not return resources with one differing column" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: "https://www.not-example.com")).to be_new_record
     end
 
     it "builds a new resource without a matching source URI or canonical ID" do
