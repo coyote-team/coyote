@@ -2,7 +2,10 @@
 // listing statistics, listing complex search results, etc
 =list-item-vertical
   align-items: stretch
+  background-color: $input
   flex-direction: column
+  overflow: hidden
+  padding: 0
 
   +ie-only
     display: block
@@ -22,6 +25,9 @@
     text-align: left
 
 .list
+  &:not(.list--grid)
+    @extend %container
+
   display: block
 
   .list-item
@@ -60,7 +66,7 @@
     .list-item-header
       display: flex
       flex: 0 0 33%
-      max-width: $breakpoint-mobile-portrait
+      max-width: $breakpoint-mobile-portrait / 2
       white-space: nowrap
 
       +ie-only
@@ -71,7 +77,10 @@
         display: block
 
       input
-        flex: 1 0 $checkbox-size
+        flex: 0 0 $checkbox-size
+
+      img
+        min-width: none
 
     .list-item-body
       flex: 1
@@ -117,8 +126,7 @@
       .list-item
         +list-item-vertical
 
-        border: 1px solid $border
-        border-radius: $border-radius
+        border-radius: $border-radius * 2
         flex: 1 1 0%
         -ms-flex: 1 1 20%
         margin: $gutter
@@ -130,16 +138,16 @@
         &:nth-child(3n + 1)
           margin-left: 0
 
-        &.list-item--card
-          border: 1px solid $border
-          padding: $gutter
+        // &.list-item--card
+        //   border: 1px solid $border
+        //   padding: $gutter
 
       // For browsers with support for the grid layout, we use that to create a masonry effect
       @supports (display: grid)
         display: grid
         grid-auto-rows: $gutter + 2px
         grid-gap: $gutter
-        grid-template-columns: repeat(3, 1fr)
+        grid-template-columns: repeat(4, 1fr)
 
         .list-item
           margin: 0
