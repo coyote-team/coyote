@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  source_uri_hash       :string
 #  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -26,7 +27,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_schemaless_source_uri             (reverse((source_uri)::text) text_pattern_ops)
+#  index_resources_on_schemaless_source_uri             (source_uri) USING gin
 #  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
@@ -45,10 +46,11 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :overwrite_representations, :skip_webhooks, :union_host_uris, :union_resource_groups
+  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks, :union_host_uris, :union_resource_groups
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
+  before_save :set_source_uri_hash, if: :source_uri_changed?
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -82,9 +84,9 @@ class Resource < ApplicationRecord
   scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}).distinct }
 
   validates :resource_type, presence: true
-  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :canonical_id_changed?
+  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :check_canonical_id?
   validates :source_uri, presence: true
-  validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :source_uri_changed?
+  validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :check_source_uri?
   validates :name, presence: true
 
   enum resource_type: Coyote::Resource::TYPES
@@ -101,18 +103,16 @@ class Resource < ApplicationRecord
     canonical_id = options[:canonical_id]
     return new if source_uri.blank? && canonical_id.blank?
 
-    source_uri_scope = where(arel_table[:source_uri].matches("%#{source_uri.to_s.strip.gsub(/\Ahttps?:\/\//, "")}"))
-    canonical_id_scope = where(canonical_id: options[:canonical_id])
+    scope = all
+    scope = scope.where(source_uri_hash: source_uri_hash_for(source_uri)) if source_uri.present?
+    scope = scope.where(canonical_id: canonical_id) if canonical_id.present?
 
-    scope = if source_uri.present? && canonical_id.present?
-      canonical_id_scope.or(source_uri_scope)
-    elsif source_uri.present?
-      source_uri_scope
-    else
-      canonical_id_scope
+    (scope.first || new(source_uri: source_uri, canonical_id: canonical_id)).tap do |resource|
+      # By default, we can skip uniqueness validations, since this method will
+      # enforce that _pretty_ well anyways. In the event it fails, it'll be at
+      # the database uniqueness constraint level
+      resource.skip_unique_validations = true
     end
-
-    scope.first || new
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
@@ -133,6 +133,10 @@ class Resource < ApplicationRecord
       unassigned_unrepresented
       with_approved_representations
     ]
+  end
+
+  def self.source_uri_hash_for(source_uri)
+    Digest::MD5.hexdigest(source_uri.to_s.downcase.strip.gsub(/\Ahttps?:\/\//, ""))
   end
 
   def self.without_webhooks
@@ -306,6 +310,14 @@ class Resource < ApplicationRecord
 
   private
 
+  def check_canonical_id?
+    !skip_unique_validations && canonical_id_changed?
+  end
+
+  def check_source_uri?
+    !skip_unique_validations && source_uri_changed?
+  end
+
   def merge_host_uris
     return unless @new_host_uris
     self[:host_uris] = union_host_uris ? (host_uris || []).union(@new_host_uris) : @new_host_uris
@@ -318,6 +330,10 @@ class Resource < ApplicationRecord
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?
+  end
+
+  def set_source_uri_hash
+    self.source_uri_hash = source_uri.present? ? self.class.source_uri_hash_for(source_uri) : nil
   end
 
   def skip_webhooks?
