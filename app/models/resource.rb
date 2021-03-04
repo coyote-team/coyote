@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  source_uri_hash       :string
 #  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -49,6 +50,7 @@ class Resource < ApplicationRecord
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
+  before_save :set_source_uri_hash, if: :source_uri_changed?
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -101,18 +103,11 @@ class Resource < ApplicationRecord
     canonical_id = options[:canonical_id]
     return new if source_uri.blank? && canonical_id.blank?
 
-    source_uri_scope = where(arel_table[:source_uri].matches("%#{source_uri.to_s.strip.gsub(/\Ahttps?:\/\//, "")}"))
-    canonical_id_scope = where(canonical_id: options[:canonical_id])
+    scope = all
+    scope = scope.where(source_uri_hash: source_uri_hash_for(source_uri)) if source_uri.present?
+    scope = scope.where(canonical_id: canonical_id) if canonical_id.present?
 
-    scope = if source_uri.present? && canonical_id.present?
-      canonical_id_scope.merge(source_uri_scope)
-    elsif source_uri.present?
-      source_uri_scope
-    else
-      canonical_id_scope
-    end
-
-    (scope.first || new).tap do |resource|
+    (scope.first || new(source_uri: source_uri, canonical_id: canonical_id)).tap do |resource|
       # By default, we can skip uniqueness validations, since this method will
       # enforce that _pretty_ well anyways. In the event it fails, it'll be at
       # the database uniqueness constraint level
@@ -138,6 +133,10 @@ class Resource < ApplicationRecord
       unassigned_unrepresented
       with_approved_representations
     ]
+  end
+
+  def self.source_uri_hash_for(source_uri)
+    Digest::MD5.hexdigest(source_uri.to_s.downcase.strip.gsub(/\Ahttps?:\/\//, ""))
   end
 
   def self.without_webhooks
@@ -331,6 +330,10 @@ class Resource < ApplicationRecord
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?
+  end
+
+  def set_source_uri_hash
+    self.source_uri_hash = source_uri.present? ? self.class.source_uri_hash_for(source_uri) : nil
   end
 
   def skip_webhooks?

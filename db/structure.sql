@@ -772,7 +772,8 @@ CREATE TABLE public.resources (
     priority_flag boolean DEFAULT false NOT NULL,
     host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     is_deleted boolean DEFAULT false NOT NULL,
-    status public.resource_status DEFAULT 'active'::public.resource_status NOT NULL
+    status public.resource_status DEFAULT 'active'::public.resource_status NOT NULL,
+    source_uri_hash character varying
 );
 
 
@@ -2311,6 +2312,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201110000430'),
 ('20201203005723'),
 ('20210224181332'),
-('20210303210513');
+('20210303210513'),
+('20210304215302');
 
 
