@@ -235,6 +235,10 @@ RSpec.describe Resource do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri)).to eq(resource)
     end
 
+    it "returns resources with a matching, schema-less source URI" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri.gsub(/^https?:\/\//, "//"))).to eq(resource)
+    end
+
     it "returns resources with both a matching canonical ID and a matching source URI" do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: resource.source_uri)).to eq(resource)
     end

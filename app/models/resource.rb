@@ -136,7 +136,7 @@ class Resource < ApplicationRecord
   end
 
   def self.source_uri_hash_for(source_uri)
-    Digest::MD5.hexdigest(source_uri.to_s.downcase.strip.gsub(/\Ahttps?:\/\//, ""))
+    Digest::MD5.hexdigest(source_uri.to_s.downcase.strip.gsub(/\A(https?:)?\/\//, ""))
   end
 
   def self.without_webhooks
