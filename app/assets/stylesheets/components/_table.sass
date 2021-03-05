@@ -2,6 +2,7 @@
 // is). Namespaced via tag name rather than class name.
 table
   border-collapse: collapse
+  border: 1px solid $border
   display: table
   width: 100%
 
@@ -11,19 +12,19 @@ table
   tr
     height: 100%
 
-    &.table-row-link
-      &:hover
-        background-color: $input
+    &:hover
+      .table-cell-link
+        a
+          color: $tint
+
+        &,
+        ~ td
+          background-color: $highlight-subtle
 
   th, td
     padding: $gutter
+    position: relative
     vertical-align: middle
-
-    &:first-child
-      padding-left: 0
-
-    &:last-child
-      padding-right: 0
 
     &.table-cell-nowrap
       white-space: nowrap
@@ -42,10 +43,13 @@ table
         margin-right: 0
 
     &.table-cell-link
-      cursor: pointer
+      font-weight: 500
       height: 100%
       padding: 0
-      position: relative
+
+      &,
+      ~ td:not(.table-cell-actions)
+        cursor: pointer
 
       a
         display: inline-block
@@ -53,10 +57,8 @@ table
         text-decoration: none
 
         &,
-        &:focus,
-        &:hover
+        &:focus
           box-shadow: none
-          color: $text
 
         &:after
           bottom: 0
@@ -65,20 +67,6 @@ table
           position: absolute
           right: 0
           top: 0
-
-      &:first-child
-        a
-          padding-left: 0
-
-      &:last-child
-        a
-          padding-right: 0
-
-      &.table-cell-link--text a
-        text-decoration: none
-
-    &.table-cell-primary
-      font-weight: bold
 
     &.table-cell-select
       // white-space: nowrap
@@ -99,12 +87,16 @@ table
 
   thead
     tr:last-child
-      border-bottom: 1px solid $border
+      border-bottom: 1px solid $border-light
+
+    th
+      background-color: $input
+      color: $placeholder
 
   tbody
     tr
       + tr
-        border-top: 1px solid $border
+        border-top: 1px solid $border-light
 
       &.table-row-disabled
         td
@@ -112,7 +104,7 @@ table
 
       +non-mobile
         th
-          padding-right: $gutter
+          // padding-right: $gutter
           width: 10px
           white-space: nowrap
 
@@ -131,7 +123,6 @@ table
             word-break: break-all
 
 .table-wrapper
-  @extend %container
-
+  border-radius: $border-radius
   max-width: 100%
   overflow: auto

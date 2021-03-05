@@ -1,6 +1,6 @@
 .table-wrapper: table
   caption
-    h1= title "#{current_user.staff? ? "All" : "Your"} Organizations"
+    h1= title "#{"Your" unless current_user.staff?} Organizations"
   thead
     tr
       th Organization

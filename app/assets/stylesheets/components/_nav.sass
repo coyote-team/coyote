@@ -105,8 +105,9 @@ nav#nav-main
 
         display: block
         font-size: $font-size-control
+        font-weight: 500
         height: 100%
-        line-height: $nav-height - 3px
+        line-height: $nav-height - 1px
         text-decoration: none
         white-space: nowrap
 
@@ -122,21 +123,8 @@ nav#nav-main
 
 
         +non-mobile
-          margin-bottom: -1px
-
           a
             color: $tint
-
-          &::after
-            background-color: $tint
-            border-top-left-radius: 2px
-            border-top-right-radius: 2px
-            bottom: 0
-            content: ""
-            height: 2px
-            left: $gutter / 2
-            position: absolute
-            right: $gutter / 2
 
   // Secondary nav
   .nav-secondary
