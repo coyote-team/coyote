@@ -99,20 +99,21 @@ class Resource < ApplicationRecord
   delegate :name, to: :resource_group, prefix: true
 
   def self.find_or_initialize_by_canonical_id_or_source_uri(options)
-    source_uri = options[:source_uri]
     canonical_id = options[:canonical_id]
-    return new if source_uri.blank? && canonical_id.blank?
+    has_canonical_id = canonical_id.present?
 
-    scope = all
-    scope = scope.where(source_uri_hash: source_uri_hash_for(source_uri)) if source_uri.present?
-    scope = scope.where(canonical_id: canonical_id) if canonical_id.present?
+    source_uri = options[:source_uri]
+    has_source_uri = source_uri.present?
+    return new if !has_source_uri && !has_canonical_id
 
-    (scope.first || new(source_uri: source_uri, canonical_id: canonical_id)).tap do |resource|
-      # By default, we can skip uniqueness validations, since this method will
-      # enforce that _pretty_ well anyways. In the event it fails, it'll be at
-      # the database uniqueness constraint level
-      resource.skip_unique_validations = true
+    instance = if has_canonical_id
+      find_or_initialize_by(canonical_id: canonical_id)
+    else
+      find_or_initialize_by(source_uri_hash: source_uri_hash_for(source_uri))
     end
+
+    instance.skip_unique_validations = has_canonical_id ? :canonical_id : :source_uri
+    instance
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
@@ -311,11 +312,11 @@ class Resource < ApplicationRecord
   private
 
   def check_canonical_id?
-    !skip_unique_validations && canonical_id_changed?
+    Array(skip_unique_validations).include?(:canonical_id) && canonical_id_changed?
   end
 
   def check_source_uri?
-    !skip_unique_validations && source_uri_changed?
+    Array(skip_unique_validations).include?(:source_uri) && source_uri_changed?
   end
 
   def merge_host_uris

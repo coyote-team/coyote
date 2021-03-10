@@ -230,6 +230,7 @@ RSpec.describe Resource do
 
   describe "::find_or_initialize_by_canonical_id_or_source_uri" do
     let!(:resource) { create(:resource, canonical_id: "12345", source_uri: "https://www.example.com/example.jpg") }
+    let!(:other_resource) { create(:resource, canonical_id: "67890", source_uri: "https://www.example.com/example%20copy.jpg") }
 
     it "returns resources with a matching source URI" do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri)).to eq(resource)
@@ -243,8 +244,8 @@ RSpec.describe Resource do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: resource.source_uri)).to eq(resource)
     end
 
-    it "does not return resources with one differing column" do
-      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: "https://www.not-example.com")).to be_new_record
+    it "prefers finding by canonical_id when the source_uri also exists" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: other_resource.source_uri)).to eq(resource)
     end
 
     it "builds a new resource without a matching source URI or canonical ID" do
