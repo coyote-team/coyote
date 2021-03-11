@@ -4,11 +4,10 @@ ruby:
   id = id_for(resource)
 
 li.list-item
-  = resource_link(resource, href: representation_path(representations.first))
-
+  = resource_link(resource, href: representation_path(representations.first), link: {class: "list-item-image"})
+  span.sr-only Caption:
+  .list-item-title= resource.name
   .list-item-body.timeline
-    span.sr-only Caption:
-    .timeline-title= resource.name
     - sorted_representations(representations).each do |representation|
       .timeline-item
         - if defined? form

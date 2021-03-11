@@ -20,10 +20,6 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, cite, cod
   line-height: 1
   font-family: inherit
 
-table
-  border-collapse: collapse
-  border-spacing: 0
-
 ol, ul
   list-style: none
 
@@ -122,8 +118,10 @@ textarea
 button,
 input
   line-height: normal
+
   // FF3/4 have !important on line-height in UA stylesheet
   *overflow: visible
+
   // Inner spacing ie IE6/7
 
 button::-moz-focus-inner,
@@ -137,8 +135,10 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"]
   cursor: pointer
+
   // Cursors on all buttons applied consistently
   -webkit-appearance: button
+
   // Style clicable inputs in iOS
 
 input[type="search"]
@@ -150,19 +150,13 @@ input[type="search"]
 
 input[type="search"]::-webkit-search-decoration
   -webkit-appearance: none
+
   // Inner-padding issues in Chrome OSX, Safari 5
 
 textarea
   overflow: auto
+
   // Remove vertical scrollbar in IE6-9
   vertical-align: top
+
   // Readability and alignment cross-browser
-
-// Tables
-// -------------------------
-// Source: http://github.com/necolas/normalize.css
-
-// Remove spacing between table cells
-table
-  border-collapse: collapse
-  border-spacing: 0

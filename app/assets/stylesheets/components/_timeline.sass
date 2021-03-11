@@ -1,13 +1,8 @@
 .timeline
-  .timeline-title
-    font-size: $h2-size
-    font-weight: 500
-    max-width: 100%
-    padding: $gutter
-    word-break: break-all
-
   .timeline-item
-    // border-top: 1px solid $border
+    + .timeline-item
+      border-top: 1px solid $border
+
     // margin: 0 0 0 (-$gutter * 2)
-    padding: ($gutter * 2) $gutter
+    // padding: ($gutter * 2) $gutter
     position: relative

@@ -1,10 +1,16 @@
 // COMPONENT: Table: used for presenting tabular data (duh; you know what this
 // is). Namespaced via tag name rather than class name.
 table
-  border-collapse: collapse
   border: 1px solid $border
+  border-collapse: separate
+  border-radius: $border-radius
+  border-spacing: 0
   display: table
+  overflow: hidden
   width: 100%
+
+  table
+    border-width: 0
 
   caption
     text-align: left
@@ -86,17 +92,27 @@ table
     white-space: nowrap
 
   thead
-    tr:last-child
-      border-bottom: 1px solid $border-light
+    background-color: $input
 
-    th
-      background-color: $input
-      color: $placeholder
+    &,
+    *:first-child
+      border-top-left-radius: $border-radius
+
+    &,
+    *:last-child
+      border-top-right-radius: $border-radius
+
+    tr:last-child
+      th
+        border-bottom: 1px solid $border-light
+        color: $placeholder
 
   tbody
     tr
       + tr
-        border-top: 1px solid $border-light
+        td,
+        th
+          border-top: 1px solid $border-light
 
       &.table-row-disabled
         td
