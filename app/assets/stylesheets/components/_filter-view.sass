@@ -12,9 +12,27 @@
       flex: 3
       padding-left: $gutter
 
+    .filter-view-toggle
+      display: none
+
+
+  +mobile
+    .filter-view-toggle
+      position: relative
+      z-index: $z-index-content + 2
+
+    .filter-view-toggle--toggled
+      display: none
+
 // COMPONENT: Filter set: provides a set of controls that can filter results
 .filter-set
-  border-top: 1px solid $border
+  +non-mobile
+    border-top: 1px solid $border
+
+
+  +mobile
+    display: none
+
 
   .filter-set-item, .filter-set-submit
     margin: 0
@@ -25,3 +43,14 @@
       display: block
       font-weight: bold
       margin: 0 0 $gutter 0
+
+.filter-set--toggled
+  +mobile
+    .filter-view-toggle-label:not(.filter-view-toggle--toggled)
+      display: none
+
+    .filter-view-toggle--toggled
+      display: inline-block
+
+    .filter-set
+      display: block
