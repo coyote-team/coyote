@@ -1,12 +1,12 @@
 export function Table(table) {
-  const link = table.querySelectorAll(".table-cell-link")
-  if (link) {
-    const linkAdjacent = table.querySelectorAll(".table-cell-link ~ td:not(.table-cell-actions")
-    linkAdjacent.forEach(cell => {
+  table.querySelectorAll(".table-cell-link > a").forEach(link => {
+    const row = link.parentNode.parentNode
+    row.querySelectorAll(".table-cell-link ~ td:not(.table-cell-actions").forEach(cell => {
       cell.addEventListener("click", event => {
-        console.log("farts")
-        link.dispatchEvent(event)
+        setTimeout(() => {
+          link.dispatchEvent(event)
+        }, 0)
       })
     })
-  }
+  })
 }

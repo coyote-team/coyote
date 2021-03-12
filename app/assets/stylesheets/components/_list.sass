@@ -25,46 +25,53 @@
       max-width: none
       width: 100%
 
-  // .list-item-title, .list-item-body
-  //   padding-bottom: 0
-  //   padding-right: 0
-
-  // .list-item-title
-  //   margin-bottom: -1px
-
-  // .list-item-actions
-  //   text-align: left
-
   + .list-item
     border-top-width: 0
 
 .list
   &:not(.list--grid)
-    @extend %container
+    // @extend %container
 
   display: block
 
   .list-item
-    display: block
+    display: flex
+    position: relative
+
+    // transition: all 100ms $swift
 
     &:not(.list-item--has-link),
     &--has-link .list-item-link
       align-items: center
-      display: flex
+      padding: $gutter 0
+
+      > * + *
+        padding-left: $gutter
+
+    &-dashboard-metric
       justify-content: space-between
-      padding: $gutter
-      transition: all 150ms $swift
 
-    + .list-item
-      border-top: 1px solid $border-light
+    &--has-link
+      .list-item-link
+        display: flex
+        flex: 1
+        text-decoration: none
 
-    // &-dashboard-metric
-    //   @extend .list-item
+        ~ *
+          position: relative
+          z-index: 1
 
-    //   border: 0
+        &:focus
+          box-shadow: none
 
-    .list-item-link
-      text-decoration: none
+        &::before
+          bottom: 0
+          left: 0
+          content: ""
+          position: absolute
+          right: 0
+          top: 0
+          z-index: 0
 
     // All immediate descendents should be block-level elements
     .list-item-image,
@@ -76,47 +83,30 @@
     .list-item-actions
       display: block
 
-    .list-item-title,
-    .list-item-body
-      pading: $gutter
-
     .list-item-checkbox
+      left: $gutter
       position: absolute
-      visibility: hidden
+      top: $gutter * 2
 
     .list-item-image
       flex: 0 0 33%
 
       &,
       img
+        border-radius: $border-radius
         display: block
         max-width: $breakpoint-mobile-portrait / 3
 
     .list-item-title
       font-weight: 500
       max-width: 100%
-      padding: $gutter
       word-break: break-all
-
-      +ie-only
-        order: -1
-
-
-      > *
-        display: block
-
-      input
-        flex: 0 0 $checkbox-size
-
-      img
-        min-width: none
 
     .list-item-body
       flex: 1
-      padding: $gutter
 
     .list-item-actions
-      flex: 1
+      display: flex
       text-align: right
       white-space: nowrap
 
@@ -130,19 +120,20 @@
           margin-right: 0
 
     .list-item-label
-      padding-right: $gutter
-
       &:after
         content: ": "
 
     .list-item-value
       font-weight: bold
-      padding-left: $gutter
       text-align: right
       text-decoration: none
 
     +mobile-portrait
       +list-item-vertical
+
+
+    + .list-item
+      border-top: 1px solid $border-light
 
   // COMPONENT SUBTYPE: Render the list as a grid of cards
   &.list--grid

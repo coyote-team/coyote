@@ -21,14 +21,14 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: {class: "form-field-hint"}
   end
 
-  config.wrappers :filter_set, class: "filter-set-item", error_class: "form-field--error" do |b|
+  config.wrappers :filters, class: "filter", error_class: "form-field--error" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: "filter-set-item-title"
+    b.use :label, class: "filter-title"
 
     b.use :input
     b.use :error, wrap_with: {tag: "span", class: "form-field-error-message"}

@@ -200,18 +200,19 @@ $simple-line-icon-prefix: "icon-" !default
   &social-dropbox,
   &social-vkontakte,
   &social-steam
-    font-family: "simple-line-icons"
-    font-size: 70%
-    font-style: normal
-    font-variant: normal
-    font-weight: normal
-    line-height: 1
-    speak: none
-    text-transform: none
+    &::before
+      font-family: "simple-line-icons"
+      font-size: 70%
+      font-style: normal
+      font-variant: normal
+      font-weight: normal
+      line-height: 1
+      speak: none
+      text-transform: none
 
-    /* Better Font Rendering ===========
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
+      /* Better Font Rendering ===========
+      -webkit-font-smoothing: antialiased
+      -moz-osx-font-smoothing: grayscale
 
 .#{$simple-line-icon-prefix}user:before
   content: ""

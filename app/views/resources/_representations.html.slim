@@ -25,5 +25,3 @@
         td.table-cell-actions
           - if policy(representation).approve?
             = render "representations/approve_reject", representation: representation
-          - if policy(representation).edit?
-            = edit_link_to edit_representation_path(representation)

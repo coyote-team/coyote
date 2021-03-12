@@ -3,7 +3,7 @@
     / h1= title "Descriptions for #{current_organization.name}"
     h1= title "Descriptions"
 
-    = search_form_for record_filter.search, url: representations_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
+    = search_form_for record_filter.search, url: representations_path, wrapper: :filters, enforce_utf8: false do |f|
       h2.sr-only Filter #{Representation.model_name.human(count: 2)}
       label.filter-set-item.field.field--accessory
         h3.sr-only Search by caption or description

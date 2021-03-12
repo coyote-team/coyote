@@ -11,7 +11,7 @@ class ResourcesController < ApplicationController
   before_action :authorize_general_access, only: %i[new index create]
   before_action :authorize_unit_access, only: %i[show edit update destroy]
 
-  helper_method :resource, :record_filter, :filter_params
+  helper_method :resource, :record_filter, :filter_params, :resource_groups
 
   def create
     self.resource = current_organization.resources.new
@@ -86,6 +86,10 @@ class ResourcesController < ApplicationController
 
   def record_filter
     @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources, default_filters: {is_deleted_eq: false})
+  end
+
+  def resource_groups
+    @resource_groups ||= ResourceGroup.all
   end
 
   def set_resource

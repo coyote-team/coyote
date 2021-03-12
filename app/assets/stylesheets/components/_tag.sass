@@ -32,13 +32,13 @@
     color: $text
 
   @each $name, $color in $status
-    $background: lighten($color, 20%)
-    $text: darken($color, 30%)
+    $background: lighten($color, 40%)
+    $text: darken($color, 20%)
 
     &.tag--#{$name}
       background-color: $background
       border-color: $background
       color: $text
 
-      &.tag--outline
-        background-color: lighten($color, 40%)
+      // &.tag--outline
+      //   background-color: lighten($color, 40%)
