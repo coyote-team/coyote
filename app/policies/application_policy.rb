@@ -43,7 +43,7 @@ class ApplicationPolicy
   # @see https://github.com/elabs/pundit#scopes
   # @see ApplicationPolicy::Scope
   def scope
-    Pundit.policy_scope!(organization_user, record.class)
+    Pundit.policy_scope!(organization_user, model)
   end
 
   # @return [false]
@@ -90,4 +90,8 @@ class ApplicationPolicy
   private
 
   attr_reader :organization_user, :record
+
+  def model
+    record.is_a?(Class) ? record : record.class
+  end
 end

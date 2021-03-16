@@ -215,7 +215,11 @@ Rails.application.routes.draw do
   end
 
   scope "organizations/:organization_id" do
-    resources :resources
+    resources :resources do
+      collection do
+        post :update_many
+      end
+    end
 
     resources :representations do
       member do

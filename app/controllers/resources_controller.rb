@@ -56,6 +56,17 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def update_many
+    resource_ids = params[:resource_ids]
+    if resource_ids.present?
+      resources = policy(Resource).scope.where(id: params[:resource_ids])
+      resources.update(many_resources_params)
+      flash[:notice] = "Your changes were applied!"
+    end
+
+    redirect_back(fallback_location: resources_path)
+  end
+
   private
 
   attr_accessor :resource
@@ -82,6 +93,10 @@ class ResourcesController < ApplicationController
 
   def filter_params
     params.fetch(:q, {}).permit(*RESOURCE_FILTERS)
+  end
+
+  def many_resources_params
+    params.require(:resource).permit(:assign_to_user_id, :resource_group_id, :union_resource_groups)
   end
 
   def record_filter

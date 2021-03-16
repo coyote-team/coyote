@@ -57,6 +57,19 @@ en:
         resource:
           # cannot_overwrite: "cannot be overwritten without an `overwrite_representations` flag on the request"
 
+  filters:
+    resource:
+      priority_flag_eq:
+        true: "Priority"
+      scope:
+        assigned: "Assigned"
+        assigned_unrepresented: "Assigned / No description"
+        represented: "Has a description"
+        unassigned: "Unassigned"
+        unassigned_unrepresented: "Unassigned / No description"
+        unrepresented: "No description"
+        with_approved_representations: "Approved"
+
   helpers:
     select:
       prompt: ""

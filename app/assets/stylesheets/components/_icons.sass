@@ -1,782 +1,1512 @@
-// Default Variables
-$simple-line-font-path: "https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/fonts/"
-$simple-line-icon-prefix: "icon-" !default
-
-// Fonts
 @font-face
-  font-family: "simple-line-icons"
-  src: url("#{$simple-line-font-path}Simple-Line-Icons.eot?v=2.4.0")
-  src: url("#{$simple-line-font-path}Simple-Line-Icons.eot?v=2.4.0#iefix") format("embedded-opentype"), url("#{$simple-line-font-path}Simple-Line-Icons.woff2?v=2.4.0") format("woff2"), url("#{$simple-line-font-path}Simple-Line-Icons.ttf?v=2.4.0") format("truetype"), url("#{$simple-line-font-path}Simple-Line-Icons.woff?v=2.4.0") format("woff"), url("#{$simple-line-font-path}Simple-Line-Icons.svg?v=2.4.0#simple-line-icons") format("svg")
-  font-weight: normal
+  font-family: "Eva-Icons"
+  src: asset-url("Eva-Icons.eot")
+  src: asset-url("Eva-Icons.eot?#iefix") format("embedded-opentype"), url("Eva-Icons.woff2") format("woff2"), url("Eva-Icons.woff") format("woff"), url("Eva-Icons.ttf") format("truetype"), url("Eva-Icons.svg#Eva-Icons") format("svg")
   font-style: normal
+  font-weight: 400
 
-.#{$simple-line-icon-prefix}
-  &user,
-  &people,
-  &user-female,
-  &user-follow,
-  &user-following,
-  &user-unfollow,
-  &login,
-  &logout,
-  &emotsmile,
-  &phone,
-  &call-end,
-  &call-in,
-  &call-out,
-  &map,
-  &location-pin,
-  &direction,
-  &directions,
-  &compass,
-  &layers,
-  &menu,
-  &list,
-  &options-vertical,
-  &options,
-  &arrow-down,
-  &arrow-left,
-  &arrow-right,
-  &arrow-up,
-  &arrow-up-circle,
-  &arrow-left-circle,
-  &arrow-right-circle,
-  &arrow-down-circle,
-  &check,
-  &clock,
-  &plus,
-  &minus,
-  &close,
-  &event,
-  &exclamation,
-  &organization,
-  &trophy,
-  &screen-smartphone,
-  &screen-desktop,
-  &plane,
-  &notebook,
-  &mustache,
-  &mouse,
-  &magnet,
-  &energy,
-  &disc,
-  &cursor,
-  &cursor-move,
-  &crop,
-  &chemistry,
-  &speedometer,
-  &shield,
-  &screen-tablet,
-  &magic-wand,
-  &hourglass,
-  &graduation,
-  &ghost,
-  &game-controller,
-  &fire,
-  &eyeglass,
-  &envelope-open,
-  &envelope-letter,
-  &bell,
-  &badge,
-  &anchor,
-  &wallet,
-  &vector,
-  &speech,
-  &puzzle,
-  &printer,
-  &present,
-  &playlist,
-  &pin,
-  &picture,
-  &handbag,
-  &globe-alt,
-  &globe,
-  &folder-alt,
-  &folder,
-  &film,
-  &feed,
-  &drop,
-  &drawer,
-  &docs,
-  &doc,
-  &diamond,
-  &cup,
-  &calculator,
-  &bubbles,
-  &briefcase,
-  &book-open,
-  &basket-loaded,
-  &basket,
-  &bag,
-  &action-undo,
-  &action-redo,
-  &wrench,
-  &umbrella,
-  &trash,
-  &tag,
-  &support,
-  &frame,
-  &size-fullscreen,
-  &size-actual,
-  &shuffle,
-  &share-alt,
-  &share,
-  &rocket,
-  &question,
-  &pie-chart,
-  &pencil,
-  &note,
-  &loop,
-  &home,
-  &grid,
-  &graph,
-  &microphone,
-  &music-tone-alt,
-  &music-tone,
-  &earphones-alt,
-  &earphones,
-  &equalizer,
-  &like,
-  &dislike,
-  &control-start,
-  &control-rewind,
-  &control-play,
-  &control-pause,
-  &control-forward,
-  &control-end,
-  &volume-1,
-  &volume-2,
-  &volume-off,
-  &calendar,
-  &bulb,
-  &chart,
-  &ban,
-  &bubble,
-  &camrecorder,
-  &camera,
-  &cloud-download,
-  &cloud-upload,
-  &envelope,
-  &eye,
-  &flag,
-  &heart,
-  &info,
-  &key,
-  &link,
-  &lock,
-  &lock-open,
-  &magnifier,
-  &magnifier-add,
-  &magnifier-remove,
-  &paper-clip,
-  &paper-plane,
-  &power,
-  &refresh,
-  &reload,
-  &settings,
-  &star,
-  &symbol-female,
-  &symbol-male,
-  &target,
-  &credit-card,
-  &paypal,
-  &social-tumblr,
-  &social-twitter,
-  &social-facebook,
-  &social-instagram,
-  &social-linkedin,
-  &social-pinterest,
-  &social-github,
-  &social-google,
-  &social-reddit,
-  &social-skype,
-  &social-dribbble,
-  &social-behance,
-  &social-foursqare,
-  &social-soundcloud,
-  &social-spotify,
-  &social-stumbleupon,
-  &social-youtube,
-  &social-dropbox,
-  &social-vkontakte,
-  &social-steam
-    &::before
-      font-family: "simple-line-icons"
-      font-size: 70%
-      font-style: normal
-      font-variant: normal
-      font-weight: normal
-      line-height: 1
-      speak: none
-      text-transform: none
-
-      /* Better Font Rendering ===========
-      -webkit-font-smoothing: antialiased
-      -moz-osx-font-smoothing: grayscale
-
-.#{$simple-line-icon-prefix}user:before
-  content: ""
-
-.#{$simple-line-icon-prefix}people:before
-  content: ""
-
-.#{$simple-line-icon-prefix}user-female:before
-  content: ""
-
-.#{$simple-line-icon-prefix}user-follow:before
-  content: ""
-
-.#{$simple-line-icon-prefix}user-following:before
-  content: ""
-
-.#{$simple-line-icon-prefix}user-unfollow:before
-  content: ""
-
-.#{$simple-line-icon-prefix}login:before
-  content: ""
-
-.#{$simple-line-icon-prefix}logout:before
-  content: ""
-
-.#{$simple-line-icon-prefix}emotsmile:before
-  content: ""
-
-.#{$simple-line-icon-prefix}phone:before
-  content: ""
-
-.#{$simple-line-icon-prefix}call-end:before
-  content: ""
-
-.#{$simple-line-icon-prefix}call-in:before
-  content: ""
-
-.#{$simple-line-icon-prefix}call-out:before
-  content: ""
-
-.#{$simple-line-icon-prefix}map:before
-  content: ""
-
-.#{$simple-line-icon-prefix}location-pin:before
-  content: ""
-
-.#{$simple-line-icon-prefix}direction:before
-  content: ""
-
-.#{$simple-line-icon-prefix}directions:before
-  content: ""
-
-.#{$simple-line-icon-prefix}compass:before
-  content: ""
-
-.#{$simple-line-icon-prefix}layers:before
-  content: ""
-
-.#{$simple-line-icon-prefix}menu:before
-  content: ""
-
-.#{$simple-line-icon-prefix}list:before
-  content: ""
-
-.#{$simple-line-icon-prefix}options-vertical:before
-  content: ""
-
-.#{$simple-line-icon-prefix}options:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-left:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-right:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-down:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-up:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-up-circle:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-left-circle:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-right-circle:before
-  content: ""
-
-.#{$simple-line-icon-prefix}arrow-down-circle:before
-  content: ""
-
-.#{$simple-line-icon-prefix}check:before
-  content: ""
-
-.#{$simple-line-icon-prefix}clock:before
-  content: ""
-
-.#{$simple-line-icon-prefix}plus:before
-  content: ""
-
-.#{$simple-line-icon-prefix}minus:before
-  content: ""
-
-.#{$simple-line-icon-prefix}close:before
-  content: ""
-
-.#{$simple-line-icon-prefix}event:before
-  content: ""
-
-.#{$simple-line-icon-prefix}exclamation:before
-  content: ""
-
-.#{$simple-line-icon-prefix}organization:before
-  content: ""
-
-.#{$simple-line-icon-prefix}trophy:before
-  content: ""
-
-.#{$simple-line-icon-prefix}screen-smartphone:before
-  content: ""
-
-.#{$simple-line-icon-prefix}screen-desktop:before
-  content: ""
-
-.#{$simple-line-icon-prefix}plane:before
-  content: ""
-
-.#{$simple-line-icon-prefix}notebook:before
-  content: ""
-
-.#{$simple-line-icon-prefix}mustache:before
-  content: ""
-
-.#{$simple-line-icon-prefix}mouse:before
-  content: ""
-
-.#{$simple-line-icon-prefix}magnet:before
-  content: ""
-
-.#{$simple-line-icon-prefix}energy:before
-  content: ""
-
-.#{$simple-line-icon-prefix}disc:before
-  content: ""
-
-.#{$simple-line-icon-prefix}cursor:before
-  content: ""
-
-.#{$simple-line-icon-prefix}cursor-move:before
-  content: ""
-
-.#{$simple-line-icon-prefix}crop:before
-  content: ""
-
-.#{$simple-line-icon-prefix}chemistry:before
-  content: ""
-
-.#{$simple-line-icon-prefix}speedometer:before
-  content: ""
-
-.#{$simple-line-icon-prefix}shield:before
-  content: ""
-
-.#{$simple-line-icon-prefix}screen-tablet:before
-  content: ""
-
-.#{$simple-line-icon-prefix}magic-wand:before
-  content: ""
-
-.#{$simple-line-icon-prefix}hourglass:before
-  content: ""
-
-.#{$simple-line-icon-prefix}graduation:before
-  content: ""
-
-.#{$simple-line-icon-prefix}ghost:before
-  content: ""
-
-.#{$simple-line-icon-prefix}game-controller:before
-  content: ""
-
-.#{$simple-line-icon-prefix}fire:before
-  content: ""
-
-.#{$simple-line-icon-prefix}eyeglass:before
-  content: ""
-
-.#{$simple-line-icon-prefix}envelope-open:before
-  content: ""
+*[class^="icon-"]
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+  display: inline-block
+  font-family: "Eva-Icons"
+  font-size: 120%
+  font-style: normal
+  font-variant: normal
+  font-weight: normal
+  line-height: normal
+  speak: none
+  text-rendering: auto
+  text-transform: none
+  transform: translate(0, 0)
 
-.#{$simple-line-icon-prefix}envelope-letter:before
-  content: ""
+.icon-lg
+  vertical-align: -15%
+  line-height: 0.75em
+  font-size: 1.33333333em
 
-.#{$simple-line-icon-prefix}bell:before
-  content: ""
+.icon-2x
+  font-size: 2em
 
-.#{$simple-line-icon-prefix}badge:before
-  content: ""
+.icon-3x
+  font-size: 3em
 
-.#{$simple-line-icon-prefix}anchor:before
-  content: ""
+.icon-4x
+  font-size: 4em
 
-.#{$simple-line-icon-prefix}wallet:before
-  content: ""
+.icon-5x
+  font-size: 5em
 
-.#{$simple-line-icon-prefix}vector:before
-  content: ""
+.icon-fw
+  width: 1.28571429em
+  text-align: center
 
-.#{$simple-line-icon-prefix}speech:before
-  content: ""
+.icon-activity::before
+  content: ""
 
-.#{$simple-line-icon-prefix}puzzle:before
-  content: ""
+.icon-activity-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}printer:before
-  content: ""
+.icon-alert-circle::before
+  content: ""
 
-.#{$simple-line-icon-prefix}present:before
-  content: ""
+.icon-alert-circle-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}playlist:before
-  content: ""
+.icon-alert-triangle::before
+  content: ""
 
-.#{$simple-line-icon-prefix}pin:before
-  content: ""
+.icon-alert-triangle-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}picture:before
-  content: ""
+.icon-archive::before
+  content: ""
 
-.#{$simple-line-icon-prefix}handbag:before
-  content: ""
+.icon-archive-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}globe-alt:before
-  content: ""
+.icon-arrow-back::before
+  content: ""
 
-.#{$simple-line-icon-prefix}globe:before
-  content: ""
+.icon-arrow-back-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}folder-alt:before
-  content: ""
+.icon-arrow-circle-down::before
+  content: ""
 
-.#{$simple-line-icon-prefix}folder:before
-  content: ""
+.icon-arrow-circle-down-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}film:before
-  content: ""
+.icon-arrow-circle-left::before
+  content: ""
 
-.#{$simple-line-icon-prefix}feed:before
-  content: ""
+.icon-arrow-circle-left-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}drop:before
-  content: ""
+.icon-arrow-circle-right::before
+  content: ""
 
-.#{$simple-line-icon-prefix}drawer:before
-  content: ""
+.icon-arrow-circle-right-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}docs:before
-  content: ""
+.icon-arrow-circle-up::before
+  content: ""
 
-.#{$simple-line-icon-prefix}doc:before
-  content: ""
+.icon-arrow-circle-up-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}diamond:before
-  content: ""
+.icon-arrow-down::before
+  content: ""
 
-.#{$simple-line-icon-prefix}cup:before
-  content: ""
+.icon-arrow-down-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}calculator:before
-  content: ""
+.icon-arrow-downward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}bubbles:before
-  content: ""
+.icon-arrow-downward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}briefcase:before
-  content: ""
+.icon-arrow-forward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}book-open:before
-  content: ""
+.icon-arrow-forward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}basket-loaded:before
-  content: ""
+.icon-arrow-ios-back::before
+  content: ""
 
-.#{$simple-line-icon-prefix}basket:before
-  content: ""
+.icon-arrow-ios-back-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}bag:before
-  content: ""
+.icon-arrow-ios-downward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}action-undo:before
-  content: ""
+.icon-arrow-ios-downward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}action-redo:before
-  content: ""
+.icon-arrow-ios-forward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}wrench:before
-  content: ""
+.icon-arrow-ios-forward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}umbrella:before
-  content: ""
+.icon-arrow-ios-upward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}trash:before
-  content: ""
+.icon-arrow-ios-upward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}tag:before
-  content: ""
+.icon-arrow-left::before
+  content: ""
 
-.#{$simple-line-icon-prefix}support:before
-  content: ""
+.icon-arrow-left-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}frame:before
-  content: ""
+.icon-arrow-right::before
+  content: ""
 
-.#{$simple-line-icon-prefix}size-fullscreen:before
-  content: ""
+.icon-arrow-right-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}size-actual:before
-  content: ""
+.icon-arrow-up::before
+  content: ""
 
-.#{$simple-line-icon-prefix}shuffle:before
-  content: ""
+.icon-arrow-up-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}share-alt:before
-  content: ""
+.icon-arrow-upward::before
+  content: ""
 
-.#{$simple-line-icon-prefix}share:before
-  content: ""
+.icon-arrow-upward-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}rocket:before
-  content: ""
+.icon-arrowhead-down::before
+  content: ""
 
-.#{$simple-line-icon-prefix}question:before
-  content: ""
+.icon-arrowhead-down-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}pie-chart:before
-  content: ""
+.icon-arrowhead-left::before
+  content: ""
 
-.#{$simple-line-icon-prefix}pencil:before
-  content: ""
+.icon-arrowhead-left-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}note:before
-  content: ""
+.icon-arrowhead-right::before
+  content: ""
 
-.#{$simple-line-icon-prefix}loop:before
-  content: ""
+.icon-arrowhead-right-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}home:before
-  content: ""
+.icon-arrowhead-up::before
+  content: ""
 
-.#{$simple-line-icon-prefix}grid:before
-  content: ""
+.icon-arrowhead-up-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}graph:before
-  content: ""
+.icon-at::before
+  content: ""
 
-.#{$simple-line-icon-prefix}microphone:before
-  content: ""
+.icon-at-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}music-tone-alt:before
-  content: ""
+.icon-attach::before
+  content: ""
 
-.#{$simple-line-icon-prefix}music-tone:before
-  content: ""
+.icon-attach-2::before
+  content: ""
 
-.#{$simple-line-icon-prefix}earphones-alt:before
-  content: ""
+.icon-attach-2-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}earphones:before
-  content: ""
+.icon-attach-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}equalizer:before
-  content: ""
+.icon-award::before
+  content: ""
 
-.#{$simple-line-icon-prefix}like:before
-  content: ""
+.icon-award-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}dislike:before
-  content: ""
+.icon-backspace::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-start:before
-  content: ""
+.icon-backspace-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-rewind:before
-  content: ""
+.icon-bar-chart::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-play:before
-  content: ""
+.icon-bar-chart-2::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-pause:before
-  content: ""
+.icon-bar-chart-2-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-forward:before
-  content: ""
+.icon-bar-chart-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}control-end:before
-  content: ""
+.icon-battery::before
+  content: ""
 
-.#{$simple-line-icon-prefix}volume-1:before
-  content: ""
+.icon-battery-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}volume-2:before
-  content: ""
+.icon-behance::before
+  content: ""
 
-.#{$simple-line-icon-prefix}volume-off:before
-  content: ""
+.icon-behance-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}calendar:before
-  content: ""
+.icon-bell::before
+  content: ""
 
-.#{$simple-line-icon-prefix}bulb:before
-  content: ""
+.icon-bell-off::before
+  content: ""
 
-.#{$simple-line-icon-prefix}chart:before
-  content: ""
+.icon-bell-off-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}ban:before
-  content: ""
+.icon-bell-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}bubble:before
-  content: ""
+.icon-bluetooth::before
+  content: ""
 
-.#{$simple-line-icon-prefix}camrecorder:before
-  content: ""
+.icon-bluetooth-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}camera:before
-  content: ""
+.icon-book::before
+  content: ""
 
-.#{$simple-line-icon-prefix}cloud-download:before
-  content: ""
+.icon-book-open::before
+  content: ""
 
-.#{$simple-line-icon-prefix}cloud-upload:before
-  content: ""
+.icon-book-open-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}envelope:before
-  content: ""
+.icon-book-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}eye:before
-  content: ""
+.icon-bookmark::before
+  content: ""
 
-.#{$simple-line-icon-prefix}flag:before
-  content: ""
+.icon-bookmark-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}heart:before
-  content: ""
+.icon-briefcase::before
+  content: ""
 
-.#{$simple-line-icon-prefix}info:before
-  content: ""
+.icon-briefcase-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}key:before
-  content: ""
+.icon-browser::before
+  content: ""
 
-.#{$simple-line-icon-prefix}link:before
-  content: ""
+.icon-browser-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}lock:before
-  content: ""
+.icon-brush::before
+  content: ""
 
-.#{$simple-line-icon-prefix}lock-open:before
-  content: ""
+.icon-brush-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}magnifier:before
-  content: ""
+.icon-bulb::before
+  content: ""
 
-.#{$simple-line-icon-prefix}magnifier-add:before
-  content: ""
+.icon-bulb-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}magnifier-remove:before
-  content: ""
+.icon-calendar::before
+  content: ""
 
-.#{$simple-line-icon-prefix}paper-clip:before
-  content: ""
+.icon-calendar-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}paper-plane:before
-  content: ""
+.icon-camera::before
+  content: ""
 
-.#{$simple-line-icon-prefix}power:before
-  content: ""
+.icon-camera-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}refresh:before
-  content: ""
+.icon-car::before
+  content: ""
 
-.#{$simple-line-icon-prefix}reload:before
-  content: ""
+.icon-car-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}settings:before
-  content: ""
+.icon-cast::before
+  content: ""
 
-.#{$simple-line-icon-prefix}star:before
-  content: ""
+.icon-cast-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}symbol-female:before
-  content: ""
+.icon-charging::before
+  content: ""
 
-.#{$simple-line-icon-prefix}symbol-male:before
-  content: ""
+.icon-charging-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}target:before
-  content: ""
+.icon-checkmark::before
+  content: ""
 
-.#{$simple-line-icon-prefix}credit-card:before
-  content: ""
+.icon-checkmark-circle::before
+  content: ""
 
-.#{$simple-line-icon-prefix}paypal:before
-  content: ""
+.icon-checkmark-circle-2::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-tumblr:before
-  content: ""
+.icon-checkmark-circle-2-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-twitter:before
-  content: ""
+.icon-checkmark-circle-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-facebook:before
-  content: ""
+.icon-checkmark-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-instagram:before
-  content: ""
+.icon-checkmark-square::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-linkedin:before
-  content: ""
+.icon-checkmark-square-2::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-pinterest:before
-  content: ""
+.icon-checkmark-square-2-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-github:before
-  content: ""
+.icon-checkmark-square-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-google:before
-  content: ""
+.icon-chevron-down::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-reddit:before
-  content: ""
+.icon-chevron-down-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-skype:before
-  content: ""
+.icon-chevron-left::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-dribbble:before
-  content: ""
+.icon-chevron-left-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-behance:before
-  content: ""
+.icon-chevron-right::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-foursqare:before
-  content: ""
+.icon-chevron-right-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-soundcloud:before
-  content: ""
+.icon-chevron-up::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-spotify:before
-  content: ""
+.icon-chevron-up-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-stumbleupon:before
-  content: ""
+.icon-clipboard::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-youtube:before
-  content: ""
+.icon-clipboard-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-dropbox:before
-  content: ""
+.icon-clock::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-vkontakte:before
-  content: ""
+.icon-clock-outline::before
+  content: ""
 
-.#{$simple-line-icon-prefix}social-steam:before
-  content: ""
+.icon-close::before
+  content: ""
+
+.icon-close-circle::before
+  content: ""
+
+.icon-close-circle-outline::before
+  content: ""
+
+.icon-close-outline::before
+  content: ""
+
+.icon-close-square::before
+  content: ""
+
+.icon-close-square-outline::before
+  content: ""
+
+.icon-cloud-download::before
+  content: ""
+
+.icon-cloud-download-outline::before
+  content: ""
+
+.icon-cloud-upload::before
+  content: ""
+
+.icon-cloud-upload-outline::before
+  content: ""
+
+.icon-code::before
+  content: ""
+
+.icon-code-download::before
+  content: ""
+
+.icon-code-download-outline::before
+  content: ""
+
+.icon-code-outline::before
+  content: ""
+
+.icon-collapse::before
+  content: ""
+
+.icon-collapse-outline::before
+  content: ""
+
+.icon-color-palette::before
+  content: ""
+
+.icon-color-palette-outline::before
+  content: ""
+
+.icon-color-picker::before
+  content: ""
+
+.icon-color-picker-outline::before
+  content: ""
+
+.icon-compass::before
+  content: ""
+
+.icon-compass-outline::before
+  content: ""
+
+.icon-copy::before
+  content: ""
+
+.icon-copy-outline::before
+  content: ""
+
+.icon-corner-down-left::before
+  content: ""
+
+.icon-corner-down-left-outline::before
+  content: ""
+
+.icon-corner-down-right::before
+  content: ""
+
+.icon-corner-down-right-outline::before
+  content: ""
+
+.icon-corner-left-down::before
+  content: ""
+
+.icon-corner-left-down-outline::before
+  content: ""
+
+.icon-corner-left-up::before
+  content: ""
+
+.icon-corner-left-up-outline::before
+  content: ""
+
+.icon-corner-right-down::before
+  content: ""
+
+.icon-corner-right-down-outline::before
+  content: ""
+
+.icon-corner-right-up::before
+  content: ""
+
+.icon-corner-right-up-outline::before
+  content: ""
+
+.icon-corner-up-left::before
+  content: ""
+
+.icon-corner-up-left-outline::before
+  content: ""
+
+.icon-corner-up-right::before
+  content: ""
+
+.icon-corner-up-right-outline::before
+  content: ""
+
+.icon-credit-card::before
+  content: ""
+
+.icon-credit-card-outline::before
+  content: ""
+
+.icon-crop::before
+  content: ""
+
+.icon-crop-outline::before
+  content: ""
+
+.icon-cube::before
+  content: ""
+
+.icon-cube-outline::before
+  content: ""
+
+.icon-diagonal-arrow-left-down::before
+  content: ""
+
+.icon-diagonal-arrow-left-down-outline::before
+  content: ""
+
+.icon-diagonal-arrow-left-up::before
+  content: ""
+
+.icon-diagonal-arrow-left-up-outline::before
+  content: ""
+
+.icon-diagonal-arrow-right-down::before
+  content: ""
+
+.icon-diagonal-arrow-right-down-outline::before
+  content: ""
+
+.icon-diagonal-arrow-right-up::before
+  content: ""
+
+.icon-diagonal-arrow-right-up-outline::before
+  content: ""
+
+.icon-done-all::before
+  content: ""
+
+.icon-done-all-outline::before
+  content: ""
+
+.icon-download::before
+  content: ""
+
+.icon-download-outline::before
+  content: ""
+
+.icon-droplet::before
+  content: ""
+
+.icon-droplet-off::before
+  content: ""
+
+.icon-droplet-off-outline::before
+  content: ""
+
+.icon-droplet-outline::before
+  content: ""
+
+.icon-edit::before
+  content: ""
+
+.icon-edit-2::before
+  content: ""
+
+.icon-edit-2-outline::before
+  content: ""
+
+.icon-edit-outline::before
+  content: ""
+
+.icon-email::before
+  content: ""
+
+.icon-email-outline::before
+  content: ""
+
+.icon-expand::before
+  content: ""
+
+.icon-expand-outline::before
+  content: ""
+
+.icon-external-link::before
+  content: ""
+
+.icon-external-link-outline::before
+  content: ""
+
+.icon-eye::before
+  content: ""
+
+.icon-eye-off::before
+  content: ""
+
+.icon-eye-off-2::before
+  content: ""
+
+.icon-eye-off-2-outline::before
+  content: ""
+
+.icon-eye-off-outline::before
+  content: ""
+
+.icon-eye-outline::before
+  content: ""
+
+.icon-facebook::before
+  content: ""
+
+.icon-facebook-outline::before
+  content: ""
+
+.icon-file::before
+  content: ""
+
+.icon-file-add::before
+  content: ""
+
+.icon-file-add-outline::before
+  content: ""
+
+.icon-file-outline::before
+  content: ""
+
+.icon-file-remove::before
+  content: ""
+
+.icon-file-remove-outline::before
+  content: ""
+
+.icon-file-text::before
+  content: ""
+
+.icon-file-text-outline::before
+  content: ""
+
+.icon-film::before
+  content: ""
+
+.icon-film-outline::before
+  content: ""
+
+.icon-flag::before
+  content: ""
+
+.icon-flag-outline::before
+  content: ""
+
+.icon-flash::before
+  content: ""
+
+.icon-flash-off::before
+  content: ""
+
+.icon-flash-off-outline::before
+  content: ""
+
+.icon-flash-outline::before
+  content: ""
+
+.icon-flip::before
+  content: ""
+
+.icon-flip-2::before
+  content: ""
+
+.icon-flip-2-outline::before
+  content: ""
+
+.icon-flip-outline::before
+  content: ""
+
+.icon-folder::before
+  content: ""
+
+.icon-folder-add::before
+  content: ""
+
+.icon-folder-add-outline::before
+  content: ""
+
+.icon-folder-outline::before
+  content: ""
+
+.icon-folder-remove::before
+  content: ""
+
+.icon-folder-remove-outline::before
+  content: ""
+
+.icon-funnel::before
+  content: ""
+
+.icon-funnel-outline::before
+  content: ""
+
+.icon-gift::before
+  content: ""
+
+.icon-gift-outline::before
+  content: ""
+
+.icon-github::before
+  content: ""
+
+.icon-github-outline::before
+  content: ""
+
+.icon-globe::before
+  content: ""
+
+.icon-globe-2::before
+  content: ""
+
+.icon-globe-2-outline::before
+  content: ""
+
+.icon-globe-3::before
+  content: ""
+
+.icon-globe-outline::before
+  content: ""
+
+.icon-google::before
+  content: ""
+
+.icon-google-outline::before
+  content: ""
+
+.icon-grid::before
+  content: ""
+
+.icon-grid-outline::before
+  content: ""
+
+.icon-hard-drive::before
+  content: ""
+
+.icon-hard-drive-outline::before
+  content: ""
+
+.icon-hash::before
+  content: ""
+
+.icon-hash-outline::before
+  content: ""
+
+.icon-headphones::before
+  content: ""
+
+.icon-headphones-outline::before
+  content: ""
+
+.icon-heart::before
+  content: ""
+
+.icon-heart-outline::before
+  content: ""
+
+.icon-home::before
+  content: ""
+
+.icon-home-outline::before
+  content: ""
+
+.icon-image::before
+  content: ""
+
+.icon-image-2::before
+  content: ""
+
+.icon-image-outline::before
+  content: ""
+
+.icon-inbox::before
+  content: ""
+
+.icon-inbox-outline::before
+  content: ""
+
+.icon-info::before
+  content: ""
+
+.icon-info-outline::before
+  content: ""
+
+.icon-keypad::before
+  content: ""
+
+.icon-keypad-outline::before
+  content: ""
+
+.icon-layers::before
+  content: ""
+
+.icon-layers-outline::before
+  content: ""
+
+.icon-layout::before
+  content: ""
+
+.icon-layout-outline::before
+  content: ""
+
+.icon-link::before
+  content: ""
+
+.icon-link-2::before
+  content: ""
+
+.icon-link-2-outline::before
+  content: ""
+
+.icon-link-outline::before
+  content: ""
+
+.icon-linkedin::before
+  content: ""
+
+.icon-linkedin-outline::before
+  content: ""
+
+.icon-list::before
+  content: ""
+
+.icon-list-outline::before
+  content: ""
+
+.icon-loader-outline::before
+  content: ""
+
+.icon-lock::before
+  content: ""
+
+.icon-lock-outline::before
+  content: ""
+
+.icon-log-in::before
+  content: ""
+
+.icon-log-in-outline::before
+  content: ""
+
+.icon-log-out::before
+  content: ""
+
+.icon-log-out-outline::before
+  content: ""
+
+.icon-map::before
+  content: ""
+
+.icon-map-outline::before
+  content: ""
+
+.icon-maximize::before
+  content: ""
+
+.icon-maximize-outline::before
+  content: ""
+
+.icon-menu::before
+  content: ""
+
+.icon-menu-2::before
+  content: ""
+
+.icon-menu-2-outline::before
+  content: ""
+
+.icon-menu-arrow::before
+  content: ""
+
+.icon-menu-arrow-outline::before
+  content: ""
+
+.icon-menu-outline::before
+  content: ""
+
+.icon-message-circle::before
+  content: ""
+
+.icon-message-circle-outline::before
+  content: ""
+
+.icon-message-square::before
+  content: ""
+
+.icon-message-square-outline::before
+  content: ""
+
+.icon-mic::before
+  content: ""
+
+.icon-mic-off::before
+  content: ""
+
+.icon-mic-off-outline::before
+  content: ""
+
+.icon-mic-outline::before
+  content: ""
+
+.icon-minimize::before
+  content: ""
+
+.icon-minimize-outline::before
+  content: ""
+
+.icon-minus::before
+  content: ""
+
+.icon-minus-circle::before
+  content: ""
+
+.icon-minus-circle-outline::before
+  content: ""
+
+.icon-minus-outline::before
+  content: ""
+
+.icon-minus-square::before
+  content: ""
+
+.icon-minus-square-outline::before
+  content: ""
+
+.icon-monitor::before
+  content: ""
+
+.icon-monitor-outline::before
+  content: ""
+
+.icon-moon::before
+  content: ""
+
+.icon-moon-outline::before
+  content: ""
+
+.icon-more-horizontal::before
+  content: ""
+
+.icon-more-horizontal-outline::before
+  content: ""
+
+.icon-more-vertical::before
+  content: ""
+
+.icon-more-vertical-outline::before
+  content: ""
+
+.icon-move::before
+  content: ""
+
+.icon-move-outline::before
+  content: ""
+
+.icon-music::before
+  content: ""
+
+.icon-music-outline::before
+  content: ""
+
+.icon-navigation::before
+  content: ""
+
+.icon-navigation-2::before
+  content: ""
+
+.icon-navigation-2-outline::before
+  content: ""
+
+.icon-navigation-outline::before
+  content: ""
+
+.icon-npm::before
+  content: ""
+
+.icon-npm-outline::before
+  content: ""
+
+.icon-options::before
+  content: ""
+
+.icon-options-2::before
+  content: ""
+
+.icon-options-2-outline::before
+  content: ""
+
+.icon-options-outline::before
+  content: ""
+
+.icon-pantone::before
+  content: ""
+
+.icon-pantone-outline::before
+  content: ""
+
+.icon-paper-plane::before
+  content: ""
+
+.icon-paper-plane-outline::before
+  content: ""
+
+.icon-pause-circle::before
+  content: ""
+
+.icon-pause-circle-outline::before
+  content: ""
+
+.icon-people::before
+  content: ""
+
+.icon-people-outline::before
+  content: ""
+
+.icon-percent::before
+  content: ""
+
+.icon-percent-outline::before
+  content: ""
+
+.icon-person::before
+  content: ""
+
+.icon-person-add::before
+  content: ""
+
+.icon-person-add-outline::before
+  content: ""
+
+.icon-person-delete::before
+  content: ""
+
+.icon-person-delete-outline::before
+  content: ""
+
+.icon-person-done::before
+  content: ""
+
+.icon-person-done-outline::before
+  content: ""
+
+.icon-person-outline::before
+  content: ""
+
+.icon-person-remove::before
+  content: ""
+
+.icon-person-remove-outline::before
+  content: ""
+
+.icon-phone::before
+  content: ""
+
+.icon-phone-call::before
+  content: ""
+
+.icon-phone-call-outline::before
+  content: ""
+
+.icon-phone-missed::before
+  content: ""
+
+.icon-phone-missed-outline::before
+  content: ""
+
+.icon-phone-off::before
+  content: ""
+
+.icon-phone-off-outline::before
+  content: ""
+
+.icon-phone-outline::before
+  content: ""
+
+.icon-pie-chart::before
+  content: ""
+
+.icon-pie-chart-2::before
+  content: ""
+
+.icon-pie-chart-outline::before
+  content: ""
+
+.icon-pin::before
+  content: ""
+
+.icon-pin-outline::before
+  content: ""
+
+.icon-play-circle::before
+  content: ""
+
+.icon-play-circle-outline::before
+  content: ""
+
+.icon-plus::before
+  content: ""
+
+.icon-plus-circle::before
+  content: ""
+
+.icon-plus-circle-outline::before
+  content: ""
+
+.icon-plus-outline::before
+  content: ""
+
+.icon-plus-square::before
+  content: ""
+
+.icon-plus-square-outline::before
+  content: ""
+
+.icon-power::before
+  content: ""
+
+.icon-power-outline::before
+  content: ""
+
+.icon-pricetags::before
+  content: ""
+
+.icon-pricetags-outline::before
+  content: ""
+
+.icon-printer::before
+  content: ""
+
+.icon-printer-outline::before
+  content: ""
+
+.icon-question-mark::before
+  content: ""
+
+.icon-question-mark-circle::before
+  content: ""
+
+.icon-question-mark-circle-outline::before
+  content: ""
+
+.icon-question-mark-outline::before
+  content: ""
+
+.icon-radio::before
+  content: ""
+
+.icon-radio-button-off::before
+  content: ""
+
+.icon-radio-button-off-outline::before
+  content: ""
+
+.icon-radio-button-on::before
+  content: ""
+
+.icon-radio-button-on-outline::before
+  content: ""
+
+.icon-radio-outline::before
+  content: ""
+
+.icon-recording::before
+  content: ""
+
+.icon-recording-outline::before
+  content: ""
+
+.icon-refresh::before
+  content: ""
+
+.icon-refresh-outline::before
+  content: ""
+
+.icon-repeat::before
+  content: ""
+
+.icon-repeat-outline::before
+  content: ""
+
+.icon-rewind-left::before
+  content: ""
+
+.icon-rewind-left-outline::before
+  content: ""
+
+.icon-rewind-right::before
+  content: ""
+
+.icon-rewind-right-outline::before
+  content: ""
+
+.icon-save::before
+  content: ""
+
+.icon-save-outline::before
+  content: ""
+
+.icon-scissors::before
+  content: ""
+
+.icon-scissors-outline::before
+  content: ""
+
+.icon-search::before
+  content: ""
+
+.icon-search-outline::before
+  content: ""
+
+.icon-settings::before
+  content: ""
+
+.icon-settings-2::before
+  content: ""
+
+.icon-settings-2-outline::before
+  content: ""
+
+.icon-settings-outline::before
+  content: ""
+
+.icon-shake::before
+  content: ""
+
+.icon-shake-outline::before
+  content: ""
+
+.icon-share::before
+  content: ""
+
+.icon-share-outline::before
+  content: ""
+
+.icon-shield::before
+  content: ""
+
+.icon-shield-off::before
+  content: ""
+
+.icon-shield-off-outline::before
+  content: ""
+
+.icon-shield-outline::before
+  content: ""
+
+.icon-shopping-bag::before
+  content: ""
+
+.icon-shopping-bag-outline::before
+  content: ""
+
+.icon-shopping-cart::before
+  content: ""
+
+.icon-shopping-cart-outline::before
+  content: ""
+
+.icon-shuffle::before
+  content: ""
+
+.icon-shuffle-2::before
+  content: ""
+
+.icon-shuffle-2-outline::before
+  content: ""
+
+.icon-shuffle-outline::before
+  content: ""
+
+.icon-skip-back::before
+  content: ""
+
+.icon-skip-back-outline::before
+  content: ""
+
+.icon-skip-forward::before
+  content: ""
+
+.icon-skip-forward-outline::before
+  content: ""
+
+.icon-slash::before
+  content: ""
+
+.icon-slash-outline::before
+  content: ""
+
+.icon-smartphone::before
+  content: ""
+
+.icon-smartphone-outline::before
+  content: ""
+
+.icon-smiling-face::before
+  content: ""
+
+.icon-smiling-face-outline::before
+  content: ""
+
+.icon-speaker::before
+  content: ""
+
+.icon-speaker-outline::before
+  content: ""
+
+.icon-square::before
+  content: ""
+
+.icon-square-outline::before
+  content: ""
+
+.icon-star::before
+  content: ""
+
+.icon-star-outline::before
+  content: ""
+
+.icon-stop-circle::before
+  content: ""
+
+.icon-stop-circle-outline::before
+  content: ""
+
+.icon-sun::before
+  content: ""
+
+.icon-sun-outline::before
+  content: ""
+
+.icon-swap::before
+  content: ""
+
+.icon-swap-outline::before
+  content: ""
+
+.icon-sync::before
+  content: ""
+
+.icon-sync-outline::before
+  content: ""
+
+.icon-text::before
+  content: ""
+
+.icon-text-outline::before
+  content: ""
+
+.icon-thermometer::before
+  content: ""
+
+.icon-thermometer-minus::before
+  content: ""
+
+.icon-thermometer-minus-outline::before
+  content: ""
+
+.icon-thermometer-outline::before
+  content: ""
+
+.icon-thermometer-plus::before
+  content: ""
+
+.icon-thermometer-plus-outline::before
+  content: ""
+
+.icon-toggle-left::before
+  content: ""
+
+.icon-toggle-left-outline::before
+  content: ""
+
+.icon-toggle-right::before
+  content: ""
+
+.icon-toggle-right-outline::before
+  content: ""
+
+.icon-trash::before
+  content: ""
+
+.icon-trash-2::before
+  content: ""
+
+.icon-trash-2-outline::before
+  content: ""
+
+.icon-trash-outline::before
+  content: ""
+
+.icon-trending-down::before
+  content: ""
+
+.icon-trending-down-outline::before
+  content: ""
+
+.icon-trending-up::before
+  content: ""
+
+.icon-trending-up-outline::before
+  content: ""
+
+.icon-tv::before
+  content: ""
+
+.icon-tv-outline::before
+  content: ""
+
+.icon-twitter::before
+  content: ""
+
+.icon-twitter-outline::before
+  content: ""
+
+.icon-umbrella::before
+  content: ""
+
+.icon-umbrella-outline::before
+  content: ""
+
+.icon-undo::before
+  content: ""
+
+.icon-undo-outline::before
+  content: ""
+
+.icon-unlock::before
+  content: ""
+
+.icon-unlock-outline::before
+  content: ""
+
+.icon-upload::before
+  content: ""
+
+.icon-upload-outline::before
+  content: ""
+
+.icon-video::before
+  content: ""
+
+.icon-video-off::before
+  content: ""
+
+.icon-video-off-outline::before
+  content: ""
+
+.icon-video-outline::before
+  content: ""
+
+.icon-volume-down::before
+  content: ""
+
+.icon-volume-down-outline::before
+  content: ""
+
+.icon-volume-mute::before
+  content: ""
+
+.icon-volume-mute-outline::before
+  content: ""
+
+.icon-volume-off::before
+  content: ""
+
+.icon-volume-off-outline::before
+  content: ""
+
+.icon-volume-up::before
+  content: ""
+
+.icon-volume-up-outline::before
+  content: ""
+
+.icon-wifi::before
+  content: ""
+
+.icon-wifi-off::before
+  content: ""
+
+.icon-wifi-off-outline::before
+  content: ""
+
+.icon-wifi-outline::before
+  content: ""

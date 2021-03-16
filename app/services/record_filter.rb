@@ -3,6 +3,7 @@
 # Handles all of the logic for transforming a user's query parameters into a subset of records
 # @see RecordPaginator
 class RecordFilter
+  attr_reader :applied_filters
   attr_writer :record_paginator
 
   # @param filter_params [Hash]
@@ -15,13 +16,17 @@ class RecordFilter
 
     @default_filters = (default_filters || {}).with_indifferent_access
     @filter_params = {}.with_indifferent_access
+    @applied_filters = {}.with_indifferent_access
     @default_filters.merge(filter_params.with_indifferent_access).each do |key, value|
       if /_(cont_all|any)$/.match?(key.to_s)
         @filter_params[key] = value.to_s.split(/(\s|,)/)
       elsif value == false || value.present?
         @filter_params[key] = value
       end
+
+      @applied_filters[key] = value if !@default_filters.key?(key) && value.present?
     end
+
     @pagination_params = pagination_params
     @default_order = default_order
 

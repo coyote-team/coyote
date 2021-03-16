@@ -70,7 +70,7 @@ module ResourcesHelper
 
   def scope_search_collection
     Resource.ransackable_scopes.map do |scope_name|
-      [scope_name.to_s.titleize.split(/\s+/).join(" ").html_safe, scope_name]
+      [t("filters.resource.scope.#{scope_name}", default: scope_name.to_s.titleize).html_safe, scope_name]
     end
   end
 end

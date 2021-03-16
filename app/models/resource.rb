@@ -46,7 +46,9 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks, :union_host_uris, :union_resource_groups
+  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks,
+    :union_host_uris, :union_resource_groups
+  attr_reader :assign_to_user_id
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
@@ -154,6 +156,11 @@ class Resource < ApplicationRecord
   def approved?
     return @approved if defined? @approved
     @approved = complete? && representations.any? && representations.all?(&:approved?)
+  end
+
+  def assign_to_user_id=(new_user_id)
+    return if new_user_id.blank?
+    assignments.build(user: organization.users.find(new_user_id))
   end
 
   def assigned?

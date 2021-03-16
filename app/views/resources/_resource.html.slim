@@ -4,7 +4,7 @@ li.list-item.list-item--has-link
   h4.sr-only id=id Resource #{resource.name}
   - if form.present? && policy(Assignment).new?
     label.list-item-checkbox
-      = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
+      = check_box_tag "resource_ids[]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
   = link_to resource, class: "list-item-link" do
     = resource_link_target(resource, alt: resource.best_representation, class: "list-item-image")
     .list-item-title

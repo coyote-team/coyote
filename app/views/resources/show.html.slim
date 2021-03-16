@@ -45,8 +45,9 @@ h1= title(resource.name)
                     th Canonical ID
                     td= resource.canonical_id
                   tr
-                    th Resource Group
-                    td= link_to(resource.resource_group, resource.resource_group)
+                    th Resource Groups
+                    td= list_of(resource, :resource_groups) do |resource_group|
+                      = link_to(resource_group, resource_group)
                   tr
                     th Organization
                     td= link_to(resource.organization, resource.organization)
