@@ -74,14 +74,6 @@ html(lang="en")
               authentication token:
             code= current_user.authentication_token
 
-        - if ENV["BOOKMARKLET"] == "true"
-          p
-            small
-              ' Add this
-              = link_to "Coyote bookmarklet", easymarklet_js("coyote")
-              ' to your bookmarks then click it to add and view annotations for
-                images on any webpage.
-
     = raw analytical.body_append_javascript
 
     = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"

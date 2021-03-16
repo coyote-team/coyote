@@ -253,15 +253,6 @@ Rails.application.routes.draw do
     resource :password_resets, only: %i[create]
   end
 
-  ## Bookmarklet
-  if ENV["BOOKMARKLET"] == "true"
-    get "coyote" => "coyote_consumer#iframe"
-    get "coyote_producer" => "coyote_producer#index"
-  end
-
-  ## Scavenger hunt
-  # mount ScavengerHunt::Engine, at: 'scavenger'
-
   ## Static pages
   get "support", to: "pages#support"
   root to: "pages#home"
