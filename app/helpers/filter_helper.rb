@@ -1,7 +1,6 @@
 module FilterHelper
   def applied_filters
-    # binding.pry
-    toolbar_item do
+    toolbar_item(class: "toolbar-item--start") do
       safe_join(record_filter.applied_filters.map { |key, value|
         Array(value).map { |value| remove_filter_link(key, value) }
       }.flatten)
@@ -15,7 +14,12 @@ module FilterHelper
     else
       filter.to_s.humanize
     end
-    I18n.t("filters.#{record_filter.records.model_name.i18n_key}.#{filter}.#{value}", default: default)
+
+    namespace = "#{record_filter.i18n_key}.#{filter}"
+    t(
+      "#{namespace}.#{value}",
+      default: t(namespace, default: default, value: record_filter.value_for(filter, value)),
+    )
   end
 
   def remove_filter_link(filter, value)
@@ -30,9 +34,13 @@ module FilterHelper
       original_value - Array(value)
     end
 
+    new_query = params.fetch(:q, {}).to_unsafe_hash.deep_merge(filter => new_value)
+
     link_to(safe_join([
-      icon(:x),
+      icon(:close),
       tag.span(label),
-    ]), q: params.fetch(:q, {}).to_unsafe_hash.deep_merge(filter => new_value))
+    ]),
+      {q: new_query},
+      class: "filter-remove")
   end
 end

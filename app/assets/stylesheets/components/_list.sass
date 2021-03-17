@@ -57,23 +57,8 @@
         flex: 1
         text-decoration: none
 
-        ~ *
-          position: relative
-          z-index: 1
-
         &:focus
           box-shadow: none
-
-        &::before
-          bottom: 0
-          left: 0
-
-          // TODO: I dunno fuck this
-          // content: ""
-          position: absolute
-          right: 0
-          top: 0
-          z-index: 0
 
     // All immediate descendents should be block-level elements
     .list-item-image,

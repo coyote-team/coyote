@@ -6,6 +6,6 @@ module AuditHelper
     return "" if changes.all?(&:blank?)
 
     changes = changes.map(&block) if block
-    changes.join(" #{icon(:arrow_forward_outline)} ").html_safe
+    changes.join(" #{icon(:arrow_forward)} ").html_safe
   end
 end

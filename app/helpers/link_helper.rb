@@ -52,14 +52,14 @@ module LinkHelper
       options[:data][:confirm] = confirmation
       options[:method] ||= :delete
     end
-    options[:icon] ||= :trash
+    options[:icon] ||= :trash_2
 
     button_link_to(title, url, options)
   end
 
   def edit_link_to(url, options = {})
     title, options = button_options("info", "Edit", options)
-    options[:icon] ||= :pencil
+    options[:icon] ||= :edit_2
     button_link_to(title, url, options)
   end
 

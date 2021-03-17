@@ -59,8 +59,9 @@ en:
 
   filters:
     resource:
+      assignments_user_id_eq: "Assigned to: %{value}"
       priority_flag_eq:
-        true: "Priority"
+        "true": "Urgent"
       scope:
         assigned: "Assigned"
         assigned_unrepresented: "Assigned / No description"

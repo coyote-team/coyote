@@ -28,18 +28,18 @@
 //     border-color: $disabled !important
 
 .button,
-button,
 input[type=button],
 input[type=reset],
 input[type=submit]
   @extend %input-fixed-height
 
-  @extend %control-text
-
   background-color: $input
   border-color: $input
   color: $text
   cursor: pointer
+  font-size: $font-size-control
+  font-weight: 600
+  letter-spacing: -0.03em
   padding: 0 ($input-padding * 2)
   text-align: center
   text-decoration: none
@@ -66,8 +66,16 @@ input[type=submit]
   .icon
     font-size: 120%
 
+  &--narrow
+    padding-left: 0
+    padding-right: 0
+
   &--round
     border-radius: 1000px
+
+  &--small
+    font-size: $font-size-control
+    padding: 0 $input-padding
 
 .button--submit,
 input[type=submit]
@@ -75,10 +83,11 @@ input[type=submit]
   border-color: $tint
   color: $background
 
-.button--incognito
+.button--quiet
   background-color: transparent
   border-color: transparent
 
+.button--subtle
   // // Disabled state
   // &[disabled],
   // form:invalid &[type]

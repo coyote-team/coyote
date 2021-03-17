@@ -28,7 +28,7 @@ module ListHelper
     options[:label] ||= icon(:options_vertical)
     options[:toggle] ||= {}
     options[:toggle] = combine_options(options[:toggle], {
-      class: "button button--incognito button--round",
+      class: "button button--quiet button--round",
     })
     tag.span(class: "list-item-action") {
       dropdown(options, &block)

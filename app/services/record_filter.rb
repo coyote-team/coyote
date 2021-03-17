@@ -53,6 +53,10 @@ class RecordFilter
     end
   end
 
+  def i18n_key
+    "filters.#{records.model_name.i18n_key}"
+  end
+
   # @return [Hash] links that point to other available filtered pages
   def pagination_link_params
     base_link_params = {}
@@ -72,6 +76,24 @@ class RecordFilter
   # @return [Ransack::Search] for use with Ransack's simple_form_for form helper
   def search
     @search ||= base_scope.ransack(filter_params)
+  end
+
+  def value_for(filter, value)
+    attribute = search.base[filter]&.attributes&.first
+    return value if attribute.blank? || attribute.try(:klass).blank?
+
+    association = attribute.klass.try(:reflect_on_association, attribute.attr_name.chomp("_id"))
+    if association.present?
+      return association.klass.find_by(id: value)
+    end
+
+    if value.is_a?(Array)
+      attribute.klass.where(attribute.attr_name => value)
+    else
+      attribute.klass.find_by(attribute.attr_name => value)
+    end
+  rescue
+    value
   end
 
   private

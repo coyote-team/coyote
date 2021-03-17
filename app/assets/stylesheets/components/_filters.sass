@@ -47,6 +47,20 @@
     // .filters
     //   display: block
 
+.filter-remove
+  border-radius: $border-radius
+  display: inline-block
+  font-size: $font-size-control
+  padding: $border-radius
+  text-decoration: none
+
+  &:hover
+    background-color: $input
+    border-color: $input
+
+  + .filter-remove
+    margin-left: $input-padding
+
 @keyframes filter-in
   0%
     opacity: 0

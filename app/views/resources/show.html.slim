@@ -4,7 +4,7 @@ h1= title(resource.name)
 = toolbar class: 'toolbar--header', title: "Actions" do
   = toolbar_item
     - if policy(resource).describe?
-      = button_link_to "Describe", new_representation_path(resource_id: resource.id), title: 'Create new description for this resource', class: 'button--aside', icon: :bubble
+      = button_link_to "Describe", new_representation_path(resource_id: resource.id), title: 'Create new description for this resource', class: 'button--aside', icon: :message_circle
     - if policy(resource).edit?
       = edit_link_to edit_resource_path(resource), title: "Edit this resource"
     - if policy(resource).destroy?

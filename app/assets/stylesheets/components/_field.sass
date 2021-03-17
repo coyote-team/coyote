@@ -30,11 +30,11 @@
     background-color: transparent
     flex: 1
 
-  #{$field-children}
+  > *
     border-radius: 0
-    margin: 0
+    margin: 0 !important
 
-    &:first-of-type
+    &:first-child
       border-bottom-left-radius: $border-radius
       border-top-left-radius: $border-radius
 
@@ -46,4 +46,4 @@
       #{$field-children}
         border-bottom-left-radius: 0 !important
         border-top-left-radius: 0 !important
-        margin-left: -1px
+        margin-left: (-1px) !important

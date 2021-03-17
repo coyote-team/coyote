@@ -14,7 +14,7 @@ li.list-item.list-item--has-link
   = list_item_actions(resource) do
     - if policy(resource).describe?
       .list-item-actions-item role="listitem"
-        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--aside', icon: :bubble, aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--aside', icon: :message_circle, aria: { labelledwby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
     - if form.nil? && policy(Assignment).new?
       = list_item_actions_overflow do
         .list-item-actions-item role="listitem"

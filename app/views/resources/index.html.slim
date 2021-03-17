@@ -3,19 +3,18 @@ h1= title "Resources"
 .toolbar
   .filters#resource-filters
     button.button.button--round.filter-toggle data-toggle-target="#resource-filters" data-toggle="filters--toggled" type="button"
-      = icon(:equalizer)
+      = icon(:funnel)
       '
       span.filter-toggle-label
         ' Filter
         '
         span.sr-only= Resource.model_name.human(count: 2).downcase
-      / span.filter-toggle-label.filter-toggle--toggled Close filters
 
     = search_form_for record_filter.search, url: resources_path, wrapper: :filters, enforce_utf8: false do |f|
       h2.sr-only Filter #{Resource.model_name.human(count: 2)}
       label.filter.field.field--accessory
         h3.sr-only Search by caption or description
-        = icon :magnifier, class: "field-accessory"
+        = icon :search, class: "field-accessory"
         = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: "Search resources"
 
       .filter
@@ -45,11 +44,6 @@ h1= title "Resources"
       .filter
         = f.submit "Apply Filters", name: nil, class: "button"
         = f.submit "Clear", type: "reset", class: "button button--outline"
-
-      / button.button.button--block.button--outline.filter-view-toggle.filter-view-toggle--toggled data-toggle-target="#resource-filters" data-toggle-off="filters--toggled" type="button"
-      /   = icon(:equalizer)
-      /   '
-      /   span Close filters
 
 
   = applied_filters
@@ -98,8 +92,8 @@ h1= title "Resources"
       - if can_edit || can_assign
         = toolbar_item class: "field toolbar-item--start", data: {checkbox_conditional: "show"} do
           - if can_edit
-            = form.hidden_field :union_resource_groups, value: 1
             = form.input_field :resource_group_id, collection: current_organization.resource_groups, label: false, prompt: "Add resource group...", required: false
+            = form.hidden_field :union_resource_groups, value: 1
 
           - if can_assign
           = form.input_field :assign_to_user_id, collection: organizational_user_collection, label: false, prompt: "Assign to...", required: false
@@ -117,12 +111,11 @@ h1= title "Resources"
 
 
     - if can_import || can_create
-      = toolbar_item
+      = toolbar_item class: "field"
+        = link_to("Add Resource", new_resource_path, class: "button") if can_create
         - if can_import
-          = new_link_to "Import Resources", new_import_path, icon: :cloud_upload
-
-        - if can_create
-          = new_link_to "Add Resource", new_resource_path
+          = dropdown(label: tag.span(icon(:arrow_down), class: "button button--narrow"), wrapper: {class: "dropdown--end"}) do
+            = dropdown_option link_to("Import Resources", new_import_path)
 
   - if has_resources
     / Render the list

@@ -9,7 +9,7 @@ module CollapseHelper
     toggle_options = {data: {toggle_target: "##{id}", toggle: "collapse--toggled"}}.deep_merge(options.delete(:toggle) || {})
     toggle = tag.button(combine_options(toggle_options, class: "collapse-toggle")) {
       safe_join([
-        icon(:arrow_right),
+        icon(:chevron_right),
         tag.div(options.delete(:label) || "Additional details", class: "collapse-toggle-label"),
       ])
     }
