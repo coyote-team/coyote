@@ -1,36 +1,15 @@
 // COMPONENT: Button: an interactive clickable element. Can be applied to
 // BUTTON tags, A tags, and INPUT tags.
-=button-colors($background, $text, $hover: $background)
-  background-color: $background
-  border-color: $background
-  color: $text
-
-  &:focus, &:hover
-    color: $text
-    background-color: $hover
-
-  &:focus
-    border-color: darken($hover, 10%)
-    box-shadow: rgba($background, $focus-shadow-opacity) $focus-shadow-size
-
-  @at-root form:invalid &,
-
-  &[disabled]
-    cursor: default
-    opacity: 0.6
-
 button
   @extend %input-base
 
-input[type=submit]:not([class~="button"]),
+input[type=submit],
 .button
   @extend %input-base
 
-  +button-colors($input, $text, $border-light)
-
-  &:not(.button--small)
-    @extend %control-height
-
+  background-color: transparent
+  color: $text
+  border-color: $border
   cursor: pointer
   font-size: $font-size-control
   font-weight: 600
@@ -40,6 +19,9 @@ input[type=submit]:not([class~="button"]),
   text-decoration: none
   transition: all 100ms $heavy
   white-space: nowrap
+
+  &:not(.button--small)
+    @extend %control-height
 
   &:not(.button--block):not(:last-child)
     margin-right: $input-padding
@@ -69,39 +51,25 @@ input[type=submit]:not([class~="button"]),
     font-size: $font-size-control
     padding: 0 $input-padding
 
+  @at-root form:invalid &,
+
+  &[disabled]
+    cursor: default
+    opacity: $focus-shadow-opacity
+
 input[type=submit]:not([class~="button"]),
 input[type=submit][class="button"],
 .button--submit
-  +button-colors($tint, $background)
+  background-color: $tint !important
+  border-color: $tint !important
+  color: $background !important
+
+  &:focus, &:hover
+    background-color: darken($tint, 5%) !important
 
 .button--quiet,
 .button--subtle
-  +button-colors(transparent, $text, $input)
-
-  background-color: transparent
   border-color: transparent
 
 .button--subtle
   color: $tint
-
-  // // Disabled state
-  // &[disabled],
-  // form:invalid &[type]
-  //   cursor: not-allowed !important
-
-  //   // opacity: 0.6 !important
-
-  //   &:focus,
-  //   &:hover
-  //     transform: none !important
-
-  // // Default is a gray button
-  // &:not([disabled]),
-  // form:not(:invalid)
-  //   +button-colors($placeholder, $text-light, $border)
-
-  // @each $name, $color in $status
-  //   &:not([disabled]),
-  //   form:not(:invalid) &
-  //     &.button--#{$name}
-  //       +button-colors($color, $text-light, desaturate($color, 50%))

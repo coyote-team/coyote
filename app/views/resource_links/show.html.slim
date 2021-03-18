@@ -28,10 +28,3 @@
         = resource_link.created_at
 
 = show_toolbar(resource_link)
-/ = toolbar class: 'toolbar--footer', title: "Actions"
-/   - if policy(resource_link).edit?
-/     = toolbar_item
-/       = edit_link_to edit_resource_link_path(resource_link), title: "Edit this resource link"
-/   - if policy(resource_link).destroy?
-/     = toolbar_item
-/       = delete_link_to 'Are you sure you want to delete this Resource Link?', resource_link, title: 'Delete this Resource Link'

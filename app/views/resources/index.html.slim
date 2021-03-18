@@ -42,7 +42,7 @@ h1= title "Resources"
     = f.input :assignments_user_id_eq, label: "Assigned to User", class: "input-medium form-control", required: false, collection: current_organization.users
 
   - if current_organization.resource_groups.many?
-    h3.sr-only#resource_group_id_label Filter by resource group
+    h3.sr-only#resource_group_id_label Filter by group
     = f.input :resource_group_resources_resource_group_id_in, label: ResourceGroup.model_name.human, label_html: {aria: {label: "resource_group_id_label"}}, collection: current_organization.resource_groups, as: :select, required: false
 
   .filter

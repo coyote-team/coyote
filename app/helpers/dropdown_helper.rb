@@ -43,6 +43,7 @@ module DropdownHelper
 
   def options_dropdown(options = {}, &block)
     options[:label] ||= icon(:more_vertical)
+    options[:title] ||= "More options"
     options[:toggle] = combine_options(options[:toggle] || {}, {
       class: "button button--quiet button--square button--round",
     })

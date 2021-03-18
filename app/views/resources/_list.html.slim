@@ -21,7 +21,7 @@ ruby:
               '
             span.field
               - if can_edit
-                = form.input_field :resource_group_id, collection: current_organization.resource_groups, label: false, prompt: "Add resource group...", required: false
+                = form.input_field :resource_group_id, collection: current_organization.resource_groups, label: false, prompt: "Add group...", required: false
                 = form.hidden_field :union_resource_groups, value: 1
               - if can_only_assign_to_self?
                 = form.hidden_field :assign_to_user_id, value: current_user.id

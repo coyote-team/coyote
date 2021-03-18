@@ -5,7 +5,7 @@ module ImportHelper
     return not_applicable("Not mapped") if mapping.blank?
     model = mapping.split(":").first
     model = model.constantize
-    model_name = model.human_name(capitalize: true)
+    model_name = model.human_name
 
     column_label = valid_import_columns.find { |label, other_mapping| other_mapping == mapping }.first
     "#{model_name} → #{column_label}"

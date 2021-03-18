@@ -2,13 +2,11 @@
 // Useful for adding accessory glyphs to form elements or grouping inputs and
 // submit buttons.
 .field
-  $field-children: "#{$controls}, .button, label, input[type=submit]"
+  $field-children: "#{$controls}, .button, .dropdown, label, input[type=submit]"
 
   align-items: stretch
   background-color: $background
   display: inline-flex
-
-  // margin-bottom: $gutter
 
   &.field--accessory
     position: relative

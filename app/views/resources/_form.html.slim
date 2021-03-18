@@ -4,7 +4,7 @@
   = f.input :name, label: 'Caption'
   = f.input :source_uri, label: 'Source URI', hint: 'Identifies the canonical location of the resource', required: true
   = f.input :canonical_id, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
-  = f.association :resource_groups, as: :check_boxes, label: 'Resource Group', prompt: "Pick a resource group", collection: resource_group_list
+  = f.association :resource_groups, as: :check_boxes, label: 'Group', prompt: "Pick a group", collection: resource_group_list
   = f.input :host_uris, label: 'Host URIs', hint: 'Identifies the locations where the resource is normally hosted or viewed. Separate lines are considered separate URIs.', as: :text, input_html: { value: resource.host_uris.join("\n") }
   = f.input :priority_flag, as: :select, collection: [['High', true], ['Low', false]], include_blank: false, label: 'Priority' if organization_user.admin?
 

@@ -2,7 +2,7 @@
 
 module MetumHelper
   def metum_tag(metum, hint: true, tag: :span)
-    content_tag(tag, class: "tag tag--info tag--outline") do
+    content_tag(tag, class: "tag") do
       safe_join([
         (hint ? self.tag.span(class: "sr-only") { "Metum: " } : ""),
         metum.to_s,
