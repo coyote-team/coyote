@@ -7,6 +7,6 @@ assets = Rails.application.config.assets
 assets.version = "1.0"
 
 # Precompile additional assets
-assets.paths << Rails.root.join("node_modules")
-assets.precompile += %w[application.css application.js]
+# assets.paths << Rails.root.join("node_modules")
+assets.precompile += %w[application.css]
 assets.precompile += %w[favicon/browserconfig.xml favicon/manifest.json]

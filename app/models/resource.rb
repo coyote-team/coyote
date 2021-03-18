@@ -52,6 +52,7 @@ class Resource < ApplicationRecord
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
+  before_save :clear_blank_canonical_ids, if: :canonical_id_changed?
   before_save :set_source_uri_hash, if: :source_uri_changed?
   before_create :set_default_resource_group
 
@@ -72,10 +73,10 @@ class Resource < ApplicationRecord
 
   has_one_attached :uploaded_resource
 
-  scope :represented, -> { joins(:representations).distinct }
-  scope :unrepresented, -> { left_outer_joins(:representations).where(representations: {resource_id: nil}) }
-  scope :assigned, -> { joins(:assignments) }
-  scope :unassigned, -> { left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
+  scope :represented, -> { where.not(representations_count: 0) }
+  scope :unrepresented, -> { where(representations_count: 0) }
+  scope :assigned, -> { includes(:assignments).references(:assignments).where.not(assignments: {id: nil}) }
+  scope :unassigned, -> { includes(:assignments).references(:assignments).where(assignments: {id: nil}) }
   scope :assigned_unrepresented, -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
   scope :in_organization, ->(organization) { where(organization_id: organization) }
@@ -168,7 +169,7 @@ class Resource < ApplicationRecord
   end
 
   def assigned_to?(user)
-    assignments.where(user_id: user.id).any?
+    assignments.find_by(user_id: user.id)
   end
 
   def best_representation
@@ -179,7 +180,7 @@ class Resource < ApplicationRecord
   def complete?
     return @complete if defined? @complete
     required_ids = organization.meta.is_required.pluck("id")
-    @complete = (representations.pluck("DISTINCT(metum_id)") & required_ids).size == required_ids.size
+    @complete = (representations.where.not(status: :not_approved).pluck("DISTINCT(metum_id)") & required_ids).size == required_ids.size
   end
 
   def content_changed?
@@ -209,9 +210,20 @@ class Resource < ApplicationRecord
     NotifyWebhookWorker.perform_async(id) if resource_groups.has_webhook.any?
   end
 
+  def partially_approved?
+    complete? && !approved?
+  end
+
   def partially_complete?
     return @partially_complete if defined? @partially_complete
     @partially_complete = represented? && !complete?
+  end
+
+  def progress
+    return "Described" if approved?
+    return "Pending" if partially_approved?
+    return "Partially Completed" if partially_complete?
+    "Undescribed"
   end
 
   # @return [Array<Symbol, ResourceLink, Resource>]
@@ -288,19 +300,6 @@ class Resource < ApplicationRecord
     @new_resource_group_ids = organization.resource_groups.where(id: new_ids).pluck(:id) # ensure we only attach resource groups for this org
   end
 
-  # TODO: Should maybe move this stuff to a presenter / decorator
-  # Status identifiers
-  def statuses
-    @statuses ||= [].tap do |statuses|
-      statuses.push(:urgent) if priority_flag?
-      statuses.push(:undescribed) if unrepresented?
-      statuses.push(:described) if represented?
-      statuses.push(:unassigned) if unassigned?
-      statuses.push(:assigned) if assigned?
-      statuses.push(:partially_complete) if partially_complete?
-    end
-  end
-
   def unassigned?
     return @unassigned if defined? @unassigned
     @unassigned = assignments.none?
@@ -323,6 +322,10 @@ class Resource < ApplicationRecord
 
   def check_source_uri?
     Array(skip_unique_validations).include?(:source_uri) && source_uri_changed?
+  end
+
+  def clear_blank_canonical_ids
+    self.canonical_id = canonical_id.presence
   end
 
   def merge_host_uris

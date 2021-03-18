@@ -1,10 +1,8 @@
 = simple_form_for target, validate: true, html: { multipart: true } do |f|
   = f.error_notification
 
-  / = f.input :uploaded_resource
-  / = f.input :resource_type, label: 'Type', prompt: 'Pick a Dublin Core resource type', collection: Coyote::Resource.type_names, label_method: -> (t) { t.to_s.titleize }
   = f.input :name, label: 'Caption'
-  = f.input :source_uri, as: :url, label: 'Source URI', hint: 'Identifies the canonical location of the resource', required: true
+  = f.input :source_uri, label: 'Source URI', hint: 'Identifies the canonical location of the resource', required: true
   = f.input :canonical_id, label: "Canonical ID", hint: 'This should be a label used by the organization to uniquely identify this resource'
   = f.association :resource_groups, as: :check_boxes, label: 'Resource Group', prompt: "Pick a resource group", collection: resource_group_list
   = f.input :host_uris, label: 'Host URIs', hint: 'Identifies the locations where the resource is normally hosted or viewed. Separate lines are considered separate URIs.', as: :text, input_html: { value: resource.host_uris.join("\n") }

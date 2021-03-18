@@ -1,7 +1,7 @@
-export function List(container) {
-  // Stash the control and its items
+export function Cards(container) {
+  // Stash the control
   this.container = container
-  this.items = this.container.children
+  this.body = this.container.querySelector("tbody")
 
   if (typeof MutationObserver !== "undefined") {
     // Use the MutationObserver class to monitor changes to the dom element
@@ -19,24 +19,26 @@ export function List(container) {
   }
 }
 
-List.prototype.calculateRows = function (mutation) {
-  if (this.container.classList.contains("list--grid")) {
-    for (var i = 0; i < this.container.children.length; i++) {
-      var child = this.container.children[i]
+Cards.prototype.calculateRows = function () {
+  if (this.container.classList.contains("table--cards")) {
+    const rows = this.body.querySelectorAll("tr")
+    for (var i = 0; i < rows.length; i++) {
+      var child = rows[i]
       this.calculateRowForItem(child)
       imagesLoaded(child, this.calculateRowForItemOnImageLoad.bind(this))
     }
   }
 }
 
-List.prototype.calculateRowForItem = function (item) {
-  const rowHeightValue = window.getComputedStyle(this.container).getPropertyValue("grid-auto-rows")
+Cards.prototype.calculateRowForItem = function (item) {
+  const rowHeightValue = window.getComputedStyle(this.body).getPropertyValue("grid-auto-rows")
   var rowHeight = parseInt(rowHeightValue)
-  var rowGap = parseInt(window.getComputedStyle(this.container).getPropertyValue("grid-row-gap"))
+  var rowGap = parseInt(window.getComputedStyle(this.body).getPropertyValue("grid-row-gap"))
+  console.log(rowHeight, rowGap)
   var rowSpan = Math.ceil((item.scrollHeight + rowGap) / (rowHeight + rowGap))
   item.style.gridRowEnd = "span " + rowSpan
 }
 
-List.prototype.calculateRowForItemOnImageLoad = function (loaded) {
+Cards.prototype.calculateRowForItemOnImageLoad = function (loaded) {
   this.calculateRowForItem(loaded.elements[0])
 }

@@ -1,21 +1,19 @@
 // COMPONENT: Table: used for presenting tabular data (duh; you know what this
 // is). Namespaced via tag name rather than class name.
 table
-  border-collapse: separate
+  border-collapse: collapse
   border-spacing: 0
-  display: table
-  overflow: hidden
+  border-width: 0
   width: 100%
-
-  table
-    border-width: 0
 
   caption
     text-align: left
 
-  tr
-    height: 100%
+  &.table--has-checkboxes
+    transform: translateX(-$checkbox-strike-area)
+    width: calc(100% + #{$checkbox-strike-area})
 
+  tr
     &:hover
       .table-cell-link
         a,
@@ -31,25 +29,43 @@ table
     position: relative
     vertical-align: middle
 
-    &.table-cell-nowrap
-      white-space: nowrap
-
     &.table-cell-actions
       text-align: right
-      vertical-align: top
       white-space: nowrap
       width: 10px
 
-      > *
-        display: inline-block
+      // > *
+      //   display: inline-block
 
-      .button:last-child, > *:last-child .button
-        margin-bottom: 0
-        margin-right: 0
+      // .button:last-child, > *:last-child .button
+      //   margin-bottom: 0
+      //   margin-right: 0
+
+    &.table-cell-checkbox
+      border-top-width: 0
+      padding: 0
+      position: relative
+      width: $checkbox-strike-area
+
+      label
+        display: block
+        padding: $list-padding $list-padding $list-padding 0
+
+        input
+          margin-right: 0
+
+    &.table-cell-checkbox label,
+    &.table-cell-link a
+      &:after
+        bottom: 0
+        content: ""
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
 
     &.table-cell-link
       font-weight: 500
-      height: 100%
       padding: 0
 
       &,
@@ -57,35 +73,26 @@ table
         cursor: pointer
 
       a
-        display: inline-block
-        padding: $gutter
+        align-items: center
+        display: flex
+        padding: $list-padding
         text-decoration: none
 
         &,
         &:focus
           box-shadow: none
 
-        &:after
-          bottom: 0
-          content: ""
-          left: 0
-          position: absolute
-          right: 0
-          top: 0
+        > * + *
+          padding-left: $list-padding
 
-    &.table-cell-select
-      // white-space: nowrap
-
-      label
-        display: flex
-
-      input
-        vertical-align: top
+    &.table-cell-nowrap
+      white-space: nowrap
 
   th
     color: $text-dark
     font-size: $font-size-control
-    font-weight: bold
+    font-weight: 600
+    letter-spacing: -0.03em
     text-align: left
     text-transform: uppercase
     white-space: nowrap
@@ -97,20 +104,11 @@ table
     ~ tbody th
       padding: $list-padding
 
-    th:first-child
-      padding-left: 0
-
-    tr:last-child
-      th
-        border-bottom: 1px solid $border-light
-        color: $placeholder
-
   tbody
     tr
-      + tr
-        td,
-        th
-          border-top: 1px solid $border-light
+      td,
+      th
+        border-top: 1px solid $border-light
 
       &.table-row-disabled
         td
@@ -135,6 +133,89 @@ table
             display: block
             padding-top: 0
             word-break: break-all
+
+// SUBCOMPONENT: A table that renders rows as cards
+table.table--cards
+  &,
+  thead,
+  th,
+  td
+    display: block
+
+  thead
+    tr
+      align-items: center
+      display: flex
+      justify-content: space-between
+
+      th:not(.table-cell-checkbox):not(.table-cell-checkbox)
+        flex: 1
+
+      th.table-cell-checkbox + th ~ th:not(.table-cell-actions)
+        position: absolute
+        visibility: hidden
+
+  tbody
+    display: grid
+    grid-auto-rows: $gutter + 2px
+    grid-gap: $gutter
+    grid-template-columns: repeat(4, 1fr)
+
+    tr
+      background-color: $highlight-subtle
+      border-radius: $border-radius
+      display: flex
+      flex-wrap: wrap
+      position: relative
+
+      td,
+      th
+        border-width: 0
+        padding: $gutter
+
+        &.table-cell-checkbox
+          left: 0
+          padding: 0
+          position: absolute
+          top: 0
+          width: auto
+          z-index: $z-index-content + 2
+
+          label
+            padding: $gutter $list-padding $list-padding $gutter
+
+        &.table-cell-card--tag
+          flex: 0
+          padding-right: $input-padding
+          white-space: nowrap
+
+          + .table-cell-card--tag
+            padding-left: 0
+
+        &.table-cell-card--row,
+        &.table-cell-actions,
+        &.table-cell-link
+          flex: 0 0 100%
+          width: 100%
+
+        &.table-cell-link
+          padding: 0
+
+          a
+            display: block
+            padding: 0
+
+            > *
+              padding: $list-padding
+
+            .image
+              border-bottom-left-radius: 0
+              border-bottom-right-radius: 0
+              display: block
+              width: 100%
+
+              &::before
+                padding-bottom: percentage(2 / 3)
 
 .table-wrapper
   max-width: 100%

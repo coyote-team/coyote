@@ -41,17 +41,12 @@
     border-top-width: 0
 
 .list
-  &:not(.list--grid)
-    border-bottom: 1px solid $border-light
-    border-top: 1px solid $border-light
-
   display: block
 
   .list-item
+    align-items: center
     display: flex
     position: relative
-
-    // transition: all 100ms $swift
 
     &-dashboard-metric
       justify-content: space-between
@@ -90,7 +85,6 @@
     .list-item-label,
     .list-item-title,
     .list-item-body,
-    .list-item-timeline,
     .list-item-value
       display: block
 
@@ -106,17 +100,6 @@
       input
         margin-right: 0
 
-    .list-item-image
-      background-size: cover
-      height: $gutter * 7
-      width: $gutter * 7
-
-      &,
-      img
-        border-radius: $border-radius
-        display: block
-        max-width: $breakpoint-mobile-portrait / 3
-
     .list-item-title
       font-weight: 500
       max-width: 100%
@@ -124,21 +107,6 @@
 
     .list-item-body
       flex: 1
-
-    .list-item-actions
-      align-items: center
-      display: flex
-      text-align: right
-      white-space: nowrap
-
-      .list-item-actions-item
-        display: inline-block
-        margin-bottom: $input-padding
-        margin-right: $input-padding
-
-        &:last-child, *
-          margin-bottom: 0
-          margin-right: 0
 
     .list-item-label
       &:after

@@ -13,7 +13,10 @@ class RepresentationPolicy < ApplicationPolicy
   # @return [Boolean] whether or not the user can create representations for this organization
   def create?
     return true if organization_user.editor?
-    organization_user.author? && instance.resource.assigned_to?(organization_user.user)
+    organization_user.author? && (
+      organization.allow_authors_to_claim_resources? ||
+      instance.resource.assigned_to?(organization_user.user)
+    )
   end
 
   alias_method :new?, :create?

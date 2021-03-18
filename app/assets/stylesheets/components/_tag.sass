@@ -25,6 +25,9 @@
   text-decoration: none
   text-transform: uppercase
 
+  &:first-child:last-child
+    margin: 0
+
   &:after
     @extend .sr
 
@@ -39,8 +42,8 @@
     color: $text
 
   @each $name, $color in $status
-    $background: lighten($color, 40%)
-    $text: darken($color, 20%)
+    $background: lighten($color, 45%)
+    $text: darken($color, 25%)
 
     &.tag--#{$name}
       background-color: $background

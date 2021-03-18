@@ -16,20 +16,6 @@ module ListHelper
     component(defaults: {class: "list-item"}, tag: :li, &block)
   end
 
-  def list_item_actions(instance, options = {}, &block)
-    items = capture(&block)
-    return if items.try(:strip).blank?
-
-    tag.span(items, class: "list-item-actions", role: "list")
-  end
-
-  def list_item_actions_overflow(options = {}, &block)
-    options[:class] = ["list-item-actions", *Array(options[:class])]
-    tag.span(class: "list-item-action") {
-      options_dropdown(options, &block)
-    }
-  end
-
   def list_item_label(label = nil)
     return "" unless label.present? || block_given?
     tag.span(class: "list-item-label") { block_given? ? yield : label }
@@ -41,12 +27,12 @@ module ListHelper
   end
 
   def list_of(parent, relationship, options = {}, &block)
-    wrap = options.delete(:wrap) { true }
+    item_options = options.delete(:item) { {} }
     relationship_component(parent, relationship, options) do |items|
       list(options) {
         list_items = items.map { |item|
           content = capture { yield item }
-          wrap ? component(defaults: {class: "list-item"}, options: options, tag: :li) { content } : content
+          component(defaults: {class: "list-item"}, options: item_options, tag: :li) { content }
         }
 
         list_items.push(link_to_list_item(view_more_link_content, options[:view_more], class: "view-more")) if options[:view_more]

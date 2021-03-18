@@ -6,8 +6,9 @@
 
   align-items: stretch
   background-color: $background
-  display: flex
-  margin-bottom: $gutter
+  display: inline-flex
+
+  // margin-bottom: $gutter
 
   &.field--accessory
     position: relative
@@ -30,9 +31,15 @@
     background-color: transparent
     flex: 1
 
+  > .button + .dropdown
+    border-left: 1px solid $border-light
+
   > *
     border-radius: 0 !important
     margin: 0 !important
+
+    > *
+      border-radius: inherit
 
     &:first-child,
     &.sr-only:first-child ~ *:not([type=hidden]),

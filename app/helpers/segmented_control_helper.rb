@@ -1,15 +1,6 @@
 # frozen_string_literal: true
 
 module SegmentedControlHelper
-  def icon(icon, options = {})
-    return "" if icon.blank?
-
-    icon = icon.to_s.dasherize
-    icon = "#{icon}-outline" unless icon.ends_with?("-outline")
-    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon}")
-    tag.i(options)
-  end
-
   # Returns a component
   def segmented_control(options = {})
     component(defaults: {class: "segmented-control"}, options: options) { yield if block_given? }

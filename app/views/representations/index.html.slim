@@ -1,120 +1,54 @@
 h1= title "Descriptions"
 
+= search_form_for record_filter.search, html: {class: "filters"}, url: representations_path, wrapper: :filters, enforce_utf8: false do |f|
+  h2 Filter #{Representation.model_name.human(count: 2)}
+  label.filter.field.field--accessory
+    h3.sr-only Search by caption or description
+    = icon :search, class: "field-accessory"
+    = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: "Search representation text", role: "search"
+
+  .filter
+    h3.filter-title#status_label Status
+    ul.boolean-list aria-labelled-by="status_label"
+      - Coyote::Representation.status_collection.each do |name, status|
+        li.boolean-list-item: label
+          = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
+          = name
+
+  .filter
+    h3.filter-title#metum_label Metum
+    ul.boolean-list aria-labelled-by="metum_label"
+      - available_meta.each do |meta|
+        li.boolean-list-item: label
+          = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
+          span= meta.name
+
+  h3.sr-only#author_label Created by author
+  = f.input :author_id_eq, label: "Created by Author", label_html: {aria: {label: "author_label"}}, collection: users_for_select, as: :select, required: false
+
+  .filter
+    = f.submit "Apply Filters", name: nil, class: "button"
+    = f.submit "Clear", type: "reset", class: "button button--outline"
+
 .toolbar
-  .filters#representation-filters
-    button.button.button--round.filter-toggle data-toggle-target="#representation-filters" data-toggle="filters--toggled" type="button"
-      span
-        ' Filter
-        span.sr-only= Representation.model_name.human(count: 2).downcase
-      = icon(:options)
-
-    = search_form_for record_filter.search, url: representations_path, wrapper: :filters, enforce_utf8: false do |f|
-      h2 Filter #{Representation.model_name.human(count: 2)}
-      label.filter.field.field--accessory
-        h3.sr-only Search by caption or description
-        = icon :search, class: "field-accessory"
-        = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: "Search representation text", role: "search"
-
-      .filter
-        h3.filter-title#status_label Status
-        ul.boolean-list aria-labelled-by="status_label"
-          - Coyote::Representation.status_collection.each do |name, status|
-            li.boolean-list-item: label
-              = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
-              = name
-
-      .filter
-        h3.filter-title#metum_label Metum
-        ul.boolean-list aria-labelled-by="metum_label"
-          - available_meta.each do |meta|
-            li.boolean-list-item: label
-              = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
-              span= meta.name
-
-      h3.sr-only#author_label Created by author
-      = f.input :author_id_eq, label: "Created by Author", label_html: {aria: {label: "author_label"}}, collection: organizational_user_collection, as: :select, required: false
-
-      .filter
-        = f.submit "Apply Filters", name: nil, class: "button"
-        = f.submit "Clear", type: "reset", class: "button button--outline"
+  button.button.button--round.filter-toggle data-toggle-target="#representation_search" data-toggle="filters--toggled" type="button"
+    = icon(:options, prefix: safe_join(["Filter ", sr_only(Representation.model_name.human(count: 2).downcase)]))
 
   = applied_filters
 
-  ruby:
-    sort_options = {
-      label: "Sort by...",
-      toggle: {
-        class: "button button--round"
-      },
-      wrapper: {
-        class: "sort dropdown--end"
-      },
-    }
-  = dropdown(sort_options) do
-    = dropdown_option sort_link_to(:name, :asc, label: "Name, A-Z")
-    = dropdown_option sort_link_to(:name, :desc, label: "Name, Z-A")
-    = dropdown_option sort_link_to(:created_at, :desc, label: "Date imported, recent")
-    = dropdown_option sort_link_to(:created_at, :asc, label: "Date imported, oldest")
+  = sort_dropdown do
+    = dropdown_option sort_link_to(:name, :asc, "Name, A-Z")
+    = dropdown_option sort_link_to(:name, :desc, "Name, Z-A")
+    = dropdown_option sort_link_to(:created_at, :desc, "Date imported, recent")
+    = dropdown_option sort_link_to(:created_at, :asc, "Date imported, oldest")
 
 
 = simple_form_for :representation_status_change, url: representation_status_changes_path, html: { class: "filter-view-list", id: "results" } do |form|
-  / Results toolbar: let users add assignments
-  / h2#results-title
-  /   ' Results:
-  /   - count = record_filter.records.total_count
-  /   = number_with_delimiter count
-  /   '
-  /   = "description".pluralize(count)
+  h2.sr-only#results-title
+    ' Results:
+    - count = record_filter.records.total_count
+    = number_with_delimiter count
+    '
+    = "description".pluralize(count)
 
-  ruby:
-    has_representations = record_filter.records.any?
-
-  - if has_representations
-    = toolbar do
-      label.label--checkbox.toolbar-item
-        input data-select-all="#results" type="checkbox"
-        span data-checkbox-conditional="hide" Select all
-        span.non-mobile-only data-checkbox-conditional="show" data-checkbox-conditional-prefix=true selected
-
-      - if can?(:approve, Representation)
-        = toolbar_item class: "field toolbar-item--start", data: {checkbox_conditional: "show"} do
-          = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: "Apply status...", required: false
-          = form.submit "Apply", class: "button"
-
-      = segmented_control class: "toolbar-item non-portrait-only", "data-checkbox-conditional" => "hide", title: {tag: :h3, text: "View options"} do
-        li.segmented-control-item= link_to request.GET.except(:grid), class: ["segmented-control-item-link", params[:grid] ? nil : "segmented-control-item-link--active"] do
-          = icon(:list)
-          span.sr-only List View
-        li.segmented-control-item= link_to request.GET.merge(grid: true), class: ["segmented-control-item-link", params[:grid] ? "segmented-control-item-link--active" : nil] do
-          = icon(:grid)
-          span.sr-only Grid View
-
-      - if record_filter.browser_pagination_link_params.any?
-        = toolbar_item "data-checkbox-conditional" => "hide" do
-          = paginate record_filter.records
-
-    - if params[:grid].present?
-      = list class: "list--grid", id: "results-list" do
-        = render partial: "resource", collection: record_filter.records.group_by(&:resource), as: :resource_and_representations, locals: { form: form }
-    - else
-      .table-wrapper: table
-        thead
-          tr
-            th Resource
-            th= sort_link(record_filter.search, :status)
-            th= sort_link(record_filter.search, :metum_id)
-            th= sort_link(record_filter.search, :language, label: "Locale")
-            th.table-cell-actions Actions
-        tbody
-          = render partial: "row", collection: record_filter.records, as: :representation
-
-    = toolbar do
-      label.label--checkbox.toolbar-item
-        input#select-all data-select-all="#results-list" type="checkbox"
-        span Select all
-
-      - if record_filter.browser_pagination_link_params.any?
-        = toolbar_item do
-          = paginate record_filter.records
-  - else
-    p.empty-message No descriptions found
+  = render "list", form: form, representations: record_filter.records

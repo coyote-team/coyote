@@ -112,8 +112,6 @@ CREATE FUNCTION public.reset_sequence(tablename text, columnname text, sequence_
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
@@ -491,7 +489,8 @@ CREATE TABLE public.organizations (
     updated_at timestamp without time zone NOT NULL,
     default_license_id integer NOT NULL,
     is_deleted boolean DEFAULT false,
-    footer character varying
+    footer character varying,
+    allow_authors_to_claim_resources boolean DEFAULT false NOT NULL
 );
 
 
@@ -1855,6 +1854,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200825173757'),
 ('20200827210043'),
 ('20201110000430'),
+('20201113164644'),
 ('20201203005723'),
 ('20210224181332'),
 ('20210303210513'),

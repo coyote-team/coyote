@@ -81,7 +81,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:name, :default_license_id, :footer)
+    params.require(:organization).permit(:name, :default_license_id, :footer, :allow_authors_to_claim_resources)
   end
 
   def pundit_user

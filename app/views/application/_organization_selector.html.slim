@@ -1,4 +1,19 @@
 - if organization_scope.many?
-  - organization_name = current_organization? ? current_organization.name : nil
-  = dropdown_for organization_scope, toggle: {aria: {label: organization_name}, class: "initials initials--collapse"}, wrapper: {class: "dropdown--end", id: "organization-dropdown"}, label: organization_name || "Select an organization", title: "Select an organization" do |organization|
-    = link_to organization.name, url_for_organization(organization)
+  ruby:
+    organization_name = current_organization? ? current_organization.name : nil
+    options = {
+      toggle: {
+        aria: {
+          label: organization_name
+        },
+        class: "button"
+      },
+      wrapper: {
+        id: "organization-dropdown"
+      },
+      label: icon(:chevron_down, prefix: organization_name || "Select an organization"),
+      title: "Select an organization"
+    }
+  = dropdown(options) do
+    - organization_scope.each do |organization|
+      = dropdown_option link_to organization.name, url_for_organization(organization)

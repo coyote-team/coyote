@@ -4,7 +4,8 @@
   thead
     tr
       th Title
-      th Webhook
+      - if can?(:view_webhook_uri, ResourceGroup)
+        th Webhook
       th Resources
       / - if can?(:edit, :resource_group)
       /   th.table-cell-actions Actions
@@ -12,7 +13,8 @@
     - resource_groups.each_with_index do |resource_group, idx|
       tr
         td.table-cell-link= link_to resource_group.name_with_default_annotation, resource_group_path(resource_group)
-        td= resource_group.webhook_uri || ""
+        - if can?(:view_webhook_uri, ResourceGroup)
+          td= resource_group.webhook_uri || ""
         td= tag_for(resource_group.resources.count)
         / - if can?(:edit, :resource_group)
         /   td.table-cell-actions

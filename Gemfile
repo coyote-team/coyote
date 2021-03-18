@@ -25,7 +25,6 @@ gem "jwt"
 gem "kaminari"
 gem "language_list"
 gem "metamagic" # meta
-gem "mini_racer", require: false
 gem "pg"
 gem "puma"
 gem "pundit"
@@ -58,7 +57,7 @@ group :development do
   gem "annotate"
   gem "brakeman", require: false # basic security checks
   gem "federal_offense", ">= 0.1.2" # Trap and preview outbound emails
-  gem "pry-rails" # gives us binding.pry calls
+  gem "pry-rails" # debug with a Ruby REPL
   gem "rails_real_favicon" # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem "yard"
 

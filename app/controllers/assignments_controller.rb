@@ -26,7 +26,7 @@ class AssignmentsController < ApplicationController
   def destroy
     if assignment.destroy
       logger.info "Deleted #{assignment}"
-      redirect_to assignments_path, notice: "Assignment was successfully destroyed."
+      redirect_back fallback_location: assignments_path, notice: assignment.user_id == current_user.id ? "You've unassigned yourself" : "The assignment has been deleted."
     else
       logger.warn "Unable to delete #{assignment}: '#{assignment.error_sentence}'"
       flash[:error] = "We were unable to delete the assignment"

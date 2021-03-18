@@ -1,31 +1,23 @@
 // COMPONENT: Button: an interactive clickable element. Can be applied to
 // BUTTON tags, A tags, and INPUT tags.
-// =button-colors($background, $text, $disabled)
-//   background-color: $background
-//   border-color: $background
-//   color: $text
+=button-colors($background, $text, $hover: $background)
+  background-color: $background
+  border-color: $background
+  color: $text
 
-//   &:focus, &:hover
-//     color: $text
-//     transform: scale(1.03)
+  &:focus, &:hover
+    color: $text
+    background-color: $hover
 
-//   &:focus
-//     border-color: $background
-//     box-shadow: rgba($background, $focus-shadow-opacity) $focus-shadow-size
+  &:focus
+    border-color: darken($hover, 10%)
+    box-shadow: rgba($background, $focus-shadow-opacity) $focus-shadow-size
 
-//   &.button--outline
-//     background-color: transparent
+  @at-root form:invalid &,
 
-//     &,
-//     &:focus,
-//     &:hover
-//       color: $background
-
-//   // Disabled state
-//   &[disabled],
-//   form:invalid &[type]
-//     background-color: $disabled !important
-//     border-color: $disabled !important
+  &[disabled]
+    cursor: default
+    opacity: 0.6
 
 button
   @extend %input-base
@@ -34,12 +26,11 @@ input[type=submit]:not([class~="button"]),
 .button
   @extend %input-base
 
+  +button-colors($input, $text, $border-light)
+
   &:not(.button--small)
     @extend %control-height
 
-  background-color: $input
-  border-color: $input
-  color: $text
   cursor: pointer
   font-size: $font-size-control
   font-weight: 600
@@ -48,18 +39,10 @@ input[type=submit]:not([class~="button"]),
   text-align: center
   text-decoration: none
   transition: all 100ms $heavy
-
-  &:hover
-    background-color: $border-light
-    border-color: $border-light
-    color: $text
+  white-space: nowrap
 
   &:not(.button--block):not(:last-child)
     margin-right: $input-padding
-
-  // &.button--block
-  //   display: block
-  //   width: 100%
 
   > *
     display: inline-block
@@ -71,11 +54,11 @@ input[type=submit]:not([class~="button"]),
     font-size: 120%
 
   &.button--narrow
-    padding-left: 0
-    padding-right: 0
+    padding-left: $input-padding
+    padding-right: $input-padding
 
   &.button--round
-    border-radius: 1000px
+    border-radius: 1000px !important
 
   &.button--square
     padding-left: 0
@@ -89,17 +72,12 @@ input[type=submit]:not([class~="button"]),
 input[type=submit]:not([class~="button"]),
 input[type=submit][class="button"],
 .button--submit
-  background-color: $tint
-  border-color: $tint
-  color: $background
-
-  &:hover
-    background-color: darken($tint, 5%)
-    border-color: darken($tint, 5%)
-    color: $background
+  +button-colors($tint, $background)
 
 .button--quiet,
 .button--subtle
+  +button-colors(transparent, $text, $input)
+
   background-color: transparent
   border-color: transparent
 

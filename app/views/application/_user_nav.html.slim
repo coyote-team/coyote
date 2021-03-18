@@ -6,11 +6,8 @@ ruby:
       },
       class: "button initials initials--collapse"
     },
-    label: safe_join([user_tag(current_user), icon(:arrow_down)]),
+    label: safe_join([user_tag(current_user), icon(:chevron_down)]),
     title: 'Global Actions',
-    wrapper: {
-      class: "dropdown--end"
-    },
   }
 
 = dropdown(dropdown_options) do

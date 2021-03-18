@@ -1,10 +1,13 @@
+// import "@popperjs/core"
+// import "bootstrap/js/dist/dropdown"
+import "bootstrap/js/dist/dropdown"
 import * as ActiveStorage from "@rails/activestorage"
 import UJS from "@rails/ujs"
 
 import "../polyfills"
 import {
+  Cards,
   Lightbox,
-  List,
   SegmentedControl,
   SelectAll,
   Table,
@@ -21,8 +24,8 @@ document.querySelectorAll("[data-lightbox]").forEach(function (link) {
   const _ = new Lightbox(link)
 })
 
-document.querySelectorAll(".list").forEach(function (control) {
-  const _ = new List(control)
+document.querySelectorAll("table").forEach(function (control) {
+  const _ = new Cards(control)
 })
 
 document.querySelectorAll(".segmented-control").forEach(function (control) {

@@ -12,13 +12,20 @@ function checkForConditionals(event) {
   const checked = form.querySelectorAll("input[type=checkbox]:not([data-select-all]):checked")
     .length
   const hasChecked = checked > 0
+
   form.querySelectorAll("[data-checkbox-conditional]").forEach(conditional => {
     if (hasChecked) {
-      conditional.dataset.checkboxConditionalCount = checked
       conditional.dataset.checkboxConditionalApplied = true
     } else {
-      delete conditional.dataset.checkboxConditionalCount
       delete conditional.dataset.checkboxConditionalApplied
+    }
+  })
+
+  form.querySelectorAll("[data-checkbox-conditional-prefix]").forEach(counter => {
+    if (hasChecked) {
+      counter.dataset.checkboxConditionalCount = checked
+    } else {
+      delete counter.dataset.checkboxConditionalCount
     }
   })
 }

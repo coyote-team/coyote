@@ -12,6 +12,7 @@ input[type=checkbox], input[type=radio]
   background-position: center center
   background-repeat: no-repeat
   border-color: $border
+  display: inline-block
   height: $checkbox-size
   flex: 0 0 $checkbox-size
   margin-right: $input-padding
@@ -28,6 +29,10 @@ input[type=checkbox], input[type=radio]
 
     &[disabled]
       background-image: radio-check-mark($placeholder)
+
+  @at-root label:hover &
+    &:not(:checked)
+      background-color: $background
 
 input[type=radio]
   border-radius: 50%

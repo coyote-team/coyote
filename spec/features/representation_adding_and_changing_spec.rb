@@ -55,12 +55,5 @@ RSpec.describe "Representation adding and changing" do
 
     click_first_link "Descriptions"
     expect(page).to have_current_path(representations_path(organization_id: user_organization), ignore_query: true)
-
-    expect {
-      click_first_link("Delete")
-    }.to change { Representation.exists?(representation.id) }
-      .from(true).to(false)
-
-    expect(page).to have_current_path(representations_path(organization_id: user_organization), ignore_query: true)
   end
 end

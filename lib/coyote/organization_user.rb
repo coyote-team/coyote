@@ -8,6 +8,8 @@ module Coyote
   # @see Organization
   # @see https://github.com/elabs/pundit#additional-context
   class OrganizationUser
+    attr_reader :organization
+
     # @!attribute [r] staff?
     #   @return [Boolean] whether or not the user is a Coyote staff member with cross-organizational authority
     # @!attribute [r] id
@@ -68,9 +70,5 @@ module Coyote
         Coyote::Membership.role_rank(role)
       end
     end
-
-    private
-
-    attr_reader :organization
   end
 end

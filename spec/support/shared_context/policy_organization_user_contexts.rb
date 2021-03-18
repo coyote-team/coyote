@@ -20,16 +20,17 @@ end
 RSpec.shared_context "with an author organization user" do
   let(:org_user) do
     double(:author_org_user, {
-      id:        300,
-      guest?:    true,
-      viewer?:   true,
-      author?:   true,
-      editor?:   false,
-      admin?:    false,
-      owner?:    false,
-      staff?:    false,
-      role_rank: Coyote::Membership.role_rank(:author),
-      user:      double(:user),
+      id:           300,
+      guest?:       true,
+      viewer?:      true,
+      author?:      true,
+      editor?:      false,
+      admin?:       false,
+      owner?:       false,
+      staff?:       false,
+      role_rank:    Coyote::Membership.role_rank(:author),
+      user:         double(:user),
+      organization: build_stubbed(:organization),
     })
   end
 end

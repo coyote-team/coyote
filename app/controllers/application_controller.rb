@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
 
   def url_options
     result = super
+    # return result if organization_controller?
     if organization_id.present?
       result.merge(organization_id: organization_id)
     elsif current_organization?
@@ -66,7 +67,6 @@ class ApplicationController < ActionController::Base
     Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if current_user?
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
-
   # :nocov:
 
   def current_organization

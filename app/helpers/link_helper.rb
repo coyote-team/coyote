@@ -5,12 +5,9 @@ module LinkHelper
 
   def button_link_to(label, url, options = {})
     icon_name = options.delete(:icon)
-    icon_position = options.delete(:icon_position) { :end }
     options = combine_options({class: "button"}, options)
     if icon_name.present?
-      label = tag.span(label)
-      icon = icon(icon_name)
-      label = safe_join(icon_position == :start ? [icon, label] : [label, icon])
+      label = icon(icon_name, prefix: label)
     end
 
     link_to(label, url, options)

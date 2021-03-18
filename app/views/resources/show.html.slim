@@ -1,9 +1,10 @@
 h1= title(resource.name)
-= resource_status_list(resource)
+/ = resource_status_list(resource)
 
 .split-view.split-view--thumbnail
   .split-view-item
     = lightbox_link(resource, alt: resource.best_representation)
+    = resource_host_link(resource)
 
   .split-view-item
     .table-wrapper: table
@@ -50,13 +51,20 @@ h1= title(resource.name)
       = button_link_to "Describe", new_representation_path(resource_id: resource.id), class: 'button--submit', title: 'Create new description for this resource', icon: :message_circle
     - if policy(resource).edit?
       = edit_link_to edit_resource_path(resource), title: "Edit this resource"
-    - if policy(resource).destroy?
-      = delete_link_to "Are you sure you want to delete this resource? This cannot be undone.", resource_path(resource.id), title: 'Delete this resource'
     - if policy(ResourceLink).new?
       = button_link_to "Create Link to Another Resource", new_resource_link_path(subject_resource_id: resource.id), icon: :link, title: 'Create new link from this resource to another resource'
-  - if policy(Assignment).new?
-    = toolbar_item
-      = render partial: 'assign', resource: resource
+
+  - if can_assign? || can?(:destroy, resource)
+    = toolbar_item class: "toolbar-item--end" do
+      - if can_only_assign_to_self?
+        = assignment_link_for(resource, class: "button button--default")
+      - elsif can_assign?
+        = render('assign', resource: resource)
+      - if can?(:destroy, resource)
+        = options_dropdown do
+          = dropdown_option do
+            = link_to "Delete this resource", resource_path(resource.id), data: {confirm: "Are you sure you want to delete this resource? This cannot be undone.", method: :delete}
+
 
 h2 Descriptions
 - if resource.representations.any?
@@ -71,5 +79,7 @@ h2 Related Resources
   p No other resources have been linked to this resource.
 
 h2 Assignments
-= list_of resource, :assignments do |assignment|
-  = link_to assignment.user, assignment
+= list_of resource, :assignments, item: {class: "list-item--has-link"} do |assignment|
+  = link_to assignment.user, assignment, class: "list-item-link"
+  - if can?(:destroy, assignment)
+    span.list-item-actions= delete_link_to "Are you sure you want to unassign #{assignment.user}?", assignment

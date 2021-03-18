@@ -4,6 +4,8 @@
 # @abstract intended to be subclassed for each ActiveRecord class that needs policy protection
 # @see https://github.com/elabs/pundit
 class ApplicationPolicy
+  delegate :organization, to: :organization_user
+
   # @raise [Pundit::NotAuthorizedError] if organization_user is nil
   # @param organization_user [organization_user]
   # @param record [ActiveRecord::Base]

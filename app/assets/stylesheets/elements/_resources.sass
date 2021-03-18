@@ -1,0 +1,82 @@
+.resource-title
+  display: block
+
+.resource-image
+  background-color: $input
+  background-size: cover
+  border-radius: $border-radius
+  display: block
+  flex: 0 0 ($gutter * 7)
+  width: $gutter * 7
+
+  &::before
+    content: ""
+    display: block
+    padding-bottom: 100%
+    width: 100%
+
+  @at-root .table--cards &
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+    flex: 1
+    width: 100%
+
+    &::before
+      padding-bottom: percentage(2 / 3)
+
+.resource-steps
+  display: flex
+  position: relative
+  text-align: center
+
+  .resource-step
+    align-items: center
+    border: 2px solid $border-light
+    border-radius: 1000px
+    color: $border
+    display: flex
+    font-size: $font-size-control - 2px
+    flex: 0 0 ($gutter * 2)
+    height: $gutter * 2
+    justify-content: center
+    position: relative
+
+    + .resource-step
+      margin-left: $gutter * 2
+
+    &:not(:first-child)
+      &::before
+        border-top: 2px solid $border-light
+        content: ""
+        height: $gutter
+        right: 50%
+        position: absolute
+        top: 50%
+        transform: translate(-$gutter, -1px)
+        width: $gutter * 2
+
+    &:first-child:not(.resource-step--complete),
+    &.resource-step--complete + .resource-step:not(.resource-step--complete)
+      border-color: $border
+
+      &::before
+        border-color: $border
+
+    &--complete
+      $success: map-get($status, "success")
+
+      background-color: lighten($success, 45%)
+      border-color: $success
+      color: $success
+
+      + .resource-step--complete::before
+        border-color: $success
+
+.resource-status
+  font-size: $font-size-control
+  font-weight: 500
+  padding-top: $gutter
+  text-align: center
+
+  @at-root .table--cards &
+    display: none

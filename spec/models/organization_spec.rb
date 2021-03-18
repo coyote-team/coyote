@@ -4,13 +4,14 @@
 #
 # Table name: organizations
 #
-#  id                 :integer          not null, primary key
-#  footer             :string
-#  is_deleted         :boolean          default(FALSE)
-#  name               :citext           not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  default_license_id :integer          not null
+#  id                               :integer          not null, primary key
+#  allow_authors_to_claim_resources :boolean          default(FALSE), not null
+#  footer                           :string
+#  is_deleted                       :boolean          default(FALSE)
+#  name                             :citext           not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  default_license_id               :integer          not null
 #
 # Indexes
 #

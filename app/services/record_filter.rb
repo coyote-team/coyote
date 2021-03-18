@@ -19,7 +19,7 @@ class RecordFilter
     @applied_filters = {}.with_indifferent_access
     @default_filters.merge(filter_params.with_indifferent_access).each do |key, value|
       if /_(cont_all|any)$/.match?(key.to_s)
-        @filter_params[key] = value.to_s.split(/(\s|,)/)
+        @filter_params[key] = value.to_s.split(/(\s|,)/).presence
       elsif value == false || value.present?
         @filter_params[key] = value
       end
@@ -36,9 +36,9 @@ class RecordFilter
     # This applies default ordering unless filter params with "by" in their name are present. This
     # app follows a convention where scopes that apply ordering have "by" in their name, e.g.
     # "order_by_priority" or "by_created_at".
-    default_order = Array(default_order)
-    @base_scope = if default_order.any? && @filter_params.none? { |name, _| name.to_s.match?(/(\b|_)by(\b|_)/) }
-      default_order.inject(base_scope) { |scope, filter| scope.send(filter) }
+    # default_order = Array(default_order)
+    @base_scope = if default_order.present? && @filter_params[:s].blank? && @filter_params.none? { |name, _| name.to_s.match?(/(\b|_)by(\b|_)/) }
+      Array(default_order).inject(base_scope) { |scope, filter| scope.send(filter) }
     else
       base_scope
     end
@@ -101,6 +101,6 @@ class RecordFilter
   attr_reader :filter_params, :pagination_params, :base_scope
 
   def record_paginator
-    @record_paginator ||= RecordPaginator.new(pagination_params, search.result)
+    @record_paginator ||= RecordPaginator.new(pagination_params, search.result) # (distinct: true))
   end
 end

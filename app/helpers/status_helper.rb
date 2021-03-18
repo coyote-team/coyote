@@ -17,9 +17,18 @@ module StatusHelper
     import_failed:   "error",
     imported:        "success",
 
+    # Resource description status
+    described:       "success",
+    undescribed:     "neutral",
+
+    # Resource assignment status
+    assigned:        "success",
+    unassigned:      "warning",
+
     # Representation status enum
     ready_to_review: "partial",
     approved:        "success",
     not_approved:    "warning",
+
   }.with_indifferent_access.freeze
 end

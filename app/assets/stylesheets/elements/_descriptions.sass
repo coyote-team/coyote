@@ -1,0 +1,32 @@
+.description
+  display: block
+  font-weight: 500
+
+  &:not(:last-child)
+    margin-bottom: $gutter * 2
+
+  &--large
+    font-size: $h2-size
+    font-weight: normal
+    padding: 0 ($gutter * 1.5)
+    position: relative
+
+    &::before,
+    &::after
+      color: $placeholder
+      font-family: serif
+      position: absolute
+
+    &::before
+      content: "“"
+      left: 0
+      top: 0
+
+    &::after
+      bottom: 0
+      content: "„"
+      right: 0
+
+    &::before,
+    &::after
+      font-size: $h1-size
