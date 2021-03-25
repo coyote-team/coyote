@@ -67,23 +67,21 @@ header
 
   h3#undescribed Undescribed &amp; Unassigned Resources
   - if current_organization.unassigned_unrepresented_resources.any?
-    = list class: 'list--grid' do
-      = render partial: 'resources/resource', collection: current_organization.unassigned_unrepresented_resources.by_priority.first(10)
+    = render "resources/list", resources: current_organization.unassigned_unrepresented_resources.by_priority.first(10)
   - else
     p There are currently no undescribed resources which lack assignments for this organization
 
 
   h3#ready_to_review Descriptions Ready to Review
   - if current_organization.ready_to_review_representations.any?
-    = list class: 'list--grid' do
-      = render partial: 'representations/resource', collection: current_organization.ready_to_review_representations.first(50).group_by(&:resource), as: :resource_and_representations
+    = render "representations/list", representations: current_organization.ready_to_review_representations.first(50)
   - else
     p There are currently no descriptions in the 'Ready to Review' state for this orgnization
 
 h2#your_queues Resources Assigned to You for Description
 - if (resources = current_user.assigned_resources.in_organization(current_organization)).any?
   = list class: 'list--grid' do
-    = render partial: 'resources/resource', collection: resources.first(10)
+    = render "resources/list", resources: resources.first(10)
 - else
   p.empty-message There are currently no resources assigned to you
 
