@@ -49,12 +49,11 @@ class ResourceGroup < ApplicationRecord
   scope :has_webhook, -> { where.not(webhook_uri: nil) }
 
   def auto_match_host_uris=(value)
+    # Clean the URIs to schema-less regex fields
     match_uris = Array(value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)).each_with_object([]) do |match_uri, matches|
       match_uri.to_s.strip
       next if match_uri.blank?
 
-      # Build a regex query for this match URI - THIS IS NOT PERFORMANT AND WE DON'T WANT TO DO
-      # THIS OFTEN
       match_regex = '\A(https?:)?//' + match_uri.gsub(/\A(https?:)?\/\//, "")
       matches.push(match_regex)
     end
