@@ -17,18 +17,14 @@ gem "bcrypt", "~> 3.1.7"
 # gem "aws-sdk-s3", require: false # Comment this in to use S3 instead of Google Cloud Storage - see config/storage.yml
 gem "bootsnap", require: false
 gem "cloudtasker"
-gem "easymarklet", git: "https://github.com/seeread/easymarklet.git", ref: "53829a6"
 gem "faraday"
 gem "ffi", require: false
 gem "htmlentities"
-gem "jquery-rails", ">= 4.0.4"
 gem "jsonapi-rails"
 gem "jwt"
 gem "kaminari"
 gem "language_list"
-gem "lightbox2-rails", github: "johansmitsnl/lightbox2-rails" # for resource lightboxes on index pages
 gem "metamagic" # meta
-gem "mini_racer", require: false
 gem "pg"
 gem "puma"
 gem "pundit"
@@ -36,12 +32,13 @@ gem "rake"
 gem "ransack"
 gem "redcarpet"
 gem "roo"
+gem "safe-pg-migrations"
 gem "sass-rails"
 gem "simple_form"
 gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
-gem "uglifier", ">= 2.7.1" # js compression
+gem "tzinfo-data"
 gem "webpacker"
 
 group :development, :test do
@@ -60,7 +57,7 @@ group :development do
   gem "annotate"
   gem "brakeman", require: false # basic security checks
   gem "federal_offense", ">= 0.1.2" # Trap and preview outbound emails
-  gem "pry-rails" # gives us binding.pry calls
+  gem "pry-rails" # debug with a Ruby REPL
   gem "rails_real_favicon" # manages many different favicons, apple touch icons, etc. see app/assets/images/favicon/manifest.json.erb
   gem "yard"
 
@@ -105,16 +102,14 @@ module BundlerHack
   end
 end
 
-Bundler::LazySpecification.prepend(BundlerHack)
+unless RUBY_PLATFORM.match?(/darwin|jruby|cygwin|mswin|mingw|bccwin|wince|emx/)
+  Bundler::LazySpecification.prepend(BundlerHack)
+end
 
 group :production do
   gem "google-cloud-storage", require: false
-  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"]
-  gem "grpc", "1.27.0", platforms: ["ruby"]
+  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"], require: false
+  gem "grpc", "1.27.0", platforms: ["ruby"], require: false
   gem "newrelic_rpm"
-  gem "non-digest-assets"
   gem "sentry-raven"
 end
-
-# NOTE: Comment this back in if you need to reactivate Scavenger Hunt
-# gem "scavenger_hunt", path: "lib/scavenger_hunt"

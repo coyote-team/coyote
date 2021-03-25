@@ -1,51 +1,48 @@
 // COMPONENT: Button: an interactive clickable element. Can be applied to
 // BUTTON tags, A tags, and INPUT tags.
-=button-colors($background, $text, $disabled)
+=button-colors($background, $text, $hover: $background)
   background-color: $background
   border-color: $background
   color: $text
 
   &:focus, &:hover
     color: $text
-    transform: scale(1.03)
+    background-color: $hover
 
   &:focus
-    border-color: $background
+    border-color: darken($hover, 10%)
     box-shadow: rgba($background, $focus-shadow-opacity) $focus-shadow-size
 
-  &.button--outline
-    background-color: transparent
+  @at-root form:invalid &,
 
-    &,
-    &:focus,
-    &:hover
-      color: $background
+  &[disabled]
+    cursor: default
+    opacity: 0.6
 
-  // Disabled state
-  &[disabled],
-  form:invalid &[type]
-    background-color: $disabled !important
-    border-color: $disabled !important
+button
+  @extend %input-base
 
-button,
+input[type=submit]:not([class~="button"]),
 .button
+  @extend %input-base
+
+  +button-colors($input, $text, $border-light)
+
+  &:not(.button--small)
+    @extend %control-height
+
   cursor: pointer
-
-.button
-  @extend %input-fixed-height
-
   font-size: $font-size-control
-  font-weight: 400
+  font-weight: 600
+  letter-spacing: -0.03em
   padding: 0 ($input-padding * 2)
   text-align: center
   text-decoration: none
   transition: all 100ms $heavy
+  white-space: nowrap
 
   &:not(.button--block):not(:last-child)
     margin-right: $input-padding
-
-  &.button--block
-    display: block
 
   > *
     display: inline-block
@@ -54,26 +51,57 @@ button,
       margin-left: $input-padding
 
   .icon
-    font-size: 90%
+    font-size: 120%
 
-  // Disabled state
-  &[disabled],
-  form:invalid &[type]
-    cursor: not-allowed !important
+  &.button--narrow
+    padding-left: $input-padding
+    padding-right: $input-padding
 
-    // opacity: 0.6 !important
+  &.button--round
+    border-radius: 1000px !important
 
-    &:focus,
-    &:hover
-      transform: none !important
+  &.button--square
+    padding-left: 0
+    padding-right: 0
+    width: $input-height
 
-  // Default is a gray button
-  &:not([disabled]),
-  form:not(:invalid)
-    +button-colors($placeholder, $text-light, $border)
+  &.button--small
+    font-size: $font-size-control
+    padding: 0 $input-padding
 
-  @each $name, $color in $status
-    &:not([disabled]),
-    form:not(:invalid) &
-      &.button--#{$name}
-        +button-colors($color, $text-light, desaturate($color, 50%))
+input[type=submit]:not([class~="button"]),
+input[type=submit][class="button"],
+.button--submit
+  +button-colors($tint, $background)
+
+.button--quiet,
+.button--subtle
+  +button-colors(transparent, $text, $input)
+
+  background-color: transparent
+  border-color: transparent
+
+.button--subtle
+  color: $tint
+
+  // // Disabled state
+  // &[disabled],
+  // form:invalid &[type]
+  //   cursor: not-allowed !important
+
+  //   // opacity: 0.6 !important
+
+  //   &:focus,
+  //   &:hover
+  //     transform: none !important
+
+  // // Default is a gray button
+  // &:not([disabled]),
+  // form:not(:invalid)
+  //   +button-colors($placeholder, $text-light, $border)
+
+  // @each $name, $color in $status
+  //   &:not([disabled]),
+  //   form:not(:invalid) &
+  //     &.button--#{$name}
+  //       +button-colors($color, $text-light, desaturate($color, 50%))

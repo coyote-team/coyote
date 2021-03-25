@@ -1,0 +1,31 @@
+// COMPONENT: Avatar: render a pretty image encapsulated in a round border
+.user
+  $avatar-size: 40px
+
+  align-items: center
+  display: inline-flex
+
+  .user-avatar
+    border-radius: 1000px
+    display: block
+    min-width: auto
+    width: $gutter * 2
+
+    + *
+      margin-left: $input-padding
+
+  .user-name
+    // color: $placeholder
+    // font-size: $font-size-control
+    display: block
+    flex: 1
+
+  // background-position: center center
+  // background-repeat: no-repeat
+  // background-size: cover
+  // border: 1px solid $border
+  // border-radius: $avatar-size / 2
+  // height: $avatar-size
+  // margin: 0 $gutter 0 0
+  // vertical-align: middle
+  // width: $avatar-size

@@ -55,8 +55,11 @@ class User < ApplicationRecord
   has_many :resource_links, through: :organizations
   has_many :resource_groups, through: :organizations
 
+  has_one_attached :profile_picture
+
   scope :active, -> { where(active: true) }
-  scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) ASC NULLS LAST, users.id ASC")) }
+  scope :can_author, -> { references(:memberships).where.not(memberships: {role: %w[guest viewer]}) }
+  scope :sorted, -> { order(Arel.sql("LOWER(users.last_name) ASC NULLS LAST, LOWER(users.first_name) ASC NULLS LAST, LOWER(users.email) ASC, users.id ASC")) }
 
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true
   validates :email, uniqueness: true, if: :email_changed?
@@ -70,6 +73,10 @@ class User < ApplicationRecord
 
   def access_locked?
     failed_attempts >= Rails.application.config.x.maximum_login_attempts
+  end
+
+  def avatar_url
+    "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.to_s)}?d=retro&s=80"
   end
 
   def full_name_and_email

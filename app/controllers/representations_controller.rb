@@ -28,7 +28,7 @@ class RepresentationsController < ApplicationController
 
   def destroy
     representation.destroy
-    redirect_to representations_path, notice: "Description was successfully destroyed."
+    redirect_to representations_path, notice: "#{representation} was successfully deleted"
   end
 
   def edit
@@ -45,6 +45,7 @@ class RepresentationsController < ApplicationController
       language: Rails.configuration.x.default_representation_language,
       author:   current_user,
     })
+    representation.metum ||= current_organization.meta.is_required.first
   end
 
   def show

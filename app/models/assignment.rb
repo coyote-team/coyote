@@ -26,6 +26,7 @@ class Assignment < ApplicationRecord
 
   validates :user, uniqueness: {scope: :resource}, if: :user_id_changed?
 
+  scope :active, -> { includes(:user).references(:user).where(users: {active: true}) }
   scope :by_created_at, -> { order(created_at: :desc) }
   scope :by_priority, -> { joins(:resource).order("resources.representations_count ASC") }
 

@@ -27,12 +27,12 @@ module ListHelper
   end
 
   def list_of(parent, relationship, options = {}, &block)
-    wrap = options.delete(:wrap) { true }
+    item_options = options.delete(:item) { {} }
     relationship_component(parent, relationship, options) do |items|
       list(options) {
         list_items = items.map { |item|
           content = capture { yield item }
-          wrap ? component(defaults: {class: "list-item"}, options: options, tag: :li) { content } : content
+          component(defaults: {class: "list-item"}, options: item_options, tag: :li) { content }
         }
 
         list_items.push(link_to_list_item(view_more_link_content, options[:view_more], class: "view-more")) if options[:view_more]

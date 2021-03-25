@@ -2,7 +2,7 @@
 
 RSpec.describe "Accessing resources" do
   describe "with authorization" do
-    include_context "API editor user"
+    include_context "with an editor user"
     include_context "without webhooks"
 
     let(:resource_group) do
@@ -334,7 +334,7 @@ RSpec.describe "Accessing resources" do
   end
 
   describe "with multiple resources" do
-    include_context "API author user"
+    include_context "with an author user"
 
     let(:default_page_size) do
       Rails.configuration.x.resource_api_page_size
@@ -450,7 +450,7 @@ RSpec.describe "Accessing resources" do
   end
 
   describe "with a resource" do
-    include_context "API author user"
+    include_context "with an author user"
 
     let(:resource) do
       create(:resource, canonical_id: "abc123", organization: user_organization)
@@ -494,7 +494,7 @@ RSpec.describe "Accessing resources" do
   end
 
   describe "without authorization" do
-    include_context "API access headers"
+    include_context "with API access headers"
 
     let(:resource) { create(:resource) }
 

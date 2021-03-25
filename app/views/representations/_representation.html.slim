@@ -1,0 +1,50 @@
+ruby:
+  form ||=nil
+  id = id_for(representation)
+
+tr
+  - if form.present?
+    td.table-cell-checkbox: label
+      = check_box_tag "representation_status_change[representation_ids][]", representation.id, false, aria: { label: "Select representation #{representation.id} for bulk update" }
+  td.table-cell-link= link_to representation do
+    = cropped_resource_image(representation.resource, alt: representation)
+  td.table-cell-card--row: .description= to_html(representation.text, truncate: 60)
+  td.table-cell-card--tag= representation_status_tag(representation)
+  td.table-cell-card--tag= metum_tag(representation.metum, hint: false)
+  td.table-cell-card--tag: span.tag.tag--outline= language_name(representation.language)
+  td.table-cell-actions
+    / = view_link_to representation, title: "View this representation", :"aria-describedby" => dom_id(representation)
+    / - if policy(representation).edit?
+    /   = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+/ tr style='border-top: 0'
+/   td id=dom_id(representation) colspan=5
+/     = to_html(representation.text)
+
+/ ruby:
+/   form ||=nil
+/   id = id_for(resource)
+
+/ li.list-item.list-item--has-link class=("list-item--has-checkbox" if form.present?)
+/   h4.sr-only id=id Resource #{resource.name}
+/   - if form.present? && can?(:approve, Representation)
+/     label.list-item-checkbox
+/       = check_box_tag "representation_status_change[representation_ids][]", representation.id, false, aria: { label: "Select representation #{representation.id} for bulk update" }
+/   = link_to representation, class: "list-item-link" do
+/     .list-item-image(style="background-image: url(#{representation.resource.source_uri})")
+/     / .list-item-title= resource.name
+/     .list-item-body= to_html(representation.text, truncate: 60)
+/     / = resource_status_list(resource, id: id, title_tag: :h5)
+/ /   td
+/ /     = representation_status_tag(representation)
+/ /   td= metum_tag(representation.metum, hint: false)
+/ /   td
+/ /     span.tag.tag--outline= language_name(representation.language)
+/ /   td.table-cell-actions
+/ /     = view_link_to representation, title: "View this representation", :"aria-describedby" => dom_id(representation)
+/ /     - if policy(representation).edit?
+/ /       = edit_link_to edit_representation_path(representation), title: "Edit this representation", :"aria-describedby" => dom_id(representation)
+/ /     - if policy(representation).destroy?
+/ /       = delete_link_to "Are you sure you want to delete #{representation}?", representation, title: "Delete this representation", aria: {describedby: dom_id(representation)}
+/ / tr style='border-top: 0'
+/ /   td id=dom_id(representation) colspan=4
+/ /     = to_html(representation.text)

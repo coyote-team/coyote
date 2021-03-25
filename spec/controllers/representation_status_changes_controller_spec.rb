@@ -20,7 +20,7 @@ RSpec.describe RepresentationStatusChangesController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       post :create, params: change_params
@@ -29,7 +29,7 @@ RSpec.describe RepresentationStatusChangesController do
   end
 
   describe "as a viewer user" do
-    include_context "signed-in viewer user"
+    include_context "with a signed-in viewer user"
 
     it "fails for creation" do
       expect {
@@ -39,7 +39,7 @@ RSpec.describe RepresentationStatusChangesController do
   end
 
   describe "as an admin user" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     it "succeeds" do
       expect {

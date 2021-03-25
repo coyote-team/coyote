@@ -36,6 +36,6 @@ class UserPolicy < ApplicationPolicy
   private
 
   def self?
-    record.id == organization_user.id
+    instance.id == organization_user.id
   end
 end

@@ -6,7 +6,7 @@ module DropdownHelper
     title = options.delete(:title)
     toggle_options = options.delete(:toggle) || {}
     wrapper_options = options.delete(:wrapper) || {}
-    menu_options = combine_options({class: "dropdown-menu"}, options)
+    menu_options = combine_options({class: "dropdown-menu dropdown-menu-end"}, options)
 
     if title.present?
       title_id = id_for(title)
@@ -19,7 +19,7 @@ module DropdownHelper
     toggle_options = combine_options(toggle_options,
       aria:  {expanded: false},
       class: "dropdown-toggle",
-      data:  {toggle: "dropdown"},
+      data:  {bs_toggle: "dropdown"},
       type:  "button")
     toggle = tag.button(label, toggle_options)
 
@@ -32,15 +32,23 @@ module DropdownHelper
     ])
   end
 
-  def dropdown_for(items, options = {}, &block)
-    item_tags = safe_join(items.map { |item|
-      dropdown_option(item, &block)
-    })
-
-    dropdown(options) { item_tags }
+  def dropdown_option(value = nil, options = {}, &block)
+    content = block ? capture(&block) : value
+    if content.try(:strip).try(:match?, /<a/)
+      tag.li(content, combine_options(options, class: "dropdown-item dropdown-item--has-link"))
+    else
+      tag.li(content, combine_options(options, class: "dropdown-item"))
+    end
   end
 
-  def dropdown_option(option)
-    tag.li(class: "dropdown-menu-item") { block_given? ? yield(option) : option }
+  def options_dropdown(options = {}, &block)
+    options[:label] ||= icon(:more_vertical)
+    options[:toggle] = combine_options(options[:toggle] || {}, {
+      class: "button button--quiet button--square button--round",
+    })
+    options[:wrapper] = combine_options(options[:wrapper] || {}, {
+      class: "dropdown--end",
+    })
+    dropdown(options, &block)
   end
 end

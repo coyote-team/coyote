@@ -1,0 +1,51 @@
+ruby:
+  form ||= nil
+  can_edit = form && can?(:update, Resource)
+  can_assign = form && can_assign?
+  limit ||= nil
+
+- if resources.empty?
+  p.empty-message There are no resources
+- else
+  table#resources class=("table--has-checkboxes" if form)
+    thead: tr
+      - if form
+        th.table-cell-checkbox: label
+          input data-select-all="#results" type="checkbox"
+          span.sr-only Select all
+      th
+        - if form
+          div data-checkbox-conditional="show"
+            span.non-mobile-only data-checkbox-conditional-prefix=true
+              ' selected:
+              '
+            span.field
+              - if can_edit
+                = form.input_field :resource_group_id, collection: current_organization.resource_groups, label: false, prompt: "Add resource group...", required: false
+                = form.hidden_field :union_resource_groups, value: 1
+              - if can_only_assign_to_self?
+                = form.hidden_field :assign_to_user_id, value: current_user.id
+              - elsif can_assign
+                = form.input_field :assign_to_user_id, collection: users_for_select(assignable_users), label: false, prompt: "Assign to...", required: false
+              - if !can_edit && can_only_assign_to_self?
+                button.button.button--submit= t("assignment.create_for_self")
+              - else
+                button.button.button--submit Apply
+        span data-checkbox-conditional="hide" Resource
+      th Assignment
+      th Progress
+      th.table-cell-actions
+        .sr-only Actions
+        div(aria-hidden=true)= segmented_control class: "non-portrait-only", title: {tag: :h3, text: "View options"} do
+          = segmented_control_item pressed: true, data: { toggle_target: "#resources", toggle_off: "table--cards" }, icon: "list", title: "List View"
+          = segmented_control_item pressed: false, data: { toggle_target: "#resources", toggle_on: "table--cards" }, icon: "grid", title: "Grid View"
+
+    tbody
+      = render partial: "resources/resource", collection: limit ? resources.limit(limit) : resources, locals: { form: form }
+      - if limit && resources.count > limit
+        tr: td.table-cell-link colspan="4"= view_more_link resources_path(q: {resource_group_resources_resource_group_id_in: resource_group.id})
+
+  - if respond_to?(:record_filter) && record_filter&.browser_pagination_link_params.present?
+    = toolbar do
+      = toolbar_item class: "toolbar-item--end" do
+        = paginate record_filter.records

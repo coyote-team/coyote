@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Changing organizational memberships" do
-  include_context "as a logged-in admin user"
+  include_context "with a logged-in admin user"
 
   let(:member_user) { create(:user) }
 
@@ -13,8 +13,9 @@ RSpec.describe "Changing organizational memberships" do
     click_first_link "Members"
 
     within "#membership_#{membership.user_id}" do
-      click_link "Change"
+      click_link member_user.first_name
     end
+    click_link "Edit"
 
     expect(page).to have_current_path(edit_membership_path(membership, organization_id: user_organization), ignore_query: true)
 
@@ -29,11 +30,13 @@ RSpec.describe "Changing organizational memberships" do
     click_first_link "Members"
 
     within "#membership_#{membership.user_id}" do
-      expect {
-        click_link "Remove"
-      }.to change {
-        user_organization.active_users.exists?(member_user.id)
-      }.from(true).to(false)
+      click_link member_user.first_name
     end
+
+    expect {
+      click_link "Delete"
+    }.to change {
+      user_organization.active_users.exists?(member_user.id)
+    }.from(true).to(false)
   end
 end

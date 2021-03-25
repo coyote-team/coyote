@@ -27,10 +27,15 @@ AllCops:
     - script/**/*
     - vendor/**/*
   NewCops: enable
+  SuggestExtensions:
+    rubocop-rake: false
 
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
+
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
 
 Rails/FilePath:
   EnforcedStyle: arguments
@@ -41,14 +46,8 @@ Rails/HelperInstanceVariable:
 Rails/OutputSafety:
   Enabled: false # We use `html_safe` intentionally
 
-Rails/RakeEnvironment:
-  Enabled: false
-
 Rails/SkipsModelValidations:
   Enabled: false # We consciously use methods that skip validation - for a reason!
-
-RSpec/ContextWording:
-  Enabled: false
 
 RSpec/DescribeClass:
   Exclude:
@@ -60,6 +59,10 @@ RSpec/Dialect:
   PreferredMethods:
     context: describe
 
+RSpec/ExpectInHook:
+  Exclude:
+    - spec/support/**/*
+
 RSpec/ExampleLength:
   Max: 20
   Exclude:
@@ -67,23 +70,32 @@ RSpec/ExampleLength:
     - spec/controllers/**/*
     - spec/features/**/*
 
+RSpec/Focus:
+  AutoCorrect: false
+
+RSpec/LetSetup:
+  Exclude:
+    - spec/support/**/*
+
 RSpec/MultipleExpectations:
   Exclude:
     - spec/api/**/*
     - spec/controllers/**/*
     - spec/features/**/*
     - spec/mailers/**/*
+  Max: 3
 
 RSpec/MultipleMemoizedHelpers:
-  Max: 10
+  Max: 15 # TODO: let's get this WAY down with some test refactors
 
 RSpec/NamedSubject:
   Enabled: false # TODO: Re-enable once other lint issues in rspec are resolve. This is causing too much noise.
 
 RSpec/VerifiedDoubles:
-  Enabled: false
+  Enabled: false # TODO: Re-enable once other lint issues in rspec are resolve. This is causing too much noise.
 
 Style/FrozenStringLiteralComment:
+  AutoCorrect: true
   Enabled: true
 
 Style/TrailingCommaInArguments:

@@ -39,10 +39,12 @@ module PermittedParameters
     representations_author_id_eq
     representations_updated_at_gt
     resource_group_resources_resource_group_id_in
+    s
     scope
     source_uri_eq_any
     updated_at_gt
   ] + [{
+    s:     {},
     scope: [],
   }]).freeze
 

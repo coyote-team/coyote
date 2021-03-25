@@ -37,7 +37,7 @@ module ToolbarHelper
     }
 
     object_name = instance.class.model_name.human.titleize
-    view_all = button_link_to("View all #{object_name.pluralize}", url_for(action: :index), class: "button--partial", icon: :list)
+    view_all = button_link_to("View all #{object_name.pluralize}", url_for(action: :index), icon: :list)
 
     options = combine_options(options, {class: "toolbar--footer", tag: :nav, title: "Actions"})
     toolbar(options) do

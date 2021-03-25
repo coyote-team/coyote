@@ -3,6 +3,7 @@ h1= title "Editing resource #{resource.name}"
 .split-view
   .split-view-item
     = lightbox_link(resource)
+    = resource_host_link(resource)
 
   .split-view-item
     = render partial: 'form', locals: { target: resource }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Representation adding and changing" do
-  include_context "as a logged-in editor user"
+  include_context "with a logged-in editor user"
 
   let(:resource) do
     create(:resource, organization: user_organization)
@@ -54,13 +54,6 @@ RSpec.describe "Representation adding and changing" do
       .to("XYZ123")
 
     click_first_link "Descriptions"
-    expect(page).to have_current_path(representations_path(organization_id: user_organization), ignore_query: true)
-
-    expect {
-      click_first_link("Delete")
-    }.to change { Representation.exists?(representation.id) }
-      .from(true).to(false)
-
     expect(page).to have_current_path(representations_path(organization_id: user_organization), ignore_query: true)
   end
 end

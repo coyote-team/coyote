@@ -2,7 +2,7 @@
 
 RSpec.describe "Adding and editing a resource group" do
   describe "when logged-in as an admin" do
-    include_context "as a logged-in admin user"
+    include_context "with a logged-in admin user"
 
     it "succeeds" do
       click_link "Resource Groups"

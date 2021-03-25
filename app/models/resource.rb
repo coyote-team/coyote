@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  source_uri_hash       :string
 #  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -26,7 +27,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_schemaless_source_uri             (reverse((source_uri)::text) text_pattern_ops)
+#  index_resources_on_schemaless_source_uri             (source_uri) USING gin
 #  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
@@ -45,10 +46,14 @@ class Resource < ApplicationRecord
   DEFAULT_NAME = "(no title provided)"
   SKIP_WEBHOOKS_KEY = :skip_webhooks
 
-  attr_accessor :overwrite_representations, :skip_webhooks, :union_host_uris, :union_resource_groups
+  attr_accessor :overwrite_representations, :skip_unique_validations, :skip_webhooks,
+    :union_host_uris, :union_resource_groups
+  attr_reader :assign_to_user_id
 
   before_save :merge_host_uris
   before_save :merge_resource_groups
+  before_save :clear_blank_canonical_ids, if: :canonical_id_changed?
+  before_save :set_source_uri_hash, if: :source_uri_changed?
   before_create :set_default_resource_group
 
   after_commit :notify_webhook!, if: :content_changed?
@@ -68,23 +73,23 @@ class Resource < ApplicationRecord
 
   has_one_attached :uploaded_resource
 
-  scope :represented, -> { joins(:representations).distinct }
-  scope :unrepresented, -> { left_outer_joins(:representations).where(representations: {resource_id: nil}) }
-  scope :assigned, -> { joins(:assignments) }
-  scope :unassigned, -> { left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
+  scope :represented, -> { where.not(representations_count: 0) }
+  scope :unrepresented, -> { where(representations_count: 0) }
+  scope :assigned, -> { includes(:assignments).references(:assignments).where.not(assignments: {id: nil}) }
+  scope :unassigned, -> { includes(:assignments).references(:assignments).where(assignments: {id: nil}) }
   scope :assigned_unrepresented, -> { unrepresented.joins(:assignments) }
   scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
   scope :in_organization, ->(organization) { where(organization_id: organization) }
   scope :by_date, -> { order(created_at: :desc) }
   scope :by_priority, -> { order(priority_flag: :desc) }
-  scope :order_by_priority_and_date, -> { by_priority.by_date }
+  scope :by_priority_and_date, -> { by_priority.by_date }
   scope :represented_by, ->(user) { joins(:representations).where(representations: {author_id: user.id}) }
   scope :with_approved_representations, -> { joins(:representations).where(representations: {status: Coyote::Representation::STATUSES[:approved]}).distinct }
 
   validates :resource_type, presence: true
-  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :canonical_id_changed?
+  validates :canonical_id, uniqueness: {scope: :organization_id}, allow_blank: true, if: :check_canonical_id?
   validates :source_uri, presence: true
-  validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :source_uri_changed?
+  validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :check_source_uri?
   validates :name, presence: true
 
   enum resource_type: Coyote::Resource::TYPES
@@ -97,22 +102,21 @@ class Resource < ApplicationRecord
   delegate :name, to: :resource_group, prefix: true
 
   def self.find_or_initialize_by_canonical_id_or_source_uri(options)
-    source_uri = options[:source_uri]
     canonical_id = options[:canonical_id]
-    return new if source_uri.blank? && canonical_id.blank?
+    has_canonical_id = canonical_id.present?
 
-    source_uri_scope = where(arel_table[:source_uri].matches("%#{source_uri.to_s.strip.gsub(/\Ahttps?:\/\//, "")}"))
-    canonical_id_scope = where(canonical_id: options[:canonical_id])
+    source_uri = options[:source_uri]
+    has_source_uri = source_uri.present?
+    return new if !has_source_uri && !has_canonical_id
 
-    scope = if source_uri.present? && canonical_id.present?
-      canonical_id_scope.or(source_uri_scope)
-    elsif source_uri.present?
-      source_uri_scope
+    instance = if has_canonical_id
+      find_or_initialize_by(canonical_id: canonical_id)
     else
-      canonical_id_scope
+      find_or_initialize_by(source_uri_hash: source_uri_hash_for(source_uri))
     end
 
-    scope.first || new
+    instance.skip_unique_validations = has_canonical_id ? :canonical_id : :source_uri
+    instance
   end
 
   # @return [ActiveSupport::TimeWithZone] if one more resources exist, this is the created_at time for the most recently-created resource
@@ -124,7 +128,6 @@ class Resource < ApplicationRecord
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
     %i[
-      order_by_priority_and_date
       represented
       assigned
       unassigned
@@ -133,6 +136,10 @@ class Resource < ApplicationRecord
       unassigned_unrepresented
       with_approved_representations
     ]
+  end
+
+  def self.source_uri_hash_for(source_uri)
+    Digest::MD5.hexdigest(source_uri.to_s.downcase.strip.gsub(/\A(https?:)?\/\//, ""))
   end
 
   def self.without_webhooks
@@ -152,12 +159,17 @@ class Resource < ApplicationRecord
     @approved = complete? && representations.any? && representations.all?(&:approved?)
   end
 
+  def assign_to_user_id=(new_user_id)
+    return if new_user_id.blank?
+    assignments.build(user: organization.users.find(new_user_id))
+  end
+
   def assigned?
     !unassigned?
   end
 
   def assigned_to?(user)
-    assignments.where(user_id: user.id).any?
+    assignments.find_by(user_id: user.id)
   end
 
   def best_representation
@@ -168,7 +180,7 @@ class Resource < ApplicationRecord
   def complete?
     return @complete if defined? @complete
     required_ids = organization.meta.is_required.pluck("id")
-    @complete = (representations.pluck("DISTINCT(metum_id)") & required_ids).size == required_ids.size
+    @complete = (representations.where.not(status: :not_approved).pluck("DISTINCT(metum_id)") & required_ids).size == required_ids.size
   end
 
   def content_changed?
@@ -198,9 +210,20 @@ class Resource < ApplicationRecord
     NotifyWebhookWorker.perform_async(id) if resource_groups.has_webhook.any?
   end
 
+  def partially_approved?
+    complete? && !approved?
+  end
+
   def partially_complete?
     return @partially_complete if defined? @partially_complete
     @partially_complete = represented? && !complete?
+  end
+
+  def progress
+    return "Described" if approved?
+    return "Pending" if partially_approved?
+    return "Partially Completed" if partially_complete?
+    "Undescribed"
   end
 
   # @return [Array<Symbol, ResourceLink, Resource>]
@@ -277,19 +300,6 @@ class Resource < ApplicationRecord
     @new_resource_group_ids = organization.resource_groups.where(id: new_ids).pluck(:id) # ensure we only attach resource groups for this org
   end
 
-  # TODO: Should maybe move this stuff to a presenter / decorator
-  # Status identifiers
-  def statuses
-    @statuses ||= [].tap do |statuses|
-      statuses.push(:urgent) if priority_flag?
-      statuses.push(:undescribed) if unrepresented?
-      statuses.push(:described) if represented?
-      statuses.push(:unassigned) if unassigned?
-      statuses.push(:assigned) if assigned?
-      statuses.push(:partially_complete) if partially_complete?
-    end
-  end
-
   def unassigned?
     return @unassigned if defined? @unassigned
     @unassigned = assignments.none?
@@ -306,6 +316,18 @@ class Resource < ApplicationRecord
 
   private
 
+  def check_canonical_id?
+    Array(skip_unique_validations).include?(:canonical_id) && canonical_id_changed?
+  end
+
+  def check_source_uri?
+    Array(skip_unique_validations).include?(:source_uri) && source_uri_changed?
+  end
+
+  def clear_blank_canonical_ids
+    self.canonical_id = canonical_id.presence
+  end
+
   def merge_host_uris
     return unless @new_host_uris
     self[:host_uris] = union_host_uris ? (host_uris || []).union(@new_host_uris) : @new_host_uris
@@ -318,6 +340,10 @@ class Resource < ApplicationRecord
 
   def set_default_resource_group
     resource_groups << organization.resource_groups.default.first unless resource_groups.any?
+  end
+
+  def set_source_uri_hash
+    self.source_uri_hash = source_uri.present? ? self.class.source_uri_hash_for(source_uri) : nil
   end
 
   def skip_webhooks?

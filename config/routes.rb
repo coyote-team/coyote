@@ -175,6 +175,8 @@ Rails.application.routes.draw do
       resources :resource_groups, only: %i[destroy show update]
       resources :representations, only: %i[show destroy]
       resource :user, only: %(show), path: "profile"
+
+      get "heartbeat", to: "heartbeat#show"
     end
   end
 
@@ -213,7 +215,11 @@ Rails.application.routes.draw do
   end
 
   scope "organizations/:organization_id" do
-    resources :resources
+    resources :resources do
+      collection do
+        post :update_many
+      end
+    end
 
     resources :representations do
       member do
@@ -246,15 +252,6 @@ Rails.application.routes.draw do
     resources :users, except: %i[new create]
     resource :password_resets, only: %i[create]
   end
-
-  ## Bookmarklet
-  if ENV["BOOKMARKLET"] == "true"
-    get "coyote" => "coyote_consumer#iframe"
-    get "coyote_producer" => "coyote_producer#index"
-  end
-
-  ## Scavenger hunt
-  # mount ScavengerHunt::Engine, at: 'scavenger'
 
   ## Static pages
   get "support", to: "pages#support"

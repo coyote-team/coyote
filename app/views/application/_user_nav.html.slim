@@ -1,4 +1,16 @@
-= dropdown toggle: {aria: {label: current_user.to_s}, class: "initials initials--collapse"}, label: initials(current_user), title: 'Global Actions' do
+ruby:
+  dropdown_options = {
+    toggle: {
+      aria: {
+        label: current_user.to_s
+      },
+      class: "button initials initials--collapse"
+    },
+    label: safe_join([user_tag(current_user), icon(:chevron_down)]),
+    title: 'Global Actions',
+  }
+
+= dropdown(dropdown_options) do
   = dropdown_option link_to('Support', support_path)
   = dropdown_option link_to('Profile', edit_user_path)
   = dropdown_option link_to('Organizations', organizations_path)

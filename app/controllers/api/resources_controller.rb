@@ -106,7 +106,7 @@ module Api
     def index
       links = {self: request.url}
 
-      resources = record_filter.records
+      resources = record_filter.records.includes(:organization, representations: %i[license metum])
 
       record_filter.pagination_link_params.each do |rel, link_params|
         link = api_resources_url(link_params)
@@ -166,7 +166,7 @@ module Api
         pagination_params,
         (current_organization || current_user).resources,
         default_filters: {is_deleted_eq: false},
-        default_order:   :order_by_priority_and_date,
+        default_order:   :by_priority_and_date,
       )
     end
 

@@ -1,8 +1,10 @@
 #!/bin/sh
 
+# Double-check dependencies
 bundle check || bundle install --jobs=$(getconf _NPROCESSORS_ONLN)
 yarn install
 
+# Wait for the database to come up
 if [ -n "${DATABASE_URL}" ]; then
   database_host=$(echo ${DATABASE_URL} | cut -d "/" -f3 | cut -d "@" -f2 | cut -d ":" -f1)
   database_port=$(echo ${DATABASE_URL} | cut -d "/" -f3 | cut -d "@" -f2 | cut -d ":" -f2)
@@ -12,5 +14,6 @@ if [ -n "${DATABASE_URL}" ]; then
   done
 fi
 
+# Run the thing
 echo "Starting with '$@'"
-exec $@
+$@

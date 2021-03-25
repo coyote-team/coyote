@@ -4,18 +4,23 @@
 #
 # Table name: organizations
 #
-#  id                 :integer          not null, primary key
-#  footer             :string
-#  is_deleted         :boolean          default(FALSE)
-#  name               :citext           not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  default_license_id :integer          not null
+#  id                               :integer          not null, primary key
+#  allow_authors_to_claim_resources :boolean          default(FALSE), not null
+#  footer                           :string
+#  is_deleted                       :boolean          default(FALSE)
+#  name                             :citext           not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  default_license_id               :integer          not null
 #
 # Indexes
 #
 #  index_organizations_on_is_deleted  (is_deleted)
 #  index_organizations_on_name        (name) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (default_license_id => licenses.id)
 #
 
 # Represents a group of users, usually associated with a particular institution
@@ -34,7 +39,7 @@ class Organization < ApplicationRecord
   has_many :imports, dependent: :destroy
 
   has_many :memberships, inverse_of: :organization, dependent: :destroy
-  has_many :active_users, -> { where(memberships: {active: true}) }, source: :user, through: :memberships
+  has_many :active_users, -> { active.where(memberships: {active: true}) }, source: :user, through: :memberships
   has_many :users, through: :memberships
 
   has_many :resources, dependent: :restrict_with_exception, inverse_of: :organization
@@ -45,6 +50,8 @@ class Organization < ApplicationRecord
   has_many :meta, inverse_of: :organization, dependent: :destroy
   has_many :resource_groups, inverse_of: :organization, dependent: :destroy
 
+  has_one_attached :logo
+
   scope :is_active, -> { where(is_deleted: false) }
 
   # :nocov:
@@ -52,10 +59,20 @@ class Organization < ApplicationRecord
     original_auditing_enabled = Audited.auditing_enabled
     Audited.auditing_enabled = false
     Organization.transaction do
+      # Delete deep metadata
       Assignment.joins(:resource).where(resources: {organization_id: id}).delete_all
       Representation.joins(:resource).where(resources: {organization_id: id}).delete_all
-      Resource.where(organization_id: id).destroy_all
-      ResourceGroup.where(organization_id: id).delete_all
+      ResourceGroupResource.joins(:resource).where(resources: {organization_id: id}).delete_all
+      ResourceLink.joins(:subject_resource).where(resources: {organization_id: id}).delete_all
+      ResourceLink.joins(:object_resource).where(resources: {organization_id: id}).delete_all
+      ResourceWebhookCall.joins(:resource).where(resources: {organization_id: id}).delete_all
+
+      # Delete direct children
+      imports.delete_all
+      memberships.delete_all
+      meta.delete_all
+      resource_groups.delete_all
+      Resource.where(organization_id: id).delete_all
       destroy!
     end
   ensure

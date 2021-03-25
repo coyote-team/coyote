@@ -8,11 +8,11 @@
       th Created at
   tbody
     - imports.each do |import|
-      tr.table-row-link
+      tr
         td.table-cell-link= link_to import.name, import
-        td.table-cell-link= link_to tag_for(import.status), import
-        td.table-cell-link= link_to import.user, import
-        td.table-cell-link= link_to l(import.created_at, format: :short), import
+        td= tag_for(import.status)
+        td= import.user
+        td= l(import.created_at, format: :short)
 
 - if policy(Import).new?
   nav.toolbar.toolbar--footer

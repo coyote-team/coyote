@@ -1,6 +1,6 @@
 .table-wrapper: table
   caption
-    h1= title "#{current_user.staff? ? "All" : "Your"} Organizations"
+    h1= title "#{"Your" unless current_user.staff?} Organizations"
   thead
     tr
       th Organization
@@ -8,7 +8,7 @@
 
   tbody
     - organizations.each do |org|
-      tr.table-row-link
+      tr
         td.table-cell-link= link_to(org.name, organization_path(org, organization_id: nil))
         td.table-cell-actions
           - if OrganizationPolicy.new(Coyote::OrganizationUser.new(current_user, org), org).edit?

@@ -46,7 +46,7 @@ module ComponentHelper
   def view_more_link_content
     safe_join([
       tag.strong("View all"),
-      icon(:arrow_right),
+      icon(:arrow_forward),
     ])
   end
 end

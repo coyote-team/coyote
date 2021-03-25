@@ -1,18 +1,19 @@
 .split-view
   .split-view-item
     = lightbox_link(current_resource)
+    = resource_host_link(current_resource)
 
   .split-view-item
     = simple_form_for target, validate: true, html: { multipart: true } do |f|
       = f.error_notification
 
-      = f.association :metum, collection: available_meta
+      = f.association :metum, include_blank: false, collection: available_meta
       - available_meta.each do |metum|
         div(data-dependent-on="representation[metum_id]:#{metum.id}" style=(metum == target.metum ? "" : "display: none"))
           = simple_format metum.instructions
 
       = f.input :resource_id, as: :hidden, input_html: { value: current_resource.id, name: 'resource_id' } if representation.new_record?
-      = f.input :text, as: :text, input_html: {rows: 1}
+      = f.input :text, as: :text, input_html: {rows: 3}
       hr data-label="... or ..."
       = f.input :content_uri, as: :url, required: false
 
@@ -23,10 +24,10 @@
         = f.input :ordinality, input_html: { min: 0, max: 100 }
         = f.input :language, as: :select, collection: language_list, include_blank: false
         = f.association :license, collection: License.all, include_blank: false
-        = f.association :author, collection: organizational_user_collection(include_staff: true), include_blank: false
+        = f.association :author, collection: users_for_select(include_staff: true), include_blank: false
 
       = toolbar class: 'toolbar--footer' do
-        = submit_toolbar_item(f, submit_options: {class: "button--aside"})
+        = submit_toolbar_item f
         - if representation.persisted?
           = toolbar_item do
             = view_link_to representation

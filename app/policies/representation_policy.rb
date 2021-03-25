@@ -5,14 +5,18 @@
 # @see RepresentationsController
 class RepresentationPolicy < ApplicationPolicy
   def approve?
-    organization_user.editor? && record.ready_to_review?
+    return true if organization_user.admin?
+    organization_user.editor? && instance&.ready_to_review?
   end
   alias_method :reject?, :approve?
 
   # @return [Boolean] whether or not the user can create representations for this organization
   def create?
     return true if organization_user.editor?
-    organization_user.author? && record.resource.assigned_to?(organization_user.user)
+    organization_user.author? && (
+      organization.allow_authors_to_claim_resources? ||
+      instance.resource.assigned_to?(organization_user.user)
+    )
   end
 
   alias_method :new?, :create?
@@ -30,7 +34,7 @@ class RepresentationPolicy < ApplicationPolicy
   # @return [Boolean] if the user can change the representation
   def update?
     return true if organization_user.editor?
-    organization_user.author? && organization_user.user == record.author
+    organization_user.author? && organization_user.user == instance.author
   end
 
   alias_method :edit?, :update?

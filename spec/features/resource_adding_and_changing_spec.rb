@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Resource adding and changing" do
-  include_context "as a logged-in editor user"
+  include_context "with a logged-in editor user"
 
   let!(:resource_group) { create(:resource_group, organization: user_organization) }
 

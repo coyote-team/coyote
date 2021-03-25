@@ -49,7 +49,7 @@ RSpec.describe ResourceLinksController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -75,7 +75,7 @@ RSpec.describe ResourceLinksController do
   end
 
   describe "as an author" do
-    include_context "signed-in author user"
+    include_context "with a signed-in author user"
 
     it "succeeds for basic actions" do
       get :show, params: resource_link_params
@@ -116,7 +116,7 @@ RSpec.describe ResourceLinksController do
   end
 
   describe "as an editor" do
-    include_context "signed-in editor user"
+    include_context "with a signed-in editor user"
 
     it "succeeds for critical actions" do
       get :new, params: {organization_id: organization, subject_resource_id: subject_resource.id}

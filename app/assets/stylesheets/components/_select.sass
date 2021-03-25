@@ -3,7 +3,7 @@
 @function select-chevron($fill)
   $fill: unquote(str-slice(ie-hex-str($fill), 4))
 
-  @return url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2210%22%3E%0A%20%20%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23#{$fill}%22%20d%3D%22M.895%201.153h10.518L6.154%209.699z%22%2F%3E%0A%3C%2Fsvg%3E")
+  @return url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m0%200h24v24h-24z%22%20opacity%3D%220%22%2F%3E%3Cpath%20d%3D%22m12%2015.5a1%201%200%200%201%20-.71-.29l-4-4a1%201%200%201%201%201.42-1.42l3.29%203.31%203.3-3.18a1%201%200%201%201%201.38%201.44l-4%203.86a1%201%200%200%201%20-.68.28z%22%2F%3E%3C%2Fsvg%3E")
 
 select
   @extend %input-text
@@ -11,8 +11,9 @@ select
   @extend %input-secondary
 
   background-image: select-chevron($text)
-  background-position: right $gutter center
+  background-position: right $input-padding center
   background-repeat: no-repeat
+  background-size: auto ($gutter * 2)
   cursor: pointer
   padding-right: $gutter * 3
   width: 100%

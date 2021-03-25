@@ -13,7 +13,7 @@ RSpec.describe Staff::UsersController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -36,7 +36,7 @@ RSpec.describe Staff::UsersController do
   end
 
   describe "as a signed-in owner" do
-    include_context "signed-in owner user"
+    include_context "with a signed-in owner user"
 
     it "requires user to be a staff member for all actions" do
       aggregate_failures do
@@ -71,7 +71,7 @@ RSpec.describe Staff::UsersController do
   end
 
   describe "as a staff member" do
-    include_context "signed-in staff user"
+    include_context "with a signed-in staff user"
 
     it "succeeds for all actions involving organization-owned contexts" do
       get :show, params: user_params

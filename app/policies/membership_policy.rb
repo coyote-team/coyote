@@ -40,10 +40,10 @@ class MembershipPolicy < ApplicationPolicy
   private
 
   def same_rank_or_lower?
-    organization_user.role_rank <= record.role_rank
+    organization_user.role_rank <= instance.role_rank
   end
 
   def self?
-    record.user_id == organization_user.id
+    instance.user_id == organization_user.id
   end
 end

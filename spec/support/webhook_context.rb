@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context "webhooks" do
+RSpec.shared_context "with webhooks" do
   let(:resource_group) { create(:resource_group, webhook_uri: "http://www.example.com/webhook/goes/here") }
 
   around do |example|

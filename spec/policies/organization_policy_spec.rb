@@ -3,7 +3,7 @@
 RSpec.describe OrganizationPolicy do
   subject { described_class.new(org_user, org) }
 
-  include_context "admin organization user"
+  include_context "with an admin organization user"
 
   let(:org) do
     double(:org, class: Organization, user_id: org_user.id)
@@ -16,7 +16,7 @@ RSpec.describe OrganizationPolicy do
   it { is_expected.to forbid_action(:destroy) }
 
   describe "as an owner" do
-    include_context "owner organization user"
+    include_context "with an owner organization user"
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }

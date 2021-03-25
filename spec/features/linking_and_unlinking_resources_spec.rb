@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Linking and unlinking resources" do
-  include_context "as a logged-in editor user"
+  include_context "with a logged-in editor user"
 
   let!(:subject_resource) { create(:resource, name: "Chrysler Building", organization: user_organization) }
   let!(:object_resource) { create(:resource, name: "Picture of Chrysler Building", organization: user_organization) }

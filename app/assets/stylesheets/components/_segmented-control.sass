@@ -4,8 +4,11 @@
 
   align-items: stretch
   border-width: 0
-  display: flex
+  display: inline-flex
   list-style: none
+
+  &--round
+    border-radius: 1000px
 
   &--scrollable
     +mobile
@@ -59,9 +62,10 @@
       &:focus
         position: relative
 
-      &[aria-pressed=true], &.segmented-control-item-link--active
-        background-color: $placeholder
-        border-color: $placeholder
+      &[aria-pressed=true],
+      &.segmented-control-item-link--active
+        background-color: $tint
+        border-color: $tint
         color: $text-light
         position: relative
 
