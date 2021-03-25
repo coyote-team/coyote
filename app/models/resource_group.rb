@@ -49,8 +49,12 @@ class ResourceGroup < ApplicationRecord
   scope :has_webhook, -> { where.not(webhook_uri: nil) }
 
   def auto_match_host_uris=(value)
+    super value.is_a?(Array) ? value : value.to_s.strip.split(/[\r\n]+/)
+  end
+
+  def match_resources!
     # Clean the URIs to schema-less regex fields
-    match_uris = Array(value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)).each_with_object([]) do |match_uri, matches|
+    match_uris = Array(auto_match_host_uris).each_with_object([]) do |match_uri, matches|
       match_uri.to_s.strip
       next if match_uri.blank?
 
@@ -58,16 +62,12 @@ class ResourceGroup < ApplicationRecord
       matches.push(match_regex)
     end
 
-    super match_uris.compact
-  end
-
-  def match_resources!
     # Find resources with matching host URIs using a regex query - this is not performant, so do
     # this in a worker
     resource_ids = organization.resources
       .distinct
       .from("#{Resource.table_name}, UNNEST(#{Resource.table_name}.host_uris) host_uri")
-      .where("host_uri ~* ANY(ARRAY[?])", auto_match_host_uris)
+      .where("host_uri ~* ANY(ARRAY[?])", match_uris)
       .pluck(:id)
 
     # Upsert any matching resources, marking the new ones as 'is_auto_matched' TRUE. This will
