@@ -2,6 +2,11 @@ h1= title "Resources"
 
 = search_form_for record_filter.search, html: {class: "filters"}, url: resources_path, wrapper: :filters, enforce_utf8: false do |f|
   h2 Filter #{Resource.model_name.human(count: 2)}
+
+  button.filters-close-button data-toggle-target="body" data-toggle="filters-toggled" type="button"
+    = icon(:close)
+    span.sr-only Close filters
+
   label.filter.field.field--accessory
     h3.sr-only Search by caption or description
     = icon :search, class: "field-accessory"
@@ -45,7 +50,7 @@ h1= title "Resources"
     = f.submit "Clear", type: "reset", class: "button button--outline"
 
 .toolbar
-  button.button.button--round.filter-toggle data-toggle-target="#resource_search" data-toggle="filters--toggled" type="button"
+  button.button.button--round.filter-toggle data-toggle-target="body" data-toggle="filters-toggled" type="button"
     span
       ' Filter
       span.sr-only= Resource.model_name.human(count: 2).downcase
