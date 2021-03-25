@@ -4,14 +4,15 @@
 #
 # Table name: resource_groups
 #
-#  id              :integer          not null, primary key
-#  default         :boolean          default(FALSE)
-#  name            :citext           not null
-#  token           :string
-#  webhook_uri     :citext
-#  created_at      :datetime
-#  updated_at      :datetime
-#  organization_id :integer          not null
+#  id                   :integer          not null, primary key
+#  auto_match_host_uris :string           default([]), not null, is an Array
+#  default              :boolean          default(FALSE)
+#  name                 :citext           not null
+#  token                :string
+#  webhook_uri          :citext
+#  created_at           :datetime
+#  updated_at           :datetime
+#  organization_id      :integer          not null
 #
 # Indexes
 #
@@ -27,6 +28,62 @@ RSpec.describe ResourceGroup do
   subject { build(:resource_group) }
 
   it { is_expected.to validate_uniqueness_of(:name).case_insensitive.scoped_to(:organization_id) }
+
+  describe "#match_resources!" do
+    let(:organization) { create(:organization) }
+    let(:default_resource_group) { organization.resource_groups.default.first }
+    let!(:resource_group) {
+      create(
+        :resource_group,
+        auto_match_host_uris: '
+https://www.example.com/\d\d\d\d/\d\d/\d+/.+
+https://www.example.com/blog/.*
+',
+        organization:         organization,
+      )
+    }
+
+    it "does notthing with blank URIs" do
+      expect {
+        create(:resource_group, auto_match_host_uris: "", organization: organization).match_resources!
+      }.not_to change(ResourceGroupResource, :count)
+    end
+
+    it "finds resources with matching regex segments" do
+      # Nice, vanilla resources without any abnormal groups
+      resource_1 = create(:resource, organization: organization, host_uris: "https://www.example.com/0000/12/20583/whatever")
+      resource_2 = create(:resource, organization: organization, host_uris: "http://www.example.com/blog/things/are/awesome,https://www.example.com/0000/12/20583/whatever")
+      resource_3 = create(:resource, organization: organization, host_uris: "http://www.example.com/blog-copy/things/are/awesome,https://www.example.com/a000/12/20583/whatever")
+
+      # Match some stuff
+      resource_group.match_resources!
+
+      # They should both have matched
+      expect(resource_1.resource_groups.reload).to eq([
+        default_resource_group,
+        resource_group,
+      ])
+      expect(resource_2.resource_groups.reload).to eq([
+        default_resource_group,
+        resource_group,
+      ])
+      expect(resource_3.resource_groups.reload).to eq([
+        default_resource_group,
+      ])
+    end
+
+    it "doesn't duplicate resource groups" do
+      resource = create(
+        :resource,
+        organization:    organization,
+        host_uris:       "https://www.example.com/0000/12/20583/whatever",
+        resource_groups: [default_resource_group, resource_group],
+      )
+      expect(resource.resource_groups).to eq([default_resource_group, resource_group])
+      resource_group.match_resources!
+      expect(resource.resource_groups.reload).to eq([default_resource_group, resource_group])
+    end
+  end
 
   describe "#webhook_uri=" do
     let(:organization) { build_stubbed(:organization, id: 1) }

@@ -2,5 +2,6 @@
   = f.error_notification
   = f.input :name
   = f.input :webhook_uri
+  = f.input :auto_match_host_uris, as: :text, input_html: { value: resource_group.auto_match_host_uris.join("\n") }
 
   = form_toolbar(f)
