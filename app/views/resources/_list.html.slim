@@ -32,8 +32,8 @@ ruby:
               - else
                 button.button.button--submit Apply
         span data-checkbox-conditional="hide" Resource
-      th Assignment
-      th Progress
+      th: span data-checkbox-conditional="hide" Assignment
+      th: span data-checkbox-conditional="hide" Progress
       th.table-cell-actions
         .sr-only Actions
         div(aria-hidden=true)= segmented_control class: "non-portrait-only", title: {tag: :h3, text: "View options"} do
