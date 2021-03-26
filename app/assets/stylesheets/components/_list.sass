@@ -1,45 +1,5 @@
 // COMPONENT: List: the main list element used for all kinds of things -
 // listing statistics, listing complex search results, etc
-=list-item-vertical
-  &,
-  .list-item-link
-    align-items: stretch
-    background-color: $input
-    flex-direction: column
-    padding: 0
-
-    > * + *
-      padding: $list-padding
-
-  +ie-only
-    display: block
-
-
-  @supports (display: grid)
-    display: block
-
-  .list-item-image
-    border-bottom-left-radius: 0
-    border-bottom-right-radius: 0
-    height: auto
-    max-width: none
-    width: 100%
-
-    &::before
-      content: ""
-      display: block
-      padding-bottom: 75%
-      width: 100%
-
-  .list-item-checkbox
-    bottom: auto
-    left: 0
-    right: auto
-    padding: $list-padding
-
-  + .list-item
-    border-top-width: 0
-
 .list
   display: block
 
@@ -81,32 +41,9 @@
         padding-right: $list-padding
 
     // All immediate descendents should be block-level elements
-    .list-item-image,
     .list-item-label,
-    .list-item-title,
-    .list-item-body,
     .list-item-value
       display: block
-
-    .list-item-checkbox
-      bottom: 0
-      align-items: center
-      display: flex
-      margin-right: $list-padding
-      right: 100%
-      position: absolute
-      top: 0
-
-      input
-        margin-right: 0
-
-    .list-item-title
-      font-weight: 500
-      max-width: 100%
-      word-break: break-all
-
-    .list-item-body
-      flex: 1
 
     .list-item-label
       &:after
@@ -117,44 +54,5 @@
       text-align: right
       text-decoration: none
 
-    +mobile-portrait
-      +list-item-vertical
-
-
     + .list-item
       border-top: 1px solid $border-light
-
-  // COMPONENT SUBTYPE: Render the list as a grid of cards
-  &.list--grid
-    margin-bottom: $list-padding
-
-    +non-mobile-portrait
-      // Default grid is just a list of cards
-      display: flex
-      flex-wrap: wrap
-
-      .list-item
-        +list-item-vertical
-
-        border-radius: $border-radius * 2
-        flex: 1 1 0%
-        -ms-flex: 1 1 20%
-        margin: $gutter
-        max-width: calc(#{percentage(1 / 3)} - #{$gutter})
-
-        &:nth-child(3n)
-          margin-right: 0
-
-        &:nth-child(3n + 1)
-          margin-left: 0
-
-      // For browsers with support for the grid layout, we use that to create a masonry effect
-      @supports (display: grid)
-        display: grid
-        grid-auto-rows: $gutter + 2px
-        grid-gap: $gutter
-        grid-template-columns: repeat(4, 1fr)
-
-        .list-item
-          margin: 0
-          max-width: none
