@@ -13,16 +13,20 @@ table
     transform: translateX(-$checkbox-strike-area)
     width: calc(100% + #{$checkbox-strike-area})
 
-  tr
-    &:hover
-      .table-cell-link
-        a,
-        a ~ td:not(.table-cell-link)
-          color: $tint
+  tbody
+    tr
+      &:focus-within
+        box-shadow: $focus-shadow
 
-        &,
-        ~ td
-          background-color: $highlight-subtle
+      &:hover
+        .table-cell-link
+          a,
+          a ~ td:not(.table-cell-link)
+            color: $tint
+
+          &,
+          ~ td
+            background-color: $highlight
 
   th, td
     padding: $gutter
@@ -162,7 +166,7 @@ table.table--cards
     grid-template-columns: repeat(4, 1fr)
 
     tr
-      background-color: $highlight-subtle
+      background-color: $highlight
       border-radius: $border-radius
       display: flex
       flex-wrap: wrap
@@ -218,5 +222,7 @@ table.table--cards
                 padding-bottom: percentage(2 / 3)
 
 .table-wrapper
-  max-width: 100%
+  max-width: calc(100% + 6px)
+  margin: 0 -3px -3px
+  padding: 0 3px 3px
   overflow: auto
