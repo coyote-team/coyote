@@ -1,6 +1,6 @@
 = simple_form_for representation, html: { class: 'form form--inline' } do |f|
   = f.input_field :status, as: :hidden, value: "approved"
-  button.button aria-label="Approve representation ##{representation.id}" data-confirm="Are you sure you want to approve this description?" type="submit"
+  button.button.button--submit aria-label="Approve representation ##{representation.id}" data-confirm="Are you sure you want to approve this description?" type="submit"
     span Approve
     '
     = icon(:checkmark)

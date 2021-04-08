@@ -39,7 +39,7 @@ class Import < ApplicationRecord
   ].freeze
 
   RESOURCE_GROUP_IMPORT_COLUMNS = [
-    ["Resource group", :name],
+    ["Group", :name],
     ["Webhook URI", :webhook_uri],
   ].freeze
 

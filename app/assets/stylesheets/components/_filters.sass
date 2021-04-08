@@ -5,6 +5,7 @@
   box-shadow: $shadow-level-2
   display: none
   left: 0
+  overflow: auto
   padding: $gutter ($gutter * 2)
   position: fixed
   right: 0
@@ -16,6 +17,15 @@
     width: $gutter * 30
 
 
+  .filters-close-button
+    cursor: pointer
+    display: block
+    font-size: $h2-size
+    padding: $gutter
+    position: absolute
+    right: 0
+    top: 0
+
   .filter
     display: block
     margin: 0
@@ -25,26 +35,6 @@
       display: block
       font-weight: bold
       margin: 0 0 $gutter 0
-
-  &--toggled
-    animation: nav-primary-in 150ms $swift-in
-    display: block
-
-    +non-mobile
-      animation: filter-in 150ms $swift-in
-
-
-    ~ * .filter-toggle::before
-      background-color: rgba($text, 0.3)
-      bottom: 0
-      content: ""
-      cursor: default
-      filter: blur(10px)
-      left: 0
-      position: fixed
-      right: 0
-      top: 0
-      z-index: $z-index-modal - 1
 
 .filter-remove
   border-radius: $border-radius
@@ -59,6 +49,33 @@
 
   + .filter-remove
     margin-left: $input-padding
+
+body.filters-toggled
+  overflow: hidden
+
+  .filters
+    animation: nav-primary-in 150ms $swift-in
+    display: block
+
+    +non-mobile
+      animation: filter-in 150ms $swift-in
+
+  .filter-toggle::before
+    background-color: rgba($text, 0.5)
+    bottom: 0
+    content: ""
+    cursor: default
+    left: 0
+    position: fixed
+    right: 0
+    top: 0
+    z-index: $z-index-modal - 1
+
+  // TODO: Figure out how to fix this with fixed position stuff
+  // nav,
+  // main > *:not(.filters),
+  // footer
+  //   filter: blur(10px)
 
 @keyframes filter-in
   0%

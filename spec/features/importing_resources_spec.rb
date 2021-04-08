@@ -18,8 +18,8 @@ RSpec.describe "Importing resources" do
     click_on "provide mappings"
 
     click_on "Sheet 1"
-    select "Resource group", from: "Collection"
-    select "Resource group", from: "Exhibit"
+    select "Group", from: "Collection"
+    select "Group", from: "Exhibit"
     select "Host URI(s)", from: "Link to Source Page"
     select "Name", from: "Object / Image Title"
     select "Canonical ID", from: '"Accession Number"'
@@ -29,8 +29,8 @@ RSpec.describe "Importing resources" do
     select "Author name", from: "Author"
 
     click_on "Other Resources"
-    select "Resource group", from: "Collection"
-    select "Resource group", from: "Exhibit"
+    select "Group", from: "Collection"
+    select "Group", from: "Exhibit"
     select "Host URI(s)", from: "Link to Source Page"
     select "Name", from: "Object / Image Title"
     select "Canonical ID", from: '"Accession Number"'
@@ -52,8 +52,8 @@ RSpec.describe "Importing resources" do
     click_on "Parse Spreadsheet"
     click_on "provide mappings"
 
-    select "Resource group", from: "Collection"
-    select "Resource group", from: "Exhibit"
+    select "Group", from: "Collection"
+    select "Group", from: "Exhibit"
     select "Host URI(s)", from: "Link to Source Page"
     select "Name", from: "Object / Image Title"
     select "Canonical ID", from: '"Accession Number"'

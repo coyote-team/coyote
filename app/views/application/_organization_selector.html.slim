@@ -4,7 +4,7 @@
     options = {
       toggle: {
         aria: {
-          label: organization_name
+          description: "Select an organization"
         },
         class: "button"
       },
@@ -12,7 +12,7 @@
         id: "organization-dropdown"
       },
       label: icon(:chevron_down, prefix: organization_name || "Select an organization"),
-      title: "Select an organization"
+      title: "Organizations"
     }
   = dropdown(options) do
     - organization_scope.each do |organization|

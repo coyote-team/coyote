@@ -23,10 +23,10 @@ ruby:
               = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: "Apply status...", required: false
               = form.submit "Apply", class: "button"
         span data-checkbox-conditional="hide" Resource
-      th Description
-      th Status
-      th Metum
-      th Language
+      th: span data-checkbox-conditional="hide" Description
+      th: span data-checkbox-conditional="hide" Status
+      th: span data-checkbox-conditional="hide" Metum
+      th: span data-checkbox-conditional="hide" Language
       th.table-cell-actions
         .sr-only Actions
         div(aria-hidden=true)= segmented_control class: "non-portrait-only", title: {tag: :h3, text: "View options"} do

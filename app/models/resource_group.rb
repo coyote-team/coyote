@@ -4,14 +4,15 @@
 #
 # Table name: resource_groups
 #
-#  id              :integer          not null, primary key
-#  default         :boolean          default(FALSE)
-#  name            :citext           not null
-#  token           :string
-#  webhook_uri     :citext
-#  created_at      :datetime
-#  updated_at      :datetime
-#  organization_id :integer          not null
+#  id                   :integer          not null, primary key
+#  auto_match_host_uris :string           default([]), not null, is an Array
+#  default              :boolean          default(FALSE)
+#  name                 :citext           not null
+#  token                :string
+#  webhook_uri          :citext
+#  created_at           :datetime
+#  updated_at           :datetime
+#  organization_id      :integer          not null
 #
 # Indexes
 #
@@ -31,6 +32,7 @@ class ResourceGroup < ApplicationRecord
 
   before_save :set_token, if: :webhook_uri?
   before_destroy :check_for_resources_or_default
+  after_save_commit :schedule_match, if: -> { previous_changes.key?(:auto_match_host_uris) }
 
   validates :name, presence: true
   validates :name, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :name_changed?
@@ -46,6 +48,44 @@ class ResourceGroup < ApplicationRecord
   scope :default, -> { where(default: true) }
   scope :has_webhook, -> { where.not(webhook_uri: nil) }
 
+  def auto_match_host_uris=(value)
+    super value.is_a?(Array) ? value : value.to_s.strip.split(/[\r\n]+/)
+  end
+
+  def match_resources!
+    # Clean the URIs to schema-less regex fields
+    match_uris = Array(auto_match_host_uris).each_with_object([]) do |match_uri, matches|
+      match_uri.to_s.strip
+      next if match_uri.blank?
+
+      match_regex = '\A(https?:)?//' + match_uri.gsub(/\A(https?:)?\/\//, "")
+      matches.push(match_regex)
+    end
+
+    # Find resources with matching host URIs using a regex query - this is not performant, so do
+    # this in a worker
+    resource_ids = organization.resources
+      .distinct
+      .from("#{Resource.table_name}, UNNEST(#{Resource.table_name}.host_uris) host_uri")
+      .where("host_uri ~* ANY(ARRAY[?])", match_uris)
+      .pluck(:id)
+
+    # Upsert any matching resources, marking the new ones as 'is_auto_matched' TRUE. This will
+    # allow us to clear them later.
+    if resource_ids.any?
+      insert_values = resource_ids.map { |resource_id| self.class.sanitize_sql_array(["(?, ?, TRUE, NOW(), NOW())", resource_id, id]) }.join("\n,")
+      insert_query = "INSERT INTO #{ResourceGroupResource.table_name} (resource_id, resource_group_id, is_auto_matched, created_at, updated_at) VALUES #{insert_values}"
+      insert_query = "#{insert_query} ON CONFLICT (resource_id, resource_group_id) DO NOTHING"
+      self.class.connection.execute(insert_query)
+    end
+
+    # Delete all leftover auto-matched resources that *no longer match*
+    resource_group_resources
+      .where(is_auto_matched: true)
+      .where.not(resource_id: resource_ids)
+      .delete_all
+  end
+
   def name_with_default_annotation
     "#{self}#{default ? " (default)" : ""}"
   end
@@ -57,6 +97,10 @@ class ResourceGroup < ApplicationRecord
       errors.add(:base, default? ? "The default resource group cannot be deleted" : "It has resources in it")
       throw(:abort)
     end
+  end
+
+  def schedule_match
+    MatchResourcesToResourceGroupWorker.perform_async(id)
   end
 
   def set_token

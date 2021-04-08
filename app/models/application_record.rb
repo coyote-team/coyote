@@ -24,8 +24,8 @@ class ApplicationRecord < ActiveRecord::Base
     limit(1).pick(column)
   end
 
-  def self.human_name(capitalize: false)
-    model_name.human.humanize(capitalize: capitalize)
+  def self.human_name(capitalize: true, count: 1)
+    model_name.human(count: count).humanize(capitalize: capitalize)
   end
 
   def default_name

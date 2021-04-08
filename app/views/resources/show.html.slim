@@ -1,5 +1,4 @@
 h1= title(resource.name)
-/ = resource_status_list(resource)
 
 .split-view.split-view--thumbnail
   .split-view-item
@@ -32,7 +31,7 @@ h1= title(resource.name)
                     th Canonical ID
                     td= resource.canonical_id
                   tr
-                    th Resource Groups
+                    th= ResourceGroup.human_name(count: resource.resource_groups.size)
                     td= list_of(resource, :resource_groups) do |resource_group|
                       = link_to(resource_group, resource_group)
                   tr

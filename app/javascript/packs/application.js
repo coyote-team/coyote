@@ -8,6 +8,7 @@ import "../polyfills"
 import {
   Cards,
   Lightbox,
+  RadioButton,
   SegmentedControl,
   SelectAll,
   Table,
@@ -34,6 +35,10 @@ document.querySelectorAll(".segmented-control").forEach(function (control) {
 
 document.querySelectorAll("[data-select-all]").forEach(function (control) {
   const _ = new SelectAll(control)
+})
+
+document.querySelectorAll("input[type=radio]").forEach(function (control) {
+  const _ = new RadioButton(control)
 })
 
 document.querySelectorAll("table").forEach(function (control) {

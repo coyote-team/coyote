@@ -75,7 +75,7 @@ class ResourceGroupsController < ApplicationController
   end
 
   def resource_group_params
-    params.require(:resource_group).permit(:name, :webhook_uri)
+    params.require(:resource_group).permit(:name, :webhook_uri, :auto_match_host_uris)
   end
 
   def resource_groups

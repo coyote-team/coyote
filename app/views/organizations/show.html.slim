@@ -80,8 +80,7 @@ header
 
 h2#your_queues Resources Assigned to You for Description
 - if (resources = current_user.assigned_resources.in_organization(current_organization)).any?
-  = list class: 'list--grid' do
-    = render "resources/list", resources: resources.first(10)
+  = render "resources/list", resources: resources.first(10)
 - else
   p.empty-message There are currently no resources assigned to you
 

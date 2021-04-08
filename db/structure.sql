@@ -596,7 +596,8 @@ CREATE TABLE public.resource_group_resources (
     resource_group_id bigint,
     resource_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_auto_matched boolean DEFAULT false NOT NULL
 );
 
 
@@ -631,7 +632,8 @@ CREATE TABLE public.resource_groups (
     organization_id integer NOT NULL,
     "default" boolean DEFAULT false,
     webhook_uri public.citext,
-    token character varying
+    token character varying,
+    auto_match_host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -1486,7 +1488,7 @@ CREATE UNIQUE INDEX index_resources_on_source_uri_and_organization_id ON public.
 -- Name: index_resources_resource_group_join; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resources_resource_group_join ON public.resource_group_resources USING btree (resource_id, resource_group_id);
+CREATE UNIQUE INDEX index_resources_resource_group_join ON public.resource_group_resources USING btree (resource_id, resource_group_id);
 
 
 --
@@ -1859,6 +1861,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210224181332'),
 ('20210303210513'),
 ('20210304215302'),
-('20210317190514');
+('20210312210908'),
+('20210317190514'),
+('20210325221939'),
+('20210325224106');
 
 
