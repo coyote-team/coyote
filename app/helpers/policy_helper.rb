@@ -14,6 +14,6 @@ module PolicyHelper
   end
 
   def map_policy_permission(action)
-    "#{(PERMISSION_ALIASES[action] || action)}?"
+    "#{PERMISSION_ALIASES[action] || action}?"
   end
 end

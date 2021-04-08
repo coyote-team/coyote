@@ -3,5 +3,6 @@
   = f.input :name, required: true
   = f.association :default_license, required: true
   = f.input :footer
+  = f.input :allow_authors_to_claim_resources, as: :select, collection: [['No', false], ['Yes', true]], include_blank: false
 
   = form_toolbar f

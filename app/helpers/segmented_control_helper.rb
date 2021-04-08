@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 module SegmentedControlHelper
-  def icon(icon, options = {})
-    return "" if icon.blank?
-
-    options = combine_options(options, aria: {hidden: true}, class: "icon-#{icon.to_s.tr("_", "-")}")
-    tag.i(options)
-  end
-
   # Returns a component
   def segmented_control(options = {})
     component(defaults: {class: "segmented-control"}, options: options) { yield if block_given? }

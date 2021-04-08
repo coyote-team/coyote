@@ -1,25 +1,13 @@
 h1= title breadcrumb(representation.resource, representation)
-= tag_list(metum_tag(representation.metum))
-
-= toolbar class: 'toolbar--header', title: 'Actions' do
-  = toolbar_item do
-    - if can?(:describe, representation.resource)
-      = button_link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), title: 'Create new description for this resource', class: 'button--aside', icon: :bubble)
-    = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
-    - if can?(:approve, representation)
-      = render "approve_reject"
-
-  = toolbar_item do
-    = button_link_to "History", history_representation_path(representation), class: "button--partial", icon: :clock
 
 .split-view.split-view--thumbnail
   .split-view-item
     = lightbox_link(representation.resource)
+    = resource_host_link(representation.resource)
 
   .split-view-item
+    blockquote.description.description--large= to_html(representation.text)
     .table-wrapper: table
-      caption
-        = to_html(representation.text)
       tbody
         tr
           th Resource
@@ -67,3 +55,21 @@ h1= title breadcrumb(representation.resource, representation)
                   tr
                     th Created
                     td= representation.created_at
+
+= toolbar class: 'toolbar--header', title: 'Actions' do
+  = toolbar_item do
+    - if can?(:describe, representation.resource)
+      = button_link_to('Describe Again', new_representation_path(resource_id: representation.resource_id), class: "button--submit", title: 'Create new description for this resource', icon: :message_circle)
+    = edit_link_to(edit_representation_path(representation), title: "Edit this representation") if policy(representation).edit?
+
+  - if can?(:approve, representation)
+    = toolbar_item class: "toolbar-item--end" do
+      = render "approve_reject"
+
+  = toolbar_item do
+    = button_link_to "History", history_representation_path(representation), icon: :clock
+
+    - if policy(representation).destroy?
+      = options_dropdown do
+        = dropdown_option do
+          = link_to "Delete this description", representation_path(representation.id), data: {confirm: "Are you sure you want to delete #{representation}?", method: :delete}

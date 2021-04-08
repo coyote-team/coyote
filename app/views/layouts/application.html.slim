@@ -5,7 +5,7 @@ html(lang="en")
 
     link rel="stylesheet" type="text/css" href="//brick.a.ssl.fastly.net/TeX+Gyre+Heros:400,400i,700,700i:f"
     link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet"
-    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => false
+    = stylesheet_link_tag "application", media: "all"
 
     = csrf_meta_tags
     = render "favicon"
@@ -27,10 +27,10 @@ html(lang="en")
 
   body class=(body_class)
     = raw analytical.body_prepend_javascript
-    nav#nav-main role="navigation"
+    nav#nav-main role="navigation": .nav-wrapper
       ruby:
         wants_primary_nav = !stateless? && current_organization?
-      = link_to !stateless? && current_organization? ? current_organization : root_path, class: "nav-brand" do
+      = link_to best_root_path, class: "nav-brand" do
         span.nav-brand-fade C
         span.nav-brand-keep o
         span.nav-brand-fade y
@@ -74,18 +74,17 @@ html(lang="en")
               authentication token:
             code= current_user.authentication_token
 
-        - if ENV["BOOKMARKLET"] == "true"
-          p
-            small
-              ' Add this
-              = link_to "Coyote bookmarklet", easymarklet_js("coyote")
-              ' to your bookmarks then click it to add and view annotations for
-                images on any webpage.
-
     = raw analytical.body_append_javascript
 
     = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"
     script integrity="sha384-Nrg+xiw+qRl3grVrxJtWazjeZmUwoSt0FAVsbthlJ5OMpx0G08bqIq3b/v0hPjhB" crossorigin="anonymous" src="https://browser.sentry-cdn.com/5.15.4/bundle.min.js"
-    = javascript_include_tag "application", "data-turbolinks-track" => false
     = javascript_pack_tag "application"
     = yield :javascript_footer
+    javascript:
+      var sentryDSN = #{Credentials.dig(:sentry, :dsn).to_json};
+      if (typeof Sentry !== "undefined" && sentryDSN && sentryDSN !== "") {
+        Sentry.init({
+          dsn: sentryDSN,
+          environment: "#{ENV['STAGING'] ? 'staging' : 'production'}"
+        });
+      }

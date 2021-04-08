@@ -10,7 +10,7 @@ RSpec.describe ApplicationHelper do
   let(:current_user) { build_stubbed(:user, first_name: "Hal") }
   let(:resource_uri) { "http://example.com/1.png" }
 
-  describe "#resource_link_target with an image resource" do
+  describe "#resource_image with an image resource" do
     let(:resource) do
       build_stubbed(:resource)
     end
@@ -21,7 +21,7 @@ RSpec.describe ApplicationHelper do
     end
 
     specify do
-      link = helper.resource_link_target(resource, id: "resource_100", alt: "some text")
+      link = helper.resource_image(resource, id: "resource_100", alt: "some text")
       expect(link).to match(/src="#{resource_uri}"/)
     end
   end

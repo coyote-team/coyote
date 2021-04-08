@@ -6,24 +6,18 @@
     th Locale
     th Text
     th Author
-    th.table-cell-actions Actions
+    - if policy(Representation).approve?
+      th.table-cell-actions Actions
   tbody
     - representations.each do |representation|
-      tr.table-row-link
+      tr
         td.table-cell-link= link_to representation_path(representation) do
           = representation_status_tag(representation)
-        td.table-cell-link= link_to representation_path(representation) do
-          = representation.ordinality
-        td.table-cell-link= link_to representation_path(representation) do
-          = metum_tag(representation.metum, hint: false)
-        td.table-cell-link= link_to representation_path(representation) do
-          span.tag.tag--outline= representation.language
-        td.table-cell-link= link_to representation_path(representation) do
-          = to_html representation.text, truncate: 120
-        td.table-cell-link= link_to representation_path(representation) do
-          = representation.author
-        td.table-cell-actions
-          - if policy(representation).approve?
+        td= representation.ordinality
+        td= metum_tag(representation.metum, hint: false)
+        td: span.tag.tag--outline= representation.language
+        td= to_html representation.text, truncate: 120
+        td= representation.author
+        - if policy(representation).approve?
+          td.table-cell-actions
             = render "representations/approve_reject", representation: representation
-          - if policy(representation).edit?
-            = edit_link_to edit_representation_path(representation)

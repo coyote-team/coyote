@@ -30,7 +30,7 @@ RSpec.describe OrganizationsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -56,7 +56,7 @@ RSpec.describe OrganizationsController do
   end
 
   describe "as an admin" do
-    include_context "signed-in guest user"
+    include_context "with a signed-in guest user"
 
     it "succeeds for basic actions" do
       get :index
@@ -89,7 +89,7 @@ RSpec.describe OrganizationsController do
   end
 
   describe "as an organization ower" do
-    include_context "signed-in owner user"
+    include_context "with a signed-in owner user"
 
     it "succeeds for critical actions" do
       get :edit, params: existing_organization_params

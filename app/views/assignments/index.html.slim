@@ -1,6 +1,5 @@
+h1= title "Assignments for #{current_organization.name}"
 .table-wrapper: table
-  caption
-    h1= title "Assignments for #{current_organization.name}"
   thead
     tr
       th User
@@ -8,6 +7,6 @@
 
   tbody
     - assigned_users.each do |membership, assignment_count|
-      tr.table-row-link
-        td.table-cell-primary.table-cell-link= link_to(membership.user, membership_assignments_path(membership))
-        td.table-cell-link= link_to number_with_delimiter(assignment_count), membership_assignments_path(membership)
+      tr
+        td.table-cell-link= link_to(user_tag(membership.user), membership_assignments_path(membership))
+        td: span.tag= number_with_delimiter(assignment_count)

@@ -1,16 +1,15 @@
+h1= "Showing #{resource_group}"
 .table-wrapper: table
-  caption
-    h1= "Showing #{resource_group}"
   tbody
     tr
       th Title:
       td= resource_group.name
-    tr
-      th Webhook URI:
-      td= resource_group.webhook_uri
-
-h2= Resource.model_name.human(count: 2)
-= list_of(resource_group, :resources, limit: 5, view_more: resources_path(q: {resource_group_resources_resource_group_id_in: resource_group.id}), wrap: false) do |resource|
-  = render resource
+    - if can?(:view_webhook_uri, ResourceGroup)
+      tr
+        th Webhook URI:
+        td= resource_group.webhook_uri
 
 = show_toolbar(resource_group)
+
+h2= Resource.model_name.human(count: 2)
+= render "resources/list", limit: 3, resources: resource_group.resources

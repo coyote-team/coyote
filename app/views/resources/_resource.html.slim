@@ -1,30 +1,35 @@
-- form ||=nil
-- id = id_for(resource)
-li.list-item.list-item--card
-  h4.sr-only id=id Resource #{resource.name}
-  - if form.present? && policy(Assignment).new?
-    label.list-item-header
-      = check_box_tag "assignment[resource_ids][]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
-      = resource_link(resource, alt: resource.best_representation)
-  - else
-    .list-item-header
-      = resource_link(resource, alt: resource.best_representation)
+ruby:
+  form ||=nil
+  id = id_for(resource)
+  assignment = form.nil? && resource.assigned_to?(current_user)
 
-  .list-item-body
-    = resource_status_list(resource, id: id, title_tag: :h5)
-    .list-item-body-text= to_html resource.name
-
-  h5.sr-only id="actions-#{id}" Actions for resource ##{resource.id}
-  ul.list-item-actions aria-labelledby="actions-#{id}"
-    - if policy(resource).index?
-      li.list-item-actions-item
-        = view_link_to resource_path(resource), aria: {labelledby: "view-#{id} resource-#{id}" }, id: "view-#{id}"
-    - if policy(resource).edit?
-      li.list-item-actions-item
-        = edit_link_to edit_resource_path(resource), aria: {labelledby: "edit-#{id} resource-#{id}" }, id: "edit-#{id}"
+tr
+  - if form.present?
+    td.table-cell-checkbox: label
+      = check_box_tag "resource_ids[]", resource.id, nil, aria: { label: "Select resource '#{resource.name}' for bulk assignment'" }
+  td.table-cell-link= link_to resource do
+    = cropped_resource_image(resource)
+    span.resource-title= resource.name
+  td.table-cell-card--tag
+    - if resource.assignments.active.any?
+      = tag_for(:assigned, hint: "Assignment status")
+    - else
+      = tag_for(:unassigned, hint: "Assignment status")
+  td
+    .resource-steps
+      .resource-step class=("resource-step--complete" if resource.represented?)
+        = icon(:message_circle)
+      .resource-step class=("resource-step--complete" if resource.approved?)
+        = icon(:more_horizontal)
+      .resource-step class=("resource-step--complete" if resource.approved?)
+        = icon(:checkmark)
+    .resource-status= resource.progress
+  td.table-cell-actions: .control-group
     - if policy(resource).describe?
-      li.list-item-actions-item
-        = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--aside', icon: :bubble, aria: { labelledby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
-    - elsif form.nil? && policy(Assignment).new?
-      li.list-item-actions-item
-        = render 'resources/assign', resource: resource
+      = button_link_to 'Describe', new_representation_path(resource_id: resource.id), class: 'button--submit', icon: :message_circle, aria: { labelledwby: "describe-#{id} resource-#{id}" }, id: "describe-#{id}"
+    - if form.nil? && can_assign?
+      = options_dropdown do
+        - if can_only_assign_to_self?
+          = dropdown_option assignment_link_for(resource), class: "dropdown-item--has-link"
+        - else
+          = dropdown_option render('resources/assign', resource: resource)

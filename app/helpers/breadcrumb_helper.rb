@@ -2,7 +2,7 @@
 
 module BreadcrumbHelper
   def breadcrumb(*args)
-    arrow = safe_join([" ", icon(:arrow_right), " "])
+    arrow = safe_join([" ", icon(:chevron_right), " "])
     final = args.pop
 
     crumbs = args.map { |crumb|

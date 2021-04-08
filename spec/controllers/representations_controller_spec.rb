@@ -63,7 +63,7 @@ RSpec.describe RepresentationsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     let(:user) { build_stubbed(:user) }
 
@@ -94,7 +94,7 @@ RSpec.describe RepresentationsController do
   end
 
   describe "as a viewer user" do
-    include_context "signed-in viewer user"
+    include_context "with a signed-in viewer user"
 
     it "succeeds for view-only actions, fails for edit actions" do
       get :index, params: base_params
@@ -126,7 +126,7 @@ RSpec.describe RepresentationsController do
   end
 
   describe "as an author working with his or her own content" do
-    include_context "signed-in author user"
+    include_context "with a signed-in author user"
 
     let(:representation) do
       create(:representation, author: user, organization: organization, resource: resource)
@@ -174,7 +174,7 @@ RSpec.describe RepresentationsController do
   end
 
   describe "as an author working with another author's content" do
-    include_context "signed-in author user"
+    include_context "with a signed-in author user"
 
     let(:other_author) do
       create(:user, organization: organization)

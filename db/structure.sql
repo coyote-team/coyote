@@ -24,6 +24,20 @@ COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings
 
 
 --
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: membership_role; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -475,7 +489,8 @@ CREATE TABLE public.organizations (
     updated_at timestamp without time zone NOT NULL,
     default_license_id integer NOT NULL,
     is_deleted boolean DEFAULT false,
-    footer character varying
+    footer character varying,
+    allow_authors_to_claim_resources boolean DEFAULT false NOT NULL
 );
 
 
@@ -581,7 +596,8 @@ CREATE TABLE public.resource_group_resources (
     resource_group_id bigint,
     resource_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_auto_matched boolean DEFAULT false NOT NULL
 );
 
 
@@ -616,7 +632,8 @@ CREATE TABLE public.resource_groups (
     organization_id integer NOT NULL,
     "default" boolean DEFAULT false,
     webhook_uri public.citext,
-    token character varying
+    token character varying,
+    auto_match_host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -758,7 +775,8 @@ CREATE TABLE public.resources (
     priority_flag boolean DEFAULT false NOT NULL,
     host_uris character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     is_deleted boolean DEFAULT false NOT NULL,
-    status public.resource_status DEFAULT 'active'::public.resource_status NOT NULL
+    status public.resource_status DEFAULT 'active'::public.resource_status NOT NULL,
+    source_uri_hash character varying
 );
 
 
@@ -779,273 +797,6 @@ CREATE SEQUENCE public.resources_id_seq
 --
 
 ALTER SEQUENCE public.resources_id_seq OWNED BY public.resources.id;
-
-
---
--- Name: scavenger_hunt_answers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_answers (
-    id bigint NOT NULL,
-    clue_id bigint NOT NULL,
-    is_correct boolean NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    answer text
-);
-
-
---
--- Name: scavenger_hunt_answers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_answers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_answers_id_seq OWNED BY public.scavenger_hunt_answers.id;
-
-
---
--- Name: scavenger_hunt_clues; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_clues (
-    id bigint NOT NULL,
-    game_id bigint NOT NULL,
-    representation_id bigint NOT NULL,
-    "position" integer NOT NULL,
-    started_at timestamp without time zone,
-    ended_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    answer text,
-    question character varying DEFAULT 'I think it is...'::character varying
-);
-
-
---
--- Name: scavenger_hunt_clues_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_clues_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_clues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_clues_id_seq OWNED BY public.scavenger_hunt_clues.id;
-
-
---
--- Name: scavenger_hunt_games; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_games (
-    id bigint NOT NULL,
-    location_id bigint NOT NULL,
-    player_id bigint NOT NULL,
-    ended_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    is_archived boolean DEFAULT false,
-    elapsed_time_in_seconds integer DEFAULT 0,
-    penalty_time_in_seconds integer DEFAULT 0
-);
-
-
---
--- Name: scavenger_hunt_games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_games_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_games_id_seq OWNED BY public.scavenger_hunt_games.id;
-
-
---
--- Name: scavenger_hunt_hints; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_hints (
-    id bigint NOT NULL,
-    clue_id bigint NOT NULL,
-    representation_id bigint NOT NULL,
-    "position" integer NOT NULL,
-    used_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: scavenger_hunt_hints_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_hints_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_hints_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_hints_id_seq OWNED BY public.scavenger_hunt_hints.id;
-
-
---
--- Name: scavenger_hunt_locations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_locations (
-    id bigint NOT NULL,
-    organization_id bigint NOT NULL,
-    "position" integer NOT NULL,
-    tint character varying NOT NULL
-);
-
-
---
--- Name: scavenger_hunt_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_locations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_locations_id_seq OWNED BY public.scavenger_hunt_locations.id;
-
-
---
--- Name: scavenger_hunt_players; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_players (
-    id bigint NOT NULL,
-    email character varying,
-    name character varying,
-    user_agent character varying NOT NULL,
-    ip inet NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: scavenger_hunt_players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_players_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_players_id_seq OWNED BY public.scavenger_hunt_players.id;
-
-
---
--- Name: scavenger_hunt_survey_answers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_survey_answers (
-    id bigint NOT NULL,
-    player_id bigint NOT NULL,
-    survey_question_id bigint NOT NULL,
-    answer character varying
-);
-
-
---
--- Name: scavenger_hunt_survey_answers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_survey_answers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_survey_answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_survey_answers_id_seq OWNED BY public.scavenger_hunt_survey_answers.id;
-
-
---
--- Name: scavenger_hunt_survey_questions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.scavenger_hunt_survey_questions (
-    id bigint NOT NULL,
-    "position" integer NOT NULL,
-    text character varying NOT NULL,
-    options json
-);
-
-
---
--- Name: scavenger_hunt_survey_questions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.scavenger_hunt_survey_questions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: scavenger_hunt_survey_questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.scavenger_hunt_survey_questions_id_seq OWNED BY public.scavenger_hunt_survey_questions.id;
 
 
 --
@@ -1237,62 +988,6 @@ ALTER TABLE ONLY public.resources ALTER COLUMN id SET DEFAULT nextval('public.re
 
 
 --
--- Name: scavenger_hunt_answers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_answers ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_answers_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_clues id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_clues ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_clues_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_games id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_games ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_games_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_hints id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_hints ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_hints_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_locations id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_locations ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_locations_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_players id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_players ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_players_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_survey_answers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_survey_answers ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_survey_answers_id_seq'::regclass);
-
-
---
--- Name: scavenger_hunt_survey_questions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_survey_questions ALTER COLUMN id SET DEFAULT nextval('public.scavenger_hunt_survey_questions_id_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1457,70 +1152,6 @@ ALTER TABLE ONLY public.resource_webhook_calls
 
 ALTER TABLE ONLY public.resources
     ADD CONSTRAINT resources_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_answers scavenger_hunt_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_answers
-    ADD CONSTRAINT scavenger_hunt_answers_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_clues scavenger_hunt_clues_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_clues
-    ADD CONSTRAINT scavenger_hunt_clues_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_games scavenger_hunt_games_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_games
-    ADD CONSTRAINT scavenger_hunt_games_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_hints scavenger_hunt_hints_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_hints
-    ADD CONSTRAINT scavenger_hunt_hints_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_locations scavenger_hunt_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_locations
-    ADD CONSTRAINT scavenger_hunt_locations_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_players scavenger_hunt_players_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_players
-    ADD CONSTRAINT scavenger_hunt_players_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_survey_answers scavenger_hunt_survey_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_survey_answers
-    ADD CONSTRAINT scavenger_hunt_survey_answers_pkey PRIMARY KEY (id);
-
-
---
--- Name: scavenger_hunt_survey_questions scavenger_hunt_survey_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.scavenger_hunt_survey_questions
-    ADD CONSTRAINT scavenger_hunt_survey_questions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1836,7 +1467,7 @@ CREATE INDEX index_resources_on_representations_count ON public.resources USING 
 -- Name: index_resources_on_schemaless_source_uri; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING btree (reverse((source_uri)::text) text_pattern_ops);
+CREATE INDEX index_resources_on_schemaless_source_uri ON public.resources USING gin (source_uri public.gin_trgm_ops);
 
 
 --
@@ -1857,77 +1488,7 @@ CREATE UNIQUE INDEX index_resources_on_source_uri_and_organization_id ON public.
 -- Name: index_resources_resource_group_join; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_resources_resource_group_join ON public.resource_group_resources USING btree (resource_id, resource_group_id);
-
-
---
--- Name: index_scavenger_hunt_answers_on_clue_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_answers_on_clue_id ON public.scavenger_hunt_answers USING btree (clue_id);
-
-
---
--- Name: index_scavenger_hunt_clues_on_game_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_clues_on_game_id ON public.scavenger_hunt_clues USING btree (game_id);
-
-
---
--- Name: index_scavenger_hunt_clues_on_representation_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_clues_on_representation_id ON public.scavenger_hunt_clues USING btree (representation_id);
-
-
---
--- Name: index_scavenger_hunt_games_on_location_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_games_on_location_id ON public.scavenger_hunt_games USING btree (location_id);
-
-
---
--- Name: index_scavenger_hunt_games_on_player_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_games_on_player_id ON public.scavenger_hunt_games USING btree (player_id);
-
-
---
--- Name: index_scavenger_hunt_hints_on_clue_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_hints_on_clue_id ON public.scavenger_hunt_hints USING btree (clue_id);
-
-
---
--- Name: index_scavenger_hunt_hints_on_representation_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_hints_on_representation_id ON public.scavenger_hunt_hints USING btree (representation_id);
-
-
---
--- Name: index_scavenger_hunt_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_locations_on_organization_id ON public.scavenger_hunt_locations USING btree (organization_id);
-
-
---
--- Name: index_scavenger_hunt_survey_answers_on_player_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_survey_answers_on_player_id ON public.scavenger_hunt_survey_answers USING btree (player_id);
-
-
---
--- Name: index_scavenger_hunt_survey_answers_on_survey_question_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_scavenger_hunt_survey_answers_on_survey_question_id ON public.scavenger_hunt_survey_answers USING btree (survey_question_id);
+CREATE UNIQUE INDEX index_resources_resource_group_join ON public.resource_group_resources USING btree (resource_id, resource_group_id);
 
 
 --
@@ -2295,7 +1856,14 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200825173757'),
 ('20200827210043'),
 ('20201110000430'),
+('20201113164644'),
 ('20201203005723'),
-('20210224181332');
+('20210224181332'),
+('20210303210513'),
+('20210304215302'),
+('20210312210908'),
+('20210317190514'),
+('20210325221939'),
+('20210325224106');
 
 

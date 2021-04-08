@@ -1,92 +1,59 @@
-.filter-view
-  .filter-view-filters
-    / h1= title "Descriptions for #{current_organization.name}"
-    h1= title "Descriptions"
+h1= title "Descriptions"
 
-    = search_form_for record_filter.search, url: representations_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
-      h2.sr-only Filter #{Representation.model_name.human(count: 2)}
-      label.filter-set-item.field.field--accessory
-        h3.sr-only Search by caption or description
-        = icon :magnifier, class: 'field-accessory'
-        = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: 'Search representation text', role: "search"
+= search_form_for record_filter.search, html: {class: "filters"}, url: representations_path, wrapper: :filters, enforce_utf8: false do |f|
+  h2 Filter #{Representation.model_name.human(count: 2)}
 
-      .filter-set-item
-        h3.filter-set-item-title#status_label Status
-        ul.boolean-list aria-labelled-by="status_label"
-          - Coyote::Representation.status_collection.each do |name, status|
-            li.boolean-list-item: label
-              = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
-              = name
+  button.filters-close-button data-toggle-target="body" data-toggle="filters-toggled" type="button"
+    = icon(:close)
+    span.sr-only Close filters
 
-      .filter-set-item
-        h3.filter-set-item-title#metum_label Metum
-        ul.boolean-list aria-labelled-by="metum_label"
-          - available_meta.each do |meta|
-            li.boolean-list-item: label
-              = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
-              span= meta.name
+  label.filter.field.field--accessory
+    h3.sr-only Search by caption or description
+    = icon :search, class: "field-accessory"
+    = f.search_field :text_or_resource_canonical_id_or_resource_name_cont_all, required: false, placeholder: "Search representation text", role: "search"
 
-      h3.sr-only#author_label Created by author
-      = f.input :author_id_eq, label: 'Created by Author', label_html: {aria: {label: "author_label"}}, collection: organizational_user_collection, as: :select, required: false
+  .filter
+    h3.filter-title#status_label Status
+    ul.boolean-list aria-labelled-by="status_label"
+      - Coyote::Representation.status_collection.each do |name, status|
+        li.boolean-list-item: label
+          = check_box_tag "q[status_in][]", status, filter_params.fetch(:status_in, []).include?(status.to_s)
+          = name
 
-      .filter-set-submit
-        = f.submit 'Search', name: nil, class: 'button'
-        = f.submit 'Clear', type: 'reset', class: 'button button--outline'
+  .filter
+    h3.filter-title#metum_label Metum
+    ul.boolean-list aria-labelled-by="metum_label"
+      - available_meta.each do |meta|
+        li.boolean-list-item: label
+          = check_box_tag "q[metum_id_in][]", meta.id, filter_params.fetch(:metum_id_in, []).include?(meta.id.to_s)
+          span= meta.name
 
-  = simple_form_for :representation_status_change, url: representation_status_changes_path, html: { class: 'filter-view-list', id: 'results' } do |form|
-    / Results toolbar: let users add assignments
-    h2#results-title
-      ' Results:
-      - count = record_filter.records.total_count
-      = number_with_delimiter count
-      '
-      = "description".pluralize(count)
+  h3.sr-only#author_label Created by author
+  = f.input :author_id_eq, label: "Created by Author", label_html: {aria: {label: "author_label"}}, collection: users_for_select, as: :select, required: false
 
-    - if record_filter.records.any?
-      = toolbar do
-        label.label--checkbox.toolbar-item
-          input#select-all data-select-all="#results" type="checkbox"
-          span Select all
+  .filter
+    = f.submit "Apply Filters", name: nil, class: "button"
+    = f.submit "Clear", type: "reset", class: "button button--outline"
 
-        - if organization_user.admin?
-          = toolbar_item class: 'field'
-            = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: 'Apply status...', required: false
-            = form.submit 'Apply', class: 'button'
+.toolbar
+  button.button.button--round.filter-toggle data-toggle-target="body" data-toggle="filters-toggled" type="button"
+    = icon(:options, prefix: safe_join(["Filter ", sr_only(Representation.model_name.human(count: 2).downcase)]))
 
-        = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
-          li.segmented-control-item= link_to request.GET.except(:grid), class: ["segmented-control-item-link", params[:grid] ? nil : 'segmented-control-item-link--active'] do
-            i.icon-list aria-hidden=true
-            span.sr-only List View
-          li.segmented-control-item= link_to request.GET.merge(grid: true), class: ["segmented-control-item-link", params[:grid] ? 'segmented-control-item-link--active' : nil] do
-            i.icon-grid aria-hidden=true
-            span.sr-only Grid View
+  = applied_filters
 
-        - if record_filter.browser_pagination_link_params.any?
-          = toolbar_item do
-            = paginate record_filter.records
+  = sort_dropdown do
+    = dropdown_option sort_link_to(:name, :asc, "Name, A-Z")
+    = dropdown_option sort_link_to(:name, :desc, "Name, Z-A")
+    = dropdown_option sort_link_to(:created_at, :desc, "Date imported, recent")
+    = dropdown_option sort_link_to(:created_at, :asc, "Date imported, oldest")
 
-      - if params[:grid].present?
-        = list class: 'list--grid', id: 'results-list' do
-          = render partial: 'resource', collection: record_filter.records.group_by(&:resource), as: :resource_and_representations, locals: { form: form }
-      - else
-        .table-wrapper: table
-          thead
-            tr
-              th Resource
-              th= sort_link(record_filter.search, :status)
-              th= sort_link(record_filter.search, :metum_id)
-              th= sort_link(record_filter.search, :language, label: "Locale")
-              th.table-cell-actions Actions
-          tbody
-            = render partial: 'row', collection: record_filter.records, as: :representation
 
-      = toolbar do
-        label.label--checkbox.toolbar-item
-          input#select-all data-select-all="#results-list" type="checkbox"
-          span Select all
+= simple_form_for :representation_status_change, url: representation_status_changes_path, html: { class: "filter-view-list", id: "results" } do |form|
+  h2.sr-only#results-title
+    ' Results:
+    - count = record_filter.records.total_count
+    = number_with_delimiter count
+    '
+    = "description".pluralize(count)
 
-        - if record_filter.browser_pagination_link_params.any?
-          = toolbar_item do
-            = paginate record_filter.records
-    - else
-      p.empty-message No descriptions found
+  = render "list", form: form, representations: record_filter.records

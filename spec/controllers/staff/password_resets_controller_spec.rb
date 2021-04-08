@@ -9,7 +9,7 @@ RSpec.describe Staff::PasswordResetsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       post :create, params: user_params
@@ -18,7 +18,7 @@ RSpec.describe Staff::PasswordResetsController do
   end
 
   describe "as a signed-in owner" do
-    include_context "signed-in owner user"
+    include_context "with a signed-in owner user"
 
     it "requires user to be a staff member for all actions" do
       expect {
@@ -28,7 +28,7 @@ RSpec.describe Staff::PasswordResetsController do
   end
 
   describe "as a staff member" do
-    include_context "signed-in staff user"
+    include_context "with a signed-in staff user"
 
     before do
       ActionMailer::Base.deliveries.clear

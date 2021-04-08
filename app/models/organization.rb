@@ -4,13 +4,14 @@
 #
 # Table name: organizations
 #
-#  id                 :integer          not null, primary key
-#  footer             :string
-#  is_deleted         :boolean          default(FALSE)
-#  name               :citext           not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  default_license_id :integer          not null
+#  id                               :integer          not null, primary key
+#  allow_authors_to_claim_resources :boolean          default(FALSE), not null
+#  footer                           :string
+#  is_deleted                       :boolean          default(FALSE)
+#  name                             :citext           not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  default_license_id               :integer          not null
 #
 # Indexes
 #
@@ -38,7 +39,7 @@ class Organization < ApplicationRecord
   has_many :imports, dependent: :destroy
 
   has_many :memberships, inverse_of: :organization, dependent: :destroy
-  has_many :active_users, -> { where(memberships: {active: true}) }, source: :user, through: :memberships
+  has_many :active_users, -> { active.where(memberships: {active: true}) }, source: :user, through: :memberships
   has_many :users, through: :memberships
 
   has_many :resources, dependent: :restrict_with_exception, inverse_of: :organization
@@ -48,6 +49,8 @@ class Organization < ApplicationRecord
 
   has_many :meta, inverse_of: :organization, dependent: :destroy
   has_many :resource_groups, inverse_of: :organization, dependent: :destroy
+
+  has_one_attached :logo
 
   scope :is_active, -> { where(is_deleted: false) }
 

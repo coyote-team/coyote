@@ -1,98 +1,90 @@
-.filter-view
-  .filter-view-filters
-    / h1= title "Resources for #{current_organization.name}"
-    h1= title "Resources"
+h1= title "Resources"
 
-    = search_form_for record_filter.search, url: resources_path, html: { class: 'filter-set' }, wrapper: :filter_set, enforce_utf8: false do |f|
-      h2.sr-only Filter #{Resource.model_name.human(count: 2)}
-      label.filter-set-item.field.field--accessory
-        h3.sr-only Search by caption or description
-        = icon :magnifier, class: 'field-accessory'
-        = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: 'Search resources'
+= search_form_for record_filter.search, html: {class: "filters"}, url: resources_path, wrapper: :filters, enforce_utf8: false do |f|
+  h2 Filter #{Resource.model_name.human(count: 2)}
 
-      .filter-set-item
-        h3.filter-set-item-title#priority_label Priority
-        ul.boolean-list aria-labelled-by="priority_label"
+  button.filters-close-button data-toggle-target="body" data-toggle="filters-toggled" type="button"
+    = icon(:close)
+    span.sr-only Close filters
+
+  label.filter.field.field--accessory
+    h3.sr-only Search by caption or description
+    = icon :search, class: "field-accessory"
+    = f.search_field :canonical_id_or_name_or_representations_text_cont_all, required: false, placeholder: "Search resources", role: "search"
+
+  .filter
+    h3.filter-title#priority_label Priority
+    ul.boolean-list aria-labelled-by="priority_label"
+      li.boolean-list-item: label
+        = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
+        span Urgent
+
+  - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose "representations_author_id_eq" AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
+    h3.sr-only#representations_by_author_label With representations authored by user
+    .filter: label aria-label="representations_by_author_label" With representations authored by user #{User.find_by(id: author_id).username}
+  - else
+    .filter
+      h3.filter-title#status-label Description Status
+      ul.boolean-list
+        - filter_scopes(%i[unrepresented represented]).each do |name, scope|
           li.boolean-list-item: label
-            = check_box_tag "q[priority_flag_eq]", true, filter_params.fetch(:priority_flag_eq, false).to_s == "true"
-            span Urgent
+            = radio_button_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
+            span= name
 
-      - if author_id = filter_params[:representations_author_id_eq] # HACK: with Ransack, we can't expose 'representations_author_id_eq' AND scope[:represented] at the same time. Probably need to write a custom ransacker to make this work.
-        h3.sr-only#representations_by_author_label With representations authored by user
-        .filter-set-item: label aria-label="representations_by_author_label" With representations authored by user #{User.find_by(id: author_id).username}
-      - else
-        .filter-set-item
-          h3.filter-set-item-title#status-label Status
-          ul.boolean-list aria-labelled-by="status_label"
-            - scope_search_collection.each do |name, scope|
-              li.boolean-list-item: label
-                = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
-                span= name
-        = f.input :assignments_user_id_eq, label: 'Assigned to User', class: 'input-medium form-control', required: false, collection: current_organization.users
+    .filter
+      h3.filter-title#status-label Assignment Status
+      ul.boolean-list
+        - filter_scopes(%i[unassigned assigned with_approved_representations]).each do |name, scope|
+          li.boolean-list-item: label
+            = check_box_tag "q[scope][]", scope, filter_params.fetch(:scope, []).include?(scope.to_s)
+            span= name
 
-      - if current_organization.resource_groups.many?
-        h3.sr-only#resource_group_id_label Filter by resource group
-        = f.input :resource_group_resources_resource_group_id_in, label: ResourceGroup.model_name.human, label_html: {aria: {label: "resource_group_id_label"}}, collection: current_organization.resource_groups, as: :select, required: false
+    = f.input :assignments_user_id_eq, label: "Assigned to User", class: "input-medium form-control", required: false, collection: current_organization.users
 
-      .filter-set-submit
-        = f.submit 'Search', name: nil, class: 'button'
-        = f.submit 'Clear', type: 'reset', class: 'button button--outline'
+  - if current_organization.resource_groups.many?
+    h3.sr-only#resource_group_id_label Filter by group
+    = f.input :resource_group_resources_resource_group_id_in, label: ResourceGroup.model_name.human, label_html: {aria: {label: "resource_group_id_label"}}, collection: current_organization.resource_groups, as: :select, required: false
 
-  = simple_form_for :assignment, url: assignments_path, html: { class: 'filter-view-list', id: 'results' } do |form|
-    / Results toolbar: let users add assignments
-    h2#results-title
-      ' Results:
-      - count = record_filter.records.total_count
-      = number_with_delimiter count
-      '
-      = "resource".pluralize(count)
+  .filter
+    = f.submit "Apply Filters", name: nil, class: "button"
+    = f.submit "Clear", type: "reset", class: "button button--outline"
 
-    - has_resources = record_filter.records.any?
-    = toolbar do
-      - if has_resources
-        label.label--checkbox.toolbar-item
-          input#select-all data-select-all="#results" type="checkbox"
-          span Select all
+.toolbar
+  button.button.button--round.filter-toggle data-toggle-target="body" data-toggle="filters-toggled" type="button"
+    span
+      ' Filter
+      span.sr-only= Resource.model_name.human(count: 2).downcase
+    = icon(:options)
 
-        - if policy(Assignment).new?
-          = toolbar_item class: 'field' do
-            = form.input_field :user_id, collection: organizational_user_collection, label: false, prompt: 'Assign...', required: false
-            = form.submit 'Assign', class: 'button'
+  = applied_filters
 
-        = segmented_control class: 'toolbar-item non-portrait-only', title: {tag: :h3, text: 'View options'} do
-          = segmented_control_item pressed: true, data: { toggle_target: "#results-list", toggle_off: "list--grid" }, icon: "list", title: "List View"
-          = segmented_control_item pressed: false, data: { toggle_target: "#results-list", toggle_on: "list--grid" }, icon: "grid", title: "Grid View"
+  ruby:
+    can_create = policy(Resource).new?
+    can_import = can?(:create, Import)
+  - if can_import || can_create
+    = toolbar_item class: "field" do
+      = link_to("Add Resource", new_resource_path, class: "button") if can_create
+      - if can_import
+        - if can_create
+          // Show the import option as a dropdown beside "Add Resource"
+          = dropdown(label: icon(:chevron_down), toggle: {class: "button button--narrow"}) do
+            = dropdown_option link_to(icon(:cloud_upload, prefix: "Import Resources"), new_import_path)
+        - else
+          // Show the import option as a standalone button
+          = new_link_to("Import Resources", new_import_path)
 
-        - if record_filter.browser_pagination_link_params.any?
-          = toolbar_item do
-            = paginate record_filter.records
+  = sort_dropdown do
+    = dropdown_option sort_link_to(:name, :asc, "Name, A-Z")
+    = dropdown_option sort_link_to(:name, :desc, "Name, Z-A")
+    = dropdown_option sort_link_to(:created_at, :desc, "Date imported, recent")
+    = dropdown_option sort_link_to(:created_at, :asc, "Date imported, oldest")
 
-      ruby:
-        can_import = can?(:create, Import)
-        can_create = policy(Resource).new?
+= simple_form_for :resource, url: update_many_resources_path, html: { id: "results" } do |form|
+  h2.sr-only#results-title
+    ' Results:
+    - count = record_filter.records.total_count
+    = number_with_delimiter count
+    '
+    = "resource".pluralize(count)
 
-      - if can_import || can_create
-        = toolbar_item
-          - if can_import
-            = new_link_to 'Import Resources', new_import_path, icon: :cloud_upload
-
-          - if can_create
-            = new_link_to 'Add Resource', new_resource_path
-
-    - if has_resources
-      / Render the list
-      = list aria: {labelled_by: "results-title"}, id: 'results-list' do
-        = render partial: 'resource', collection: record_filter.records, locals: { form: form }
-
-      / Render the footer
-      = toolbar do
-        label.label--checkbox.toolbar-item
-          input#select-all data-select-all="#results-list" type="checkbox"
-          span Select all
-
-        - if record_filter.browser_pagination_link_params.any?
-          = toolbar_item do
-            = paginate record_filter.records
-
-    - else
-      p.empty-message There are no resources
+  = render "list", form: can_assign? ? form : nil, resources: record_filter.records

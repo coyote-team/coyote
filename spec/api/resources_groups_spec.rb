@@ -2,7 +2,7 @@
 
 RSpec.describe "Accessing resource groups" do
   describe "with authorization" do
-    include_context "API admin user"
+    include_context "with an admin user"
 
     let(:resource_group) do
       create(:resource_group, :website, organization: user_organization)
@@ -65,7 +65,7 @@ RSpec.describe "Accessing resource groups" do
   end
 
   describe "with multiple resource_groups" do
-    include_context "API author user"
+    include_context "with an author user"
 
     let!(:user_org_resource_groups) do
       i = 0
@@ -106,7 +106,7 @@ RSpec.describe "Accessing resource groups" do
   end
 
   describe "with a resource group" do
-    include_context "API author user"
+    include_context "with an author user"
 
     let(:resource_group) do
       create(:resource_group, organization: user_organization, webhook_uri: "https://test/test")
@@ -128,7 +128,7 @@ RSpec.describe "Accessing resource groups" do
   end
 
   describe "without authorization" do
-    include_context "API access headers"
+    include_context "with API access headers"
 
     let(:resource_group) { create(:resource_group) }
 

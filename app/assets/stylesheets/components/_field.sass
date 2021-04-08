@@ -2,12 +2,11 @@
 // Useful for adding accessory glyphs to form elements or grouping inputs and
 // submit buttons.
 .field
-  $field-children: "#{$controls}, .button, label"
+  $field-children: "#{$controls}, .button, .dropdown, label, input[type=submit]"
 
   align-items: stretch
   background-color: $background
-  display: flex
-  margin-bottom: $gutter
+  display: inline-flex
 
   &.field--accessory
     position: relative
@@ -30,20 +29,30 @@
     background-color: transparent
     flex: 1
 
-  #{$field-children}
-    border-radius: 0
-    margin: 0
+  > .button + .dropdown
+    border-left: 1px solid $border-light
 
-    &:first-of-type
-      border-bottom-left-radius: $border-radius
-      border-top-left-radius: $border-radius
+  > *
+    border-radius: 0 !important
+    margin: 0 !important
+
+    > *
+      border-radius: inherit
+
+    &:first-child,
+    &.sr-only:first-child ~ *:not([type=hidden]),
+    &[type=hidden]:first-child ~ *:not([type=hidden])
+      border-bottom-left-radius: $border-radius !important
+      border-top-left-radius: $border-radius !important
+
+    &[type=hidden]:first-child ~ *:not([type=hidden]) ~ *
+      border-bottom-left-radius: 0 !important
+      border-top-left-radius: 0 !important
 
     &:last-child
-      border-bottom-right-radius: $border-radius
-      border-top-right-radius: $border-radius
+      border-bottom-right-radius: $border-radius !important
+      border-top-right-radius: $border-radius !important
 
     +
       #{$field-children}
-        border-bottom-left-radius: 0 !important
-        border-top-left-radius: 0 !important
-        margin-left: -1px
+        margin-left: (-1px) !important

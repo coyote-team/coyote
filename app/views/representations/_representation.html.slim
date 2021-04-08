@@ -1,0 +1,15 @@
+ruby:
+  form ||=nil
+  id = id_for(representation)
+
+tr
+  - if form.present?
+    td.table-cell-checkbox: label
+      = check_box_tag "representation_status_change[representation_ids][]", representation.id, false, aria: { label: "Select representation #{representation.id} for bulk update" }
+  td.table-cell-link= link_to representation do
+    = cropped_resource_image(representation.resource, alt: representation)
+  td.table-cell-card--row: .description= to_html(representation.text, truncate: 60)
+  td.table-cell-card--tag= representation_status_tag(representation)
+  td.table-cell-card--tag= metum_tag(representation.metum, hint: false)
+  td.table-cell-card--tag: span.tag= language_name(representation.language)
+  td.table-cell-actions

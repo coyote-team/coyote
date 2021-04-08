@@ -5,28 +5,28 @@
   vertical-align: top
 
   .dropdown-toggle
-    @extend select
-
+    margin-right: 0 !important
     text-overflow: ellipsis
     white-space: nowrap
 
     &[aria-expanded=true] + .dropdown-menu
-      animation: dropdown-in 150ms both
+      animation: dropdown-in 150ms $swift-in both
       display: block
       z-index: $z-index-modal
 
   .dropdown-menu
+    --bs-position: end
     background: $background
-    border: 1px solid $border
+    border: 1px solid $border-light
     border-radius: $border-radius
-    box-shadow: $shadow-level-1
+    box-shadow: $shadow-level-2
     display: none
     opacity: 0
     min-width: 100%
+    padding: ($gutter * 2) 0
     position: absolute
-    right: 0
-    transition: opacity 250ms $swift-in, transform 250ms $swift-in
-    transform: none
+    text-align: left
+    transition: opacity 250ms $swift-in
     z-index: -1
 
     &:before, &:after
@@ -35,7 +35,6 @@
       bottom: 100%
       content: ""
       height: 0
-      left: 50%
       position: absolute
       width: $gutter
 
@@ -43,31 +42,61 @@
         left: auto
         right: $gutter
 
+    &[data-popper-placement$="-start"]
+      --bs-position: start
+
+    &:not([data-popper-placement]),
+    &[data-popper-placement$="-end"]
+      --bs-position: end
+
+      &::before,
+      &::after
+        right: 0
+
     &:before
-      border-color: transparent transparent $border transparent
+      border-color: transparent transparent $border-light transparent
       transform: translate(-50%, -1px)
 
     &:after
       border-color: transparent transparent $background transparent
       transform: translateX(-50%)
 
-    .dropdown-menu-item
-      border-bottom: 1px solid $border
+    .dropdown-item
+      $item-padding: $input-padding ($gutter * 2)
+
+      padding: $item-padding
+      position: relative
       white-space: nowrap
 
-      &:last-child
-        border-bottom-width: 0
+      &:focus,
+      &:focus-within
+        box-shadow: $focus-shadow
+        z-index: $z-index-content + 1
 
-      a
-        display: block
-        padding: $input-padding
-        text-decoration: none
+      &--has-link
+        padding: 0
+
+        &:hover,
+        &:focus,
+        &:focus-within
+          background-color: $input
+
+        a
+          display: block
+          padding: $item-padding
+          text-decoration: none
+
+          &:hover
+            color: inherit
+
+          &:focus
+            box-shadow: none
 
 @keyframes dropdown-in
   0%
     opacity: 0
-    transform: translateY(0)
+    margin-top: 0
 
   100%
     opacity: 1
-    transform: translateY($gutter + 1px)
+    margin-top: $gutter + 1px

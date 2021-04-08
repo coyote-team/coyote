@@ -1,23 +1,18 @@
+h1= title "Groups for #{current_organization.name}"
 .table-wrapper: table
-  caption
-    h1= title "Resource Groups for #{current_organization.name}"
   thead
     tr
       th Title
-      th Webhook
+      - if can?(:view_webhook_uri, ResourceGroup)
+        th Webhook
       th Resources
-      - if can?(:edit, :resource_group)
-        th.table-cell-actions Actions
   tbody
     - resource_groups.each_with_index do |resource_group, idx|
-      tr.table-row-link
-        td.table-cell-primary.table-cell-link= link_to resource_group.name_with_default_annotation, resource_group_path(resource_group)
-        td.table-cell-link= link_to resource_group.webhook_uri || "", resource_group_path(resource_group)
-        td.table-cell-link= link_to tag_for(resource_group.resources.count), resource_group_path(resource_group)
-        - if can?(:edit, :resource_group)
-          td.table-cell-actions
-            = edit_link_to edit_resource_group_path(resource_group), title: "Edit this resource group"
-            = delete_link_to "Are you sure you want to delete #{resource_group}?", resource_group_path(resource_group), title: "Delete this resource group", disabled: resource_group.resources.any? || resource_group.default?
+      tr
+        td.table-cell-link= link_to resource_group.name_with_default_annotation, resource_group_path(resource_group)
+        - if can?(:view_webhook_uri, ResourceGroup)
+          td= resource_group.webhook_uri || ""
+        td= tag_for(resource_group.resources.count)
 
 - if policy(::ResourceGroup).new?
-  nav.toolbar.toolbar--footer= new_link_to('Add Resource Group', new_resource_group_path, class: 'toolbar-item')
+  nav.toolbar.toolbar--footer= new_link_to('Add Group', new_resource_group_path, class: 'toolbar-item')

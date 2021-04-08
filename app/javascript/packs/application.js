@@ -1,8 +1,20 @@
+// import "@popperjs/core"
+// import "bootstrap/js/dist/dropdown"
+import "bootstrap/js/dist/dropdown"
 import * as ActiveStorage from "@rails/activestorage"
 import UJS from "@rails/ujs"
 
 import "../polyfills"
-import { Lightbox, List, SegmentedControl, SelectAll, Tabs, ToggleControl } from "../components"
+import {
+  Cards,
+  Lightbox,
+  RadioButton,
+  SegmentedControl,
+  SelectAll,
+  Table,
+  Tabs,
+  ToggleControl,
+} from "../components"
 
 // Boot up the Rails helpers
 ActiveStorage.start()
@@ -13,8 +25,8 @@ document.querySelectorAll("[data-lightbox]").forEach(function (link) {
   const _ = new Lightbox(link)
 })
 
-document.querySelectorAll(".list").forEach(function (control) {
-  const _ = new List(control)
+document.querySelectorAll("table").forEach(function (control) {
+  const _ = new Cards(control)
 })
 
 document.querySelectorAll(".segmented-control").forEach(function (control) {
@@ -23,6 +35,14 @@ document.querySelectorAll(".segmented-control").forEach(function (control) {
 
 document.querySelectorAll("[data-select-all]").forEach(function (control) {
   const _ = new SelectAll(control)
+})
+
+document.querySelectorAll("input[type=radio]").forEach(function (control) {
+  const _ = new RadioButton(control)
+})
+
+document.querySelectorAll("table").forEach(function (control) {
+  const _ = new Table(control)
 })
 
 // document.querySelectorAll("textarea").forEach(function(control) {

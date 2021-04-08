@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Changing one's own user profile" do
-  include_context "as a logged-in user"
+  include_context "with a logged-in user"
 
   it "succeeds" do
     click_link "Profile"

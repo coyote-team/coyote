@@ -1,0 +1,42 @@
+ruby:
+  form ||= nil
+  can_edit = form && can?(:update, Resource)
+  can_assign = form && can_assign?
+  limit ||= nil
+
+- if representations.empty?
+  p.empty-message There are no descriptions
+- else
+  table#representations class=("table--has-checkboxes" if form)
+    thead: tr
+      - if form
+        th.table-cell-checkbox: label
+          input data-select-all="#results" type="checkbox"
+          span.sr-only Select all
+      th
+        - if form && can?(:approve, Representation)
+          div data-checkbox-conditional="show"
+            span.non-mobile-only data-checkbox-conditional-prefix=true
+              ' selected:
+              '
+            span.field
+              = form.input_field :status, collection: Coyote::Representation.status_collection, label: false, prompt: "Apply status...", required: false
+              = form.submit "Apply", class: "button"
+        span data-checkbox-conditional="hide" Resource
+      th: span data-checkbox-conditional="hide" Description
+      th: span data-checkbox-conditional="hide" Status
+      th: span data-checkbox-conditional="hide" Metum
+      th: span data-checkbox-conditional="hide" Language
+      th.table-cell-actions
+        .sr-only Actions
+        div(aria-hidden=true)= segmented_control class: "non-portrait-only", title: {tag: :h3, text: "View options"} do
+          = segmented_control_item pressed: true, data: { toggle_target: "#representations", toggle_off: "table--cards" }, icon: "list", title: "List View"
+          = segmented_control_item pressed: false, data: { toggle_target: "#representations", toggle_on: "table--cards" }, icon: "grid", title: "Grid View"
+
+    tbody
+      = render partial: "representations/representation", collection: representations, locals: { form: form }
+
+  - if respond_to?(:record_filter) && record_filter&.browser_pagination_link_params.present?
+    = toolbar do
+      = toolbar_item class: "toolbar-item--end" do
+        = paginate record_filter.records

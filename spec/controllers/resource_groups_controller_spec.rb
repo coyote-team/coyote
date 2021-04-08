@@ -46,7 +46,7 @@ RSpec.describe ResourceGroupsController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -75,7 +75,7 @@ RSpec.describe ResourceGroupsController do
   end
 
   describe "as an editor" do
-    include_context "signed-in editor user"
+    include_context "with a signed-in editor user"
 
     before { create(:resource_group, organization: organization) }
 
@@ -109,7 +109,7 @@ RSpec.describe ResourceGroupsController do
   end
 
   describe "as an admin" do
-    include_context "signed-in admin user"
+    include_context "with a signed-in admin user"
 
     it "succeeds for all actions involving organization-owned resource_groups" do
       get :show, params: resource_group_params

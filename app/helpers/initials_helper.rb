@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module InitialsHelper
   def initials(name)
     scanner = StringScanner.new(name.to_s)

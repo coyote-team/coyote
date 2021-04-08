@@ -1,7 +1,0 @@
-var sentryDSN = <%= Credentials.dig(:sentry, :dsn).to_json %>;
-if (typeof Sentry !== "undefined" && sentryDSN && sentryDSN !== "") {
-  Sentry.init({
-    dsn: sentryDSN,
-    environment: "<%= ENV['STAGING'] ? 'staging' : 'production' %>"
-  });
-}

@@ -21,14 +21,14 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: {class: "form-field-hint"}
   end
 
-  config.wrappers :filter_set, class: "filter-set-item", error_class: "form-field--error" do |b|
+  config.wrappers :filters, class: "filter", error_class: "form-field--error" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: "filter-set-item-title"
+    b.use :label, class: "filter-title"
 
     b.use :input
     b.use :error, wrap_with: {tag: "span", class: "form-field-error-message"}
@@ -45,7 +45,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = "button button--info"
+  config.button_class = "button button--submit"
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.

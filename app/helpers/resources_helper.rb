@@ -2,6 +2,27 @@
 
 # View methods for displaying resources
 module ResourcesHelper
+  def cropped_resource_image(resource, options = {})
+    options[:aria] ||= {}
+    options[:aria][:label] = options[:aria][:label].presence || resource.best_representation.presence || "Image for resource ##{resource.id}"
+    options = combine_options(
+      options,
+      class: "resource-image",
+    )
+    content = if resource.viewable?
+      options[:style] = (
+        Array(options[:style]) +
+        [%[background-image: url("#{resource_content_uri(resource)}")]]
+      ).join("; ")
+      ""
+    else
+      options[:class] = "#{options[:class]} resource-image--not-viewable"
+      "#{resource.name} (#{resource.resource_type})"
+    end
+
+    tag.span(content, options)
+  end
+
   def resource_content_uri(resource)
     if resource.source_uri.present?
       resource.source_uri
@@ -20,20 +41,14 @@ module ResourcesHelper
     end
   end
 
-  def resource_link(resource, options = {})
-    link_options = options.delete(:link) || {}
-    target = options.delete(:href) || resource_path(resource)
-
-    link_to(target, link_options) do
-      resource_link_target(resource, options.merge(alt: options[:alt] || resource.best_representation || "Image for resource ##{resource.id}"))
-    end
+  def resource_host_link(resource)
+    return if resource.host_uris.blank?
+    uri = resource.host_uris.find { |uri| URI.parse(uri).present? }
+    link_to(safe_join([tag.span("View in context"), icon(:external_link)]), uri, target: "_resource_#{resource.id}_host_uri")
   end
 
-  # @param target_resource [Resource] the Resource that is being displayed
-  # @param representation_dom_id [String] identifies the DOM element which contains a description of the resource
-  # @param options [Hash] passed on to to the helper code that builds a link (such as Rails' image_tag method)
-  # @return [String] an HTML fragment that best depicts the resource (such as an image thumbnail, or an audio icon) based on the type of resource
-  def resource_link_target(resource, options = {})
+  def resource_image(resource, options = {})
+    options[:alt] = options[:alt].presence || resource.best_representation.presence || "Image for resource ##{resource.id}"
     if resource.viewable?
       image_tag(resource_content_uri(resource), options)
     else
@@ -41,35 +56,12 @@ module ResourcesHelper
     end
   end
 
-  def resource_status_list(resource, id: nil, title_tag: :h2)
-    return unless resource.statuses.any?
+  def resource_link(resource, options = {})
+    link_options = options.delete(:link) || {}
+    target = options.delete(:href) || resource_path(resource)
 
-    id ||= "resource-#{resource.id}"
-    tags = []
-
-    if resource.unrepresented?
-      tags.push(tag_for("Undescribed", type: :neutral, hint: "Status"))
-    elsif resource.partially_complete?
-      tags.push(tag_for("Partially Completed", type: :partial, hint: "Status"))
-    elsif resource.approved?
-      tags.push(tag_for("Approved", type: :success, hint: "Status"))
-    end
-
-    resource.meta.distinct.each do |metum|
-      tags.push(metum_tag(metum, tag: :li))
-    end
-
-    tags.push(tag_for("Urgent", type: :error)) if resource.priority_flag?
-
-    safe_join([
-      content_tag(title_tag, class: "sr-only", id: "tag-list-#{id}") { "Properties for resource ##{resource.id}" },
-      tag_list(tags, aria: {labelledby: "tag-list-#{id}"}),
-    ])
-  end
-
-  def scope_search_collection
-    Resource.ransackable_scopes.map do |scope_name|
-      [scope_name.to_s.titleize.split(/\s+/).join(" ").html_safe, scope_name]
+    link_to(target, link_options) do
+      resource_image(resource, options)
     end
   end
 end

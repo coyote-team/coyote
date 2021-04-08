@@ -1,29 +1,17 @@
+h1= title "Members of #{current_organization.name}"
 .table-wrapper: table
-  caption
-    h1
-      = title "Members of #{current_organization.name}"
-
   thead
     tr
-      th First name
-      th Last name
+      th Name
       th Email
       th Role
-      th.table-cell-actions Actions
 
   tbody
     - organization_users.each do |org_user|
-      tr.table-row-link id="membership_#{org_user.id}"
-        td.table-cell-primary.table-cell-link= link_to(org_user.first_name || "", org_user.membership)
-        td.table-cell-primary.table-cell-link= link_to(org_user.last_name || "", org_user.membership)
-        td.table-cell-link= link_to(org_user.email, org_user.membership)
-        td.table-cell-link= link_to org_user.role.to_s.titleize, org_user.membership
-        td.table-cell-actions
-          - if policy(org_user.membership).edit?
-            = edit_link_to(edit_membership_path(org_user.membership), title: "Change this user's membership")
-
-          - if policy(org_user.membership).destroy?
-            = delete_link_to("Are you sure you want to remove #{org_user.user}?", org_user.membership, title: 'Remove this user from the organization')
+      tr id="membership_#{org_user.id}"
+        td.table-cell-link= link_to(user_tag(org_user, label: org_user.first_name), org_user.membership)
+        td= org_user.email
+        td= org_user.role.to_s.titleize
 
 - if policy(:invitation).new?
   nav.toolbar.toolbar--footer

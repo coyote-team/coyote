@@ -1,6 +1,5 @@
+h1= title(user.to_s)
 .table-wrapper: table
-  caption
-    h1= title(user.to_s)
   tbody
     tr
       th First name:
@@ -23,7 +22,7 @@ h2= Representation.model_name.human(count: 2)
       th.table-cell-actions Actions
     tbody
       - representations_scope.limit(10).each do |representation|
-        tr.table-row-link
+        tr
           td.table-cell-link= link_to representation_path(representation) do
             = representation_status_tag(representation)
           td.table-cell-link= link_to representation_path(representation) do
@@ -40,7 +39,7 @@ h2= Representation.model_name.human(count: 2)
             - if policy(representation).edit?
               = edit_link_to edit_representation_path(representation)
       - if current_organization?
-        tr.table-row-link
+        tr
           td.table-cell-link.text--center colspan=6
             = link_to representations_path(q: {author_id_eq: user.id}) do
               strong View all

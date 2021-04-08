@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/ClassAndModuleChildren necessary to flatten namespace here because of how Rails autoloading works
-
 # @abstract Base class for all API controllers
 # @see http://api.rubyonrails.org/classes/ActionController/API.html
 class Api::ApplicationController < ActionController::API
@@ -89,5 +87,3 @@ class Api::ApplicationController < ActionController::API
     render json: {error: I18n.t("actioncontroller.parameter_missing", param: exception.param)}, status: :unprocessable_entity
   end
 end
-
-# rubocop:enable Style/ClassAndModuleChildren

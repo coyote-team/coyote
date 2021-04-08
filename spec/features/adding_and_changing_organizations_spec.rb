@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Adding and changing an organization" do
-  include_context "as a logged-in staff user"
+  include_context "with a logged-in staff user"
 
   it "succeeds" do
     click_link "Organizations"

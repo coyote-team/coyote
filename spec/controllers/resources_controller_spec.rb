@@ -24,7 +24,7 @@ RSpec.describe ResourcesController do
   end
 
   describe "as a signed-out user" do
-    include_context "signed-out user"
+    include_context "with no user signed in"
 
     it "requires login for all actions" do
       aggregate_failures do
@@ -53,7 +53,7 @@ RSpec.describe ResourcesController do
   end
 
   describe "as an author" do
-    include_context "signed-in author user"
+    include_context "with a signed-in author user"
 
     it "shows resources" do
       get :show, params: resource_params
@@ -94,7 +94,7 @@ RSpec.describe ResourcesController do
   end
 
   describe "as an editor" do
-    include_context "signed-in editor user"
+    include_context "with a signed-in editor user"
 
     it "succeeds for critical actions" do
       get :new, params: base_params

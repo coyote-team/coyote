@@ -12,6 +12,7 @@
 #  representations_count :integer          default(0), not null
 #  resource_type         :enum             default("image"), not null
 #  source_uri            :citext           not null
+#  source_uri_hash       :string
 #  status                :enum             default("active"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -26,7 +27,7 @@
 #  index_resources_on_organization_id_and_canonical_id  (organization_id,canonical_id) UNIQUE
 #  index_resources_on_priority_flag                     (priority_flag)
 #  index_resources_on_representations_count             (representations_count)
-#  index_resources_on_schemaless_source_uri             (reverse((source_uri)::text) text_pattern_ops)
+#  index_resources_on_schemaless_source_uri             (source_uri) USING gin
 #  index_resources_on_source_uri                        (source_uri)
 #  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
 #
@@ -37,7 +38,6 @@
 
 require "webmock/rspec"
 
-# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe Resource do
   subject { resource }
 
@@ -113,7 +113,7 @@ RSpec.describe Resource do
   end
 
   describe "#notify_webhook!" do
-    include_context "webhooks"
+    include_context "with webhooks"
 
     it "sends webhook notifications when resources are created" do
       resource = create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
@@ -212,34 +212,39 @@ RSpec.describe Resource do
     let!(:unrequired_metum) { create(:metum, is_required: false, organization: organization) }
 
     it "returns `true` if the resource has representations for all required meta" do
-      expect(resource.complete?).to eq(false)
-
       # No matter how many UN-required representations you create, it's not complete
       create_list(:representation, 2, metum: unrequired_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(false)
 
-      # Once you've created a representation for all REQUIRED meta, it's complete
+      # If you've created a representation for SOME of the required meta, it's still incomplete
+      create(:representation, metum: organization.meta.find_by!(name: "Alt"), resource: resource)
       create(:representation, metum: required_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(false)
 
+      # Once you've created a representation for ALL of the required meta, it's complete!!
       create(:representation, metum: other_required_metum, resource: resource)
-      expect(resource.reload.complete?).to eq(false)
+      expect(described_class.find(resource.id).complete?).to eq(true)
     end
   end
 
   describe "::find_or_initialize_by_canonical_id_or_source_uri" do
     let!(:resource) { create(:resource, canonical_id: "12345", source_uri: "https://www.example.com/example.jpg") }
+    let!(:other_resource) { create(:resource, canonical_id: "67890", source_uri: "https://www.example.com/example%20copy.jpg") }
 
     it "returns resources with a matching source URI" do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri)).to eq(resource)
+    end
+
+    it "returns resources with a matching, schema-less source URI" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(source_uri: resource.source_uri.gsub(/^https?:\/\//, "//"))).to eq(resource)
     end
 
     it "returns resources with both a matching canonical ID and a matching source URI" do
       expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: resource.source_uri)).to eq(resource)
     end
 
-    it "returns resources with a matching canonical ID" do
-      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: "https://www.not-example.com")).to eq(resource)
+    it "prefers finding by canonical_id when the source_uri also exists" do
+      expect(described_class.find_or_initialize_by_canonical_id_or_source_uri(canonical_id: resource.canonical_id, source_uri: other_resource.source_uri)).to eq(resource)
     end
 
     it "builds a new resource without a matching source URI or canonical ID" do
@@ -251,4 +256,3 @@ RSpec.describe Resource do
     end
   end
 end
-# rubocop:enable RSpec/MultipleExpectations

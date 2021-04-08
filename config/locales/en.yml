@@ -35,13 +35,22 @@ en:
   activerecord:
     attributes:
       organization:
-        footer: "Footer notes"
+        allow_authors_to_claim_resources: "Allow authors to describe resources without being assigned?"
+        footer: "Footer text"
       representation:
         ordinality: Order
       resource:
         host_uris: "Host URIs"
     models:
-      membership: Member
+      assignment:
+        one: Assigment
+        other: Assignments
+      membership:
+        one: Member
+        other: Members
+      metum:
+        one: Metum
+        other: Meta
       representation:
         one: Description
         other: Descriptions
@@ -49,13 +58,30 @@ en:
         one: Resource
         other: Resources
       resource_group:
-        one: Resource Group
-        other: Resource Groups
-      resource_link: Link
+        one: Group
+        other: Groups
+      resource_link:
+        one: Link
+        other: Links
     errors:
       models:
         resource:
           # cannot_overwrite: "cannot be overwritten without an `overwrite_representations` flag on the request"
+
+  filters:
+    resource:
+      assignments_user_id_eq: "Assigned to: %{value}"
+      priority_flag_eq:
+        "true": "Urgent"
+      resource_group_resources_resource_group_id_in: "Resource group"
+      scope:
+        assigned: "Assigned"
+        assigned_unrepresented: "Assigned / No description"
+        represented: "Has a description"
+        unassigned: "Unassigned"
+        unassigned_unrepresented: "Unassigned / No description"
+        unrepresented: "No description"
+        with_approved_representations: "Approved"
 
   helpers:
     select:
@@ -64,6 +90,10 @@ en:
       import:
         create: "Parse Spreadsheet"
         # update: "Save Changes"
+
+  assignment:
+    create_for_self: "Assign to me"
+    destroy_for_self: "Unassign myself"
 
   import:
     cannot_edit:

@@ -14,7 +14,7 @@ class ResourcePolicy < ApplicationPolicy
 
   # @return [Boolean] if the user can create representations of this resource
   def describe?
-    return true if RepresentationPolicy.new(organization_user, Representation.new(resource: record)).new?
+    return true if RepresentationPolicy.new(organization_user, Representation.new(resource: instance)).new?
   end
 
   # @return [true] everyone can list resources in their organizations

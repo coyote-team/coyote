@@ -1,0 +1,3 @@
+#/bin/sh
+
+rails db:test:prepare && rubocop && rspec

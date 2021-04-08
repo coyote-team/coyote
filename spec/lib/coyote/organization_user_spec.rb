@@ -22,9 +22,11 @@ RSpec.describe Coyote::OrganizationUser do
   end
 
   before do
-    allow(user).to receive_message_chain(:memberships, :find_by)
+    memberships = double(:memberships)
+    allow(memberships).to receive(:find_by)
       .with(organization: organization)
       .and_return(membership)
+    allow(user).to receive(:memberships).and_return(memberships)
   end
 
   specify { expect(subject.id).to eq(10) }
@@ -124,8 +126,11 @@ RSpec.describe Coyote::OrganizationUser do
 
   describe "with no membership in an organization" do
     before do
-      allow(user).to receive_message_chain(:memberships, :find_by)
+      memberships = double(:memberships)
+      allow(memberships).to receive(:find_by)
+        .with(organization: organization)
         .and_return(nil)
+      allow(user).to receive(:memberships).and_return(memberships)
     end
 
     specify { expect(subject.role).to eq(:none) }

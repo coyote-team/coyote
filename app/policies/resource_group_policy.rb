@@ -18,4 +18,8 @@ class ResourceGroupPolicy < ApplicationPolicy
   end
 
   alias_method :show?, :index?
+
+  def view_webhook_uri?
+    user.admin?
+  end
 end

@@ -50,7 +50,6 @@ RSpec.describe Representation do
 
   describe ".find_or_initialize_by_text" do
     it "converts HTML entities and strips extra characters" do
-      # rubocop:disable RSpec/MultipleExpectations
       representation = create(:representation, text: %(I'm a "very interesting" representation <with> much to say for myself.))
 
       standard_escape = "I&apos;m a &quot;very interesting&quot; representation &lt;with&gt; much to say for myself."
@@ -61,12 +60,11 @@ RSpec.describe Representation do
 
       extra_whitespace = "\t\t\r\n#{hex_escape}   "
       expect(described_class.find_or_initialize_by_text(extra_whitespace)).to eq(representation)
-      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 
   describe "#notify_webhook!" do
-    include_context "webhooks"
+    include_context "with webhooks"
 
     let!(:resource) { create(:resource, organization: resource_group.organization, resource_groups: [resource_group]) }
 
@@ -74,7 +72,6 @@ RSpec.describe Representation do
       WebMock.reset!
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
     it "sends webhook notifications when represenations are created (as approved)" do
       representation = create(:representation, resource: resource, status: :approved)
       expect(a_request(:post, resource_group.webhook_uri).with { |req|
@@ -130,7 +127,5 @@ RSpec.describe Representation do
       representation.update!(status: :ready_to_review)
       expect(a_request(:post, resource_group.webhook_uri)).not_to have_been_made
     end
-
-    # rubocop:enable RSpec/MultipleExpectations
   end
 end

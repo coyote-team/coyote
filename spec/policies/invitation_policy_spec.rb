@@ -3,7 +3,7 @@
 RSpec.describe InvitationPolicy do
   subject { described_class.new(org_user, Invitation) }
 
-  include_context "editor organization user"
+  include_context "with an editor organization user"
 
   it { is_expected.to forbid_action(:index) }
   it { is_expected.to forbid_action(:show) }
@@ -16,7 +16,7 @@ RSpec.describe InvitationPolicy do
       described_class.new(org_user, build_stubbed(:invitation, :editor))
     end
 
-    include_context "admin organization user"
+    include_context "with an admin organization user"
 
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:show) }
@@ -30,7 +30,7 @@ RSpec.describe InvitationPolicy do
       described_class.new(org_user, build_stubbed(:invitation, :admin))
     end
 
-    include_context "admin organization user"
+    include_context "with an admin organization user"
 
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:show) }
@@ -45,7 +45,7 @@ RSpec.describe InvitationPolicy do
       described_class.new(org_user, build_stubbed(:invitation, :owner))
     end
 
-    include_context "owner organization user"
+    include_context "with an owner organization user"
 
     it { is_expected.to forbid_action(:index) }
     it { is_expected.to forbid_action(:show) }

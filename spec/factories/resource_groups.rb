@@ -4,14 +4,15 @@
 #
 # Table name: resource_groups
 #
-#  id              :integer          not null, primary key
-#  default         :boolean          default(FALSE)
-#  name            :citext           not null
-#  token           :string
-#  webhook_uri     :citext
-#  created_at      :datetime
-#  updated_at      :datetime
-#  organization_id :integer          not null
+#  id                   :integer          not null, primary key
+#  auto_match_host_uris :string           default([]), not null, is an Array
+#  default              :boolean          default(FALSE)
+#  name                 :citext           not null
+#  token                :string
+#  webhook_uri          :citext
+#  created_at           :datetime
+#  updated_at           :datetime
+#  organization_id      :integer          not null
 #
 # Indexes
 #
