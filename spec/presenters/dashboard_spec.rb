@@ -6,8 +6,8 @@ RSpec.describe Dashboard, type: :integration do
   end
 
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, organization: organization) }
-  let!(:other_user) { create(:user, organization: organization) }
+  let!(:user) { create(:user, organization: organization, first_name: "Z", last_name: "Z") }
+  let!(:other_user) { create(:user, organization: organization, first_name: "A", last_name: "Z") }
 
   describe "with no resources or representations" do
     it "returns correct values" do # rubocop:disable RSpec/ExampleLength
@@ -34,7 +34,7 @@ RSpec.describe Dashboard, type: :integration do
         expect(subject.organization_unassigned_count).to eq(0)
         expect(subject.organization_unassigned_unrepresented_count).to eq(0)
         expect(subject.organization_unrepresented_count).to eq(0)
-        expect(subject.organization_users).to eq([user, other_user].sort { |a, b| a.last_name&.downcase <=> b.last_name&.downcase })
+        expect(subject.organization_users).to eq([other_user, user])
       end
     end
   end
