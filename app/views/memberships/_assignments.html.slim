@@ -1,2 +1,1 @@
-= list do
-  = render assignments.map(&:resource)
+= render "resources/list", resources: assignments.map(&:resource)

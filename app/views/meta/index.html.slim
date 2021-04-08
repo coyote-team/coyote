@@ -1,13 +1,10 @@
+h1= title "Meta for #{current_organization.name}"
 .table-wrapper: table
-  caption
-    h1= title "Meta for #{current_organization.name}"
   thead
     tr
       th Title
       th Required
       th Instructions
-      / - if can?(:edit, :meta)
-      /   th.table-cell-actions Actions
 
   tbody
     - list_of_meta.each do |metum|
@@ -15,9 +12,6 @@
         td.table-cell-link= link_to metum.name, metum
         td= metum.is_required? ? "Yes" : "No"
         td= simple_format(metum.instructions)
-        / - if can?(:edit, :meta)
-        /   td.table-cell-actions
-        /     = edit_link_to edit_metum_path(metum), title: "Edit this metum"
 
 - if policy(Metum).new?
   nav.toolbar.toolbar--footer

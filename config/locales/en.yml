@@ -42,7 +42,15 @@ en:
       resource:
         host_uris: "Host URIs"
     models:
-      membership: Member
+      assignment:
+        one: Assigment
+        other: Assignments
+      membership:
+        one: Member
+        other: Members
+      metum:
+        one: Metum
+        other: Meta
       representation:
         one: Description
         other: Descriptions
@@ -50,9 +58,11 @@ en:
         one: Resource
         other: Resources
       resource_group:
-        one: Resource Group
-        other: Resource Groups
-      resource_link: Link
+        one: Group
+        other: Groups
+      resource_link:
+        one: Link
+        other: Links
     errors:
       models:
         resource:
