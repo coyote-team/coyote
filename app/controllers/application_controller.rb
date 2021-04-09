@@ -83,6 +83,7 @@ class ApplicationController < ActionController::Base
     return @current_user if defined? @current_user
     @current_user = auth_token.presence && User.joins(:auth_tokens).find_by(auth_tokens: {token: auth_token})
   end
+  impersonates :user
 
   def current_user?
     current_user.present?

@@ -19,3 +19,4 @@ h1= title 'User Management (Staff)'
           = edit_link_to(edit_staff_user_path(user), title: "Edit #{user}")
           - if user != current_user
             = delete_link_to("Are you sure you want to archive #{user}?", staff_user_path(user), title: "Archive #{user}") unless user == current_user
+          = button_link_to("Impersonate", impersonate_staff_user_path(user), icon: :person_outline)

@@ -8,7 +8,7 @@ h1= title safe_join([sr_only("Membership for "), membership.user.to_s])
       th Role
       td= Coyote::OrganizationUser.new(membership.user, current_organization).role
 
-= show_toolbar(membership)
+= show_toolbar(membership, extra: can?(:impersonate, User) ? button_link_to("Impersonate", impersonate_staff_user_path(@membership.user), icon: :person_outline) : nil)
 
 h2 Assignments
 = render partial: 'assignments', object: membership.assignments
