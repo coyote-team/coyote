@@ -3,7 +3,8 @@
 module Staff
   # Staff-only CRUD functions for Users
   class UsersController < Staff::ApplicationController
-    before_action :set_user, only: %i[show edit update destroy]
+    before_action :set_user, only: %i[impersonate show edit update destroy]
+    skip_before_action :authorize_staff!, only: :stop_impersonating
 
     helper_method :user, :users
 
@@ -20,11 +21,21 @@ module Staff
     def edit
     end
 
+    def impersonate
+      impersonate_user(user)
+      redirect_to root_path, notice: "You are now impersonating #{user}"
+    end
+
     def index
       self.users = User.sorted
     end
 
     def show
+    end
+
+    def stop_impersonating
+      stop_impersonating_user
+      redirect_to root_path, notice: "You're not longer impersonating #{user}"
     end
 
     def update

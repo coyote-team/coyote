@@ -6,14 +6,15 @@
 if Rails.env.development?
   require "annotate"
   task :set_annotation_options do # rubocop:disable Rails/RakeEnvironment
+    binding.pry
     # You can override any of these by setting an environment variable of the
     # same name.
     Annotate.set_defaults(
       "active_admin"               => "false",
       "additional_file_patterns"   => [],
-      "routes"                     => "false",
+      "routes"                     => false,
       "models"                     => "true",
-      "position_in_routes"         => "after",
+      "position_in_routes"         => "bottom",
       "position_in_class"          => "before",
       "position_in_test"           => "before",
       "position_in_fixture"        => "before",
