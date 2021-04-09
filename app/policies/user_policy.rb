@@ -22,6 +22,10 @@ class UserPolicy < ApplicationPolicy
 
   alias_method :update?, :edit?
 
+  def impersonate?
+    organization_user.staff?
+  end
+
   # @return [false] we don't allow all users to be enumerated
   # @note will change when we build a separate admin UI
   def index?

@@ -26,6 +26,7 @@ gem "kaminari"
 gem "language_list"
 gem "metamagic" # meta
 gem "pg"
+gem "pretender"
 gem "puma"
 gem "pundit"
 gem "rake"

@@ -22,7 +22,7 @@ module ToolbarHelper
 
   def show_toolbar(instance, options = {})
     edit_or_delete = toolbar_item(tag: :div) {
-      item = "".html_safe
+      item = []
 
       can_edit = options.delete(:edit) { policy(instance).edit? }
       edit_options = options.delete(:edit_options) { {} }
@@ -33,7 +33,9 @@ module ToolbarHelper
       delete_options = options.delete(:delete_options) { {} }
       item << delete_link_to("Are you sure you want to #{delete_title.downcase} #{instance}?", {action: :show}, delete_options.reverse_merge(title: "#{delete_title} #{instance}")) if can_delete
 
-      item
+      item << Array(options.delete(:extra))
+
+      safe_join(item)
     }
 
     object_name = instance.class.model_name.human.titleize

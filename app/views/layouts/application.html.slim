@@ -27,6 +27,10 @@ html(lang="en")
 
   body class=(body_class)
     = raw analytical.body_prepend_javascript
+    - if !stateless? && current_user? && current_user.id != true_user.id
+      .notification.notification--warning
+        .notification-title You are currently impersonating #{current_user}
+        = link_to "Stop", stop_impersonating_staff_users_path, class: "notification-dismiss"
     nav#nav-main role="navigation": .nav-wrapper
       ruby:
         wants_primary_nav = !stateless? && current_organization?

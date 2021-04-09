@@ -19,6 +19,7 @@ RUN apk update \
   postgresql-client \
   postgresql-dev \
   ruby-json \
+  shared-mime-info \
   tzdata \
   yaml-dev \
   yarn

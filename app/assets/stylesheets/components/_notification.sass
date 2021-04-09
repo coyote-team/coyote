@@ -2,8 +2,6 @@
 // significant way
 .notification
   // background-color: rgba($text, 0.7)
-  border-radius: $border-radius
-  box-shadow: $shadow-level-2
 
   // color: $background
   display: flex
@@ -18,7 +16,7 @@
   .notification-dismiss
     appearance: none
     background-color: $text
-    border: 1px solid $text
+    border-left: 1px solid $text
     color: inherit
     cursor: pointer
     display: block
@@ -31,6 +29,10 @@
     &.notification--#{$name}
       background-color: $color
       color: $text-light
+
+      .notification-dismiss
+        background-color: darken($color, 5%)
+        border-color: darken($color, 10%)
 
 // COMPONENT: Notifications container: Contains notifications in an Android
 // "toast" style way
@@ -49,6 +51,8 @@
 
   .notification
     animation: notification-in 150ms $swift-in both
+    border-radius: $border-radius
+    box-shadow: $shadow-level-2
 
     @for $i from 1 through 10
       &:nth-child(#{$i})

@@ -11,9 +11,9 @@ if Rails.env.development?
     Annotate.set_defaults(
       "active_admin"               => "false",
       "additional_file_patterns"   => [],
-      "routes"                     => "false",
+      "routes"                     => false,
       "models"                     => "true",
-      "position_in_routes"         => "after",
+      "position_in_routes"         => "bottom",
       "position_in_class"          => "before",
       "position_in_test"           => "before",
       "position_in_fixture"        => "before",
