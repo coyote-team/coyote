@@ -21,17 +21,18 @@ table
   tbody
     tr
       &:focus-within
-        box-shadow: $focus-shadow
+        &,
+        td,
+        a
+          background-color: $tint-background
 
       &:hover
-        .table-cell-link
-          a,
-          a ~ td:not(.table-cell-link)
-            color: $tint
+        .table-cell-link a
+          color: $tint
 
-          &,
-          ~ td
-            background-color: $highlight
+        &,
+        ~ td
+          background-color: $highlight
 
   th, td
     padding: $gutter
@@ -52,7 +53,7 @@ table
       label
         align-items: center
         display: flex
-        padding: $list-padding $list-padding $list-padding 0
+        padding: $list-padding $gutter
 
         input
           margin-right: 0
