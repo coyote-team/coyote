@@ -2,7 +2,9 @@ ruby:
   form ||= nil
   can_edit = form && can?(:update, Resource)
   can_assign = form && can_assign?
+  group_by ||= nil
   limit ||= nil
+  groups = resources.group_by(group_by.to_proc) if group_by.present?
 
 - if resources.empty?
   p.empty-message There are no resources

@@ -20,19 +20,19 @@ table
 
   tbody
     tr
-      &:focus-within
-        &,
-        td,
-        a
-          background-color: $tint-background
-
       &:hover
-        .table-cell-link a
-          color: $tint
+        .table-cell-link
+          &,
+          ~ td
+            background-color: $highlight
 
+          a
+            color: $tint
+
+      .table-cell-link:focus-within
         &,
         ~ td
-          background-color: $highlight
+          background-color: $tint-background
 
   th, td
     padding: $gutter
@@ -101,7 +101,6 @@ table
     font-weight: 600
     letter-spacing: -0.03em
     text-align: left
-    text-transform: uppercase
     white-space: nowrap
 
   thead

@@ -27,6 +27,7 @@ module PermittedParameters
     metum_id
     notes
     ordinality
+    rejection_reason
     status
     text
   ].freeze

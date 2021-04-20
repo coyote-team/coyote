@@ -60,9 +60,7 @@ RSpec.describe Dashboard, type: :integration do
 
     before do
       create(:representation, :approved, resource: first_resource, author: user)
-      [first_resource, second_resource, third_resource].each do |resource|
-        create(:assignment, resource: resource, user: user)
-      end
+      create(:assignment, resource: second_resource, user: user)
 
       create(:assignment, resource: other_user_resource, user: other_user)
       third_resource.update!(created_at: latest_timestamp)

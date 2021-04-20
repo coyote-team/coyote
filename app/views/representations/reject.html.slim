@@ -1,0 +1,6 @@
+h1= title breadcrumb(representation.resource, representation, "History")
+= simple_form_for representation do |f|
+  = f.input_field :status, as: :hidden, value: "not_approved"
+  = f.input :rejection_reason
+  button.button.button--submit type="submit" Reject
+  = cancel_link_to representation_path(representation)

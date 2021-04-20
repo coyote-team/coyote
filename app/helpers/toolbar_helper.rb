@@ -49,8 +49,7 @@ module ToolbarHelper
 
   def submit_toolbar_item(form, submit_options: {}, cancel_options: {})
     toolbar_item do
-      form.button(:submit, combine_options({class: "toolbar-item"}, submit_options)) +
-        cancel_link_to(:back, cancel_options)
+      form.button(:submit, submit_options) + cancel_link_to(:back, cancel_options)
     end
   end
 

@@ -233,6 +233,7 @@ Rails.application.routes.draw do
     resources :representations do
       member do
         get :history
+        get :reject
       end
     end
 

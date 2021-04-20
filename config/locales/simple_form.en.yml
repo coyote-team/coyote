@@ -17,6 +17,7 @@ en:
       representation:
         content_uri: "Provide a link to a description for this resource"
         ordinality: "Order"
+        rejection_reason: "Why are your rejecting this description?"
         text: "Provide a visual description"
       resource_group:
         auto_match_host_uris: 'Host URI patterns'
@@ -24,6 +25,8 @@ en:
       organization:
         allow_authors_to_claim_resources: 'If you set this to "Yes", authors will be able to describe a resource without an editor assigning it to them'
         name_confirmation: "We ask you to do this just to avoid any accidental deletions"
+      representation:
+        rejection_reason: "Provide notes to help the author improve the description"
       resource_group:
         auto_match_host_uris: 'Add patterns for resource source URIs that should automatically lump them into this resource group'
         webhook_uri: "This advanced feature allows Coyote to notify external applications when descriptions change. The URI you enter here will receive an HTTP POST request containing details about the resource that changed. <a href='https://coyote-team.github.io/coyote/api/'>See the API docs for more information.</a>"

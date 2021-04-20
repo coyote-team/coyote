@@ -4,20 +4,21 @@
 #
 # Table name: representations
 #
-#  id           :bigint           not null, primary key
-#  content_type :string           default("text/plain"), not null
-#  content_uri  :citext
-#  language     :citext           not null
-#  notes        :text
-#  ordinality   :integer
-#  status       :enum             default("ready_to_review"), not null
-#  text         :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  author_id    :bigint           not null
-#  license_id   :bigint           not null
-#  metum_id     :bigint           not null
-#  resource_id  :bigint           not null
+#  id               :bigint           not null, primary key
+#  content_type     :string           default("text/plain"), not null
+#  content_uri      :citext
+#  language         :citext           not null
+#  notes            :text
+#  ordinality       :integer
+#  rejection_reason :text
+#  status           :enum             default("ready_to_review"), not null
+#  text             :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  author_id        :bigint           not null
+#  license_id       :bigint           not null
+#  metum_id         :bigint           not null
+#  resource_id      :bigint           not null
 #
 # Indexes
 #
@@ -60,6 +61,45 @@ RSpec.describe Representation do
 
       extra_whitespace = "\t\t\r\n#{hex_escape}   "
       expect(described_class.find_or_initialize_by_text(extra_whitespace)).to eq(representation)
+    end
+  end
+
+  describe "#check_assignment" do
+    let(:user) { create(:user) }
+    let(:resource) { representation.resource.tap { |resource| resource.save! } }
+    let(:representation) { build(:representation, author: user) }
+
+    it "ensures a user is assigned" do
+      expect {
+        representation.save!
+      }.to change(user.assignments, :count).from(0).to(1)
+      expect(user.assignments.first.resource).to eq(representation.resource)
+    end
+
+    it "doesn't re-assign users" do
+      Assignment.create!(
+        resource: resource,
+        user:     user,
+      )
+
+      expect {
+        representation.save!
+      }.not_to change(user.assignments, :count).from(1)
+      expect(user.assignments.first.resource).to eq(representation.resource)
+    end
+
+    it "updates the status of existing assignments to 'complete'" do
+      assignment = Assignment.create!(
+        resource: resource,
+        status:   :deleted,
+        user:     user,
+      )
+
+      expect {
+        representation.save!
+      }.to change {
+        assignment.reload.status
+      }.from("deleted").to("complete")
     end
   end
 

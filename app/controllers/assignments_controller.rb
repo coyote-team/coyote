@@ -13,7 +13,8 @@ class AssignmentsController < ApplicationController
     resources = current_organization.resources.where(id: resource_ids)
 
     assignments = resources.map { |resource|
-      Assignment.find_or_create_by!(resource: resource, user: assigned_user)
+      assignment = resource.assignments.find_or_initialize_by(user_id: assigned_user.id)
+      assignment.infer_status!
     }
 
     logger.info "Created '#{assignments}'"
@@ -24,7 +25,7 @@ class AssignmentsController < ApplicationController
 
   # DELETE /assignments/1
   def destroy
-    if assignment.destroy
+    if assignment.update(status: :deleted)
       logger.info "Deleted #{assignment}"
       redirect_back fallback_location: assignments_path, notice: assignment.user_id == current_user.id ? "You've unassigned yourself" : "The assignment has been deleted."
     else
@@ -38,20 +39,16 @@ class AssignmentsController < ApplicationController
   def index
     if params[:membership_id]
       @membership = current_organization.memberships.find(params[:membership_id])
-      @assignments = current_organization.assignments.where(user_id: @membership.user_id).by_priority
+      @assignments = current_organization.assignments.active.where(user_id: @membership.user_id).by_priority
       render :member_index
     else
-      assignments = current_organization.assignments.to_a
-
-      assignments.sort_by! do |a|
-        [a.user_last_name, a.user_email].tap(&:compact!).first
-      end
-
+      assignments = current_organization.assignments.active.by_user_name
       memberships = current_organization.memberships.index_by(&:user_id)
 
-      self.assigned_users = assignments.each_with_object(Hash.new(0)) do |assignment, hash|
+      self.assigned_users = assignments.each_with_object({}) do |assignment, hash|
         membership = memberships[assignment.user_id]
-        hash[membership] = hash[membership] + 1 if membership.present?
+        hash[membership] ||= []
+        hash[membership].push(assignment)
         hash
       end
     end

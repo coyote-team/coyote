@@ -29,6 +29,7 @@ class Membership < ApplicationRecord
 
   belongs_to :user
   belongs_to :organization
+  has_many :assignments, through: :user
 
   delegate :first_name, :last_name, :email, to: :user, allow_nil: true
 

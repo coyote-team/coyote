@@ -5,9 +5,7 @@
     '
     = icon(:checkmark)
 
-= simple_form_for representation, html: { class: 'form form--inline' } do |f|
-  = f.input_field :status, as: :hidden, value: "not_approved"
-  button.button aria-label="Reject representation ##{representation.id}" data-confirm="Are you sure you want to reject this description?" type="submit"
-    span Reject
-    '
-    = icon(:close)
+= link_to reject_representation_path(representation), aria: {label: "Reject representation ##{representation.id}"}, class: "button" do
+  span Reject
+  '
+  = icon(:close)

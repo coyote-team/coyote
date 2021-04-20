@@ -4,20 +4,21 @@
 #
 # Table name: representations
 #
-#  id           :bigint           not null, primary key
-#  content_type :string           default("text/plain"), not null
-#  content_uri  :citext
-#  language     :citext           not null
-#  notes        :text
-#  ordinality   :integer
-#  status       :enum             default("ready_to_review"), not null
-#  text         :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  author_id    :bigint           not null
-#  license_id   :bigint           not null
-#  metum_id     :bigint           not null
-#  resource_id  :bigint           not null
+#  id               :bigint           not null, primary key
+#  content_type     :string           default("text/plain"), not null
+#  content_uri      :citext
+#  language         :citext           not null
+#  notes            :text
+#  ordinality       :integer
+#  rejection_reason :text
+#  status           :enum             default("ready_to_review"), not null
+#  text             :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  author_id        :bigint           not null
+#  license_id       :bigint           not null
+#  metum_id         :bigint           not null
+#  resource_id      :bigint           not null
 #
 # Indexes
 #
@@ -67,6 +68,10 @@ class Representation < ApplicationRecord
 
   before_save :clean_text
   before_create :set_ordinality
+  after_create :check_assignment
+  before_destroy :destroy_assignments
+  after_save :sync_assignment_status, if: :status_changed?
+
   after_commit :notify_webhook!, if: :should_notify_webhook?
   delegate :notify_webhook!, to: :resource, allow_nil: true
 
@@ -81,6 +86,10 @@ class Representation < ApplicationRecord
   # @see https://github.com/activerecord-hackery/ransack#using-scopesclass-methods
   def self.ransackable_scopes(_ = nil)
     %i[approved by_ordinality by_status_and_ordinality not_approved ready_to_review]
+  end
+
+  def assignments
+    Assignment.where(resource_id: resource_id, user_id: author_id)
   end
 
   def status_value
@@ -99,8 +108,23 @@ class Representation < ApplicationRecord
 
   private
 
+  # If a user has described a resource, we want to retroactively ensure they have an assignment to
+  # that resource - we'll also mark it as complete, since they just described it. That status is
+  # subject to rollback if the description is rejected.
+  def check_assignment
+    assignments.upsert({
+      resource_id: resource_id,
+      status:      :complete,
+      user_id:     author_id,
+    }, unique_by: %i[resource_id user_id])
+  end
+
   def clean_text
     self.text = self.class.clean_text(text)
+  end
+
+  def destroy_assignments
+    assignments.delete_all
   end
 
   def must_have_text_or_content_uri
@@ -123,5 +147,11 @@ class Representation < ApplicationRecord
 
     # Only notify the webhook if it has changed from approved to something else
     status_change.first == Coyote::Representation::STATUSES[:approved]
+  end
+
+  def sync_assignment_status
+    # Effectively 'unassign' users if the thing was marked as not approved
+    assignment_status = not_approved? ? :deleted : :complete
+    assignments.update_all(status: assignment_status)
   end
 end

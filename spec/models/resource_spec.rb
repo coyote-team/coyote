@@ -150,7 +150,7 @@ RSpec.describe Resource do
     let(:metum) { organization.meta.find_by!(name: "Alt") }
     let(:metum_2) { organization.meta.find_by!(name: "Long") }
 
-    let(:representation_attributes) { attributes_for(:representation) }
+    let(:representation_attributes) { attributes_for(:representation).except(:author, :license, :metum, :resource) }
 
     describe "on new records" do
       let(:resource) {

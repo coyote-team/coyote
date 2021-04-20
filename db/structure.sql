@@ -201,7 +201,8 @@ CREATE TABLE public.assignments (
     user_id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    resource_id integer NOT NULL
+    resource_id integer NOT NULL,
+    status integer DEFAULT 0 NOT NULL
 );
 
 
@@ -564,7 +565,8 @@ CREATE TABLE public.representations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     notes text,
-    ordinality integer
+    ordinality integer,
+    rejection_reason text
 );
 
 
@@ -1864,6 +1866,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210312210908'),
 ('20210317190514'),
 ('20210325221939'),
-('20210325224106');
+('20210325224106'),
+('20210405190521'),
+('20210417203301');
 
 

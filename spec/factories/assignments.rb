@@ -5,6 +5,7 @@
 # Table name: assignments
 #
 #  id          :integer          not null, primary key
+#  status      :integer          default("pending"), not null
 #  created_at  :datetime
 #  updated_at  :datetime
 #  resource_id :integer          not null

@@ -77,8 +77,9 @@ h2 Related Resources
 - else
   p No other resources have been linked to this resource.
 
-h2 Assignments
-= list_of resource, :assignments, item: {class: "list-item--has-link"} do |assignment|
-  = link_to assignment.user, assignment, class: "list-item-link"
-  - if can?(:destroy, assignment)
-    span.list-item-actions= delete_link_to "Are you sure you want to unassign #{assignment.user}?", assignment
+- if can?(:index, Assignment)
+  h2 Assignments
+  = list_of resource, :active_assignments, item: {class: "list-item--has-link"} do |assignment|
+    = link_to assignment.user, assignment, class: "list-item-link"
+    - if can?(:destroy, assignment)
+      span.list-item-actions= delete_link_to "Are you sure you want to unassign #{assignment.user}?", assignment

@@ -11,7 +11,7 @@ tr
     = cropped_resource_image(resource)
     span.resource-title= resource.name
   td.table-cell-card--tag
-    - if resource.assignments.active.any?
+    - if resource.active_assignments.any?
       = tag_for(:assigned, hint: "Assignment status")
     - else
       = tag_for(:unassigned, hint: "Assignment status")

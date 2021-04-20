@@ -37,10 +37,6 @@
     content: ""
     display: none
 
-  &.tag--outline
-    background-color: $input
-    color: $text
-
   @each $name, $color in $status
     $background: lighten($color, 45%)
     $text: darken($color, 25%)
@@ -49,6 +45,3 @@
       background-color: $background
       border-color: $background
       color: $text
-
-      // &.tag--outline
-      //   background-color: lighten($color, 40%)

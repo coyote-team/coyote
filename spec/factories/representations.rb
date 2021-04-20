@@ -4,20 +4,21 @@
 #
 # Table name: representations
 #
-#  id           :bigint           not null, primary key
-#  content_type :string           default("text/plain"), not null
-#  content_uri  :citext
-#  language     :citext           not null
-#  notes        :text
-#  ordinality   :integer
-#  status       :enum             default("ready_to_review"), not null
-#  text         :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  author_id    :bigint           not null
-#  license_id   :bigint           not null
-#  metum_id     :bigint           not null
-#  resource_id  :bigint           not null
+#  id               :bigint           not null, primary key
+#  content_type     :string           default("text/plain"), not null
+#  content_uri      :citext
+#  language         :citext           not null
+#  notes            :text
+#  ordinality       :integer
+#  rejection_reason :text
+#  status           :enum             default("ready_to_review"), not null
+#  text             :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  author_id        :bigint           not null
+#  license_id       :bigint           not null
+#  metum_id         :bigint           not null
+#  resource_id      :bigint           not null
 #
 # Indexes
 #
@@ -73,18 +74,12 @@ FactoryBot.define do
     end
 
     transient do
-      resource { nil }
-      metum { nil }
-      author { nil }
-      license { nil }
-      organization { build(:organization) }
+      organization { instance.resource&.organization || create(:organization) }
     end
 
-    before(:create) do |representation, evaluator|
-      representation.resource = evaluator.resource || build(:resource, organization: evaluator.organization)
-      representation.metum = evaluator.metum || build(:metum, organization: evaluator.organization)
-      representation.author = evaluator.author || build(:user, organization: evaluator.organization)
-      representation.license = evaluator.license || build(:license)
-    end
+    resource { build(:resource, organization: organization) }
+    metum { organization.meta.first || build(:metum, organization: organization) }
+    author { build(:user) }
+    license { License.first || build(:license) }
   end
 end

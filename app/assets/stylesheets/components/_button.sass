@@ -67,9 +67,9 @@ input[type=submit][class="button"],
   &:focus, &:hover
     background-color: darken($tint, 5%) !important
 
-.button--quiet,
-.button--subtle
+.button--quiet
   border-color: transparent
 
-.button--subtle
-  color: $tint
+  &:hover
+    background-color: $border-light
+    border-color: $border-light

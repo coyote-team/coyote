@@ -82,7 +82,7 @@ RSpec.describe AssignmentsController do
         assignment
         expect {
           delete :destroy, params: assignment_params
-        }.to change(Assignment, :count).by(-1)
+        }.to change { assignment.reload.status }.from("pending").to("deleted")
       end
     end
   end
@@ -102,13 +102,13 @@ RSpec.describe AssignmentsController do
       expect {
         delete :destroy, params: assignment_params
         expect(response).to be_redirect
-      }.to change { Assignment.exists?(assignment.id) }
-        .from(true).to(false)
+      }.to change { assignment.reload.status }
+        .from("pending").to("deleted")
 
       expect {
         post :create, params: new_assignment_params
         expect(response).to be_redirect
-      }.to change(new_assignment_user.assignments, :count)
+      }.to change(new_assignment_user.assignments.not_deleted, :count)
         .from(0).to(1)
     end
   end

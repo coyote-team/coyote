@@ -65,6 +65,7 @@ class Resource < ApplicationRecord
   has_many :subject_resource_links, foreign_key: :subject_resource_id, class_name: :ResourceLink, inverse_of: :subject_resource, dependent: :destroy
   has_many :object_resource_links, foreign_key: :object_resource_id, class_name: :ResourceLink, inverse_of: :object_resource, dependent: :destroy
   has_many :assignments, inverse_of: :resource, dependent: :destroy
+  has_many :active_assignments, -> { not_deleted }, class_name: "Assignment", inverse_of: :resource
   has_many :meta, through: :representations
 
   has_many :resource_group_resources, inverse_of: :resource, dependent: :destroy
@@ -76,9 +77,9 @@ class Resource < ApplicationRecord
   scope :represented, -> { where.not(representations_count: 0) }
   scope :unrepresented, -> { where(representations_count: 0) }
   scope :assigned, -> { includes(:assignments).references(:assignments).where.not(assignments: {id: nil}) }
-  scope :unassigned, -> { includes(:assignments).references(:assignments).where(assignments: {id: nil}) }
+  scope :unassigned, -> { includes(:active_assignments).references(:active_assignments).where(assignments: {id: nil}) }
   scope :assigned_unrepresented, -> { unrepresented.joins(:assignments) }
-  scope :unassigned_unrepresented, -> { unrepresented.left_outer_joins(:assignments).where(assignments: {resource_id: nil}) }
+  scope :unassigned_unrepresented, -> { unrepresented.unassigned }
   scope :in_organization, ->(organization) { where(organization_id: organization) }
   scope :by_date, -> { order(created_at: :desc) }
   scope :by_priority, -> { order(priority_flag: :desc) }
@@ -169,7 +170,7 @@ class Resource < ApplicationRecord
   end
 
   def assigned_to?(user)
-    assignments.find_by(user_id: user.id)
+    active_assignments.find_by(user_id: user.id)
   end
 
   def best_representation
@@ -302,7 +303,7 @@ class Resource < ApplicationRecord
 
   def unassigned?
     return @unassigned if defined? @unassigned
-    @unassigned = assignments.none?
+    @unassigned = active_assignments.none?
   end
 
   def unrepresented?

@@ -6,7 +6,7 @@
 class RepresentationsController < ApplicationController
   include PermittedParameters
 
-  before_action :set_representation, only: %i[show edit update destroy history]
+  before_action :set_representation, only: %i[show edit update destroy history reject]
   before_action :set_current_resource_and_organization, only: %i[new edit create update]
   before_action :authorize_general_access, only: %i[index]
   before_action :authorize_create_access, only: %i[new create]
@@ -46,6 +46,9 @@ class RepresentationsController < ApplicationController
       author:   current_user,
     })
     representation.metum ||= current_organization.meta.is_required.first
+  end
+
+  def reject
   end
 
   def show
