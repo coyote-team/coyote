@@ -1,33 +1,25 @@
+=xl-screen
+  @media screen and (min-width: $breakpoint-xl-screen)
+    @content
+
 =large-screen
   @media screen and (min-width: $breakpoint-large-screen)
     @content
 
-=desktop
-  @media screen and (min-width: $breakpoint-desktop)
+=medium-screen
+  @media screen and (max-width: #{$breakpoint-medium-screen})
     @content
 
-=tablet
-  @media screen and (max-width: $breakpoint-tablet) and (min-width: #{$breakpoint-mobile + 1px})
+=small-screen
+  @media screen and (max-width: $breakpoint-small-screen)
     @content
 
-=non-desktop
-  @media screen and (max-width: $breakpoint-tablet)
+=larger-than-small-screen
+  @media screen and (min-width: #{$breakpoint-small-screen + 1px})
     @content
 
-=mobile
-  @media screen and (max-width: $breakpoint-mobile)
-    @content
-
-=non-mobile
-  @media screen and (min-width: #{$breakpoint-mobile + 1px})
-    @content
-
-=mobile-portrait
-  @media screen and (max-width: $breakpoint-mobile-portrait)
-    @content
-
-=non-mobile-portrait
-  @media screen and (min-width: $breakpoint-mobile-portrait + 1px)
+=tiny-screen
+  @media screen and (max-width: $breakpoint-tiny-screen)
     @content
 
 =ie-only

@@ -11,7 +11,7 @@ nav#nav-main
     display: flex
     height: $nav-height
 
-    +non-mobile
+    +larger-than-small-screen
       justify-content: space-between
 
   // Logo
@@ -63,14 +63,14 @@ nav#nav-main
     // text-transform: lowercase
     z-index: $z-index-modal + 1
 
-    +non-mobile
+    +larger-than-small-screen
       display: none
 
   .nav-primary
     align-items: stretch
     display: flex
 
-    +mobile
+    +small-screen
       display: none
 
       @at-root .nav-toggled &
@@ -92,16 +92,16 @@ nav#nav-main
       position: relative
 
       a
-        +non-mobile
+        +larger-than-small-screen
           padding: 0 $input-padding
 
 
-        +large-screen
+        +xl-screen
           font-size: $font-size
           padding: 0 $gutter
 
 
-        +mobile
+        +small-screen
           font-size: $font-size
           padding: 0 $gutter
 
@@ -119,13 +119,13 @@ nav#nav-main
 
       &.active,
       &:active
-        +mobile
+        +small-screen
           a
             background-color: $tint
             color: $background
 
 
-        +non-mobile
+        +larger-than-small-screen
           a
             color: $tint
 
@@ -141,7 +141,7 @@ nav#nav-main
       &:last-child
         margin-right: 0
 
-    +mobile
+    +small-screen
       margin-left: auto
       padding-right: $input-padding
 

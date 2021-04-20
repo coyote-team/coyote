@@ -11,7 +11,7 @@
     border-radius: 1000px
 
   &--scrollable
-    +mobile
+    +small-screen
       overflow: auto
 
   .segmented-control-item
@@ -31,16 +31,16 @@
       display: inline-block
       margin-left: $input-padding
 
-      +desktop
+      +large-screen
         &:first-child
           margin-left: 0
 
 
-      +non-desktop
+      +medium-screen
         display: none
 
     .segmented-control-item-icon
-      +desktop
+      +large-screen
         display: none
 
         + .segmented-control-item-label
@@ -70,7 +70,7 @@
         position: relative
 
     &--collapse
-      +non-desktop
+      +medium-screen
         display: none
 
     + .segmented-control-item

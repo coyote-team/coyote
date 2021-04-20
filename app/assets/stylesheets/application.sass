@@ -70,12 +70,11 @@ $swift-in: cubic-bezier(0, 0, 0.2, 1)
 $swift-out: cubic-bezier(0.4, 0, 1, 1)
 
 // MEDIA QUERIES
-$breakpoint-large-screen: 1280px
-$breakpoint-desktop: 1025px
-$breakpoint-tablet: 1024px
-$breakpoint-mobile: 768px
-$breakpoint-mobile-portrait: 480px
-$breakpoint-non-mobile: $breakpoint-mobile + 1px
+$breakpoint-xl-screen: 1280px
+$breakpoint-large-screen: 1025px
+$breakpoint-medium-screen: $breakpoint-large-screen - 1px
+$breakpoint-small-screen: 768px
+$breakpoint-tiny-screen: 480px
 
 // Import all of the mixins we need to build our site
 @import lib/*

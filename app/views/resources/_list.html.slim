@@ -7,16 +7,16 @@ ruby:
 - if resources.empty?
   p.empty-message There are no resources
 - else
-  table#resources class=("table--has-checkboxes" if form)
+  table.table--responsive#resources class=("table--has-checkboxes" if form)
     thead: tr
       - if form
         th.table-cell-checkbox: label
           input data-select-all="#results" type="checkbox"
-          span.sr-only Select all
+          span.select-all Select all
       th
         - if form
           div data-checkbox-conditional="show"
-            span.non-mobile-only data-checkbox-conditional-prefix=true
+            span.larger-than-small-screen data-checkbox-conditional-prefix=true
               ' selected:
               '
             span.field
@@ -36,7 +36,7 @@ ruby:
       th: span data-checkbox-conditional="hide" Progress
       th.table-cell-actions
         .sr-only Actions
-        div(aria-hidden=true)= segmented_control class: "non-portrait-only", title: {tag: :h3, text: "View options"} do
+        div.large-screen-only(aria-hidden=true)= segmented_control title: {tag: :h3, text: "View options"} do
           = segmented_control_item pressed: true, data: { toggle_target: "#resources", toggle_off: "table--cards" }, icon: "list", title: "List View"
           = segmented_control_item pressed: false, data: { toggle_target: "#resources", toggle_on: "table--cards" }, icon: "grid", title: "Grid View"
 

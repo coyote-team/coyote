@@ -1,5 +1,6 @@
 .resource-title
   display: block
+  word-wrap: break-word
 
 .resource-image
   background-color: $input
@@ -15,7 +16,8 @@
     padding-bottom: 100%
     width: 100%
 
-  @at-root .table--cards &
++in-card-table
+  .resource-image
     border-bottom-left-radius: 0
     border-bottom-right-radius: 0
     flex: 1
@@ -23,6 +25,7 @@
 
     &::before
       padding-bottom: percentage(2 / 3)
+
 
 .resource-steps
   display: flex
@@ -79,5 +82,6 @@
   padding-top: $gutter
   text-align: center
 
-  @at-root .table--cards &
++in-card-table
+  .resource-status
     display: none

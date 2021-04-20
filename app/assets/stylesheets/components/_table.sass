@@ -13,6 +13,11 @@ table
     transform: translateX(-$checkbox-strike-area)
     width: calc(100% + #{$checkbox-strike-area})
 
+    .select-all
+      display: inline-block
+      margin-left: $gutter
+      line-height: 1.5
+
   tbody
     tr
       &:focus-within
@@ -38,13 +43,6 @@ table
       white-space: nowrap
       width: 10px
 
-      // > *
-      //   display: inline-block
-
-      // .button:last-child, > *:last-child .button
-      //   margin-bottom: 0
-      //   margin-right: 0
-
     &.table-cell-checkbox
       border-top-width: 0
       padding: 0
@@ -52,7 +50,8 @@ table
       width: $checkbox-strike-area
 
       label
-        display: block
+        align-items: center
+        display: flex
         padding: $list-padding $list-padding $list-padding 0
 
         input
@@ -60,6 +59,9 @@ table
 
     &.table-cell-checkbox label,
     &.table-cell-link a
+      word-break: break-word
+      word-wrap: break-word
+
       &:after
         bottom: 0
         content: ""
@@ -118,7 +120,7 @@ table
         td
           color: $placeholder
 
-      +non-mobile
+      +larger-than-small-screen
         th
           // padding-right: $gutter
           width: 10px
@@ -129,7 +131,7 @@ table
             word-break: break-word
 
 
-      +mobile
+      +small-screen
         th
           display: block
 
@@ -139,7 +141,7 @@ table
             word-break: break-all
 
 // SUBCOMPONENT: A table that renders rows as cards
-table.table--cards
+=cardify-table
   &,
   thead,
   th,
@@ -155,18 +157,22 @@ table.table--cards
       th:not(.table-cell-checkbox):not(.table-cell-checkbox)
         flex: 1
 
-      th.table-cell-checkbox + th ~ th:not(.table-cell-actions)
-        position: absolute
-        visibility: hidden
+      th.table-cell-checkbox
+        width: auto
+
+        ~ th:not(.table-cell-actions)
+          position: absolute
+          visibility: hidden
 
   tbody
     display: grid
     grid-auto-rows: $gutter + 2px
     grid-gap: $gutter
-    grid-template-columns: repeat(4, 1fr)
+    grid-template-columns: repeat(3, 1fr)
 
     tr
       background-color: $highlight
+      border: 1px solid $border-light
       border-radius: $border-radius
       display: flex
       flex-wrap: wrap
@@ -220,6 +226,59 @@ table.table--cards
 
               &::before
                 padding-bottom: percentage(2 / 3)
+
+  &.table--has-checkboxes
+    transform: none
+    width: 100%
+
+// Mixin to allow styling of card-type tables once. Necessary because we can't mix in a media query
+// for `.table--responsive` with a straight-up `.table--cards`
+=in-card-table
+  table.table--cards
+    @content
+
+  +medium-screen
+    table.table--responsive
+      @content
+
+=not-in-card-table
+  +large-screen
+    table:not(.table--cards)
+      @content
+
+
+  +medium-screen
+    table:not(.table--responsive)
+      @content
+
++not-in-card-table
+  &.table--has-checkboxes .select-all
+    +sr-only
+
+
++in-card-table
+  +cardify-table
+
+
++tiny-screen
+  table.table--responsive
+    grid-template-columns: repeat(2, 1fr)
+
+
+// Only show two cards when sticking w/a grid layout
++medium-screen
+  table.table--responsive tbody
+    grid-template-columns: repeat(2, 1fr)
+
+
+// Stack cards on small screens (instead of doing a grid)
++small-screen
+  table.table--responsive tbody
+    display: block
+
+    tr
+      margin-bottom: $gutter
+
 
 .table-wrapper
   max-width: calc(100% + 6px)

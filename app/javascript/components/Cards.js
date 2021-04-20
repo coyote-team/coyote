@@ -20,7 +20,7 @@ export function Cards(container) {
 }
 
 Cards.prototype.calculateRows = function () {
-  if (this.container.classList.contains("table--cards")) {
+  if (this.renderAsCards()) {
     const rows = this.body.querySelectorAll("tr")
     for (var i = 0; i < rows.length; i++) {
       var child = rows[i]
@@ -34,11 +34,14 @@ Cards.prototype.calculateRowForItem = function (item) {
   const rowHeightValue = window.getComputedStyle(this.body).getPropertyValue("grid-auto-rows")
   var rowHeight = parseInt(rowHeightValue)
   var rowGap = parseInt(window.getComputedStyle(this.body).getPropertyValue("grid-row-gap"))
-  console.log(rowHeight, rowGap)
   var rowSpan = Math.ceil((item.scrollHeight + rowGap) / (rowHeight + rowGap))
   item.style.gridRowEnd = "span " + rowSpan
 }
 
 Cards.prototype.calculateRowForItemOnImageLoad = function (loaded) {
   this.calculateRowForItem(loaded.elements[0])
+}
+
+Cards.prototype.renderAsCards = function () {
+  return this.container.classList.contains("table--cards") || window.innerWidth <= 1024
 }

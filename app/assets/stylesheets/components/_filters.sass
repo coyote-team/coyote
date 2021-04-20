@@ -12,7 +12,7 @@
   top: 0
   z-index: $z-index-modal
 
-  +non-mobile
+  +larger-than-small-screen
     left: auto
     width: $gutter * 30
 
@@ -57,7 +57,7 @@ body.filters-toggled
     animation: nav-primary-in 150ms $swift-in
     display: block
 
-    +non-mobile
+    +larger-than-small-screen
       animation: filter-in 150ms $swift-in
 
   .filter-toggle::before

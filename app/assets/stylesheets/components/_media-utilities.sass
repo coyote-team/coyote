@@ -1,16 +1,12 @@
 // COMPONENT: Media utilities: used to hide content outside of its intended
 // media context
-@include non-mobile
-  .mobile-only
++medium-screen
+  .large-screen-only
     display: none !important
     speak: none
 
-@include mobile-portrait
-  .non-portrait-only
-    display: none !important
-    speak: none
 
-@include mobile
-  .non-mobile-only
++small-screen
+  .larger-than-small-screen
     display: none !important
     speak: none
