@@ -6,14 +6,18 @@
   .split-view-item
     = simple_form_for target, validate: true, html: { multipart: true } do |f|
       = f.error_notification
-
       = f.association :metum, include_blank: false, collection: available_meta
       - available_meta.each do |metum|
         div(data-dependent-on="representation[metum_id]:#{metum.id}" style=(metum == target.metum ? "" : "display: none"))
           = simple_format metum.instructions
-
       = f.input :resource_id, as: :hidden, input_html: { value: current_resource.id, name: 'resource_id' } if representation.new_record?
       = f.input :text, as: :text, input_html: {rows: 3}
+      - if rejection = f.object.previous_rejection_for?(current_user)
+        .form-field
+          .form-field-label Previous reason for rejection
+          = simple_format rejection.reason
+          = user_tag(rejection.user)
+
       hr data-label="... or ..."
       = f.input :content_uri, as: :url, required: false
 

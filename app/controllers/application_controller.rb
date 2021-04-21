@@ -158,7 +158,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    redirect_to new_session_path(Session::RETURN_TO_KEY => request.path) unless current_user?
+    if current_user?
+      Thread.current[User::ID_KEY] = current_user.id
+    else
+      redirect_to new_session_path(Session::RETURN_TO_KEY => request.path)
+    end
   end
 
   def return_to_path

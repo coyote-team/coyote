@@ -20,6 +20,12 @@ h1= title breadcrumb(representation.resource, representation)
         tr
           th Status
           td= representation_status_tag(representation)
+        - if representation.not_approved? && can?(:view_rejection, representation)
+          th Reason for rejection
+          td= list_of representation, :rejections do |rejection|
+              .list-item-body
+                blockquote.description= simple_format(rejection.reason)
+                = user_tag rejection.user
         tr
           th Metum
           td= metum_tag(representation.metum, hint: false)

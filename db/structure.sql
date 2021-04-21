@@ -548,6 +548,39 @@ ALTER SEQUENCE public.password_resets_id_seq OWNED BY public.password_resets.id;
 
 
 --
+-- Name: representation_rejections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.representation_rejections (
+    id bigint NOT NULL,
+    representation_id bigint,
+    user_id bigint,
+    reason text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: representation_rejections_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.representation_rejections_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: representation_rejections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.representation_rejections_id_seq OWNED BY public.representation_rejections.id;
+
+
+--
 -- Name: representations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -565,8 +598,7 @@ CREATE TABLE public.representations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     notes text,
-    ordinality integer,
-    rejection_reason text
+    ordinality integer
 );
 
 
@@ -941,6 +973,13 @@ ALTER TABLE ONLY public.password_resets ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: representation_rejections id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.representation_rejections ALTER COLUMN id SET DEFAULT nextval('public.representation_rejections_id_seq'::regclass);
+
+
+--
 -- Name: representations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1098,6 +1137,14 @@ ALTER TABLE ONLY public.organizations
 
 ALTER TABLE ONLY public.password_resets
     ADD CONSTRAINT password_resets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: representation_rejections representation_rejections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.representation_rejections
+    ADD CONSTRAINT representation_rejections_pkey PRIMARY KEY (id);
 
 
 --
@@ -1323,6 +1370,20 @@ CREATE UNIQUE INDEX index_organizations_on_name ON public.organizations USING bt
 --
 
 CREATE INDEX index_password_resets_on_user_id ON public.password_resets USING btree (user_id);
+
+
+--
+-- Name: index_representation_rejections_on_representation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representation_rejections_on_representation_id ON public.representation_rejections USING btree (representation_id);
+
+
+--
+-- Name: index_representation_rejections_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_representation_rejections_on_user_id ON public.representation_rejections USING btree (user_id);
 
 
 --
@@ -1674,6 +1735,14 @@ ALTER TABLE ONLY public.resources
 
 
 --
+-- Name: representation_rejections fk_rails_b9bd075422; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.representation_rejections
+    ADD CONSTRAINT fk_rails_b9bd075422 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: representations fk_rails_bdad6334d2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1719,6 +1788,14 @@ ALTER TABLE ONLY public.imports
 
 ALTER TABLE ONLY public.resource_links
     ADD CONSTRAINT fk_rails_e34756464a FOREIGN KEY (object_resource_id) REFERENCES public.resources(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: representation_rejections fk_rails_f68380ebbc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.representation_rejections
+    ADD CONSTRAINT fk_rails_f68380ebbc FOREIGN KEY (representation_id) REFERENCES public.representations(id);
 
 
 --
@@ -1868,6 +1945,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210325221939'),
 ('20210325224106'),
 ('20210405190521'),
-('20210417203301');
+('20210417203301'),
+('20210421221224');
 
 
