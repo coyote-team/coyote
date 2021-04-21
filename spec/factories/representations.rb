@@ -4,21 +4,20 @@
 #
 # Table name: representations
 #
-#  id               :bigint           not null, primary key
-#  content_type     :string           default("text/plain"), not null
-#  content_uri      :citext
-#  language         :citext           not null
-#  notes            :text
-#  ordinality       :integer
-#  rejection_reason :text
-#  status           :enum             default("ready_to_review"), not null
-#  text             :text
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  author_id        :bigint           not null
-#  license_id       :bigint           not null
-#  metum_id         :bigint           not null
-#  resource_id      :bigint           not null
+#  id           :bigint           not null, primary key
+#  content_type :string           default("text/plain"), not null
+#  content_uri  :citext
+#  language     :citext           not null
+#  notes        :text
+#  ordinality   :integer
+#  status       :enum             default("ready_to_review"), not null
+#  text         :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  author_id    :bigint           not null
+#  license_id   :bigint           not null
+#  metum_id     :bigint           not null
+#  resource_id  :bigint           not null
 #
 # Indexes
 #

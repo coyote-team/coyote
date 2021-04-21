@@ -31,6 +31,7 @@
 #
 
 class User < ApplicationRecord
+  ID_KEY = :user_id
   MINIMUM_PASSWORD_LENGTH = 8
 
   attr_accessor :current_password, :password_confirmation, :remember_me

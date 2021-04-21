@@ -26,7 +26,7 @@ module ListHelper
     tag.span(class: "list-item-value") { block_given? ? yield : value }
   end
 
-  def list_of(parent, relationship, options = {}, &block)
+  def list_of(parent, relationship = nil, options = {}, &block)
     item_options = options.delete(:item) { {} }
     relationship_component(parent, relationship, options) do |items|
       list(options) {

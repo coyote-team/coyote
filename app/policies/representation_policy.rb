@@ -37,6 +37,10 @@ class RepresentationPolicy < ApplicationPolicy
     organization_user.author? && organization_user.user == instance.author
   end
 
+  def view_rejection?
+    update?
+  end
+
   alias_method :edit?, :update?
   alias_method :destroy?, :update?
 end

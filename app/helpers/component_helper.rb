@@ -12,9 +12,9 @@ module ComponentHelper
     ])
   end
 
-  def relationship_component(parent, relationship, options = {})
+  def relationship_component(parent, relationship = nil, options = {})
     empty = options.delete(:empty)
-    items = parent.send(relationship)
+    items = relationship.present? ? parent.send(relationship) : parent
     limit = options.delete(:limit)
     view_more_url = options.delete(:view_more)
 

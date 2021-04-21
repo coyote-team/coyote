@@ -4,21 +4,20 @@
 #
 # Table name: representations
 #
-#  id               :bigint           not null, primary key
-#  content_type     :string           default("text/plain"), not null
-#  content_uri      :citext
-#  language         :citext           not null
-#  notes            :text
-#  ordinality       :integer
-#  rejection_reason :text
-#  status           :enum             default("ready_to_review"), not null
-#  text             :text
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  author_id        :bigint           not null
-#  license_id       :bigint           not null
-#  metum_id         :bigint           not null
-#  resource_id      :bigint           not null
+#  id           :bigint           not null, primary key
+#  content_type :string           default("text/plain"), not null
+#  content_uri  :citext
+#  language     :citext           not null
+#  notes        :text
+#  ordinality   :integer
+#  status       :enum             default("ready_to_review"), not null
+#  text         :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  author_id    :bigint           not null
+#  license_id   :bigint           not null
+#  metum_id     :bigint           not null
+#  resource_id  :bigint           not null
 #
 # Indexes
 #
@@ -38,12 +37,15 @@
 
 # An alternate sensory impression of a Resource
 class Representation < ApplicationRecord
+  attr_reader :rejection_reason
+
   belongs_to :resource, inverse_of: :representations, counter_cache: true
   belongs_to :metum
   belongs_to :author, inverse_of: :authored_representations, class_name: :User
   belongs_to :license
 
   has_one :organization, through: :resource
+  has_many :rejections, class_name: "RepresentationRejection", inverse_of: :representation
 
   enum status: Coyote::Representation::STATUSES
 
@@ -61,6 +63,7 @@ class Representation < ApplicationRecord
   scope :with_distinct_meta, -> { Representation.default_scoped.select("DISTINCT ON(metum_id) metum_id, *").from(by_ordinality, table_name).unscope(:order) }
   scope :with_metum, ->(metum_id) { where(metum_id: metum_id) }
   scope :with_metum_named, ->(name) { joins(:metum).where(meta: {name: name}) }
+  scope :with_author, ->(author) { where(author_id: author) }
 
   audited
 
@@ -90,6 +93,18 @@ class Representation < ApplicationRecord
 
   def assignments
     Assignment.where(resource_id: resource_id, user_id: author_id)
+  end
+
+  def previous_rejection_for?(user)
+    (user == author && rejections.by_creation(:desc).first) ||
+      RepresentationRejection.where(representation: resource.representations.not_approved.with_author(user)).by_creation(:desc).first
+  end
+
+  def rejection_reason=(new_reason)
+    rejections.build(
+      reason:  new_reason,
+      user_id: Thread.current[User::ID_KEY],
+    )
   end
 
   def status_value

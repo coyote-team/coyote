@@ -4,9 +4,9 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  scope :by_created_at, -> { order(created_at: :asc) }
-  scope :by_id, -> { order(id: :asc) }
-  scope :by_creation, -> { by_created_at.by_id }
+  scope :by_created_at, ->(direction = :asc) { order(created_at: direction) }
+  scope :by_id, ->(direction = :asc) { order(id: direction) }
+  scope :by_creation, ->(direction = :asc) { by_created_at(direction).by_id(direction) }
 
   def self.enum(definitions)
     definitions.each do |attribute, values|
