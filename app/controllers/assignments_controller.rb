@@ -47,6 +47,7 @@ class AssignmentsController < ApplicationController
 
       self.assigned_users = assignments.each_with_object({}) do |assignment, hash|
         membership = memberships[assignment.user_id]
+        next if membership.blank?
         hash[membership] ||= []
         hash[membership].push(assignment)
         hash

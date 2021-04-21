@@ -1,18 +1,20 @@
 h1= title "Assignments for #{current_organization.name}"
-.table-wrapper: table
-  thead
-    tr
-      th Resource
-      th Status
-
-  tbody
-    - assigned_users.each do |membership, assignments|
+- if assigned_users.blank?
+  p.empty-message There are no assignments
+- else
+  .table-wrapper: table
+    thead
       tr
-        th.table-cell-link(colspan=2)= link_to(user_tag(membership.user), membership_assignments_path(membership))
-      - assignments.each do |assignment|
+        th Resource
+        th Status
+    tbody
+      - assigned_users.each do |membership, assignments|
         tr
-          td.table-cell-link= link_to assignment_path(assignment) do
-            = cropped_resource_image(assignment.resource)
-            span.resource-title= assignment.resource.name
-          td= icon(assignment.pending? ? :more_horizontal : :checkmark)
+          th.table-cell-link(colspan=2)= link_to(user_tag(membership.user), membership_assignments_path(membership))
+        - assignments.each do |assignment|
+          tr
+            td.table-cell-link= link_to assignment_path(assignment) do
+              = cropped_resource_image(assignment.resource)
+              span.resource-title= assignment.resource.name
+            td= icon(assignment.pending? ? :more_horizontal : :checkmark)
 

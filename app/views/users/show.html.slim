@@ -10,7 +10,7 @@ h1= title(user.to_s)
 
 h2= Representation.model_name.human(count: 2)
 - if representations_scope.empty?
-  p.empty This user has no #{representations_scope.model_name.human(count: 2).downcase}.
+  p.empty-message This user has no #{representations_scope.model_name.human(count: 2).downcase}.
 - else
   .table-wrapper: table
     thead
