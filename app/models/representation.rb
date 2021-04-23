@@ -45,7 +45,7 @@ class Representation < ApplicationRecord
   belongs_to :license
 
   has_one :organization, through: :resource
-  has_many :rejections, class_name: "RepresentationRejection", inverse_of: :representation
+  has_many :rejections, class_name: "RepresentationRejection", inverse_of: :representation, dependent: :destroy
 
   enum status: Coyote::Representation::STATUSES
 
