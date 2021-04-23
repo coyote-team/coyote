@@ -6,8 +6,9 @@
     display: flex
     font-weight: bold
 
-    .icon
+    .icon-chevron-right-outline
       flex: 0
+      transition: transform 250ms
 
     .collapse-toggle-label
       flex: 1
@@ -18,7 +19,7 @@
 
   &.collapse--toggled
     .collapse-toggle .icon-chevron-right-outline
-      @extend .icon-chevron-down-outline
+      transform: rotate(90deg)
 
     .collapse-content
       display: block

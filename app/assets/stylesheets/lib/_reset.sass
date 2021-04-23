@@ -8,8 +8,11 @@
   &:focus
     border-color: $tint !important
     border-radius: $border-radius
-    box-shadow: $focus-shadow
     outline: none
+
+  +with-focus-visible
+    box-shadow: $focus-shadow
+
 
   &::-moz-focus-inner
     border: 0

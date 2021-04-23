@@ -71,12 +71,16 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     return @current_organization if defined? @current_organization
-    @current_organization = organization_scope.find(params[:organization_id])
+    @current_organization = if params.key?(:organization_id)
+      organization_scope.find_by(id: params[:organization_id])
+    elsif organization_scope.one?
+      organization_scope.first
+    end
   end
 
   def current_organization?
     return @has_current_organization if defined? @has_current_organization
-    @has_current_organization = current_user.present? && organization_scope.exists?(params[:organization_id])
+    @has_current_organization = current_user.present? && current_organization.present?
   end
 
   def current_user

@@ -110,6 +110,9 @@ table
     ~ tbody th
       padding: $list-padding
 
+    th.table-cell-actions
+      padding-right: 0
+
   tbody
     tr
       td,
@@ -160,7 +163,7 @@ table
       th.table-cell-checkbox
         width: auto
 
-        ~ th:not(.table-cell-actions)
+        ~ th:not(.table-cell-actions) *[data-checkbox-conditional="hide"]
           position: absolute
           visibility: hidden
 
@@ -283,5 +286,5 @@ table
 .table-wrapper
   max-width: calc(100% + 6px)
   margin: 0 -3px -3px
-  padding: 0 3px 3px
+  padding: 0 3px ($gutter * 1.5 + 3px)
   overflow: auto

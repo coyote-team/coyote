@@ -63,14 +63,15 @@ module LinkHelper
   # Used to render top-level navigation, so the current page gets an "active" CSS class applied
   # @param text [String] the link text to display
   # @param path [String] the target of the link
-  def nav_menu_link(text, path, exact: false)
+  def nav_menu_link(text, path, options = {})
+    exact = options.delete(:exact) { false }
     @uri ||= URI.parse(request.url)
     path = url_for(path) unless path.respond_to?(:match?)
     path = URI.parse(path).path if path.match?(URL_TEST)
     is_active = exact ? path == @uri.path : /^#{path}/.match?(@uri.path)
-    link_class = is_active ? "active" : ""
+    link_class = Array(options.delete(:class)).push(is_active ? "active" : "")
 
-    tag.li(class: link_class) do
+    tag.li(options.merge(class: link_class)) do
       link_to(text, path)
     end
   end

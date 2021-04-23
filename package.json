@@ -5,7 +5,8 @@
     "@rails/activestorage": "^6.0.3-2",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "5.2.1",
-    "bootstrap": "^5.0.0-beta2"
+    "bootstrap": "^5.0.0-beta2",
+    "focus-visible": "^5.2.0"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

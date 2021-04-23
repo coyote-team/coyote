@@ -1,8 +1,7 @@
-// import "@popperjs/core"
-// import "bootstrap/js/dist/dropdown"
-import "bootstrap/js/dist/dropdown"
 import * as ActiveStorage from "@rails/activestorage"
 import UJS from "@rails/ujs"
+import "bootstrap/js/dist/dropdown"
+import "focus-visible"
 
 import "../polyfills"
 import {
