@@ -10,6 +10,7 @@ end
 gem "rails", "~> 6.0.1"
 
 gem "acts_as_list"
+gem "activerecord-postgres_enum"
 gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"

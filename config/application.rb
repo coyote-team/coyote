@@ -37,7 +37,7 @@ module Coyote
 
     config.eager_load_paths << Rails.root.join("lib") # http://blog.arkency.com/2014/11/dont-forget-about-eager-load-when-extending-autoload/
 
-    config.active_record.schema_format = :sql
+    config.active_record.schema_format = :ruby
 
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
