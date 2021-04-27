@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_landing_path(user = current_user)
-    !user.staff? && user.organizations.one? ? organization_path(user.organizations.first) : organizations_path
+    !user.staff? && user.organizations.one? ? organization_path(user.organizations.first, organization_id: nil) : organizations_path(organization_id: nil)
   end
 
   def log_user_in(user, options = {})
