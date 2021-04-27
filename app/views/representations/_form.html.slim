@@ -11,7 +11,7 @@
         div(data-dependent-on="representation[metum_id]:#{metum.id}" style=(metum == target.metum ? "" : "display: none"))
           = simple_format metum.instructions
       = f.input :resource_id, as: :hidden, input_html: { value: current_resource.id, name: 'resource_id' } if representation.new_record?
-      = f.input :text, as: :text, input_html: {rows: 3}
+      = f.input :text, as: :text, input_html: {rows: 6}
       - if rejection = f.object.previous_rejection_for?(current_user)
         .form-field
           .form-field-label Previous reason for rejection
