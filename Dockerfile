@@ -37,25 +37,25 @@ RUN bundle config --global frozen 1 \
 RUN yarn install
 
 # Accept the remainder of the args (prevents rebuilding gems when we don't need to)
-ARG database_url
+# ARG database_url
 ARG env="production"
-ARG base_key
-ARG master_key
-ARG staging_key
+# ARG base_key
+# ARG master_key
+# ARG staging_key
 
-ENV DATABASE_URL ${database_url}
+# ENV DATABASE_URL ${database_url}
 ENV RAILS_ENV ${env:-"production"}
 ENV RACK_ENV ${RAILS_ENV}
 ENV NODE_ENV ${RAILS_ENV}
 ENV RAILS_LOG_TO_STDOUT 1
-ENV RAILS_BASE_KEY ${base_key}
-ENV RAILS_MASTER_KEY ${master_key}
-ENV RAILS_STAGING_KEY ${staging_key}
+# ENV RAILS_BASE_KEY ${base_key}
+# ENV RAILS_MASTER_KEY ${master_key}
+# ENV RAILS_STAGING_KEY ${staging_key}
 ENV PORT 3000
 
 # Copy and configure the app
 ADD . ./
-RUN if [ "$RAILS_ENV" = "production" ]; then RAILS_MASTER_KEY=${master_key} bundle exec rails assets:precompile && bundle exec rails assets:precompile:pages; fi
+RUN if [ "$RAILS_ENV" = "production" ]; then bundle exec rails assets:precompile && bundle exec rails assets:precompile:pages; fi
 
 # Launch!
 EXPOSE $PORT
