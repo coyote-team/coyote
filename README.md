@@ -90,15 +90,13 @@ You can regenerate development environment data by running `bundle exec rake dev
 
 ### Asynchronous Workers
 
-Coyote uses Cloudtasker, which has an identical API to Sidekiq, but processes jobs by pushing them up to Google Tasks, which in turn call back down to the web server. This prevents the request/response cycle from blocking, and allows us to use the flexible Cloud Run environment to expand and contract with worker demand the same way it does with traffic.
+Coyote uses Sidekiq to process jobs. This prevents the request/response cycle from blocking.
 
-`docker-compose` will ensure the Cloudtasker worker is running, but you can also run it manually:
+`docker-compose` will ensure the Sidekiq worker is running, but you can also run it manually:
 
 ```
-bundle exec cloudtasker
+bundle exec sidekiq
 ```
-
-The biggest difference between this and Sidekiq is that you will notice Cloudtasker tasks running in your web server logs, and not the terminal where you ran Cloudtasker. And that's about it.
 
 ## <a name="development-workflow-anchor"></a>Development Workflow
 

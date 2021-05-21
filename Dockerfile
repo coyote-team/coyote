@@ -4,14 +4,10 @@ WORKDIR /coyote
 
 ARG bundle_without="development test"
 
-# This is needed to make Google's RPC stuff work - ugh
-ENV LD_LIBRARY_PATH /lib64
-
 RUN apk update \
   && apk upgrade \
   && apk add --update --no-cache \
   build-base \
-  gcompat \
   git \
   libxml2-dev \
   libxslt-dev \
@@ -31,7 +27,6 @@ ADD Gemfile Gemfile.lock package.json yarn.lock ./
 RUN gem install bundler:`tail -1 Gemfile.lock | xargs` --no-document --conservative
 RUN bundle config --global frozen 1 \
   && bundle config set without "${bundle_without}" \
-  && bundle config build.google-protobuf --with-cflags=-D__va_copy=va_copy \
   && bundle config build.nokogiri --use-system-libraries \
   && bundle install --jobs=$(getconf _NPROCESSORS_ONLN) \
   && rm -rf /usr/local/bundle/cache/*.gem \

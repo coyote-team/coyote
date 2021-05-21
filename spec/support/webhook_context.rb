@@ -19,7 +19,7 @@ end
 
 RSpec.shared_context "without webhooks" do
   around do |example|
-    Cloudtasker::Testing.fake! do
+    Sidekiq::Testing.fake! do
       example.run
       expect(NotifyWebhookWorker.jobs).to be_empty
     end

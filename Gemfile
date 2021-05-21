@@ -15,9 +15,7 @@ gem "analytical" # analytics
 gem "apipie-rails"
 gem "audited"
 gem "bcrypt", "~> 3.1.7"
-# gem "aws-sdk-s3", require: false # Comment this in to use S3 instead of Google Cloud Storage - see config/storage.yml
 gem "bootsnap", require: false
-gem "cloudtasker"
 gem "faraday"
 gem "ffi", require: false
 gem "htmlentities"
@@ -36,12 +34,17 @@ gem "redcarpet"
 gem "roo"
 gem "safe-pg-migrations"
 gem "sass-rails"
+gem "sidekiq"
 gem "simple_form"
 gem "slim-rails"
 gem "sprockets"
 gem "sprockets-rails"
 gem "tzinfo-data"
 gem "webpacker"
+
+# Cloud storage options
+gem "aws-sdk-s3", require: false # Comment this in to use S3 or Digital Ocean
+# gem "google-cloud-storage", require: false # Comment this in to use Google Cloud Storage
 
 group :development, :test do
   gem "factory_bot_rails", require: false
@@ -109,9 +112,6 @@ unless RUBY_PLATFORM.match?(/darwin|jruby|cygwin|mswin|mingw|bccwin|wince|emx/)
 end
 
 group :production do
-  gem "google-cloud-storage", require: false
-  gem "google-protobuf", "3.12.0.rc.1", platforms: ["ruby"], require: false
-  gem "grpc", "1.27.0", platforms: ["ruby"], require: false
   gem "newrelic_rpm"
   gem "sentry-raven"
 end

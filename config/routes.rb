@@ -70,6 +70,7 @@
 #                                PUT    /organizations/:organization_id/resources/:id(.:format)                                  resources#update
 #                                DELETE /organizations/:organization_id/resources/:id(.:format)                                  resources#destroy
 #         history_representation GET    /organizations/:organization_id/representations/:id/history(.:format)                    representations#history
+#          reject_representation GET    /organizations/:organization_id/representations/:id/reject(.:format)                     representations#reject
 #                representations GET    /organizations/:organization_id/representations(.:format)                                representations#index
 #                                POST   /organizations/:organization_id/representations(.:format)                                representations#create
 #             new_representation GET    /organizations/:organization_id/representations/new(.:format)                            representations#new
@@ -143,16 +144,12 @@
 #             rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
 #      update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
 #           rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
-#                    cloudtasker        /cloudtasker                                                                             Cloudtasker::Engine
 #
 # Routes for FederalOffense::Engine:
 #      destroy_message POST /:id/destroy(.:format) federal_offense/messages#destroy
 # destroy_all_messages POST /destroy_all(.:format) federal_offense/messages#destroy_all
 #             messages GET  /                      federal_offense/messages#index
 #              message GET  /:id(.:format)         federal_offense/messages#show
-#
-# Routes for Cloudtasker::Engine:
-#    run POST /run(.:format) cloudtasker/worker#run
 
 Rails.application.routes.draw do
   apipie

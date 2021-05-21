@@ -39,6 +39,14 @@ google:
     project_id: "<%= Credentials.dig(:google, :project) %>"
   bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
+digitalocean:
+  service: S3
+  endpoint: <%= Credentials.dig(:digital_ocean, :endpoint) %>
+  access_key_id: <%= Credentials.dig(:digital_ocean, :access_key_id) %>
+  secret_access_key: <%= Credentials.dig(:digital_ocean, :secret_access_key) %>
+  region: <%= Credentials.dig(:digital_ocean, :region) %>
+  bucket: <%= Credentials.dig(:digital_ocean, :bucket) %>
+
 # mirror:
 #   service: Mirror
 #   primary: local

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationWorker
-  include Cloudtasker::Worker
-
-  cloudtasker_options lock: :until_executed, on_conflict: :reject
+  def self.inherited(base)
+    base.class_eval do
+      include Sidekiq::Worker
+      sidekiq_options lock: :until_executed, on_conflict: :reject
+    end
+  end
 
   private
 

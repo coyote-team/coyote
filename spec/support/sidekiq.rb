@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require "cloudtasker/testing"
+require "sidekiq/testing"
 
 # Run all jobs inline - this ensures jobs are called as we run the tests
-Cloudtasker::Testing.inline!
+Sidekiq::Testing.inline!
 
 RSpec.configure do |config|
-  config.around :each, :cloudtasker do |example|
-    method = case example.metadata[:cloudtasker]
+  config.around :each, :sidekiq do |example|
+    method = case example.metadata[:sidekiq]
     when :fake, false
       :fake
     else
       :inline
     end
 
-    Cloudtasker::Testing.send("#{method}!") do
+    Sidekiq::Testing.send("#{method}!") do
       example.run
     end
   end
