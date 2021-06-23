@@ -291,6 +291,8 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.5.1)
     redis (4.2.5)
+    redis-namespace (1.8.1)
+      redis (>= 3.0.4)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     roo (2.8.3)
@@ -475,6 +477,7 @@ DEPENDENCIES
   rake
   ransack
   redcarpet
+  redis-namespace
   roo
   rspec-rails (>= 3.6.1)
   rubocop
