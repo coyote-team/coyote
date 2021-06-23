@@ -6,7 +6,9 @@ namespace :db do
     migrate = true
     version = ActiveRecord::Base.connection.select_value("SELECT version FROM schema_migrations LIMIT 1")
     raise StandardError.new("Needs database setup") if version.blank?
-  rescue
+    Rails.logger.warn "Preparing to run migrations..."
+  rescue => error
+    Rails.logger.warn "Cannot run migrations. Trying setup instead: #{error.inspect}"
     migrate = false
   ensure
     if migrate
