@@ -171,7 +171,10 @@ module Api
     end
 
     def resource_for(resource_params)
-      current_organization.resources.find_or_initialize_by_canonical_id_or_source_uri(resource_params)
+      resource_id = params.dig(:resource, :id)
+      resource = resource_id.presence && current_organization.resources.find_by(id: resource_id)
+      resource ||= current_organization.resources.find_or_initialize_by_canonical_id_or_source_uri(resource_params)
+      resource
     end
   end
 end
