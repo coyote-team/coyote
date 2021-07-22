@@ -100,7 +100,7 @@ class Resource < ApplicationRecord
   paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
   # max_paginates_per Rails.configuration.x.resource_api_page_size # see https://github.com/kaminari/kaminari#configuring-max-per_page-value-for-each-model-by-max_paginates_per
 
-  delegate :name, to: :resource_group, prefix: true
+  delegate :name, to: :resource_group, prefix: true, allow_nil: true
 
   def self.find_or_initialize_by_canonical_id_or_source_uri(options)
     canonical_id = options[:canonical_id]
