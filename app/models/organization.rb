@@ -31,7 +31,7 @@ class Organization < ApplicationRecord
   after_create :create_default_resource_group
 
   validates :name, presence: true
-  validates :name, uniqueness: true, if: :name_changed?
+  validates :name, uniqueness: {conditions: -> { where.not(is_deleted: true) }}, if: :name_changed?
   validates :name, confirmation: {if: -> { name_confirmation.present? }}
 
   belongs_to :default_license, class_name: "License"

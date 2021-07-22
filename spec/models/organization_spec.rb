@@ -29,4 +29,11 @@ RSpec.describe Organization do
     organization = described_class.create!(default_license: create(:license, :universal), name: "Test Organization")
     expect(organization.meta.size).to eq(Metum::DEFAULTS.size)
   end
+
+  it "validates uniqueness for non-deleted organizations" do
+    original_organization = create(:organization, name: "TEST")
+    original_organization.update_attribute(:is_deleted, true)
+    new_organization = build(:organization, name: "TEST")
+    expect(new_organization).to be_valid
+  end
 end
