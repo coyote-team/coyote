@@ -21,6 +21,7 @@ class ParseImportSpreadsheetWorker < ApplicationWorker
 
     import.update!(sheet_mappings: sheets, status: :parsed)
   rescue => error
+    Raven.capture_exception(error)
     import.update(error: error.message, sheet_mappings: {}, status: :parse_failed)
   end
 end
