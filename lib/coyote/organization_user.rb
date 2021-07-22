@@ -14,7 +14,7 @@ module Coyote
     #   @return [Boolean] whether or not the user is a Coyote staff member with cross-organizational authority
     # @!attribute [r] id
     #   @return [Integer] database ID of the underlying User object
-    delegate :id, :staff?, :first_name, :last_name, :email, :==, to: :user
+    delegate :id, :staff?, :first_name, :last_name, :name, :email, :==, to: :user
 
     # @!attribute [r] user
     #   @return [User] the user whose membership we are modeling
