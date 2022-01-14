@@ -9,8 +9,8 @@ services:
     environment:
       POSTGRES_DB: coyote_development
       POSTGRES_PASSWORD: postgres
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     volumes:
       - postgres:/var/lib/postgresql/data
 
@@ -35,6 +35,7 @@ services:
     entrypoint: ./bin/docker_entrypoint
     environment:
       BOOTSNAP_CACHE_DIR: /bundle/bootsnap
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/
       HOST: http://web:3000/
       NODE_ENV: ${NODE_ENV:-development}
       RAILS_ENV: ${RAILS_ENV:-development}
