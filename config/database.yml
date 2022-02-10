@@ -6,7 +6,7 @@ default: &default
 development:
   <<: *default
   database: coyote_development
-  url: <%= ENV.fetch('DATABASE_URL') %>
+  url: <%= ENV["DATABASE_URL"] %>
 
 test: &test
   <<: *default
