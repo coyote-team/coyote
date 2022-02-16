@@ -42,7 +42,6 @@ gem "sprockets"
 gem "sprockets-rails"
 gem "tzinfo-data"
 gem "webpacker"
-gem "appsignal"
 
 # Cloud storage options
 gem "aws-sdk-s3", require: false # Comment this in to use S3 or Digital Ocean
