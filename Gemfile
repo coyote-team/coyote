@@ -113,5 +113,5 @@ unless RUBY_PLATFORM.match?(/darwin|jruby|cygwin|mswin|mingw|bccwin|wince|emx/)
 end
 
 group :production do
-  gem "sentry-raven"
+  gem "appsignal"
 end
