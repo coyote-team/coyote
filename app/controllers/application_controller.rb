@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
 
   before_action :require_user
 
-  before_action :configure_sentry if defined? Raven
-
   analytical
 
   helper_method :body_class,
@@ -61,13 +59,6 @@ class ApplicationController < ActionController::Base
     @body_class.push(class_name) if class_name.present?
     @body_class.join(" ")
   end
-
-  # :nocov:
-  def configure_sentry
-    Raven.user_context(id: current_user&.id, username: current_user.username, name: current_user.name) if current_user?
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
-  end
-  # :nocov:
 
   def current_organization
     return @current_organization if defined? @current_organization
