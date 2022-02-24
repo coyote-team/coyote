@@ -1,5 +1,5 @@
 default: &defaults
-  push_api_key: "<%= Credentials.fetch(:appsignal, :push_api_key) %>"
+  push_api_key: "<%= Credentials.fetch(:appsignal, :push_api_key) { "" } %>"
 
   # Your app's name
   name: "Coyote"
