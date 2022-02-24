@@ -84,11 +84,3 @@ html(lang="en")
     = javascript_pack_tag "application"
     = yield :javascript_footer
     javascript:
-      (() => {
-          const appsignalKey = #{Credentials.dig(:appsignal, :frontend_push_api_key).to_json};
-          if (Appsignal instanceof Function && appsignalKey !== null) {
-              window.appsignal = new Appsignal({
-                  key: appsignalKey
-              })
-          }
-      })();
