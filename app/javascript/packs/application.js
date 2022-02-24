@@ -1,3 +1,4 @@
+import Appsignal from "@appsignal/javascript"
 import * as ActiveStorage from "@rails/activestorage"
 import UJS from "@rails/ujs"
 import "bootstrap/js/dist/dropdown"
@@ -53,3 +54,5 @@ document.querySelectorAll("[role=tablist]").forEach(tabs => new Tabs(tabs))
 document.querySelectorAll("[data-toggle-target]").forEach(function (control) {
   const _ = new ToggleControl(control)
 })
+
+window.Appsignal = Appsignal

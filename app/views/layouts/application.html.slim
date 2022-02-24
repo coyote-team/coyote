@@ -81,14 +81,14 @@ html(lang="en")
     = raw analytical.body_append_javascript
 
     = javascript_include_tag "https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"
-    script integrity="sha384-Nrg+xiw+qRl3grVrxJtWazjeZmUwoSt0FAVsbthlJ5OMpx0G08bqIq3b/v0hPjhB" crossorigin="anonymous" src="https://browser.sentry-cdn.com/5.15.4/bundle.min.js"
     = javascript_pack_tag "application"
     = yield :javascript_footer
     javascript:
-      var sentryDSN = #{Credentials.dig(:sentry, :dsn).to_json};
-      if (typeof Sentry !== "undefined" && sentryDSN && sentryDSN !== "") {
-        Sentry.init({
-          dsn: sentryDSN,
-          environment: "#{ENV['STAGING'] ? 'staging' : 'production'}"
-        });
-      }
+      (() => {
+          const appsignalKey = #{Credentials.dig(:appsignal, :frontend_push_api_key).to_json};
+          if (Appsignal instanceof Function && appsignalKey !== null) {
+              window.appsignal = new Appsignal({
+                  key: appsignalKey
+              })
+          }
+      })();

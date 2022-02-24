@@ -69,6 +69,8 @@ GEM
       rake (>= 10.4, < 14.0)
     apipie-rails (0.5.18)
       rails (>= 4.1)
+    appsignal (3.0.21)
+      rack
     ast (2.4.2)
     audited (4.10.0)
       activerecord (>= 4.2, < 6.2)
@@ -361,8 +363,6 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
-    sentry-raven (3.1.2)
-      faraday (>= 1.0)
     shellany (0.0.1)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
@@ -438,6 +438,7 @@ DEPENDENCIES
   analytical
   annotate
   apipie-rails
+  appsignal
   audited
   aws-sdk-s3
   bcrypt (~> 3.1.7)
@@ -486,7 +487,6 @@ DEPENDENCIES
   safe-pg-migrations
   sass-rails
   selenium-webdriver
-  sentry-raven
   shoulda-matchers
   sidekiq
   simple_form

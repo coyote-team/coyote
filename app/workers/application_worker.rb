@@ -12,8 +12,8 @@ class ApplicationWorker
 
   # :nocov:
   def on_error(error)
-    if defined? Raven
-      Raven.capture_exception(exception)
+    if defined? Appsignal
+      Appsignal.set_error(exception)
     else
       raise error
     end
