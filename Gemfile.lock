@@ -476,6 +476,7 @@ DEPENDENCIES
   rake
   ransack
   redcarpet
+  redis
   redis-namespace
   roo
   rspec-rails (>= 3.6.1)

@@ -43,7 +43,7 @@ ruby:
           = segmented_control_item pressed: false, data: { toggle_target: "#resources", toggle_on: "table--cards" }, icon: "grid", title: "Grid View"
 
     tbody
-      = render partial: "resources/resource", collection: limit ? resources.limit(limit) : resources, locals: { form: form }
+      = render partial: "resources/resource", collection: limit ? resources.limit(limit) : resources, locals: { form: form }, cached: true
       - if limit && resources.count > limit
         tr: td.table-cell-link colspan="4"= view_more_link resources_path(q: {resource_group_resources_resource_group_id_in: resource_group.id})
 

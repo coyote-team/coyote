@@ -34,7 +34,7 @@ ruby:
           = segmented_control_item pressed: false, data: { toggle_target: "#representations", toggle_on: "table--cards" }, icon: "grid", title: "Grid View"
 
     tbody
-      = render partial: "representations/representation", collection: representations, locals: { form: form }
+      = render partial: "representations/representation", collection: representations, locals: { form: form }, cached: true
 
   - if respond_to?(:record_filter) && record_filter&.browser_pagination_link_params.present?
     = toolbar do

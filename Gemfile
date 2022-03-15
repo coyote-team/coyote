@@ -114,4 +114,5 @@ end
 
 group :production do
   gem "appsignal"
+  gem "redis"
 end
