@@ -2,7 +2,6 @@
 *.rbc
 *.sassc
 .DS_Store
-.DS_Store
 .capybara.html
 .sass-cache
 .yardoc
@@ -30,7 +29,6 @@ config/credentials/test.key
 
 # Asset pipeline leftovers
 .yarn-integrity
-node_modules
 public/packs
 public/packs-test
 yarn-debug.log*

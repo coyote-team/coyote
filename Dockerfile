@@ -1,4 +1,4 @@
-FROM ruby:2.6.6-alpine3.11
+FROM ruby:2.7.6-alpine3.15
 
 WORKDIR /coyote
 
@@ -6,7 +6,7 @@ ARG bundle_without="development test"
 
 RUN apk update \
   && apk upgrade \
-  && apk add --update --no-cache \
+  && apk add --update --no-cache --virtual .gyp python2 make g++ \
   build-base \
   git \
   libxml2-dev \
