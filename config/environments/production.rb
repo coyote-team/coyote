@@ -54,19 +54,19 @@ Rails.application.configure do
 
   unless redis_cache_url.nil?
     config.cache_store = :redis_cache_store, {
-      namespace: ENV["STAGING"].present? ? "staging" : "production",
-      url: redis_cache_url,
+      namespace:          ENV["STAGING"].present? ? "staging" : "production",
+      url:                redis_cache_url,
 
-      connect_timeout:    5,   # Defaults to 20 seconds
+      connect_timeout:    5, # Defaults to 20 seconds
       read_timeout:       0.2, # Defaults to 1 second
       write_timeout:      0.2, # Defaults to 1 second
-      reconnect_attempts: 0,   # Defaults to 0
+      reconnect_attempts: 0, # Defaults to 0
 
-      error_handler: -> (method:, returning:, exception:) {
+      error_handler:      ->(method:, returning:, exception:) {
         Appsignal.set_error(exception) do |transaction|
           transaction.set_tags(method: method, returning: returning)
         end
-      }
+      },
     }
 
     config.action_controller.perform_caching = true
