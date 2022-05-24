@@ -50,24 +50,10 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
 
-  redis_cache_url = Credentials.dig(:cache, :redis_url)
+  redis_cache_store_config = Coyote::Helpers::ProductionConfigHelper.redis_cache_config
 
-  unless redis_cache_url.nil?
-    config.cache_store = :redis_cache_store, {
-      namespace: ENV["STAGING"].present? ? "staging" : "production",
-      url: redis_cache_url,
-
-      connect_timeout:    5,   # Defaults to 20 seconds
-      read_timeout:       0.2, # Defaults to 1 second
-      write_timeout:      0.2, # Defaults to 1 second
-      reconnect_attempts: 0,   # Defaults to 0
-
-      error_handler: -> (method:, returning:, exception:) {
-        Appsignal.set_error(exception) do |transaction|
-          transaction.set_tags(method: method, returning: returning)
-        end
-      }
-    }
+  unless redis_cache_store_config.nil?
+    config.cache_store = :redis_cache_store, redis_cache_store_config
 
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
