@@ -39,13 +39,13 @@ google:
     project_id: "<%= Credentials.dig(:google, :project) %>"
   bucket: <%= Credentials.fetch(:google, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
-digitalocean:
+wasabi:
   service: S3
-  endpoint: <%= Credentials.dig(:digital_ocean, :endpoint) %>
-  access_key_id: <%= Credentials.dig(:digital_ocean, :access_key_id) %>
-  secret_access_key: <%= Credentials.dig(:digital_ocean, :secret_access_key) %>
-  region: <%= Credentials.dig(:digital_ocean, :region) %>
-  bucket: <%= Credentials.dig(:digital_ocean, :bucket) %>
+  endpoint: <%= Credentials.dig(:wasabi, :endpoint) %>
+  access_key_id: <%= Credentials.dig(:wasabi, :access_key_id) %>
+  secret_access_key: <%= Credentials.dig(:wasabi, :secret_access_key) %>
+  region: <%= Credentials.dig(:wasabi, :region) %>
+  bucket: <%= Credentials.dig(:wasabi, :bucket) %>
 
 # mirror:
 #   service: Mirror
