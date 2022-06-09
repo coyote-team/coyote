@@ -41,11 +41,11 @@ google:
 
 wasabi:
   service: S3
-  endpoint: <%= Credentials.dig(:wasabi, :endpoint) %>
-  access_key_id: <%= Credentials.dig(:wasabi, :access_key_id) %>
-  secret_access_key: <%= Credentials.dig(:wasabi, :secret_access_key) %>
+  endpoint: "<%= Credentials.dig(:wasabi, :endpoint) %>"
+  access_key_id: "<%= Credentials.dig(:wasabi, :access_key_id) %>"
+  secret_access_key: "<%= Credentials.dig(:wasabi, :secret_access_key) %>"
   region: <%= Credentials.dig(:wasabi, :region) %>
-  bucket: <%= Credentials.dig(:wasabi, :bucket) %>
+  bucket: <%= Credentials.fetch(:wasabi, :bucket) { "teamcoyote-uploads-#{Rails.env}" } %>
 
 # mirror:
 #   service: Mirror

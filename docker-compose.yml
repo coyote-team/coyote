@@ -1,8 +1,5 @@
 version: "3"
 
-volumes:
-  postgres_data: {}
-
 services:
   db:
     image: postgres:11-alpine
