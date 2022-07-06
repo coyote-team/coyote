@@ -53,9 +53,7 @@ Rails.application.configure do
   redis_cache_store_config = Coyote::Helpers::ProductionConfigHelper.redis_cache_config
 
   unless redis_cache_store_config.nil?
-    redis_pool = ConnectionPool.new(size: 24) { Redis.new(redis_cache_store_config) }
-
-    config.cache_store = :redis_cache_store, redis_pool
+    config.cache_store = :redis_cache_store, redis_cache_store_config
 
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
