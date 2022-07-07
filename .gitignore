@@ -36,3 +36,6 @@ yarn-error.log
 
 # RubyMine
 .idea
+
+# Docker
+.env
