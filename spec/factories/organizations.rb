@@ -16,7 +16,7 @@
 # Indexes
 #
 #  index_organizations_on_is_deleted  (is_deleted)
-#  index_organizations_on_name        (name) UNIQUE
+#  index_organizations_on_name        (name) UNIQUE WHERE (is_deleted IS FALSE)
 #
 # Foreign Keys
 #

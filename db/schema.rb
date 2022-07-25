@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_221224) do
+ActiveRecord::Schema.define(version: 2022_07_25_061155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 2021_04_21_221224) do
     t.string "footer"
     t.boolean "allow_authors_to_claim_resources", default: false, null: false
     t.index ["is_deleted"], name: "index_organizations_on_is_deleted"
-    t.index ["name"], name: "index_organizations_on_name", unique: true
+    t.index ["name"], name: "index_organizations_on_name", unique: true, where: "(is_deleted IS FALSE)"
   end
 
   create_table "password_resets", force: :cascade do |t|
