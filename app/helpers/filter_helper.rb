@@ -64,6 +64,33 @@ module FilterHelper
     dropdown(options) { content }
   end
 
+  def sort_form(q, options = {}, &block)
+    content = capture(&block)
+    link = Ransack::Helpers::FormHelper::SortLink.new(q, nil, [], params)
+    options[:action] = url_for(link.url_options)
+    options[:class] = "sort"
+    tag.form(content, options)
+  end
+
+  def sort_select(options = {}, &block)
+    content = capture(&block)
+    safe_join([
+      tag.label("Sort order", for: "resource_sort_options"),
+      tag.select(content, id: "resource_sort_options", name: "q[s]")
+    ])
+  end
+
+  def sort_option(attribute, direction, label)
+    sort = "#{attribute} #{direction}"
+    active_sort = params.dig(:q, :s)
+
+    options = {value: sort}.tap do |o|
+      o[:selected] = 1 if active_sort == sort
+    end
+
+    tag.option(label, options)
+  end
+
   def sort_link_to(attribute, *args)
     # Extract some simple options
     options = args.extract_options!
