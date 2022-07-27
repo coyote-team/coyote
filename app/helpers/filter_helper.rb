@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module FilterHelper
+  include PermittedParameters
+
   def applied_filters
     toolbar_item(class: "toolbar-item--start") do
       safe_join(record_filter.applied_filters.map { |key, value|
@@ -65,11 +67,17 @@ module FilterHelper
   end
 
   def sort_form(q, options = {}, &block)
-    content = capture(&block)
-    link = Ransack::Helpers::FormHelper::SortLink.new(q, nil, [], params)
-    options[:action] = url_for(link.url_options)
+    options[:method] = "GET"
     options[:class] = "form form--sort"
-    tag.form(content, options)
+    content = capture(&block)
+
+    permitted_params = params.fetch(:q, {}).permit(*RESOURCE_FILTERS.reject{ |n| n == :s })
+
+    hidden_fields = permitted_params.to_h.map do
+      |key, value| tag.input(value:value, type:'hidden', name: "q[#{key}]")
+    end.flatten
+
+    tag.form(safe_join([content, hidden_fields]), options)
   end
 
   def sort_select(options = {}, &block)
