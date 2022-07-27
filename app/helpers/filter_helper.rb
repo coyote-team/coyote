@@ -68,16 +68,16 @@ module FilterHelper
     content = capture(&block)
     link = Ransack::Helpers::FormHelper::SortLink.new(q, nil, [], params)
     options[:action] = url_for(link.url_options)
-    options[:class] = "sort"
+    options[:class] = "form form--sort"
     tag.form(content, options)
   end
 
   def sort_select(options = {}, &block)
     content = capture(&block)
-    safe_join([
-      tag.label("Sort order", for: "resource_sort_options"),
+    tag.div(safe_join([
+      tag.label("Sort order", for: "resource_sort_options", class: 'form-field-label'),
       tag.select(content, id: "resource_sort_options", name: "q[s]")
-    ])
+    ]), class: 'form-field')
   end
 
   def sort_option(attribute, direction, label)

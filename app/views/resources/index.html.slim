@@ -73,14 +73,14 @@ h1= title "Resources"
           // Show the import option as a standalone button
           = new_link_to("Import Resources", new_import_path)
 
-= sort_form(record_filter.search, {id: "sort-resources", enforce_utf8: false}) do
-  h3.sr-only Sort
-  = sort_select do
-    = sort_option(:name, :asc, "Name, A-Z")
-    = sort_option(:name, :desc, "Name, Z-A")
-    = sort_option(:created_at, :desc, "Date imported, recent")
-    = sort_option(:created_at, :asc, "Date imported, oldest")
-  button.button.button--round Sort
+  = sort_form(record_filter.search, {id: "sort-resources", enforce_utf8: false}) do
+    h3.sr-only Sort
+    = sort_select do
+      = sort_option(:name, :asc, "Name, A-Z")
+      = sort_option(:name, :desc, "Name, Z-A")
+      = sort_option(:created_at, :desc, "Date imported, recent")
+      = sort_option(:created_at, :asc, "Date imported, oldest")
+    button.button.button--round Sort
 
 = simple_form_for :resource, url: update_many_resources_path, html: { id: "results" } do |form|
   h2.sr-only#results-title
