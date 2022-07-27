@@ -2,7 +2,7 @@
 
 # Handles all of the logic for transforming a user's query parameters into a subset of records
 # @see RecordPaginator
-class RecordFilter
+class  RecordFilter
   attr_reader :applied_filters
   attr_writer :record_paginator
 

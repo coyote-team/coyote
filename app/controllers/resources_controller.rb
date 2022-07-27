@@ -100,7 +100,9 @@ class ResourcesController < ApplicationController
   end
 
   def record_filter
-    @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources, default_filters: {is_deleted_eq: false})
+    @record_filter ||= RecordFilter.new(filter_params, pagination_params, current_organization.resources,
+                                        default_filters: {is_deleted_eq: false},
+                                        default_order: ['by_name'])
   end
 
   def resource_groups
