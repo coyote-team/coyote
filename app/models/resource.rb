@@ -82,6 +82,7 @@ class Resource < ApplicationRecord
   scope :unassigned_unrepresented, -> { unrepresented.unassigned }
   scope :in_organization, ->(organization) { where(organization_id: organization) }
   scope :by_date, -> { order(created_at: :desc) }
+  scope :by_name, -> { order(name: :asc) }
   scope :by_priority, -> { order(priority_flag: :desc) }
   scope :by_priority_and_date, -> { by_priority.by_date }
   scope :represented_by, ->(user) { joins(:representations).where(representations: {author_id: user.id}) }

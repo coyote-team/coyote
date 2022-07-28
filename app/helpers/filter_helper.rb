@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module FilterHelper
+  include PermittedParameters
+
   def applied_filters
     toolbar_item(class: "toolbar-item--start") do
       safe_join(record_filter.applied_filters.map { |key, value|
@@ -62,6 +64,43 @@ module FilterHelper
     options[:toggle] = combine_options(options[:toggle] || {}, class: "button button--round")
     @_active_sort = nil
     dropdown(options) { content }
+  end
+
+  def sort_form(q, options = {}, &block)
+    # The form submits to the page that it is included on, hence a custom action endpoint is unneeded
+    options[:method] = "GET"
+    options[:class] = "form form--sort"
+    content = capture(&block)
+
+    # Take all permitted pre-existing parameters but strip the "sort" parameter as it's redefined by the select dropdown
+    permitted_params = params.fetch(:q, {}).permit(*RESOURCE_FILTERS.reject{ |n| n == :s })
+
+    # Include all pre-existing parameters as hidden fields
+    hidden_fields = permitted_params.to_h.map do
+      |key, value| tag.input(value:value, type:'hidden', name: "q[#{key}]")
+    end.flatten
+
+    tag.form(safe_join([content, hidden_fields]), options)
+  end
+
+  def sort_select(options = {}, &block)
+    content = capture(&block)
+    tag.div(safe_join([
+      tag.label("Sort order", for: "resource_sort_options", class: 'form-field-label'),
+      # q[s] is the Ransack sorting parameter
+      tag.select(content, id: "resource_sort_options", name: "q[s]")
+    ]), class: 'form-field')
+  end
+
+  def sort_option(attribute, direction, label)
+    sort = "#{attribute} #{direction}"
+    active_sort = params.dig(:q, :s)
+
+    options = {value: sort}.tap do |o|
+      o[:selected] = 1 if active_sort == sort
+    end
+
+    tag.option(label, options)
   end
 
   def sort_link_to(attribute, *args)
