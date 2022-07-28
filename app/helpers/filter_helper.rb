@@ -67,12 +67,15 @@ module FilterHelper
   end
 
   def sort_form(q, options = {}, &block)
+    # The form submits to the page that it is included on, hence a custom action endpoint is unneeded
     options[:method] = "GET"
     options[:class] = "form form--sort"
     content = capture(&block)
 
+    # Take all permitted pre-existing parameters but strip the "sort" parameter as it's redefined by the select dropdown
     permitted_params = params.fetch(:q, {}).permit(*RESOURCE_FILTERS.reject{ |n| n == :s })
 
+    # Include all pre-existing parameters as hidden fields
     hidden_fields = permitted_params.to_h.map do
       |key, value| tag.input(value:value, type:'hidden', name: "q[#{key}]")
     end.flatten
@@ -84,6 +87,7 @@ module FilterHelper
     content = capture(&block)
     tag.div(safe_join([
       tag.label("Sort order", for: "resource_sort_options", class: 'form-field-label'),
+      # q[s] is the Ransack sorting parameter
       tag.select(content, id: "resource_sort_options", name: "q[s]")
     ]), class: 'form-field')
   end
