@@ -32,9 +32,10 @@ services:
       - RAILS_LOG_TO_STDOUT
       - STAGING
       - APPSIGNAL_APP_ENV
+      - HOST
+      - MAILER_PASSWORD
       - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/
-      - HOST=http://web:3000/
       - NODE_ENV=${NODE_ENV:-production}
       - RAILS_ENV=${RAILS_ENV:-production}
       - REDIS_URL=redis://redis:6379/
