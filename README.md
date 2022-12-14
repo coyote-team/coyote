@@ -102,7 +102,7 @@ bundle exec sidekiq
 
 ### Topic Branches & Review Apps
 
-We use Heroku Pipelines and a modified "git flow" workflow for our development process. It's very important you follow the process outlined below!
+We use a modified "git flow" workflow for our development process. It's very important you follow the process outlined below!
 
 1. Create a topic branch off of master related to your work, typically something like
 
@@ -111,17 +111,44 @@ We use Heroku Pipelines and a modified "git flow" workflow for our development p
    git checkout -b {name}/{issue-numer}-{description} # (e.g.) `flip/208-fix-dev-workflow
    ```
 
-2. Write your code and then run tests, either locally (`rspec`) or via CI (simply push your topic branch to Github: `git push origin flip/208-fix-dev-workflow`)
+2. Write your code and then run tests locally (`rspec`) 
+3. Once the tests have passed, create a pull request ("PR") and request a review from one or more team members _who aren't you_
 
-3. When CI has run on Github, create a pull request ("PR") and request a review from one or more team members _who aren't you_
+### Deploying to a DigitalOcean Droplet
 
-4. Heroku will deploy a review app for every pull request you create. The review apps automatically generate seed data to use with testing. Reviewers can use them to test new functionality with one of the seed user accounts.
+Coyote on DigitalOcean runs inside Docker.
+Staging and production Docker compose configuration is defined in `docker-compose-production.yml`.
+To run the application, certain environment variables need to be set.
 
-### Deploying to Staging
+[Environment variables are defined within an .env file](https://docs.docker.com/compose/environment-variables/#the-env-file):
 
-Deploying to staging happens automatically whenever the `master` branch is modified (in this, `master` is similar to `develop` in git flow). Staging is available at [staging.coyote.pics](https://staging.coyote.pics).
+```ini
+APPSIGNAL_APP_ENV=
+STAGING=
+RAILS_ENV=
+RAILS_LOG_TO_STDOUT=
+RAILS_MIN_THREADS=
+RAILS_MAX_THREADS=
+WEB_CONCURRENCY=
+RAILS_BASE_KEY=
+RAILS_MASTER_KEY=
+RAILS_STAGING_KEY=
+MAILER_PASSWORD=
+```
+* `APPSIGNAL_APP_ENV`: The environment for which [AppSignal](https://www.appsignal.com) metrics are collected;
+* `STAGING` (optional): defines whether it's a staging instance (which loads additional configuration);
+* `RAILS_ENV`: the environment which Rails runs in. `production` when running in production or staging, otherwise `development`;
+* `RAILS_LOG_TO_STDOUT`: usually `true`. Whether to log to stdout instead of a file;
+* `RAILS_MIN_THREADS`: how many threads Puma should run at minimum;
+* `RAILS_MIN_THREADS`: how many threads Puma should run at maximum;
+* `WEB_CONCURRENCY`: how many concurrent workers Puma should run;
+* `RAILS_BASE_KEY`: the [encrypted credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) key for `config/credentials.yml.enc`;
+* `RAILS_STAGING_KEY` (only when `STAGING=1`): the [encrypted credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) key for `config/credentials/staging.yml.enc`;  
+* `RAILS_MASTER_KEY`: the [encrypted credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) key for `config/credentials/production.yml.enc`; and
+* `MAILER_PASSWORD` (optional) can be used to override the password for `Rails::ActionMailer`.
 
-**IMPORTANT NOTE:** when you deploy to staging, the production database is cloned and then migrations are run on staging. This means _every_ commit to `master` will overwrite the staging database.
+To start the application, run `docker-compose -f docker-compose-production.yml up -d web`. This starts `web` and its associated services in daemon mode.
+Rails boots Puma on port 3000. A running Nginx server with certbot SSL certificates proxies all requests to port 3000 on the `web` container.
 
 ### Deploying to Production
 
@@ -164,6 +191,8 @@ More info regarding accessibility:
 - Anna Lavatelli, [MCA Chicago](https://mcachicago.org) - project management
 - Christopher Reed, [SEEREAD.info](http://seeread.info) - development
 - Mike Subelsky, [subelsky.com](http://subelsky.com) - development
+- Flip Sasser, [flipsasser.com](https://flipsasser.com) - development
+- Job van Achterberg, [3ode](https://www.3ode.nl) - development
 
 ## <a name="license-anchor"></a>License
 

@@ -4,7 +4,7 @@ module Coyote
   module Helpers
     module ProductionConfigHelper
       def self.redis_cache_config
-        env_url = ENV["REDIS_CACHE_URL"]
+        env_url = ENV["REDIS_URL"]
         redis_cache_url = env_url || Credentials.dig(:cache, :redis_url)
 
         if redis_cache_url.nil?
@@ -21,14 +21,18 @@ module Coyote
           end
         }
 
+        redis_namespace = "coyote-cache-#{ENV["STAGING"].present? ? "staging" : Rails.env}"
+
         {
-          namespace:          ENV["STAGING"].present? ? "staging" : "production",
+          namespace:          redis_namespace,
           url:                redis_cache_url,
           error_handler:      error_handler,
           connect_timeout:    5, # Defaults to 20 seconds
           read_timeout:       0.2, # Defaults to 1 second
           write_timeout:      0.2, # Defaults to 1 second
           reconnect_attempts: 0, # Defaults to 0
+          pool_size:          5,
+          pool_timeout:       5
         }
       end
     end

@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14.3-alpine
+    environment:
+      POSTGRES_DB: coyote
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432
+    volumes: []
+
+  redis:
+    image: redis:7.0.0-alpine3.16
+
+  web: &rails
+    build:
+      args:
+        bundle_without: "development test"
+        database_url: postgresql://postgres:postgres@db:5432/
+        env: "production"
+      context: .
+    command: bundle exec rails server -b 0.0.0.0
+    depends_on:
+      - db
+      - worker
+    entrypoint: ./bin/docker_entrypoint
+    environment:
+      - RAILS_BASE_KEY
+      - RAILS_MASTER_KEY
+      - RAILS_STAGING_KEY
+      - RAILS_LOG_TO_STDOUT
+      - STAGING
+      - APPSIGNAL_APP_ENV
+      - HOST
+      - MAILER_PASSWORD
+      - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/
+      - NODE_ENV=${NODE_ENV:-production}
+      - RAILS_ENV=${RAILS_ENV:-production}
+      - REDIS_URL=redis://redis:6379/
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+      - WEB_CONCURRENCY=1
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tmpfs:
+      - /tmp
+    tty: true
+    volumes: []
+
+  worker:
+    <<: *rails
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+    ports: []
+

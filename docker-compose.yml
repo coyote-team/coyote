@@ -1,11 +1,8 @@
 version: "3"
 
-volumes:
-  postgres_data: {}
-
 services:
   db:
-    image: postgres:11-alpine
+    image: postgres:14.3-alpine
     environment:
       POSTGRES_DB: coyote_development
       POSTGRES_PASSWORD: postgres
@@ -15,11 +12,7 @@ services:
       - postgres:/var/lib/postgresql/data
 
   redis:
-    image: redis:6-alpine
-    ports:
-      - 6379:6379
-    volumes:
-      - postgres:/var/lib/postgresql/data
+    image: redis:7.0.0-alpine3.16
 
   web: &rails
     build:

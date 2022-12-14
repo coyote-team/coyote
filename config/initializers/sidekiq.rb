@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-redis_namespace = "coyote-#{ENV["STAGING"] ? "staging" : Rails.env}"
+redis_namespace = "coyote-sidekiq-#{ENV["STAGING"] ? "staging" : Rails.env}"
 REDIS_POOL = ConnectionPool.new(size: 24) {
   Redis.new(
     connect_timeout:    1,
