@@ -73,34 +73,14 @@ module FilterHelper
     content = capture(&block)
 
     # Take all permitted pre-existing parameters but strip the "sort" parameter as it's redefined by the select dropdown
-    permitted_params = params.fetch(:q, {}).permit(*RESOURCE_FILTERS.reject{ |n| n == :s })
+    permitted_params = params.fetch(:q, {}).permit(*RESOURCE_FILTERS.reject { |n| n == :s })
 
     # Include all pre-existing parameters as hidden fields
-    hidden_fields = permitted_params.to_h.map do
-      |key, value| tag.input(value:value, type:'hidden', name: "q[#{key}]")
+    hidden_fields = permitted_params.to_h.map do |key, value|
+      tag.input(value: value, type: "hidden", name: "q[#{key}]")
     end.flatten
 
     tag.form(safe_join([content, hidden_fields]), options)
-  end
-
-  def sort_select(options = {}, &block)
-    content = capture(&block)
-    tag.div(safe_join([
-      tag.label("Sort order", for: "resource_sort_options", class: 'form-field-label'),
-      # q[s] is the Ransack sorting parameter
-      tag.select(content, id: "resource_sort_options", name: "q[s]")
-    ]), class: 'form-field')
-  end
-
-  def sort_option(attribute, direction, label)
-    sort = "#{attribute} #{direction}"
-    active_sort = params.dig(:q, :s)
-
-    options = {value: sort}.tap do |o|
-      o[:selected] = 1 if active_sort == sort
-    end
-
-    tag.option(label, options)
   end
 
   def sort_link_to(attribute, *args)
@@ -120,5 +100,25 @@ module FilterHelper
       # Determine if the requested sort is the one already applied
       @_active_sort_label = label if active_sort.present? && active_sort == sort
     end
+  end
+
+  def sort_option(attribute, direction, label)
+    sort = "#{attribute} #{direction}"
+    active_sort = params.dig(:q, :s)
+
+    options = {value: sort}.tap do |o|
+      o[:selected] = 1 if active_sort == sort
+    end
+
+    tag.option(label, options)
+  end
+
+  def sort_select(options = {}, &block)
+    content = capture(&block)
+    tag.div(safe_join([
+      tag.label("Sort order", for: "resource_sort_options", class: "form-field-label"),
+      # q[s] is the Ransack sorting parameter
+      tag.select(content, id: "resource_sort_options", name: "q[s]"),
+    ]), class: "form-field")
   end
 end
