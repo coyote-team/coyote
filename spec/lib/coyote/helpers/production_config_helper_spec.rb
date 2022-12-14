@@ -35,7 +35,7 @@ RSpec.describe Coyote::Helpers::ProductionConfigHelper do
     it("sets the namespace to \"`Rails.env`\" if ENV[\"STAGING\"] is not present") do
       ENV.delete("STAGING")
       config = subject.redis_cache_config
-      expect(config[:namespace]).to eq("coyote-cache-development")
+      expect(config[:namespace]).to eq("coyote-cache-test")
     end
   end
 end
