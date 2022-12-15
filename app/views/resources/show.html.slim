@@ -1,4 +1,7 @@
-h1= title(resource.name)
+h1
+  =title(resource.name)
+  - if resource.soft_deleted?
+    span.soft-deleted Soft deleted
 
 .split-view.split-view--thumbnail
   .split-view-item
