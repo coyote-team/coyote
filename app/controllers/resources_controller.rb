@@ -78,6 +78,9 @@ class ResourcesController < ApplicationController
 
   def authorize_unit_access
     authorize(resource)
+    if resource.soft_deleted? && !current_user.staff?
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def check_for_canonical_id

@@ -302,6 +302,10 @@ class Resource < ApplicationRecord
     @new_resource_group_ids = organization.resource_groups.where(id: new_ids).pluck(:id) # ensure we only attach resource groups for this org
   end
 
+  def soft_deleted?
+    is_deleted
+  end
+
   def unassigned?
     return @unassigned if defined? @unassigned
     @unassigned = active_assignments.none?
