@@ -130,6 +130,8 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday-net_http (1.0.1)
+    faraday_middleware (1.2.0)
+      faraday (~> 1.0)
     federal_offense (0.1.2)
       rails (~> 6.0, >= 6.0.3.1)
     ffi (1.15.0)
@@ -449,6 +451,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday
+  faraday_middleware
   federal_offense (>= 0.1.2)
   ffi
   guard
