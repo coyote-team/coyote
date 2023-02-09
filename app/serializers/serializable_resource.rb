@@ -4,7 +4,7 @@
 class SerializableResource < ApplicationSerializer
   type "resource"
 
-  attributes :id, :name, :resource_type, :canonical_id, :source_uri, :created_at, :updated_at
+  attributes :id, :name, :resource_type, :host_uris, :canonical_id, :source_uri, :created_at, :updated_at
 
   attribute :resource_group do
     @object.resource_group_name

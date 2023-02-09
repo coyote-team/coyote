@@ -24,4 +24,5 @@ RSpec.describe SerializableResource do
 
   it { is_expected.to include(id: object.id) }
   it { is_expected.to include(canonical_id: object.canonical_id) }
+  it { is_expected.to include(host_uris: object.host_uris) }
 end
