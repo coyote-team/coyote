@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 class NotifyWebhookWorker < ApplicationWorker
+  INVALID_REDIRECT_STATUSES = [301, 302, 303]
+
+  class WebhookEndpointRedirectsError < StandardError
+    attr_reader :endpoint, :location, :status
+
+    def initialize(endpoint: nil, location: "unknown", status: "unknown")
+      super
+      @endpoint = endpoint
+      @location = location
+      @status = status
+    end
+
+    def message
+      "Webhook endpoint '#{endpoint}' redirected to '#{location}' with status #{status}"
+    end
+  end
+
   attr_reader :resource
 
   def perform(resource_id)
@@ -38,7 +55,20 @@ class NotifyWebhookWorker < ApplicationWorker
       Rails.logger.warn "[WEBHOOK] Calling #{resource_group.webhook_uri} for #{resource}"
 
       begin
-        client = Faraday.new(url: resource_group.webhook_uri)
+        redirect_callback = proc { |old_response, new_response|
+          if INVALID_REDIRECT_STATUSES.include?(old_response.status)
+            raise WebhookEndpointRedirectsError.new(
+              endpoint: old_response.url,
+              location: new_response.url,
+              status:   old_response.status,
+            )
+          end
+        }
+
+        client = Faraday.new(url: resource_group.webhook_uri) do |f|
+          f.use FaradayMiddleware::FollowRedirects, {callback: redirect_callback}
+        end
+
         response = client.post { |req|
           req.headers["Content-Type"] = "application/json"
           req.headers["X-Coyote-Token"] = token

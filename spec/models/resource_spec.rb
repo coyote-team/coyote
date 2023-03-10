@@ -113,29 +113,89 @@ RSpec.describe Resource do
   end
 
   describe "#notify_webhook!" do
-    include_context "with webhooks"
+    describe "with webhooks" do
+      include_context "with webhooks"
+      it "sends webhook notifications when resources are created" do
+        resource = create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+        expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
+          data = JSON.parse(req.body)["data"]
+          expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
+        }).to have_been_made
+      end
 
-    it "sends webhook notifications when resources are created" do
-      resource = create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
-      expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
-        data = JSON.parse(req.body)["data"]
-        expect(data).to have_attribute(:canonical_id).with_value(resource.canonical_id)
-      }).to have_been_made
+      it "adds a JWT token header with the resource ID in it" do
+        create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+        expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
+          data = JSON.parse(req.body)["data"]
+          payload = {id: data["id"]}
+          token = JWT.encode(payload, resource_group.token, "HS256")
+          expect(req.headers["X-Coyote-Token"]).to eq(token)
+        }).to have_been_made
+      end
     end
 
-    it "doesn't sent webhook notifications in a `without_webhooks` context" do
-      described_class.without_webhooks { create(:resource, resource_groups: [resource_group]) }
-      expect(a_request(:post, "http://www.example.com/webhook/goes/here")).not_to have_been_made
+    describe "with 301 redirected webhooks" do
+      include_context "with 301 redirected webhooks"
+      it "does not follow 301 redirect when issuing webhook requests" do
+        expect {
+          create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+        }.to raise_error(NotifyWebhookWorker::WebhookEndpointRedirectsError)
+
+        expect(a_request(:post, resource_group.webhook_uri)).to have_been_made
+        expect(a_request(:get, redirect_location)).not_to have_been_made
+      end
     end
 
-    it "adds a JWT token header with the resource ID in it" do
-      create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
-      expect(a_request(:post, "http://www.example.com/webhook/goes/here").with { |req|
-        data = JSON.parse(req.body)["data"]
-        payload = {id: data["id"]}
-        token = JWT.encode(payload, resource_group.token, "HS256")
-        expect(req.headers["X-Coyote-Token"]).to eq(token)
-      }).to have_been_made
+    describe "with 302 redirected webhooks" do
+      include_context "with 302 redirected webhooks"
+      it "does not follow 302 redirect when issuing webhook requests" do
+        expect {
+          create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+        }.to raise_error(NotifyWebhookWorker::WebhookEndpointRedirectsError)
+
+        expect(a_request(:post, resource_group.webhook_uri)).to have_been_made
+        expect(a_request(:get, redirect_location)).not_to have_been_made
+      end
+    end
+
+    describe "with 303 redirected webhooks" do
+      include_context "with 303 redirected webhooks"
+      it "does not follow 303 redirect when issuing webhook requests" do
+        expect {
+          create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+        }.to raise_error(NotifyWebhookWorker::WebhookEndpointRedirectsError)
+
+        expect(a_request(:post, resource_group.webhook_uri)).to have_been_made
+        expect(a_request(:get, redirect_location)).not_to have_been_made
+      end
+    end
+
+    describe "with 307 redirected webhooks" do
+      include_context "with 307 redirected webhooks"
+      it "follows 307 redirect when issuing webhook requests" do
+        create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+
+        expect(a_request(:post, resource_group.webhook_uri)).to have_been_made
+        expect(a_request(:post, redirect_location)).to have_been_made
+      end
+    end
+
+    describe "with 308 redirected webhooks" do
+      include_context "with 308 redirected webhooks"
+      it "follows 308 redirect when issuing webhook requests" do
+        create(:resource, organization: resource_group.organization, resource_groups: [resource_group])
+
+        expect(a_request(:post, resource_group.webhook_uri)).to have_been_made
+        expect(a_request(:post, redirect_location)).to have_been_made
+      end
+    end
+
+    describe "without webhooks" do
+      include_context "without webhooks"
+      it "doesn't send webhook notifications in a `without_webhooks` context" do
+        create(:resource, resource_groups: [])
+        expect(a_request(:post, "http://www.example.com/webhook/goes/here")).not_to have_been_made
+      end
     end
   end
 
