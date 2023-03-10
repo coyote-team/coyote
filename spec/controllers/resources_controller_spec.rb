@@ -4,6 +4,14 @@ RSpec.describe ResourcesController do
   let(:organization) { create(:organization) }
   let(:resource_group) { create(:resource_group, organization: organization) }
   let(:resource) { create(:resource, canonical_id: "test-resource", organization: organization) }
+  let(:soft_deleted_resource) {
+    create(
+      :resource,
+      canonical_id: "soft-deleted-resource",
+      organization: organization,
+      is_deleted:   true,
+    )
+  }
 
   let(:base_params) do
     {organization_id: organization}
@@ -17,6 +25,10 @@ RSpec.describe ResourcesController do
     resource = attributes_for(:resource, organization: organization)
     resource[:resource_group_id] = resource_group.id
     base_params.merge(resource: resource)
+  end
+
+  let(:soft_deleted_resource_params) do
+    base_params.merge(id: soft_deleted_resource.id)
   end
 
   let(:update_resource_params) do
@@ -68,6 +80,12 @@ RSpec.describe ResourcesController do
     it "lists resources" do
       get :index, params: base_params
       expect(response).to be_successful
+    end
+
+    it "does not show resources that are soft-deleted" do
+      expect {
+        get :show, params: soft_deleted_resource_params
+      }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it "does not allow creating, editing, or deleting" do
@@ -124,6 +142,15 @@ RSpec.describe ResourcesController do
         expect(response).to redirect_to(resources_path(organization_id: organization))
       }.to change { resource.reload.is_deleted? }
         .from(false).to(true)
+    end
+  end
+
+  describe "as a staff member" do
+    include_context "with a signed-in staff user"
+
+    it "shows resources that are soft-deleted" do
+      get :show, params: soft_deleted_resource_params
+      expect(response).to be_successful
     end
   end
 end

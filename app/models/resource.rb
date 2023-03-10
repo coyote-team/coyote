@@ -29,7 +29,7 @@
 #  index_resources_on_representations_count             (representations_count)
 #  index_resources_on_schemaless_source_uri             (source_uri) USING gin
 #  index_resources_on_source_uri                        (source_uri)
-#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
+#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext) AND (is_deleted IS FALSE))
 #
 # Foreign Keys
 #
@@ -300,6 +300,10 @@ class Resource < ApplicationRecord
   def resource_group_ids=(value)
     new_ids = value.is_a?(Array) ? value : value.to_s.split(/[\r\n]+/)
     @new_resource_group_ids = organization.resource_groups.where(id: new_ids).pluck(:id) # ensure we only attach resource groups for this org
+  end
+
+  def soft_deleted?
+    is_deleted
   end
 
   def unassigned?

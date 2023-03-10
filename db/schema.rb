@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_25_061155) do
+ActiveRecord::Schema.define(version: 2022_12_15_104530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -309,7 +309,7 @@ ActiveRecord::Schema.define(version: 2022_07_25_061155) do
     t.index ["organization_id"], name: "index_resources_on_organization_id"
     t.index ["priority_flag"], name: "index_resources_on_priority_flag", order: :desc
     t.index ["representations_count"], name: "index_resources_on_representations_count"
-    t.index ["source_uri", "organization_id"], name: "index_resources_on_source_uri_and_organization_id", unique: true, where: "((source_uri IS NOT NULL) AND (source_uri <> ''::citext))"
+    t.index ["source_uri", "organization_id"], name: "index_resources_on_source_uri_and_organization_id", unique: true, where: "((source_uri IS NOT NULL) AND (source_uri <> ''::citext) AND (is_deleted IS FALSE))"
     t.index ["source_uri"], name: "index_resources_on_schemaless_source_uri", opclass: :gin_trgm_ops, using: :gin
     t.index ["source_uri"], name: "index_resources_on_source_uri"
   end

@@ -29,7 +29,7 @@
 #  index_resources_on_representations_count             (representations_count)
 #  index_resources_on_schemaless_source_uri             (source_uri) USING gin
 #  index_resources_on_source_uri                        (source_uri)
-#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext))
+#  index_resources_on_source_uri_and_organization_id    (source_uri,organization_id) UNIQUE WHERE ((source_uri IS NOT NULL) AND (source_uri <> ''::citext) AND (is_deleted IS FALSE))
 #
 # Foreign Keys
 #
