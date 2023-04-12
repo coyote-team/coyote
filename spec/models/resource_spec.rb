@@ -76,11 +76,15 @@ RSpec.describe Resource do
     specify do
       expect(with_uri("../foo.jpg")).not_to be_valid
       expect(with_uri("//foo.jpg")).not_to be_valid
+      expect(with_uri("//../foo.jpg")).not_to be_valid
+      expect(with_uri("//../")).not_to be_valid
       expect(with_uri("javascript://foo.jpg")).not_to be_valid
       expect(with_uri("https://foo.jpg")).not_to be_valid
 
       expect(with_uri("http://example.org/foo.jpg")).to be_valid
+      expect(with_uri("http://example.org/images/misc/../foo.jpg")).to be_valid
       expect(with_uri("https://example.org/foo.jpg")).to be_valid
+      expect(with_uri("//example.org/foo.jpg")).to be_valid
     end
   end
 

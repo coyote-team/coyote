@@ -328,11 +328,11 @@ class Resource < ApplicationRecord
     return unless source_uri.present?
     uri = URI.parse(source_uri)
 
-    errors.add(:source_uri, "is not a valid UI") if
-      uri.scheme.nil? ||
-      uri.host.nil? ||
-      uri.path.blank? ||
-      ['http', 'https'].exclude?(uri.scheme)
+    errors.add(:source_uri, "is not a valid URI") if
+      (uri.scheme.nil? && uri.host.nil?) ||
+      uri.host.present? && !/[^.\\]+/.match?(uri.host) ||
+      uri.path.empty? ||
+      uri.scheme.present? && ['http', 'https'].exclude?(uri.scheme)
   end
 
   def check_canonical_id?
