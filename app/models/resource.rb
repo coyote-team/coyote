@@ -94,6 +94,8 @@ class Resource < ApplicationRecord
   validates :source_uri, uniqueness: {case_sensitive: false, scope: :organization_id}, if: :check_source_uri?
   validates :name, presence: true
 
+  validate :source_uri_is_valid_uri
+
   enum resource_type: Coyote::Resource::TYPES
 
   audited
@@ -321,6 +323,17 @@ class Resource < ApplicationRecord
   end
 
   private
+
+  def source_uri_is_valid_uri
+    return unless source_uri.present?
+    uri = URI.parse(source_uri)
+
+    errors.add(:source_uri, "is not a valid URI") if
+      (uri.scheme.nil? && uri.host.nil?) ||
+      uri.host.present? && !/[^.\\]+/.match?(uri.host) ||
+      uri.path.empty? ||
+      uri.scheme.present? && ['http', 'https'].exclude?(uri.scheme)
+  end
 
   def check_canonical_id?
     Array(skip_unique_validations).include?(:canonical_id) && canonical_id_changed?

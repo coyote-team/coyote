@@ -60,11 +60,31 @@ RSpec.describe Resource do
     expect(resource).to be_viewable
   end
 
-  describe "without the presence of a source URI" do
+  describe "without the presence of a non-blank source URI" do
     let(:resource) { build(:resource, source_uri: "") }
 
     specify do
       expect(resource).not_to be_viewable
+    end
+  end
+
+  describe "without the presence of a valid URI pattern source URI" do
+    def with_uri(uri)
+      build(:resource, source_uri: uri)
+    end
+
+    specify do
+      expect(with_uri("../foo.jpg")).not_to be_valid
+      expect(with_uri("//foo.jpg")).not_to be_valid
+      expect(with_uri("//../foo.jpg")).not_to be_valid
+      expect(with_uri("//../")).not_to be_valid
+      expect(with_uri("javascript://foo.jpg")).not_to be_valid
+      expect(with_uri("https://foo.jpg")).not_to be_valid
+
+      expect(with_uri("http://example.org/foo.jpg")).to be_valid
+      expect(with_uri("http://example.org/images/misc/../foo.jpg")).to be_valid
+      expect(with_uri("https://example.org/foo.jpg")).to be_valid
+      expect(with_uri("//example.org/foo.jpg")).to be_valid
     end
   end
 
