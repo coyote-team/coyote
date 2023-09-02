@@ -51,7 +51,7 @@ module FilterHelper
     new_query = params.fetch(:q, {}).to_unsafe_hash.deep_merge(filter => new_value)
     link_to(safe_join([
       icon(:close),
-      tag.span(label),
+      tag.span(label + " [" + value + "]"),
     ]),
       {q: new_query},
       class: "filter-remove")

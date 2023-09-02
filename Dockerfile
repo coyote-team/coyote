@@ -6,7 +6,7 @@ ARG bundle_without="development test"
 
 RUN apk update \
   && apk upgrade \
-  && apk add --update --no-cache --virtual .gyp python2 make g++ \
+  && apk add --update --no-cache --virtual .gyp python2 make g++ gcompat \
   build-base \
   git \
   libxml2-dev \
