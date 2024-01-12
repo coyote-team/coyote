@@ -6,6 +6,7 @@ ARG bundle_without="development test"
 
 RUN apk update \
   && apk upgrade \
+  && apk add --no-cache gcompat \
   && apk add --update --no-cache --virtual .gyp python2 make g++ \
   build-base \
   git \
