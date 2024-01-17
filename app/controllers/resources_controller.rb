@@ -5,6 +5,7 @@
 # @see ResourcePolicy
 class ResourcesController < ApplicationController
   include PermittedParameters
+  include FormErrors
 
   before_action :check_for_canonical_id, only: %i[show]
   before_action :set_resource, only: %i[show edit update destroy]
