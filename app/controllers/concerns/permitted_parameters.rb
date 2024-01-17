@@ -62,10 +62,11 @@ module PermittedParameters
       union_host_uris
       union_resource_groups
       uploaded_resource
+      organization_id
     ] + [{
       host_uris:          [],
       representations:    REPRESENTATION_PARAMS,
-      resource_group_ids: [],
+      resource_group_ids: []
     }]).freeze
 
   private
@@ -76,8 +77,9 @@ module PermittedParameters
     end
   end
 
-  def clean_resource_params(resource_params)
+  def clean_resource_params(resource_params, org_id)
     resource_params = ActionController::Parameters.new(resource_params) unless resource_params.respond_to?(:permit)
+    resource_params[:organization_id] = org_id
     resource_params.permit(*RESOURCE_PARAMS).tap do |params|
       representations = params.delete(:representations)
       if representations.present?
@@ -101,7 +103,7 @@ module PermittedParameters
     clean_representation_params(params.require(:representation))
   end
 
-  def resource_params
-    clean_resource_params(params.require(:resource))
+  def resource_params(org_id)
+    clean_resource_params(params.require(:resource), org_id)
   end
 end
