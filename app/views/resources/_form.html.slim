@@ -1,5 +1,7 @@
 = simple_form_for target, validate: true, html: { multipart: true } do |f|
-  = f.error_notification
+  - if f.object.errors.any?
+    - f.object.errors.full_messages.each do |message|
+      .error_notification= message
 
   = f.input :name, label: 'Caption'
   = f.input :source_uri, label: 'Source URI', hint: 'Identifies the canonical location of the resource', required: true

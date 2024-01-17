@@ -15,15 +15,11 @@ class ResourcesController < ApplicationController
   helper_method :resource, :record_filter, :filter_params, :resource_groups
 
   def create
-    self.resource = current_organization.resources.new
+    self.resource = current_organization.resources.new(resource_params(current_organization.id))
 
-    if resource.update(resource_params)
-      logger.info "Created #{resource}"
-      redirect_to resource, notice: "The resource has been created"
-    else
-      logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
-      render :new
-    end
+    resource.save
+    logger.info "Created #{resource}"
+    redirect_to resource, notice: "The resource has been created"
   end
 
   def destroy
