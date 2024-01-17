@@ -16,10 +16,14 @@ class ResourcesController < ApplicationController
 
   def create
     self.resource = current_organization.resources.new(resource_params(current_organization.id))
-
-    resource.save
-    logger.info "Created #{resource}"
-    redirect_to resource, notice: "The resource has been created"
+    
+    if resource.save
+      logger.info "Created #{resource}"
+      redirect_to resource, notice: "The resource has been created"
+    else
+      logger.warn "Unable to create resource due to '#{resource.error_sentence}'"
+      render :new
+    end
   end
 
   def destroy
