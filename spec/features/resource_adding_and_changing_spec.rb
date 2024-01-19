@@ -41,8 +41,9 @@ RSpec.describe "Resource adding and changing" do
   end
 
   context "when invalid resource attributes are submitted" do
-    let!(:resource) { create(:resource, organization_id: user_organization.id) }
+    let!(:resource) { create(:resource, organization_id: user_organization.id, canonical_id: '4') }
     let(:resource_uri) { resource.source_uri }
+    let(:resource_canonical_id) { resource.canonical_id }
 
     describe 'source URI is invalid' do
       it "should display an error message and re-render the form" do
@@ -67,6 +68,19 @@ RSpec.describe "Resource adding and changing" do
     
         expect(page).to have_current_path(resources_path(organization_id: user_organization))
         expect(page).to have_content("The Source URI is already in use for this organization.")
+      end
+    end
+
+    describe 'canonical uri is not unique' do
+      it "should display an error message and re-render the form" do
+        fill_in "Caption", with: resource_attributes[:name]
+        fill_in "Canonical ID", with: resource_canonical_id
+        fill_in "Source URI", with: resource_attributes[:source_uri]
+        fill_in "Host URIs", with: "http://example.com/abc\nhttp://example.com/xyz"
+        click_button("Create Resource")
+    
+        expect(page).to have_current_path(resources_path(organization_id: user_organization))
+        expect(page).to have_content("The Canonical ID is already in use for this organization.")
       end
     end
   end
