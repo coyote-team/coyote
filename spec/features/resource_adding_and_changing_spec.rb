@@ -9,10 +9,12 @@ RSpec.describe "Resource adding and changing" do
     attributes_for(:resource, canonical_id: "abc123").symbolize_keys
   end
 
-  it "succeeds" do
+  before(:each) do
     click_first_link "Resources"
     click_first_link("Add Resource")
+  end
 
+  it "succeeds" do
     within(".form-field.resource_resource_groups") do
       user_organization.resource_groups.default.each do |other_group|
         uncheck(other_group.name)
@@ -39,14 +41,11 @@ RSpec.describe "Resource adding and changing" do
   end
 
   context "when invalid resource attributes are submitted" do
+    let!(:resource) { create(:resource, organization_id: user_organization.id) }
+    let(:resource_uri) { resource.source_uri }
+
     describe 'source URI is invalid' do
-      let!(:resource) { create(:resource, organization_id: user_organization.id) }
-      let(:resource_uri) { resource.source_uri }
-
       it "should display an error message and re-render the form" do
-        click_first_link "Resources"
-        click_first_link("Add Resource")
-
         fill_in "Caption", with: resource_attributes[:name]
         fill_in "Canonical ID", with: resource_attributes[:canonical_id]
         fill_in "Source URI", with: "Hello World!"
@@ -59,13 +58,7 @@ RSpec.describe "Resource adding and changing" do
     end
 
     describe 'source uri is not unique' do
-      let!(:resource) { create(:resource, organization_id: user_organization.id) }
-      let(:resource_uri) { resource.source_uri }
-
       it "should display an error message and re-render the form" do
-        click_first_link "Resources"
-        click_first_link("Add Resource")
-
         fill_in "Caption", with: resource_attributes[:name]
         fill_in "Canonical ID", with: resource_attributes[:canonical_id]
         fill_in "Source URI", with: resource_uri
