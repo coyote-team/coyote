@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+# Used to rescue form errors that would otherwise raise an exception and display the standard rails 500 error page
+# Needed to rescue from resources controller create action for identical/invalid source URIs and Canonical IDs
+# Can add additional rescue_from statements as needed for other controllers/forms
 module FormErrors
   extend ActiveSupport::Concern
 
