@@ -5,6 +5,7 @@
 # @see ResourcePolicy
 class ResourcesController < ApplicationController
   include PermittedParameters
+  include FormErrors
 
   before_action :check_for_canonical_id, only: %i[show]
   before_action :set_resource, only: %i[show edit update destroy]
@@ -14,9 +15,9 @@ class ResourcesController < ApplicationController
   helper_method :resource, :record_filter, :filter_params, :resource_groups
 
   def create
-    self.resource = current_organization.resources.new
-
-    if resource.update(resource_params)
+    self.resource = current_organization.resources.new(resource_params(current_organization.id))
+    
+    if resource.save
       logger.info "Created #{resource}"
       redirect_to resource, notice: "The resource has been created"
     else
