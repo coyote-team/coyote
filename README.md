@@ -75,7 +75,7 @@ If you want to stop execution while in the development enviroment by placing a <
 
 1. Start the web app in development `docker-compose up web`
 2. In a different terminal window list the running containers `docker ps`
-![MCAChicago sample image T.Y.F.F.S.H](doc_assets/docker_ps_command.png "Screenshot of the docker ps command output. List of running containers. First column: 'Container ID', second column: 'Image', third column: 'Created', fourth column: 'Status', fith column: 'Ports', sixth column: 'Names'.")
+![Docker PS Command image](doc_assets/docker_ps_command.png "Screenshot of the docker ps command output. List of running containers. First column: 'Container ID', second column: 'Image', third column: 'Created', fourth column: 'Status', fith column: 'Ports', sixth column: 'Names'.")
 *Screenshot output of the docker ps command*
 3. Copy the container id for the coyote-web image. Ex: "d41c8f609c8e"
 4. Attach to the container `docker attach d41c8f609c8e`
