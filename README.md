@@ -69,6 +69,14 @@ docker-compose exec web bin/rails db:migrate # update the Postgres server manage
 
 If you encounter an error starting Docker processes like the above, you may have your own version of Postgres running in the background. You'll need to stop it in an environment-appropriate way, e.g. `sudo service postgresql stop` on Linux or `brew services stop postgresql` on Mac OS.
 
+#### Running specifc spec files
+
+If you want to run individual specs, you can use the following command:
+
+`docker-compose run --rm -e "RAILS_ENV=test" web bundle exec rspec spec/your/spec.rb`
+
+![Spec command image](doc_assets/docker_ps_command.png "Screenshot of the docker ps command output. List of running containers. First column: 'Container ID', second column: 'Image', third column: 'Created', fourth column: 'Status', fith column: 'Ports', sixth column: 'Names'.")
+
 #### Using Pry Gem
 
 If you want to stop execution while in the development enviroment by placing a <code>binding.pry</code> you can use the following commands:
@@ -79,9 +87,10 @@ If you want to stop execution while in the development enviroment by placing a <
 *Screenshot output of the docker ps command*
 3. Copy the container id for the coyote-web image. Ex: "d41c8f609c8e"
 4. Attach to the container `docker attach d41c8f609c8e`
-  - Note this will appear blank as if nothing is happening
+  - Note this will appear blank as if nothing is happening.
+![Docker attach command image](doc_assets/docker_attach_command.png "Screenshot of the docker attach command output. The terminal is blank after running the command.")
 
-Now when the binding.pry is hit, you can interact with the terminal as you normally would
+Now when the binding.pry is hit, you can interact with the terminal as you normally would using the terminal window from the `docker attach` command.
 
 ### Configuring secure credentials
 
