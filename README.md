@@ -71,11 +71,11 @@ If you encounter an error starting Docker processes like the above, you may have
 
 #### Running specifc spec files
 
-If you want to run individual specs, you can use the following command:
+If you want to run individual specs, you can use the following command in a new terminal window:
 
 `docker-compose run --rm -e "RAILS_ENV=test" web bundle exec rspec spec/your/spec.rb`
 
-![Spec command image](doc_assets/docker_ps_command.png "Screenshot of the docker ps command output. List of running containers. First column: 'Container ID', second column: 'Image', third column: 'Created', fourth column: 'Status', fith column: 'Ports', sixth column: 'Names'.")
+  - Note: you will be able to use binding.pry as you normally would when using this command.
 
 #### Using Pry Gem
 
