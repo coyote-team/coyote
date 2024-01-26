@@ -89,6 +89,7 @@ If you want to stop execution while in the development enviroment by placing a <
 4. Attach to the container `docker attach d41c8f609c8e`
   - Note this will appear blank as if nothing is happening.
 ![Docker attach command image](doc_assets/docker_attach_command.png "Screenshot of the docker attach command output. The terminal is blank after running the command.")
+*Screenshot output of the docker attach command*
 
 Now when the binding.pry is hit, you can interact with the terminal as you normally would using the terminal window from the `docker attach` command.
 
