@@ -36,16 +36,20 @@ h1= title "Descriptions"
     = f.submit "Clear", type: "reset", class: "button button--outline"
 
 .toolbar
-  button.button.button--round.filter-toggle data-toggle-target="body" data-toggle="filters-toggled" type="button"
-    = icon(:options, prefix: safe_join(["Filter ", sr_only(Representation.model_name.human(count: 2).downcase)]))
+  ul.toolbar-list
+    li.toolbar-item 
+      button.button.button--round.filter-toggle data-toggle-target="body" data-toggle="filters-toggled" type="button"
+        = icon(:options, prefix: safe_join(["Filter ", sr_only(Representation.model_name.human(count: 2).downcase)]))
 
-  = applied_filters
+    li.toolbar-item
+      = applied_filters
 
-  = sort_dropdown do
-    = dropdown_option sort_link_to(:name, :asc, "Name, A-Z")
-    = dropdown_option sort_link_to(:name, :desc, "Name, Z-A")
-    = dropdown_option sort_link_to(:created_at, :desc, "Date imported, recent")
-    = dropdown_option sort_link_to(:created_at, :asc, "Date imported, oldest")
+    li.toolbar-item
+      = sort_dropdown do
+        = dropdown_option sort_link_to(:name, :asc, "Name, A-Z")
+        = dropdown_option sort_link_to(:name, :desc, "Name, Z-A")
+        = dropdown_option sort_link_to(:created_at, :desc, "Date imported, recent")
+        = dropdown_option sort_link_to(:created_at, :asc, "Date imported, oldest")
 
 
 = simple_form_for :representation_status_change, url: representation_status_changes_path, html: { class: "filter-view-list", id: "results" } do |form|
