@@ -17,7 +17,7 @@ module FilterHelper
       # Explicit ActiveRecord scopes!
       value.to_s.humanize
     else
-      filter.to_s.humanize
+      "#{filter.to_s.humanize}: #{value.to_s.humanize}"
     end
 
     namespace = "#{record_filter.i18n_key}.#{filter}"
