@@ -77,11 +77,9 @@ class ImportsController < ApplicationController
 
     open(file) do |f|
       if nonbinary?(f, non_ascii_printable)
-        # puts "#{file}: ascii printable"
         return true
       else
-        # puts "#{file}: binary"
-        false
+        return false
       end
     end
   end
