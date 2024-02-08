@@ -9,8 +9,13 @@ class ImportsController < ApplicationController
 
   def create
     self.import = current_organization.imports.new(import_params.merge(user: current_user))
-    import.save!
-    redirect_to import_path(import), success: "Your import file has been uploaded"
+    if is_text_file?
+      import.save!
+      redirect_to import_path(import), success: "Your import file has been uploaded"
+    else
+      flash[:alert] = "Please Upload a properly formatted csv file."
+      render :new
+    end
   end
 
   def edit
@@ -60,5 +65,32 @@ class ImportsController < ApplicationController
       :status,
       sheet_mappings: {},
     )
+  end
+
+  def is_text_file?
+    file = params[:import][:spreadsheet].tempfile
+    check(file)
+  end
+
+  def check(file)
+    non_ascii_printable = /[^\x20-\x7e\s]/
+
+    open(file) do |f|
+      if nonbinary?(f, non_ascii_printable)
+        # puts "#{file}: ascii printable"
+        return true
+      else
+        # puts "#{file}: binary"
+        false
+      end
+    end
+  end
+
+  def nonbinary?(io, forbidden, size = 1024)
+    while buf = io.read(size)
+      return false if forbidden =~ buf
+    end
+
+    true
   end
 end
